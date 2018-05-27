@@ -1,0 +1,48 @@
+// Copyright 2018 Superblocks AB
+//
+// This file is part of Superblocks Studio.
+//
+// Superblocks Studio is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation version 3 of the License.
+//
+// Superblocks Studio is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Superblocks Studio.  If not, see <http://www.gnu.org/licenses/>.
+
+.toolbar {
+    display: block;
+    &:after {
+        content: " ";
+        display: block;
+        clear: both;
+    }
+    background: linear-gradient(#282727, #1e1e1e);
+    min-height: 25px;
+    box-shadow: 1px;
+    .buttons {
+        float: left;
+        margin-left: 50px;
+        >a {
+            margin-right: 10px;
+            color: #fff;
+            opacity: 0.6;
+            &:hover {
+                opacity: 1.0;
+            }
+        }
+    }
+    .info {
+        float: right;
+        display: block;
+        overflow: hidden;
+        text-align: right;
+        margin-right: 25px;
+        color: #cecece;
+        font-size: 0.9em;
+    }
+}

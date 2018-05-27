@@ -1,0 +1,9 @@
+{
+  "name": "Superblocks Studio",
+  "short_name": "Studio",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "icons": [ ],
+  "version": "1.0-beta19"
+}

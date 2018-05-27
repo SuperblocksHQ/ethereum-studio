@@ -1,0 +1,50 @@
+{
+  "private": true,
+  "name": "Superblocks",
+  "version": "0.0.0",
+  "license": "GPL",
+  "scripts": {},
+  "eslintConfig": {
+    "extends": "eslint-config-synacor"
+  },
+  "eslintIgnore": [
+    "build/*"
+  ],
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babelify": "^8.0.0",
+    "browserify": "^16.1.1",
+    "eslint": "^4.9.0",
+    "eslint-config-synacor": "^2.0.2",
+    "ethereumjs-abi": "^0.6.5",
+    "ethereumjs-account": "^2.0.4",
+    "ethereumjs-blockchain": "^2.1.0",
+    "ethereumjs-util": "^5.1.5",
+    "ethereumjs-vm": "^2.3.3",
+    "if-env": "^1.0.0",
+    "merkle-patricia-tree": "^2.3.1",
+    "preact-cli": "^2.1.1",
+    "solc": "^0.4.21"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome": "^1.1.3",
+    "@fortawesome/fontawesome-free-brands": "^5.0.6",
+    "@fortawesome/fontawesome-free-regular": "^5.0.6",
+    "@fortawesome/fontawesome-free-solid": "^5.0.6",
+    "@fortawesome/react-fontawesome": "^0.0.17",
+    "classnames": "^2.2.5",
+    "crypto-js": "^3.1.9-1",
+    "eth-lightwallet": "^3.0.1",
+    "ethereumjs-tx": "^1.3.4",
+    "less": "^2.7.3",
+    "less-loader": "^4.0.5",
+    "normalize-css": "^2.3.1",
+    "preact": "^8.2.6",
+    "preact-compat": "^3.17.0",
+    "react-fetch": "^0.0.9",
+    "react-monaco-editor": "^0.13.0",
+    "web3": "0.19"
+  }
+}

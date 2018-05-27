@@ -1,0 +1,227 @@
+// Copyright 2018 Superblocks AB
+//
+// This file is part of Superblocks Studio.
+//
+// Superblocks Studio is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation version 3 of the License.
+//
+// Superblocks Studio is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Superblocks Studio.  If not, see <http://www.gnu.org/licenses/>.
+
+html, body {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    background-color: #262e33;
+    font-family: 'Space Mono';
+    font-weight: 400;
+    color: #444;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 16px;
+}
+html {
+    ::-webkit-scrollbar
+    {
+        width: 12px;
+    }
+
+    ::-webkit-scrollbar-track
+    {
+        background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb
+    {
+        border: 2px solid #4e4e4e;
+    }
+}
+a:active,a:focus {
+    outline: none;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.full {
+    width: 100%;
+    height: 100%;
+}
+
+.full-y {
+    height: 100%;
+}
+
+.full-x {
+    width: 100%;
+}
+
+#app {
+    position: absolute;
+    z-index: 1;
+    display: block;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    #app_content {
+        &.modals {
+            opacity: 0.333;
+        }
+    }
+}
+
+#app.modals {
+    #app_content {
+        opacity: 0.333;
+    }
+    #app_modal {
+        display: block;
+    }
+}
+
+#app_content {
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+
+#app_modal {
+    position: absolute;
+    z-index: 2;
+    display: none;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.top-menu {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    display: block;
+    width: 100%;
+    height: 30px;
+    background-color: #1a1f23;
+    line-height: 190%;
+    color: #fff;
+    a {
+        color: #8641f2;
+    }
+    .left {
+        margin-left: 30px;
+        float: left;
+    }
+    .right {
+        margin-right: 30px;
+        float: right;
+    }
+}
+
+.maincontent {
+    background-color: #222;
+    position: absolute;
+    z-index: 1;
+    overflow: hidden;
+    margin: 0 auto;
+    left: 0;
+    top: 31px;
+    right: 0;
+    bottom: 0;
+    a {
+        color: #fff;
+        text-decoration: none;
+    }
+}
+
+/* space-mono-regular - latin */
+@font-face {
+  font-family: 'Space Mono';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Space Mono'), local('SpaceMono-Regular'),
+       url('/static/fonts/spacemono/space-mono-v2-latin-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+       url('/static/fonts/spacemono/space-mono-v2-latin-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+/* space-mono-italic - latin */
+@font-face {
+  font-family: 'Space Mono';
+  font-style: italic;
+  font-weight: 400;
+  src: local('Space Mono Italic'), local('SpaceMono-Italic'),
+       url('/static/fonts/spacemono/space-mono-v2-latin-italic.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+       url('/static/fonts/spacemono/space-mono-v2-latin-italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+/* space-mono-700 - latin */
+@font-face {
+  font-family: 'Space Mono';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Space Mono Bold'), local('SpaceMono-Bold'),
+       url('/static/fonts/spacemono/space-mono-v2-latin-700.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+       url('/static/fonts/spacemono/space-mono-v2-latin-700.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+/* space-mono-700italic - latin */
+@font-face {
+  font-family: 'Space Mono';
+  font-style: italic;
+  font-weight: 700;
+  src: local('Space Mono Bold Italic'), local('SpaceMono-BoldItalic'),
+       url('/static/fonts/spacemono/space-mono-v2-latin-700italic.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+       url('/static/fonts/spacemono/space-mono-v2-latin-700italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+.btn1 {
+    -webkit-border-radius: 17;
+    -moz-border-radius: 17;
+    border-radius: 17px;
+    border-color: #8641f2;
+    font-size: 20px;
+    background-color: #ffffff;
+    padding: 15px 25px;
+    text-decoration: none;
+    &:hover {
+        background-color: #8641f2;
+        color: #fff;
+        text-decoration: none;
+    }
+}
+.btn2 {
+    -webkit-border-radius: 19;
+    -moz-border-radius: 19;
+    border-radius: 19px;
+    border: 1px solid #262e33;
+    color: #262e33;
+    font-size: 20px;
+    padding: 5px 20px;
+    text-decoration: none;
+    &:hover {
+        background-color: #262e33;
+        color: #fff;
+        text-decoration: none;
+    }
+    &.filled {
+        color: #8641f2;
+        background-color: #ffffff;
+        &:hover {
+            background-color: #8641f2;
+            color: #fff;
+        }
+    }
+}
+.scrollable-y {
+    display: block;
+    height: 100%;
+    width: 100%;
+    overflow-y: auto;
+}
