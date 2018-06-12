@@ -25,12 +25,14 @@ import {Wallet} from './projecteditor/wallet';
 import Solc from './solc';
 import EVM from './evm';
 
+import Settings from './settings';
+
 export default class App extends Component {
     constructor(props) {
         super(props);
         this.idCounter=0;
 
-        this._version="1.0-beta19";
+        this._version="1.0-beta20";
         this.session={
             start_time: Date.now(),
         };
@@ -88,6 +90,7 @@ export default class App extends Component {
                 endpoints: endpoints,
             },
             generateId: this.generateId,
+            settings: new Settings(),
         };
         this.knownWalletSeed="butter toward celery cupboard blind morning item night fatal theme display toy";
         this.functions.wallet = new Wallet({functions: this.functions, length:30});
@@ -97,14 +100,16 @@ export default class App extends Component {
         this.setState({modals:[]});
         console.log("Known development Ethereum wallet seed is: "+this.knownWalletSeed);
 
-        this._init();
+        this.functions.settings.load(()=>{
+            this._init();
+        });
     }
 
     _init=()=>{
         const modalData={
             title: "Loading Superblocks Studio " + this._version,
             body: "Initializing Solidity compiler and Ethereum Virtual Machine...",
-            style: {width:"528px","background-color":"#73618b",color:"#fef7ff"},
+            style: {"text-align":"center"},
         };
         const modal=(<Modal data={modalData} />);
         this.functions.modal.show({cancel: ()=>{return false}, render: () => {return modal;}});
@@ -114,12 +119,42 @@ export default class App extends Component {
             if(this.functions.EVM.isReady() && this.functions.compiler.isReady()) {
                 console.log("Superblocks Studio "+this._version+" Ready.");
                 this.functions.modal.close();
+                this._showSplash();
             }
             else {
                 setTimeout(fn,1000);
             }
         };
         fn();
+    };
+
+    _showSplash=()=>{
+        const settings=this.functions.settings.get();
+        if(settings.splash_mute) return;
+        const body=(
+            <div class="splash">
+                <p class="splash_text">
+                    Let's watch a short video to help you get started.
+                </p>
+                <p class="splash_video">
+                    <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/xkr7rb0e5DE?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                </p>
+                <p class="splash_cancel">
+                    <a href="#" onClick={()=>{
+                        this.functions.modal.cancel();
+                        settings.splash_mute=true;
+                        this.functions.settings.save();
+                    }}>No thanks</a>
+                </p>
+            </div>
+        );
+        const modalData={
+            title: "Welcome to Superblocks Studio!",
+            body: body,
+            style: {width:"680px","xbackground-color":"#73618b",xcolor:"#fef7ff"},
+        };
+        const modal=(<Modal data={modalData} />);
+        this.functions.modal.show({render: () => {return modal;}});
     };
 
     //_checkVersion=()=>{
