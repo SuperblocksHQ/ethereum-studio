@@ -262,4 +262,14 @@ export default class Backend {
         if(file) setTimeout(()=>cb({status:0, contents:file.contents || "", hash:""}),1);
         else setTimeout(()=>cb({status:1, contents:"", hash:""}),1);
     };
+
+    loadSettings = (cb) => {
+        const settings=JSON.parse(localStorage.getItem("settings1.0")) || {};
+        if(cb) setTimeout(()=>cb(settings),1);
+    };
+
+    saveSettings = (settings, cb) => {
+        localStorage.setItem("settings1.0", JSON.stringify(settings));
+        if(cb) setTimeout(()=>cb(),1);
+    };
 }
