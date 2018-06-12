@@ -22,7 +22,6 @@ export default class TransactionLogData {
 
         this._web3s={};
         this._transactions=[];
-        console.log(this.addTx);
     }
 
     transactions=()=>{
@@ -46,11 +45,9 @@ export default class TransactionLogData {
     // Issue a rerender when new data has arrived.
     _fillData=tx=>{
         this._getTxObj(tx, (obj)=>{
-            console.log("tx obj", obj);
             tx.obj=obj;
             //this.setState();
             this._getTxReceipt(tx, (receipt)=>{
-                console.log("tx receipt", receipt);
                 tx.receipt=receipt;
                 //this.setState();
             });
