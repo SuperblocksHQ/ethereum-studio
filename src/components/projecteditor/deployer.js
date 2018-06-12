@@ -263,7 +263,7 @@ export default class Deployer extends Component {
                                 const modalData={
                                     title: "WARNING: Invoking external account provider",
                                     body: "Please understand that Superblocks Studio has no power over which network is targeted when using an external provider. It is your responsibility that the network is the same as it is expected to be.",
-                                    style: {"background-color":"#cd5c5c",color:"#fef7ff"},
+                                    class: style.externalProviderWarning,
                                 };
                                 const modal=(<Modal data={modalData} />);
                                 this.props.functions.modal.show({cancel: ()=>{return false}, render: () => {return modal;}});
