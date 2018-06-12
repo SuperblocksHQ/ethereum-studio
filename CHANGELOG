@@ -1,0 +1,11 @@
+# Superblocks Studio - Change log
+
+## [1.0-beta20]
+
++ Add Settings stored in local storage
++ Add Welcome splash
+* Update Modal component
+- Remove unused Explorer component
+- Remove system.log trace
+
+## [1.0-beta19]
