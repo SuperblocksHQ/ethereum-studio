@@ -155,7 +155,10 @@ var render=function(abi, contract) {
                 for(var index=0;index<item.outputs.length;index++) {
                     var output=item.outputs[index];
                     var id2=id+"_output_"+index;
-                    var value=res.shift() || (iserr?"(ERROR)":"(NO DATA)");
+                    var val=res.shift()
+                    var isBool = typeof val =='boolean'
+                    var isString = typeof val =='string'
+                    var value=val || isBool?val:isString?"(Empty)":iserr?"(ERROR)":"(NO DATA)";
                     if(item.type=="uint256") {
                         value=res.toNumber();
                     }
