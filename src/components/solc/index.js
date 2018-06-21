@@ -41,7 +41,7 @@ export default class Solc {
 
         render((
             <div style="display:none;" id={this.id}>
-                <iframe ref={setRef} src="/solc/index-v0.4.21.html" frameborder="0"></iframe>
+                <iframe ref={setRef} src="/solc/index-v0.4.21-1.html" frameborder="0"></iframe>
             </div>
         ), document.body);
 

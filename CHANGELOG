@@ -1,10 +1,15 @@
 # Superblocks Studio - Change log
 
+## [1.0-beta21]
+
++ Add Solidity import feature to compiler
+
 ## [1.0-beta20]
 
 + Add Settings stored in local storage
 + Add Welcome splash
 * Update Modal component
+* Bug fix \#8 contract interaction displaying confusing results. Cred: Richard Bondi.
 - Remove unused Explorer component
 - Remove system.log trace
 

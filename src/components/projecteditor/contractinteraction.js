@@ -110,7 +110,10 @@ export default class ContractInteraction extends Component {
                         this.writeContent(1, "Missing file(s)");
                         return;
                     }
-                    const abi=JSON.parse(body.contents);
+                    var abi=body.contents;
+                    if(typeof(body.contents) != "object") {
+                        abi=JSON.parse(body.contents);
+                    }
                     this._loadJsFiles(contracts, env, (status, jsbodies)=>{
                         if(status!=0) {
                             this.writeContent(1, "Missing contract javascript file, have you deployed all contracts?");

@@ -578,7 +578,12 @@ export default class Deployer extends Component {
         }, true, true);
     };
     _buildBin=(obj, cb)=>{
-        const contract=obj.web3.eth.contract(JSON.parse(obj.abi));
+        var contract=null;
+        if(typeof(obj.abi) == "object") {
+            contract=obj.web3.eth.contract(obj.abi);
+        } else {
+            contract=obj.web3.eth.contract(JSON.parse(obj.abi));
+        }
         const args=obj.args.concat([{data:obj.bin}]);
         var bin2;
         var err="";
