@@ -272,4 +272,44 @@ export default class Backend {
         localStorage.setItem("settings1.0", JSON.stringify(settings));
         if(cb) setTimeout(()=>cb(),1);
     };
+
+    downloadWorkspace = () => {
+        const exportName = 'superblocks_workspace.json';
+        const workspace=JSON.parse(localStorage.getItem("dapps1.0")) || {};
+        var exportObj = workspace;
+        var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportObj));
+        var downloadAnchorNode = document.createElement('a');
+        downloadAnchorNode.setAttribute("href",     dataStr);
+        downloadAnchorNode.setAttribute("download", exportName + ".json");
+        document.body.appendChild(downloadAnchorNode); // required for firefox
+        downloadAnchorNode.click();
+        downloadAnchorNode.remove();
+    }
+
+    uploadWorkspace = (file, cb) => {
+        var reader = new FileReader();
+      
+        reader.onloadend = (evt) => {
+          if (evt.target.readyState == FileReader.DONE) {
+            try {
+              const obj = JSON.parse(evt.target.result);
+              if (!obj.projects) {
+                cb('invalid workspace file');
+                return;
+              }
+            } catch (e) {
+              cb('invalid JSON');
+              return;
+            }
+            localStorage.setItem("dapps1.0",evt.target.result)
+            cb()
+          }
+        };
+      
+        var blob = file.slice(0, file.size);
+        reader.readAsBinaryString(blob);
+    }
+
+
+
 }

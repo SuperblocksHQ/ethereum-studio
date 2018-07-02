@@ -52,6 +52,8 @@ import iconWrench from '@fortawesome/fontawesome-free-solid/faWrench';
 import iconGlobe from '@fortawesome/fontawesome-free-solid/faGlobe';
 import iconChess from '@fortawesome/fontawesome-free-solid/faChess';
 import iconYT from '@fortawesome/fontawesome-free-brands/faYoutube';
+import iconDownload from '@fortawesome/fontawesome-free-solid/faDownload';
+import iconUpload from '@fortawesome/fontawesome-free-solid/faUpload';
 
 export default class DevkitProjectEditorControl extends Component {
     constructor(props) {
@@ -485,14 +487,68 @@ export default class DevkitProjectEditorControl extends Component {
         return (
             <div>
                 <div>
-                    <a href="#" class={style.btn1} onClick={this._newDapp}>New DApp</a>
+                    <a href="#" class={style.btn1} onClick={this._newDapp}  title="New Dapp">
+                        <FaIcon icon={iconPlus} />
+                    </a>
+                    <a href="#" class={style.btn1}  onClick={this._downloadWorkspace} title="Download Workspace">
+                        <FaIcon icon={iconDownload} />
+                    </a>
+                    <input id="wsFileInput" type="file" style="display: none;" onChange={e => this._uploadWorkspace(e)} ref={w => this.wsFileInput=w} />
+                    <a href="#" class={style.btn1}  onClick={e => this._clickWorkspace(e)} title="Upload Workspace">
+                        <FaIcon icon={iconUpload} />
+                    </a>
                 </div>
                 <div class={style.notefiles}>
-                    Note: all files are stored in the browser only
+                    Note: all files are stored in the browser only, download to backup.
                 </div>
             </div>
         );
     };
+
+    _downloadWorkspace = e => {
+        e.preventDefault();
+        this.backend.downloadWorkspace(e);
+    }
+
+    _clickWorkspace = (e) => {
+        e.preventDefault();
+        document.querySelector('#wsFileInput').dispatchEvent(new MouseEvent('click')); // ref does not work fhttps://github.com/developit/preact/issues/477
+    }
+    _uploadWorkspace = (e) => {
+        e.preventDefault();
+        var files = document.querySelector('#wsFileInput').files;
+        var file = files[0];
+
+        const uploadConfirm = e => {
+            e.preventDefault()
+            this.backend.uploadWorkspace(file, err => {
+                if(err) {
+                    alert(err);
+                    this.props.functions.modal.close();
+                }
+                else this._reloadProjects(e, this.props.functions.modal.close)
+            });
+        }
+        
+        const body=(
+            <div>
+                <p>Warning, this will overwrite the entire workspace, press 'Import' to confirm.</p>
+                <div style="margin-top: 10px;">
+                    <a class="btn2" style="float: left; margin-right: 30px;" onClick={this.props.functions.modal.cancel}>Cancel</a>
+                    <a class="btn2 filled" style="float: left;" onClick={uploadConfirm}>Import</a>
+                </div>
+            </div>
+        );
+        const modalData={
+            title: "Import Saved Workspace",
+            body: body,
+            style: {"text-align":"center",height:"400px"},
+        };
+        const modal=(<Modal data={modalData} />);
+        this.props.functions.modal.show({render: () => {return modal;}});
+
+        e.target.value = '';
+    }
 
     _menuProjects = (level, index, item) => {
         var index=-1;
