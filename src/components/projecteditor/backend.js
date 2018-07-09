@@ -174,6 +174,17 @@ export default class Backend {
         setTimeout(()=>{cb(1)},1);
     }
 
+    deleteProject = (name, cb) => {
+        const data=JSON.parse(localStorage.getItem("dapps1.0")) || {};
+        if(!data.projects) data.projects=[];
+        var projects=data.projects.filter((item)=>{
+            return item.dir!=name;
+        });
+        data.projects=projects;
+        localStorage.setItem("dapps1.0", JSON.stringify(data));
+        cb();
+    }
+
     loadProjects = (cb) => {
         const data=JSON.parse(localStorage.getItem("dapps1.0")) || {};
         setTimeout(()=>cb(0, data.projects || []),1);

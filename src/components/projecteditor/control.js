@@ -218,6 +218,7 @@ export default class DevkitProjectEditorControl extends Component {
         projectItem.props._project=projectItem;
 
         projectItem.save=(cb) => {this._saveProject(projectItem, cb)};
+        projectItem.delete=(cb) => {this._deleteProject(projectItem, cb)};
         projectItem.loadFile=(file, cb, stealth) => {this._loadFile(project, file, cb, false, stealth)};
         projectItem.saveFile=(file, cb) => {this._saveFile(project, file, cb)};
         projectItem.closeFile=(file) => {this._closeFile(project, file)};
@@ -1066,6 +1067,29 @@ export default class DevkitProjectEditorControl extends Component {
         if(index>-1) {
             this._projectsList.splice(index,1);
         }
+    };
+
+    _deleteProject = (projectItem, cb) => {
+        this.backend.deleteProject(projectItem.props.state.data.dir, ()=>{
+            this._reloadProjects(null, (status)=>{
+                cb(status);
+            });
+        });
+    };
+
+    _getProjectWindowCount=(projectItem)=> {
+        var count=0;
+        if(this.props.router.panes) {
+            this.props.router.panes.panes.map((pane, index)=> {
+                pane.windows.map((win, index2)=> {
+                    if(win.props.item.props._project && win.props.item.props._project.getId()==projectItem.getId()) {
+                        count++;
+                    }
+                });
+            });
+        }
+
+        return count;
     };
 
     _renderIcons = (level, index, item) => {
