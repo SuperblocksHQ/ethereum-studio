@@ -286,6 +286,29 @@ export default class Backend {
         downloadAnchorNode.remove();
     }
 
+    downloadProject = (projectName) => {
+        const exportName = "superblocks_project_" + projectName;
+        const workspace = JSON.parse(localStorage.getItem("dapps1.0")) || {};
+        var project = workspace.projects.filter((item) => {
+            return item.dir==projectName;
+        })[0];
+
+        // Return on empty project
+        if(Object.keys(project).length <= 0) {
+            console.warn("Unable to locate project: " + projectName);
+            return;
+        }
+
+        var exportObj = project;
+        var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportObj));
+        var downloadAnchorNode = document.createElement('a');
+        downloadAnchorNode.setAttribute("href",     dataStr);
+        downloadAnchorNode.setAttribute("download", exportName + ".json");
+        document.body.appendChild(downloadAnchorNode); // required for firefox
+        downloadAnchorNode.click();
+        downloadAnchorNode.remove();
+    }
+
     uploadWorkspace = (file, cb) => {
         var reader = new FileReader();
       
@@ -310,6 +333,29 @@ export default class Backend {
         reader.readAsBinaryString(blob);
     }
 
+    uploadProject = (project, file, handler, cb) => {
+        var reader = new FileReader();
 
+        reader.onloadend = (evt) => {
+            var dappfileJSONObj;
+            if (evt.target.readyState == FileReader.DONE) {
+                try {
+                    const obj = JSON.parse(evt.target.result);
+                    if (!obj.dir) {
+                        cb('invalid project file');
+                        return;
+                    }
+                    dappfileJSONObj = obj;
+                } catch (e) {
+                    cb('invalid JSON');
+                    return;
+                }
+                this.saveProject(project, {dappfile:dappfileJSONObj.dappfile}, (o)=>{handler(o.status,o.code)}, true, dappfileJSONObj.files)
+                cb();
+            }
+        };
 
+        var blob = file.slice(0, file.size);
+        reader.readAsBinaryString(blob);
+    }
 }

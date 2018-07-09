@@ -473,7 +473,7 @@ export default class DevkitProjectEditorControl extends Component {
                 });
             }
             else {
-                alert("A DApp with that name already exists, chose a different name.");
+                alert("A DApp with that name already exists, choose a different name.");
             }
         };
         const cancel=(modal) =>{

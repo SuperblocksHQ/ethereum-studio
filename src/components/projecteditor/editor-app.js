@@ -17,6 +17,8 @@
 import { h, Component } from 'preact';
 import classnames from 'classnames';
 import style from './style-editor-contract';
+import Backend from  './backend';
+
 import FaIcon  from '@fortawesome/react-fontawesome';
 import iconSave from '@fortawesome/fontawesome-free-regular/faSave';
 import iconCompile from '@fortawesome/fontawesome-free-solid/faPuzzlePiece';
@@ -27,6 +29,7 @@ import iconDebug from '@fortawesome/fontawesome-free-solid/faBug';
 export default class AppEditor extends Component {
     constructor(props) {
         super(props);
+        this.backend = new Backend();
         this.id=props.id+"_editor";
         this.props.parent.childComponent=this;
         this.dappfile = this.props.project.props.state.data.dappfile;
@@ -117,7 +120,6 @@ export default class AppEditor extends Component {
             }
         };
         clearDotfiles(dappfilejson.files);
-        const dappfileexport=JSON.stringify(dappfilejson);
 
         const toolbar=this.renderToolbar();
         const maxHeight = {
@@ -139,8 +141,7 @@ export default class AppEditor extends Component {
                     </form>
                 </div>
             <div>
-                <a href="#" onClick={(e)=>{e.preventDefault();this.setState({show:true});}}>Show Dappfile.json for export</a>
-                {this.state.show && <textarea style="width:100%;height:300px;" readonly="true">{dappfileexport}</textarea>}
+                <a href="#" onClick={(e)=>{e.preventDefault();this.backend.downloadProject(this.props.dappfilejson.dir);}}>Download project as JSON file</a>
             </div>
             </div>
         </div>);
