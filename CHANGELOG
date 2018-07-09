@@ -1,5 +1,11 @@
 # Superblocks Studio - Change log
 
+## [1.0-beta22]
+
++ Add ability to save and restore workspace. Cred: Richard Bondi.
++ Add single dapp project import and export functionality
++ Add delete project functionality
+
 ## [1.0-beta21]
 
 + Add Solidity import feature to compiler

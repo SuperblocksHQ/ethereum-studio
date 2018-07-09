@@ -32,7 +32,7 @@ export default class App extends Component {
         super(props);
         this.idCounter=0;
 
-        this._version="1.0-beta21";
+        this._version="1.0-beta22";
         this.session={
             start_time: Date.now(),
         };
