@@ -14,13 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Studio.  If not, see <http://www.gnu.org/licenses/>.
 
-import { h, Component } from 'preact';
-import compat from 'preact-compat';
+import { Component } from 'preact';
 import classNames from 'classnames';
 import Modal from './modal';
 
 import ProjectEditor from './projecteditor';
-import {Wallet} from './projecteditor/wallet';
+import { Wallet } from './projecteditor/wallet';
 
 import Solc from './solc';
 import EVM from './evm';
@@ -232,11 +231,20 @@ export default class App extends Component {
             <div id="app" className={this.getClassNames()}>
                 <div id="app_content">
                     <div class="top-menu">
-                        <span class="left">Superblocks Studio {this._version} (Asparagus)</span>
-                        <span class="right">Need help? <a href="https://t.me/GetSuperblocks" target="_blank">Join us on Telegram!</a></span>
+                        <img class="left" src="/static/img/img-studio-logo.svg" alt="Superblocks Studio logo"></img>
+                        <span class="left">Transactions</span>
+                        <span class="left">Collaborate</span>
+                        <span class="right">Help</span>
                     </div>
                     <div class="maincontent">
                         <ProjectEditor key="projedit" functions={this.functions} />
+                    </div>
+                    <div class="bottom-status-bar">
+                        <div>
+                            <span class="left">{this._version}</span>
+                            <span class="left note">Note</span>
+                        </div>
+
                     </div>
                 </div>
                 <div id="app_modal" onClick={this.modalOutside}>
