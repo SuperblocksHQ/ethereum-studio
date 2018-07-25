@@ -33,7 +33,6 @@ import iconFolder from '@fortawesome/fontawesome-free-solid/faFolder';
 import iconFolderOpen from '@fortawesome/fontawesome-free-solid/faFolderOpen';
 import iconAngleRight from '@fortawesome/fontawesome-free-solid/faAngleRight';
 import iconAngleDown from '@fortawesome/fontawesome-free-solid/faAngleDown';
-import iconCubes from '@fortawesome/fontawesome-free-solid/faCubes';
 import iconCube from '@fortawesome/fontawesome-free-solid/faCube';
 import iconTh from '@fortawesome/fontawesome-free-solid/faTh';
 import iconPlus from '@fortawesome/fontawesome-free-solid/faPlusSquare';
@@ -62,10 +61,6 @@ export default class DevkitProjectEditorControl extends Component {
         this._projectsList=[
         ];
         this._menuChildren=[
-            this._newItem({type: "toolbox", title: "Tutorials", toggable: true, icon:null, onClick: this._angleClicked, state:{open: false, children: [
-                //this._newItem({type: "tutorials", type2: "online", title: "Online", classes: [], icon:iconYT, onClick: this._openItem}),
-                this._newItem({type: "tutorials", type2: "manual", title: "Manual", classes: [], icon:iconBook, onClick: this._openItem}),
-            ]}}),
             this._newItem({type: "project_select", title: "DApps", render:this._menuProjects, classes: ["menuprojects"], icon:null, state:{data: {projects: this._projectsList}}}),
         ];
         var menu=this._newItem({type: "top", title: "Top menu", render:this._menuTop, classes: ["menutop"], icon:null, toggable: false, state: {children: (item) => {
@@ -499,9 +494,6 @@ export default class DevkitProjectEditorControl extends Component {
                         <FaIcon icon={iconUpload} />
                     </a>
                 </div>
-                <div class={style.notefiles}>
-                    Note: all files are stored in the browser only, download to backup.
-                </div>
             </div>
         );
     };
@@ -530,7 +522,7 @@ export default class DevkitProjectEditorControl extends Component {
                 else this._reloadProjects(e, this.props.functions.modal.close)
             });
         }
-        
+
         const body=(
             <div>
                 <p>Warning, this will overwrite the entire workspace, press 'Import' to confirm.</p>
