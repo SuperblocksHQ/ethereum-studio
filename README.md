@@ -43,6 +43,9 @@ Run this script to fix that for you:
 ./bump_version "1.1.0"
 ```
 
+Consider double-checking and updating the `CHANGELOG` to reflect the changes. Tag the new version.
+
+
 ## Contributing
 Contributions are welcome, a `TODO` list will be presented.
 
