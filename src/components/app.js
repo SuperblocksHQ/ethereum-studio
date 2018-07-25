@@ -231,20 +231,31 @@ export default class App extends Component {
             <div id="app" className={this.getClassNames()}>
                 <div id="app_content">
                     <div class="top-menu">
-                        <img class="left" src="/static/img/img-studio-logo.svg" alt="Superblocks Studio logo"></img>
-                        <span class="left">Transactions</span>
-                        <span class="left">Collaborate</span>
-                        <span class="right">Help</span>
+                        <img class="left logo" src="/static/img/img-studio-logo.svg" alt="Superblocks Studio logo"></img>
+                        <span class="tools">
+                            <span class="left">
+                                <img class="icon" src="/static/img/icon-transactions.png" alt="Open transactions screen"></img>
+                                <span>Transactions</span>
+                            </span>
+                            <span class="left">
+                                <img class="icon collaborate" src="/static/img/icon-collaborate.png" alt="Open the transactions screen"></img>
+                                <span>Collaborate</span>
+                            </span>
+                        </span>
+                        <span class="right">
+                            <img class="icon" src="/static/img/icon-help.svg" alt="Open transactions screen"></img>
+                            <span>Help</span>
+                        </span>
                     </div>
                     <div class="maincontent">
-                        <ProjectEditor key="projedit" functions={this.functions} />
+    					<ProjectEditor key="projedit" functions={this.functions} />
                     </div>
                     <div class="bottom-status-bar">
-                        <div>
-                            <span class="left">{this._version}</span>
+    					<span class="left">
                             <span class="left note">Note</span>
-                        </div>
-
+                            <span class="note-text">All files are stored in the browser only, download to backup</span>
+                        </span>
+                        <span class="right">{this._version}</span>
                     </div>
                 </div>
                 <div id="app_modal" onClick={this.modalOutside}>

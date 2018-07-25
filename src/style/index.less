@@ -24,7 +24,7 @@ html, body {
     color: #444;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    font-size: 16px;
+    font-size: 14px;
 }
 html {
     ::-webkit-scrollbar
@@ -109,9 +109,10 @@ a:active,a:focus {
     -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-    display: block;
+    display: flex;
+    align-items: center;
     width: 100%;
-    height: 67px;
+    height: 50px;
     background-color: #1a1f23;
     line-height: 190%;
     color: #fff;
@@ -125,7 +126,28 @@ a:active,a:focus {
     .right {
         margin-right: 30px;
         float: right;
+        margin-left: auto;
     }
+    .logo {
+        width: 28px;
+        height: 28px;
+    }
+    .tools {
+        margin-left: 15px;
+        .collaborate {
+            width: 18px;
+            height: 14px;
+        }
+    }
+    .icon {
+        position: relative;
+        width: 15px;
+        height: 15px;
+        top: 2px;
+        right: 7px;
+
+    }
+
 }
 
 .maincontent {
@@ -135,7 +157,7 @@ a:active,a:focus {
     overflow: hidden;
     margin: 0 auto;
     left: 0;
-    top: 67px;
+    top: 50px;
     right: 0;
     bottom: 0;
     a {
@@ -152,6 +174,9 @@ a:active,a:focus {
     z-index: 1;
     overflow: hidden;
     margin: 0 auto;
+    font-size: 0.80em;
+    display: flex;
+    align-items: center;
     left: 0;
     right: 0;
     bottom: 0;
@@ -163,21 +188,27 @@ a:active,a:focus {
         color: #fff;
     }
     .left {
-        margin-left: 30px;
+        margin-left: 10px;
         float: left;
     }
     .right {
-        margin-right: 30px;
+        margin-right: 15px;
         float: right;
+        margin-left: auto;
     }
     .note {
         background-color: #F8E71C;
         color: #262E33;
-        height: 18px;
+        font-weight: 600;
+        padding: 1px 8px 1px 8px;
+        border-radius: 4px;
 
         span {
             font-size: 10px;
         }
+    }
+    .note-text {
+        margin-left: 10px;
     }
 }
 
@@ -203,6 +234,23 @@ a:active,a:focus {
        url('/static/fonts/untitledsans/untitled-sans-regular-italic.otf') format('opentype');
 
 }
+/* untitled-sans-medium - latin */
+@font-face {
+    font-family: 'Untitled Sans';
+    font-style: normal;
+    font-weight: 600;
+    src: local('Untitled Sans Medium'), local('UntitledSans-Medium'),
+        url('/static/fonts/untitledsans/untitled-sans-medium.otf') format('opentype');
+}
+  /* ntitled-sans-medium - latin */
+@font-face {
+    font-family: 'Untitled Sans';
+    font-style: italic;
+    font-weight: 600;
+    src: local('Untitled Sans Medium Italic'), local('UntitledSans-MediumItalic'),
+            url('/static/fonts/untitledsans/untitled-sans-medium-italic.otf') format('opentype');
+}
+
 /* untitled-sans-bold - latin */
 @font-face {
   font-family: 'Untitled Sans';
