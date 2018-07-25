@@ -41,7 +41,7 @@ export default class EVM {
 
         render((
             <div style="display:none;" id={this.id}>
-                <iframe ref={setRef} src="/evm/index-v4.html" frameborder="0"></iframe>
+                <iframe ref={setRef} src="/evm/index-v5.html" frameborder="0"></iframe>
             </div>
         ), document.body);
 

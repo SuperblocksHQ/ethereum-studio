@@ -919,7 +919,13 @@ function call(data, callback) {
             skipNonce: true,
         }, function (err, results) {
             _vm.stateManager.revert(function() {
-                callback(err, utils.addHexPrefix(results.vm.return.toString("hex")));
+                var result = results.vm.return;
+                if(result) {
+                    result = utils.addHexPrefix(result.toString("hex"));
+                } else {
+                    result = "0x0";
+                }
+                callback(err, result);
             });
         });
     }
