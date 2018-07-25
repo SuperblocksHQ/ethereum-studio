@@ -1,5 +1,13 @@
 # Superblocks Studio - Change log
 
+## [current]
+
++ Add error checking to ctrs in clickNewContract
++ Add length check to ctrs in clickNewContract
++ Add comments explaning the magic indices in clickNewContract
++ Add error checking when reading evm return data in call()
+* Fix erroneous index referencing ctrs in clickNewContract
+
 ## [1.0-beta22]
 
 + Add ability to save and restore workspace. Cred: Richard Bondi.
