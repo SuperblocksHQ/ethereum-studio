@@ -237,7 +237,7 @@ export default class App extends Component {
                     </div>
                     <div class="bottom-status-bar">
     					<span class="left">
-                            <span class="left note">Note</span>
+                            <span class="note">Note</span>
                             <span class="note-text">All files are stored in the browser only, download to backup</span>
                         </span>
                         <span class="right">{this._version}</span>
