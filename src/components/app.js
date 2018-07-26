@@ -18,6 +18,7 @@ import { Component } from 'preact';
 import classNames from 'classnames';
 import Modal from './modal';
 
+import TopBar from './topbar';
 import ProjectEditor from './projecteditor';
 import { Wallet } from './projecteditor/wallet';
 
@@ -230,23 +231,7 @@ export default class App extends Component {
         return (
             <div id="app" className={this.getClassNames()}>
                 <div id="app_content">
-                    <div class="top-menu">
-                        <img class="left logo" src="/static/img/img-studio-logo.svg" alt="Superblocks Studio logo"></img>
-                        <span class="tools">
-                            <span class="left">
-                                <img class="icon" src="/static/img/icon-transactions.png" alt="Open transactions screen"></img>
-                                <span>Transactions</span>
-                            </span>
-                            <span class="left">
-                                <img class="icon collaborate" src="/static/img/icon-collaborate.png" alt="Open the transactions screen"></img>
-                                <span>Collaborate</span>
-                            </span>
-                        </span>
-                        <span class="right">
-                            <img class="icon" src="/static/img/icon-help.svg" alt="Open transactions screen"></img>
-                            <span>Help</span>
-                        </span>
-                    </div>
+                    <TopBar />
                     <div class="maincontent">
     					<ProjectEditor key="projedit" functions={this.functions} />
                     </div>
