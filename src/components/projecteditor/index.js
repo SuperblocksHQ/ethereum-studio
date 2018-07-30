@@ -14,8 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Studio.  If not, see <http://www.gnu.org/licenses/>.
 
-import { h, Component } from 'preact';
-import classnames from 'classnames';
+import { Component } from 'preact';
 import style from './style';
 import Control from './control.js';
 import Panes from './panes.js';
