@@ -15,16 +15,9 @@
 // along with Superblocks Studio.  If not, see <http://www.gnu.org/licenses/>.
 
 import { h, Component } from 'preact';
-import classnames from 'classnames';
 import style from './style-editor-contract';
 import Backend from  './backend';
 
-import FaIcon  from '@fortawesome/react-fontawesome';
-import iconSave from '@fortawesome/fontawesome-free-regular/faSave';
-import iconCompile from '@fortawesome/fontawesome-free-solid/faPuzzlePiece';
-import iconDeploy from '@fortawesome/fontawesome-free-regular/faPlayCircle';
-import iconTest from '@fortawesome/fontawesome-free-solid/faFlask';
-import iconDebug from '@fortawesome/fontawesome-free-solid/faBug';
 
 export default class AppEditor extends Component {
     constructor(props) {
