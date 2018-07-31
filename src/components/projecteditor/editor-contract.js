@@ -218,11 +218,6 @@ export default class ContractEditor extends Component {
             </div>
         );
     };
-                    //<a href="#" title="Save" onClick={this.save}><FaIcon icon={iconSave}/></a>
-                    //<a href="#" title="Compile" onClick={this.compile}><FaIcon icon={iconCompile}/></a>
-                    //<a href="#" title="Deploy"><FaIcon icon={iconDeploy}/></a>
-                    //<a href="#" title="Test"><FaIcon icon={iconTest}/></a>
-                    //<a href="#" title="Debug in Remix"><FaIcon icon={iconDebug}/></a>
 
     getHeight = () => {
         const a=document.getElementById(this.id);

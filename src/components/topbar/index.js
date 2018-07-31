@@ -71,3 +71,22 @@ export default class TopBar extends Component {
         );
     }
 }
+
+// _menuTop = (level, index, item) => {
+//     return (
+//         <div>
+//             <div>
+//                 <a href="#" class={style.btn1} onClick={this._newDapp}  title="New Dapp">
+//                     <FaIcon icon={iconPlus} />
+//                 </a>
+//                 <a href="#" class={style.btn1}  onClick={this._downloadWorkspace} title="Download Workspace">
+//                     <FaIcon icon={iconDownload} />
+//                 </a>
+//                 <input id="wsFileInput" type="file" style="display: none;" onChange={e => this._uploadWorkspace(e)} ref={w => this.wsFileInput=w} />
+//                 <a href="#" class={style.btn1}  onClick={e => this._clickWorkspace(e)} title="Upload Workspace">
+//                     <FaIcon icon={iconUpload} />
+//                 </a>
+//             </div>
+//         </div>
+//     );
+// };

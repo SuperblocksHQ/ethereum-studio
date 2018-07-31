@@ -23,6 +23,7 @@ import Dappfile from './dappfile';
 import NewDapp from '../newdapp';
 import Modal from '../modal';
 import TransactionLogData from '../blockexplorer/transactionlogdata.js';
+import NetworkAccountSelector from '../NetworkAccountSelector';
 
 import FaIcon  from '@fortawesome/react-fontawesome';
 import iconTrash from '@fortawesome/fontawesome-free-regular/faTrashAlt';
@@ -34,7 +35,6 @@ import iconFolderOpen from '@fortawesome/fontawesome-free-solid/faFolderOpen';
 import iconAngleRight from '@fortawesome/fontawesome-free-solid/faAngleRight';
 import iconAngleDown from '@fortawesome/fontawesome-free-solid/faAngleDown';
 import iconCube from '@fortawesome/fontawesome-free-solid/faCube';
-import iconPlus from '@fortawesome/fontawesome-free-solid/faPlusSquare';
 import iconCog from '@fortawesome/fontawesome-free-solid/faCog';
 import iconCompile from '@fortawesome/fontawesome-free-solid/faPuzzlePiece';
 import iconDeploy from '@fortawesome/fontawesome-free-regular/faPlayCircle';
@@ -42,10 +42,12 @@ import iconUp from '@fortawesome/fontawesome-free-solid/faArrowUp';
 import iconDown from '@fortawesome/fontawesome-free-solid/faArrowDown';
 import iconClone from '@fortawesome/fontawesome-free-solid/faClone';
 import iconChess from '@fortawesome/fontawesome-free-solid/faChess';
-import iconDownload from '@fortawesome/fontawesome-free-solid/faDownload';
-import iconUpload from '@fortawesome/fontawesome-free-solid/faUpload';
 
-import { IconContract, IconAddContract } from '../icons';
+import {
+    IconContract,
+    IconAddContract,
+} from '../icons';
+
 
 export default class DevkitProjectEditorControl extends Component {
     constructor(props) {
@@ -472,24 +474,7 @@ export default class DevkitProjectEditorControl extends Component {
         this.props.functions.modal.show(modal);
     };
 
-    _menuTop = (level, index, item) => {
-        return (
-            <div>
-                <div>
-                    <a href="#" class={style.btn1} onClick={this._newDapp}  title="New Dapp">
-                        <FaIcon icon={iconPlus} />
-                    </a>
-                    <a href="#" class={style.btn1}  onClick={this._downloadWorkspace} title="Download Workspace">
-                        <FaIcon icon={iconDownload} />
-                    </a>
-                    <input id="wsFileInput" type="file" style="display: none;" onChange={e => this._uploadWorkspace(e)} ref={w => this.wsFileInput=w} />
-                    <a href="#" class={style.btn1}  onClick={e => this._clickWorkspace(e)} title="Upload Workspace">
-                        <FaIcon icon={iconUpload} />
-                    </a>
-                </div>
-            </div>
-        );
-    };
+    _menuTop = (level, index, item) => <NetworkAccountSelector />;
 
     _downloadWorkspace = e => {
         e.preventDefault();
@@ -578,30 +563,32 @@ export default class DevkitProjectEditorControl extends Component {
 
     _renderConstantsTitle = (level, index, item) => {
         var projectItem = item.props._project;
-        return (<div class={style.projectContractsTitle}>
-            <div class={style.title}>
-                <a href="#" onClick={(e)=>this._angleClicked(e, item)}>{item.getTitle()}</a>
-            </div>
-            <div class={style.buttons}>
-                <a href="#" title="New constant" onClick={(e)=>{this._clickNewConstant(e, projectItem);}}>
-                    <FaIcon icon={iconGem} />
-                </a>
-            </div>
-        </div>);
+        return (
+            <div class={style.projectContractsTitle}>
+                <div class={style.title}>
+                    <a href="#" onClick={(e)=>this._angleClicked(e, item)}>{item.getTitle()}</a>
+                </div>
+                <div class={style.buttons}>
+                    <a href="#" title="New constant" onClick={(e)=>{this._clickNewConstant(e, projectItem);}}>
+                        <FaIcon icon={iconGem} />
+                    </a>
+                </div>
+            </div>);
     };
 
     _renderAccountsTitle = (level, index, item) => {
         var projectItem = item.props._project;
-        return (<div class={style.projectContractsTitle}>
-            <div class={style.title}>
-                <a href="#" onClick={(e)=>this._angleClicked(e, item)}>{item.getTitle()}</a>
-            </div>
-            <div class={style.buttons}>
-                <a href="#" title="New account" onClick={(e)=>{this._clickNewAccount(e, projectItem);}}>
-                    <FaIcon icon={iconGem} />
-                </a>
-            </div>
-        </div>);
+        return (
+            <div class={style.projectContractsTitle}>
+                <div class={style.title}>
+                    <a href="#" onClick={(e)=>this._angleClicked(e, item)}>{item.getTitle()}</a>
+                </div>
+                <div class={style.buttons}>
+                    <a href="#" title="New account" onClick={(e)=>{this._clickNewAccount(e, projectItem);}}>
+                        <FaIcon icon={iconGem} />
+                    </a>
+                </div>
+            </div>);
     };
 
     _openContractMake = (e, item) => {
@@ -1098,7 +1085,7 @@ export default class DevkitProjectEditorControl extends Component {
                 iconOpen=iconFolderOpen;
                 iconCollapsed=iconFolder;
             }
-            else if(item.props.type2=="contract") {
+            else if (item.props.type2=="contract") {
                 iconOpen=iconFileAlt;
                 iconCollapsed=iconFileAlt;
             }
