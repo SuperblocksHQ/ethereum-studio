@@ -25,25 +25,23 @@ import Modal from '../modal';
 import TransactionLogData from '../blockexplorer/transactionlogdata.js';
 import NetworkAccountSelector from '../NetworkAccountSelector';
 
-import FaIcon  from '@fortawesome/react-fontawesome';
-import iconTrash from '@fortawesome/fontawesome-free-regular/faTrashAlt';
-import iconGem from '@fortawesome/fontawesome-free-regular/faGem';
-import iconFile from '@fortawesome/fontawesome-free-solid/faFile';
-import iconFileAlt from '@fortawesome/fontawesome-free-regular/faFileAlt';
-import iconFolder from '@fortawesome/fontawesome-free-solid/faFolder';
-import iconFolderOpen from '@fortawesome/fontawesome-free-solid/faFolderOpen';
-import iconAngleRight from '@fortawesome/fontawesome-free-solid/faAngleRight';
-import iconAngleDown from '@fortawesome/fontawesome-free-solid/faAngleDown';
-import iconCube from '@fortawesome/fontawesome-free-solid/faCube';
-import iconCog from '@fortawesome/fontawesome-free-solid/faCog';
-import iconCompile from '@fortawesome/fontawesome-free-solid/faPuzzlePiece';
-import iconDeploy from '@fortawesome/fontawesome-free-regular/faPlayCircle';
-import iconUp from '@fortawesome/fontawesome-free-solid/faArrowUp';
-import iconDown from '@fortawesome/fontawesome-free-solid/faArrowDown';
-import iconClone from '@fortawesome/fontawesome-free-solid/faClone';
-import iconChess from '@fortawesome/fontawesome-free-solid/faChess';
-
 import {
+    IconTrash,
+    IconGem,
+    IconFile,
+    IconFileAlt,
+    IconFolder,
+    IconFolderOpen,
+    IconAngleRight,
+    IconAngleDown,
+    IconCube,
+    IconConfigure,
+    IconCompile,
+    IconDeploy,
+    IconUp,
+    IconDown,
+    IconClone,
+    IconInteract,
     IconContract,
     IconAddContract,
 } from '../icons';
@@ -216,7 +214,7 @@ export default class DevkitProjectEditorControl extends Component {
         projectItem.renameFile=(path, file, cb) => {this._renameFile(project, path, file, cb)};
         projectItem.constantsReplace=(text)=>{return this._constantsReplace(projectItem, text)};
 
-        var transactionlog=this._newItem({title: "Transaction history", type: "transaction_log", icon:iconCube,onClick:this._openItem, _project: projectItem});
+        var transactionlog=this._newItem({title: "Transaction history", type: "transaction_log", icon: <IconCube />, onClick:this._openItem, _project: projectItem});
         children.push(transactionlog);
 
         var contractsChildren=(item) => {
@@ -228,12 +226,12 @@ export default class DevkitProjectEditorControl extends Component {
                 var contract=contracts[index];
 
                 const contractChildChildren=[];
-                var contractChild=this._newItem({title: contract.name, _index: index, _nrContracts: contracts.length, _key: contract.name+":"+contract.source, render: this._renderContractTitle, icon: iconFileAlt, _project: projectItem, _contract: contract, type: "file", type2: "contract", file: contract.source, toggable: true, state:{_tag: 0, open:false, children: contractChildChildren}});
+                var contractChild=this._newItem({title: contract.name, _index: index, _nrContracts: contracts.length, _key: contract.name+":"+contract.source, render: this._renderContractTitle, icon: <IconFileAlt />, _project: projectItem, _contract: contract, type: "file", type2: "contract", file: contract.source, toggable: true, state:{_tag: 0, open:false, children: contractChildChildren}});
 
-                var contractConfig=this._newItem({title: "Configure", _contract: contract.name, _project: projectItem, type: "contract", type2: "configure", onClick: this._openItem, icon: iconCog, state: {_tag: 1}});
-                var contractInteract=this._newItem({title: "Interact", _parentItem: contractChild, _contract: contract.name, _project: projectItem, type: "contract", type2: "interact", onClick: this._openItem, icon: iconChess, state: {_tag: 2}});
-                var contractCompile=this._newItem({title: "Compile", _contract: contract.name, _project: projectItem, type: "contract", type2: "compile", onClick: this._openItem, icon: iconCompile, state: {_tag: 3}});
-                var contractDeploy=this._newItem({title: "Deploy", _parentItem: contractChild, _contract: contract.name, _project: projectItem, type: "contract", type2: "deploy", onClick: this._openItem, icon: iconDeploy, state: {_tag: 4}});
+                var contractConfig=this._newItem({title: "Configure", _contract: contract.name, _project: projectItem, type: "contract", type2: "configure", onClick: this._openItem, icon: <IconConfigure />, state: {_tag: 1}});
+                var contractInteract=this._newItem({title: "Interact", _parentItem: contractChild, _contract: contract.name, _project: projectItem, type: "contract", type2: "interact", onClick: this._openItem, icon: <IconInteract /> , state: {_tag: 2}});
+                var contractCompile=this._newItem({title: "Compile", _contract: contract.name, _project: projectItem, type: "contract", type2: "compile", onClick: this._openItem, icon: <IconCompile />, state: {_tag: 3}});
+                var contractDeploy=this._newItem({title: "Deploy", _parentItem: contractChild, _contract: contract.name, _project: projectItem, type: "contract", type2: "deploy", onClick: this._openItem, icon: <IconDeploy />, state: {_tag: 4}});
 
                 contractChildChildren.push(contractConfig);
                 contractChildChildren.push(contractCompile);
@@ -242,7 +240,7 @@ export default class DevkitProjectEditorControl extends Component {
                 children.push(contractChild);
             }
             // Add invisible items
-            const invsMake=this._newItem({title: "Make", icon: iconDeploy, _project: projectItem, _key: "make", type: "make", type2: "contracts", _hidden: true});
+            const invsMake=this._newItem({title: "Make", icon: <IconDeploy />, _project: projectItem, _key: "make", type: "make", type2: "contracts", _hidden: true});
             children.push(invsMake);
             this._copyState(children, _children);
             item.props.state._children=children;
@@ -262,7 +260,7 @@ export default class DevkitProjectEditorControl extends Component {
             var constants=state.data.dappfile.constants();
             for(var index=0;index<constants.length;index++) {
                 var constant=constants[index];
-                var childItem = this._newItem({title: constant.name, _key: constant.name, _index: index, _project: projectItem, _constant: constant.name, icon:iconGem, onClick:this._openItem, render: this._renderConstantTitle, type: "constant"});
+                var childItem = this._newItem({title: constant.name, _key: constant.name, _index: index, _project: projectItem, _constant: constant.name, icon: <IconGem />, onClick:this._openItem, render: this._renderConstantTitle, type: "constant"});
                 children.push(childItem);
             }
             this._copyState(children, _children);
@@ -283,7 +281,7 @@ export default class DevkitProjectEditorControl extends Component {
             var accounts=state.data.dappfile.accounts();
             for(var index=0;index<accounts.length;index++) {
                 var account=accounts[index];
-                var childItem = this._newItem({title: account.name, _key: account.name, _index: index, _project: projectItem, _account: account.name, icon:iconGem, onClick: this._openItem, render: this._renderAccountTitle, type: "account"});
+                var childItem = this._newItem({title: account.name, _key: account.name, _index: index, _project: projectItem, _account: account.name, icon: <IconGem />, onClick: this._openItem, render: this._renderAccountTitle, type: "account"});
                 children.push(childItem);
             }
             this._copyState(children, _children);
@@ -292,7 +290,7 @@ export default class DevkitProjectEditorControl extends Component {
             item.props.state._children=children;
             return children;
         };
-        var app=this._newItem({title: "App", type: "app", type2: "composite", onClick: this._openAppComposite, _project: projectItem, toggable: true, icon:iconCog, state:{open: false, children: [
+        var app=this._newItem({title: "App", type: "app", type2: "composite", onClick: this._openAppComposite, _project: projectItem, toggable: true, icon: <IconConfigure />, state:{open: false, children: [
             this._newItem({title: "app.html", _project: projectItem, type: "file", type2: 'html', _project: projectItem, file: "/app/app.html",onClick: this._openItem, state:{_tag:0}}),
             this._newItem({title: "app.js", _project: projectItem, type: "file", type2: 'js', _project: projectItem, file:'/app/app.js', onClick: this._openItem, state:{_tag:3}}),
             this._newItem({title: "app.css", _project: projectItem, type: "file", type2: 'css', _project: projectItem, file: '/app/app.css', onClick: this._openItem, state:{_tag:2}}),
@@ -570,7 +568,7 @@ export default class DevkitProjectEditorControl extends Component {
                 </div>
                 <div class={style.buttons}>
                     <a href="#" title="New constant" onClick={(e)=>{this._clickNewConstant(e, projectItem);}}>
-                        <FaIcon icon={iconGem} />
+                        <IconGem />
                     </a>
                 </div>
             </div>);
@@ -585,7 +583,7 @@ export default class DevkitProjectEditorControl extends Component {
                 </div>
                 <div class={style.buttons}>
                     <a href="#" title="New account" onClick={(e)=>{this._clickNewAccount(e, projectItem);}}>
-                        <FaIcon icon={iconGem} />
+                        <IconGem />
                     </a>
                 </div>
             </div>);
@@ -786,7 +784,7 @@ export default class DevkitProjectEditorControl extends Component {
             </div>
             <div class={style.buttons}>
                 <a href="#" title="Delete constant" onClick={(e)=>{this._clickDeleteConstant(e, projectItem, constantIndex);}}>
-                    <FaIcon icon={iconTrash} />
+                    <IconTrash />
                 </a>
             </div>
         </div>);
@@ -803,7 +801,7 @@ export default class DevkitProjectEditorControl extends Component {
             </div>
             <div class={style.buttons}>
                 <a href="#" title="Delete account" onClick={(e)=>{this._clickDeleteAccount(e, projectItem, accountIndex);}}>
-                    <FaIcon icon={iconTrash} />
+                    <IconTrash />
                 </a>
             </div>
         </div>);
@@ -821,22 +819,22 @@ export default class DevkitProjectEditorControl extends Component {
             <div class={style.buttons}>
                 {contractIndex>0&&
                 <a href="#" title="Move up" onClick={(e)=>{this._clickUpContract(e, projectItem, contractIndex);}}>
-                    <FaIcon icon={iconUp} />
+                    <IconUp />
                 </a> ||
                     <div style="opacity:0.3;display:inline;">
-                        <FaIcon icon={iconUp} />
+                        <IconUp />
                     </div>
                 }
                 {contractIndex<item.props._nrContracts-1 &&
                 <a href="#" title="Move down" onClick={(e)=>{this._clickDownContract(e, projectItem, contractIndex);}}>
-                    <FaIcon icon={iconDown} />
+                    <IconDown />
                 </a> ||
                     <div style="opacity:0.3;display:inline;">
-                        <FaIcon icon={iconDown} />
+                        <IconDown />
                     </div>
                 }
                 <a href="#" title="Delete contract" onClick={(e)=>{this._clickDeleteContract(e, projectItem, contractIndex);}}>
-                    <FaIcon icon={iconTrash} />
+                    <IconTrash />
                 </a>
             </div>
         </div>);
@@ -909,10 +907,10 @@ export default class DevkitProjectEditorControl extends Component {
                 </div>
                 <div class={style.buttons}>
                     <a href="#" title="Rename file" onClick={(e)=>{this._clickRenameFile(e, item);}}>
-                        <FaIcon icon={iconClone} />
+                        <IconClone />
                     </a>
                     <a href="#" title="Delete file" onClick={(e)=>{this._clickDeleteFile(e, item);}}>
-                        <FaIcon icon={iconTrash} />
+                        <IconTrash />
                     </a>
                 </div>
             </div>);
@@ -924,15 +922,15 @@ export default class DevkitProjectEditorControl extends Component {
                 </div>
                 <div class={style.buttons}>
                     <a href="#" title="New..." onClick={(e)=>{this._clickNewFile(e, item);}}>
-                        <FaIcon icon={iconFile} />
+                        <IconFile />
                     </a>
                     {item.props._path != "/" &&
                     <div style="display: inline;">
                         <a href="#" title="Rename directory" onClick={(e)=>{this._clickRenameFile(e, item);}}>
-                            <FaIcon icon={iconClone} />
+                            <IconClone />
                         </a>
                         <a href="#" title="Delete directory" onClick={(e)=>{this._clickDeleteFile(e, item);}}>
-                            <FaIcon icon={iconTrash} />
+                            <IconTrash />
                         </a>
                     </div>
                     }
@@ -956,7 +954,7 @@ export default class DevkitProjectEditorControl extends Component {
             </div>
             <div class={style.buttons}>
                 <a href="#" title="Configure project" onClick={(e)=>this._openProjectConfig(e, item)}>
-                    <FaIcon icon={iconCog} />
+                    <IconConfigure />
                 </a>
             </div>
         </div>);
@@ -1060,13 +1058,13 @@ export default class DevkitProjectEditorControl extends Component {
         var caret;
         var isToggable=item.props.toggable && (item.getChildren().length>0 || item.props._lazy);
         if(isToggable) {
-            var caretIcon=iconAngleRight;
+            var caretIcon= <IconAngleRight />;
             if(item.props.state.open) {
-                caretIcon=iconAngleDown;
+                caretIcon= <IconAngleDown />;
             }
             caret = (<div class={style.caret}>
                     <a href="#" onClick={(e)=>this._angleClicked(e, item)}>
-                        <FaIcon icon={caretIcon} />
+                        { caretIcon }
                     </a>
                 </div>);
         }
@@ -1082,16 +1080,16 @@ export default class DevkitProjectEditorControl extends Component {
         }
         else {
             if(item.props.type=="folder") {
-                iconOpen=iconFolderOpen;
-                iconCollapsed=iconFolder;
+                iconOpen= <IconFolderOpen />;
+                iconCollapsed= <IconFolder />;
             }
             else if (item.props.type2=="contract") {
-                iconOpen=iconFileAlt;
-                iconCollapsed=iconFileAlt;
+                iconOpen= <IconFileAlt />;
+                iconCollapsed= <IconFileAlt />;
             }
             else {
-                iconOpen=iconFile;
-                iconCollapsed=iconFile;
+                iconOpen= <IconFile />;
+                iconCollapsed= <IconFile />;
             }
         }
 
@@ -1107,19 +1105,21 @@ export default class DevkitProjectEditorControl extends Component {
             if(isToggable) {
                 icon = (<div class={style.icon}>
                         <a href="#" onClick={(e)=>this._angleClicked(e, item)}>
-                            <FaIcon icon={iconIcon} />
+                            { iconIcon }
                         </a>
                     </div>);
             }
             else {
                 if(item.props.onClick) {
                     icon = (<div class={style.icon}>
-                            <a href="#" onClick={(e)=>{item.props.onClick(e,item)}}><FaIcon icon={iconIcon} /></a>
+                            <a href="#" onClick={(e)=>{item.props.onClick(e,item)}}>
+                                { iconIcon }
+                            </a>
                         </div>);
                 }
                 else {
                     icon = (<div class={style.icon}>
-                        <FaIcon icon={iconIcon} />
+                        { iconIcon }
                     </div>);
                 }
             }

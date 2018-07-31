@@ -14,8 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Studio.  If not, see <http://www.gnu.org/licenses/>.
 
-import FaIcon  from '@fortawesome/react-fontawesome';
-import iconFile from '@fortawesome/fontawesome-free-solid/faFile';
+import { IconFile } from '../icons';
 
 export default class Item {
     props;
@@ -43,7 +42,6 @@ export default class Item {
     }
 
     getIcon = () => {
-        if(this.props.icon) return <FaIcon icon={this.props.icon} />;
-        return <FaIcon icon={iconFile} />;
+        return this.props.icon ? this.props.icon : <IconFile />;
     };
 }
