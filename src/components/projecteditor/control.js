@@ -34,25 +34,18 @@ import iconFolderOpen from '@fortawesome/fontawesome-free-solid/faFolderOpen';
 import iconAngleRight from '@fortawesome/fontawesome-free-solid/faAngleRight';
 import iconAngleDown from '@fortawesome/fontawesome-free-solid/faAngleDown';
 import iconCube from '@fortawesome/fontawesome-free-solid/faCube';
-import iconTh from '@fortawesome/fontawesome-free-solid/faTh';
 import iconPlus from '@fortawesome/fontawesome-free-solid/faPlusSquare';
-import iconSync from '@fortawesome/fontawesome-free-solid/faSync';
-import iconBug from '@fortawesome/fontawesome-free-solid/faBug';
-import iconBook from '@fortawesome/fontawesome-free-solid/faBook';
 import iconCog from '@fortawesome/fontawesome-free-solid/faCog';
 import iconCompile from '@fortawesome/fontawesome-free-solid/faPuzzlePiece';
 import iconDeploy from '@fortawesome/fontawesome-free-regular/faPlayCircle';
-import iconTest from '@fortawesome/fontawesome-free-solid/faFlask';
 import iconUp from '@fortawesome/fontawesome-free-solid/faArrowUp';
 import iconDown from '@fortawesome/fontawesome-free-solid/faArrowDown';
 import iconClone from '@fortawesome/fontawesome-free-solid/faClone';
-import iconDollar from '@fortawesome/fontawesome-free-solid/faDollarSign';
-import iconWrench from '@fortawesome/fontawesome-free-solid/faWrench';
-import iconGlobe from '@fortawesome/fontawesome-free-solid/faGlobe';
 import iconChess from '@fortawesome/fontawesome-free-solid/faChess';
-import iconYT from '@fortawesome/fontawesome-free-brands/faYoutube';
 import iconDownload from '@fortawesome/fontawesome-free-solid/faDownload';
 import iconUpload from '@fortawesome/fontawesome-free-solid/faUpload';
+
+import { IconContract, IconAddContract } from '../icons';
 
 export default class DevkitProjectEditorControl extends Component {
     constructor(props) {
@@ -636,19 +629,11 @@ export default class DevkitProjectEditorControl extends Component {
             </div>
             <div class={style.buttons}>
                 <a href="#" title="New contract" onClick={(e)=>{this._clickNewContract(e, projectItem);}}>
-                    <FaIcon icon={iconFileAlt} />
+                    <IconAddContract />
                 </a>
             </div>
         </div>);
     };
-            /*
-                <a href="#" title="Deploy contracts..." onClick={(e)=>this._openContractMake(e, item)}>
-                    <FaIcon icon={iconDeploy} />
-                </a>
-                <a href="#" title="Test contracts...">
-                    <FaIcon icon={iconTest} />
-                </a>
-                */
 
     _clickNewConstant = (e, projectItem) => {
         e.preventDefault();

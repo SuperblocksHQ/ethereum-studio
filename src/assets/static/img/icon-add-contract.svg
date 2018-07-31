@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="10px" height="10px" viewBox="0 0 10 10" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>icon-add-contract</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Studio-Online" transform="translate(-241.000000, -123.000000)">
+            <g id="Group-13">
+                <g id="icon-add-contract" transform="translate(241.000000, 123.000000)">
+                    <rect id="rectangle" stroke="#FFFFFF" x="0.5" y="0.5" width="9" height="9"></rect>
+                    <polygon id="icon-plus" fill="#FFFFFF" fill-rule="nonzero" points="8 4.5 5.5 4.5 5.5 2 4.5 2 4.5 4.5 2 4.5 2 5.5 4.5 5.5 4.5 8 5.5 8 5.5 5.5 8 5.5"></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
