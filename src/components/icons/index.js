@@ -38,7 +38,6 @@ import iconDownload from '@fortawesome/fontawesome-free-solid/faDownload';
 import iconUpload from '@fortawesome/fontawesome-free-solid/faUpload';
 
 export const IconDeployGreen = () => <img src={'/static/img/icon-deploy-green.svg'} />;
-export const IconContract = () => <img src={'/static/img/icon-solidity.svg'} />;
 export const IconAddContract = () => <img src={'/static/img/icon-add-contract.svg'} />;
 export const IconRun = () => <FaIcon icon={iconRun} />;
 export const IconSave = () => <FaIcon icon={iconSave} />;
@@ -61,3 +60,16 @@ export const IconDown = () => <FaIcon icon={iconDown} />;
 export const IconClone = () => <FaIcon icon={iconClone} />;
 export const IconDownload = () => <FaIcon icon={iconDownload} />;
 export const IconUpload = () => <FaIcon icon={iconUpload} />;
+
+// File types
+export const IconContract = () => <img src={'/static/img/icon-solidity.svg'} />;
+export const IconHtml = () => <img src={'/static/img/icon-html.svg'} />;
+export const IconJS = () => <img src={'/static/img/icon-js.svg'} />;
+export const IconCss = () => <img src={'/static/img/icon-css.svg'} />;
+
+// Learn and Resouces
+export const IconGuide = () => <img src={'/static/img/icon-guide.svg'} />;
+export const IconVideoTutorials = () => <img src={'/static/img/icon-video-tutorials.svg'} />;
+export const IconHelpCenter = () => <img src={'/static/img/icon-help-center.svg'} />;
+export const IconAskQuestion = () => <img src={'/static/img/icon-ask-question.svg'} />;
+export const IconWhatsNew = () => <img src={'/static/img/icon-whats-new.svg'} />;

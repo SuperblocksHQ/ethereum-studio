@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="10px" height="10px" viewBox="0 0 10 10" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>icon-help-center</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Studio-Online" transform="translate(-16.000000, -710.000000)">
+            <g id="Group-13">
+                <g id="icon-help-center" transform="translate(16.000000, 709.000000)">
+                    <circle id="Oval" fill="#09CF17" cx="5" cy="6" r="5"></circle>
+                    <text id="?" font-family="OpenSans-Bold, Open Sans" font-size="8" font-weight="bold" fill="#FFFFFF">
+                        <tspan x="3.45554688" y="9">?</tspan>
+                    </text>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -43,6 +43,14 @@ import {
     IconInteract,
     IconContract,
     IconAddContract,
+    IconHtml,
+    IconJS,
+    IconCss,
+    IconGuide,
+    IconVideoTutorials,
+    IconHelpCenter,
+    IconAskQuestion,
+    IconWhatsNew
 } from '../icons';
 
 
@@ -245,7 +253,7 @@ export default class DevkitProjectEditorControl extends Component {
             item.props.state._children=children;
             return children;
         };
-        var contracts=this._newItem({title: "Contracts", type: "folder", type2: "contracts", _project: projectItem, render: this._renderContractsTitle, toggable: true, state: {open: true, children: contractsChildren}});
+        var contracts=this._newItem({ title: "CONTRACTS", type: "folder", type2: "contracts", _project: projectItem, render: this._renderContractsSectionTitle, toggable: true, state: { open: true, children: contractsChildren }});
         children.push(contracts);
 
         var constantsChildren=(item) => {
@@ -289,20 +297,29 @@ export default class DevkitProjectEditorControl extends Component {
             item.props.state._children=children;
             return children;
         };
-        var app=this._newItem({title: "App", type: "app", type2: "composite", onClick: this._openAppComposite, _project: projectItem, toggable: true, icon: <IconConfigure />, state:{open: false, children: [
-            this._newItem({title: "app.html", _project: projectItem, type: "file", type2: 'html', _project: projectItem, file: "/app/app.html",onClick: this._openItem, state:{_tag:0}}),
-            this._newItem({title: "app.js", _project: projectItem, type: "file", type2: 'js', _project: projectItem, file:'/app/app.js', onClick: this._openItem, state:{_tag:3}}),
-            this._newItem({title: "app.css", _project: projectItem, type: "file", type2: 'css', _project: projectItem, file: '/app/app.css', onClick: this._openItem, state:{_tag:2}}),
+        var app=this._newItem({title: "APPLICATION", type: "app", type2: "composite", render: this._renderApplicationSectionTitle, onClick: this._openAppComposite, _project: projectItem, toggable: true, icon: <IconConfigure />, state:{ open: true, children: [
+            this._newItem({title: "app.html", _project: projectItem, type: "file", type2: 'html', _project: projectItem, file: "/app/app.html", onClick: this._openItem, icon: <IconHtml />, state: { _tag:0 }}),
+            this._newItem({title: "app.js", _project: projectItem, type: "file", type2: 'js', _project: projectItem, file:'/app/app.js', onClick: this._openItem, icon: <IconJS />, state:{ _tag:3 }}),
+            this._newItem({title: "app.css", _project: projectItem, type: "file", type2: 'css', _project: projectItem, file: '/app/app.css', onClick: this._openItem, icon: <IconCss />, state:{ _tag:2 }}),
             this._newItem({title: "View", _project: projectItem, type: "app", type2: "view", _project: projectItem, onClick: this._openItem, state:{_tag:1}}),
-
         ]}});
         children.push(app);
 
         var constants=this._newItem({classes: ["hidden"], title: "Constants", type: "folder", type2: "constants", _project: projectItem, render:this._renderConstantsTitle ,toggable: true, state:{open: false, children: constantsChildren}});
         children.push(constants);
 
-        var accounts=this._newItem({title: "Accounts", type: "folder", type2: "accounts", _project: projectItem, render:this._renderAccountsTitle ,toggable: true, state:{open: false, children: accountsChildren}});
-        children.push(accounts);
+        // TODO - Remove all the code from accounts from here.
+        // var accounts=this._newItem({title: "Accounts", type: "folder", type2: "accounts", _project: projectItem, render:this._renderAccountsTitle ,toggable: true, state:{open: false, children: accountsChildren}});
+        // children.push(accounts);
+
+        var learningAndResources=this._newItem({ title: "LEARNING AND RESOURCES", type: "app", type2: "composite", onClick: this._openExternalLink, _project: projectItem, toggable: true, state: { open: true, children: [
+            this._newItem({ title: "Guide to Superblocks Studio", _project: projectItem, type: "file", type2: 'html', _project: projectItem, onClick: this._openItem, icon: <IconGuide />, state: { _tag:0 }}),
+            this._newItem({ title: "Video tutorials", _project: projectItem, type: "file", type2: 'js', _project: projectItem, onClick: this._openItem, icon: <IconVideoTutorials />, state:{ _tag:3 }}),
+            this._newItem({ title: "Help Center", _project: projectItem, type: "file", type2: 'css', _project: projectItem, onClick: this._openItem, icon: <IconHelpCenter />, state:{ _tag:2 }}),
+            this._newItem({ title: "Ask a question", _project: projectItem, type: "file", type2: 'css', _project: projectItem, onClick: this._openItem, icon: <IconAskQuestion />, state:{ _tag:2 }}),
+            this._newItem({ title: "What's new", _project: projectItem, type: "file", type2: 'css', _project: projectItem, onClick: this._openItem, icon: <IconWhatsNew />, state:{ _tag:2 }}),
+        ]}});
+        children.push(learningAndResources);
 
         var files=this._newItem({classes: ["hidden"], title: "Files", type: "folder", type2: "files", _project: projectItem, _level: 0, _lazy:true, _path: '/', _key: '/', toggable: true, render: this._renderFileTitle, state:{open: false, children: this._renderFilesChildren}});
         children.push(files);
@@ -436,6 +453,21 @@ export default class DevkitProjectEditorControl extends Component {
         var item2=this._filterItem(item, {type2: "view"});
         this.props.router.panes.openItem(item2, pane.id);
     };
+
+    _openExternalLink=(e,item)=>{
+        e.preventDefault();
+        if(!this.props.router.panes) return;
+        var item2=this._filterItem(item, {type2: "html"});
+        if(!this.props.router.panes.openItem(item2)) return;
+        var {pane, winId} = this.props.router.panes.getWindowByItem(item2);
+        var item2=this._filterItem(item, {type2: "js"});
+        this.props.router.panes.openItem(item2, pane.id);
+        var item2=this._filterItem(item, {type2: "css"});
+        this.props.router.panes.openItem(item2, pane.id);
+        var item2=this._filterItem(item, {type2: "view"});
+        this.props.router.panes.openItem(item2, pane.id);
+    };
+
     _openItem = (e, item) => {
         e.preventDefault();
         if(this.props.router.panes) this.props.router.panes.openItem(item);
@@ -605,7 +637,7 @@ export default class DevkitProjectEditorControl extends Component {
         })[0];
     };
 
-    _renderContractsTitle = (level, index, item) => {
+    _renderContractsSectionTitle = (level, index, item) => {
         var projectItem = item.props._project;
         return (<div class={style.projectContractsTitle}>
             <div class={style.title}>
@@ -614,6 +646,20 @@ export default class DevkitProjectEditorControl extends Component {
             <div class={style.buttons}>
                 <a href="#" title="New contract" onClick={(e)=>{this._clickNewContract(e, projectItem);}}>
                     <IconAddContract />
+                </a>
+            </div>
+        </div>);
+    };
+
+    _renderApplicationSectionTitle = (level, index, item) => {
+        var projectItem = item.props._project;
+        return (<div class={style.projectContractsTitle}>
+            <div class={style.title}>
+                <a href="#" onClick={ (e)=>this._angleClicked(e, item) }>{ item.getTitle() }</a>
+            </div>
+            <div class={style.buttons}>
+                <a href="#" title="New contract" onClick={(e)=>{ this._clickNewContract(e, projectItem)} }>
+                    View
                 </a>
             </div>
         </div>);

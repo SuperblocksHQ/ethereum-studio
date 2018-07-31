@@ -1,5 +1,6 @@
 import { h, Component } from 'preact';
 import { IconDeployGreen } from '../icons';
+import style from "./style"
 
 class NetworkSelector extends Component {
     render() {
@@ -20,7 +21,7 @@ class AccountSelector extends Component {
 export default class NetworkAcccountSelector extends Component {
     render () {
         return (
-            <div>
+        <div class={ style.container }>
                 <IconDeployGreen />
                 <NetworkSelector />
                 <AccountSelector />
