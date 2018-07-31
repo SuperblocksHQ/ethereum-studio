@@ -17,12 +17,7 @@
 import { h, Component } from 'preact';
 import style from './style-editor';
 import MonacoEditor from 'react-monaco-editor';
-import FaIcon  from '@fortawesome/react-fontawesome';
-import iconSave from '@fortawesome/fontawesome-free-regular/faSave';
-import iconCompile from '@fortawesome/fontawesome-free-solid/faPuzzlePiece';
-import iconDeploy from '@fortawesome/fontawesome-free-regular/faPlayCircle';
-import iconCog from '@fortawesome/fontawesome-free-solid/faCog';
-import iconChess from '@fortawesome/fontawesome-free-solid/faChess';
+import { IconSave, IconCompile, IconDeploy, IconConfigure, IconInteract } from '../icons';
 
 export default class Editor extends Component {
     constructor(props) {
@@ -182,11 +177,11 @@ contract `+this.props.contract.name+` {
         return (
             <div class={style.toolbar} id={this.id+"_header"}>
                 <div class={style.buttons}>
-                    <a href="#" title="Save" style={stl} onClick={this.save}><FaIcon icon={iconSave}/></a>
-                    {this.props.type2=="contract" && <a href="#" title="Compile" onClick={this.compile}><FaIcon icon={iconCompile}/></a>}
-                    {this.props.type2=="contract" && <a href="#" title="Deploy" onClick={this.deploy}><FaIcon icon={iconDeploy}/></a>}
-                    {this.props.type2=="contract" && <a href="#" title="Configure" onClick={this.configure}><FaIcon icon={iconCog}/></a>}
-                    {this.props.type2=="contract" && <a href="#" title="Interact" onClick={this.interact}><FaIcon icon={iconChess}/></a>}
+                    <a href="#" title="Save" style={stl} onClick={this.save}><IconSave /></a>
+                    {this.props.type2=="contract" && <a href="#" title="Compile" onClick={this.compile}><IconCompile /></a>}
+                    {this.props.type2=="contract" && <a href="#" title="Deploy" onClick={this.deploy}><IconDeploy /></a>}
+                    {this.props.type2=="contract" && <a href="#" title="Configure" onClick={this.configure}><IconConfigure /></a>}
+                    {this.props.type2=="contract" && <a href="#" title="Interact" onClick={this.interact}><IconInteract /></a>}
                 </div>
                 <div class={style.info}>
                     <span>

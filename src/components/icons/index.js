@@ -16,7 +16,22 @@
 
 import FaIcon  from '@fortawesome/react-fontawesome';
 import iconRun from '@fortawesome/fontawesome-free-solid/faBolt';
+import iconSave from '@fortawesome/fontawesome-free-regular/faSave';
+import iconCompile from '@fortawesome/fontawesome-free-solid/faPuzzlePiece';
+import iconDeploy from '@fortawesome/fontawesome-free-regular/faPlayCircle';
+import iconConfigure from '@fortawesome/fontawesome-free-solid/faCog';
+import iconInteract from '@fortawesome/fontawesome-free-solid/faChess';
 
 export const IconContract = () => <img src={'/static/img/icon-solidity.svg'} />;
 export const IconAddContract = () => <img src={'/static/img/icon-add-contract.svg'} />;
-export const IconRun = () => <FaIcon icon={iconRun}/>;
+export const IconRun = () => <FaIcon icon={iconRun} />;
+export const IconSave = () => <FaIcon icon={iconSave} />;
+export const IconCompile = () => <FaIcon icon={iconCompile} />;
+export const IconDeploy = () => <FaIcon icon={iconDeploy} />;
+export const IconConfigure = () => <FaIcon icon={iconConfigure} />;
+export const IconInteract = () => <FaIcon icon={iconInteract} />;
+
+
+
+
+
