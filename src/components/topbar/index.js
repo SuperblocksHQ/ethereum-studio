@@ -3,6 +3,32 @@ import style from './style';
 import classNames from 'classnames';
 
 export default class TopBar extends Component {
+    constructor() {
+        super();
+
+        this.state = {
+            showMenu: false,
+        }
+
+        this.showMenu = this.showMenu.bind(this);
+        this.closeMenu = this.closeMenu.bind(this);
+    }
+
+    showMenu(event) {
+        event.preventDefault();
+
+        this.setState({ showMenu: true });
+        // this.setState({ showMenu: true }, () => {
+        //   document.addEventListener('click', this.closeMenu);
+        // });
+      }
+
+    closeMenu() {
+        this.setState({ showMenu: false }, () => {
+            document.removeEventListener('click', this.closeMenu);
+        });
+    }
+
     render() {
         const collaborateClasses={};
         collaborateClasses[style.icon]=true;
@@ -21,10 +47,21 @@ export default class TopBar extends Component {
                         <span>Collaborate</span>
                     </span>
                 </span>
-                <span class={style.project}>
+                <span class={style.project} onClick={this.showMenu}>
                     <img class={style.icon} src="/static/img/icon-project-selector.svg" alt="Open transactions screen"></img>
                     <span class={style.projecttext}>My super project</span>
                     <img class={style.dropdown} src="/static/img/icon-dropdown.svg" alt="Open transactions screen"></img>
+
+                    {
+                        this.state.showMenu ? (
+                            <div class={style.menu}>
+                                <button> Menu Item 1 </button>
+                                <button> Menu Item 2 </button>
+                                <button> Menu item 3 </button>
+                            </div>
+                        ) : (null)
+                    }
+
                 </span>
                 <span class={style.right}>
                     <img class={style.icon} src="/static/img/icon-help.svg" alt="Open transactions screen"></img>
