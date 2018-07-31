@@ -29,7 +29,6 @@ import {
     IconTrash,
     IconGem,
     IconFile,
-    IconFileAlt,
     IconFolder,
     IconFolderOpen,
     IconAngleRight,
@@ -226,7 +225,7 @@ export default class DevkitProjectEditorControl extends Component {
                 var contract=contracts[index];
 
                 const contractChildChildren=[];
-                var contractChild=this._newItem({title: contract.name, _index: index, _nrContracts: contracts.length, _key: contract.name+":"+contract.source, render: this._renderContractTitle, icon: <IconFileAlt />, _project: projectItem, _contract: contract, type: "file", type2: "contract", file: contract.source, toggable: true, state:{_tag: 0, open:false, children: contractChildChildren}});
+                var contractChild=this._newItem({title: contract.name, _index: index, _nrContracts: contracts.length, _key: contract.name+":"+contract.source, render: this._renderContractTitle, icon: <IconContract />, _project: projectItem, _contract: contract, type: "file", type2: "contract", file: contract.source, toggable: true, state:{_tag: 0, open:false, children: contractChildChildren}});
 
                 var contractConfig=this._newItem({title: "Configure", _contract: contract.name, _project: projectItem, type: "contract", type2: "configure", onClick: this._openItem, icon: <IconConfigure />, state: {_tag: 1}});
                 var contractInteract=this._newItem({title: "Interact", _parentItem: contractChild, _contract: contract.name, _project: projectItem, type: "contract", type2: "interact", onClick: this._openItem, icon: <IconInteract /> , state: {_tag: 2}});
@@ -1084,8 +1083,8 @@ export default class DevkitProjectEditorControl extends Component {
                 iconCollapsed= <IconFolder />;
             }
             else if (item.props.type2=="contract") {
-                iconOpen= <IconFileAlt />;
-                iconCollapsed= <IconFileAlt />;
+                iconOpen= <IconContract />;
+                iconCollapsed= <IconContract />;
             }
             else {
                 iconOpen= <IconFile />;
