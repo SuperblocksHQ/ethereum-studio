@@ -30,10 +30,6 @@ export default class TopBar extends Component {
     }
 
     render() {
-        const collaborateClasses={};
-        collaborateClasses[style.icon]=true;
-        collaborateClasses[style.collaborate]=true;
-
         return (
             <div class={style.topbar}>
                 <img class={style.logo} src="/static/img/img-studio-logo.svg" alt="Superblocks Studio logo"></img>
@@ -43,7 +39,7 @@ export default class TopBar extends Component {
                         <span>Transactions</span>
                     </span>
                     <span class={style.left}>
-                        <img class={classNames(collaborateClasses)} src="/static/img/icon-collaborate.png" alt="Open the transactions screen"></img>
+                        <img class={classNames([style.icon, style.collaborate])} src="/static/img/icon-collaborate.png" alt="Open the transactions screen"></img>
                         <span>Collaborate</span>
                     </span>
                 </span>

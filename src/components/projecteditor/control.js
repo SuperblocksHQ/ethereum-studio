@@ -653,7 +653,7 @@ export default class DevkitProjectEditorControl extends Component {
 
     _renderApplicationSectionTitle = (level, index, item) => {
         var projectItem = item.props._project;
-        return (<div class={style.projectContractsTitle}>
+        return (<div class={classnames([style.projectContractsTitle, 'mt-3', 'p-1'])}>
             <div class={style.title}>
                 <a href="#" onClick={ (e)=>this._angleClicked(e, item) }>{ item.getTitle() }</a>
             </div>
@@ -667,7 +667,7 @@ export default class DevkitProjectEditorControl extends Component {
 
     _renderLearnSectionTitle = (level, index, item) => {
         return (
-            <div class={style.projectContractsTitle}>
+            <div class={classnames([style.projectContractsTitle, 'mt-3', 'p-1'])}>
                 <div class={style.title}>
                     <a href="#" onClick={ (e)=>this._angleClicked(e, item) }>{ item.getTitle() }</a>
                 </div>
