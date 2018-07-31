@@ -42,9 +42,9 @@ export const IconAddContract = () => <img src={'/static/img/icon-add-contract.sv
 export const IconRun = () => <FaIcon icon={iconRun} />;
 export const IconSave = () => <FaIcon icon={iconSave} />;
 export const IconCompile = () => <FaIcon icon={iconCompile} />;
-export const IconDeploy = () => <FaIcon icon={iconDeploy} />;
+export const IconDeploy = () => <img src={'/static/img/icon-deploy.svg'} />;
 export const IconConfigure = () => <FaIcon icon={iconConfigure} />;
-export const IconInteract = () => <FaIcon icon={iconInteract} />;
+export const IconInteract = () => <img src={'/static/img/icon-interact.svg'} />;
 export const IconTrash = () => <FaIcon icon={iconTrash} />;
 export const IconGem = () => <FaIcon icon={iconGem} />;
 export const IconFile = () => <FaIcon icon={iconFile} />;
@@ -60,6 +60,8 @@ export const IconDown = () => <FaIcon icon={iconDown} />;
 export const IconClone = () => <FaIcon icon={iconClone} />;
 export const IconDownload = () => <FaIcon icon={iconDownload} />;
 export const IconUpload = () => <FaIcon icon={iconUpload} />;
+export const IconDropdown = () => <img src={'/static/img/icon-dropdown.svg'} />;
+
 
 // File types
 export const IconContract = () => <img src={'/static/img/icon-solidity.svg'} />;
