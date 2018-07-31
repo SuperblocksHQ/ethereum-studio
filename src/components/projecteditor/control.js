@@ -312,7 +312,7 @@ export default class DevkitProjectEditorControl extends Component {
         // var accounts=this._newItem({title: "Accounts", type: "folder", type2: "accounts", _project: projectItem, render:this._renderAccountsTitle ,toggable: true, state:{open: false, children: accountsChildren}});
         // children.push(accounts);
 
-        var learningAndResources=this._newItem({ title: "LEARNING AND RESOURCES", type: "app", type2: "composite", onClick: this._openExternalLink, _project: projectItem, toggable: true, icon: null, state: { open: true, children: [
+        var learningAndResources=this._newItem({ title: "LEARNING AND RESOURCES", type: "app", type2: "composite", render: this._renderLearnSectionTitle, onClick: this._openExternalLink, _project: projectItem, toggable: true, icon: null, state: { open: true, children: [
             this._newItem({ title: "Guide to Superblocks Studio", _project: projectItem, type: "file", type2: 'html', _project: projectItem, onClick: this._openItem, icon: <IconGuide />, state: { _tag:0 }}),
             this._newItem({ title: "Video tutorials", _project: projectItem, type: "file", type2: 'js', _project: projectItem, onClick: this._openItem, icon: <IconVideoTutorials />, state:{ _tag:3 }}),
             this._newItem({ title: "Help Center", _project: projectItem, type: "file", type2: 'css', _project: projectItem, onClick: this._openItem, icon: <IconHelpCenter />, state:{ _tag:2 }}),
@@ -665,6 +665,15 @@ export default class DevkitProjectEditorControl extends Component {
         </div>);
     };
 
+    _renderLearnSectionTitle = (level, index, item) => {
+        return (
+            <div class={style.projectContractsTitle}>
+                <div class={style.title}>
+                    <a href="#" onClick={ (e)=>this._angleClicked(e, item) }>{ item.getTitle() }</a>
+                </div>
+            </div>);
+    };
+
     _clickNewConstant = (e, projectItem) => {
         e.preventDefault();
 
@@ -856,7 +865,7 @@ export default class DevkitProjectEditorControl extends Component {
         var projectItem=item.props._project;
         var contractIndex=item.props._index;
         return (<div class={style.projectContractsTitle}>
-            <div class={style.title}>
+            <div>
                 <a href="#" onClick={(e)=>this._openItem(e, item)}>
                     {item.getTitle()}
                 </a>
