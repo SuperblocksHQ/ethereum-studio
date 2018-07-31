@@ -221,7 +221,7 @@ export default class DevkitProjectEditorControl extends Component {
         projectItem.renameFile=(path, file, cb) => {this._renameFile(project, path, file, cb)};
         projectItem.constantsReplace=(text)=>{return this._constantsReplace(projectItem, text)};
 
-        var transactionlog=this._newItem({title: "Transaction history", type: "transaction_log", icon: <IconCube />, onClick:this._openItem, _project: projectItem});
+        var transactionlog=this._newItem({ classes: ["hidden"], title: "Transaction history", type: "transaction_log", icon: <IconCube />, onClick:this._openItem, _project: projectItem });
         children.push(transactionlog);
 
         var contractsChildren=(item) => {
@@ -639,7 +639,7 @@ export default class DevkitProjectEditorControl extends Component {
 
     _renderContractsSectionTitle = (level, index, item) => {
         var projectItem = item.props._project;
-        return (<div class={style.projectContractsTitle}>
+        return (<div class={classnames([style.projectContractsTitle, 'p-1'])}>
             <div class={style.title}>
                 <a href="#" onClick={(e)=>this._angleClicked(e, item)}>{item.getTitle()}</a>
             </div>

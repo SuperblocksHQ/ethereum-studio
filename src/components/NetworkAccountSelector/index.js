@@ -1,11 +1,16 @@
 import { h, Component } from 'preact';
-import { IconDeployGreen } from '../icons';
+import { IconDeployGreen, IconDropdown } from '../icons';
 import style from "./style"
 
 class NetworkSelector extends Component {
     render() {
         return (
-            <div>Browser</div>
+            <div class={ style.selector }>
+                Browser
+                <div class={ style.dropdownIcon }>
+                    <IconDropdown/>
+                </div>
+            </div>
         )
     }
 }
@@ -13,7 +18,12 @@ class NetworkSelector extends Component {
 class AccountSelector extends Component {
     render() {
         return (
-            <div>Default</div>
+            <div class={ style.selector }>
+                Default
+                <div class={ style.dropdownIcon }>
+                    <IconDropdown/>
+                </div>
+            </div>
         )
     }
 }
@@ -24,6 +34,7 @@ export default class NetworkAcccountSelector extends Component {
         <div class={ style.container }>
                 <IconDeployGreen />
                 <NetworkSelector />
+                <div class={ style.separator } />
                 <AccountSelector />
             </div>
         );
