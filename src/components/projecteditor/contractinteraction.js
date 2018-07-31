@@ -15,7 +15,6 @@
 // along with Superblocks Studio.  If not, see <http://www.gnu.org/licenses/>.
 
 import { h, Component } from 'preact';
-import classnames from 'classnames';
 import style from './style-appview';
 import FaIcon  from '@fortawesome/react-fontawesome';
 import iconRun from '@fortawesome/fontawesome-free-solid/faBolt';
