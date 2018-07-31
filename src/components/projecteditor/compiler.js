@@ -18,8 +18,7 @@ import { h, Component } from 'preact';
 import sha256 from 'crypto-js/sha256';
 import classnames from 'classnames';
 import style from './style-console';
-import FaIcon  from '@fortawesome/react-fontawesome';
-import iconRun from '@fortawesome/fontawesome-free-solid/faBolt';
+import { IconRun } from '../icons';
 
 export default class Compiler extends Component {
     constructor(props) {
@@ -283,7 +282,7 @@ export default class Compiler extends Component {
         return (
             <div class={style.toolbar} id={this.id+"_header"}>
                 <div class={style.buttons}>
-                    <a class={classnames(cls)} href="#" title="Recompile" onClick={this.run}><FaIcon icon={iconRun}/></a>
+                    <a class={classnames(cls)} href="#" title="Recompile" onClick={this.run}><IconRun /></a>
                 </div>
                 <div class={style.status}>
                     {this.state.status}

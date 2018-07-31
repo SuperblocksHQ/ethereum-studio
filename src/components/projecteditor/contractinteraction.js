@@ -16,8 +16,8 @@
 
 import { h, Component } from 'preact';
 import style from './style-appview';
-import FaIcon  from '@fortawesome/react-fontawesome';
-import iconRun from '@fortawesome/fontawesome-free-solid/faBolt';
+import { IconRun } from '../icons';
+
 var Generator = require('../contractinteraction');
 import SuperProvider from '../superprovider';
 import Web3 from 'web3';
@@ -369,7 +369,7 @@ export default class ContractInteraction extends Component {
         return (
             <div class={style.toolbar} id={this.id+"_header"}>
                 <div class={style.buttons}>
-                    <a href="#" title="Recompile" onClick={this.run}><FaIcon icon={iconRun}/></a>
+                    <a href="#" title="Recompile" onClick={this.run}><IconRun /></a>
                     <span><input checked={this.state.showSource=="on"} onChange={(e)=>{this.setState({showSource:(e.target.checked?"on":"off")});this.redraw();}} type="checkbox" />&nbsp;Show source</span>
                 </div>
                 <div class={style.accounts}>

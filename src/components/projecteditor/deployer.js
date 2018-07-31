@@ -18,8 +18,7 @@ import { h, Component } from 'preact';
 import sha256 from 'crypto-js/sha256';
 import classnames from 'classnames';
 import style from './style-console';
-import FaIcon  from '@fortawesome/react-fontawesome';
-import iconRun from '@fortawesome/fontawesome-free-solid/faBolt';
+import { iconRun, IconRun } from '../icons';
 import Web3 from 'web3';
 import Tx from '../../ethereumjs-tx-1.3.3.min.js';
 import Modal from '../modal';
@@ -840,7 +839,7 @@ if(typeof(Contracts)==="undefined") var Contracts={};
         return (
             <div class={style.toolbar} id={this.id+"_header"}>
                 <div class={style.buttons}>
-                    <a class={classnames(cls)} href="#" title="Redeploy" onClick={this.run}><FaIcon icon={iconRun}/></a>
+                    <a class={classnames(cls)} href="#" title="Redeploy" onClick={this.run}><IconRun /></a>
                 </div>
                 <div class={style.status}>
                     {this.state.status}

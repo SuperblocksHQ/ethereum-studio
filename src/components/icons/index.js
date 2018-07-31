@@ -14,5 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Studio.  If not, see <http://www.gnu.org/licenses/>.
 
+import FaIcon  from '@fortawesome/react-fontawesome';
+import iconRun from '@fortawesome/fontawesome-free-solid/faBolt';
+
 export const IconContract = () => <img src={'/static/img/icon-solidity.svg'} />;
 export const IconAddContract = () => <img src={'/static/img/icon-add-contract.svg'} />;
+export const IconRun = () => <FaIcon icon={iconRun}/>;
