@@ -50,7 +50,8 @@ import {
     IconVideoTutorials,
     IconHelpCenter,
     IconAskQuestion,
-    IconWhatsNew
+    IconWhatsNew,
+    IconShowPreview
 } from '../icons';
 
 
@@ -297,11 +298,11 @@ export default class DevkitProjectEditorControl extends Component {
             item.props.state._children=children;
             return children;
         };
-        var app=this._newItem({title: "APPLICATION", type: "app", type2: "composite", render: this._renderApplicationSectionTitle, onClick: this._openAppComposite, _project: projectItem, toggable: true, icon: null, state:{ open: true, children: [
+        var app=this._newItem({title: "APPLICATION", type: "app", type2: "composite", render: this._renderApplicationSectionTitle, _project: projectItem, toggable: true, icon: null, state:{ open: true, children: [
             this._newItem({title: "app.html", _project: projectItem, type: "file", type2: 'html', _project: projectItem, file: "/app/app.html", onClick: this._openItem, icon: <IconHtml />, state: { _tag:0 }}),
             this._newItem({title: "app.js", _project: projectItem, type: "file", type2: 'js', _project: projectItem, file:'/app/app.js', onClick: this._openItem, icon: <IconJS />, state:{ _tag:3 }}),
             this._newItem({title: "app.css", _project: projectItem, type: "file", type2: 'css', _project: projectItem, file: '/app/app.css', onClick: this._openItem, icon: <IconCss />, state:{ _tag:2 }}),
-            this._newItem({classes: ["hidden"], title: "View", _project: projectItem, type: "app", type2: "view", _project: projectItem, onClick: this._openItem, state:{ _tag:1 }}),
+            this._newItem({title: "Show Preview", _project: projectItem, type: "app", type2: "view", _project: projectItem, onClick: this._openItem, icon: <IconShowPreview />, state:{ _tag:1 }}),
         ]}});
         children.push(app);
 
@@ -658,8 +659,8 @@ export default class DevkitProjectEditorControl extends Component {
                 <a href="#" onClick={ (e)=>this._angleClicked(e, item) }>{ item.getTitle() }</a>
             </div>
             <div class={style.buttons}>
-                <a href="#" onClick={(e)=>{ this._clickOpenAppView(e, projectItem)} }>
-                    View
+                <a href="#" onClick={(e)=>{ this._openAppComposite(e, item)} }>
+                    Mosaic
                 </a>
             </div>
         </div>);
@@ -700,14 +701,6 @@ export default class DevkitProjectEditorControl extends Component {
         });
         this.setState();
     };
-
-    _clickOpenAppView = (e, projectItem) => {
-        // TODO: this lookup is bad.
-        console.log(projectItem.props.state);
-        const appSectionChildren=projectItem.props.state.children[2].props.state.children;
-        const viewItem=appSectionChildren[appSectionChildren.length-1];
-        if(this.props.router.panes) this.props.router.panes.openItem(viewItem);
-    }
 
     _clickNewAccount = (e, projectItem) => {
         e.preventDefault();

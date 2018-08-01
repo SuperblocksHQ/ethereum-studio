@@ -64,6 +64,7 @@ export const IconContract = () => <img src={'/static/img/icon-solidity.svg'} />;
 export const IconHtml = () => <img src={'/static/img/icon-html.svg'} />;
 export const IconJS = () => <img src={'/static/img/icon-js.svg'} />;
 export const IconCss = () => <img src={'/static/img/icon-css.svg'} />;
+export const IconShowPreview = () => <img src={'/static/img/icon-show-preview.svg'} />;
 
 // Learn and Resouces
 export const IconGuide = () => <img src={'/static/img/icon-guide.svg'} />;
