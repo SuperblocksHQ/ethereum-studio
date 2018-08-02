@@ -27,8 +27,15 @@ export default class AppView extends Component {
         this.props.parent.childComponent=this;
         this.dappfile = this.props.project.props.state.data.dappfile;
         this.provider=new SuperProvider({that:this});
-        this.setState({account:1});
+        this._getEnv();
     }
+
+    _getEnv=()=>{
+        // Update the chosen network and account
+        const accountName = this.props.project.props.state.data.account;
+        const env=this.props.project.props.state.data.env;
+        this.setState({account:accountName, network:env});
+    };
 
     notifyTx=(hash, endpoint)=>{
         var network;
@@ -40,6 +47,7 @@ export default class AppView extends Component {
     };
 
     redraw = (props) => {
+         this._getEnv();
         if((props||{}).all) this.lastContent=null;  // To force a render.
         this.setState();
         this.render2();
@@ -110,7 +118,7 @@ export default class AppView extends Component {
                     for(var index=0;index<contracts.length;index++) {
                         const contract = this.dappfile.getItem("contracts", [{name: contracts[index]}]);
                         const src=contract.get('source');
-                        const network=contract.get('network', env);
+                        const network=this.state.network;
                         const endpoint2=(this.props.functions.networks.endpoints[network] || {}).endpoint;
                         if(endpoint && endpoint!=endpoint2) {
                             this.endpointwarning="Warning: Different endpoints detected for contracts, this is advanced functionality.";
@@ -157,10 +165,7 @@ export default class AppView extends Component {
     };
 
     _getAccount=()=>{
-        const items=this.getAccounts().filter((item)=>{
-            return this.state.account==item.value;
-        });
-        if(items.length>0) return items[0].name;
+        return this.state.disableAccounts=="on" ? "(no provider)" : this.state.account;
     };
 
     _getAccountAddress=()=>{
@@ -182,6 +187,7 @@ export default class AppView extends Component {
 
         if(walletType=="external") {
             // Metamask seems to always only provide one (the chosen) account.
+            if(!window.web3) return [];
             const extAccounts = window.web3.eth.accounts || [];
             if(extAccounts.length<accountIndex+1) {
                 // Account not matched
@@ -354,12 +360,6 @@ export default class AppView extends Component {
         this.render2();
     };
 
-    _selectAccount=(e)=>{
-        e.preventDefault();
-        this.setState({account:e.target.value});
-        this.redraw();
-    };
-
     getAccounts = (useDefault) => {
         var index=0;
         const ret=[{name:"(no provider)",value:index++},{name:"(locked)",value:index++}];
@@ -379,12 +379,7 @@ export default class AppView extends Component {
                     <span><input checked={this.state.showSource=="on"} onChange={(e)=>{this.setState({showSource:(e.target.checked?"on":"off")});this.redraw();}} type="checkbox" />&nbsp;Show source</span>
                 </div>
                 <div class={style.accounts}>
-                    Account: <select onChange={this._selectAccount} value={this.state.account}>
-                        {accounts.map((account) => {
-                            return (<option
-                                value={account.value}>{account.name}</option>);
-                        })}
-                    </select>
+                    <span><input checked={this.state.disableAccounts=="on"} onChange={(e)=>{this.setState({disableAccounts:(e.target.checked?"on":"off")});this.redraw();}} type="checkbox" />&nbsp;Disable accounts&nbsp;</span>
                     {this.accountinfo} {this.endpointwarning}
                 </div>
                 <div class={style.info}>

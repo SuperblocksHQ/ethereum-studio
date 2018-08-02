@@ -29,9 +29,10 @@ export default class ContractInteraction extends Component {
         this.props.parent.childComponent=this;
         this.dappfile = this.props.project.props.state.data.dappfile;
         this.provider=new SuperProvider({that:this});
-        this.setState({account:0});
+        this.setState({account:null});
         this.contract_address="";
         this.contract_balance="?";
+        this._getEnv();
     }
 
     notifyTx=(hash, endpoint)=>{
@@ -43,7 +44,15 @@ export default class ContractInteraction extends Component {
         this.props.project.props.state.txlog.addTx({hash:hash,context:'Contract interaction',network:network});
     };
 
+    _getEnv=()=>{
+        // Update the chosen network and account
+        const accountName = this.props.project.props.state.data.account;
+        const env=this.props.project.props.state.data.env;
+        this.setState({account:accountName, network:env});
+    };
+
     redraw = (props) => {
+        this._getEnv();
         if((props||{}).all) this.lastContent=null;  // To force a render.
         this.setState();
         this.render2();
@@ -85,7 +94,7 @@ export default class ContractInteraction extends Component {
         const env=this.props.project.props.state.data.env;
         const contract = this.dappfile.getItem("contracts", [{name: this.props.contract}]);
         const src=contract.get('source');
-        const network=contract.get('network', env);
+        const network=this.state.network;
         const endpoint=(this.props.functions.networks.endpoints[network] || {}).endpoint;
         const tag=env;
         const srcabi=this._makeFileName(src, tag, "abi");
@@ -135,10 +144,7 @@ export default class ContractInteraction extends Component {
     };
 
     _getAccount=()=>{
-        const items=this.getAccounts().filter((item)=>{
-            return this.state.account==item.value;
-        });
-        if(items.length>0) return items[0].name;
+        return this.state.account;
     };
 
     _getAccountAddress=()=>{
@@ -351,20 +357,10 @@ export default class ContractInteraction extends Component {
         this.redraw();
     };
 
-    getAccounts = (useDefault) => {
-        var index=0;
-        const ret=[{name:"(locked)",value:index++}];
-        this.dappfile.accounts().map((account) => {
-            ret.push({name:account.name,value:index++});
-        })
-        return ret;
-    };
-
     renderToolbar = () => {
-        const accounts=this.getAccounts();
         const contract = this.dappfile.getItem("contracts", [{name: this.props.contract}]);
         const env=this.props.project.props.state.data.env;
-        const network=contract.get("network", env);
+        const network=this.state.network;
         const endpoint=(this.props.functions.networks.endpoints[network] || {}).endpoint;
         return (
             <div class={style.toolbar} id={this.id+"_header"}>
@@ -373,13 +369,7 @@ export default class ContractInteraction extends Component {
                     <span><input checked={this.state.showSource=="on"} onChange={(e)=>{this.setState({showSource:(e.target.checked?"on":"off")});this.redraw();}} type="checkbox" />&nbsp;Show source</span>
                 </div>
                 <div class={style.accounts}>
-                    Account: <select onChange={this._selectAccount} value={this.state.account}>
-                        {accounts.map((account) => {
-                            return (<option
-                                value={account.value}>{account.name}</option>);
-                        })}
-                    </select>
-                    &nbsp;<a href="#" title="Click to get account balance" onClick={this._getUserBalance}>{this.accountinfo}</a>&nbsp;Balance: {this.account_balance}
+                    <a href="#" title="Click to get account balance" onClick={this._getUserBalance}>{this.accountinfo}</a>&nbsp;Balance: {this.account_balance}
                 </div>
                 <div class={style.info}>
                     <span>
@@ -394,7 +384,7 @@ export default class ContractInteraction extends Component {
         e.preventDefault();
         const env=this.props.project.props.state.data.env;
         const contract = this.dappfile.getItem("contracts", [{name: this.props.contract}]);
-        const network=contract.get('network', env);
+        const network=this.state.network;
         const endpoint=(this.props.functions.networks.endpoints[network] || {}).endpoint;
         const web3=this._getWeb3(endpoint);
         if(this.account_address.length<5) {
@@ -417,7 +407,7 @@ export default class ContractInteraction extends Component {
         e.preventDefault();
         const env=this.props.project.props.state.data.env;
         const contract = this.dappfile.getItem("contracts", [{name: this.props.contract}]);
-        const network=contract.get('network', env);
+        const network=this.state.network;
         const endpoint=(this.props.functions.networks.endpoints[network] || {}).endpoint;
         const web3=this._getWeb3(endpoint);
         if(this.contract_address.length<5) {

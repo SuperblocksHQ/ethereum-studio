@@ -36,7 +36,10 @@ export class Obj {
                 return undefined;
             }
         }
-        if(dataEnv) return Obj.cloneObj(dataEnv[key] || dataDefault[key]);
+        if(dataEnv) {
+            const v=Obj.cloneObj(dataEnv[key]);
+            return v===undefined?dataDefault[key]:v;
+        }
         return Obj.cloneObj(dataDefault[key]);
     }
 

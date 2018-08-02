@@ -445,4 +445,268 @@ export default class Templates {
     };
         return [data.dappfile,data.files];
     }
+
+    static tplBlank(project, title) {
+        const data={
+            "files": {
+                "/": {
+                    "type": "d",
+                    "children": {
+                        "app": {
+                            "type": "d",
+                            "children": {
+                                "app.html": {
+                                    "type": "f",
+                                    "contents": "<!DOCTYPE html>\n<html lang=\"en\">\n    <head>\n        <script type=\"text/javascript\" src=\"https://unpkg.com/jquery@3.3.1/dist/jquery.js\"></script>\n        <script type=\"text/javascript\" src=\"https://unpkg.com/web3@0.20.5/dist/web3.min.js\"></script>\n        <!-- JAVASCRIPT -->\n        <!-- STYLE -->\n    </head>\n    <body>\n        <h1>Hello World DApp</h1>\n        <h2>Message: <span id=\"message\"></span></h2>\n    </body>\n</html>"
+                                },
+                                "app.css": {
+                                    "type": "f",
+                                    "contents": "body {\n    background-color: midnightblue;\n    color: darksalmon;\n    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;\n    text-align: center;\n}"
+                                },
+                                "app.js": {
+                                    "type": "f",
+                                    "contents": "(function (Contract) {\n    var web3;\n    var instance;\n\n    function init(cb) {\n        web3 = new Web3(\n            (window.web3 && window.web3.currentProvider) ||\n            new Web3.providers.HttpProvider(Contract.endpoint));\n\n        var contract_interface = web3.eth.contract(Contract.abi);\n        instance = contract_interface.at(Contract.address);\n        cb();\n    }\n\n    function getMessage(cb) {\n        instance.message(function (error, result) {\n            cb(error, result);\n        });\n    }\n\n    $(document).ready(function () {\n        init(function () {\n            getMessage(function (error, result) {\n                if (error) {\n                    console.error(\"Could not get article:\", error);\n                    return;\n                }\n                $('#message').append(result);\n            });\n        });\n    });\n})(Contracts['HelloWorld']);"
+                                },
+                                "contracts": {
+                                    "type": "d",
+                                    "children": {}
+                                }
+                            }
+                        },
+                        "contracts": {
+                            "type": "d",
+                            "children": {
+                                "HelloWorld.sol": {
+                                    "type": "f",
+                                    "contents": "pragma solidity ^0.4.17;\n\ncontract HelloWorld {\n    string public message;\n    \n    function HelloWorld(string message2) public {\n        message=message2;\n    }\n\n    function update(string message2) public {\n        message=message2;\n    }\n}"
+                                },
+                            }
+                        }
+                    }
+                }
+            },
+    "dappfile": {
+        "environments": [
+            {
+                "name": "browser"
+            },
+            {
+                "name": "custom"
+            },
+            {
+                "name": "rinkeby"
+            },
+            {
+                "name": "ropsten"
+            },
+            {
+                "name": "kovan"
+            },
+            {
+                "name": "infuranet"
+            },
+            {
+                "name": "mainnet"
+            }
+        ],
+        "constants": [],
+        "contracts": [
+            {
+                "source": "/contracts/HelloWorld.sol",
+                "args": [
+                    {
+                        "value": "Hello World!"
+                    }
+                ],
+                "blockchain": "ethereum",
+                "name": "HelloWorld"
+            },
+        ],
+        "wallets": [
+            {
+                "desc": "This is a wallet for local development",
+                "name": "development",
+                "blockchain": "ethereum"
+            },
+            {
+                "desc": "A private wallet",
+                "name": "private",
+                "blockchain": "ethereum"
+            },
+            {
+                "desc": "External wallet integrating with Metamask and other compatible wallets",
+                "name": "external",
+                "blockchain": "ethereum",
+                "type": "external"
+            }
+        ],
+        "accounts": [
+            {
+                "name": "ACCOUNT0",
+                "blockchain": "ethereum",
+                "_environments": [
+                    {
+                        "name": "browser",
+                        "data": {
+                            "wallet": "development",
+                            "index": 0,
+                        }
+                    },
+                    {
+                        "name": "custom",
+                        "data": {
+                            "wallet": "private",
+                            "index": 0,
+                        }
+                    },
+                    {
+                        "name": "rinkeby",
+                        "data": {
+                            "wallet": "external",
+                            "index": 0,
+                        }
+                    },
+                    {
+                        "name": "ropsten",
+                        "data": {
+                            "wallet": "external",
+                            "index": 0,
+                        }
+                    },
+                    {
+                        "name": "kovan",
+                        "data": {
+                            "wallet": "external",
+                            "index": 0,
+                        }
+                    },
+                    {
+                        "name": "infuranet",
+                        "data": {
+                            "wallet": "external",
+                            "index": 0,
+                        }
+                    },
+                    {
+                        "name": "mainnet",
+                        "data": {
+                            "wallet": "external",
+                            "index": 0,
+                        }
+                    },
+                ],
+            },
+            {
+                "name": "ACCOUNT1",
+                "blockchain": "ethereum",
+                "_environments": [
+                    {
+                        "name": "browser",
+                        "data": {
+                            "wallet": "development",
+                            "index": 1,
+                        }
+                    },
+                    {
+                        "name": "custom",
+                        "data": {
+                            "wallet": "private",
+                            "index": 1,
+                        }
+                    },
+                ],
+                "address": "0x0"
+            },
+            {
+                "name": "ACCOUNT2",
+                "blockchain": "ethereum",
+                "_environments": [
+                    {
+                        "name": "browser",
+                        "data": {
+                            "wallet": "development",
+                            "index": 2,
+                        }
+                    },
+                    {
+                        "name": "custom",
+                        "data": {
+                            "wallet": "private",
+                            "index": 2,
+                        }
+                    },
+                ],
+                "address": "0x0"
+            },
+            {
+                "name": "ACCOUNT3",
+                "blockchain": "ethereum",
+                "_environments": [
+                    {
+                        "name": "browser",
+                        "data": {
+                            "wallet": "development",
+                            "index": 3,
+                        }
+                    },
+                    {
+                        "name": "custom",
+                        "data": {
+                            "wallet": "private",
+                            "index": 3,
+                        }
+                    },
+                ],
+                "address": "0x0"
+            },
+            {
+                "name": "ACCOUNT4",
+                "blockchain": "ethereum",
+                "_environments": [
+                    {
+                        "name": "browser",
+                        "data": {
+                            "wallet": "development",
+                            "index": 4,
+                        }
+                    },
+                    {
+                        "name": "custom",
+                        "data": {
+                            "wallet": "private",
+                            "index": 4,
+                        }
+                    },
+                ],
+                "address": "0x0"
+            },
+            {
+                "name": "ACCOUNT5",
+                "blockchain": "ethereum",
+                "_environments": [
+                    {
+                        "name": "browser",
+                        "data": {
+                            "wallet": "development",
+                            "index": 5,
+                        }
+                    },
+                    {
+                        "name": "custom",
+                        "data": {
+                            "wallet": "private",
+                            "index": 5,
+                        }
+                    },
+                ],
+                "address": "0x0"
+            },
+        ],
+        "project": {
+            info: {title: title}
+            }
+        }
+    };
+        return [data.dappfile,data.files];
+    }
 }

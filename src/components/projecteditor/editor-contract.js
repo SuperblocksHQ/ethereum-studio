@@ -27,7 +27,6 @@ export default class ContractEditor extends Component {
         this.contract.obj.args = this.contract.obj.args || [];
         this.contract.obj.network = this.contract.obj.network || "browser";
         this._originalsourcepath=this.contract.get("source");
-        this.form={env:""};
     }
 
     componentDidMount() {
@@ -43,7 +42,7 @@ export default class ContractEditor extends Component {
 
     save = (e) => {
         e.preventDefault();
-        if((this.contract.obj.name||"").length==0||(this.contract.obj.source||"").length==0||(this.contract.obj.account||"").length==0) {
+        if((this.contract.obj.name||"").length==0||(this.contract.obj.source||"").length==0) {
             alert('Error: Missing fields.');
             return;
         }
@@ -114,8 +113,7 @@ export default class ContractEditor extends Component {
         if(key=="name") {
             this.contract.set("source", "/contracts/"+value+".sol");
         }
-        if(value=="(default)") value=undefined;
-        this.contract.set(key, value, (key!="name"?this.form.env:null));
+        this.contract.set(key, value);
         this.setState();
     };
 
@@ -145,7 +143,7 @@ export default class ContractEditor extends Component {
             if(arg.account!=null) {
                 type="account";
                 const options=[];
-                const accounts=this.getAccounts(false);
+                const accounts=this.getAccounts();
                 accounts.map((account) => options.push(account.name));
                 arg[type] = arg[type] || options[0];
                 value=this.getSelect(arg[type], options, (e) => {
@@ -180,20 +178,10 @@ export default class ContractEditor extends Component {
         return ret;
     };
 
-    getAccounts = (useDefault) => {
+    getAccounts = () => {
         const ret=[];
-        if(this.form.env && useDefault!==false) ret.push({name:"(default)"});
         this.dappfile.accounts().map((account) => {
             ret.push(account)
-        })
-        return ret;
-    };
-
-    getNetworks = () => {
-        const ret=[];
-        if(this.form.env) ret.push("(default)");
-        ["browser", "local","ropsten","rinkeby","infuranet","kovan","mainnet"].map((network) => {
-            ret.push(network)
         })
         return ret;
     };
@@ -226,20 +214,12 @@ export default class ContractEditor extends Component {
         return (a.offsetHeight - b.offsetHeight);
     };
 
-    onEnvChange = (e) => {
-        e.preventDefault();
-        this.form.env=e.target.value;
-        this.setState();
-    };
-
     render() {
         if(!this.contract) {
             return (<div>Could not find {this.props.contract} in Dappfile.yaml</div>);
         }
 
         const args=this.renderArgs();
-        const accounts=this.getAccounts();
-        const networks=this.getNetworks();
         const toolbar=this.renderToolbar();
         const maxHeight = {
             height: this.getHeight() + "px"
@@ -256,24 +236,6 @@ export default class ContractEditor extends Component {
                             <p>Name:</p>
                             <input type="text" onKeyUp={(e)=>{this.onChange(e, 'name')}} value={this.contract.get("name")} onChange={(e)=>{this.onChange(e, 'name')}} />
                         </div>
-                        <div class={style.field} style="display:none;">
-                            <p>
-                                Source:
-                            </p>
-                            <input type="text" onChange={(e)=>{this.onChange(e, 'source')}} value={this.contract.get("source")} />
-                        </div>
-                        <div class={style.field}>
-                            <p>
-                                Account:
-                            </p>
-                            <select onChange={(e)=>{this.onChange(e, 'account')}} value={this.contract.get('account')}>
-                                {accounts.map((account) => {
-                                    return (<option
-                                        selected={account.name==this.contract.get('account')}
-                                        value={account.name}>{account.name}</option>);
-                                })}
-                            </select>
-                        </div>
                         <div>
                             <p>Contract constructor arguments. The number of arguments must match the number of arguments on the contract constructor.</p>
                             <div>
@@ -287,32 +249,6 @@ export default class ContractEditor extends Component {
                             </div>
                         </div>
                         <div>
-                        <div class={style.field}>
-                            <p>
-                                Environment:
-                            </p>
-                            <select key="envs" onChange={this.onEnvChange} value={this.form.env}>
-                                <option value="">(default)</option>
-                                {this.dappfile.environments().map((env) => {
-                                    return (<option
-                                        value={env.name}>{env.name}</option>);
-                                })}
-                            </select>
-                        </div>
-                        <div class={style.field}>
-                            <p>
-                                Network:
-                            </p>
-                            <select key="networks" value={(this.contract.get('network', this.form.env, false) || "(default)")}
-                                    onChange={(e)=>{this.onChange(e, 'network')}}>
-                                {networks.map((network)=>{
-                                    return (<option
-                                        value={network}>{network}</option>);})}
-                            </select>
-                        </div>
-
-
-
                             <a href="#" class="btn2" onClick={this.save}>Save</a>
                         </div>
                     </form>

@@ -43,7 +43,7 @@ export default class App extends Component {
                 chainId: undefined,
                 interval: 1000,
             },
-            local: {
+            custom: {
                 endpoint: "http://localhost:8545/",
                 chainId: undefined,
                 interval: 2000,
