@@ -1,4 +1,5 @@
 import { Component } from 'preact';
+import PropTypes from 'prop-types';
 import style from './style';
 import classNames from 'classnames';
 
@@ -12,6 +13,7 @@ export default class TopBar extends Component {
 
         this.showMenu = this.showMenu.bind(this);
         this.closeMenu = this.closeMenu.bind(this);
+        this.onTransactionsClicked = this.onTransactionsClicked.bind(this);
     }
 
     showMenu(event) {
@@ -29,43 +31,63 @@ export default class TopBar extends Component {
         });
     }
 
+    onTransactionsClicked() {
+        this.props.router.control._openAppShowPreview();
+    }
+
     render() {
         return (
             <div class={style.topbar}>
                 <img class={style.logo} src="/static/img/img-studio-logo.svg" alt="Superblocks Studio logo"></img>
-                <span class={style.tools}>
-                    <span class={style.left}>
+                <div class={style.tools}>
+                    <div class={classNames([style.left, style.container])} onClick={this.onTransactionsClicked}>
                         <img class={style.icon} src="/static/img/icon-transactions.png" alt="Open transactions screen"></img>
-                        <span>Transactions</span>
-                    </span>
-                    <span class={style.left}>
-                        <img class={classNames([style.icon, style.collaborate])} src="/static/img/icon-collaborate.png" alt="Open the transactions screen"></img>
-                        <span>Collaborate</span>
-                    </span>
-                </span>
-                <span class={style.project} onClick={this.showMenu}>
+                        <div>Transactions</div>
+                    </div>
+                    <div class={classNames([style.left, style.container])}>
+                        <img class={classNames([style.icon, style.collaborateIcon])} src="/static/img/icon-collaborate.png" alt="Open the transactions screen"></img>
+                        <div>Collaborate</div>
+                    </div>
+                </div>
+                <div class={classNames([style.project, style.container])} onClick={this.showMenu}>
                     <img class={style.icon} src="/static/img/icon-project-selector.svg" alt="Open transactions screen"></img>
-                    <span class={style.projecttext}>My super project</span>
+                    <div class={style.projectText}>My super project</div>
                     <img class={style.dropdown} src="/static/img/icon-dropdown.svg" alt="Open transactions screen"></img>
 
                     {
                         this.state.showMenu ? (
-                            <div class={style.menu}>
-                                <button> Menu Item 1 </button>
-                                <button> Menu Item 2 </button>
-                                <button> Menu item 3 </button>
+                            <div class={style.projectMenu}>
+                                <div class={style.tabs}>
+                                    <div class={classNames([style.tabList, style.container])}>
+                                        <div class={style.tab}>
+                                            <div>Personal</div>
+                                        </div>
+                                    </div>
+                                    <div class={classNames([style.paneList, style.container])}>
+                                        <div>My Project</div>
+                                    </div>
+                                </div>
+                                <div class={style.actions}>
+                                    <a>Create New</a>
+                                    <div class={style.separator} />
+                                    <a>Import</a>
+                                </div>
                             </div>
                         ) : (null)
                     }
 
-                </span>
-                <span class={style.right}>
+                </div>
+                <div class={classNames([style.right, style.container])}>
                     <img class={style.icon} src="/static/img/icon-help.svg" alt="Open transactions screen"></img>
-                    <span>Help</span>
-                </span>
+                    <div>Help</div>
+                </div>
             </div>
         );
     }
+}
+
+TopBar.PropTypes = {
+    onTransactionSelected: PropTypes.func.isRequired
 }
 
 // _menuTop = (level, index, item) => {
