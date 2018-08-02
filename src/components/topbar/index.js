@@ -19,11 +19,11 @@ export default class TopBar extends Component {
 
     showMenu(event) {
         event.preventDefault();
+        event.stopPropagation();
 
-        this.setState({ showMenu: true });
-        // this.setState({ showMenu: true }, () => {
-        //   document.addEventListener('click', this.closeMenu);
-        // });
+        this.setState({ showMenu: true }, () => {
+            document.addEventListener('click', this.closeMenu);
+        });
       }
 
     closeMenu() {
@@ -50,57 +50,54 @@ export default class TopBar extends Component {
                         <div>Collaborate</div>
                     </div>
                 </div>
-                <div class={classNames([style.project, style.container])} onClick={this.showMenu}>
+                <button class={classNames([style.projectButton, style.container])} onClick={this.showMenu}>
                     <img class={style.icon} src="/static/img/icon-project-selector.svg" alt="Open transactions screen"></img>
-                    <div class={style.projectText}>My super project</div>
+                    <span class={style.projectText}>My super project</span>
                     <img class={style.dropdown} src="/static/img/icon-dropdown.svg" alt="Open transactions screen"></img>
-
-                    {
-                        this.state.showMenu ? (
-                            <div class={style.projectMenu}>
-                                <div class={style.tabs}>
-                                    <div class={classNames([style.tabList, style.container])}>
-                                        <button class={style.tab}>
-                                            Personal
-                                        </button>
-                                    </div>
-                                    <div class={classNames([style.paneList, style.container])}>
-                                        <div class={style.pane}>
-                                            <ul class={style.projectSwitcherList}>
-                                                <li class={style.projSwitcherItem}>
-                                                    <div class={classNames([style.projSwitcherRow, style.container])}>
-                                                        <a href="" class={style.container}>
-                                                            <div>My Project - </div>
-                                                            <div>myproject</div>
-                                                        </a>
-                                                        <div class={classNames([style.projSwitcherRowActions, style.container])}>
-                                                            <button>
-                                                                <IconConfigure />
-                                                            </button>
-                                                            <button>
-                                                                <IconDownload />
-                                                            </button>
-                                                            <button>
-                                                                <IconTrash />
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </div>
-
-                                    </div>
+                </button>
+                {
+                    this.state.showMenu ? (
+                        <div class={style.projectMenu}>
+                            <div class={style.tabs}>
+                                <div class={classNames([style.tabList, style.container])}>
+                                    <button class={style.tab}>
+                                        Personal
+                                    </button>
                                 </div>
-                                <div class={style.actions}>
-                                    <a href="">Create New</a>
-                                    <div class={style.separator} />
-                                    <a href="">Import</a>
+                                <div class={classNames([style.paneList, style.container])}>
+                                    <div class={style.pane}>
+                                        <ul class={style.projectSwitcherList}>
+                                            <li class={style.projSwitcherItem}>
+                                                <div class={classNames([style.projSwitcherRow, style.container])}>
+                                                    <a href="" class={style.container}>
+                                                        <div>My Project - </div>
+                                                        <div>&nbsp;myproject</div>
+                                                    </a>
+                                                    <div class={classNames([style.projSwitcherRowActions, style.container])}>
+                                                        <button class="btnNoBg">
+                                                            <IconConfigure />
+                                                        </button>
+                                                        <button class="btnNoBg">
+                                                            <IconDownload />
+                                                        </button>
+                                                        <button class="btnNoBg">
+                                                            <IconTrash />
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
-                        ) : (null)
-                    }
-
-                </div>
+                            <div class={style.actions}>
+                                <button class="btnNoBg">Create New</button>
+                                <div class={style.separator} />
+                                <button class="btnNoBg">Import</button>
+                            </div>
+                        </div>
+                    ) : (null)
+                }
                 <div class={classNames([style.right, style.container])}>
                     <img class={style.icon} src="/static/img/icon-help.svg" alt="Open transactions screen"></img>
                     <div>Help</div>

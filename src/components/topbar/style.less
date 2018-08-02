@@ -46,10 +46,20 @@
         height: 15px;
         right: 7px;
     }
-    .project {
+    .projectButton {
         position: fixed;
         left: 50%;
+        -webkit-transform: translateX(-50%);
         transform: translate(-50%);
+        background: transparent;
+        padding: 0;
+        border-radius: 3px;
+        max-width: none;
+        border: none;
+        color: #fff;
+        &:focus {
+            outline: none;
+        }
         .projectText {
             margin-left: 3px;
             font-size: 1.2em;
@@ -64,6 +74,10 @@
     .projectMenu {
         display: block;
         position: absolute;
+        left: 50%;
+        -webkit-transform: translateX(-50%);
+        transform: translate(-50%);
+        top: 45px;
         border-radius: 4px;
         background-color: #fff;
         min-width: 400px;
@@ -72,8 +86,6 @@
         z-index: 1;
         color: #262E33;
         padding: 8px 16px;
-        top: 40px;
-        left: -100px;
         .tabs {
             .tabList {
                 border-bottom: 1px solid #eaeaea;
@@ -129,10 +141,6 @@
                                     margin-left: auto;
                                     >button {
                                         margin: 0;
-                                        border: none;
-                                        background: transparent;
-                                        border-radius: 0;
-                                        cursor: pointer;
                                         color: #8641f2;
                                     }
                                 }
@@ -149,12 +157,15 @@
             list-style: none;
             display: flex;
             margin-left: auto;
-            >a {
+            >button {
                 color: #8641f2;
                 text-decoration: none;
                 font-weight: 600;
-                margin-left: 14px;
-                margin-right: 14px;
+                &:hover {
+                    color: #7237CF;
+                    text-decoration: underline;
+                    cursor: pointer;
+                }
             }
             .separator {
                 border-left: 1px solid #eaeaea;
