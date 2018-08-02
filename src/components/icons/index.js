@@ -32,6 +32,7 @@ import iconUp from '@fortawesome/fontawesome-free-solid/faArrowUp';
 import iconDown from '@fortawesome/fontawesome-free-solid/faArrowDown';
 import iconClone from '@fortawesome/fontawesome-free-solid/faClone';
 import iconUpload from '@fortawesome/fontawesome-free-solid/faUpload';
+import iconTelegram from '@fortawesome/fontawesome-free-brands/faTelegram';
 
 
 class IconImg extends Component {
@@ -77,7 +78,8 @@ export const IconDropdown = ({...props}) => <IconImg src={'/static/img/icon-drop
 // Top Bar
 export const IconTransactions = ({...props}) => <IconImg src={'/static/img/icon-transactions.png'} {...props}/>;
 export const IconCollaborate = ({...props}) => <IconImg src={'src="/static/img/icon-collaborate.png'} {...props}/>;
-export const IconProjectSelector = ({...props}) => <IconImg src={'src="/static/img/icon-project-selector.png'} {...props}/>;
+export const IconProjectSelector = ({...props}) => <IconImg src={'/static/img/icon-project-selector.svg'} {...props} />;
+export const IconTelegram = ({...props}) => <FaIcon icon={iconTelegram} {...props}/>;
 
 // File types
 export const IconContract = ({...props}) => <IconImg src={'/static/img/icon-solidity.svg'} {...props} />;
@@ -85,7 +87,6 @@ export const IconHtml = ({...props}) => <IconImg src={'/static/img/icon-html.svg
 export const IconJS = ({...props}) => <IconImg src={'/static/img/icon-js.svg'} {...props} />;
 export const IconCss = ({...props}) => <IconImg src={'/static/img/icon-css.svg'} {...props} />;
 export const IconShowPreview = ({...props}) => <IconImg src={'/static/img/icon-show-preview.svg'} {...props} />;
-export const IconProjectSelector = ({...props}) => <IconImg src={'/static/img/icon-project-selector.svg'} {...props} />;
 
 // Learn and Resouces
 export const IconGuide = ({...props}) => <IconImg src={'/static/img/icon-guide.svg'} {...props} />;

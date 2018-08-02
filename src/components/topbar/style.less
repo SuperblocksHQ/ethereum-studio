@@ -35,10 +35,6 @@
     }
     .tools {
         margin-left: 15px;
-        .collaborateIcon {
-            width: 18px;
-            height: 14px;
-        }
     }
     .icon {
         position: relative;
@@ -51,15 +47,11 @@
         left: 50%;
         -webkit-transform: translateX(-50%);
         transform: translate(-50%);
-        background: transparent;
         padding: 0;
         border-radius: 3px;
         max-width: none;
         border: none;
         color: #fff;
-        &:focus {
-            outline: none;
-        }
         .projectText {
             margin-left: 3px;
             font-size: 1.2em;
@@ -68,6 +60,7 @@
         .dropdown {
             position: relative;
             right: -7px;
+            top: 2px;
         }
     }
 
@@ -172,6 +165,42 @@
                 height: 12px;
                 margin-top: 7px;
             }
+        }
+    }
+
+    .helpMenu {
+        display: block;
+        position: absolute;
+        right: 40px;
+        top: 45px;
+        border-radius: 4px;
+        background-color: #fff;
+        min-width: 200px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+        color: #262E33;
+        padding: 10px 0;
+        .title {
+            font-weight: 600;
+            margin-bottom: 5px;
+            padding-left: 24px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            >li {
+                padding: 2px 24px;
+                &:hover {
+                    background: #f4f4f4;
+                }
+            }
+        }
+        a {
+            color: #262E33;
+        }
+        .telegramIcon {
+            margin-left: 10px;
         }
     }
 }

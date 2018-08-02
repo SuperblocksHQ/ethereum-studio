@@ -2,9 +2,18 @@ import { Component } from 'preact';
 import PropTypes from 'prop-types';
 import style from './style';
 import classNames from 'classnames';
-import { IconTransactions, IconDownload, IconTrash, IconConfigure, IconCollaborate, IconProjectSelector, IconDropdown } from '../icons';
+import {
+    IconTransactions,
+    IconDownload,
+    IconTrash,
+    IconConfigure,
+    IconCollaborate,
+    IconProjectSelector,
+    IconDropdown,
+    IconTelegram
+} from '../icons';
 
-export default class TopBar extends Component {
+class DropDownDialog extends Component {
     constructor() {
         super();
 
@@ -14,7 +23,6 @@ export default class TopBar extends Component {
 
         this.showMenu = this.showMenu.bind(this);
         this.closeMenu = this.closeMenu.bind(this);
-        this.onTransactionsClicked = this.onTransactionsClicked.bind(this);
     }
 
     showMenu(event) {
@@ -31,6 +39,53 @@ export default class TopBar extends Component {
             document.removeEventListener('click', this.closeMenu);
         });
     }
+}
+
+class HelpDropdownDialog extends DropDownDialog {
+    render() {
+        let { ...props } = this.props;
+
+        return (
+            <div {...props}>
+                <button class={classNames([style.container, "btnNoBg"])} onClick={this.showMenu}>
+                    <img class={style.icon} src="/static/img/icon-help.svg" alt="Open transactions screen"></img>
+                    <div>Help</div>
+                </button>
+                {
+                    this.state.showMenu ? (
+                        <div class={style.helpMenu}>
+                            <div class={style.title}>General</div>
+                            <ul>
+                                <li>
+                                    <a href="">Help Center</a>
+                                </li>
+                                <li>
+                                    <div class={style.container}>
+                                        <a href="">Join our Community!</a>
+                                        <span class={style.telegramIcon}>
+                                            <IconTelegram color="#0088cc"/>
+                                        </span>
+                                    </div>
+
+                                </li>
+                                <li>
+                                    <a href="">What’s new 🚀</a>
+                                </li>
+                            </ul>
+                        </div>
+                    ) : (null)
+                }
+            </div>
+        );
+    }
+}
+
+export default class TopBar extends DropDownDialog {
+    constructor() {
+        super();
+
+        this.onTransactionsClicked = this.onTransactionsClicked.bind(this);
+    }
 
     onTransactionsClicked() {
         this.props.router.control._openAppShowPreview();
@@ -41,19 +96,15 @@ export default class TopBar extends Component {
             <div class={style.topbar}>
                 <img class={style.logo} src="/static/img/img-studio-logo.svg" alt="Superblocks Studio logo"></img>
                 <div class={style.tools}>
-                    <div class={classNames([style.left, style.container])} onClick={this.onTransactionsClicked}>
+                    <button class={classNames([style.left, style.container, "btnNoBg"])} onClick={this.onTransactionsClicked}>
                         <IconTransactions class={style.icon} alt="Open the transactions log screen"/>
                         <div>Transactions</div>
-                    </div>
-                    <div class={classNames([style.left, style.container])}>
-                        <IconCollaborate class={classNames([style.icon, style.collaborateIcon])} alt="Start collaborating"/>
-                        <div>Collaborate</div>
-                    </div>
+                    </button>
                 </div>
-                <button class={classNames([style.projectButton, style.container])} onClick={this.showMenu}>
+                <button class={classNames([style.projectButton, style.container, "btnNoBg"])} onClick={this.showMenu}>
                     <IconProjectSelector class={style.icon}/>
                     <span class={style.projectText}>My super project</span>
-                    <IconDropdown class={style.icon}/>
+                    <IconDropdown class={classNames([style.dropdown])}/>
                 </button>
                 {
                     this.state.showMenu ? (
@@ -98,10 +149,7 @@ export default class TopBar extends Component {
                         </div>
                     ) : (null)
                 }
-                <div class={classNames([style.right, style.container])}>
-                    <img class={style.icon} src="/static/img/icon-help.svg" alt="Open transactions screen"></img>
-                    <div>Help</div>
-                </div>
+                <HelpDropdownDialog class={style.right}/>
             </div>
         );
     }

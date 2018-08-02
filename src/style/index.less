@@ -23,9 +23,9 @@ html, body {
     font-weight: 400;
     color: #444;
     -webkit-font-smoothing: antialiased;
-    -webkit-text-stroke: 0.45px;
+    // -webkit-text-stroke: 0.45px;
     -moz-osx-font-smoothing: grayscale;
-    font-size: 14px;
+    font-size: 15px;
 }
 html {
     ::-webkit-scrollbar
@@ -249,6 +249,10 @@ a:active,a:focus {
     border-radius: 3px;
     max-width: none;
     border: none;
+    color: #fff;
+    &:focus {
+        outline: none;
+    }
 }
 .btn1 {
     -webkit-border-radius: 17;
