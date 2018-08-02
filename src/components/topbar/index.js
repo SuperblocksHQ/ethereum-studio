@@ -2,7 +2,7 @@ import { Component } from 'preact';
 import PropTypes from 'prop-types';
 import style from './style';
 import classNames from 'classnames';
-import { IconDownload, IconTrash, IconConfigure } from '../icons';
+import { IconTransactions, IconDownload, IconTrash, IconConfigure, IconCollaborate, IconProjectSelector, IconDropdown } from '../icons';
 
 export default class TopBar extends Component {
     constructor() {
@@ -42,18 +42,18 @@ export default class TopBar extends Component {
                 <img class={style.logo} src="/static/img/img-studio-logo.svg" alt="Superblocks Studio logo"></img>
                 <div class={style.tools}>
                     <div class={classNames([style.left, style.container])} onClick={this.onTransactionsClicked}>
-                        <img class={style.icon} src="/static/img/icon-transactions.png" alt="Open transactions screen"></img>
+                        <IconTransactions class={style.icon} alt="Open the transactions log screen"/>
                         <div>Transactions</div>
                     </div>
                     <div class={classNames([style.left, style.container])}>
-                        <img class={classNames([style.icon, style.collaborateIcon])} src="/static/img/icon-collaborate.png" alt="Open the transactions screen"></img>
+                        <IconCollaborate class={classNames([style.icon, style.collaborateIcon])} alt="Start collaborating"/>
                         <div>Collaborate</div>
                     </div>
                 </div>
                 <button class={classNames([style.projectButton, style.container])} onClick={this.showMenu}>
-                    <img class={style.icon} src="/static/img/icon-project-selector.svg" alt="Open transactions screen"></img>
+                    <IconProjectSelector class={style.icon}/>
                     <span class={style.projectText}>My super project</span>
-                    <img class={style.dropdown} src="/static/img/icon-dropdown.svg" alt="Open transactions screen"></img>
+                    <IconDropdown class={style.icon}/>
                 </button>
                 {
                     this.state.showMenu ? (

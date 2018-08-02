@@ -74,6 +74,10 @@ export const IconDownload = ({...props})=> <IconImg src={'/static/img/icon-downl
 export const IconUpload = () => <FaIcon icon={iconUpload} />;
 export const IconDropdown = ({...props}) => <IconImg src={'/static/img/icon-dropdown.svg'} {...props}/>;
 
+// Top Bar
+export const IconTransactions = ({...props}) => <IconImg src={'/static/img/icon-transactions.png'} {...props}/>;
+export const IconCollaborate = ({...props}) => <IconImg src={'src="/static/img/icon-collaborate.png'} {...props}/>;
+export const IconProjectSelector = ({...props}) => <IconImg src={'src="/static/img/icon-project-selector.png'} {...props}/>;
 
 // File types
 export const IconContract = ({...props}) => <IconImg src={'/static/img/icon-solidity.svg'} {...props} />;
@@ -81,6 +85,7 @@ export const IconHtml = ({...props}) => <IconImg src={'/static/img/icon-html.svg
 export const IconJS = ({...props}) => <IconImg src={'/static/img/icon-js.svg'} {...props} />;
 export const IconCss = ({...props}) => <IconImg src={'/static/img/icon-css.svg'} {...props} />;
 export const IconShowPreview = ({...props}) => <IconImg src={'/static/img/icon-show-preview.svg'} {...props} />;
+export const IconProjectSelector = ({...props}) => <IconImg src={'/static/img/icon-project-selector.svg'} {...props} />;
 
 // Learn and Resouces
 export const IconGuide = ({...props}) => <IconImg src={'/static/img/icon-guide.svg'} {...props} />;
