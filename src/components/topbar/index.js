@@ -2,6 +2,7 @@ import { Component } from 'preact';
 import PropTypes from 'prop-types';
 import style from './style';
 import classNames from 'classnames';
+import { IconDownload, IconTrash, IconConfigure } from '../icons';
 
 export default class TopBar extends Component {
     constructor() {
@@ -59,18 +60,41 @@ export default class TopBar extends Component {
                             <div class={style.projectMenu}>
                                 <div class={style.tabs}>
                                     <div class={classNames([style.tabList, style.container])}>
-                                        <div class={style.tab}>
-                                            <div>Personal</div>
-                                        </div>
+                                        <button class={style.tab}>
+                                            Personal
+                                        </button>
                                     </div>
                                     <div class={classNames([style.paneList, style.container])}>
-                                        <div>My Project</div>
+                                        <div class={style.pane}>
+                                            <ul class={style.projectSwitcherList}>
+                                                <li class={style.projSwitcherItem}>
+                                                    <div class={classNames([style.projSwitcherRow, style.container])}>
+                                                        <a href="" class={style.container}>
+                                                            <div>My Project - </div>
+                                                            <div>myproject</div>
+                                                        </a>
+                                                        <div class={classNames([style.projSwitcherRowActions, style.container])}>
+                                                            <button>
+                                                                <IconConfigure />
+                                                            </button>
+                                                            <button>
+                                                                <IconDownload />
+                                                            </button>
+                                                            <button>
+                                                                <IconTrash />
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+
                                     </div>
                                 </div>
                                 <div class={style.actions}>
-                                    <a>Create New</a>
+                                    <a href="">Create New</a>
                                     <div class={style.separator} />
-                                    <a>Import</a>
+                                    <a href="">Import</a>
                                 </div>
                             </div>
                         ) : (null)

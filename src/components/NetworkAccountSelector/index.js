@@ -8,7 +8,7 @@ class NetworkSelector extends Component {
             <div class={ style.selector }>
                 Browser
                 <div class={ style.dropdownIcon }>
-                    <IconDropdown/>
+                    <IconDropdown height="10" width="12"/>
                 </div>
             </div>
         )
@@ -21,7 +21,7 @@ class AccountSelector extends Component {
             <div class={ style.selector }>
                 Default
                 <div class={ style.dropdownIcon }>
-                    <IconDropdown/>
+                    <IconDropdown height="10" width="12"/>
                 </div>
             </div>
         )

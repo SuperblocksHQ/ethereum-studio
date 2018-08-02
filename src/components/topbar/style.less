@@ -65,7 +65,7 @@
         display: block;
         position: absolute;
         border-radius: 4px;
-        background-color: #FAFAFA;
+        background-color: #fff;
         min-width: 400px;
         min-height: 320px;
         box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
@@ -90,6 +90,56 @@
                 }
             }
             .paneList {
+                padding: 16px 0 8px 0;
+                max-height: 256px;
+                overflow-y: auto;
+                .pane {
+                    flex: auto;
+                    display: block;
+                    .projectSwitcherList {
+                        list-style: none;
+                        margin: 0;
+                        padding: 0;
+                        .projSwitcherItem {
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            -webkit-touch-callout: none;
+                            -webkit-user-select: none;
+                            -khtml-user-select: none;
+                            -moz-user-select: none;
+                            -ms-user-select: none;
+                            user-select: none;
+                            height: 40px;
+                            cursor: pointer;
+                            max-width: 400px;
+                            line-height: 40px;
+                            font-size: 14px;
+                            border-radius: 3px;
+                            &:hover {
+                                background: #f4f4f4;
+                            }
+                            .projSwitcherRow {
+                                padding: 0 16px;
+                                >a {
+                                    color: inherit;
+                                    text-decoration: none;
+                                }
+                                .projSwitcherRowActions {
+                                    margin-left: auto;
+                                    >button {
+                                        margin: 0;
+                                        border: none;
+                                        background: transparent;
+                                        border-radius: 0;
+                                        cursor: pointer;
+                                        color: #8641f2;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
         .actions {
@@ -100,6 +150,8 @@
             display: flex;
             margin-left: auto;
             >a {
+                color: #8641f2;
+                text-decoration: none;
                 font-weight: 600;
                 margin-left: 14px;
                 margin-right: 14px;

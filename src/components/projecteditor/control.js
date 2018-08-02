@@ -675,6 +675,16 @@ export default class DevkitProjectEditorControl extends Component {
             </div>);
     };
 
+    _openAppShowPreview = () => {
+        projectItem= item.props._project
+        // TODO: this lookup is bad.
+        console.log(projectItem.props.state);
+        const appSectionChildren=projectItem.props.state.children[2].props.state.children;
+        const viewItem=appSectionChildren[appSectionChildren.length-1];
+        if(this.props.router.panes) this.props.router.panes.openItem(viewItem);
+    }
+
+
     _clickNewConstant = (e, projectItem) => {
         e.preventDefault();
 
@@ -1115,9 +1125,9 @@ export default class DevkitProjectEditorControl extends Component {
         var caret;
         var isToggable=item.props.toggable && (item.getChildren().length>0 || item.props._lazy);
         if(isToggable) {
-            var caretIcon= <IconAngleRight />;
+            var caretIcon= <IconAngleRight height="8" width="5" />;
             if(item.props.state.open) {
-                caretIcon= <IconAngleDown />;
+                caretIcon= <IconAngleDown height="5" width="8" />;
             }
             caret = (<div class={style.caret}>
                     <a href="#" onClick={(e)=>this._angleClicked(e, item)}>

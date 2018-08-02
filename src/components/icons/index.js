@@ -13,6 +13,7 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Studio.  If not, see <http://www.gnu.org/licenses/>.
+import { h, Component } from 'preact';
 
 import FaIcon  from '@fortawesome/react-fontawesome';
 import iconRun from '@fortawesome/fontawesome-free-solid/faBolt';
@@ -30,45 +31,60 @@ import iconPlus from '@fortawesome/fontawesome-free-solid/faPlusSquare';
 import iconUp from '@fortawesome/fontawesome-free-solid/faArrowUp';
 import iconDown from '@fortawesome/fontawesome-free-solid/faArrowDown';
 import iconClone from '@fortawesome/fontawesome-free-solid/faClone';
-import iconDownload from '@fortawesome/fontawesome-free-solid/faDownload';
 import iconUpload from '@fortawesome/fontawesome-free-solid/faUpload';
 
-export const IconDeployGreen = () => <img src={'/static/img/icon-deploy-green.svg'} />;
-export const IconAddContract = () => <img src={'/static/img/icon-add-contract.svg'} />;
+
+class IconImg extends Component {
+    render () {
+        let { width, height, ...props } = this.props;
+
+        let defaults = {
+            height: height || 14,
+            width: width || 14,
+          };
+
+        return (
+            <img {...props} {...defaults} />
+        );
+    }
+}
+
+export const IconDeployGreen = ({...props}) => <IconImg src={'/static/img/icon-deploy-green.svg'} {...props} />;
+export const IconAddContract = ({...props}) => <IconImg src={'/static/img/icon-add-contract.svg'} {...props} />;
 export const IconRun = () => <FaIcon icon={iconRun} />;
 export const IconSave = () => <FaIcon icon={iconSave} />;
 export const IconCompile = () => <FaIcon icon={iconCompile} />;
-export const IconDeploy = () => <img src={'/static/img/icon-deploy.svg'} />;
-export const IconConfigure = () => <FaIcon icon={iconConfigure} />;
-export const IconInteract = () => <img src={'/static/img/icon-interact.svg'} />;
+export const IconDeploy = ({...props}) => <IconImg src={'/static/img/icon-deploy.svg'} {...props} />;
+export const IconConfigure = ({...props}) => <FaIcon icon={iconConfigure} />;
+export const IconInteract = ({...props}) => <IconImg src={'/static/img/icon-interact.svg'} {...props} />;
 export const IconTrash = () => <FaIcon icon={iconTrash} />;
 export const IconGem = () => <FaIcon icon={iconGem} />;
 export const IconFile = () => <FaIcon icon={iconFile} />;
 export const IconFileAlt = () => <FaIcon icon={iconFileAlt} />;
 export const IconFolder = () => <FaIcon icon={iconFolder} />;
 export const IconFolderOpen = () => <FaIcon icon={iconFolderOpen} />;
-export const IconAngleRight = () => <img src={'/static/img/icon-arrow-right.svg'} />;
-export const IconAngleDown = () => <img src={'/static/img/icon-arrow-down.svg'} />;
+export const IconAngleRight = ({...props}) => <IconImg src={'/static/img/icon-arrow-right.svg'} {...props} />;
+export const IconAngleDown = ({...props}) => <IconImg src={'/static/img/icon-arrow-down.svg'} {...props} />;
 export const IconCube = () => <FaIcon icon={iconCube} />;
 export const IconPlus = () => <FaIcon icon={iconPlus} />;
 export const IconUp = () => <FaIcon icon={iconUp} />;
 export const IconDown = () => <FaIcon icon={iconDown} />;
 export const IconClone = () => <FaIcon icon={iconClone} />;
-export const IconDownload = () => <FaIcon icon={iconDownload} />;
+export const IconDownload = ({...props})=> <IconImg src={'/static/img/icon-download.svg'} {...props} />;
 export const IconUpload = () => <FaIcon icon={iconUpload} />;
-export const IconDropdown = () => <img src={'/static/img/icon-dropdown.svg'} />;
+export const IconDropdown = ({...props}) => <IconImg src={'/static/img/icon-dropdown.svg'} {...props}/>;
 
 
 // File types
-export const IconContract = () => <img src={'/static/img/icon-solidity.svg'} />;
-export const IconHtml = () => <img src={'/static/img/icon-html.svg'} />;
-export const IconJS = () => <img src={'/static/img/icon-js.svg'} />;
-export const IconCss = () => <img src={'/static/img/icon-css.svg'} />;
-export const IconShowPreview = () => <img src={'/static/img/icon-show-preview.svg'} />;
+export const IconContract = ({...props}) => <IconImg src={'/static/img/icon-solidity.svg'} {...props} />;
+export const IconHtml = ({...props}) => <IconImg src={'/static/img/icon-html.svg'} {...props} />;
+export const IconJS = ({...props}) => <IconImg src={'/static/img/icon-js.svg'} {...props} />;
+export const IconCss = ({...props}) => <IconImg src={'/static/img/icon-css.svg'} {...props} />;
+export const IconShowPreview = ({...props}) => <IconImg src={'/static/img/icon-show-preview.svg'} {...props} />;
 
 // Learn and Resouces
-export const IconGuide = () => <img src={'/static/img/icon-guide.svg'} />;
-export const IconVideoTutorials = () => <img src={'/static/img/icon-video-tutorials.svg'} />;
-export const IconHelpCenter = () => <img src={'/static/img/icon-help-center.svg'} />;
-export const IconAskQuestion = () => <img src={'/static/img/icon-ask-question.svg'} />;
-export const IconWhatsNew = () => <img src={'/static/img/icon-whats-new.svg'} />;
+export const IconGuide = ({...props}) => <IconImg src={'/static/img/icon-guide.svg'} {...props} />;
+export const IconVideoTutorials = ({...props}) => <IconImg src={'/static/img/icon-video-tutorials.svg'} {...props} />;
+export const IconHelpCenter = ({...props}) => <IconImg src={'/static/img/icon-help-center.svg'} {...props} />;
+export const IconAskQuestion = ({...props}) => <IconImg src={'/static/img/icon-ask-question.svg'} {...props} />;
+export const IconWhatsNew = ({...props}) => <IconImg src={'/static/img/icon-whats-new.svg'} {...props} />;
