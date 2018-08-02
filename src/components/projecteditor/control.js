@@ -582,6 +582,15 @@ export default class DevkitProjectEditorControl extends Component {
         });
     };
 
+    _selectAccount = (item, e) => {
+        var account=e.target.value;
+        if(account) {
+            item.props.state.data.account=account;
+            if(this.props.router.panes) this.props.router.panes.redraw(true);
+            this.setState();
+        }
+    };
+
     _selectEnvironment = (item, e) => {
         var env=e.target.value;
         if(env) {
@@ -690,24 +699,41 @@ export default class DevkitProjectEditorControl extends Component {
 
         var name;
         for(var index=0;index<100000;index++) {
-            name="Account"+index;
+            name="ACCOUNT"+index;
             if(projectItem.props.state.data.dappfile.accounts().filter((c)=>{
                 return c.name==name;
             }).length==0) {
                 break;
             }
         }
-        const wallet=projectItem.props.state.data.dappfile.wallets()[0].name;
+
+        var browserIndex=0;
+        var customIndex=0;
+        projectItem.props.state.data.dappfile.accounts().map((item)=>{
+            const account=projectItem.props.state.data.dappfile.getItem("accounts", [{name: item.name}]);
+            var index=parseInt(account.get("index", "browser"));
+            if(!isNaN(index) && index>=browserIndex) browserIndex=index+1;
+            var index=parseInt(account.get("index", "custom"));
+            if(!isNaN(index) && index>=customIndex) customIndex=index+1;
+        });
+
+        //const wallet=projectItem.props.state.data.dappfile.wallets()[0].name;
         projectItem.props.state.data.dappfile.accounts().push({
             name: name,
             blockchain: "ethereum",
-            wallet: wallet,
-            index: '0',
+            address: "0x0",
         });
+        const account=projectItem.props.state.data.dappfile.getItem("accounts", [{name: name}]);
+        account.set("wallet", "development", "browser");
+        account.set("index", browserIndex, "browser");
+        account.set("wallet", "private", "custom");
+        account.set("index", browserIndex, "custom");
+        projectItem.props.state.data.dappfile.setItem("accounts", [{name: name}], account);
+
         projectItem.save((status)=>{
             if(status==0) {
-                // TODO: this lookup is bad.
-                const accnts=projectItem.props.state.children[3].props.state._children;
+                // TODO: this lookup is bad, because it depends on the order of the items in the menu.
+                const accnts=projectItem.props.state.children[4].props.state._children;
                 const account=accnts[accnts.length-1];
                 if(this.props.router.panes) this.props.router.panes.openItem(account);
             }
@@ -992,12 +1018,23 @@ export default class DevkitProjectEditorControl extends Component {
         var options = item.props.state.data.dappfile.environments().map((option) => {
             return (<option selected={option.name==item.props.state.data.env} value={option.name}>{option.name}</option>);
         });
+
+        var accounts = item.props.state.data.dappfile.accounts().map((option) => {
+            return (<option selected={option.name==item.props.state.data.account} value={option.name}>{option.name}</option>);
+        });
+
         return (<div class={style.projectSelect}>
             <div class={style.title}>
                 <a href="#" onClick={(e)=>this._angleClicked(e, item)}>{item.getTitle()}</a>
             </div>
             <div class={style.select}>
-                <select title="Environment" onChange={(e) =>this._selectEnvironment(item, e)}>
+                <select title="Account" onChange={(e) =>this._selectAccount(item, e)}>
+                    <option name="(locked)">(locked)</option>
+                    {accounts}
+                </select>
+            </div>
+            <div class={style.select}>
+                <select title="Network" onChange={(e) =>this._selectEnvironment(item, e)}>
                     {options}
                 </select>
             </div>

@@ -135,17 +135,18 @@ export default class Deployer extends Component {
         const contract = this.dappfile.getItem("contracts", [{name: this.props.contract}]);
         const src=contract.get('source');
         const tag=env;
-        const network=contract.get("network", env);
-        const endpoint=(this.props.functions.networks.endpoints[network] || {}).endpoint;
+        this.network=env;
+
+        const endpoint=(this.props.functions.networks.endpoints[this.network] || {}).endpoint;
         if(!endpoint) {
-            this._stderr("No endpoint matched network " + network + ".");
+            this._stderr("No endpoint matched network " + this.network + ".");
             this.callback(1);
             return;
         }
         const obj={
             web3: this._getWeb3(endpoint),
             endpoint: endpoint,
-            network: network,
+            network: this.network,
             gasPrice: "0x3B9ACA00", //TODO
             gasLimit: "0x3b8260", //TODO
             recompile: this.recompile,
@@ -158,11 +159,27 @@ export default class Deployer extends Component {
             binsrc: this._makeFileName(src, tag, "bin"),
             hashsrc: this._makeFileName(src, tag, "hash"),
             metasrc: this._makeFileName(src, tag, "meta"),
-            addresssrc: this._makeFileName(src, tag+"."+network, "address"),
-            txsrc: this._makeFileName(src, tag+"."+network, "tx"),
+            addresssrc: this._makeFileName(src, tag+"."+this.network, "address"),
+            txsrc: this._makeFileName(src, tag+"."+this.network, "tx"),
             deploysrc: this._makeFileName(src, tag, "deploy"),
             contractsjssrc: "/app/contracts/." + this.props.contract + "." + env + ".js",
         };
+
+        this.accountName = this.props.project.props.state.data.account;
+        if(!this.accountName || this.accountName == "(locked)") {
+            this._stderr("No account chosen. Please choose an account for the network in the left menu.");
+            this.callback(1);
+            return;
+        }
+        const account = this.dappfile.getItem("accounts", [{name: this.accountName}]);
+        const accountIndex=account.get('index', env);
+        const walletName=account.get('wallet', env);
+        const wallet = this.dappfile.getItem("wallets", [{name: walletName}]);
+        if(!wallet) {
+            this._stderr("Can not deploy with chosen account on public network. Choose the first account in the list.");
+            this.callback(1);
+            return;
+        }
 
         this._buildArgs(obj, (status)=>{
             if(status!=0) {
@@ -181,16 +198,6 @@ export default class Deployer extends Component {
                     }
                     this._buildBin(obj, (status)=>{
                         if(status!=0) {
-                            this.callback(1);
-                            return;
-                        }
-                        const accountName = obj.contract.get("account");
-                        const account = this.dappfile.getItem("accounts", [{name: accountName}]);
-                        const accountIndex=account.get('index', env);
-                        const walletName=account.get('wallet', env);
-                        const wallet = this.dappfile.getItem("wallets", [{name: walletName}]);
-                        if(!wallet) {
-                            this._stderr("Wallet not found.");
                             this.callback(1);
                             return;
                         }
@@ -282,7 +289,7 @@ export default class Deployer extends Component {
                                 });
                             }
                             else {
-                                this._openWallet(obj, obj.contract.get("account"), (status)=>{
+                                this._openWallet(obj, this.accountName, (status)=>{
                                     if(status!=0) {
                                         this.callback(1);
                                         return;
@@ -329,8 +336,16 @@ export default class Deployer extends Component {
             const walletName=account.get('wallet', env);
             const wallet = this.dappfile.getItem("wallets", [{name: walletName}]);
             if(!wallet) {
-                this._stderr("Wallet not found for constructor argument.");
-                cb(1);
+                // We expect a static value to have been set as the account address.
+                const accountAddress=account.get('address', env);
+                if(!accountAddress) {
+                    this._stderr("Wallet/Address not found for account: "+accountName);
+                    cb(1);
+                }
+                else {
+                    args2.push(accountAddress);
+                    cb(0);
+                }
                 return;
             }
             const walletType=wallet.get('type');
@@ -377,10 +392,8 @@ export default class Deployer extends Component {
                 return;
             }
             const src=contract.get('source');
-            const network=contract.get("network", env);
             const tag=env;
-            const addresssrc=this._makeFileName(src, tag+"."+network, "address");
-            const txsrc=this._makeFileName(src, tag+"."+network, "tx");
+            const txsrc=this._makeFileName(src, tag+"."+this.network, "tx");
             const deploysrc=this._makeFileName(src, tag, "deploy");
             const files=[txsrc, addresssrc, deploysrc];
             this._loadRawFiles(files, (status, bodies)=>{
@@ -832,9 +845,7 @@ if(typeof(Contracts)==="undefined") var Contracts={};
 
     renderToolbar = () => {
         const contract = this.dappfile.getItem("contracts", [{name: this.props.contract}]);
-        const env=this.props.project.props.state.data.env;
-        const network=contract.get("network", env);
-        const endpoint=(this.props.functions.networks.endpoints[network] || {}).endpoint;
+        const endpoint=(this.props.functions.networks.endpoints[this.network] || {}).endpoint;
         const cls={};
         cls[style.running] = this.isRunning;
         return (
@@ -847,7 +858,7 @@ if(typeof(Contracts)==="undefined") var Contracts={};
                 </div>
                 <div class={style.info}>
                     <span>
-                        Deploy {this.props.contract}, Network: {network}, Endpoint: {endpoint}
+                        Deploy {this.props.contract}, Network: {this.network}, Endpoint: {endpoint}
                     </span>
                 </div>
             </div>
