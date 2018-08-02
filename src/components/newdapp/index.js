@@ -96,6 +96,12 @@ export default class DevkitNewDapp extends Component {
             const files=tpl[1];
             this.props.backend.saveProject(project, {dappfile:dappfile}, (o)=>{cb(o.status,o.code)}, true, files)
         }
+        else if(this.state.projectTemplate=="Blank") {
+            const tpl=Templates.tplBlank(project, title);
+            const dappfile=tpl[0];
+            const files=tpl[1];
+            this.props.backend.saveProject(project, {dappfile:dappfile}, (o)=>{cb(o.status,o.code)}, true, files)
+        }
         else {
             cb(1, 1);
         }
@@ -220,6 +226,11 @@ export default class DevkitNewDapp extends Component {
                                 Choose a template to start out with:
                             </p>
                             <ul>
+                                <li>
+                                    <label>
+                                        <input checked={this.state.projectTemplate=="Blank"} value="Blank" onClick={this.handleTemplateChange} type="radio" /> Blank project
+                                    </label>
+                                </li>
                                 <li>
                                     <label>
                                         <input checked={this.state.projectTemplate=="HelloWorld"} value="HelloWorld" onClick={this.handleTemplateChange} type="radio" /> HelloWorld - Simple starter DApp
