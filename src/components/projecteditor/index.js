@@ -18,6 +18,7 @@ import { Component } from 'preact';
 import style from './style';
 import Control from './control.js';
 import Panes from './panes.js';
+import TopBar from '../topbar';
 
 export default class DevkitProjectEditor extends Component {
     constructor(props) {
@@ -71,6 +72,7 @@ export default class DevkitProjectEditor extends Component {
     render() {
         return (
             <div class={style.projecteditor} id="main_container">
+                <TopBar router={this.router} />
                 <div key="main_control" id="main_control" class={style.control}>
                     <Control router={this.router} functions={this.props.functions} />
                 </div>

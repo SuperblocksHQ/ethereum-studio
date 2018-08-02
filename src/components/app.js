@@ -18,7 +18,6 @@ import { Component } from 'preact';
 import classNames from 'classnames';
 import Modal from './modal';
 
-import TopBar from './topbar';
 import ProjectEditor from './projecteditor';
 import { Wallet } from './projecteditor/wallet';
 
@@ -231,9 +230,10 @@ export default class App extends Component {
         return (
             <div id="app" className={this.getClassNames()}>
                 <div id="app_content">
-                    <TopBar />
                     <div class="maincontent">
-    					<ProjectEditor key="projedit" functions={this.functions} />
+                        <ProjectEditor
+                            key="projedit"
+                            functions={this.functions} />
                     </div>
                     <div class="bottom-status-bar">
     					<span class="left">
