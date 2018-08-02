@@ -219,7 +219,7 @@ export default class Compiler extends Component {
                                     };
                                     cb(metasrc, JSON.stringify(meta), ()=>{
                                         cb(binsrc, "0x"+contractObj.evm.bytecode.object, ()=>{
-                                            const hash=sha256(contractbody.contents).toString();
+                                            const hash=sha256(contractbody).toString();
                                             cb(hashsrc, hash, ()=>{
                                                 // This is the success exit point.
                                                 // Reload projects to update file list and open tabs.
