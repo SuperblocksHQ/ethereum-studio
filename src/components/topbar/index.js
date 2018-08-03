@@ -120,7 +120,7 @@ export default class TopBar extends DropDownDialog {
                                         <ul class={style.projectSwitcherList}>
                                             <li class={style.projSwitcherItem}>
                                                 <div class={classNames([style.projSwitcherRow, style.container])}>
-                                                    <a href="" class={style.container}>
+                                                    <a href="#" class={style.container}>
                                                         <div>My Project - </div>
                                                         <div>&nbsp;myproject</div>
                                                     </a>
