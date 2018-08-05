@@ -504,7 +504,7 @@ export default class DevkitProjectEditorControl extends Component {
         this.props.functions.modal.show(modal);
     };
 
-    _menuTop = (level, index, item) => <NetworkAccountSelector />;
+    _menuTop = (level, index, item) => <NetworkAccountSelector router={this.props.router} item={item} />;
 
     _downloadWorkspace = e => {
         e.preventDefault();
@@ -1076,8 +1076,16 @@ export default class DevkitProjectEditorControl extends Component {
     };
 
     _addProjectToExplorer = (projectItem) => {
+        // TODO: only one project can be open at a time
         projectItem.props.state.status='active';
         this.setState();
+    };
+
+    _getActiveProject =() => {
+        const projects=this._projectsList.filter((project)=>{
+            return project.props.state.status=='active';
+        });
+        return projects[0];
     };
 
     _validateProject = (project) => {
