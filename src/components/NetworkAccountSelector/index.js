@@ -14,7 +14,7 @@ class NetworkSelector extends Component {
         if(project) {
             dappfile=project.props.state.data.dappfile;
             dappfile.environments().map((env) => {
-                if(env.name==this.props.item.props.state.env) network=this.props.item.props.state.env;
+                if(env.name==project.props.state.data.env) network=project.props.state.data.env;
             });
             defaultEnv=dappfile.environments()[0].name;
         };
@@ -46,7 +46,7 @@ class NetworkSelector extends Component {
         this.setState({
             network: network,
         });
-        this.props.item.props.state.env=network;
+        this.state.project.props.state.env=network;
     };
 
     closeNetworkMenu=(e)=>{
@@ -89,13 +89,13 @@ class NetworkSelector extends Component {
 class AccountSelector extends Component {
     constructor(props) {
         super(props);
-        console.log(props);
         var account,dappfile, defaultAccount="Default";
         const project = this.props.router.control._getActiveProject();
+        console.log(project);
         if(project) {
             dappfile=project.props.state.data.dappfile;
             dappfile.accounts().map((accountItem) => {
-                if(accountItem.name==this.props.item.props.state.account) account=this.props.item.props.state.account;
+                if(accountItem.name==project.props.state.data.account) account=project.props.state.data.account;
             });
             defaultAccount=dappfile.accounts()[0].name;
         };
@@ -129,7 +129,7 @@ class AccountSelector extends Component {
         this.setState({
             account: account,
         });
-        this.props.item.props.state.account=account;
+        this.state.project.props.state.data.account=account;
     };
 
     closeAccountMenu=(e)=>{
