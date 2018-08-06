@@ -132,7 +132,26 @@ export default class DevkitProjectEditorPanes extends Component {
         this.closePane(paneId);
     }
 
-    closePane = (paneId) => {
+    closeAll = (cb) => {
+        const fn = () => {
+            if(this.panes.length==0) {
+                if(cb) cb(0);
+                return;
+            }
+            const pane = this.panes[0];
+            this.closePane(pane.id, (status) => {
+                if(status==0) {
+                    fn();
+                }
+                else {
+                    if(cb) cb(1);
+                }
+            });
+        };
+        fn();
+    };
+
+    closePane = (paneId, cb) => {
         var {pane,index}=this.getPane(paneId);
         pane.closeAll( (status) => {
             if(status==0) {
@@ -146,6 +165,7 @@ export default class DevkitProjectEditorPanes extends Component {
                 }
                 this.setState();
             }
+            if(cb) cb(status);
         });
     };
 
