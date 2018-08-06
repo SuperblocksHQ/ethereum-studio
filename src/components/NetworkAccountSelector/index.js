@@ -10,7 +10,7 @@ class NetworkSelector extends Component {
     constructor(props) {
         super(props);
         var network,dappfile,defaultEnv="browser";
-        const project = this.props.router.control._getActiveProject();
+        const project = this.props.router.control.getActiveProject();
         if(project) {
             dappfile=project.props.state.data.dappfile;
             dappfile.environments().map((env) => {
@@ -97,7 +97,7 @@ class AccountSelector extends Component {
     constructor(props) {
         super(props);
         var account,dappfile, defaultAccount="Default";
-        const project = this.props.router.control._getActiveProject();
+        const project = this.props.router.control.getActiveProject();
         if(project) {
             dappfile=project.props.state.data.dappfile;
             dappfile.accounts().map((accountItem) => {

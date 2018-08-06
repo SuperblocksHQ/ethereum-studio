@@ -63,22 +63,6 @@ export default class AppEditor extends Component {
         });
     };
 
-    delete = (e) => {
-        e.preventDefault();
-        if(confirm("Are you sure you want to delete this DApp?")) {
-            if(this.props.router.control._getProjectWindowCount(this.props.project)>1) {
-                alert("You must first close all open tabs for this project.");
-                return;
-            }
-            this.props.project.delete(()=>{
-                this.props.parent.close();
-            });
-        }
-    };
-
-    _download=()=>{
-    };
-
     onChange = (e, key) => {
         var value=e.target.value;
         const form=this.state.form;
@@ -146,12 +130,6 @@ export default class AppEditor extends Component {
                         <a href="#" class="btn2" onClick={this.save}>Save</a>
                     </form>
                 </div>
-            <div>
-                <a href="#" onClick={(e)=>{e.preventDefault();this.backend.downloadProject(this.props.dappfilejson.dir);}}>Download project as JSON file</a>
-            </div>
-            <div>
-                <a href="#" class={style.deleteBtn} onClick={this.delete}>Delete this DApp</a>
-            </div>
             </div>
         </div>);
     }

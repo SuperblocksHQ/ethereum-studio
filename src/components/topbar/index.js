@@ -14,8 +14,8 @@ import {
 } from '../icons';
 
 class DropDownDialog extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         this.state = {
             showMenu: false,
@@ -81,8 +81,8 @@ class HelpDropdownDialog extends DropDownDialog {
 }
 
 export default class TopBar extends DropDownDialog {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         this.onTransactionsClicked = this.onTransactionsClicked.bind(this);
     }
@@ -91,7 +91,70 @@ export default class TopBar extends DropDownDialog {
         this.props.router.control._openAppShowPreview();
     }
 
+    openProject = (e, project, cb) => {
+        e.preventDefault();
+        this.props.router.control.openProject(project, cb);
+    };
+
+    openProjectConfig = (e, project) => {
+        this.openProject(e, project, (status) => {
+            if(status==0) {
+                this.props.router.control.openProjectConfig(project);
+            }
+        });
+    };
+
+    downloadProject = (e, project) => {
+        e.preventDefault();
+        this.props.router.control.downloadProject(project);
+    };
+
+    deleteProject = (e, project) => {
+        e.preventDefault();
+        this.props.router.control.deleteProject(project);
+    };
+
+    getProjectItems = () => {
+        if(this.props.router.control) {
+            const openProject = this.props.router.control.getActiveProject();
+            const items=this.props.router.control.getProjects().map((project)=>{
+                const isActive = openProject === project;
+                // TODO: implement icon for isActive flag.
+                return (
+                    <li class={style.projSwitcherItem}>
+                        <div class={classNames([style.projSwitcherRow, style.container])}>
+                            <a href="#" class={style.container} onClick={(e)=>{this.openProject(e, project)}}>
+                                <div>{project.props.state.data.dappfile.getObj().project.info.title || ""} - </div>
+                                <div>&nbsp;{project.props.state.data.dir}</div>
+                            </a>
+                            <div class={classNames([style.projSwitcherRowActions, style.container])}>
+                                <button class="btnNoBg" onClick={(e)=>{this.openProjectConfig(e, project)}}>
+                                    <IconConfigure />
+                                </button>
+                                <button class="btnNoBg" onClick={(e)=>{this.downloadProject(e, project)}}>
+                                    <IconDownload />
+                                </button>
+                                <button class="btnNoBg" onClick={(e)=>{this.deleteProject(e, project)}}>
+                                    <IconTrash />
+                                </button>
+                            </div>
+                        </div>
+                    </li>
+                );
+            });
+            return items;
+        }
+    };
+
     render() {
+        var title="";
+        const projectItems = this.getProjectItems();
+        if(this.props.router.control) {
+            const openProject = this.props.router.control.getActiveProject();
+            if(openProject) {
+                title = openProject.props.state.data.dappfile.getObj().project.info.title;
+            }
+        }
         return (
             <div class={style.topbar}>
                 <img class={style.logo} src="/static/img/img-studio-logo.svg" alt="Superblocks Studio logo"></img>
@@ -103,7 +166,7 @@ export default class TopBar extends DropDownDialog {
                 </div>
                 <button class={classNames([style.projectButton, style.container, "btnNoBg"])} onClick={this.showMenu}>
                     <IconProjectSelector class={style.icon}/>
-                    <span class={style.projectText}>My super project</span>
+                    <span class={style.projectText}>{title}</span>
                     <IconDropdown class={classNames([style.dropdown])}/>
                 </button>
                 {
@@ -118,25 +181,7 @@ export default class TopBar extends DropDownDialog {
                                 <div class={classNames([style.paneList, style.container])}>
                                     <div class={style.pane}>
                                         <ul class={style.projectSwitcherList}>
-                                            <li class={style.projSwitcherItem}>
-                                                <div class={classNames([style.projSwitcherRow, style.container])}>
-                                                    <a href="#" class={style.container}>
-                                                        <div>My Project - </div>
-                                                        <div>&nbsp;myproject</div>
-                                                    </a>
-                                                    <div class={classNames([style.projSwitcherRowActions, style.container])}>
-                                                        <button class="btnNoBg">
-                                                            <IconConfigure />
-                                                        </button>
-                                                        <button class="btnNoBg">
-                                                            <IconDownload />
-                                                        </button>
-                                                        <button class="btnNoBg">
-                                                            <IconTrash />
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </li>
+                                            {projectItems}
                                         </ul>
                                     </div>
                                 </div>

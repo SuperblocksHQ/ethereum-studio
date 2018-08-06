@@ -62,7 +62,6 @@ export default class DevkitProjectEditorControl extends Component {
         this._projectsList=[
         ];
         this._menuChildren=[
-            this._newItem({type: "project_select", title: "DApps", render:this._menuProjects, classes: ["menuprojects"], icon:null, state:{data: {projects: this._projectsList}}}),
         ];
         var menu=this._newItem({type: "top", title: "Top menu", render:this._menuTop, classes: ["menutop"], icon:null, toggable: false, state: {children: (item) => {
             var children=[];
@@ -207,7 +206,7 @@ export default class DevkitProjectEditorControl extends Component {
             render: this._renderProjectTitle,
             type: "project",
             icon: null,
-            toggable: true,
+            toggable: false,
             classes: ["project"],
             state: state,
         });
@@ -551,35 +550,70 @@ export default class DevkitProjectEditorControl extends Component {
         e.target.value = '';
     }
 
-    _menuProjects = (level, index, item) => {
-        var index=-1;
-        return (
-            <div>
-                <select onChange={this._selectProject}>
-                    <option selected={true}>DApps</option>
-                    {item.props.state.data.projects.map((item) => {
-                        index++;
-                        return <option value={index}>{item.getTitle()}</option>
-                    })}
-                </select>
-            </div>
-        );
+    closeProject = (cb) => {
+        // Request to close all windows.
+        this.props.router.panes.closeAll((status) => {
+            if(status==0) {
+                // Close project.
+                this._projectsList.map((project)=>{
+                    delete project.props.state.status;
+                });
+            }
+            if(cb) cb(status);
+        });
     };
 
-    _selectProject = (e) => {
-        e.preventDefault();
-        var item=this._projectsList[e.target.value];
-        if(item) this._addProjectToExplorer(item);
+    openProject = (project, cb) => {
+        if(this.getActiveProject() == project) {
+            if(cb) cb(0);
+            return;
+        }
+
+        this.closeProject((status) => {
+            if(status==0) this._addProjectToExplorer(project);
+            if(cb) cb(status);
+        });
     };
 
-    _openProjectConfig = (e, item) => {
-        e.preventDefault();
+    openProjectConfig = (item) => {
         this.backend.loadProject(item.props.state.data.dir, (status, project)=>{
             if(status==0) {
                 item.props._dappfilejson=project;
                 if(this.props.router.panes) this.props.router.panes.openItem(item);
             }
         });
+    };
+
+    deleteProject = (project, cb) => {
+        if(confirm("Are you sure you want to delete this project?")) {
+            const delFn = () => {
+                project.delete((status)=>{
+                    if(cb) cb(status);
+                });
+            };
+
+            if(this.getActiveProject() == project) {
+                this.closeProject((status) => {
+                    if(status==0) {
+                        delFn();
+                    }
+                    else {
+                        if(cb) cb(status);
+                    }
+                });
+            }
+            else {
+                delFn();
+            }
+        }
+        else {
+            if(cb) cb(1);
+        }
+    };
+
+    downloadProject = (project) => {
+        console.log(project);
+        this.backend.downloadProject(project.props.state.data.dir);
     };
 
     _renderConstantsTitle = (level, index, item) => {
@@ -1023,6 +1057,7 @@ export default class DevkitProjectEditorControl extends Component {
     };
 
     _renderProjectTitle = (level, index, item) => {
+        return;
         var options = item.props.state.data.dappfile.environments().map((option) => {
             return (<option selected={option.name==item.props.state.data.env} value={option.name}>{option.name}</option>);
         });
@@ -1036,7 +1071,7 @@ export default class DevkitProjectEditorControl extends Component {
                 <a href="#" onClick={(e)=>this._angleClicked(e, item)}>{item.getTitle()}</a>
             </div>
             <div class={style.buttons}>
-                <a href="#" title="Configure project" onClick={(e)=>this._openProjectConfig(e, item)}>
+                <a href="#" title="Configure project" onClick={(e)=>this.openProjectConfig(e, item)}>
                     <IconConfigure />
                 </a>
             </div>
@@ -1044,16 +1079,19 @@ export default class DevkitProjectEditorControl extends Component {
     };
 
     _addProjectToExplorer = (projectItem) => {
-        // TODO: only one project can be open at a time
         projectItem.props.state.status='active';
         this.setState();
     };
 
-    _getActiveProject =() => {
+    getActiveProject =() => {
         const projects=this._projectsList.filter((project)=>{
             return project.props.state.status=='active';
         });
         return projects[0];
+    };
+
+    getProjects = () => {
+        return this._projectsList;
     };
 
     _validateProject = (project) => {
