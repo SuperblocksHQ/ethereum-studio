@@ -24,6 +24,8 @@ class NetworkSelector extends Component {
             network: network || defaultEnv,
             showNetworkMenu: false,
             project: project,
+        }, ()=> {
+            this.pushSettings();
         });
     }
 
@@ -46,7 +48,11 @@ class NetworkSelector extends Component {
         this.setState({
             network: network,
         });
-        this.state.project.props.state.env=network;
+        this.pushSettings();
+    };
+
+    pushSettings=()=>{
+        if(this.state.project) this.state.project.props.state.data.env=this.state.network;
     };
 
     closeNetworkMenu=(e)=>{
@@ -60,6 +66,7 @@ class NetworkSelector extends Component {
         const networks = this.state.dappfile.environments().map((env) => {
             const cls={};
             cls[style.networkLink]=true;
+            cls[style.capitalize]=true;
             if(env.name==this.state.network) cls[style.networkLinkChosen]=true;
             return (<a href="#" onClick={(e)=>{e.preventDefault();this.networkChosen(env.name)}} className={classnames(cls)}>{env.name}</a>);
         });
@@ -74,7 +81,7 @@ class NetworkSelector extends Component {
         const droppedDown=this.networkDropdown();
         return (
             <div class={ style.selector }>
-                <a href="#" onClick={this.networkClick}>
+                <a class={style.capitalize} href="#" onClick={this.networkClick}>
                     {this.state.network}
                     <div class={ style.dropdownIcon }>
                         <IconDropdown height="8" width="10"/>
@@ -91,7 +98,6 @@ class AccountSelector extends Component {
         super(props);
         var account,dappfile, defaultAccount="Default";
         const project = this.props.router.control._getActiveProject();
-        console.log(project);
         if(project) {
             dappfile=project.props.state.data.dappfile;
             dappfile.accounts().map((accountItem) => {
@@ -100,13 +106,13 @@ class AccountSelector extends Component {
             defaultAccount=dappfile.accounts()[0].name;
         };
 
-        console.log("account", account);
-
         this.setState({
             dappfile: dappfile,
             account: account || defaultAccount,
             showAccountMenu: false,
             project: project,
+        }, ()=> {
+            this.pushSettings();
         });
     }
 
@@ -129,7 +135,28 @@ class AccountSelector extends Component {
         this.setState({
             account: account,
         });
-        this.state.project.props.state.data.account=account;
+    };
+
+    accountEdit=(e, index)=>{
+        // Pass on to control.js
+        e.preventDefault();
+        if(this.state.project) this.props.router.control._clickEditAccount (e, this.state.project, index);
+    };
+
+    accountDelete=(e, index)=>{
+        // Pass on to control.js
+        e.preventDefault();
+        if(this.state.project) this.props.router.control._clickDeleteAccount (e, this.state.project, index);
+    };
+
+    accountNew=(e)=>{
+        // Pass on to control.js
+        e.preventDefault();
+        if(this.state.project) this.props.router.control._clickNewAccount(e, this.state.project);
+    };
+
+    pushSettings=()=>{
+        if(this.state.project) this.state.project.props.state.data.account=this.state.account;
     };
 
     closeAccountMenu=(e)=>{
@@ -140,15 +167,22 @@ class AccountSelector extends Component {
 
     accountDropdown=(e)=>{
         if(!this.state.showAccountMenu) return;
-        const account = this.state.dappfile.accounts().map((account) => {
+        const accounts = this.state.dappfile.accounts().map((account, index) => {
             const cls={};
             cls[style.accountLink]=true;
             if(account.name==this.state.account) cls[style.accountLinkChosen]=true;
-            return (<a href="#" onClick={(e)=>{e.preventDefault();this.accountChosen(account.name)}} className={classnames(cls)}>{account.name}</a>);
+            return (
+                <div>
+                    <a href="#" onClick={(e)=>{e.preventDefault();this.accountChosen(account.name)}} className={classnames(cls)}>{account.name}</a>
+                    <a href="#" onClick={(e)=>{e.preventDefault();this.accountEdit(e, index)}} className={classnames(cls)}>(edit)</a>
+                    <a href="#" onClick={(e)=>{e.preventDefault();this.accountDelete(e, index)}} className={classnames(cls)}>(delete)</a>
+                </div>
+            );
         });
         return (
             <div class={style.accounts}>
-                {account}
+                {accounts}
+                <a href="#" style="color:#333;" onClick={this.accountNew}>(+ new account)</a>
             </div>
         );
     };
@@ -165,7 +199,7 @@ class AccountSelector extends Component {
                 </a>
                 {droppedDown}
             </div>
-        )
+        );
     }
 }
 

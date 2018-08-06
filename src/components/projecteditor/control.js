@@ -309,9 +309,9 @@ export default class DevkitProjectEditorControl extends Component {
         var constants=this._newItem({classes: ["hidden"], title: "Constants", type: "folder", type2: "constants", _project: projectItem, render:this._renderConstantsTitle ,toggable: true, state:{open: false, children: constantsChildren}});
         children.push(constants);
 
-        // TODO - Remove all the code from accounts from here.
-        // var accounts=this._newItem({title: "Accounts", type: "folder", type2: "accounts", _project: projectItem, render:this._renderAccountsTitle ,toggable: true, state:{open: false, children: accountsChildren}});
-        // children.push(accounts);
+        // Accounts items are hidden and accessed from the accounts dropdown menu.
+        var accounts=this._newItem({classes: ["hidden"], title: "Accounts", type: "folder", type2: "accounts", _project: projectItem, toggable: true, state:{open: false, children: accountsChildren}});
+        children.push(accounts);
 
         var learningAndResources=this._newItem({ title: "LEARNING AND RESOURCES", type: "app", type2: "composite", render: this._renderLearnSectionTitle, onClick: this._openExternalLink, _project: projectItem, toggable: true, icon: null, state: { open: true, children: [
             this._newItem({ title: "Guide to Superblocks Studio", _project: projectItem, type: "file", type2: 'html', _project: projectItem, onClick: this._openItem, icon: <IconGuide />, state: { _tag:0 }}),
@@ -582,24 +582,6 @@ export default class DevkitProjectEditorControl extends Component {
         });
     };
 
-    _selectAccount = (item, e) => {
-        var account=e.target.value;
-        if(account) {
-            item.props.state.data.account=account;
-            if(this.props.router.panes) this.props.router.panes.redraw(true);
-            this.setState();
-        }
-    };
-
-    _selectEnvironment = (item, e) => {
-        var env=e.target.value;
-        if(env) {
-            item.props.state.data.env=env;
-            if(this.props.router.panes) this.props.router.panes.redraw(true);
-            this.setState();
-        }
-    };
-
     _renderConstantsTitle = (level, index, item) => {
         var projectItem = item.props._project;
         return (
@@ -609,21 +591,6 @@ export default class DevkitProjectEditorControl extends Component {
                 </div>
                 <div class={style.buttons}>
                     <a href="#" title="New constant" onClick={(e)=>{this._clickNewConstant(e, projectItem);}}>
-                        <IconGem />
-                    </a>
-                </div>
-            </div>);
-    };
-
-    _renderAccountsTitle = (level, index, item) => {
-        var projectItem = item.props._project;
-        return (
-            <div class={style.projectContractsTitle}>
-                <div class={style.title}>
-                    <a href="#" onClick={(e)=>this._angleClicked(e, item)}>{item.getTitle()}</a>
-                </div>
-                <div class={style.buttons}>
-                    <a href="#" title="New account" onClick={(e)=>{this._clickNewAccount(e, projectItem);}}>
                         <IconGem />
                     </a>
                 </div>
@@ -687,7 +654,6 @@ export default class DevkitProjectEditorControl extends Component {
     _openAppShowPreview = () => {
         projectItem= item.props._project
         // TODO: this lookup is bad.
-        console.log(projectItem.props.state);
         const appSectionChildren=projectItem.props.state.children[2].props.state.children;
         const viewItem=appSectionChildren[appSectionChildren.length-1];
         if(this.props.router.panes) this.props.router.panes.openItem(viewItem);
@@ -721,6 +687,7 @@ export default class DevkitProjectEditorControl extends Component {
         this.setState();
     };
 
+    // Called from accounts dropdown
     _clickNewAccount = (e, projectItem) => {
         e.preventDefault();
 
@@ -769,8 +736,6 @@ export default class DevkitProjectEditorControl extends Component {
     };
 
     _clickNewContract = (e, projectItem) => {
-        console.log(projectItem);
-
         e.preventDefault();
 
         var name;
@@ -870,8 +835,22 @@ export default class DevkitProjectEditorControl extends Component {
         this.setState();
     };
 
+    _clickEditAccount = (e, projectItem, accountIndex) => {
+        // Find item in menu
+        // TODO: this lookup is bad, because it depends on the order of the items in the menu.
+        const accnts=projectItem.props.state.children[4].props.state._children;
+        const account=accnts[accountIndex];
+
+        this._openItem(e, account);
+    };
+
     _clickDeleteAccount = (e, projectItem, accountIndex) => {
         e.preventDefault();
+        if(projectItem.props.state.data.dappfile.accounts().length==1) {
+            alert("You can't delete the last account.");
+            return;
+        }
+        if(!confirm("Are you sure to delete account?")) return;
         projectItem.props.state.data.dappfile.accounts().splice(accountIndex,1);
         projectItem.save();
         this.setState();
@@ -1055,17 +1034,6 @@ export default class DevkitProjectEditorControl extends Component {
         return (<div class={style.projectSelect}>
             <div class={style.title}>
                 <a href="#" onClick={(e)=>this._angleClicked(e, item)}>{item.getTitle()}</a>
-            </div>
-            <div class={style.select}>
-                <select title="Account" onChange={(e) =>this._selectAccount(item, e)}>
-                    <option name="(locked)">(locked)</option>
-                    {accounts}
-                </select>
-            </div>
-            <div class={style.select}>
-                <select title="Network" onChange={(e) =>this._selectEnvironment(item, e)}>
-                    {options}
-                </select>
             </div>
             <div class={style.buttons}>
                 <a href="#" title="Configure project" onClick={(e)=>this._openProjectConfig(e, item)}>

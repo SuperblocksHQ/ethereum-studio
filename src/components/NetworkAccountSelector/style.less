@@ -18,6 +18,11 @@
         margin-left: 14px;
         margin-top: 2px;
     }
+    .capitalize {
+        &:first-letter{
+            text-transform: capitalize
+        }
+    }
     .networks {
         position: absolute;
         margin-top: 40px;
@@ -27,9 +32,6 @@
         display: block;
         font-size: 1.1em;
         color: #ccc;
-        &:first-letter{
-            text-transform: capitalize
-        }
     }
     .networkLinkChosen {
         color: green;
@@ -43,9 +45,6 @@
         display: block;
         font-size: 1.1em;
         color: #ccc;
-        &:first-letter{
-            text-transform: capitalize
-        }
     }
     .accountLinkChosen {
         color: green;
