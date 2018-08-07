@@ -40,6 +40,15 @@ export default class ContractEditor extends Component {
     focus = (rePerform) => {
     };
 
+    canClose = (cb) => {
+        if(this.isDirty) {
+            const flag = confirm("There is unsaved data. Do you want to close tab and loose the changes?");
+            cb(flag?0:1);
+            return;
+        }
+        cb(0);
+    };
+
     save = (e) => {
         e.preventDefault();
         if((this.contract.obj.name||"").length==0||(this.contract.obj.source||"").length==0) {
@@ -74,11 +83,12 @@ export default class ContractEditor extends Component {
             }
             this.props.project.save((status)=>{
                 if(status==0) {
+                    this.isDirty=false;
                     this.props.parent.close();
                     this.props.router.control._reloadProjects();
                 }
             });
-        }
+        };
         // TODO verify object validity?
         if(this.props.contract!=this.contract.get('name')) {
             const contract2 = this.dappfile.getItem("contracts", [{name:this.contract.get("name")}]);
@@ -98,7 +108,7 @@ export default class ContractEditor extends Component {
                     return;
                 }
                 else {
-                    alert("Warning: You must now manually rename the constructor in the contract source file to match the new name.");
+                    alert("Warning: You must now manually rename the contract and the constructor in the source file to match the new name file name.");
                 }
                 finalize();
             });
@@ -114,6 +124,7 @@ export default class ContractEditor extends Component {
             this.contract.set("source", "/contracts/"+value+".sol");
         }
         this.contract.set(key, value);
+        this.isDirty=true;
         this.setState();
     };
 
@@ -146,7 +157,13 @@ export default class ContractEditor extends Component {
                 const accounts=this.getAccounts();
                 accounts.map((account) => options.push(account.name));
                 arg[type] = arg[type] || options[0];
+                if(options.indexOf(arg[type]) == -1) {
+                    // Chosen value does not exist
+                    this.isDirty = true;
+                    arg[type] = options[0];
+                }
                 value=this.getSelect(arg[type], options, (e) => {
+                    this.isDirty=true;
                     arg[type]=e.target.value;
                 });
             }
@@ -154,16 +171,24 @@ export default class ContractEditor extends Component {
                 type="contract";
                 const options=this.getContractsBefore();
                 arg[type] = arg[type] || options[0];
+                if(options.indexOf(arg[type]) == -1) {
+                    // Chosen value does not exist
+                    this.isDirty = true;
+                    arg[type] = options[0];
+                }
                 value=this.getSelect(arg[type], options, (e) => {
+                    this.isDirty=true;
                     arg[type]=e.target.value;
                 });
             }
             else {
                 value=(<input value={arg[type]} onChange={(e) => {
+                    this.isDirty=true;
                     arg[type]=e.target.value;
                 }}/>);
             }
             const select=this.getSelect(type, ["account","contract","value"], (e) => {
+                this.isDirty=true;
                 delete arg[type];
                 arg[e.target.value]="";
                 this.redraw();
@@ -249,7 +274,7 @@ export default class ContractEditor extends Component {
                             </div>
                         </div>
                         <div>
-                            <a href="#" class="btn2" onClick={this.save}>Save</a>
+                            <button href="#" class="btn2" onClick={this.save}>Save</button>
                         </div>
                     </form>
                 </div>

@@ -355,9 +355,7 @@ export default class AccountEditor extends Component {
                                     value={this.form.name}
                                     onKeyUp={(e)=>{this.onNameChange(e)}}
                                     onChange={(e)=>{this.onNameChange(e)}} />
-                                <button class="btn2"
-                                    disabled={!this.state.accountNameDirty}
-                                    onClick={this._nameSave}>Save &amp; Close tab</button>
+                                <button disabled={!this.state.accountNameDirty} onClick={this._nameSave}>Save name</button>
                             </div>
                             <div class={style.networks}>
                                 {this.dappfile.environments().map((env) => {

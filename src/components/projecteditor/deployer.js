@@ -331,6 +331,11 @@ export default class Deployer extends Component {
         else if(arg.account) {
             const accountName = arg.account;
             const account = this.dappfile.getItem("accounts", [{name: accountName}]);
+            if(!account) {
+                this._stderr("Account " + (accountName||"") + " is referred to as constructor argument to the contract, but the account does not exist. Please reconfigure the contract.");
+                cb(1);
+                return;
+            }
             const accountIndex=account.get('index', env);
             const walletName=account.get('wallet', env);
             const wallet = this.dappfile.getItem("wallets", [{name: walletName}]);
@@ -390,10 +395,21 @@ export default class Deployer extends Component {
                 cb(1);
                 return;
             }
+            var index1=-1,index2=-1;
+            this.dappfile.contracts().map((c, index)=>{
+                if(c.name==arg.contract) index1=index;
+                if(c.name==this.props.contract) index2=index;
+            });
+            if(index1>index2) {
+                this._stderr("Contract " + arg.contract + " is referenced as argument but is below this contract in the order. Readjust order or reconfigure this contract.");
+                cb(1);
+                return;
+            }
             const src=contract.get('source');
             const tag=env;
             const txsrc=this._makeFileName(src, tag+"."+this.network, "tx");
             const deploysrc=this._makeFileName(src, tag, "deploy");
+            const addresssrc=this._makeFileName(src, tag+"."+this.network, "address");
             const files=[txsrc, addresssrc, deploysrc];
             this._loadRawFiles(files, (status, bodies)=>{
                 if(status>0) {

@@ -135,6 +135,7 @@ class AccountSelector extends Component {
         this.setState({
             account: account,
         });
+        this.pushSettings();
     };
 
     accountEdit=(e, index)=>{

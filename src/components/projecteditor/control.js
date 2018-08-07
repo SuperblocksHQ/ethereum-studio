@@ -695,7 +695,6 @@ export default class DevkitProjectEditorControl extends Component {
         }
     };
 
-
     _clickNewConstant = (e, projectItem) => {
         e.preventDefault();
 
@@ -729,7 +728,7 @@ export default class DevkitProjectEditorControl extends Component {
 
         var name;
         for(var index=0;index<100000;index++) {
-            name="ACCOUNT"+index;
+            name="Account"+index;
             if(projectItem.props.state.data.dappfile.accounts().filter((c)=>{
                 return c.name==name;
             }).length==0) {
@@ -739,13 +738,24 @@ export default class DevkitProjectEditorControl extends Component {
 
         var browserIndex=0;
         var customIndex=0;
-        projectItem.props.state.data.dappfile.accounts().map((item)=>{
-            const account=projectItem.props.state.data.dappfile.getItem("accounts", [{name: item.name}]);
-            var index=parseInt(account.get("index", "browser"));
-            if(!isNaN(index) && index>=browserIndex) browserIndex=index+1;
-            var index=parseInt(account.get("index", "custom"));
-            if(!isNaN(index) && index>=customIndex) customIndex=index+1;
-        });
+        var dirty;
+        do {
+            dirty=false;
+            projectItem.props.state.data.dappfile.accounts().map((item)=>{
+                const account=projectItem.props.state.data.dappfile.getItem("accounts", [{name: item.name}]);
+                var index=parseInt(account.get("index", "browser"));
+                if(!isNaN(index) && index==browserIndex) {
+                    browserIndex=index+1;
+                    dirty=true;
+                }
+                var index=parseInt(account.get("index", "custom"));
+                if(!isNaN(index) && index==customIndex) {
+                    customIndex=index+1;
+                    dirty=true;
+                }
+            });
+        } while(dirty);
+        console.log("new account indexes", browserIndex, customIndex);
 
         //const wallet=projectItem.props.state.data.dappfile.wallets()[0].name;
         projectItem.props.state.data.dappfile.accounts().push({
