@@ -187,40 +187,37 @@ export default class DevkitNewDapp extends Component {
 
     render() {
         return (
-            <div class={style.centerScreen}>
-                <div className={classnames([style.newDapp])}>
-                    <div class={style.footer}>
-                        <a onClick={this.props.functions.modal.cancel} class="btn2 noBg" href="#">Cancel</a>
-                        <a onClick={this.add} class="btn2"   href="#">Next</a>
-                    </div>
-                    <div class={style.area}>
-                        <div class={style.title}>
-                            Create a new project
-                        </div>
-                        <div class={style.form}>
-                            <div class={style.info}>
-                                    <div>
-                                        <div class={style.input}>
-                                            <p>Project name: </p>
-                                            <input
-                                                type="text"
-                                                maxLength="20"
-                                                value={this.state.projectName}
-                                                onChange={this.handleNameChange}
-                                                placeholder="Enter super cool name"/>
-                                        </div>
-                                        <div class={style.input}>
-                                            <p>DApp (HTML) Title: </p>
-                                            <input
-                                                type="text"
-                                                maxLength="30"
-                                                value={this.state.projectTitle}
-                                                onChange={this.handleTitleChange}/>
-                                        </div>
-                                    </div>
+            <div className={classnames([style.newDapp, "modal"])}>
+                <div class={style.header}>
+                    <div class={style.title}>Create a new project</div>
+                </div>
+                <div class={style.area}>
+                    <div class={style.form}>
+                        <div class={style.info}>
+                            <div class="superInput">
+                                <p class="label">Project name</p>
+                                <input
+                                    type="text"
+                                    maxLength="20"
+                                    value={this.state.projectName}
+                                    onChange={this.handleNameChange}
+                                    placeholder="Enter project name"/>
+                            </div>
+                            <div class="superInput my-3">
+                                <p class="label">DApp (HTML) Title: </p>
+                                <input
+                                    type="text"
+                                    maxLength="30"
+                                    value={this.state.projectTitle}
+                                    onChange={this.handleTitleChange}
+                                    placeholder="Project HTML page title"/>
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class={style.footer}>
+                    <a onClick={this.props.functions.modal.cancel} class="btn2 noBg" href="#">Cancel</a>
+                    <a onClick={this.add} class="btn2"   href="#">Next</a>
                 </div>
             </div>
         );
