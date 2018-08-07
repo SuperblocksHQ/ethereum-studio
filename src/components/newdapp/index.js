@@ -18,7 +18,14 @@ import { h, Component } from 'preact';
 import classnames from 'classnames';
 import style from './style';
 import Templates from '../templates';
-import Modal from '../modal';
+
+class Step1 extends Component {
+
+}
+
+class Step2 extends Component {
+
+}
 
 export default class DevkitNewDapp extends Component {
     constructor(props) {
@@ -112,43 +119,44 @@ export default class DevkitNewDapp extends Component {
         document.querySelector('#wsProjectFileInput').dispatchEvent(new MouseEvent('click')); // ref does not work https://github.com/developit/preact/issues/477
     }
 
-    _uploadProject = (e) => {
-        e.preventDefault();
-        var project=this.state.projectName;
-        if(project=="") {
-            alert("Please give the project a name.");
-            document.querySelector('#wsProjectFileInput').value = "";
-            return;
-        }
-        if(!project.match(/^([a-zA-Z0-9-]+)$/)) {
-            alert('Illegal projectname. Only A-Za-z0-9 and dash (-) allowed.');
-            document.querySelector('#wsProjectFileInput').value = "";
-            return;
-        }
-        var contentJSON="";
+    // TODO - Move out from here
+    // _uploadProject = (e) => {
+    //     e.preventDefault();
+    //     var project=this.state.projectName;
+    //     if(project=="") {
+    //         alert("Please give the project a name.");
+    //         document.querySelector('#wsProjectFileInput').value = "";
+    //         return;
+    //     }
+    //     if(!project.match(/^([a-zA-Z0-9-]+)$/)) {
+    //         alert('Illegal projectname. Only A-Za-z0-9 and dash (-) allowed.');
+    //         document.querySelector('#wsProjectFileInput').value = "";
+    //         return;
+    //     }
+    //     var contentJSON="";
 
-        var files = document.querySelector('#wsProjectFileInput').files;
-        var file = files[0];
+    //     var files = document.querySelector('#wsProjectFileInput').files;
+    //     var file = files[0];
 
-        const handler=(status, code) => {
-            if(this.props.cb) {
-                const index=this.props.functions.modal.getCurrentIndex();
-                if(this.props.cb(status, code) !== false) this.props.functions.modal.close(index);
-            }
-            else {
-                this.props.functions.modal.close();
-            }
-        };
+    //     const handler=(status, code) => {
+    //         if(this.props.cb) {
+    //             const index=this.props.functions.modal.getCurrentIndex();
+    //             if(this.props.cb(status, code) !== false) this.props.functions.modal.close(index);
+    //         }
+    //         else {
+    //             this.props.functions.modal.close();
+    //         }
+    //     };
 
-        this.props.backend.uploadProject(project, file, handler, err => {
-            if(err) {
-                alert(err);
-            }
-            this.props.functions.modal.close();
-        });
+    //     this.props.backend.uploadProject(project, file, handler, err => {
+    //         if(err) {
+    //             alert(err);
+    //         }
+    //         this.props.functions.modal.close();
+    //     });
 
-        e.target.value = '';
-    }
+    //     e.target.value = '';
+    // }
 
     handleNameChange = changeEvent => {
         this.setState({
@@ -178,75 +186,39 @@ export default class DevkitNewDapp extends Component {
     };
 
     render() {
-        const cls={};
-        const clsnew=style.newDapp;
-        cls[clsnew]=true;
         return (
-            <div className={classnames(cls)}>
-                <div class={style.footer}>
-                    <a onClick={this.props.functions.modal.cancel} class="btn2" style="float: left; margin-right: 30px;" href="#">Cancel</a>
-                    <a onClick={this.add} class="btn2 filled" style="float: left;"  href="#">Create</a>
-                    <a onClick={ e => this._clickProject(e)} class="" style="float: right;margin-top: 20px;margin-right: 10px;" href="#">Upload project JSON file</a>
-                    <input id="wsProjectFileInput" type="file" style="display: none;" onChange={e => this._uploadProject(e)} ref={w => this.wsProjectFileInput=w} />
-                </div>
-                <div class={style.area}>
-                    <div class={style.form}>
-                        <p>
-                            You are about to create a DApp - a Decentralized Application.
-                        </p>
-                        <p>
-                            A DApp has two parts:
-                            <ul>
-                                <li>The Smart Contracts making up the "back-end" of the DApp.</li>
-                                <li>The front-end web application running in the users browser.</li>
-                            </ul>
-                        </p>
-                        <p>
-                            In Superblocks Studio you can create your full DApp, deploy the contracts and then export the html source to be served as you wish, it's aiming to be the full experience!
-
-                        </p>
-                        <div class={style.info}>
-                                <div>
-                                    <div class={style.input}>
-                                        <p>Project name: </p><input type="text"
-                                                        maxLength="20"
-                                                        value={this.state.projectName}
-                                                        onChange={this.handleNameChange}
-                                                        />
+            <div class={style.centerScreen}>
+                <div className={classnames([style.newDapp])}>
+                    <div class={style.footer}>
+                        <a onClick={this.props.functions.modal.cancel} class="btn2 noBg" href="#">Cancel</a>
+                        <a onClick={this.add} class="btn2"   href="#">Next</a>
+                    </div>
+                    <div class={style.area}>
+                        <div class={style.title}>
+                            Create a new project
+                        </div>
+                        <div class={style.form}>
+                            <div class={style.info}>
+                                    <div>
+                                        <div class={style.input}>
+                                            <p>Project name: </p>
+                                            <input
+                                                type="text"
+                                                maxLength="20"
+                                                value={this.state.projectName}
+                                                onChange={this.handleNameChange}
+                                                placeholder="Enter super cool name"/>
+                                        </div>
+                                        <div class={style.input}>
+                                            <p>DApp (HTML) Title: </p>
+                                            <input
+                                                type="text"
+                                                maxLength="30"
+                                                value={this.state.projectTitle}
+                                                onChange={this.handleTitleChange}/>
+                                        </div>
                                     </div>
-                                    <div class={style.input}>
-                                        <p>DApp (HTML) Title: </p><input type="text"
-                                                        maxLength="30"
-                                                        value={this.state.projectTitle}
-                                                        onChange={this.handleTitleChange}
-                                                        />
-                                    </div>
-                                </div>
-                            <p>
-                                Choose a template to start out with:
-                            </p>
-                            <ul>
-                                <li>
-                                    <label>
-                                        <input checked={this.state.projectTemplate=="Blank"} value="Blank" onClick={this.handleTemplateChange} type="radio" /> Blank project
-                                    </label>
-                                </li>
-                                <li>
-                                    <label>
-                                        <input checked={this.state.projectTemplate=="HelloWorld"} value="HelloWorld" onClick={this.handleTemplateChange} type="radio" /> HelloWorld - Simple starter DApp
-                                    </label>
-                                </li>
-                                <li>
-                                    <label>
-                                        <input checked={this.state.projectTemplate=="NewsFeed"} value="NewsFeed" onClick={this.handleTemplateChange} type="radio" /> Uncensorable News Feed - Publish news that nobody can remove
-                                    </label>
-                                </li>
-                                <li>
-                                    <label>
-                                        <input checked={this.state.projectTemplate=="RaiseToSummon"} value="RaiseToSummon" onClick={this.handleTemplateChange} type="radio" /> Raise to Summon - Raise Funds to Summon a V.I.P. to your meetup
-                                    </label>
-                                </li>
-                            </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
