@@ -81,8 +81,8 @@ class NetworkSelector extends Component {
     render() {
         const droppedDown=this.networkDropdown();
         return (
-            <div class={ style.selector }>
-                <a class={style.capitalize} href="#" onClick={this.networkClick}>
+            <div>
+                <a class={classnames([style.capitalize, style.selector])} href="#" onClick={this.networkClick}>
                     {this.state.network}
                     <div class={ style.dropdownIcon }>
                         <IconDropdown height="8" width="10"/>
@@ -193,8 +193,8 @@ class AccountSelector extends Component {
     render() {
         const droppedDown=this.accountDropdown();
         return (
-            <div class={ style.selector }>
-                <a href="#" onClick={this.accountClick}>
+            <div>
+                <a class={style.selector} href="#" onClick={this.accountClick}>
                     {this.state.account}
                     <div class={ style.dropdownIcon }>
                         <IconDropdown height="8" width="10"/>
