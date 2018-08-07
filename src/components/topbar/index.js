@@ -87,8 +87,9 @@ export default class TopBar extends DropDownDialog {
         this.onTransactionsClicked = this.onTransactionsClicked.bind(this);
     }
 
-    onTransactionsClicked() {
-        this.props.router.control._openAppShowPreview();
+    onTransactionsClicked(e) {
+        e.preventDefault();
+        this.props.router.control.openTransactionHistory();
     }
 
     openProject = (e, project, cb) => {
@@ -187,7 +188,7 @@ export default class TopBar extends DropDownDialog {
                                 </div>
                             </div>
                             <div class={style.actions}>
-                                <button class="btnNoBg">Create New</button>
+                                <button class="btnNoBg" onClick={this.props.router.control._newDapp}>Create New</button>
                                 <div class={style.separator} />
                                 <button class="btnNoBg">Import</button>
                             </div>

@@ -685,13 +685,15 @@ export default class DevkitProjectEditorControl extends Component {
             </div>);
     };
 
-    _openAppShowPreview = () => {
-        projectItem= item.props._project
-        // TODO: this lookup is bad.
-        const appSectionChildren=projectItem.props.state.children[2].props.state.children;
-        const viewItem=appSectionChildren[appSectionChildren.length-1];
-        if(this.props.router.panes) this.props.router.panes.openItem(viewItem);
-    }
+    openTransactionHistory = () => {
+        // Open the transaction history tab for the open project.
+        const project = this.getActiveProject();
+        if(project) {
+            console.log(project);
+            //TODO: this lookup is bad since it depends on the order of the menu items.
+            if(this.props.router.panes) this.props.router.panes.openItem(project.props.state.children[0]);
+        }
+    };
 
 
     _clickNewConstant = (e, projectItem) => {
