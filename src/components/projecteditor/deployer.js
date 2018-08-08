@@ -323,7 +323,7 @@ export default class Deployer extends Component {
     _buildArgs2=(obj, args, args2, env, tag, cb)=>{
         if(args.length==0) {cb(0);return;}
         const arg=args.shift();
-        if(arg.value) {
+        if(arg.value !== undefined) {
             args2.push(arg.value);
             cb(0);
             return;
