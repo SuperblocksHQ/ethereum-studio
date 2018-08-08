@@ -105,7 +105,7 @@ export default class AccountEditor extends Component {
             provider=this.props.functions.EVM.getProvider();
         }
         else {
-            var provider=new Web3.providers.HttpProvider(endpoint);
+            provider=new Web3.providers.HttpProvider(endpoint);
         }
         var web3=new Web3(provider);
         return web3;

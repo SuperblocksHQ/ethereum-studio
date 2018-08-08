@@ -80,10 +80,13 @@ class NetworkSelector extends Component {
 
     render() {
         const droppedDown=this.networkDropdown();
+        const endpoint=(this.props.functions.networks.endpoints[this.state.network] || {}).endpoint;
         return (
             <div>
-                <a class={classnames([style.capitalize, style.selector])} href="#" onClick={this.networkClick}>
-                    {this.state.network}
+                <a class={classnames([style.selector])} href="#" onClick={this.networkClick}>
+                    <div class={style.capitalize} title={endpoint}>
+                        {this.state.network}
+                    </div>
                     <div class={ style.dropdownIcon }>
                         <IconDropdown height="8" width="10"/>
                     </div>
@@ -112,9 +115,18 @@ class AccountSelector extends Component {
             account: account || defaultAccount,
             showAccountMenu: false,
             project: project,
+            balances: {},
         }, ()=> {
             this.pushSettings();
         });
+    }
+
+    componentDidMount() {
+        this.timer=setInterval(this.updateBalances, 3000);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.timer);
     }
 
     accountClick=(e)=>{
@@ -168,7 +180,7 @@ class AccountSelector extends Component {
         });
     };
 
-    accountDropdown=(e)=>{
+    accountDropdown = (e) => {
         if(!this.state.showAccountMenu) return;
         const accounts = this.state.dappfile.accounts().map((account, index) => {
             const cls={};
@@ -190,16 +202,169 @@ class AccountSelector extends Component {
         );
     };
 
+    accountType = (e) => {
+        if(!this.state.dappfile) return {};
+        // Figure out what type of account this is and if it is locked or not.
+        const env=this.state.project.props.state.data.env;
+        var isLocked=false;
+        var walletType=null;
+        var address="";
+        var wallet=null;
+        var accountType;
+        const account = this.state.dappfile.getItem("accounts", [{name: this.state.account}]);
+        const walletName=account.get('wallet', env);
+        const accountIndex=account.get('index', env);
+        if(walletName) {
+            wallet = this.state.dappfile.getItem("wallets", [{name: walletName}]);
+        }
+        if(wallet) {
+            walletType=wallet.get('type');
+            if(walletType=="external") {
+                accountType="metamask";
+                if(!window.web3) {
+                    isLocked=true;
+                }
+                else {
+                    const extAccounts = window.web3.eth.accounts || [];
+                    isLocked = extAccounts.length<1;
+                    address=extAccounts[0];
+                }
+            }
+            else {
+                accountType="wallet";
+                if(this.props.functions.wallet.isOpen(walletName)) {
+                    try {
+                        address=this.props.functions.wallet.getAddress(walletName, accountIndex);
+                    }
+                    catch(ex) {
+                        address="0x0";
+                    }
+                }
+                else {
+                    isLocked=true;
+                }
+            }
+        }
+        else {
+            address=account.get('address', env);
+            accountType="pseudo";
+        }
+
+        const network=env;
+        return {accountType, isLocked, network, address};
+    };
+
+    accountBalance = () => {
+        // Return cached balance of account
+        const {accountType, isLocked, network, address}=this.accountType();
+        return ((this.state.balances[network] || {})[address] || "0") + " eth";
+    };
+
+    getWeb3 = (endpoint) => {
+        var provider;
+        if(endpoint.toLowerCase()=="http://superblocks-browser") {
+            provider=this.props.functions.EVM.getProvider();
+        }
+        else {
+            provider=new Web3.providers.HttpProvider(endpoint);
+        }
+        var web3=new Web3(provider);
+        return web3;
+    };
+
+    updateBalances = () => {
+        console.log("update");
+        const {accountType, isLocked, network, address}=this.accountType();
+        if(!address || address.length<5) {
+            // a 0x00 address...
+            return;
+        }
+        this.fetchBalance(network, address, (res) => {
+            const a = this.state.balances[network] = this.state.balances[network] || {};
+            a[address]=res;
+            this.setState();
+        });
+    };
+
+    fetchBalance = (network, address, cb) => {
+        console.log(network, address);
+        const endpoint=(this.props.functions.networks.endpoints[network] || {}).endpoint;
+        const web3 = this.getWeb3(endpoint);
+        web3.eth.getBalance(address,(err,res)=>{
+            if(err) {
+                cb("<unknown balance>");
+            }
+            else {
+                cb(web3.fromWei(res.toNumber()));
+            }
+        });
+    };
+
+    unlockWallet = (e) => {
+        e.preventDefault();
+        const env=this.state.project.props.state.data.env;
+        const account = this.state.dappfile.getItem("accounts", [{name: this.state.account}]);
+        const walletName=account.get('wallet', env);
+        this.props.functions.wallet.openWallet(walletName, null, (status)=>{
+            console.log(status, walletName);
+            if(status===0) {
+                // Reload data (for the same env)
+                this.setState();
+            }
+        });
+    };
+
     render() {
         const droppedDown=this.accountDropdown();
+        const {accountType, isLocked, network, address}=this.accountType();
+        const accountBalance=this.accountBalance(network, address);
+        var accountIcon;
+
+        // TODO: @Javier plz put icon/imgs here.
+        if(accountType=="metamask") {
+            if(isLocked) {
+                accountIcon=(<img src="" alt="locked metamask account" />);
+            }
+            else {
+                accountIcon=(<img src="" alt="available metamask account" />);
+            }
+        }
+        else if(accountType=="wallet") {
+            if(isLocked) {
+                accountIcon=(
+                    <a href="#" onClick={this.unlockWallet}>
+                        <img src="" alt="locked wallet account - click to unlock" />
+                    </a>
+                );
+            }
+            else {
+                accountIcon=(<img src="" alt="open wallet account" />);
+            }
+        }
+        else if(accountType=="pseudo") {
+            accountIcon=(
+                <img src="" alt="pseudo account with only a public address" />
+            );
+        }
+
         return (
             <div>
                 <a class={style.selector} href="#" onClick={this.accountClick}>
-                    {this.state.account}
+                    <div title={address}>
+                        {this.state.account}<br />
+                        <span style="font-size: 0.5em;">
+                            {accountBalance}
+                        </span>
+                    </div>
+                    <div>
+                    </div>
                     <div class={ style.dropdownIcon }>
                         <IconDropdown height="8" width="10"/>
                     </div>
                 </a>
+                <div>
+                    {accountIcon}
+                </div>
                 {droppedDown}
             </div>
         );

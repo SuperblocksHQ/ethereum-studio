@@ -503,7 +503,7 @@ export default class DevkitProjectEditorControl extends Component {
         this.props.functions.modal.show(modal);
     };
 
-    _menuTop = (level, index, item) => <NetworkAccountSelector router={this.props.router} item={item} />;
+    _menuTop = (level, index, item) => <NetworkAccountSelector router={this.props.router} item={item} functions={this.props.functions} />;
 
     _downloadWorkspace = e => {
         e.preventDefault();
