@@ -612,7 +612,6 @@ export default class DevkitProjectEditorControl extends Component {
     };
 
     downloadProject = (project) => {
-        console.log(project);
         this.backend.downloadProject(project.props.state.data.dir);
     };
 
@@ -689,7 +688,6 @@ export default class DevkitProjectEditorControl extends Component {
         // Open the transaction history tab for the open project.
         const project = this.getActiveProject();
         if(project) {
-            console.log(project);
             //TODO: this lookup is bad since it depends on the order of the menu items.
             if(this.props.router.panes) this.props.router.panes.openItem(project.props.state.children[0]);
         }

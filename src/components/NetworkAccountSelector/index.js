@@ -273,7 +273,6 @@ class AccountSelector extends Component {
     };
 
     updateBalances = () => {
-        console.log("update");
         const {accountType, isLocked, network, address}=this.accountType();
         if(!address || address.length<5) {
             // a 0x00 address...
@@ -287,7 +286,6 @@ class AccountSelector extends Component {
     };
 
     fetchBalance = (network, address, cb) => {
-        console.log(network, address);
         const endpoint=(this.props.functions.networks.endpoints[network] || {}).endpoint;
         const web3 = this.getWeb3(endpoint);
         web3.eth.getBalance(address,(err,res)=>{
@@ -306,7 +304,6 @@ class AccountSelector extends Component {
         const account = this.state.dappfile.getItem("accounts", [{name: this.state.account}]);
         const walletName=account.get('wallet', env);
         this.props.functions.wallet.openWallet(walletName, null, (status)=>{
-            console.log(status, walletName);
             if(status===0) {
                 // Reload data (for the same env)
                 this.setState();
