@@ -118,7 +118,7 @@ export default class TopBar extends DropDownDialog {
     getProjectItems = () => {
         if(this.props.router.control) {
             const openProject = this.props.router.control.getActiveProject();
-            const items=this.props.router.control.getProjects().map((project)=>{
+            const items=this.props.router.control.getProjects().slice(0).reverse().map((project)=>{
                 const isActive = openProject === project;
                 // TODO: implement icon for isActive flag.
                 return (
