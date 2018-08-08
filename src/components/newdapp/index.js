@@ -111,8 +111,8 @@ class Step1 extends Component {
                         </div>
                     </div>
                     <div class={style.footer}>
-                        <a onClick={this.cancel} class="btn2 noBg" href="#">Cancel</a>
-                        <a onClick={this.add} class="btn2"   href="#">Next</a>
+                        <button onClick={this.cancel} class="btn2 noBg">Cancel</button>
+                        <button onClick={this.add} class="btn2">Next</button>
                     </div>
                 </div>
             </div>
@@ -126,7 +126,168 @@ Step1.protoTypes = {
 
 
 class Step2 extends Component {
-    // const cb=(status, code) => {
+
+    state = {
+        sectionSelected: 0,
+        templateSelected: null
+    }
+
+    createProject = () => {
+        // TODO
+    }
+
+    back = () => {
+        this.props.onBackPress();
+    }
+
+    onSectionSelected(id) {
+        this.setState({
+            sectionSelected: id
+        })
+    }
+
+    onTemplateSelected = (template) => {
+        this.setState({
+            templateSelected: template
+        })
+    }
+
+    render() {
+        let { sections, templates } = Templates;
+        let { sectionSelected, templateSelected } = this.state;
+
+        return(
+            <div className={classnames([style.newDapp, "modal"])}>
+                <div class={style.step2}>
+                    <div class={style.header}>
+                        <div class={style.title}>Select Template</div>
+                    </div>
+                    <div class={style.area}>
+                        <div style="display: flex;">
+                            <div class={style.sectionsArea}>
+                                <ul>
+                                    {
+                                        sections.map(section =>
+                                            <li class={sectionSelected == section.id ? style.selected : null}>
+                                                <TemplateSection
+                                                    title={section.name}
+                                                    onSectionSelected={() => this.onSectionSelected(section.id)}/>
+                                            </li>
+                                        )
+                                    }
+                                </ul>
+                            </div>
+                            <div class={style.templateListArea}>
+                                <GridLayout
+                                    templates={templates}
+                                    onTemplateSelected={this.onTemplateSelected}/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class={style.footer}>
+                        <button onClick={this.back} class="btn2 noBg">Back</button>
+                        <button onClick={this.createProject} disabled={!templateSelected} class="btn2">Create Project</button>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+}
+
+const TemplateSection = ({ onSectionSelected, title } = props) => (
+    <div onClick={onSectionSelected}>{title}</div>
+)
+
+TemplateSection.protoTypes = {
+    title: Proptypes.string,
+    onSectionSelected: Proptypes.func
+}
+
+const GridLayout = ({ templates, onTemplateSelected } = props) => (
+    <div class={style.gridLayout}>
+        <div id="mainContent" className="container" style={{display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gridGap: '10px', gridAutoRows: 'minMax(100px, auto)'}}>
+        { templates.map((template) => (
+                <TemplateLayout
+                    image={template.image}
+                    name={template.name}
+                    description={template.description}
+                    onTemplateSelected={() => onTemplateSelected(template)}
+                />
+        ))}
+        </div>
+    </div>
+);
+
+const TemplateLayout = ({ image, name, description, onTemplateSelected } = props) => (
+    <div onClick={onTemplateSelected} class={style.templateLayout}>
+        <img src={image} width="300"/>
+        <div class={style.title}>{name}</div>
+        <div class={style.description}>{description}</div>
+    </div>
+);
+
+export default class DevkitNewDapp extends Component {
+
+    state = {
+        currentStep: 1,
+    }
+
+    constructor(props) {
+        super(props);
+        // this.setState({projectTemplate:"HelloWorld"});
+        // this.setState({
+        //     projectName: "",
+        //     projectTitle: "",
+        //     projectGitUrl: ""
+        // });
+        // this.templates=new Templates();
+        // this.props.modal.cancel=this.props.modal.cancel||this.cancel;
+    }
+
+    onStep1DoneHandle = () => {
+        this.setState({
+            currentStep: 2
+        });
+    }
+
+    onStep2DoneHandle = () => {
+        // this.setState({
+        //     currentStep: 2
+        // });
+    }
+
+    pop = () => {
+        this.setState({
+            currentStep:  this.state.currentStep - 1
+        })
+    }
+
+    render() {
+        let step;
+        switch (this.state.currentStep) {
+            case 1:
+                step = <Step1 onStep1Done={this.onStep1DoneHandle}/>;
+                break;
+            case 2:
+                step = <Step2 onStep2Done={this.onStep2DoneHandle}
+                            onBackPress={this.pop}/>;
+                break;
+            default:
+                step = <Step1 onStep1Done={this.onStep1DoneHandle}/>;
+                break;
+        }
+
+        return (
+            <div>
+                {step}
+            </div>
+        );
+    }
+}
+
+
+
+ // const cb=(status, code) => {
     //     if(this.props.cb) {
     //         const index=this.props.functions.modal.getCurrentIndex();
     //         if(this.props.cb(status, code) !== false) this.props.functions.modal.close(index);
@@ -172,134 +333,6 @@ class Step2 extends Component {
     //     cb(1, 1);
     // }
 
-    state = {
-        sectionSelected: 0
-    }
-
-    createProject = () => {
-        // TODO
-    }
-
-    back = () => {
-        this.props.onBackPress();
-    }
-
-    onSectionSelected(id) {
-        this.setState({
-            sectionSelected: id
-        })
-    }
-
-    render() {
-        let { sections, templates } = Templates;
-        let { sectionSelected } = this.state;
-
-        return(
-            <div className={classnames([style.newDapp, "modal"])}>
-                <div class={style.step2}>
-                    <div class={style.header}>
-                        <div class={style.title}>Select Template</div>
-                    </div>
-                    <div class={style.area}>
-                        <div style="display: flex;">
-                            <div class={style.sectionsArea}>
-                                <ul>
-                                    {
-                                        sections.map(section =>
-                                            <li class={sectionSelected == section.id ? style.selected : null}>
-                                                <TemplateSection
-                                                    title={section.name}
-                                                    onSectionSelected={() => this.onSectionSelected(section.id)}/>
-                                            </li>
-                                        )
-                                    }
-                                </ul>
-                            </div>
-                            <div class={style.templateListArea}>
-                                <GridLayout templates={templates}/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class={style.footer}>
-                        <a onClick={this.back} class="btn2 noBg" href="#">Back</a>
-                        <a onClick={this.createProject} class="btn2" href="#">Create Project</a>
-                    </div>
-                </div>
-            </div>
-        );
-    }
-}
-
-const TemplateSection = (props) => (
-    <div onClick={props.onSectionSelected}>{props.title}</div>
-)
-
-// class TemplateSection extends Component {
-//     render() {
-//         return (
-
-//         );
-//     }
-// }
-
-const GridLayout = (props) => (
-    <div class={style.gridLayout}>
-        <div id="mainContent" className="container" style={{display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gridGap: '10px', gridAutoRows: 'minMax(100px, auto)'}}>
-        { props.templates.map((template) => (
-                <TemplateLayout template={template}/>
-        ))}
-        </div>
-    </div>
-);
-
-const TemplateLayout = (props) => (
-    <div class={style.templateLayout}>
-        <img src={props.template.image} width="300"/>
-        <div class={style.title}>{props.template.name}</div>
-        <div class={style.description}>{props.template.description}</div>
-    </div>
-)
-
-TemplateSection.protoTypes = {
-    title: Proptypes.string,
-    onSectionSelected: Proptypes.func
-}
-
-export default class DevkitNewDapp extends Component {
-
-    state = {
-        currentStep: 1,
-    }
-
-    constructor(props) {
-        super(props);
-        // this.setState({projectTemplate:"HelloWorld"});
-        // this.setState({
-        //     projectName: "",
-        //     projectTitle: "",
-        //     projectGitUrl: ""
-        // });
-        // this.templates=new Templates();
-        // this.props.modal.cancel=this.props.modal.cancel||this.cancel;
-    }
-
-    onStep1DoneHandle = () => {
-        this.setState({
-            currentStep: 2
-        });
-    }
-
-    onStep2DoneHandle = () => {
-        // this.setState({
-        //     currentStep: 2
-        // });
-    }
-
-    pop = () => {
-        this.setState({
-            currentStep:  this.state.currentStep - 1
-        })
-    }
 
 
     // _clickProject = (e) => {
@@ -345,26 +378,3 @@ export default class DevkitNewDapp extends Component {
 
     //     e.target.value = '';
     // };
-
-    render() {
-        let step;
-        switch (this.state.currentStep) {
-            case 1:
-                step = <Step1 onStep1Done={this.onStep1DoneHandle}/>;
-                break;
-            case 2:
-                step = <Step2 onStep2Done={this.onStep2DoneHandle}
-                            onBackPress={this.pop}/>;
-                break;
-            default:
-                step = <Step1 onStep1Done={this.onStep1DoneHandle}/>;
-                break;
-        }
-
-        return (
-            <div>
-                {step}
-            </div>
-        );
-    }
-}

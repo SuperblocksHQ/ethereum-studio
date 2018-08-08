@@ -286,7 +286,7 @@ a:active,a:focus {
     -webkit-border-radius: 4;
     -moz-border-radius: 4;
     color: #fff;
-    padding: 10px 20px;
+    padding: 7px 20px;
     text-decoration: none;
     font-weight: 600;
     &:hover {
@@ -295,9 +295,15 @@ a:active,a:focus {
     &.noBg {
         color: #646464;
         background-color: transparent;
+        border: 0;
         &:hover {
             background-color: #f4f4f4;
         }
+    }
+    &:disabled {
+        background-color: #f4f4f4;
+        color: #C0C0C0;
+        border: 0;
     }
 }
 .superInput {
