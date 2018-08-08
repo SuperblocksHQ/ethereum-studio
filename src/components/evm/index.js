@@ -50,11 +50,11 @@ export default class EVM {
         this.queue({},(result)=>{
             this.devkitVm=result.devkitVm;
             this.provider= new this.devkitVm.Provider(this.devkitVm);
-            this.devkitVm.setBalance("0xa48f2e0be8ab5a04a5eb1f86ead1923f03a207fd", "0x10000000000000000");
-            this.devkitVm.setBalance("0x95c2332b26bb22153a689ae619d81a6c59e0a804", "0x10000000000000000");
-            this.devkitVm.setBalance("0x96a893548257af28a362015e70a95cf6f4ddf56f", "0x10000000000000000");
-            this.devkitVm.setBalance("0xa48f2e0be8ab5a04a5eb1f86ead1923f03a207fd", "0x10000000000000000");
-            this.devkitVm.setBalance("0x105e8df6456765bf8f0f360b66ed86d9ace92363", "0x10000000000000000");
+            this.devkitVm.setBalance("0xa48f2e0be8ab5a04a5eb1f86ead1923f03a207fd", "0x56bc75e2d63100000");
+            this.devkitVm.setBalance("0x95c2332b26bb22153a689ae619d81a6c59e0a804", "0x56bc75e2d63100000");
+            this.devkitVm.setBalance("0x96a893548257af28a362015e70a95cf6f4ddf56f", "0x56bc75e2d63100000");
+            this.devkitVm.setBalance("0x105e8df6456765bf8f0f360b66ed86d9ace92363", "0x56bc75e2d63100000");
+            this.devkitVm.setBalance("0x842f47affb5b810a8f2c967dcb666ba1d75c5c8a", "0x56bc75e2d63100000");
             console.log("[VM] ready");
         });
 
