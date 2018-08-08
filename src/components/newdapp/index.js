@@ -43,10 +43,8 @@ export default class NewDapp extends Component {
         });
     }
 
-    onStep2DoneHandle = (selectedTemplate) => {
-        // this.setState({
-        //     currentStep: 2
-        // });
+    onTemplateSelectedHandle = (selectedTemplate) => {
+        console.log(selectedTemplate);
     }
 
     pop = () => {
@@ -65,7 +63,7 @@ export default class NewDapp extends Component {
                 step = <Step2
                             categories={Templates.categories}
                             templates={Templates.templates}
-                            onStep2Done={this.onStep2DoneHandle}
+                            onTemplateSelected={this.onTemplateSelectedHandle}
                             onBackPress={this.pop}/>;
                 break;
             default:
