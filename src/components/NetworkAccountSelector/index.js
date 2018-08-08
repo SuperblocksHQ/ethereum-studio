@@ -49,6 +49,7 @@ class NetworkSelector extends Component {
             network: network,
         });
         this.pushSettings();
+        this.props.router.main.redraw();
     };
 
     pushSettings=()=>{
@@ -136,6 +137,7 @@ class AccountSelector extends Component {
             account: account,
         });
         this.pushSettings();
+        this.props.router.main.redraw();
     };
 
     accountEdit=(e, index)=>{
