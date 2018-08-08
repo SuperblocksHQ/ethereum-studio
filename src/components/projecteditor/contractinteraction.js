@@ -165,7 +165,8 @@ export default class ContractInteraction extends Component {
 
         if(walletType=="external") {
             // Metamask seems to always only provide one (the chosen) account.
-            const extAccounts = web3.eth.accounts || [];
+            var extAccounts = [];
+            if(window.web3 && window.web3.eth) extAccounts = window.web3.eth.accounts || [];
             if(extAccounts.length<accountIndex+1) {
                 // Account not matched
                 return [];
