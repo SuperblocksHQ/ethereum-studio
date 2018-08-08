@@ -804,6 +804,7 @@ function sendRawTransaction(data, callback) {
             _vm.runBlock({block: nextBlock, generate: true}, function(err, results) {
                 if(err) {
                     console.error(err);
+                    callback(err, null);
                 } else {
                     _debugLog("[Block] finished running");
                     _debugLog(results);
