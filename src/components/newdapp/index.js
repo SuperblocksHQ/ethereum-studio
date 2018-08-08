@@ -16,7 +16,7 @@
 
 import { h, Component } from 'preact';
 import Proptypes from 'prop-types';
-import classnames from 'classnames';
+import classNames from 'classnames';
 import style from './style';
 import Templates from '../templates';
 import { POINT_CONVERSION_COMPRESSED } from 'constants';
@@ -81,7 +81,7 @@ class Step1 extends Component {
 
     render() {
         return (
-            <div className={classnames([style.newDapp, "modal"])}>
+            <div className={classNames([style.newDapp, "modal"])}>
                 <div class={style.step1}>
                     <div class={style.header}>
                         <div class={style.title}>Create a new project</div>
@@ -157,14 +157,15 @@ class Step2 extends Component {
         let { sectionSelected, templateSelected } = this.state;
 
         return(
-            <div className={classnames([style.newDapp, "modal"])}>
+            <div className={classNames([style.newDapp, "modal"])}>
                 <div class={style.step2}>
                     <div class={style.header}>
                         <div class={style.title}>Select Template</div>
                     </div>
-                    <div class={style.area}>
-                        <div style="display: flex;">
-                            <div class={style.sectionsArea}>
+                    <div class={classNames([style.area, style.container])}>
+                        <div class={style.sectionsArea}>
+                            <div class={style.categoriesTitle}>Categories</div>
+                            <div class={style.categoriesList}>
                                 <ul>
                                     {
                                         sections.map(section =>
@@ -177,11 +178,12 @@ class Step2 extends Component {
                                     }
                                 </ul>
                             </div>
-                            <div class={style.templateListArea}>
-                                <GridLayout
-                                    templates={templates}
-                                    onTemplateSelected={this.onTemplateSelected}/>
-                            </div>
+                        </div>
+                        <div class={style.templateListArea}>
+                            <GridLayout
+                                templates={templates}
+                                onTemplateSelected={this.onTemplateSelected}
+                                templateSelectedId={templateSelected ? templateSelected.id : null}/>
                         </div>
                     </div>
                     <div class={style.footer}>
@@ -199,11 +201,11 @@ const TemplateSection = ({ onSectionSelected, title } = props) => (
 )
 
 TemplateSection.protoTypes = {
-    title: Proptypes.string,
-    onSectionSelected: Proptypes.func
+    title: Proptypes.string.isRequired,
+    onSectionSelected: Proptypes.func.isRequired
 }
 
-const GridLayout = ({ templates, onTemplateSelected } = props) => (
+const GridLayout = ({ templates, onTemplateSelected, templateSelectedId } = props) => (
     <div class={style.gridLayout}>
         <div id="mainContent" className="container" style={{display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gridGap: '10px', gridAutoRows: 'minMax(100px, auto)'}}>
         { templates.map((template) => (
@@ -211,6 +213,7 @@ const GridLayout = ({ templates, onTemplateSelected } = props) => (
                     image={template.image}
                     name={template.name}
                     description={template.description}
+                    selected={template.id ==  templateSelectedId}
                     onTemplateSelected={() => onTemplateSelected(template)}
                 />
         ))}
@@ -218,13 +221,27 @@ const GridLayout = ({ templates, onTemplateSelected } = props) => (
     </div>
 );
 
-const TemplateLayout = ({ image, name, description, onTemplateSelected } = props) => (
-    <div onClick={onTemplateSelected} class={style.templateLayout}>
+GridLayout.protoTypes = {
+    templates: Proptypes.array.isRequired,
+    onSectionSelected: Proptypes.func.isRequired,
+    templateSelectedId: Proptypes.number,
+}
+
+const TemplateLayout = ({ image, name, description, selected, onTemplateSelected } = props) => (
+    <div onClick={onTemplateSelected} class={classNames([style.templateLayout], { [style.selected]: selected })}>
         <img src={image} width="300"/>
         <div class={style.title}>{name}</div>
         <div class={style.description}>{description}</div>
     </div>
 );
+
+TemplateLayout.protoTypes = {
+    image: Proptypes.string.isRequired,
+    name: Proptypes.string.isRequired,
+    description: Proptypes.string.isRequired,
+    selected: Proptypes.bool.isRequired,
+    onTemplateSelected: Proptypes.func.isRequired
+}
 
 export default class DevkitNewDapp extends Component {
 

@@ -67,10 +67,20 @@
     .step2 {
         min-width: 920px;
         min-height: 700px;
-        // TODO - Move this from here
+        .container {
+            display: flex;
+            margin-top: 20px;
+        }
         .sectionsArea {
             width: 20%;
             border-right: 1px solid #D8DDE6;
+            .categoriesTitle {
+                font-weight: 600;
+                margin-bottom: 16px;
+            }
+            .categoriesList {
+
+            }
             ul {
                 list-style-type: none;
                 margin: 0;
@@ -95,19 +105,22 @@
             overflow: auto;
             .gridLayout {
                 height: 500px;
+                .templateLayout {
+                    padding: 15px;
+                    .title {
+                        font-weight: 700;
+                    }
+                    .description {
+                        margin-top: 7px;
+                    }
+                    &:hover {
+                        background-color: #F4F4F4;
+                        cursor: pointer;
+                    }
+                }
             }
-            .templateLayout {
-                padding: 15px;
-                .title {
-                    font-weight: 700;
-                }
-                .description {
-                    margin-top: 7px;
-                }
-                &:hover {
-                    background-color: #F4F4F4;
-                    cursor: pointer;
-                }
+            .selected {
+                background-color: #F4F4F4;
             }
         }
     }
