@@ -2,16 +2,15 @@ import { h, Component } from 'preact';
 import Proptypes from 'prop-types';
 import classNames from 'classnames';
 import style from '../style';
-import Templates from '../../templates';
 
 export default class Step2 extends Component {
 
     state = {
-        sectionSelected: 0,
+        categorySelected: 0,
         templateSelected: null
     }
 
-    createProject = () => {
+    onCreateProjectHandle = () => {
         // TODO
     }
 
@@ -19,9 +18,9 @@ export default class Step2 extends Component {
         this.props.onBackPress();
     }
 
-    onSectionSelected(id) {
+    onCategorySelected(id) {
         this.setState({
-            sectionSelected: id
+            categorySelected: id
         })
     }
 
@@ -32,8 +31,8 @@ export default class Step2 extends Component {
     }
 
     render() {
-        let { sections, templates } = Templates;
-        let { sectionSelected, templateSelected } = this.state;
+        let { categories, templates } = this.props;
+        let { categorySelected, templateSelected } = this.state;
 
         return(
             <div className={classNames([style.newDapp, "modal"])}>
@@ -42,22 +41,20 @@ export default class Step2 extends Component {
                         <div class={style.title}>Select Template</div>
                     </div>
                     <div class={classNames([style.area, style.container])}>
-                        <div class={style.sectionsArea}>
+                        <div class={style.categoriesArea}>
                             <div class={style.categoriesTitle}>Categories</div>
-                            <div class={style.categoriesList}>
                                 <ul>
                                     {
-                                        sections.map(section =>
-                                            <li class={sectionSelected == section.id ? style.selected : null}>
-                                                <TemplateSection
-                                                    title={section.name}
-                                                    onSectionSelected={() => this.onSectionSelected(section.id)}/>
+                                        categories.map(category =>
+                                            <li class={categorySelected == category.id ? style.selected : null}>
+                                                <TemplateCategory
+                                                    title={category.name}
+                                                    onCategorySelected={() => this.onCategorySelected(category.id)}/>
                                             </li>
                                         )
                                     }
                                 </ul>
                             </div>
-                        </div>
                         <div class={style.templateListArea}>
                             <GridLayout
                                 templates={templates}
@@ -75,13 +72,19 @@ export default class Step2 extends Component {
     }
 }
 
-const TemplateSection = ({ onSectionSelected, title } = props) => (
-    <div onClick={onSectionSelected}>{title}</div>
+Step2.proptypes = {
+    categories: Proptypes.array.isRequired,
+    templates: Proptypes.array.isRequired,
+    onBackPress: Proptypes.func.isRequired,
+}
+
+const TemplateCategory = ({ onCategorySelected, title } = props) => (
+    <div onClick={onCategorySelected}>{title}</div>
 )
 
-TemplateSection.protoTypes = {
+TemplateCategory.protoTypes = {
     title: Proptypes.string.isRequired,
-    onSectionSelected: Proptypes.func.isRequired
+    onCategorySelected: Proptypes.func.isRequired,
 }
 
 const GridLayout = ({ templates, onTemplateSelected, templateSelectedId } = props) => (
@@ -102,7 +105,7 @@ const GridLayout = ({ templates, onTemplateSelected, templateSelectedId } = prop
 
 GridLayout.protoTypes = {
     templates: Proptypes.array.isRequired,
-    onSectionSelected: Proptypes.func.isRequired,
+    onCategorySelected: Proptypes.func.isRequired,
     templateSelectedId: Proptypes.number,
 }
 

@@ -17,6 +17,7 @@
 import { h, Component } from 'preact';
 import Step1 from './step1';
 import Step2 from './step2';
+import Templates from '../templates';
 
 export default class NewDapp extends Component {
 
@@ -42,7 +43,7 @@ export default class NewDapp extends Component {
         });
     }
 
-    onStep2DoneHandle = () => {
+    onStep2DoneHandle = (selectedTemplate) => {
         // this.setState({
         //     currentStep: 2
         // });
@@ -61,7 +62,10 @@ export default class NewDapp extends Component {
                 step = <Step1 onStep1Done={this.onStep1DoneHandle}/>;
                 break;
             case 2:
-                step = <Step2 onStep2Done={this.onStep2DoneHandle}
+                step = <Step2
+                            categories={Templates.categories}
+                            templates={Templates.templates}
+                            onStep2Done={this.onStep2DoneHandle}
                             onBackPress={this.pop}/>;
                 break;
             default:
