@@ -47,7 +47,7 @@ export default class Step1 extends Component {
         return validInputs;
     }
 
-    add = (evt, dappfileJSONObj) => {
+    onNextClickHandle = (evt, dappfileJSONObj) => {
         if (evt) evt.preventDefault();
 
         if (dappfileJSONObj) {
@@ -57,7 +57,7 @@ export default class Step1 extends Component {
 
         // TODO - Make sure we  validate this and don't forget to turn off!
         // if (this.validateInputs()) {
-            this.props.onStep1Done();
+            this.props.onStep1Done({ name: this.state.projectName, title: this.state.projectTitle });
         //}
     };
 
@@ -110,7 +110,7 @@ export default class Step1 extends Component {
                     </div>
                     <div class={style.footer}>
                         <button onClick={this.cancel} class="btn2 noBg">Cancel</button>
-                        <button onClick={this.add} class="btn2">Next</button>
+                        <button onClick={this.onNextClickHandle} class="btn2">Next</button>
                     </div>
                 </div>
             </div>

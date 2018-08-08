@@ -15,6 +15,7 @@
 // along with Superblocks Studio.  If not, see <http://www.gnu.org/licenses/>.
 
 import { h, Component } from 'preact';
+import Proptypes from 'prop-types';
 import Step1 from './step1';
 import Step2 from './step2';
 import Templates from '../templates';
@@ -22,29 +23,32 @@ import Templates from '../templates';
 export default class NewDapp extends Component {
 
     state = {
+        projectInfo: null,
         currentStep: 1,
     }
 
-    constructor(props) {
-        super(props);
-        // this.setState({projectTemplate:"HelloWorld"});
-        // this.setState({
-        //     projectName: "",
-        //     projectTitle: "",
-        //     projectGitUrl: ""
-        // });
-        // this.templates=new Templates();
-        // this.props.modal.cancel=this.props.modal.cancel||this.cancel;
-    }
-
-    onStep1DoneHandle = () => {
+    onStep1DoneHandle = (projectInfo) => {
         this.setState({
-            currentStep: 2
+            currentStep: 2,
+            projectInfo: projectInfo
         });
     }
 
     onTemplateSelectedHandle = (selectedTemplate) => {
         console.log(selectedTemplate);
+;
+        var dappfile = selectedTemplate.dappfile;
+        // Make sure we include the info of the current project in the dappFile, in order to do not break anything in the app...
+        const project = { info: this.state.projectInfo }
+        dappfile.project = project;
+
+        const files = selectedTemplate.files;
+        this.props.backend.saveProject(this.state.projectInfo.name, { dappfile: dappfile }, (o) => { cb(o.status, o.code) }, true, files);
+        this.closeModal();
+    }
+
+    closeModal() {
+        this.props.functions.modal.cancel();
     }
 
     pop = () => {
@@ -77,6 +81,11 @@ export default class NewDapp extends Component {
             </div>
         );
     }
+}
+
+NewDapp.proptypes = {
+    modal: Proptypes.object.isRequired,
+    functions: Proptypes.object.isRequired,
 }
 
 
@@ -125,13 +134,6 @@ export default class NewDapp extends Component {
     // }
     // else {
     //     cb(1, 1);
-    // }
-
-
-
-    // _clickProject = (e) => {
-    //     e.preventDefault();
-    //     document.querySelector('#wsProjectFileInput').dispatchEvent(new MouseEvent('click')); // ref does not work https://github.com/developit/preact/issues/477
     // }
 
     // TODO - Move out from here
