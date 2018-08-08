@@ -727,7 +727,7 @@ export default class DevkitProjectEditorControl extends Component {
         e.preventDefault();
 
         var name;
-        for(var index=0;index<100000;index++) {
+        for(var index=1;index<100000;index++) {
             name="Account"+index;
             if(projectItem.props.state.data.dappfile.accounts().filter((c)=>{
                 return c.name==name;
@@ -755,7 +755,6 @@ export default class DevkitProjectEditorControl extends Component {
                 }
             });
         } while(dirty);
-        console.log("new account indexes", browserIndex, customIndex);
 
         //const wallet=projectItem.props.state.data.dappfile.wallets()[0].name;
         projectItem.props.state.data.dappfile.accounts().push({
@@ -892,8 +891,8 @@ export default class DevkitProjectEditorControl extends Component {
 
     _clickDeleteAccount = (e, projectItem, accountIndex) => {
         e.preventDefault();
-        if(projectItem.props.state.data.dappfile.accounts().length==1) {
-            alert("You can't delete the last account.");
+        if(accountIndex==0) {
+            alert("You cannot delete the default account.");
             return;
         }
         if(!confirm("Are you sure to delete account?")) return;
