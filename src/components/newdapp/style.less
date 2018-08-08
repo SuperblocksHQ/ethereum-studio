@@ -28,8 +28,6 @@
     -webkit-border-radius: 4;
     -moz-border-radius: 4;
     border-radius: 4px;
-    width: 512px;
-    height: 400px;
     background-color: #fff;
     color: #333;
     .header {
@@ -41,13 +39,16 @@
         padding: 18px 32px;
         .title {
             color: #383E40;
-            font-size: 22px;
-            font-weight: 600;
+            font-weight: 700;
             text-align: left;
         }
     }
     .area {
         padding: 63px 32px 40px 32px;
+    }
+    .step1 {
+        width: 512px;
+        height: 400px;
         .form {
             display: inline-block;
             -webkit-border-radius: 17;
@@ -60,7 +61,53 @@
             }
         }
         input {
-          width: 443px;
+            width: 443px;
+        }
+    }
+    .step2 {
+        min-width: 920px;
+        min-height: 700px;
+        // TODO - Move this from here
+        .sectionsArea {
+            width: 20%;
+            ul {
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+                li {
+                    line-height: 40px;
+                    padding: 0 16px;
+                    &:hover {
+                        background-color: #F4F4F4;
+                        color: #8641F2;
+                        cursor: pointer;
+                    }
+                }
+                .selected {
+                    background-color: #F4F4F4;
+                    color: #8641F2;
+                }
+            }
+        }
+        .templateListArea {
+            width: 80%;
+            overflow: auto;
+            .gridLayout {
+                height: 500px;
+            }
+            .templateLayout {
+                padding: 15px;
+                .title {
+                    font-weight: 700;
+                }
+                .description {
+                    margin-top: 7px;
+                }
+                &:hover {
+                    background-color: #F4F4F4;
+                    cursor: pointer;
+                }
+            }
         }
     }
     .footer {
