@@ -257,6 +257,13 @@ export default class Deployer extends Component {
                                     this.callback(1);
                                     return;
                                 }
+                                // Check the Metamask network so that it matches
+                                const chainId=(this.props.functions.networks.endpoints[this.network] || {}).chainId;
+                                if(chainId && window.web3.version.network != chainId) {
+                                    this._stderr("The Metamask network does not match the Studio network. Check so that you have the same network chosen in Metamask as in Studio, then try again.");
+                                    this.callback(1);
+                                    return;
+                                }
                                 const params={
                                     from: extAccounts[accountIndex],
                                     to: "",
@@ -860,7 +867,6 @@ if(typeof(Contracts)==="undefined") var Contracts={};
 
     renderToolbar = () => {
         const contract = this.dappfile.getItem("contracts", [{name: this.props.contract}]);
-        const endpoint=(this.props.functions.networks.endpoints[this.network] || {}).endpoint;
         const cls={};
         cls[style.running] = this.isRunning;
         return (
@@ -873,7 +879,7 @@ if(typeof(Contracts)==="undefined") var Contracts={};
                 </div>
                 <div class={style.info}>
                     <span>
-                        Deploy {this.props.contract}, Network: {this.network}, Endpoint: {endpoint}
+                        Deploy {this.props.contract}
                     </span>
                 </div>
             </div>
