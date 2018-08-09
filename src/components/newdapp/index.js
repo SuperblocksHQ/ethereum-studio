@@ -34,10 +34,13 @@ export default class NewDapp extends Component {
         });
     }
 
+    onCancelClickHandle = () => {
+        this.closeModal();
+    }
+
     onTemplateSelectedHandle = (selectedTemplate) => {
-        console.log(selectedTemplate);
-;
         var dappfile = selectedTemplate.dappfile;
+
         // Make sure we include the info of the current project in the dappFile, in order to do not break anything in the app...
         const project = { info: this.state.projectInfo }
         dappfile.project = project;
@@ -61,7 +64,8 @@ export default class NewDapp extends Component {
         let step;
         switch (this.state.currentStep) {
             case 1:
-                step = <Step1 onStep1Done={this.onStep1DoneHandle}/>;
+                step = <Step1 onStep1Done={this.onStep1DoneHandle}
+                            onCancelClick={this.onCancelClickHandle}/>;
                 break;
             case 2:
                 step = <Step2

@@ -61,8 +61,8 @@ export default class Step1 extends Component {
         //}
     };
 
-    cancel = () => {
-     // this.props.modal.cancel=this.props.modal.cancel||this.cancel;'
+    onCancelClickHandle = () => {
+        this.props.onCancelClick();
     };
 
     handleNameChange = changeEvent => {
@@ -109,7 +109,7 @@ export default class Step1 extends Component {
                         </div>
                     </div>
                     <div class={style.footer}>
-                        <button onClick={this.cancel} class="btn2 noBg">Cancel</button>
+                        <button onClick={this.onCancelClickHandle} class="btn2 noBg">Cancel</button>
                         <button onClick={this.onNextClickHandle} class="btn2">Next</button>
                     </div>
                 </div>
@@ -119,5 +119,6 @@ export default class Step1 extends Component {
 }
 
 Step1.protoTypes = {
-    onStep1Done: Proptypes.func
+    onStep1Done: Proptypes.func.isRequired,
+    onCancelClick: Proptypes.func.isRequired,
 }
