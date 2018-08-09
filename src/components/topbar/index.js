@@ -53,30 +53,26 @@ class HelpDropdownDialog extends DropDownDialog {
                         <div>Help</div>
                     </button>
                 </div>
-                {
-                    this.state.showMenu ? (
-                        <div class={style.helpMenu}>
-                            <div class={style.title}>General</div>
-                            <ul>
-                                <li>
-                                    <a href="">Help Center</a>
-                                </li>
-                                <li>
-                                    <div class={style.container}>
-                                        <a href="">Join our Community!</a>
-                                        <span class={style.telegramIcon}>
-                                            <IconTelegram color="#0088cc"/>
-                                        </span>
-                                    </div>
+                <div class={classNames([style.helpMenu], {[style.show]: this.state.showMenu })}>
+                    <div class={style.title}>General</div>
+                    <ul>
+                        <li>
+                            <a href="">Help Center</a>
+                        </li>
+                        <li>
+                            <div class={style.container}>
+                                <a href="">Join our Community!</a>
+                                <span class={style.telegramIcon}>
+                                    <IconTelegram color="#0088cc"/>
+                                </span>
+                            </div>
 
-                                </li>
-                                <li>
-                                    <a href="">What’s new 🚀</a>
-                                </li>
-                            </ul>
-                        </div>
-                    ) : (null)
-                }
+                        </li>
+                        <li>
+                            <a href="">What’s new 🚀</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         );
     }
