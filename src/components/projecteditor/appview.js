@@ -19,6 +19,7 @@ import style from './style-appview';
 import { IconRun } from '../icons';
 import SuperProvider from '../superprovider';
 import Web3 from 'web3';
+import Modal from '../modal';
 
 export default class AppView extends Component {
     constructor(props) {
@@ -34,7 +35,7 @@ export default class AppView extends Component {
         // Update the chosen network and account
         const accountName = this.props.project.props.state.data.account;
         const env=this.props.project.props.state.data.env;
-        this.setState({account:accountName, network:env});
+        this.setState({account:accountName, network:env, env:env});
     };
 
     notifyTx=(hash, endpoint)=>{
@@ -109,21 +110,16 @@ export default class AppView extends Component {
                     this.dappfile.contracts().map((item)=>{
                         contracts.push(item.name);
                     });
-                    const env=this.props.project.props.state.data.env;
+                    const env=this.state.env;
 
                     const contracts2=[];
                     const tag=env;
-                    this.endpointwarning="";
                     var endpoint;
                     for(var index=0;index<contracts.length;index++) {
                         const contract = this.dappfile.getItem("contracts", [{name: contracts[index]}]);
                         const src=contract.get('source');
                         const network=this.state.network;
-                        const endpoint2=(this.props.functions.networks.endpoints[network] || {}).endpoint;
-                        if(endpoint && endpoint!=endpoint2) {
-                            this.endpointwarning="Warning: Different endpoints detected for contracts, this is advanced functionality.";
-                        }
-                        endpoint=endpoint2;
+                        endpoint=(this.props.functions.networks.endpoints[network] || {}).endpoint;
                         const txsrc=this._makeFileName(src, tag+"."+network, "tx");
                         const deploysrc=this._makeFileName(src, tag, "deploy");
                         contracts2.push([txsrc, deploysrc, endpoint]);
@@ -149,19 +145,75 @@ export default class AppView extends Component {
                             js=this.props.project.constantsReplace(js);
                             contractjs=this.props.project.constantsReplace(contractjs);
                             var content=this.getInnerContent(html, css, contractjs+"\n"+js, endpoint, this._getAccountAddress());
-                            if(this.state.showSource=="on") {
-                                var content=this.getInnerContent(html, css, contractjs+"\n"+js);
-                                content=content.replace(/&/g, "&amp;");
-                                content=content.replace(/</g, "&lt;");
-                                content=content.replace(/>/g, "&gt;");
-                                content="<html><body style='color: #fff;'><pre><code>"+content+"</code></pre></body></html>";
-                            }
+                            // Save the exportable version.
+                            this.exportableContent=this.getInnerContent(html, css, contractjs+"\n"+js);
+
                             this.writeContent(0, content);
                         });
                     });
                 }, true, true);
             }, true, true);
         }, true);
+    };
+
+    download = (e) => {
+        e.preventDefault();
+
+        if(this.state.network=="browser") {
+            const body=(
+                <div>
+                    <p>Computer says no.</p>
+                    <p>
+                        When you download your creation, it is configured for the specific network you have chosen (up to the far left).
+                        Right now you have chosen the Browser network, which only exists in your browser when using Studio, so downloading your DApp
+                        makes no sense until you choose any other network than Browser.
+                    </p>
+                    <div style="margin-top: 54px;">
+                        <a class="btn2" onClick={this.props.functions.modal.cancel}>Thanks, but I already knew that</a>
+                    </div>
+                </div>
+            );
+            const modalData={
+                title: "Cannot export DApp for the Browser network",
+                body: body,
+                style: {"text-align":"center",height:"263px"},
+            };
+            const modal=(<Modal data={modalData} />);
+            this.props.functions.modal.show({render: () => {return modal;}});
+            return;
+        }
+
+        const fn = (e) => {
+            e.preventDefault();
+            this.props.functions.modal.cancel();
+            const exportName = "superblocks_dapp_" + this.props.project.props.state.data.dir + ".html";
+            var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(this.exportableContent);
+            var downloadAnchorNode = document.createElement('a');
+            downloadAnchorNode.setAttribute("href",     dataStr);
+            downloadAnchorNode.setAttribute("download", exportName);
+            document.body.appendChild(downloadAnchorNode); // required for firefox
+            downloadAnchorNode.click();
+            downloadAnchorNode.remove();
+        };
+
+        const body=(
+            <div>
+                <p>You are downloading this DApp preconfigured for the {this.state.network} network.</p>
+                <p>The HTML file you are about to download contains everything which the DApp needs, such as HTML, CSS, Javascript, contract data and network configurations.</p>
+                <p>After download you can upload the DApp HTML file to any (decentralized) web host of choice.</p>
+                <div style="margin-top: 49px;">
+                    <a class="btn2" style="margin-right: 30px;" onClick={this.props.functions.modal.cancel}>Cancel</a>
+                    <a class="btn2 filled" onClick={fn}>Download</a>
+                </div>
+            </div>
+        );
+        const modalData={
+            title: "Download DApp for the " + this.state.network + " network",
+            body: body,
+            style: {"text-align":"center",height:"280px"},
+        };
+        const modal=(<Modal data={modalData} />);
+        this.props.functions.modal.show({render: () => {return modal;}});
     };
 
     _getAccount=()=>{
@@ -175,7 +227,7 @@ export default class AppView extends Component {
         if(accountName=="(locked)") return [];
         if(!accountName) return [];
 
-        const env=this.props.project.props.state.data.env;
+        const env=this.state.env;
         const account = this.dappfile.getItem("accounts", [{name: accountName}]);
         const accountIndex=account.get('index', env);
         const walletName=account.get('wallet', env);
@@ -371,21 +423,24 @@ export default class AppView extends Component {
 
     renderToolbar = () => {
         const accounts=this.getAccounts();
-        const env=this.props.project.props.state.data.env;
+        var accountsNotice="";
+        if(this.state.disableAccounts=="on") {
+            if(this.state.network=="browser") {
+                accountsNotice="Warning: the dapp cannot communicate to the Browser blockchain when accounts are disabled.";
+            }
+            else {
+                accountsNotice="Accounts are not injected into the dapp simulating when Metamask is not active.";
+            }
+        }
         return (
             <div class={style.toolbar} id={this.id+"_header"}>
                 <div class={style.buttons}>
                     <a href="#" title="Recompile" onClick={this.run}><IconRun /></a>
-                    <span><input checked={this.state.showSource=="on"} onChange={(e)=>{this.setState({showSource:(e.target.checked?"on":"off")});this.redraw();}} type="checkbox" />&nbsp;Show source</span>
+                    <a href="#" title="Download DApp" onClick={this.download}>Download DApp</a>
                 </div>
                 <div class={style.accounts}>
                     <span><input checked={this.state.disableAccounts=="on"} onChange={(e)=>{this.setState({disableAccounts:(e.target.checked?"on":"off")});this.redraw();}} type="checkbox" />&nbsp;Disable accounts&nbsp;</span>
-                    {this.accountinfo} {this.endpointwarning}
-                </div>
-                <div class={style.info}>
-                    <span>
-                        Environment: {env}
-                    </span>
+                    <span>{accountsNotice}</span>
                 </div>
             </div>
         );
@@ -414,16 +469,6 @@ export default class AppView extends Component {
     };
 
     render() {
-        const addresses=this._getAccountAddress();
-        if(addresses == null) {
-            this.accountinfo="Warning: the in-browser blockchain is decoupled in this mode.";
-        }
-        else if(addresses.length==0) {
-            this.accountinfo="Account not accessible";
-        }
-        else {
-            this.accountinfo=addresses[0];
-        }
         const toolbar=this.renderToolbar();
         const maxHeight = {
             height: this.getHeight() + "px"
