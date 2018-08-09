@@ -569,6 +569,7 @@ export default class DevkitProjectEditorControl extends Component {
 
         this.closeProject((status) => {
             if(status==0) this._addProjectToExplorer(project);
+            this.props.router.main.redraw(true);
             if(cb) cb(status);
         });
     };

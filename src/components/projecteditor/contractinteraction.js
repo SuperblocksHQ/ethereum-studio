@@ -349,7 +349,6 @@ export default class ContractInteraction extends Component {
         const contract = this.dappfile.getItem("contracts", [{name: this.props.contract}]);
         const env=this.state.network;
         const network=this.state.network;
-        const endpoint=(this.props.functions.networks.endpoints[network] || {}).endpoint;
         return (
             <div class={style.toolbar} id={this.id+"_header"}>
                 <div class={style.buttons}>
@@ -361,9 +360,6 @@ export default class ContractInteraction extends Component {
                     </span>
                     <span title={this.contract_balance_wei}>
                         Balance: {this.contract_balance}&nbsp;
-                    </span>
-                    <span>
-                        Endpoint: {endpoint}
                     </span>
                 </div>
             </div>
