@@ -23,12 +23,16 @@ export default class Templates {
         },
         {
             "id": 1,
-            "name": "Games"
+            "name": "Crowfunding"
         },
         {
             "id": 2,
-            "name": "General"
-        }
+            "name": "Generic"
+        },
+        {
+            "id": 3,
+            "name": "Introduction"
+        },
     ]
 
     static templates = [
@@ -36,7 +40,8 @@ export default class Templates {
             "id": 0,
             "name": "Empty Project",
             "description": "Create an empty project and start coding!",
-            "image": "/static/img/templates/img-portis.png",
+            "image": "/static/img/templates/img-empty.png",
+            "categories": [0, 2],
             "files": {
                 "/": {
                     "type": "d",
@@ -297,7 +302,8 @@ export default class Templates {
             "id": 1,
             "name": "Hello World",
             "description": "The simplest form of application simply showing a Hello World through a Smart Contract",
-            "image": "/static/img/templates/img-portis.png",
+            "image": "/static/img/templates/img-hello-world.png",
+            "categories": [0, 3],
             "files": {
                 "/": {
                     "type": "d",
@@ -435,7 +441,8 @@ export default class Templates {
             "id": 2,
             "name": "Uncesorable News Feed",
             "description": "Publish news that nobody can remove. No more censorship!",
-            "image": "/static/img/templates/img-portis.png",
+            "image": "/static/img/templates/img-news-feed.png",
+            "categories": [0, 2],
             "files": {
                 "/": {
                     "type": "d",
@@ -585,7 +592,8 @@ export default class Templates {
             "id": 3,
             "name": "Raise to Summon",
             "description": "Raise Funds to per example summon a V.I.P. to a meeting/conference/meetup or whatever you like",
-            "image": "/static/img/templates/img-portis.png",
+            "image": "/static/img/templates/img-raise-to-summon.png",
+            "categories": [0, 1],
             "files": {
                 "/": {
                     "type": "d",
