@@ -92,7 +92,7 @@ export default class Deployer extends Component {
         this._stop(msg);
         const callback=this.props.parent.callback;
         delete this.props.parent.callback;
-        this.props.router.control._reloadProjects();
+        this.props.router.control._reloadProjects(null, null, true);
         if(callback) callback(status);
     };
 

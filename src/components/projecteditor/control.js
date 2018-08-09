@@ -1110,7 +1110,7 @@ export default class DevkitProjectEditorControl extends Component {
         return true;
     };
 
-    _reloadProjects = (e, cb) => {
+    _reloadProjects = (e, cb, redrawAll) => {
         if(e) e.preventDefault();
         this.backend.loadProjects((status, projects) => {
             if(status!=0) {
@@ -1157,7 +1157,7 @@ export default class DevkitProjectEditorControl extends Component {
             }
 
             if(cb) cb(0);
-            this.props.router.main.redraw();
+            this.props.router.main.redraw(redrawAll);
         });
     };
 
