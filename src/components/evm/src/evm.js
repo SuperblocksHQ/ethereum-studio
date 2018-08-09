@@ -806,6 +806,7 @@ function sendRawTransaction(data, callback) {
                     console.error(err);
                     callback(err, null);
                 } else {
+                    callback(null, transactionHash);
                     _debugLog("[Block] finished running");
                     _debugLog(results);
                     //console.info("[Transaction] returned: " + results.results[0].vm.return.toString("hex"));
@@ -886,7 +887,6 @@ function sendRawTransaction(data, callback) {
         "status": null,
     };
 
-    callback(null, transactionHash);
     });
 }
 
