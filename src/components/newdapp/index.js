@@ -46,7 +46,8 @@ export default class NewDapp extends Component {
         dappfile.project = project;
 
         const files = selectedTemplate.files;
-        this.props.backend.saveProject(this.state.projectInfo.name, { dappfile: dappfile }, (o) => { cb(o.status, o.code) }, true, files);
+
+        this.props.backend.saveProject(this.state.projectInfo.name, { dappfile: dappfile }, o => this.props.cb(o.status, o.code), true, files);
         this.closeModal();
     }
 
@@ -90,9 +91,8 @@ export default class NewDapp extends Component {
 NewDapp.proptypes = {
     modal: Proptypes.object.isRequired,
     functions: Proptypes.object.isRequired,
+    cb: Proptypes.func.isRequired
 }
-
-
 
  // const cb=(status, code) => {
     //     if(this.props.cb) {
