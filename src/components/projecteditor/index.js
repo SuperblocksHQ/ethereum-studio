@@ -24,11 +24,7 @@ export default class DevkitProjectEditor extends Component {
     constructor(props) {
         super(props);
 
-        // Used to communicate between components, events is probably a bettter way of doing this.
-        this.router={
-            register: this.register,
-        };
-        this.router.register("main", this);
+        this.props.router.register("main", this);
 
         window.addEventListener("resize", (e) =>{
             this._updatePanesWidth();
@@ -49,16 +45,15 @@ export default class DevkitProjectEditor extends Component {
     }
 
     redraw = (all) => {
-        if(this.router.control) {
-            this.router.control.redraw();
+        if(this.props.router.control) {
+            this.props.router.control.redraw();
         }
-        if(this.router.panes) {
-            this.router.panes.redraw(all);
+        if(this.props.router.app) {
+            this.props.router.app.redraw(all);
         }
-    };
-
-    register = (name, obj) => {
-        this.router[name] = obj;
+        if(this.props.router.panes) {
+            this.props.router.panes.redraw(all);
+        }
     };
 
     _updatePanesWidth=()=>{
@@ -72,12 +67,12 @@ export default class DevkitProjectEditor extends Component {
     render() {
         return (
             <div class={style.projecteditor} id="main_container">
-                <TopBar router={this.router} />
+                <TopBar router={this.props.router} />
                 <div key="main_control" id="main_control" class={style.control}>
-                    <Control router={this.router} functions={this.props.functions} />
+                    <Control router={this.props.router} functions={this.props.functions} />
                 </div>
                 <div key="main_panes" id="main_panes" class={style.panescontainer}>
-                    <Panes router={this.router} functions={this.props.functions} />
+                    <Panes router={this.props.router} functions={this.props.functions} />
                 </div>
             </div>
         );

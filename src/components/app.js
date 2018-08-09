@@ -19,8 +19,7 @@ import classNames from 'classnames';
 import Modal from './modal';
 
 import ProjectEditor from './projecteditor';
-import { Wallet } from './projecteditor/wallet';
-
+import { Wallet } from './projecteditor/wallet'; 
 import Solc from './solc';
 import EVM from './evm';
 
@@ -75,6 +74,13 @@ export default class App extends Component {
             },
         };
 
+        // Used to communicate between components, events is probably a better way of doing this.
+        this.router={
+            register: this.register,
+        };
+
+        this.router.register("app", this);
+
         this.functions = {
             modal: {
                 show: this.showModal,
@@ -103,6 +109,14 @@ export default class App extends Component {
             this._init();
         });
     }
+
+    redraw = (all) => {
+        this.setState();
+    }
+
+    register = (name, obj) => {
+        this.router[name] = obj;
+    };
 
     _init=()=>{
         const modalData={
@@ -226,6 +240,15 @@ export default class App extends Component {
     };
 
     render() {
+        var endpoint="";
+        var project;
+        if(this.router && this.router.control) {
+            project = this.router.control && this.router.control.getActiveProject();
+            if(project) {
+                const network = project.props.state.data.env;
+                endpoint = (this.functions.networks.endpoints[network] || {}).endpoint;
+            }
+        }
         const modalContent = this.getModal();
         return (
             <div id="app" className={this.getClassNames()}>
@@ -233,6 +256,7 @@ export default class App extends Component {
                     <div class="maincontent">
                         <ProjectEditor
                             key="projedit"
+                            router={this.router}
                             functions={this.functions} />
                     </div>
                     <div class="bottom-status-bar">
@@ -240,6 +264,7 @@ export default class App extends Component {
                             <span class="note">Note</span>
                             <span class="note-text">All files are stored in the browser only, download to backup</span>
                         </span>
+                        <span class="right">{endpoint}</span>
                         <span class="right">{this._version}</span>
                     </div>
                 </div>
