@@ -12,10 +12,12 @@ TemplateCategory.protoTypes = {
     onCategorySelected: Proptypes.func.isRequired,
 }
 
-const GridLayout = ({ templates, onTemplateSelected, templateSelectedId } = props) => (
+const GridLayout = ({ templates, onTemplateSelected, templateSelectedId, categorySelectedId } = props) => (
     <div class={style.gridLayout}>
         <div id="mainContent" className="container" style={{display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gridGap: '10px', gridAutoRows: 'minMax(100px, auto)'}}>
-        { templates.map((template) => (
+        { templates
+            .filter((template) => template.categories.indexOf(categorySelectedId) > -1)
+            .map((template) => (
                 <TemplateLayout
                     image={template.image}
                     name={template.name}
@@ -32,6 +34,7 @@ GridLayout.protoTypes = {
     templates: Proptypes.array.isRequired,
     onCategorySelected: Proptypes.func.isRequired,
     templateSelectedId: Proptypes.number,
+    categorySelectedId: Proptypes.number,
 }
 
 const TemplateLayout = ({ image, name, description, selected, onTemplateSelected } = props) => (
@@ -53,7 +56,7 @@ TemplateLayout.protoTypes = {
 export default class Step2 extends Component {
 
     state = {
-        categorySelected: 0,
+        categorySelectedId: 0,
         templateSelected: null
     }
 
@@ -67,7 +70,7 @@ export default class Step2 extends Component {
 
     onCategorySelected(id) {
         this.setState({
-            categorySelected: id
+            categorySelectedId: id
         })
     }
 
@@ -79,7 +82,7 @@ export default class Step2 extends Component {
 
     render() {
         let { categories, templates } = this.props;
-        let { categorySelected, templateSelected } = this.state;
+        let { categorySelectedId, templateSelected } = this.state;
 
         return(
             <div className={classNames([style.newDapp, "modal"])}>
@@ -93,7 +96,7 @@ export default class Step2 extends Component {
                                 <ul>
                                     {
                                         categories.map(category =>
-                                            <li class={categorySelected == category.id ? style.selected : null}>
+                                            <li class={categorySelectedId == category.id ? style.selected : null}>
                                                 <TemplateCategory
                                                     title={category.name}
                                                     onCategorySelected={() => this.onCategorySelected(category.id)}/>
@@ -106,7 +109,8 @@ export default class Step2 extends Component {
                             <GridLayout
                                 templates={templates}
                                 onTemplateSelected={this.onTemplateSelected}
-                                templateSelectedId={templateSelected ? templateSelected.id : null}/>
+                                templateSelectedId={templateSelected ? templateSelected.id : null}
+                                categorySelectedId={categorySelectedId}/>
                         </div>
                     </div>
                     <div class={style.footer}>

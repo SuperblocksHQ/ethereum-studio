@@ -496,10 +496,8 @@ export default class DevkitProjectEditorControl extends Component {
                 alert("A DApp with that name already exists, choose a different name.");
             }
         };
-        const cancel=(modal) =>{
-        };
         const modal={};
-        modal.render=() => {return (<NewDapp backend={this.backend} functions={this.props.functions} modal={modal} cb={cb} />)};
+        modal.render=() => {return (<NewDapp backend={this.backend} router={this.props.router} functions={this.props.functions} modal={modal} cb={cb} />)};
         this.props.functions.modal.show(modal);
     };
 
