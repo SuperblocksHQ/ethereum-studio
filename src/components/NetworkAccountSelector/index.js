@@ -49,7 +49,7 @@ class NetworkSelector extends Component {
             network: network,
         });
         this.pushSettings();
-        this.props.router.main.redraw();
+        this.props.router.main.redraw(true);
     };
 
     pushSettings=()=>{
@@ -149,7 +149,7 @@ class AccountSelector extends Component {
             account: account,
         });
         this.pushSettings();
-        this.props.router.main.redraw();
+        this.props.router.main.redraw(true);
     };
 
     accountEdit=(e, index)=>{
@@ -273,15 +273,19 @@ class AccountSelector extends Component {
     };
 
     updateBalances = () => {
+        if(this.updateBalanceBusy) return;
+        this.updateBalanceBusy=true;
         const {accountType, isLocked, network, address}=this.accountType();
         if(!address || address.length<5) {
             // a 0x00 address...
+            this.updateBalanceBusy=false;
             return;
         }
         this.fetchBalance(network, address, (res) => {
             const a = this.state.balances[network] = this.state.balances[network] || {};
             a[address]=res;
             this.setState();
+            this.updateBalanceBusy=false;
         });
     };
 
@@ -305,8 +309,7 @@ class AccountSelector extends Component {
         const walletName=account.get('wallet', env);
         this.props.functions.wallet.openWallet(walletName, null, (status)=>{
             if(status===0) {
-                // Reload data (for the same env)
-                this.setState();
+                this.props.router.main.redraw(true);
             }
         });
     };
