@@ -60,7 +60,11 @@ export default class SuperProvider {
             if((payload.method=="eth_sendTransaction" || payload.method=="eth_sendRawTransaction") && !err && res && res.result && this.that.notifyTx) {
                 this.that.notifyTx(res.result, data.endpoint);
             }
-            this.iframe.contentWindow.postMessage({type:"reply",channel:this.that.id,id:data.id,payload:{err:err,res:res}}, '*');
+            try {
+                this.iframe.contentWindow.postMessage({type:"reply",channel:this.that.id,id:data.id,payload:{err:err,res:res}}, '*');
+            }
+            catch (e) {
+            }
         };
 
         const send=(payload, endpoint, callback)=>{

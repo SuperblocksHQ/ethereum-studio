@@ -31,7 +31,8 @@ export default class ContractInteraction extends Component {
         this.provider=new SuperProvider({that:this});
         this.setState({account:null});
         this.contract_address="";
-        this.contract_balance="?";
+        this.contract_balance="? eth";
+        this.contract_balance_wei="";
         this._getEnv();
     }
 
@@ -91,7 +92,7 @@ export default class ContractInteraction extends Component {
     };
 
     render2 = () => {
-        const env=this.props.project.props.state.data.env;
+        const env=this.state.network;
         const contract = this.dappfile.getItem("contracts", [{name: this.props.contract}]);
         const src=contract.get('source');
         const network=this.state.network;
@@ -128,13 +129,6 @@ export default class ContractInteraction extends Component {
                             return;
                         }
                         const rendered=Generator.render(abi, this.props.contract);
-                        if(this.state.showSource=="on") {
-                            var jscontent=rendered.js.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-                            var htmlcontent=rendered.html.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-                            const content="<html><body style='color: #fff;'>HTML:<br/><pre><code>"+htmlcontent+"</code></pre><br/>JS:<br/><pre><code>"+jscontent+"</code></pre></body></html>";
-                            this.writeContent(0, content);
-                            return;
-                        }
                         const content=this.getOuterContent(rendered.html, jsbodies.join("\n")+rendered.js, endpoint, this._getAccountAddress());
                         this.writeContent(0, content);
                     });
@@ -150,10 +144,9 @@ export default class ContractInteraction extends Component {
     _getAccountAddress=()=>{
         // Check given account, try to open and get address, else return [].
         const accountName=this._getAccount();
-        if(accountName=="(locked)") return [];
         if(!accountName) return [];
 
-        const env=this.props.project.props.state.data.env;
+        const env=this.state.network;
         const account = this.dappfile.getItem("accounts", [{name: accountName}]);
         const accountIndex=account.get('index', env);
         const walletName=account.get('wallet', env);
@@ -352,76 +345,55 @@ export default class ContractInteraction extends Component {
         this.render2();
     };
 
-    _selectAccount=(e)=>{
-        e.preventDefault();
-        this.setState({account:e.target.value});
-        this.redraw();
-    };
-
     renderToolbar = () => {
         const contract = this.dappfile.getItem("contracts", [{name: this.props.contract}]);
-        const env=this.props.project.props.state.data.env;
+        const env=this.state.network;
         const network=this.state.network;
         const endpoint=(this.props.functions.networks.endpoints[network] || {}).endpoint;
         return (
             <div class={style.toolbar} id={this.id+"_header"}>
                 <div class={style.buttons}>
                     <a href="#" title="Recompile" onClick={this.run}><IconRun /></a>
-                    <span><input checked={this.state.showSource=="on"} onChange={(e)=>{this.setState({showSource:(e.target.checked?"on":"off")});this.redraw();}} type="checkbox" />&nbsp;Show source</span>
-                </div>
-                <div class={style.accounts}>
-                    <a href="#" title="Click to get account balance" onClick={this._getUserBalance}>{this.accountinfo}</a>&nbsp;Balance: {this.account_balance}
                 </div>
                 <div class={style.info}>
                     <span>
-                        Endpoint: {endpoint} Contract: <a href="#" title="Click to get contract balance" onClick={this._getBalance}>{this.contract_address}</a> Balance: {this.contract_balance} wei
+                        Contract address: {this.contract_address}&nbsp;
+                    </span>
+                    <span title={this.contract_balance_wei}>
+                        Balance: {this.contract_balance}&nbsp;
+                    </span>
+                    <span>
+                        Endpoint: {endpoint}
                     </span>
                 </div>
             </div>
         );
     };
 
-    _getUserBalance=(e)=>{
-        e.preventDefault();
-        const env=this.props.project.props.state.data.env;
-        const contract = this.dappfile.getItem("contracts", [{name: this.props.contract}]);
-        const network=this.state.network;
-        const endpoint=(this.props.functions.networks.endpoints[network] || {}).endpoint;
-        const web3=this._getWeb3(endpoint);
-        if(this.account_address.length<5) {
-            this.account_balance="?";
-            this.setState();
-            return;
-        }
-        web3.eth.getBalance(this.account_address,(err,res)=>{
-            if(err) {
-                alert("Could not get balance of user.");
-            }
-            else {
-                this.account_balance=res.toNumber();
-                this.setState();
-            }
-        });
-    };
-
-    _getBalance=(e)=>{
-        e.preventDefault();
-        const env=this.props.project.props.state.data.env;
+    updateBalance=()=>{
+        if(this.updateBalanceBusy) return;
+        this.updateBalanceBusy=true;
+        const env=this.state.network;
         const contract = this.dappfile.getItem("contracts", [{name: this.props.contract}]);
         const network=this.state.network;
         const endpoint=(this.props.functions.networks.endpoints[network] || {}).endpoint;
         const web3=this._getWeb3(endpoint);
         if(this.contract_address.length<5) {
-            this.contract_balance="?";
+            this.updateBalanceBusy=false;
+            this.contract_balance="? eth";
+            this.contract_balance_wei="";
             this.setState();
             return;
         }
         web3.eth.getBalance(this.contract_address,(err,res)=>{
+            this.updateBalanceBusy=false;
             if(err) {
-                alert("Could not get balance of contract.");
+                this.contract_balance="? eth";
+                this.contract_balance_wei="";
             }
             else {
-                this.contract_balance=res.toNumber();
+                this.contract_balance_wei=res.toNumber() + " wei";
+                this.contract_balance=web3.fromWei(res.toNumber()) + " eth";
                 this.setState();
             }
         });
@@ -435,6 +407,7 @@ export default class ContractInteraction extends Component {
     };
 
     componentDidMount() {
+        this.timer=setInterval(this.updateBalance, 3000);
         this.provider._attachListener();
         // We need to do a first redraw to get the height right, since toolbar didn't exist in the first sweep.
         this.redraw();
@@ -442,6 +415,7 @@ export default class ContractInteraction extends Component {
 
     componentWillUnmount() {
         this.provider._detachListener();
+        clearInterval(this.timer);
     }
 
 
@@ -451,16 +425,6 @@ export default class ContractInteraction extends Component {
     };
 
     render() {
-        const addresses=this._getAccountAddress();
-        if(addresses.length==0) {
-            this.accountinfo="Account not accessible";
-            this.account_address="0x0";
-            this.account_balance="?";
-        }
-        else {
-            this.accountinfo=addresses[0];
-            this.account_address=addresses[0];
-        }
         const toolbar=this.renderToolbar();
         const maxHeight = {
             height: this.getHeight() + "px"

@@ -141,13 +141,20 @@ var render=function(abi, contract) {
         const fn=item.name;
         const cb=(err,res)=>{
             var iserr=false;
+            if(res && res.error) {
+                // Sometimes we get an error in the result, so we copy it over.
+                err=res.error;
+            }
             if(err) {
-                console.error("Could not get data from contract: ", err);
+                console.error("Could not interact with contract: ", err);
                 iserr=true;
                 res=[];
             }
             if(item.outputs.length==0) {
                 var id2=id+"_res";
+                if(iserr) {
+                    res=err;
+                }
                 document.getElementById(id2).textContent=res.toString();
             }
             else {
@@ -173,7 +180,7 @@ var render=function(abi, contract) {
         catch(e) {
             console.error("Error interacting with contract:", e);
         }
-    }
+    };
     module.handler=handler;
 })(module, Contracts['`+contract+`'].abi, Contracts['`+contract+`'].address,
     (function(endpoint) {
