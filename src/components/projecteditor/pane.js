@@ -50,6 +50,10 @@ export class Pane {
         this.activeWindowId=null;
     }
 
+    windowsCount = () => {
+        return this.windows.length;
+    };
+
     addWindow = (props) => {
         if(props.item.props.state._tag) {
             // Check if a window with the tag already exists,

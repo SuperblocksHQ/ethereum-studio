@@ -113,8 +113,14 @@ export default class DevkitProjectEditorPanes extends Component {
             this.focusWindow(pane.id, winId, true, cb);
         }
         else {
+            if(targetPaneId) {
+                var {pane} = this.getPane(targetPaneId);
+                if(pane==null) return false;
+                if(pane.windowsCount()>=4) {
+                    targetPaneId=null;
+                }
+            }
             var {pane, winId} = this.addWindow({item: item, router: this.props.router, functions: this.props.functions}, targetPaneId);
-            if(pane==null) return false;
             this.focusWindow(pane.id, winId, false, cb);
         }
         this.setState();
