@@ -28,19 +28,19 @@ html, body {
     font-size: 15px;
 }
 html {
-    ::-webkit-scrollbar
-    {
-        width: 12px;
+    ::-webkit-scrollbar {
+        width: 7px;
     }
 
-    ::-webkit-scrollbar-track
-    {
+    ::-webkit-scrollbar-track {
         background: transparent;
     }
 
-    ::-webkit-scrollbar-thumb
-    {
-        border: 2px solid #4e4e4e;
+    ::-webkit-scrollbar-thumb {
+        border-radius: 4px;
+        background-color: rgba(0,0,0,.5);
+        -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+        box-shadow: 0 0 1px rgba(255,255,255,.5);
     }
 }
 
@@ -53,6 +53,7 @@ a:active,a:focus {
 }
 
 .full {
+    display: relative;
     width: 100%;
     height: 100%;
 }
@@ -98,9 +99,6 @@ a:active,a:focus {
 }
 
 #app.modals {
-    #app_content {
-        opacity: 0.333;
-    }
     #app_modal {
         display: block;
     }
@@ -120,6 +118,7 @@ a:active,a:focus {
     left: 0;
     width: 100%;
     height: 100%;
+    background-color: rgba(0, 0, 0, 0.75)
 }
 
 .modal {
@@ -152,7 +151,7 @@ a:active,a:focus {
 .bottom-status-bar {
     position: absolute;
     height: 27px;
-	background-color: #414141;
+	background-color: #141618;
     box-shadow: 0 -2px 4px 0 rgba(0, 0, 0, 0.0);
     z-index: 1;
     overflow: hidden;
@@ -160,7 +159,7 @@ a:active,a:focus {
     font-size: 0.80em;
     display: flex;
     align-items: center;
-    left: 0;
+    left: 300px;
     right: 0;
     bottom: 0;
     a {

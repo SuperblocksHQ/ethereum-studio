@@ -32,6 +32,8 @@ import iconUp from '@fortawesome/fontawesome-free-solid/faArrowUp';
 import iconDown from '@fortawesome/fontawesome-free-solid/faArrowDown';
 import iconClone from '@fortawesome/fontawesome-free-solid/faClone';
 import iconUpload from '@fortawesome/fontawesome-free-solid/faUpload';
+import iconTwitter from '@fortawesome/fontawesome-free-brands/faTwitter';
+import iconGithub from '@fortawesome/fontawesome-free-brands/faGithub';
 import iconTelegram from '@fortawesome/fontawesome-free-brands/faTelegram';
 
 
@@ -79,7 +81,6 @@ export const IconDropdown = ({...props}) => <IconImg src={'/static/img/icon-drop
 export const IconTransactions = ({...props}) => <IconImg src={'/static/img/icon-transactions.png'} {...props}/>;
 export const IconCollaborate = ({...props}) => <IconImg src={'src="/static/img/icon-collaborate.png'} {...props}/>;
 export const IconProjectSelector = ({...props}) => <IconImg src={'/static/img/icon-project-selector.svg'} {...props} />;
-export const IconTelegram = ({...props}) => <FaIcon icon={iconTelegram} {...props}/>;
 
 // File types
 export const IconContract = ({...props}) => <IconImg src={'/static/img/icon-solidity.svg'} {...props} />;
@@ -94,3 +95,9 @@ export const IconVideoTutorials = ({...props}) => <IconImg src={'/static/img/ico
 export const IconHelpCenter = ({...props}) => <IconImg src={'/static/img/icon-help-center.svg'} {...props} />;
 export const IconAskQuestion = ({...props}) => <IconImg src={'/static/img/icon-ask-question.svg'} {...props} />;
 export const IconWhatsNew = ({...props}) => <IconImg src={'/static/img/icon-whats-new.svg'} {...props} />;
+
+// External services
+export const IconTwitter = ({...props}) => <FaIcon icon={iconTwitter} {...props} />;
+export const IconGithub = ({...props}) => <FaIcon icon={iconGithub} {...props} />;
+export const IconTelegram = ({...props}) => <FaIcon icon={iconTelegram} {...props}/>;
+

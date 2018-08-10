@@ -47,34 +47,32 @@ class HelpDropdownDialog extends DropDownDialog {
 
         return (
             <div {...props}>
-                <button class={classNames([style.container, "btnNoBg"])} onClick={this.showMenu}>
-                    <img class={style.icon} src="/static/img/icon-help.svg" alt="Open transactions screen"></img>
-                    <div>Help</div>
-                </button>
-                {
-                    this.state.showMenu ? (
-                        <div class={style.helpMenu}>
-                            <div class={style.title}>General</div>
-                            <ul>
-                                <li>
-                                    <a href="">Help Center</a>
-                                </li>
-                                <li>
-                                    <div class={style.container}>
-                                        <a href="">Join our Community!</a>
-                                        <span class={style.telegramIcon}>
-                                            <IconTelegram color="#0088cc"/>
-                                        </span>
-                                    </div>
+                <div class={style.action}>
+                    <button class={classNames([style.container, "btnNoBg"])} onClick={this.showMenu}>
+                        <img class={style.icon} src="/static/img/icon-help.svg" alt="Open transactions screen"></img>
+                        <div>Help</div>
+                    </button>
+                </div>
+                <div class={classNames([style.helpMenu], {[style.show]: this.state.showMenu })}>
+                    <div class={style.title}>General</div>
+                    <ul>
+                        <li>
+                            <a href="">Help Center</a>
+                        </li>
+                        <li>
+                            <div class={style.container}>
+                                <a href="">Join our Community!</a>
+                                <span class={style.telegramIcon}>
+                                    <IconTelegram color="#0088cc"/>
+                                </span>
+                            </div>
 
-                                </li>
-                                <li>
-                                    <a href="">What’s new 🚀</a>
-                                </li>
-                            </ul>
-                        </div>
-                    ) : (null)
-                }
+                        </li>
+                        <li>
+                            <a href="">What’s new 🚀</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         );
     }
@@ -160,10 +158,12 @@ export default class TopBar extends DropDownDialog {
             <div class={style.topbar}>
                 <img class={style.logo} src="/static/img/img-studio-logo.svg" alt="Superblocks Studio logo"></img>
                 <div class={style.tools}>
-                    <button class={classNames([style.left, style.container, "btnNoBg"])} onClick={this.onTransactionsClicked}>
-                        <IconTransactions class={style.icon} alt="Open the transactions log screen"/>
-                        <div>Transactions</div>
-                    </button>
+                    <div class={style.action}>
+                        <button class={classNames([style.container, "btnNoBg"])} onClick={this.onTransactionsClicked}>
+                            <IconTransactions class={style.icon} alt="Open the transactions log screen"/>
+                            <div>Transactions</div>
+                        </button>
+                    </div>
                 </div>
                 <button class={classNames([style.projectButton, style.container, "btnNoBg"])} onClick={this.showMenu}>
                     <IconProjectSelector class={style.icon}/>
@@ -195,7 +195,7 @@ export default class TopBar extends DropDownDialog {
                         </div>
                     ) : (null)
                 }
-                <HelpDropdownDialog class={style.right}/>
+                <HelpDropdownDialog class={style.elementsRight}/>
             </div>
         );
     }
