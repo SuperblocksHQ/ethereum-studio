@@ -87,30 +87,6 @@ export default class AppEditor extends Component {
     };
 
     render() {
-        // Copy
-        const dappfilejson=JSON.parse(JSON.stringify(this.props.dappfilejson));
-        // Clear
-        delete dappfilejson.dir;
-        delete dappfilejson.inode;
-        delete dappfilejson._filecache;
-        if(dappfilejson.project) delete dappfilejson.project.info;
-        // TODO delete all dotfiles.
-        const clearDotfiles=(root)=>{
-            const keys=Object.keys(root);
-            for(var index=0;index<keys.length;index++) {
-                const key=keys[index];
-                if(key[0]=='.') {
-                    delete root[key];
-                    continue;
-                }
-                const node=root[key];
-                if(node.type=='d') {
-                    clearDotfiles(node.children);
-                }
-            }
-        };
-        clearDotfiles(dappfilejson.files);
-
         const toolbar=this.renderToolbar();
         const maxHeight = {
             height: this.getHeight() + "px"
