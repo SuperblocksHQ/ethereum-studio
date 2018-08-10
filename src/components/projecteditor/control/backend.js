@@ -21,15 +21,15 @@ export default class Backend {
 
     // Make sure projects created for an older version are converted to the current format.
     convertProjects = (cb) => {
-        if(!localStorage.getItem(DAPP_FORMAT_VERSION)) {
-            if(localStorage.getItem("dapps1.0")) {
+        if (!localStorage.getItem(DAPP_FORMAT_VERSION)) {
+            if (localStorage.getItem("dapps1.0")) {
                 // Convert from 1.0 to 2.0
                 const data=JSON.parse(localStorage.getItem("dapps1.0"));
                 const newProjects=[];
-                for(let i=0; i<data.projects.length; i++) {
+                for (let i=0; i<data.projects.length; i++) {
                     const project=data.projects[i];
                     const newProject=this._convertProject1_0to2_0(project);
-                    if(newProject) {
+                    if (newProject) {
                         newProjects.push(newProject);
                     }
                     else {
@@ -37,9 +37,12 @@ export default class Backend {
                     }
                 }
                 // store projects.
-                const newData={projects:newProjects};
+                const newData = { projects:newProjects };
                 localStorage.setItem(DAPP_FORMAT_VERSION, JSON.stringify(newData));
                 cb(1);  // Indicate that there are converted projects.
+            } else {
+                // Nothing to convert
+                cb(0);
             }
         }
         else {
