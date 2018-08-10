@@ -1,7 +1,7 @@
 /* global window */
 import { createStore, applyMiddleware, compose } from 'redux';
 import { persistStore, persistCombineReducers } from 'redux-persist';
-import storage from 'redux-persist/es/storage'; // default: localStorage if web
+import storage from 'redux-persist/lib/storage'; // default: localStorage if web
 import thunk from 'redux-thunk';
 import reducers from '../reducers';
 

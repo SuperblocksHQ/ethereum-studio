@@ -1,3 +1,4 @@
+
 // Copyright 2018 Superblocks AB
 //
 // This file is part of Superblocks Studio.
@@ -16,6 +17,7 @@
 
 import { Component } from 'preact';
 import classNames from 'classnames';
+<<<<<<< HEAD:src/components/app.js
 import Modal from './modal';
 
 import ProjectEditor from './projecteditor';
@@ -23,8 +25,14 @@ import { Wallet } from './projecteditor/wallet';
 import Solc from './solc';
 import EVM from './evm';
 import Backend from  './projecteditor/backend';
+=======
+>>>>>>> Migrated settings to redux/redux-persist:src/components/app/app.js
 
-import Settings from './settings';
+import Modal from '../modal';
+import ProjectEditor from '../projecteditor';
+import { Wallet } from '../projecteditor/wallet';
+import Solc from '../solc';
+import EVM from '../evm';
 
 export default class App extends Component {
     constructor(props) {
@@ -96,7 +104,6 @@ export default class App extends Component {
                 endpoints: endpoints,
             },
             generateId: this.generateId,
-            settings: new Settings(),
         };
         this.knownWalletSeed="butter toward celery cupboard blind morning item night fatal theme display toy";
         this.functions.wallet = new Wallet({functions: this.functions, length:30});
@@ -106,12 +113,16 @@ export default class App extends Component {
         this.setState({modals:[]});
         console.log("Known development Ethereum wallet seed is: "+this.knownWalletSeed);
 
+<<<<<<< HEAD:src/components/app.js
         this.functions.settings.load(()=>{
             this._convertProjects((status)  => {
                 this.isReady=true;
                 this._init();
             });
         });
+=======
+        this._init();
+>>>>>>> Migrated settings to redux/redux-persist:src/components/app/app.js
     }
 
     _convertProjects = (cb) => {
@@ -152,6 +163,7 @@ export default class App extends Component {
     };
 
     _init=()=>{
+        let { showSplash } = this.props;
         const modalData={
             title: "Loading Superblocks Studio " + this._version,
             body: "Initializing Solidity compiler and Ethereum Virtual Machine...",
@@ -162,10 +174,13 @@ export default class App extends Component {
         this.functions.compiler=new Solc({id:this.generateId()});
         this.functions.EVM=new EVM({id:this.generateId()});
         const fn=()=>{
-            if(this.functions.EVM.isReady() && this.functions.compiler.isReady()) {
+            if (this.functions.EVM.isReady() && this.functions.compiler.isReady()) {
                 console.log("Superblocks Studio "+this._version+" Ready.");
                 this.functions.modal.close();
-                this._showSplash();
+
+                if (showSplash) {
+                    this._showSplash();
+                }
             }
             else {
                 setTimeout(fn,1000);
@@ -175,8 +190,8 @@ export default class App extends Component {
     };
 
     _showSplash=()=>{
-        const settings=this.functions.settings.get();
-        if(settings.splash_mute) return;
+        let { showSplashNoMore } = this.props;
+
         const body=(
             <div class="splash">
                 <p class="splash_text">
@@ -187,9 +202,9 @@ export default class App extends Component {
                 </p>
                 <p class="splash_cancel">
                     <a href="#" onClick={()=>{
+                        // Idealy this should be inside the action and not here.
                         this.functions.modal.cancel();
-                        settings.splash_mute=true;
-                        this.functions.settings.save();
+                        showSplashNoMore();
                     }}>No thanks</a>
                 </p>
             </div>

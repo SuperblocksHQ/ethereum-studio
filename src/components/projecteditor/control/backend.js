@@ -429,16 +429,6 @@ export default class Backend {
         else setTimeout(()=>cb({status:1, contents:"", hash:""}),1);
     };
 
-    loadSettings = (cb) => {
-        const settings=JSON.parse(localStorage.getItem("settings1.0")) || {};
-        if(cb) setTimeout(()=>cb(settings),1);
-    };
-
-    saveSettings = (settings, cb) => {
-        localStorage.setItem("settings1.0", JSON.stringify(settings));
-        if(cb) setTimeout(()=>cb(),1);
-    };
-
     downloadWorkspace = () => {
         const exportName = 'superblocks_workspace.json';
         const workspace=JSON.parse(localStorage.getItem(DAPP_FORMAT_VERSION)) || {};
@@ -477,7 +467,7 @@ export default class Backend {
 
     uploadWorkspace = (file, cb) => {
         var reader = new FileReader();
-      
+
         reader.onloadend = (evt) => {
           if (evt.target.readyState == FileReader.DONE) {
             try {
@@ -494,7 +484,7 @@ export default class Backend {
             cb()
           }
         };
-      
+
         var blob = file.slice(0, file.size);
         reader.readAsBinaryString(blob);
     }

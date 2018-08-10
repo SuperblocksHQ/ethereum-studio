@@ -566,15 +566,15 @@ export default class Control extends Component {
     };
 
     openProject = (project, cb) => {
-        if(this.getActiveProject() == project) {
-            if(cb) cb(0);
+        if (this.getActiveProject() == project) {
+            if (cb) cb(0);
             return;
         }
 
         this.closeProject((status) => {
-            if(status==0) this._addProjectToExplorer(project);
+            if (status==0) this._addProjectToExplorer(project);
             this.props.router.main.redraw(true);
-            if(cb) cb(status);
+            if (cb) cb(status);
         });
     };
 

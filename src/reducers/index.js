@@ -1,4 +1,5 @@
 import app from './app';
+import settings from './settings';
 
 const rehydrated = (state = false, action) => {
   switch (action.type) {
@@ -12,4 +13,5 @@ const rehydrated = (state = false, action) => {
 export default {
   rehydrated,
   app,
+  settings,
 };
