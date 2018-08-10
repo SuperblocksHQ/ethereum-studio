@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Studio.  If not, see <http://www.gnu.org/licenses/>.
 
-import Backend from '../projecteditor/backend';
+import Backend from '../projecteditor/control/backend';
 
 export default class Settings {
     constructor(props) {
@@ -26,7 +26,7 @@ export default class Settings {
     get=()=>{
         return this.settings;
     };
-    
+
     load=(cb)=>{
         this.backend.loadSettings((settings)=>{
             this.settings=settings;

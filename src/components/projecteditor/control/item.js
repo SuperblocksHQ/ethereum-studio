@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Studio.  If not, see <http://www.gnu.org/licenses/>.
 
-import { IconFile } from '../icons';
+import { IconFile } from '../../icons';
 
 export default class Item {
     props;

@@ -16,7 +16,7 @@
 
 import { h, Component } from 'preact';
 import style from './style-editor-contract';
-import Backend from  './backend';
+import Backend from './control/backend';
 
 
 export default class AppEditor extends Component {

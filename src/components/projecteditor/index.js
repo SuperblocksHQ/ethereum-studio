@@ -16,7 +16,7 @@
 
 import { Component } from 'preact';
 import style from './style';
-import Control from './control.js';
+import Control from './control';
 import Panes from './panes.js';
 import TopBar from '../topbar';
 

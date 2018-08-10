@@ -15,17 +15,16 @@
 // along with Superblocks Studio.  If not, see <http://www.gnu.org/licenses/>.
 
 import { h, Component } from 'preact';
-import { connect } from 'react-redux';
-
 import classnames from 'classnames';
-import style from './control.less';
+
+import style from './style';
 import Item from './item.js';
 import Backend from  './backend';
 import Dappfile from './dappfile';
-import NewDapp from '../newdapp';
-import Modal from '../modal';
-import TransactionLogData from '../blockexplorer/transactionlogdata.js';
-import NetworkAccountSelector from '../NetworkAccountSelector';
+import NewDapp from '../../newdapp';
+import Modal from '../../modal';
+import TransactionLogData from '../../blockexplorer/transactionlogdata.js';
+import NetworkAccountSelector from '../../NetworkAccountSelector';
 
 import {
     IconTrash,
@@ -57,10 +56,10 @@ import {
     IconGithub,
     IconTwitter,
     IconTelegram
-} from '../icons';
+} from '../../icons';
 
 
-class Control extends Component {
+export default class Control extends Component {
     constructor(props) {
         super(props);
         this.backend = new Backend();
@@ -1384,9 +1383,3 @@ class Control extends Component {
         );
     }
 }
-
-const mapStateToProps = state => ({
-    appVersion: state.app.version || '',
-  });
-
-export default connect(mapStateToProps, null)(Control);
