@@ -136,7 +136,7 @@ export default class Templates {
                 ],
                 "accounts": [
                     {
-                        "name": "ACCOUNT0",
+                        "name": "Default",
                         "blockchain": "ethereum",
                         "_environments": [
                             {
@@ -189,111 +189,6 @@ export default class Templates {
                                 }
                             },
                         ],
-                    },
-                    {
-                        "name": "ACCOUNT1",
-                        "blockchain": "ethereum",
-                        "_environments": [
-                            {
-                                "name": "browser",
-                                "data": {
-                                    "wallet": "development",
-                                    "index": 1,
-                                }
-                            },
-                            {
-                                "name": "custom",
-                                "data": {
-                                    "wallet": "private",
-                                    "index": 1,
-                                }
-                            },
-                        ],
-                        "address": "0x0"
-                    },
-                    {
-                        "name": "ACCOUNT2",
-                        "blockchain": "ethereum",
-                        "_environments": [
-                            {
-                                "name": "browser",
-                                "data": {
-                                    "wallet": "development",
-                                    "index": 2,
-                                }
-                            },
-                            {
-                                "name": "custom",
-                                "data": {
-                                    "wallet": "private",
-                                    "index": 2,
-                                }
-                            },
-                        ],
-                        "address": "0x0"
-                    },
-                    {
-                        "name": "ACCOUNT3",
-                        "blockchain": "ethereum",
-                        "_environments": [
-                            {
-                                "name": "browser",
-                                "data": {
-                                    "wallet": "development",
-                                    "index": 3,
-                                }
-                            },
-                            {
-                                "name": "custom",
-                                "data": {
-                                    "wallet": "private",
-                                    "index": 3,
-                                }
-                            },
-                        ],
-                        "address": "0x0"
-                    },
-                    {
-                        "name": "ACCOUNT4",
-                        "blockchain": "ethereum",
-                        "_environments": [
-                            {
-                                "name": "browser",
-                                "data": {
-                                    "wallet": "development",
-                                    "index": 4,
-                                }
-                            },
-                            {
-                                "name": "custom",
-                                "data": {
-                                    "wallet": "private",
-                                    "index": 4,
-                                }
-                            },
-                        ],
-                        "address": "0x0"
-                    },
-                    {
-                        "name": "ACCOUNT5",
-                        "blockchain": "ethereum",
-                        "_environments": [
-                            {
-                                "name": "browser",
-                                "data": {
-                                    "wallet": "development",
-                                    "index": 5,
-                                }
-                            },
-                            {
-                                "name": "custom",
-                                "data": {
-                                    "wallet": "private",
-                                    "index": 5,
-                                }
-                            },
-                        ],
-                        "address": "0x0"
                     },
                 ],
             }
