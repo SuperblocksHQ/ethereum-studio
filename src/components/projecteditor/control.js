@@ -51,7 +51,10 @@ import {
     IconHelpCenter,
     IconAskQuestion,
     IconWhatsNew,
-    IconShowPreview
+    IconShowPreview,
+    IconGithub,
+    IconTwitter,
+    IconTelegram
 } from '../icons';
 
 
@@ -1346,6 +1349,24 @@ export default class DevkitProjectEditorControl extends Component {
             <div class="full">
                 <div class={style.treemenu}>
                     {item}
+                </div>
+                <div>
+                <div class={style.controlBottomContainer}>
+                    <div style="display: inline-block">
+                        <a href="https://twitter.com/getsuperblocks" target="_blank" rel="noopener noreferrer" class={style.contactIcon}>
+                            <IconTwitter />
+                        </a>
+                        <a href="https://github.com/SuperblocksHQ/studio" target="_blank" rel="noopener noreferrer" class={style.contactIcon}>
+                            <IconGithub />
+                        </a>
+                        <a href="https://t.me/GetSuperblocks" target="_blank" rel="noopener noreferrer" class={style.contactIcon}>
+                            <IconTelegram />
+                        </a>
+                    </div>
+                    <div class={style.version}>
+                         1.0.0
+                    </div>
+                </div>
                 </div>
             </div>
         );
