@@ -1103,9 +1103,18 @@ export default class DevkitProjectEditorControl extends Component {
     };
 
     _validateProject = (project) => {
+        // TODO: not complete
+        var valid=true;
         if(! (project.dappfile.environments instanceof Array)) {
+            valid=false;
+        }
+
+        if(!valid) {
+            const name = project.dir || "<unknown>";
+            console.log("Invalid format of project " + name + ", ignoring.");
             return false;
         }
+
         return true;
     };
 

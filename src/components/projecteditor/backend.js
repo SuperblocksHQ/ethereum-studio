@@ -14,12 +14,167 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Studio.  If not, see <http://www.gnu.org/licenses/>.
 
+const DAPP_FORMAT_VERSION = "dapps2.0";
 export default class Backend {
     constructor() {
     }
 
+    // Make sure projects created for an older version are converted to the current format.
+    convertProjects = (cb) => {
+        if(!localStorage.getItem(DAPP_FORMAT_VERSION)) {
+            if(localStorage.getItem("dapps1.0")) {
+                // Convert from 1.0 to 2.0
+                const data=JSON.parse(localStorage.getItem("dapps1.0"));
+                const newProjects=[];
+                for(let i=0; i<data.projects.length; i++) {
+                    const project=data.projects[i];
+                    const newProject=this._convertProject1_0to2_0(project);
+                    if(newProject) {
+                        newProjects.push(newProject);
+                    }
+                    else {
+                        alert("A project could not be converted into the new format.");
+                    }
+                }
+                // store projects.
+                const newData={projects:newProjects};
+                localStorage.setItem(DAPP_FORMAT_VERSION, JSON.stringify(newData));
+                cb(1);  // Indicate that there are converted projects.
+            }
+        }
+        else {
+            // Already converted.
+            cb(0);
+        }
+    };
+
+    _convertProject1_0to2_0 = (project) => {
+        const environments = [
+            {
+                "name": "browser"
+            },
+            {
+                "name": "custom"
+            },
+            {
+                "name": "rinkeby"
+            },
+            {
+                "name": "ropsten"
+            },
+            {
+                "name": "kovan"
+            },
+            {
+                "name": "infuranet"
+            },
+            {
+                "name": "mainnet"
+            }
+        ];
+        const wallets = [
+            {
+                "desc": "This is a wallet for local development",
+                "name": "development",
+                "blockchain": "ethereum"
+            },
+            {
+                "desc": "A private wallet",
+                "name": "private",
+                "blockchain": "ethereum"
+            },
+            {
+                "desc": "External wallet integrating with Metamask and other compatible wallets",
+                "name": "external",
+                "blockchain": "ethereum",
+                "type": "external"
+            }
+        ];
+        const accounts = [
+            {
+                "name": "Default",
+                "blockchain": "ethereum",
+                "_environments": [
+                    {
+                        "name": "browser",
+                        "data": {
+                            "wallet": "development",
+                            "index": 0,
+                        }
+                    },
+                    {
+                        "name": "custom",
+                        "data": {
+                            "wallet": "private",
+                            "index": 0,
+                        }
+                    },
+                    {
+                        "name": "rinkeby",
+                        "data": {
+                            "wallet": "external",
+                            "index": 0,
+                        }
+                    },
+                    {
+                        "name": "ropsten",
+                        "data": {
+                            "wallet": "external",
+                            "index": 0,
+                        }
+                    },
+                    {
+                        "name": "kovan",
+                        "data": {
+                            "wallet": "external",
+                            "index": 0,
+                        }
+                    },
+                    {
+                        "name": "infuranet",
+                        "data": {
+                            "wallet": "external",
+                            "index": 0,
+                        }
+                    },
+                    {
+                        "name": "mainnet",
+                        "data": {
+                            "wallet": "external",
+                            "index": 0,
+                        }
+                    },
+                ],
+            },
+        ];
+        const files = project.files;
+        const contracts = project.dappfile.contracts.map((contract) => {
+            return {
+                source: contract.source,
+                args: contract.args,
+                blockchain: "ethereum",
+                name: contract.name,
+            };
+        });
+
+        const newProject = {
+            dir: project.dir,
+            inode: project.inode,
+            files: files,
+            dappfile: {
+                environments: environments,
+                wallets: wallets,
+                accounts: accounts,
+                contracts: contracts,
+                project: project.dappfile.project,
+            }
+        };
+
+        return newProject;
+    };
+
     newFile = (name, path, file, cb) => {
-        const data=JSON.parse(localStorage.getItem("dapps1.0")) || {};
+        const data=JSON.parse(localStorage.getItem(DAPP_FORMAT_VERSION)) || {};
         if(!data.projects) data.projects=[];
         var project=data.projects.filter((item)=>{
             return item.dir==name;
@@ -53,12 +208,12 @@ export default class Backend {
             return;
         }
         folder.children[file]={type:type,children:(type=="d"?{}:null)};
-        localStorage.setItem("dapps1.0", JSON.stringify(data));
+        localStorage.setItem(DAPP_FORMAT_VERSION, JSON.stringify(data));
         setTimeout(()=>cb(0),1);
     };
 
     renameFile = (name, path, file, cb) => {
-        const data=JSON.parse(localStorage.getItem("dapps1.0")) || {};
+        const data=JSON.parse(localStorage.getItem(DAPP_FORMAT_VERSION)) || {};
         if(!data.projects) data.projects=[];
         var project=data.projects.filter((item)=>{
             return item.dir==name;
@@ -94,12 +249,12 @@ export default class Backend {
         }
         delete folder.children[parts[parts.length-1]];
         folder.children[file]=o;
-        localStorage.setItem("dapps1.0", JSON.stringify(data));
+        localStorage.setItem(DAPP_FORMAT_VERSION, JSON.stringify(data));
         setTimeout(()=>cb(0),1);
     };
 
     deleteFile = (name, path, cb) => {
-        const data=JSON.parse(localStorage.getItem("dapps1.0")) || {};
+        const data=JSON.parse(localStorage.getItem(DAPP_FORMAT_VERSION)) || {};
         if(!data.projects) data.projects=[];
         var project=data.projects.filter((item)=>{
             return item.dir==name;
@@ -125,12 +280,12 @@ export default class Backend {
             folder=folder2;
         }
         delete folder.children[parts[parts.length-1]];
-        localStorage.setItem("dapps1.0", JSON.stringify(data));
+        localStorage.setItem(DAPP_FORMAT_VERSION, JSON.stringify(data));
         if(cb) setTimeout(()=>cb(0),1);
     };
 
     listFiles = (name, path, cb) => {
-        const data=JSON.parse(localStorage.getItem("dapps1.0")) || {};
+        const data=JSON.parse(localStorage.getItem(DAPP_FORMAT_VERSION)) || {};
         if(!data.projects) data.projects=[];
         var project=data.projects.filter((item)=>{
             return item.dir==name;
@@ -164,7 +319,7 @@ export default class Backend {
     };
 
     loadProject = (dir, cb) => {
-        const data=JSON.parse(localStorage.getItem("dapps1.0")) || {};
+        const data=JSON.parse(localStorage.getItem(DAPP_FORMAT_VERSION)) || {};
         for(var index=0;index<data.projects.length;index++) {
             if(data.projects[index].dir==dir) {
                 setTimeout(()=>cb(0, data.projects[index]),1);
@@ -175,23 +330,23 @@ export default class Backend {
     }
 
     deleteProject = (name, cb) => {
-        const data=JSON.parse(localStorage.getItem("dapps1.0")) || {};
+        const data=JSON.parse(localStorage.getItem(DAPP_FORMAT_VERSION)) || {};
         if(!data.projects) data.projects=[];
         var projects=data.projects.filter((item)=>{
             return item.dir!=name;
         });
         data.projects=projects;
-        localStorage.setItem("dapps1.0", JSON.stringify(data));
+        localStorage.setItem(DAPP_FORMAT_VERSION, JSON.stringify(data));
         cb();
     }
 
     loadProjects = (cb) => {
-        const data=JSON.parse(localStorage.getItem("dapps1.0")) || {};
+        const data=JSON.parse(localStorage.getItem(DAPP_FORMAT_VERSION)) || {};
         setTimeout(()=>cb(0, data.projects || []),1);
     }
 
     saveProject = (name, payload, cb, isNew, files) => {
-        const data=JSON.parse(localStorage.getItem("dapps1.0")) || {};
+        const data=JSON.parse(localStorage.getItem(DAPP_FORMAT_VERSION)) || {};
         if(!data.projects) data.projects=[];
         var project=data.projects.filter((item)=>{
             return item.dir==name;
@@ -209,12 +364,12 @@ export default class Backend {
             data.projects.push(project);
         }
         project.dappfile=payload.dappfile;
-        localStorage.setItem("dapps1.0", JSON.stringify(data));
+        localStorage.setItem(DAPP_FORMAT_VERSION, JSON.stringify(data));
         setTimeout(()=>cb({status:0,code:0}),1);
     };
 
     saveFile = (name, payload, cb) => {
-        const data=JSON.parse(localStorage.getItem("dapps1.0")) || {};
+        const data=JSON.parse(localStorage.getItem(DAPP_FORMAT_VERSION)) || {};
         if(!data.projects) data.projects=[];
         var project=data.projects.filter((item)=>{
             return item.dir==name;
@@ -240,12 +395,12 @@ export default class Backend {
             folder=folder2;
         }
         folder.children[parts[parts.length-1]]= {type:"f",contents:payload.contents};
-        localStorage.setItem("dapps1.0", JSON.stringify(data));
+        localStorage.setItem(DAPP_FORMAT_VERSION, JSON.stringify(data));
         setTimeout(()=>cb({status:0, hash:""}),1);
     };
 
     loadFile = (name, path, cb) => {
-        const data=JSON.parse(localStorage.getItem("dapps1.0")) || {};
+        const data=JSON.parse(localStorage.getItem(DAPP_FORMAT_VERSION)) || {};
         if(!data.projects) data.projects=[];
         var project=data.projects.filter((item)=>{
             return item.dir==name;
@@ -286,7 +441,7 @@ export default class Backend {
 
     downloadWorkspace = () => {
         const exportName = 'superblocks_workspace.json';
-        const workspace=JSON.parse(localStorage.getItem("dapps1.0")) || {};
+        const workspace=JSON.parse(localStorage.getItem(DAPP_FORMAT_VERSION)) || {};
         var exportObj = workspace;
         var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportObj));
         var downloadAnchorNode = document.createElement('a');
@@ -299,7 +454,7 @@ export default class Backend {
 
     downloadProject = (projectName) => {
         const exportName = "superblocks_project_" + projectName;
-        const workspace = JSON.parse(localStorage.getItem("dapps1.0")) || {};
+        const workspace = JSON.parse(localStorage.getItem(DAPP_FORMAT_VERSION)) || {};
         var project = workspace.projects.filter((item) => {
             return item.dir==projectName;
         })[0];
@@ -335,7 +490,7 @@ export default class Backend {
               cb('invalid JSON');
               return;
             }
-            localStorage.setItem("dapps1.0",evt.target.result)
+            localStorage.setItem(DAPP_FORMAT_VERSION,evt.target.result)
             cb()
           }
         };

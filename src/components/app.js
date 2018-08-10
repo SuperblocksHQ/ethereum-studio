@@ -22,6 +22,7 @@ import ProjectEditor from './projecteditor';
 import { Wallet } from './projecteditor/wallet'; 
 import Solc from './solc';
 import EVM from './evm';
+import Backend from  './projecteditor/backend';
 
 import Settings from './settings';
 
@@ -106,9 +107,41 @@ export default class App extends Component {
         console.log("Known development Ethereum wallet seed is: "+this.knownWalletSeed);
 
         this.functions.settings.load(()=>{
-            this._init();
+            this._convertProjects((status)  => {
+                this.isReady=true;
+                this._init();
+            });
         });
     }
+
+    _convertProjects = (cb) => {
+        const backend = new Backend();
+        backend.convertProjects((status) => {
+            if(status==1) {
+                const modalData={
+                    title: "Projects converted",
+                    body: (
+                        <div>
+                            <div>
+                                Your projects have been converted to the new Superblocks Studio format.<br />
+                                You might need to reconfigure your accounts and contract arguments due to these
+                                changes. We are sorry for any inconvenience.
+                            </div>
+                            <div>
+                                Please see the Superblocks Studio help center for more information on this topic.
+                            </div>
+                        </div>
+                    ),
+                    style: {width:"680px"},
+                };
+                const modal=(<Modal data={modalData} />);
+                this.functions.modal.show({cancel:()=>{cb(0);return true;}, render: () => {return modal;}});
+            }
+            else {
+                cb(0);
+            }
+        });
+    };
 
     redraw = (all) => {
         this.setState();
@@ -254,10 +287,10 @@ export default class App extends Component {
             <div id="app" className={this.getClassNames()}>
                 <div id="app_content">
                     <div class="maincontent">
-                        <ProjectEditor
+                        { this.isReady && <ProjectEditor
                             key="projedit"
                             router={this.router}
-                            functions={this.functions} />
+                            functions={this.functions} /> }
                     </div>
                     <div class="bottom-status-bar">
     					<span class="left">
