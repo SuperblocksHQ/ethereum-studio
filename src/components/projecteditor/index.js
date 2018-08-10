@@ -20,7 +20,7 @@ import Control from './control.js';
 import Panes from './panes.js';
 import TopBar from '../topbar';
 
-export default class DevkitProjectEditor extends Component {
+export default class ProjectEditor extends Component {
     constructor(props) {
         super(props);
 
@@ -65,6 +65,15 @@ export default class DevkitProjectEditor extends Component {
     }
 
     render() {
+        var endpoint="";
+        var project;
+        if (this.props.router && this.props.router.control) {
+            project = this.props.router.control && this.props.router.control.getActiveProject();
+            if (project) {
+                const network = project.props.state.data.env;
+                endpoint = (this.props.functions.networks.endpoints[network] || {}).endpoint;
+            }
+        }
         return (
             <div class={style.projecteditor} id="main_container">
                 <TopBar router={this.props.router} />
@@ -73,6 +82,13 @@ export default class DevkitProjectEditor extends Component {
                 </div>
                 <div key="main_panes" id="main_panes" class={style.panescontainer}>
                     <Panes router={this.props.router} functions={this.props.functions} />
+                </div>
+                <div class="bottom-status-bar">
+                    <span class="left">
+                        <span class="note">Note</span>
+                        <span class="note-text">All files are stored in the browser only, download to backup</span>
+                    </span>
+                    <span class="right">{endpoint}</span>
                 </div>
             </div>
         );

@@ -15,6 +15,8 @@
 // along with Superblocks Studio.  If not, see <http://www.gnu.org/licenses/>.
 
 import { h, Component } from 'preact';
+import { connect } from 'react-redux';
+
 import classnames from 'classnames';
 import style from './control.less';
 import Item from './item.js';
@@ -58,7 +60,7 @@ import {
 } from '../icons';
 
 
-export default class DevkitProjectEditorControl extends Component {
+class Control extends Component {
     constructor(props) {
         super(props);
         this.backend = new Backend();
@@ -1351,6 +1353,8 @@ export default class DevkitProjectEditorControl extends Component {
     };
 
     render() {
+        let { appVersion } = this.props;
+
         const item=this.renderItem(0, 0, this.state.menu);
         item.key="controltree";
         return (
@@ -1372,7 +1376,7 @@ export default class DevkitProjectEditorControl extends Component {
                         </a>
                     </div>
                     <div class={style.version}>
-                         1.0.0
+                         {appVersion}
                     </div>
                 </div>
                 </div>
@@ -1380,3 +1384,9 @@ export default class DevkitProjectEditorControl extends Component {
         );
     }
 }
+
+const mapStateToProps = state => ({
+    appVersion: state.app.version || '',
+  });
+
+export default connect(mapStateToProps, null)(Control);

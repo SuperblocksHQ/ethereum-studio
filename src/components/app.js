@@ -19,7 +19,7 @@ import classNames from 'classnames';
 import Modal from './modal';
 
 import ProjectEditor from './projecteditor';
-import { Wallet } from './projecteditor/wallet'; 
+import { Wallet } from './projecteditor/wallet';
 import Solc from './solc';
 import EVM from './evm';
 import Backend from  './projecteditor/backend';
@@ -273,15 +273,6 @@ export default class App extends Component {
     };
 
     render() {
-        var endpoint="";
-        var project;
-        if(this.router && this.router.control) {
-            project = this.router.control && this.router.control.getActiveProject();
-            if(project) {
-                const network = project.props.state.data.env;
-                endpoint = (this.functions.networks.endpoints[network] || {}).endpoint;
-            }
-        }
         const modalContent = this.getModal();
         return (
             <div id="app" className={this.getClassNames()}>
@@ -291,14 +282,6 @@ export default class App extends Component {
                             key="projedit"
                             router={this.router}
                             functions={this.functions} /> }
-                    </div>
-                    <div class="bottom-status-bar">
-    					<span class="left">
-                            <span class="note">Note</span>
-                            <span class="note-text">All files are stored in the browser only, download to backup</span>
-                        </span>
-                        <span class="right">{endpoint}</span>
-                        <span class="right">{this._version}</span>
                     </div>
                 </div>
                 <div id="app_modal" onClick={this.modalOutside}>
