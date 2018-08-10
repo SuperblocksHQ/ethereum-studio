@@ -32,6 +32,8 @@ import iconUp from '@fortawesome/fontawesome-free-solid/faArrowUp';
 import iconDown from '@fortawesome/fontawesome-free-solid/faArrowDown';
 import iconClone from '@fortawesome/fontawesome-free-solid/faClone';
 import iconUpload from '@fortawesome/fontawesome-free-solid/faUpload';
+import iconExchangeAlt from '@fortawesome/fontawesome-free-solid/faExchangeAlt';
+import iconQuestionCircle from '@fortawesome/fontawesome-free-regular/faQuestionCircle';
 import iconTwitter from '@fortawesome/fontawesome-free-brands/faTwitter';
 import iconGithub from '@fortawesome/fontawesome-free-brands/faGithub';
 import iconTelegram from '@fortawesome/fontawesome-free-brands/faTelegram';
@@ -78,9 +80,10 @@ export const IconUpload = () => <FaIcon icon={iconUpload} />;
 export const IconDropdown = ({...props}) => <IconImg src={'/static/img/icon-dropdown.svg'} {...props}/>;
 
 // Top Bar
-export const IconTransactions = ({...props}) => <IconImg src={'/static/img/icon-transactions.png'} {...props}/>;
+export const IconTransactions = ({...props}) => <FaIcon icon={iconExchangeAlt} {...props}/>;
 export const IconCollaborate = ({...props}) => <IconImg src={'src="/static/img/icon-collaborate.png'} {...props}/>;
 export const IconProjectSelector = ({...props}) => <IconImg src={'/static/img/icon-project-selector.svg'} {...props} />;
+export const IconHelp = () => <FaIcon icon={iconQuestionCircle} />;
 
 // File types
 export const IconContract = ({...props}) => <IconImg src={'/static/img/icon-solidity.svg'} {...props} />;

@@ -7,7 +7,7 @@ import {
     IconDownload,
     IconTrash,
     IconConfigure,
-    IconCollaborate,
+    IconHelp,
     IconProjectSelector,
     IconDropdown,
     IconTelegram
@@ -49,8 +49,8 @@ class HelpDropdownDialog extends DropDownDialog {
             <div {...props}>
                 <div class={style.action}>
                     <button class={classNames([style.container, "btnNoBg"])} onClick={this.showMenu}>
-                        <img class={style.icon} src="/static/img/icon-help.svg" alt="Open transactions screen"></img>
-                        <div>Help</div>
+                        <IconHelp />
+                        <span>Help</span>
                     </button>
                 </div>
                 <div class={classNames([style.helpMenu], {[style.show]: this.state.showMenu })}>
@@ -90,9 +90,9 @@ export default class TopBar extends DropDownDialog {
         this.props.router.control.openTransactionHistory();
     }
 
-    openProject = (e, project, cb) => {
+    openProject = (e, project) => {
         e.preventDefault();
-        this.props.router.control.openProject(project, cb);
+        this.props.router.control.openProject(project);
     };
 
     openProjectConfig = (e, project) => {
@@ -183,7 +183,7 @@ export default class TopBar extends DropDownDialog {
                     <div class={style.action}>
                         <button class={classNames([style.container, "btnNoBg"])} onClick={this.onTransactionsClicked}>
                             <IconTransactions class={style.icon} alt="Open the transactions log screen"/>
-                            <div>Transactions</div>
+                            <span>Transactions</span>
                         </button>
                     </div>
                 </div>
