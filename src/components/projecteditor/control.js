@@ -777,7 +777,7 @@ export default class DevkitProjectEditorControl extends Component {
                 if(this.props.router.panes) this.props.router.panes.openItem(account);
             }
         });
-        this.setState();
+        this.props.router.main.redraw(true);
     };
 
     _clickNewContract = (e, projectItem) => {
@@ -835,7 +835,7 @@ export default class DevkitProjectEditorControl extends Component {
                 }
             }
         });
-        this.setState();
+        this.props.router.main.redraw(true);
     };
 
     _clickDeleteContract = (e, projectItem, contractIndex) => {
@@ -849,7 +849,7 @@ export default class DevkitProjectEditorControl extends Component {
             }
             projectItem.props.state.data.dappfile.contracts().splice(contractIndex,1);
             projectItem.save();
-            this.setState();
+            this.props.router.main.redraw(true);
         });
     };
 
@@ -860,7 +860,7 @@ export default class DevkitProjectEditorControl extends Component {
         projectItem.props.state.data.dappfile.contracts()[contractIndex] = c2;
         projectItem.props.state.data.dappfile.contracts()[contractIndex+1] = c1;
         projectItem.save();
-        this.setState();
+        this.props.router.main.redraw(true);
     };
 
     _clickUpContract = (e, projectItem, contractIndex) => {
@@ -870,7 +870,7 @@ export default class DevkitProjectEditorControl extends Component {
         projectItem.props.state.data.dappfile.contracts()[contractIndex] = c2;
         projectItem.props.state.data.dappfile.contracts()[contractIndex-1] = c1;
         projectItem.save();
-        this.setState();
+        this.props.router.main.redraw(true);
     };
 
     _clickDeleteConstant = (e, projectItem, constantIndex) => {
@@ -898,7 +898,7 @@ export default class DevkitProjectEditorControl extends Component {
         if(!confirm("Are you sure to delete account?")) return;
         projectItem.props.state.data.dappfile.accounts().splice(accountIndex,1);
         projectItem.save();
-        this.setState();
+        this.props.router.main.redraw(true);
     };
 
     _renderConstantTitle = (level, index, item) => {
@@ -1091,7 +1091,6 @@ export default class DevkitProjectEditorControl extends Component {
 
     _addProjectToExplorer = (projectItem) => {
         projectItem.props.state.status='active';
-        this.setState();
     };
 
     getActiveProject =() => {
