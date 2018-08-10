@@ -17,17 +17,8 @@
 
 import { Component } from 'preact';
 import classNames from 'classnames';
-<<<<<<< HEAD:src/components/app.js
-import Modal from './modal';
 
-import ProjectEditor from './projecteditor';
-import { Wallet } from './projecteditor/wallet';
-import Solc from './solc';
-import EVM from './evm';
-import Backend from  './projecteditor/backend';
-=======
->>>>>>> Migrated settings to redux/redux-persist:src/components/app/app.js
-
+import Backend from  '../projecteditor/control/backend';
 import Modal from '../modal';
 import ProjectEditor from '../projecteditor';
 import { Wallet } from '../projecteditor/wallet';
@@ -113,22 +104,16 @@ export default class App extends Component {
         this.setState({modals:[]});
         console.log("Known development Ethereum wallet seed is: "+this.knownWalletSeed);
 
-<<<<<<< HEAD:src/components/app.js
-        this.functions.settings.load(()=>{
-            this._convertProjects((status)  => {
-                this.isReady=true;
-                this._init();
-            });
+        this._convertProjects((status)  => {
+            this.isReady=true;
+            this._init();
         });
-=======
-        this._init();
->>>>>>> Migrated settings to redux/redux-persist:src/components/app/app.js
     }
 
     _convertProjects = (cb) => {
         const backend = new Backend();
         backend.convertProjects((status) => {
-            if(status==1) {
+            if (status == 1) {
                 const modalData={
                     title: "Projects converted",
                     body: (
