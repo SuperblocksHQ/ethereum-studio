@@ -53,7 +53,9 @@
             overflow-x: auto;
             .tab {
                 padding: 10px 12px 10px 12px;
-                display: block;
+                display: flex;
+                align-items: center;
+                align-content: center;
                 float: left;
                 min-width: 60px;
                 background-color: #2D2D2D;
@@ -70,11 +72,9 @@
                     }
                 }
                 .close {
-                    line-height: 130%;
-                    margin-bottom: 3px;
+                    margin-left: 10px;
                     display: none;
-                    width: 10px;
-                    height: 10px;
+                    font-size: 0.85em;
                     a {
                         font-weight: 700;
                     }

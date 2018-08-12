@@ -17,7 +17,8 @@
 import { h, Component } from 'preact';
 import classnames from 'classnames';
 import style from './style';
-import {Pane, PaneComponent} from './pane';
+import { Pane, PaneComponent } from './pane';
+import { IconClose } from '../icons';
 
 export default class DevkitProjectEditorPanes extends Component {
     constructor(props) {
@@ -196,7 +197,9 @@ export default class DevkitProjectEditorPanes extends Component {
                         </a>
                     </div>
                     <div class={style.close}>
-                        <a href="#" onClick={(e) => this.tabClickedClose(e, pane.id)}>x</a>
+                        <a href="#" onClick={(e) => this.tabClickedClose(e, pane.id)}>
+                            <IconClose />
+                        </a>
                     </div>
                 </div>);
         });

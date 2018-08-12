@@ -34,6 +34,7 @@ import iconClone from '@fortawesome/fontawesome-free-solid/faClone';
 import iconUpload from '@fortawesome/fontawesome-free-solid/faUpload';
 import iconExchangeAlt from '@fortawesome/fontawesome-free-solid/faExchangeAlt';
 import iconCheck from '@fortawesome/fontawesome-free-solid/faCheck';
+import iconClose from '@fortawesome/fontawesome-free-solid/faTimes';
 import iconQuestionCircle from '@fortawesome/fontawesome-free-regular/faQuestionCircle';
 import iconTwitter from '@fortawesome/fontawesome-free-brands/faTwitter';
 import iconGithub from '@fortawesome/fontawesome-free-brands/faGithub';
@@ -79,6 +80,7 @@ export const IconClone = () => <FaIcon icon={iconClone} />;
 export const IconDownload = ({...props})=> <IconImg src={'/static/img/icon-download.svg'} {...props} />;
 export const IconUpload = () => <FaIcon icon={iconUpload} />;
 export const IconDropdown = ({...props}) => <IconImg src={'/static/img/icon-dropdown.svg'} {...props}/>;
+export const IconClose = ({...props}) => <FaIcon icon={iconClose} />;
 
 // Top Bar
 export const IconTransactions = ({...props}) => <FaIcon icon={iconExchangeAlt} {...props}/>;
