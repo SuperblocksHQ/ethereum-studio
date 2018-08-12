@@ -54,9 +54,6 @@ import {
     IconAskQuestion,
     IconWhatsNew,
     IconShowPreview,
-    IconGithub,
-    IconTwitter,
-    IconTelegram
 } from '../../icons';
 
 
@@ -1370,32 +1367,12 @@ export default class Control extends Component {
     };
 
     render() {
-        let { appVersion } = this.props;
-
         const item=this.renderItem(0, 0, this.state.menu);
         item.key="controltree";
         return (
             <div class="full">
                 <div class={style.treemenu}>
                     {item}
-                </div>
-                <div>
-                <div class={style.controlBottomContainer}>
-                    <div style="display: inline-block">
-                        <a href="https://twitter.com/getsuperblocks" target="_blank" rel="noopener noreferrer" class={style.contactIcon}>
-                            <IconTwitter />
-                        </a>
-                        <a href="https://github.com/SuperblocksHQ/studio" target="_blank" rel="noopener noreferrer" class={style.contactIcon}>
-                            <IconGithub />
-                        </a>
-                        <a href="https://t.me/GetSuperblocks" target="_blank" rel="noopener noreferrer" class={style.contactIcon}>
-                            <IconTelegram />
-                        </a>
-                    </div>
-                    <div class={style.version}>
-                         {appVersion}
-                    </div>
-                </div>
                 </div>
             </div>
         );

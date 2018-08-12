@@ -19,6 +19,7 @@ import style from './style';
 import Control from './control';
 import Panes from './panes';
 import TopBar from '../topbar';
+import ContactContainer from '../contactContainer';
 
 export default class ProjectEditor extends Component {
     constructor(props) {
@@ -79,6 +80,7 @@ export default class ProjectEditor extends Component {
                 <TopBar router={this.props.router} />
                 <div key="main_control" id="main_control" class={style.control}>
                     <Control router={this.props.router} functions={this.props.functions} />
+                    <ContactContainer />
                 </div>
                 <div key="main_panes" id="main_panes" class={style.panescontainer}>
                     <Panes router={this.props.router} functions={this.props.functions} />
