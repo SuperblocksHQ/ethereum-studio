@@ -78,26 +78,16 @@ class HelpDropdownDialog extends DropDownDialog {
     }
 }
 
-export default class TopBar extends DropDownDialog {
-    constructor(props) {
-        super(props);
+class ProjectSelector extends Component {
 
-        this.onTransactionsClicked = this.onTransactionsClicked.bind(this);
-    }
-
-    onTransactionsClicked(e) {
+    openProject = (e, project, cb) => {
         e.preventDefault();
-        this.props.router.control.openTransactionHistory();
-    }
-
-    openProject = (e, project) => {
-        e.preventDefault();
-        this.props.router.control.openProject(project);
+        this.props.router.control.openProject(project, cb);
     };
 
     openProjectConfig = (e, project) => {
         this.openProject(e, project, (status) => {
-            if(status==0) {
+            if (status == 0) {
                 this.props.router.control.openProjectConfig(project);
             }
         });
@@ -167,9 +157,68 @@ export default class TopBar extends DropDownDialog {
         }
     };
 
+
+    render() {
+        const projectItems = this.getProjectItems();
+        return (
+            <div class={classNames([style.projectMenu, "modal"])}>
+                <div class={style.tabs}>
+                    <div class={classNames([style.tabList, style.container])}>
+                        <button class={style.tab}>
+                            Personal
+                        </button>
+                    </div>
+                    <div class={classNames([style.paneList, style.container])}>
+                        <div class={style.pane}>
+                            <ul class={style.projectSwitcherList}>
+                                {projectItems}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class={style.actions}>
+                    <button class="btnNoBg" onClick={this.props.router.control._newDapp}>Create New</button>
+                    <div class={style.separator} />
+                    <button class="btnNoBg">Import</button>
+                </div>
+            </div>
+        )
+    }
+}
+
+class ActionOpenTransactions extends Component {
+
+    render () {
+        let { onClick } = this.props;
+        return (
+            <div class={style.action}>
+                <button class={classNames([style.container, "btnNoBg"])} onClick={onClick}>
+                    <IconTransactions class={style.icon} alt="Open the transactions log screen"/>
+                    <span>Transactions</span>
+                </button>
+            </div>
+        )
+    }
+}
+
+ActionOpenTransactions.propTypes = {
+    onClick: PropTypes.func.isRequired
+}
+
+export default class TopBar extends DropDownDialog {
+    constructor(props) {
+        super(props);
+
+        this.onTransactionsClicked = this.onTransactionsClicked.bind(this);
+    }
+
+    onTransactionsClicked(e) {
+        e.preventDefault();
+        this.props.router.control.openTransactionHistory();
+    }
+
     render() {
         var title="";
-        const projectItems = this.getProjectItems();
         if(this.props.router.control) {
             const openProject = this.props.router.control.getActiveProject();
             if(openProject) {
@@ -180,12 +229,7 @@ export default class TopBar extends DropDownDialog {
             <div class={style.topbar}>
                 <img class={style.logo} src="/static/img/img-studio-logo.svg" alt="Superblocks Studio logo"></img>
                 <div class={style.tools}>
-                    <div class={style.action}>
-                        <button class={classNames([style.container, "btnNoBg"])} onClick={this.onTransactionsClicked}>
-                            <IconTransactions class={style.icon} alt="Open the transactions log screen"/>
-                            <span>Transactions</span>
-                        </button>
-                    </div>
+                    <ActionOpenTransactions onClick={this.onTransactionsClicked}/>
                 </div>
                 <button class={classNames([style.projectButton, style.container, "btnNoBg"])} onClick={this.showMenu}>
                     <IconProjectSelector class={style.icon}/>
@@ -194,35 +238,11 @@ export default class TopBar extends DropDownDialog {
                 </button>
                 {
                     this.state.showMenu ? (
-                        <div class={classNames([style.projectMenu, "modal"])}>
-                            <div class={style.tabs}>
-                                <div class={classNames([style.tabList, style.container])}>
-                                    <button class={style.tab}>
-                                        Personal
-                                    </button>
-                                </div>
-                                <div class={classNames([style.paneList, style.container])}>
-                                    <div class={style.pane}>
-                                        <ul class={style.projectSwitcherList}>
-                                            {projectItems}
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class={style.actions}>
-                                <button class="btnNoBg" onClick={this.props.router.control._newDapp}>Create New</button>
-                                <div class={style.separator} />
-                                <button class="btnNoBg">Import</button>
-                            </div>
-                        </div>
+                        <ProjectSelector router={this.props.router} />
                     ) : (null)
                 }
                 <HelpDropdownDialog class={style.elementsRight}/>
             </div>
         );
     }
-}
-
-TopBar.PropTypes = {
-    onTransactionSelected: PropTypes.func.isRequired
 }
