@@ -33,6 +33,7 @@ import iconDown from '@fortawesome/fontawesome-free-solid/faArrowDown';
 import iconClone from '@fortawesome/fontawesome-free-solid/faClone';
 import iconUpload from '@fortawesome/fontawesome-free-solid/faUpload';
 import iconExchangeAlt from '@fortawesome/fontawesome-free-solid/faExchangeAlt';
+import iconCheck from '@fortawesome/fontawesome-free-solid/faCheck';
 import iconQuestionCircle from '@fortawesome/fontawesome-free-regular/faQuestionCircle';
 import iconTwitter from '@fortawesome/fontawesome-free-brands/faTwitter';
 import iconGithub from '@fortawesome/fontawesome-free-brands/faGithub';
@@ -84,6 +85,7 @@ export const IconTransactions = ({...props}) => <FaIcon icon={iconExchangeAlt} {
 export const IconCollaborate = ({...props}) => <IconImg src={'src="/static/img/icon-collaborate.png'} {...props}/>;
 export const IconProjectSelector = ({...props}) => <IconImg src={'/static/img/icon-project-selector.svg'} {...props} />;
 export const IconHelp = () => <FaIcon icon={iconQuestionCircle} />;
+export const IconCheck = () => <FaIcon icon={iconCheck} />;
 
 // File types
 export const IconContract = ({...props}) => <IconImg src={'/static/img/icon-solidity.svg'} {...props} />;

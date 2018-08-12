@@ -10,7 +10,8 @@ import {
     IconHelp,
     IconProjectSelector,
     IconDropdown,
-    IconTelegram
+    IconTelegram,
+    IconCheck
 } from '../icons';
 
 class DropDownDialog extends Component {
@@ -134,6 +135,12 @@ class ProjectSelector extends Component {
                 return (
                     <li class={style.projSwitcherItem}>
                         <div class={classNames([style.projSwitcherRow, style.container])}>
+                            { isActive ? (
+                                <div class={style.active}>
+                                    <IconCheck />
+                                </div>
+                                ) : (null)
+                            }
                             <a href="#" class={style.container} onClick={(e)=>{this.openProject(e, project)}}>
                                 <div>{project.props.state.data.dappfile.getObj().project.info.title || ""} - </div>
                                 <div>&nbsp;{project.props.state.data.dir}</div>
@@ -141,7 +148,7 @@ class ProjectSelector extends Component {
                             <div class={classNames([style.projSwitcherRowActions, style.container])}>
                                 <button class="btnNoBg" onClick={(e)=>{this.openProjectConfig(e, project)}}>
                                     <IconConfigure />
-                                </button>
+                                    </button>
                                 <button class="btnNoBg" onClick={(e)=>{this.downloadProject(e, project)}}>
                                     <IconDownload />
                                 </button>
