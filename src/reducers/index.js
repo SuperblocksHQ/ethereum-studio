@@ -1,4 +1,5 @@
 import app from './app';
+import projects from './projects';
 import settings from './settings';
 
 const rehydrated = (state = false, action) => {
@@ -14,4 +15,5 @@ export default {
   rehydrated,
   app,
   settings,
+  projects
 };

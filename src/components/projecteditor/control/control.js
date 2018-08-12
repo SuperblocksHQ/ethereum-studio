@@ -16,14 +16,15 @@
 
 import { h, Component } from 'preact';
 import classnames from 'classnames';
+import PropTypes from 'prop-types';
 
 import style from './style';
-import Item from './item.js';
+import Item from './item';
 import Backend from  './backend';
 import Dappfile from './dappfile';
 import NewDapp from '../../newdapp';
 import Modal from '../../modal';
-import TransactionLogData from '../../blockexplorer/transactionlogdata.js';
+import TransactionLogData from '../../blockexplorer/transactionlogdata';
 import NetworkAccountSelector from '../../NetworkAccountSelector';
 
 import {
@@ -572,7 +573,15 @@ export default class Control extends Component {
         }
 
         this.closeProject((status) => {
-            if (status==0) this._addProjectToExplorer(project);
+            if (status == 0) {
+                this._addProjectToExplorer(project);
+
+                // Atm we are not going full retard using redux to perform all sort of glogal actions like this one,
+                // but until then there is still a good way we can notify and broadcast the selected project to
+                // per example when the app gets relaunched we can re-hydrate the store and select again the project.
+                this.props.selectProject(project);
+            }
+
             this.props.router.main.redraw(true);
             if (cb) cb(status);
         });
@@ -595,7 +604,7 @@ export default class Control extends Component {
                 });
             };
 
-            if(this.getActiveProject() == project) {
+            if (this.getActiveProject() == project) {
                 this.closeProject((status) => {
                     if(status==0) {
                         delFn();
@@ -1167,6 +1176,15 @@ export default class Control extends Component {
                 }
             }
 
+            // NOTE: Ideally all this logic should not leave in the component itself but most likely in an epic
+            // which we can actually properly test
+            let { selectedProjectId } = this.props;
+            this._projectsList.forEach((project) => {
+                if (selectedProjectId && selectedProjectId === project.getId()) {
+                    this.openProject(project);
+                }
+            });
+
             if(cb) cb(0);
             this.props.router.main.redraw(redrawAll);
         });
@@ -1182,7 +1200,7 @@ export default class Control extends Component {
 
     _deleteProject = (projectItem, cb) => {
         this.backend.deleteProject(projectItem.props.state.data.dir, ()=>{
-            this._reloadProjects(null, (status)=>{
+            this._reloadProjects(null, (status) => {
                 cb(status);
             });
         });
@@ -1382,4 +1400,10 @@ export default class Control extends Component {
             </div>
         );
     }
+}
+
+Control.propTypes = {
+    appVersion: PropTypes.string.isRequired,
+    selectProject: PropTypes.func.isRequired,
+    selectedProjectId: PropTypes.number
 }
