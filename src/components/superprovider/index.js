@@ -16,7 +16,7 @@
 
 import Web3 from 'web3';
 import Tx from '../../ethereumjs-tx-1.3.3.min.js';
-import Modal from '../modal';
+import Modal from '../modal/index.js';
 
 export default class SuperProvider {
     constructor(props) {

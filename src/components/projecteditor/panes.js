@@ -17,7 +17,7 @@
 import { h, Component } from 'preact';
 import classnames from 'classnames';
 import style from './style';
-import {Pane, PaneComponent} from './pane.js';
+import {Pane, PaneComponent} from './pane';
 
 export default class DevkitProjectEditorPanes extends Component {
     constructor(props) {

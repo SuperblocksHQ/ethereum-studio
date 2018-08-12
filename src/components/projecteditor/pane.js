@@ -17,7 +17,7 @@
 import { h, Component } from 'preact';
 import classnames from 'classnames';
 import style from './style';
-import {Window, WindowComponent} from './window.js';
+import {Window, WindowComponent} from './window';
 
 export class PaneComponent extends Component {
     constructor(props) {
