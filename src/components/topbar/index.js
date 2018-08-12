@@ -186,19 +186,15 @@ class ProjectSelector extends Component {
     }
 }
 
-class ActionOpenTransactions extends Component {
-
-    render () {
-        let { onClick } = this.props;
-        return (
-            <div class={style.action}>
-                <button class={classNames([style.container, "btnNoBg"])} onClick={onClick}>
-                    <IconTransactions class={style.icon} alt="Open the transactions log screen"/>
-                    <span>Transactions</span>
-                </button>
-            </div>
-        )
-    }
+const ActionOpenTransactions = ( { onClick } = this.props) => {
+    return (
+        <div class={style.action}>
+            <button class={classNames([style.container, "btnNoBg"])} onClick={onClick}>
+                <IconTransactions class={style.icon} alt="Open the transactions log screen"/>
+                <span>Transactions</span>
+            </button>
+        </div>
+    )
 }
 
 ActionOpenTransactions.propTypes = {
