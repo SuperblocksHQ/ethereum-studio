@@ -257,9 +257,9 @@ export default class AccountEditor extends Component {
             );
         }
         else {
-            if (this.form.walletType=="external") {
-                // Check for external web3 provider
-                if(this.form.isLocked) {
+            // Check for external web3 provider
+            if (this.form.walletTyp == "external") {
+                if (this.form.isLocked) {
                     return (
                         <p>
                             Metamask is locked. Unlock Metamask to see address and balance of this account.
@@ -269,9 +269,9 @@ export default class AccountEditor extends Component {
                 else {
                     return (
                         <div>
-                            <p>
-                                Metamask account.
-                            </p>
+                            <h3>
+                                Metamask account
+                            </h3>
                             <p>
                                 <b>Address:</b> {this.form.address}
                             </p>
@@ -334,7 +334,7 @@ export default class AccountEditor extends Component {
                             <div class={style.networkContainer}>
                                 <div class={style.networkHeader}>
                                     <div class={style.titleContainer}>
-                                        <div class={style.title}>Configure the account for each network</div>
+                                        <h3 class={style.title}>Configure the account for each network</h3>
                                         <IconHelp class={style.icon}/>
                                     </div>
                                     <div class={style.subtitle}>
