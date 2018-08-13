@@ -19,7 +19,7 @@
     width: 100%;
     height: 100%;
     color: #eee;
-    padding: 16px 50px;
+    padding: 16px 50px 100px 50px;
     .title {
         font-weight: 700;
     }
@@ -30,23 +30,10 @@
         border-radius: 17px;
         width: 100%;
         margin: 10px auto;
-        label {
-            margin-left: 3px;
-        }
         .field {
             display: block;
-            p,input,select {
-                display: inline-block;
-            }
-            p {
-                margin-right: 10px;
-                min-width: 100px;
-            }
-            input {
-                width: 300px;
-            }
-            select {
-                width: 300px;
+            button {
+                margin-top: 12px;
             }
         }
         .arguments {
@@ -81,8 +68,9 @@
                 display: flex;
                 margin-top: 40px;
                 .networks {
-                    width: 300px;
+                    width: 20%;
                     border-right: 1px solid #565656;
+                    max-width: 300px;
                     p {
                         display: block;
 
@@ -118,6 +106,7 @@
                     }
                 }
                 .networkInfo {
+                    width: 80%;
                     margin-left: 40px;
                 }
             }

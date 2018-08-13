@@ -289,6 +289,8 @@ a:active,a:focus {
     text-decoration: none;
     font-weight: 600;
     border: none;
+    user-select: none;
+    outline: none;
     &:hover {
         background-color: #7237CF;
     }
@@ -307,11 +309,14 @@ a:active,a:focus {
     }
 }
 .superInput {
-    .label {
+    label {
+        display: block;
         font-weight: 600;
         text-align: left;
+        margin: 12px 0;
     }
     input {
+        display: block;
         box-sizing: border-box;
         background-color: #fff;
         line-height: normal;
@@ -329,6 +334,16 @@ a:active,a:focus {
         }
     }
 }
+
+.superInputDark {
+    &:extend(.superInput all);
+    input {
+        color: #fff;
+        background-color: #3A3A3A;
+        border: none;
+    }
+}
+
 .scrollable-y {
     display: block;
     height: 100%;

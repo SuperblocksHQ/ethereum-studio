@@ -328,15 +328,15 @@ export default class AccountEditor extends Component {
                 <div class={style.form}>
                     <form action="">
                         <div class={style.field}>
-                            <div>
-                                <label>Name
-                                    <input type="text"
+                            <div class="superInputDark">
+                                <label for="name">Name</label>
+                                <input type="text"
+                                        id="name"
                                         value={this.form.name}
                                         onKeyUp={(e)=>{this.onNameChange(e)}}
                                         onChange={(e)=>{this.onNameChange(e)}} />
-                                </label>
 
-                                <button disabled={!this.state.accountNameDirty} onClick={this._nameSave}>Save name</button>
+                                <button class="btn2" disabled={!this.state.accountNameDirty} onClick={this._nameSave}>Save name</button>
                             </div>
                             <div class={style.networkContainer}>
                                 <div class={style.networkHeader}>
