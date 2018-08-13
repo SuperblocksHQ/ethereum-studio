@@ -261,9 +261,9 @@ export default class AccountEditor extends Component {
                 // Check for external web3 provider
                 if(this.form.isLocked) {
                     return (
-                        <div>
+                        <p>
                             Metamask is locked. Unlock Metamask to see address and balance of this account.
-                        </div>
+                        </p>
                     );
                 }
                 else {
@@ -273,10 +273,10 @@ export default class AccountEditor extends Component {
                                 Metamask account.
                             </p>
                             <p>
-                                Address: {this.form.address}
+                                <b>Address:</b> {this.form.address}
                             </p>
                             <p>
-                                Balance: {this.form.balance} ({this.form.balanceFormatted} Ether)
+                                <b>Balance:</b> {this.form.balance} wei ({this.form.balanceFormatted} Ether)
                             </p>
                         </div>
                     );
@@ -288,29 +288,22 @@ export default class AccountEditor extends Component {
                     return (
                         <div>
                             <p>
-                                This wallet is locked.
+                                This wallet is locked. Unlock the wallet to show the address and the balance.
                             </p>
-                            <p>
-                                <a href="#" onClick={(e)=>{e.preventDefault();this.unlockWallet(this.form.walletName);}}>Unlock wallet</a> to show address and balance.
-                            </p>
+                            <button class="btn2" onClick={(e)=>{e.preventDefault(); this.unlockWallet(this.form.walletName); }}>
+                                Unlock
+                            </button>
                         </div>
                     );
                 } else {
                     return (
                         <div>
-                            <div>
-                                Address: {this.form.address}
-                            </div>
-                            <div>
-                                Balance: <input type="text"
-                                            disabled
-                                            onKeyUp={(e)=>{this.onBalanceChange(e)}}
-                                            onChange={(e)=>{this.onBalanceChange(e)}}
-                                            value={this.form.balance} />
-                                            &nbsp;({this.form.balanceFormatted} Ether)
-                            </div>
-
-                            <button style="display: none;" disabled={!this.state.accountBalanceDirty} onClick={this._balanceSave}>Save</button>
+                            <p>
+                                <b>Address:</b> {this.form.address}
+                            </p>
+                            <p>
+                                <b>Balance:</b> {this.form.balance} wei ({this.form.balanceFormatted} Ether)
+                            </p>
                         </div>
                     );
                 }
