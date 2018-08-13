@@ -16,14 +16,9 @@
 
 import { h, Component } from 'preact';
 import classnames from 'classnames';
-import style from './style-editor-account';
-import FaIcon  from '@fortawesome/react-fontawesome';
-import iconSave from '@fortawesome/fontawesome-free-regular/faSave';
-import iconCompile from '@fortawesome/fontawesome-free-solid/faPuzzlePiece';
-import iconDeploy from '@fortawesome/fontawesome-free-regular/faPlayCircle';
-import iconTest from '@fortawesome/fontawesome-free-solid/faFlask';
-import iconDebug from '@fortawesome/fontawesome-free-solid/faBug';
 import Web3 from 'web3';
+import style from './style-editor-account';
+import { IconHelp } from '../icons';
 
 export default class AccountEditor extends Component {
     constructor(props) {
@@ -151,22 +146,6 @@ export default class AccountEditor extends Component {
         this.props.project.save(cb);
     };
 
-    renderToolbar = () => {
-        return (
-            <div class={style.toolbar} id={this.id+"_header"}>
-                <div>
-                </div>
-            </div>
-        );
-    };
-
-    getHeight = () => {
-        const a=document.getElementById(this.id);
-        const b=document.getElementById(this.id+"_header");
-        if(!a) return 99;
-        return (a.offsetHeight - b.offsetHeight);
-    };
-
     onEnvChange = (e, value) => {
         e.preventDefault();
         this.setEnv(value);
@@ -260,7 +239,7 @@ export default class AccountEditor extends Component {
     };
 
     _renderAccountContent = () => {
-        if(this.form.wallet==null) {
+        if (this.form.wallet == null) {
             // Static address
             return (
                 <div>
@@ -278,13 +257,13 @@ export default class AccountEditor extends Component {
             );
         }
         else {
-            if(this.form.walletType=="external") {
+            if (this.form.walletType=="external") {
                 // Check for external web3 provider
                 if(this.form.isLocked) {
                     return (
-                        <div>
+                        <p>
                             Metamask is locked. Unlock Metamask to see address and balance of this account.
-                        </div>
+                        </p>
                     );
                 }
                 else {
@@ -294,10 +273,10 @@ export default class AccountEditor extends Component {
                                 Metamask account.
                             </p>
                             <p>
-                                Address: {this.form.address}
+                                <b>Address:</b> {this.form.address}
                             </p>
                             <p>
-                                Balance: {this.form.balance} ({this.form.balanceFormatted} Ether)
+                                <b>Balance:</b> {this.form.balance} wei ({this.form.balanceFormatted} Ether)
                             </p>
                         </div>
                     );
@@ -305,29 +284,26 @@ export default class AccountEditor extends Component {
             }
             else {
                 // Regular wallet
-                if(this.form.isLocked) {
+                if (this.form.isLocked) {
                     return (
                         <div>
                             <p>
-                                This wallet is locked.
+                                This wallet is locked. Unlock the wallet to show the address and the balance.
                             </p>
-                            <p>
-                                <a href="#" onClick={(e)=>{e.preventDefault();this.unlockWallet(this.form.walletName);}}>Unlock wallet</a> to show address and balance.
-                            </p>
+                            <button class="btn2" onClick={(e)=>{e.preventDefault(); this.unlockWallet(this.form.walletName); }}>
+                                Unlock
+                            </button>
                         </div>
                     );
-                }
-                else {
+                } else {
                     return (
                         <div>
-                            Address: {this.form.address}
-                            Balance: <input type="text"
-                                        disabled
-                                        onKeyUp={(e)=>{this.onBalanceChange(e)}}
-                                        onChange={(e)=>{this.onBalanceChange(e)}}
-                                        value={this.form.balance} />
-                                &nbsp;({this.form.balanceFormatted} Ether)
-                                     <button style="display: none;" disabled={!this.state.accountBalanceDirty} onClick={this._balanceSave}>Save</button>
+                            <p>
+                                <b>Address:</b> {this.form.address}
+                            </p>
+                            <p>
+                                <b>Balance:</b> {this.form.balance} wei ({this.form.balanceFormatted} Ether)
+                            </p>
                         </div>
                     );
                 }
@@ -336,40 +312,56 @@ export default class AccountEditor extends Component {
     };
 
     render() {
-        const toolbar=this.renderToolbar();
-        const maxHeight = {
-            height: this.getHeight() + "px"
-        };
         const accountContent=this._renderAccountContent();
         return (<div id={this.id} class={style.main}>
-            {toolbar}
-            <div class="scrollable-y" style={maxHeight} id={this.id+"_scrollable"}>
+            <div class="scrollable-y" id={this.id+"_scrollable"}>
                 <h1 class={style.title}>
                     Edit Account
                 </h1>
                 <div class={style.form}>
                     <form action="">
                         <div class={style.field}>
-                            <div>
+                            <div class="superInputDark">
+                                <label for="name">Name</label>
                                 <input type="text"
-                                    value={this.form.name}
-                                    onKeyUp={(e)=>{this.onNameChange(e)}}
-                                    onChange={(e)=>{this.onNameChange(e)}} />
-                                <button disabled={!this.state.accountNameDirty} onClick={this._nameSave}>Save name</button>
+                                        id="name"
+                                        value={this.form.name}
+                                        onKeyUp={(e)=>{this.onNameChange(e)}}
+                                        onChange={(e)=>{this.onNameChange(e)}} />
+
+                                <button class="btn2" disabled={!this.state.accountNameDirty} onClick={this._nameSave}>Save name</button>
                             </div>
-                            <div class={style.networks}>
-                                {this.dappfile.environments().map((env) => {
-                                    const cls={};
-                                    if(env.name==this.form.env) cls[style.active]=true;
-                                    return (<div>
-                                        <a href="#"
-                                            className={classnames(cls)}
-                                            onClick={(e)=>{this.onEnvChange(e, env.name);}}>{env.name}</a>
-                                        </div>);
-                                })}
-                            </div>
-                            <div>
-                                {accountContent}
+                            <div class={style.networkContainer}>
+                                <div class={style.networkHeader}>
+                                    <div class={style.titleContainer}>
+                                        <div class={style.title}>Configure the account for each network</div>
+                                        <IconHelp class={style.icon}/>
+                                    </div>
+                                    <div class={style.subtitle}>
+                                        Each account must be configured for each of the networks available.
+                                        <a href="#" target="_blank" rel="noopener noreferrer"> Click here</a> to access our Help Center and find more information about this.
+                                    </div>
+                                </div>
+                                <div class={style.networkSelector}>
+                                    <div class={style.networks}>
+                                        <ul>
+                                            {
+                                                this.dappfile.environments().map((env) => {
+                                                    const cls={};
+                                                    if (env.name == this.form.env) {
+                                                        cls[style.active] = true;
+                                                    }
+                                                    return (
+                                                        <li className={classnames([cls])}>
+                                                            <div class={style.networkName} onClick={(e)=>{this.onEnvChange(e, env.name)}}>{env.name}</div>
+                                                        </li>);
+                                            })}
+                                        </ul>
+                                    </div>
+                                    <div class={style.networkInfo}>
+                                        {accountContent}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </form>

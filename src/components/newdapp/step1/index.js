@@ -88,8 +88,9 @@ export default class Step1 extends Component {
                         <div class={style.form}>
                             <div class={style.info}>
                                 <div class="superInput">
-                                    <p class="label">Project name</p>
+                                    <label for="project">Project name</label>
                                     <input
+                                        id="project"
                                         type="text"
                                         maxLength="20"
                                         value={this.state.projectName}
@@ -97,8 +98,9 @@ export default class Step1 extends Component {
                                         placeholder="Enter project name"/>
                                 </div>
                                 <div class="superInput my-3">
-                                    <p class="label">DApp (HTML) Title: </p>
+                                    <label for="html">DApp (HTML) Title: </label>
                                     <input
+                                        id="html"
                                         type="text"
                                         maxLength="30"
                                         value={this.state.projectTitle}
