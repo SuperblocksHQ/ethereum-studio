@@ -223,47 +223,38 @@ export default class ContractEditor extends Component {
         this.setState();
     };
 
-    renderToolbar = () => {
-        return (
-            <div class={style.toolbar} id={this.id+"_header"}>
-                <div>
-                </div>
-            </div>
-        );
-    };
-
-    getHeight = () => {
-        const a=document.getElementById(this.id);
-        const b=document.getElementById(this.id+"_header");
-        if(!a) return 99;
-        return (a.offsetHeight - b.offsetHeight);
-    };
-
     render() {
-        if(!this.contract) {
+        if (!this.contract) {
             return (<div>Could not find {this.props.contract} in Dappfile.yaml</div>);
         }
-
         const args=this.renderArgs();
-        const toolbar=this.renderToolbar();
-        const maxHeight = {
-            height: this.getHeight() + "px"
-        };
         return (<div id={this.id} class={style.main}>
-            {toolbar}
-            <div class="scrollable-y" style={maxHeight} id={this.id+"_scrollable"}>
+            <div class="scrollable-y" id={this.id+"_scrollable"}>
                 <h1 class={style.title}>
                     Edit Contract {this.props.contract}
                 </h1>
                 <div class={style.form}>
                     <form action="">
                         <div class={style.field}>
-                            <p>Name:</p>
-                            <input type="text" onKeyUp={(e)=>{this.onChange(e, 'name')}} value={this.contract.get("name")} onChange={(e)=>{this.onChange(e, 'name')}} />
+                            <div class="superInputDark">
+                                <label for="name">Name</label>
+                                <input
+                                    id="name"
+                                    type="text"
+                                    onKeyUp={(e)=>{this.onChange(e, 'name')}}
+                                    value={this.contract.get("name")}
+                                    onChange={(e)=>{this.onChange(e, 'name')}}
+                                    />
+                            </div>
                         </div>
-                        <div>
-                            <p>Contract constructor arguments. The number of arguments must match the number of arguments on the contract constructor.</p>
-                            <div>
+                        <div class={style.constructorContainer}>
+                            <h3>Constructor arguments</h3>
+                            <p>When deploying your contract, you need to provide the initial values for the contract's constructor arguments.
+                            <a href="#" target="_blank" rel="noopener noreferrer"> Learn more</a>
+                                <br/>
+                                <br/>
+                                <b>IMPORTANT:</b> The number of arguments must match the number of arguments on the contract constructor.</p>
+                            <div class={style.argumentsContainer}>
                                 <p>No. args: {this.contract.obj.args.length}
                                     <a href="#" onClick={this.incArg} title="Increase arguments">+</a>
                                     <a href="#" onClick={this.decArg} title="Decrease arguments">-</a>
