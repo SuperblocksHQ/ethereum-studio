@@ -82,7 +82,16 @@ export default class Control extends Component {
     }
 
     componentDidMount() {
-        this._reloadProjects();
+        this._reloadProjects(null, (status) => {
+            // NOTE: Ideally all this logic should not leave in the component itself but most likely in an epic
+            // which we can actually properly test
+            let { selectedProjectId } = this.props;
+            this._projectsList.forEach((project) => {
+                if (selectedProjectId && selectedProjectId === project.props.state.data.dir) {
+                    this.openProject(project);
+                }
+            });
+        });
     }
 
     _saveProject = (projectItem, cb) => {
@@ -483,15 +492,18 @@ export default class Control extends Component {
         e.preventDefault();
         const cb=(status, code) => {
             if(code==0) {
-                this._reloadProjects(null, (status)=>{
-                const item=this._projectsList[this._projectsList.length-1];
-                if(item) this._addProjectToExplorer(item);
-                const data={
-                    title: "Create new DApp successful",
-                    body: "Your DApp has been successfully created.",
-                    buttons: []
-                };
-                this.props.functions.modal.show({render: () => {return (<Modal functions={this.props.functions} data={data} />)}});
+                this._reloadProjects(null, (status) => {
+                    const item=this._projectsList[this._projectsList.length-1];
+                    if(item) {
+                        this.openProject(item, () => {
+                            const data={
+                                title: "Create new DApp successful",
+                                body: "Your DApp has been successfully created.",
+                                buttons: []
+                            };
+                            this.props.functions.modal.show({render: () => {return (<Modal functions={this.props.functions} data={data} />)}});
+                        });
+                    }
                 });
             }
             else {
@@ -572,11 +584,6 @@ export default class Control extends Component {
         this.closeProject((status) => {
             if (status == 0) {
                 this._addProjectToExplorer(project);
-
-                // Atm we are not going full retard using redux to perform all sort of glogal actions like this one,
-                // but until then there is still a good way we can notify and broadcast the selected project to
-                // per example when the app gets relaunched we can re-hydrate the store and select again the project.
-                this.props.selectProject(project);
             }
 
             this.props.router.main.redraw(true);
@@ -1098,6 +1105,7 @@ export default class Control extends Component {
 
     _addProjectToExplorer = (projectItem) => {
         projectItem.props.state.status='active';
+        this.props.selectProject(projectItem);
     };
 
     getActiveProject =() => {
@@ -1172,15 +1180,6 @@ export default class Control extends Component {
                     this._removeProject(existingItem);
                 }
             }
-
-            // NOTE: Ideally all this logic should not leave in the component itself but most likely in an epic
-            // which we can actually properly test
-            let { selectedProjectId } = this.props;
-            this._projectsList.forEach((project) => {
-                if (selectedProjectId && selectedProjectId === project.getId()) {
-                    this.openProject(project);
-                }
-            });
 
             if(cb) cb(0);
             this.props.router.main.redraw(redrawAll);
