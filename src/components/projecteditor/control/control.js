@@ -91,8 +91,23 @@ export default class Control extends Component {
                     this.openProject(project);
                 }
             });
+            this._showWelcome();
         });
     }
+
+    _showWelcome = () => {
+        // Show a welcome window in a pane if no project is chosen.
+        if(!this.getActiveProject()) {
+            const item = this._newItem({
+                type: "info",
+                type2: "welcome",
+                title: "Welcome",
+                icon: <IconCube />,
+                state: {},
+            });
+            if(this.props.router.panes) this.props.router.panes.openItem(item);
+        }
+    };
 
     _saveProject = (projectItem, cb) => {
         this.backend.saveProject(projectItem.props.state.data.dir, {
@@ -602,7 +617,7 @@ export default class Control extends Component {
 
     deleteProject = (project, cb) => {
         if(confirm("Are you sure you want to delete this project?")) {
-            const delFn = () => {
+            const delFn = (cb) => {
                 project.delete((status)=>{
                     if(cb) cb(status);
                 });
@@ -611,7 +626,16 @@ export default class Control extends Component {
             if (this.getActiveProject() == project) {
                 this.closeProject((status) => {
                     if(status==0) {
-                        delFn();
+                        delFn((status) => {
+                            // Open project if any
+                            if(this._projectsList.length) {
+                                this.openProject(this._projectsList[this._projectsList.length-1]);
+                            }
+                            else {
+                                this._showWelcome();
+                            }
+                            if(cb) cb(status);
+                        });
                     }
                     else {
                         if(cb) cb(status);
