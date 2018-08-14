@@ -306,7 +306,7 @@ export default class ContractEditor extends Component {
                                 <p><b>No. args: </b>{this.contract.obj.args.length}</p>
                                 <div class={style.arguments}>
                                     <div>
-                                        <b>{this.contract.obj.name}(</b>
+                                        <b>{this.contract.obj.name} (</b>
                                         {
                                             this.contract.obj.args.length ? args : null
                                         }
