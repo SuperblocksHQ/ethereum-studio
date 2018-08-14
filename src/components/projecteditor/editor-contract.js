@@ -15,7 +15,95 @@
 // along with Superblocks Studio.  If not, see <http://www.gnu.org/licenses/>.
 
 import { h, Component } from 'preact';
+import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import style from './style-editor-contract';
+import {
+    IconTrash,
+    IconAdd
+} from '../icons';
+
+class ConstructorArgument extends Component {
+
+    getSelect = (active, options, onChange) => {
+        return (<select onChange={onChange}>
+            {options.map((option)=>{
+                return (<option selected={active==option} value={option}>{option}</option>);
+            })}
+            </select>);
+    };
+
+    render() {
+        const { argument, accounts, contractsBefore, index, onOptionSelected, onRemoveArgumentClicked } = this.props;
+        var type = "value";
+        var value;
+
+        if (argument.account != null) {
+            type = "account";
+            const options = [];
+            accounts.map((account) => options.push(account.name));
+            argument[type] = argument[type] || options[0];
+
+            if (options.indexOf(argument[type]) == -1) {
+                // Chosen value does not exist
+                this.isDirty = true;
+                argument[type] = options[0];
+            }
+            value = this.getSelect(argument[type], options, (e) => {
+                this.isDirty = true;
+                argument[type] = e.target.value;
+            });
+        }
+        else if (argument.contract != null) {
+            type = "contract";
+            const options = contractsBefore;
+            argument[type] = argument[type] || options[0];
+
+            if (options.indexOf(argument[type]) == -1) {
+                // Chosen value does not exist
+                this.isDirty = true;
+                argument[type] = options[0];
+            }
+
+            value = this.getSelect(argument[type], options, (e) => {
+                this.isDirty = true;
+                argument[type] = e.target.value;
+            });
+        }
+        else {
+            value = (
+                <input value={argument[type]} onChange={(e) => {
+                    this.isDirty=true;
+                    argument[type]=e.target.value;
+                }}/>
+            );
+        }
+        const select = this.getSelect(type, ["account","contract","value"], (e) => {
+            this.isDirty = true;
+            delete argument[type];
+            argument[e.target.value] = "";
+            onOptionSelected();
+        });
+        return (
+            <div>
+                {select}
+                {value}
+                <button class={classNames(["btnNoBg", style.iconTrash])} onClick={(e) => onRemoveArgumentClicked(e, index)}>
+                    <IconTrash />
+                </button>
+            </div>
+        );
+    }
+}
+
+ConstructorArgument.propTypes = {
+    argument: PropTypes.object.isRequired,
+    accounts: PropTypes.array.isRequired,
+    contractsBefore: PropTypes.array.isRequired,
+    index: PropTypes.number.isRequired,
+    onOptionSelected: PropTypes.func.isRequired,
+    onRemoveArgumentClicked: PropTypes.func.isRequired
+}
 
 export default class ContractEditor extends Component {
     constructor(props) {
@@ -41,9 +129,9 @@ export default class ContractEditor extends Component {
     };
 
     canClose = (cb) => {
-        if(this.isDirty) {
+        if (this.isDirty) {
             const flag = confirm("There is unsaved data. Do you want to close tab and loose the changes?");
-            cb(flag?0:1);
+            cb(flag ? 0 : 1);
             return;
         }
         cb(0);
@@ -90,20 +178,20 @@ export default class ContractEditor extends Component {
             });
         };
         // TODO verify object validity?
-        if(this.props.contract!=this.contract.get('name')) {
+        if (this.props.contract != this.contract.get('name')) {
             const contract2 = this.dappfile.getItem("contracts", [{name:this.contract.get("name")}]);
-            if(contract2) {
+            if (contract2) {
                 alert("A contract by this name already exists, choose a different name, please.");
                 return;
             }
             // Rename the source file too.
             const file=this.contract.get('source').match(".*/([^/]+$)")[1];
-            this.props.project.renameFile(this._originalsourcepath, file, (status)=>{
-                if(status==4) {
+            this.props.project.renameFile(this._originalsourcepath, file, (status) => {
+                if (status == 4) {
                     // File doesn't exist (yet).
                     // Fall through
                 }
-                else if(status>0) {
+                else if (status > 0) {
                     alert("Error: Could not rename contract source file. Close the editor and try again.");
                     return;
                 }
@@ -120,20 +208,12 @@ export default class ContractEditor extends Component {
 
     onChange = (e, key) => {
         var value=e.target.value;
-        if(key=="name") {
+        if (key == "name") {
             this.contract.set("source", "/contracts/"+value+".sol");
         }
         this.contract.set(key, value);
-        this.isDirty=true;
+        this.isDirty = true;
         this.setState();
-    };
-
-    getSelect = (active, options, onChange) => {
-        return (<select onChange={onChange}>
-            {options.map((option)=>{
-                return (<option selected={active==option} value={option}>{option}</option>);
-            })}
-            </select>);
     };
 
     getContractsBefore = () => {
@@ -148,59 +228,23 @@ export default class ContractEditor extends Component {
     };
 
     renderArgs = () => {
-        const ret=this.contract.obj.args.map((arg, index)=> {
-            var type="value";
-            var value;
-            if(arg.account!=null) {
-                type="account";
-                const options=[];
-                const accounts=this.getAccounts();
-                accounts.map((account) => options.push(account.name));
-                arg[type] = arg[type] || options[0];
-                if(options.indexOf(arg[type]) == -1) {
-                    // Chosen value does not exist
-                    this.isDirty = true;
-                    arg[type] = options[0];
+        return (
+            <div>
+                { this.contract.obj.args.map((arg, index) => (
+                    <div class={style.argumentContainer}>
+                        <ConstructorArgument
+                            index={index}
+                            argument={arg}
+                            accounts={this.getAccounts()}
+                            contractsBefore={this.getContractsBefore()}
+                            onOptionSelected={this.redraw}
+                            onRemoveArgumentClicked={this.removeArgument}
+                        /> , <br/>
+                    </div>
+                    ))
                 }
-                value=this.getSelect(arg[type], options, (e) => {
-                    this.isDirty=true;
-                    arg[type]=e.target.value;
-                });
-            }
-            else if(arg.contract!=null) {
-                type="contract";
-                const options=this.getContractsBefore();
-                arg[type] = arg[type] || options[0];
-                if(options.indexOf(arg[type]) == -1) {
-                    // Chosen value does not exist
-                    this.isDirty = true;
-                    arg[type] = options[0];
-                }
-                value=this.getSelect(arg[type], options, (e) => {
-                    this.isDirty=true;
-                    arg[type]=e.target.value;
-                });
-            }
-            else {
-                value=(<input value={arg[type]} onChange={(e) => {
-                    this.isDirty=true;
-                    arg[type]=e.target.value;
-                }}/>);
-            }
-            const select=this.getSelect(type, ["account","contract","value"], (e) => {
-                this.isDirty=true;
-                delete arg[type];
-                arg[e.target.value]="";
-                this.redraw();
-            });
-            return (
-                <div style="display: inline;">
-                    {select}
-                    {value}
-                </div>
-            );
-        });
-        return ret;
+            </div>
+        )
     };
 
     getAccounts = () => {
@@ -211,16 +255,18 @@ export default class ContractEditor extends Component {
         return ret;
     };
 
-    incArg = (e) => {
+    addArgument = (e) => {
         e.preventDefault();
-        this.contract.obj.args.push({value:""})
+        this.contract.obj.args.push({ value: "" })
         this.setState();
     };
 
-    decArg = (e) => {
+    removeArgument = (e, index) => {
         e.preventDefault();
-        this.contract.obj.args.splice(-1,1);
-        this.setState();
+        if (index > -1) {
+            this.contract.obj.args.splice(index, 1);
+            this.setState();
+        }
     };
 
     render() {
@@ -255,13 +301,16 @@ export default class ContractEditor extends Component {
                                 <br/>
                                 <b>IMPORTANT:</b> The number of arguments must match the number of arguments on the contract constructor.</p>
                             <div class={style.argumentsContainer}>
-                                <p>No. args: {this.contract.obj.args.length}
-                                    <a href="#" onClick={this.incArg} title="Increase arguments">+</a>
-                                    <a href="#" onClick={this.decArg} title="Decrease arguments">-</a>
-                                </p>
+                                <p>No. args: {this.contract.obj.args.length}</p>
                             </div>
                             <div class={style.arguments}>
-                                <div>{this.contract.obj.name}({args})</div>
+                                <div><b>{this.contract.obj.name}(</b>
+                                    {args}
+                                    <button class={classNames(["btnNoBg", style.iconAdd])}>
+                                        <IconAdd onClick={this.addArgument}/>
+                                    </button>
+                                    <b>)</b>
+                                </div>
                             </div>
                         </div>
                         <div>

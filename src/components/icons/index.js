@@ -81,6 +81,7 @@ export const IconDownload = ({...props})=> <IconImg src={'/static/img/icon-downl
 export const IconUpload = () => <FaIcon icon={iconUpload} />;
 export const IconDropdown = ({...props}) => <IconImg src={'/static/img/icon-dropdown.svg'} {...props}/>;
 export const IconClose = ({...props}) => <FaIcon icon={iconClose} />;
+export const IconAdd = ({...props}) => <IconImg src={'/static/img/icon-add-contract.svg'} {...props} />;
 
 // Top Bar
 export const IconTransactions = ({...props}) => <FaIcon icon={iconExchangeAlt} {...props}/>;
