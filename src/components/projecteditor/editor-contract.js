@@ -72,10 +72,12 @@ class ConstructorArgument extends Component {
         }
         else {
             value = (
-                <input value={argument[type]} onChange={(e) => {
-                    this.isDirty=true;
-                    argument[type]=e.target.value;
-                }}/>
+                <div class={classNames(["superInputDark", style.valueContainer])}>
+                    <input value={argument[type]} onChange={(e) => {
+                        this.isDirty=true;
+                        argument[type]=e.target.value;
+                    }}/>
+                </div>
             );
         }
         const select = this.getSelect(type, ["account","contract","value"], (e) => {
@@ -301,15 +303,18 @@ export default class ContractEditor extends Component {
                                 <br/>
                                 <b>IMPORTANT:</b> The number of arguments must match the number of arguments on the contract constructor.</p>
                             <div class={style.argumentsContainer}>
-                                <p>No. args: {this.contract.obj.args.length}</p>
-                            </div>
-                            <div class={style.arguments}>
-                                <div><b>{this.contract.obj.name}(</b>
-                                    {args}
-                                    <button class={classNames(["btnNoBg", style.iconAdd])}>
-                                        <IconAdd onClick={this.addArgument}/>
-                                    </button>
-                                    <b>)</b>
+                                <p><b>No. args: </b>{this.contract.obj.args.length}</p>
+                                <div class={style.arguments}>
+                                    <div>
+                                        <b>{this.contract.obj.name}(</b>
+                                        {
+                                            this.contract.obj.args.length ? args : null
+                                        }
+                                        <button class={classNames(["btnNoBg", style.iconAdd])} onClick={this.addArgument}>
+                                            <IconAdd />
+                                        </button>
+                                        <b>)</b>
+                                    </div>
                                 </div>
                             </div>
                         </div>
