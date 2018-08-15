@@ -41,6 +41,7 @@ import iconGithub from '@fortawesome/fontawesome-free-brands/faGithub';
 import iconTelegram from '@fortawesome/fontawesome-free-brands/faTelegram';
 import iconLock from '@fortawesome/fontawesome-free-solid/faLock';
 import iconLockOpen from '@fortawesome/fontawesome-free-solid/faLockOpen';
+import iconPencil from '@fortawesome/fontawesome-free-solid/faPencilAlt';
 
 
 class IconImg extends Component {
@@ -81,11 +82,12 @@ export const IconDown = () => <FaIcon icon={iconDown} />;
 export const IconClone = () => <FaIcon icon={iconClone} />;
 export const IconDownload = ({...props})=> <IconImg src={'/static/img/icon-download.svg'} {...props} />;
 export const IconUpload = () => <FaIcon icon={iconUpload} />;
-export const IconDropdown = ({...props}) => <IconImg src={'/static/img/icon-dropdown.svg'} {...props}/>;
+export const IconDropdown = ({...props}) => <span class="dropDown" {...props}></span>;
 export const IconClose = ({...props}) => <FaIcon icon={iconClose} />;
 export const IconAdd = ({...props}) => <IconImg src={'/static/img/icon-add-contract.svg'} {...props} />;
 export const IconLock = ({...props}) => <FaIcon icon={iconLock} {...props} />;
 export const IconLockOpen = ({...props}) => <FaIcon icon={iconLockOpen} {...props} />;
+export const IconEdit = ({...props}) => <FaIcon icon={iconPencil} {...props} />;
 
 // Top Bar
 export const IconTransactions = ({...props}) => <FaIcon icon={iconExchangeAlt} {...props}/>;

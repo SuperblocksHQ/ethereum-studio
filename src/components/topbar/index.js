@@ -237,7 +237,7 @@ export default class TopBar extends DropDownDialog {
                 <button class={classNames([style.projectButton, style.container, "btnNoBg"])} onClick={this.showMenu}>
                     <IconProjectSelector class={style.icon}/>
                     <span class={style.projectText}>{title}</span>
-                    <IconDropdown class={classNames([style.dropdown])}/>
+                    <IconDropdown class={classNames([style.dropDown, "dropDown"])}/>
                 </button>
                 {
                     this.state.showMenu ? (

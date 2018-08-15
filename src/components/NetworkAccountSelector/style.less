@@ -35,28 +35,71 @@
     }
     .networks {
         position: absolute;
-        margin-top: 40px;
-        background-color: #fff;
-    }
-    .networkLink {
-        display: block;
-        font-size: 1.1em;
-        color: #ccc;
-    }
-    .networkLinkChosen {
-        color: green;
+        margin-top: 6px;
+        left: 0;
+        background-color: #2a2a2a;
+        width: 320px;
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .50);
+        padding: 20px;
+        z-index: 1;
+        .title {
+            font-weight: 600;
+            margin: 0 0 20px 20px;
+        }
+        .networkLink {
+            display: block;
+            color: #A5A5A5;
+            padding: 0px 100px 0px 20px;
+            padding-left: 20px;
+            line-height: 40px;
+            border-left: 2px solid;
+            border-color: transparent;
+            margin: 0;
+            &:hover {
+                background-color: rgba(128, 46, 255, 0.22);
+                cursor: pointer;
+                color: #fff;
+                border-color: #7237CF;
+            }
+        }
+        .networkLinkChosen {
+            background-color: rgba(128, 46, 255, 0.32);
+            color: #fff;
+            border-color: #8641F2;
+        }
     }
     .accounts {
         position: absolute;
-        margin-top: 40px;
-        background-color: #fff;
-    }
-    .accountLink {
-        display: block;
-        font-size: 1.1em;
-        color: #ccc;
-    }
-    .accountLinkChosen {
-        color: green;
+        margin-top: -7px;
+        background-color: #2a2a2a;
+        width: 320px;
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .50);
+        padding: 20px;
+        z-index: 1;
+        .title {
+            font-weight: 600;
+            margin: 0 0 20px 20px;
+        }
+        .accountLink {
+            display: block;
+            color: #A5A5A5;
+            padding: 0px 100px 0px 20px;
+            padding-left: 20px;
+            line-height: 40px;
+            border-left: 2px solid;
+            border-color: transparent;
+            margin: 0;
+            &:hover {
+                background-color: rgba(128, 46, 255, 0.22);
+                cursor: pointer;
+                color: #fff;
+                border-color: #7237CF;
+            }
+        }
+        .accountLinkChosen {
+            background-color: rgba(128, 46, 255, 0.32);
+            color: #fff;
+            border-color: #8641F2;
+        }
     }
 }
