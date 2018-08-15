@@ -346,12 +346,32 @@ a:active,a:focus {
     }
 }
 
+.superInputInline {
+    &:extend(.superInput all);
+    input {
+        display: inline-block;
+    }
+    button {
+        margin-left: 12px;
+    }
+}
+
 .superInputDark {
     &:extend(.superInput all);
     input {
         color: #fff;
         background-color: #3A3A3A;
         border: none;
+    }
+}
+
+.superInputDarkInline {
+    &:extend(.superInputDark all);
+    input {
+        display: inline-block;
+    }
+    button {
+        margin-left: 12px;
     }
 }
 

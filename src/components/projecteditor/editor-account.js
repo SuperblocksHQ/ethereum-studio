@@ -243,15 +243,20 @@ export default class AccountEditor extends Component {
             // Static address
             return (
                 <div>
-                    Address: <input type="text"
+                    <div class="superInputDarkInline">
+                        <label for="address">Address</label>
+                        <input type="text"
+                                id="address"
                                 onKeyUp={(e)=>{this.onAddressChange(e)}}
                                 onChange={(e)=>{this.onAddressChange(e)}}
                                 value={this.form.address} />
-                             <button disabled={!this.state.accountAddressDirty} onClick={this._staticAddressSave}>Save</button>
+
+                        <button class="btn2" disabled={!this.state.accountAddressDirty} onClick={this._staticAddressSave}>Save</button>
+                    </div>
                     <p>
-                        This account purely has a public address which you set yourself.
-                        This means that the  account cannot be used for any transactions.
-                        The reason of this feature is that the account can be passed as argument to contract constructors.
+                        <b>NOTE:</b> This account only has a public address which you need to set yourself.
+                        This means that the account cannot be used for any transactions.
+                        The reason for this feature is that this account can be passed as argument to contract constructors.
                     </p>
                 </div>
             );
@@ -321,7 +326,7 @@ export default class AccountEditor extends Component {
                 <div class={style.form}>
                     <form action="">
                         <div class={style.field}>
-                            <div class="superInputDark">
+                            <div class="superInputDarkInline">
                                 <label for="name">Name</label>
                                 <input type="text"
                                         id="name"
