@@ -185,23 +185,23 @@ export default class DevkitProjectEditorPanes extends Component {
             cls[tab]=true;
             cls[selected]=isSelected;
             return (
-                <div className={classnames(cls)}>
-                    <div class={style.title}>
-                        <a href="#" onClick={(e) => this.tabClicked(e, pane.id)}>
+                <a href="#" onClick={(e) => this.tabClicked(e, pane.id)}>
+                    <div className={classnames(cls)}>
+                        <div class={style.title}>
                             <div class={style.icon}>
                                 {pane.getIcon()}
                             </div>
                             <div class={style.title2}>
                                 {pane.getTitle()}
                             </div>
-                        </a>
+                        </div>
+                        <div class={style.close}>
+                            <a href="#" onClick={(e) => this.tabClickedClose(e, pane.id)}>
+                                <IconClose />
+                            </a>
+                        </div>
                     </div>
-                    <div class={style.close}>
-                        <a href="#" onClick={(e) => this.tabClickedClose(e, pane.id)}>
-                            <IconClose />
-                        </a>
-                    </div>
-                </div>);
+                </a>);
         });
         return (<div>{html}</div>);
     };
