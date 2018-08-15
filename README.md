@@ -45,9 +45,5 @@ Run this script to fix that for you:
 
 Consider double-checking and updating the `CHANGELOG` to reflect the changes. Tag the new version.
 
-
 ## Contributing
 Contributions are welcome, a `TODO` list will be presented.
-
-## Blockchain agnostic
-Studio is only for Ethereum DApp development as for now. However the goal is for Studio to support many different blockchain technologies and smart contract languages.
