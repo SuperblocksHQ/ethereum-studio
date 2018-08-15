@@ -191,11 +191,11 @@ class AccountSelector extends Component {
     };
 
     accountDropdown = (e) => {
-        if(!this.state.showAccountMenu) return;
+        if (!this.state.showAccountMenu) return;
         const accounts = this.state.dappfile.accounts().map((account, index) => {
             const cls={};
             cls[style.accountLink]=true;
-            if (account.name==this.state.account) cls[style.active]=true;
+            if (account.name==this.state.account) cls[style.accountLinkChosen]=true;
             return (
                 <div>
                     <div className={classnames(cls)} onClick={(e)=>{e.preventDefault(); this.accountChosen(account.name)}}>
@@ -213,12 +213,14 @@ class AccountSelector extends Component {
             );
         });
         return (
-            <div class={style.accounts}>
+            <div class={classnames([style.accounts], {[style.show]: this.state.showAccountMenu })}>
                 <div class={style.title}>
                     Select an Account
                 </div>
                 {accounts}
-                <a href="#" style="color:#333;" onClick={this.accountNew}>(+ new account)</a>
+                <div class={style.newAccount}>
+                    <button class="btnNoBg" onClick={this.accountNew}>+ New Account</button>
+                </div>
             </div>
         );
     };
