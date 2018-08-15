@@ -5,7 +5,9 @@ import {
     IconDeployGreen,
     IconDropdown,
     IconLock,
-    IconLockOpen
+    IconLockOpen,
+    IconTrash,
+    IconEdit
 } from '../icons';
 
 // Note: We display networks, which really are environments, which map to networks.
@@ -78,6 +80,9 @@ class NetworkSelector extends Component {
         });
         return (
             <div class={style.networks}>
+                <div class={style.title}>
+                    Select a Network
+                </div>
                 {networks}
             </div>
         );
@@ -93,7 +98,7 @@ class NetworkSelector extends Component {
                         {this.state.network}
                     </div>
                     <div class={ style.dropdownIcon }>
-                        <IconDropdown height="8" width="10"/>
+                        <IconDropdown />
                     </div>
                 </a>
                 {droppedDown}
@@ -190,17 +195,28 @@ class AccountSelector extends Component {
         const accounts = this.state.dappfile.accounts().map((account, index) => {
             const cls={};
             cls[style.accountLink]=true;
-            if(account.name==this.state.account) cls[style.accountLinkChosen]=true;
+            if (account.name==this.state.account) cls[style.active]=true;
             return (
                 <div>
-                    <a href="#" onClick={(e)=>{e.preventDefault();this.accountChosen(account.name)}} className={classnames(cls)}>{account.name}</a>
-                    <a href="#" onClick={(e)=>{e.preventDefault();this.accountEdit(e, index)}} className={classnames(cls)}>(edit)</a>
-                    <a href="#" onClick={(e)=>{e.preventDefault();this.accountDelete(e, index)}} className={classnames(cls)}>(delete)</a>
+                    <div className={classnames(cls)} onClick={(e)=>{e.preventDefault(); this.accountChosen(account.name)}}>
+                        <div>{account.name}</div>
+                        <div style="margin-left: auto;">
+                            <button class="btnNoBg" onClick={(e)=>{e.preventDefault(); this.accountEdit(e, index)}}>
+                                <IconEdit />
+                            </button>
+                            <button class="btnNoBg" onClick={(e)=>{e.preventDefault(); this.accountDelete(e, index)}}>
+                                <IconTrash />
+                            </button>
+                        </div>
+                    </div>
                 </div>
             );
         });
         return (
             <div class={style.accounts}>
+                <div class={style.title}>
+                    Select an Account
+                </div>
                 {accounts}
                 <a href="#" style="color:#333;" onClick={this.accountNew}>(+ new account)</a>
             </div>
