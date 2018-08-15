@@ -157,6 +157,9 @@ export default class AccountEditor extends Component {
                 // Reload data (for the same env)
                 this.setEnv(this.form.env);
             }
+            else {
+                alert("Computer says no. The seed entered is not a valid 12 word seed.");
+            }
         });
     };
 
