@@ -651,8 +651,8 @@ export default class Control extends Component {
         }
     };
 
-    downloadProject = (project) => {
-        this.backend.downloadProject(project.props.state.data.dir);
+    downloadProject = (project, keepState) => {
+        this.backend.downloadProject(project.props.state.data.dir, keepState);
     };
 
     _renderConstantsTitle = (level, index, item) => {

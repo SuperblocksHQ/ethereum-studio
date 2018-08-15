@@ -445,7 +445,24 @@ export default class Backend {
         downloadAnchorNode.remove();
     }
 
-    downloadProject = (projectName) => {
+    _clearDotfiles = (root) => {
+        // This will clear all keys starting with a dot.
+        // Changes are done in place in the 'root' object.
+        const keys=Object.keys(root);
+        for(var index=0;index<keys.length;index++) {
+            const key=keys[index];
+            if(key[0]=='.') {
+                delete root[key];
+                continue;
+            }
+            const node=root[key];
+            if(node.type=='d') {
+                this._clearDotfiles(node.children);
+            }
+        }
+    };
+
+    downloadProject = (projectName, keepState) => {
         const exportName = "superblocks_project_" + projectName;
         const workspace = JSON.parse(localStorage.getItem(DAPP_FORMAT_VERSION)) || {};
         var project = workspace.projects.filter((item) => {
@@ -458,8 +475,17 @@ export default class Backend {
             return;
         }
 
-        var exportObj = project;
-        var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportObj));
+        const project2 = JSON.parse(JSON.stringify(project));
+        delete project2._filecache;
+        delete project2.dir;
+        delete project2.inode;
+        project2.dappfile.project = {info: {title: (project2.dappfile.project.info || {}).title}};
+
+        if(!keepState) {
+            this._clearDotfiles(project2.files);
+        }
+
+        var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(project2));
         var downloadAnchorNode = document.createElement('a');
         downloadAnchorNode.setAttribute("href",     dataStr);
         downloadAnchorNode.setAttribute("download", exportName + ".json");

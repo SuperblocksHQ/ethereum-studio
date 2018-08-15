@@ -95,30 +95,10 @@ class ProjectSelector extends Component {
     };
 
     downloadProject = (e, project) => {
-        // CODE TO CLEAR DOTFILES, if we add that feature to download.
-        //const dappfilejson=JSON.parse(JSON.stringify(this.props.dappfilejson));
-        //delete dappfilejson.dir;
-        //delete dappfilejson.inode;
-        //delete dappfilejson._filecache;
-        //if(dappfilejson.project) delete dappfilejson.project.info;
-        //const clearDotfiles=(root)=>{
-            //const keys=Object.keys(root);
-            //for(var index=0;index<keys.length;index++) {
-                //const key=keys[index];
-                //if(key[0]=='.') {
-                    //delete root[key];
-                    //continue;
-                //}
-                //const node=root[key];
-                //if(node.type=='d') {
-                    //clearDotfiles(node.children);
-                //}
-            //}
-        //};
-        //clearDotfiles(dappfilejson.files);
-
         e.preventDefault();
-        this.props.router.control.downloadProject(project);
+
+        const keepState = confirm("Do you also want to save the project state (current contract addresse, ABI's, etc)?");
+        this.props.router.control.downloadProject(project, keepState);
     };
 
     deleteProject = (e, project) => {
