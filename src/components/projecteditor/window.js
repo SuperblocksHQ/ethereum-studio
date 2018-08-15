@@ -190,7 +190,16 @@ export class Window {
     getTitle = () => {
         if(this.childComponent && this.childComponent.getTitle) return this.childComponent.getTitle();
         if(this.props.item.props.type=="file") return this.props.item.props.title;
-        if(this.props.item.props.type=="contract") return this.props.item.props.title;
+        if(this.props.item.props.type=="contract") {
+            switch(this.props.item.props.type2) {
+                case "configure":
+                case "interact":
+                case "compile":
+                case "deploy":
+                    return this.props.item.props._contract;
+
+            }
+        }
         return this.props.item.props.title;
     };
 
