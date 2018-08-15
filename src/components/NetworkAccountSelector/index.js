@@ -1,7 +1,12 @@
 import { h, Component } from 'preact';
-import { IconDeployGreen, IconDropdown } from '../icons';
 import classnames from 'classnames';
 import style from "./style";
+import {
+    IconDeployGreen,
+    IconDropdown,
+    IconLock,
+    IconLockOpen
+} from '../icons';
 
 // Note: We display networks, which really are environments, which map to networks.
 // This is due to a simplification where we do not show environments, only networks, but technically it's environments which we work with.
@@ -321,7 +326,7 @@ class AccountSelector extends Component {
         var accountIcon;
 
         // TODO: @Javier plz put icon/imgs here.
-        if(accountType=="metamask") {
+        if (accountType=="metamask") {
             if(isLocked) {
                 accountIcon=(<img src="" alt="locked metamask account" />);
             }
@@ -329,19 +334,19 @@ class AccountSelector extends Component {
                 accountIcon=(<img src="" alt="available metamask account" />);
             }
         }
-        else if(accountType=="wallet") {
-            if(isLocked) {
+        else if (accountType=="wallet") {
+            if (isLocked) {
                 accountIcon=(
-                    <a href="#" onClick={this.unlockWallet}>
-                        <img src="" alt="locked wallet account - click to unlock" />
-                    </a>
+                    <IconLock alt="locked wallet account" size="xs" />
                 );
             }
             else {
-                accountIcon=(<img src="" alt="open wallet account" />);
+                accountIcon=(
+                    <IconLockOpen alt="open wallet account" size="xs" />
+                )
             }
         }
-        else if(accountType=="pseudo") {
+        else if (accountType=="pseudo") {
             accountIcon=(
                 <img src="" alt="pseudo account with only a public address" />
             );
@@ -349,22 +354,18 @@ class AccountSelector extends Component {
 
         return (
             <div>
-                <a class={style.selector} href="#" onClick={this.accountClick}>
-                    <div title={address}>
+                <a class={classnames([style.selector, style.account])} href="#" onClick={this.accountClick} >
+                    {accountIcon}
+                    <div title={address} class={style.nameContainer}>
                         {this.state.account}<br />
                         <span style="font-size: 0.5em;">
                             {accountBalance}
                         </span>
                     </div>
-                    <div>
-                    </div>
                     <div class={ style.dropdownIcon }>
                         <IconDropdown height="8" width="10"/>
                     </div>
                 </a>
-                <div>
-                    {accountIcon}
-                </div>
                 {droppedDown}
             </div>
         );

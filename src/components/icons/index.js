@@ -39,6 +39,8 @@ import iconQuestionCircle from '@fortawesome/fontawesome-free-regular/faQuestion
 import iconTwitter from '@fortawesome/fontawesome-free-brands/faTwitter';
 import iconGithub from '@fortawesome/fontawesome-free-brands/faGithub';
 import iconTelegram from '@fortawesome/fontawesome-free-brands/faTelegram';
+import iconLock from '@fortawesome/fontawesome-free-solid/faLock';
+import iconLockOpen from '@fortawesome/fontawesome-free-solid/faLockOpen';
 
 
 class IconImg extends Component {
@@ -82,6 +84,8 @@ export const IconUpload = () => <FaIcon icon={iconUpload} />;
 export const IconDropdown = ({...props}) => <IconImg src={'/static/img/icon-dropdown.svg'} {...props}/>;
 export const IconClose = ({...props}) => <FaIcon icon={iconClose} />;
 export const IconAdd = ({...props}) => <IconImg src={'/static/img/icon-add-contract.svg'} {...props} />;
+export const IconLock = ({...props}) => <FaIcon icon={iconLock} {...props} />;
+export const IconLockOpen = ({...props}) => <FaIcon icon={iconLockOpen} {...props} />;
 
 // Top Bar
 export const IconTransactions = ({...props}) => <FaIcon icon={iconExchangeAlt} {...props}/>;
