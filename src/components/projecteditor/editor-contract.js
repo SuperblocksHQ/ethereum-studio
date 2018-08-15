@@ -198,7 +198,7 @@ export default class ContractEditor extends Component {
                     return;
                 }
                 else {
-                    alert("Warning: You must now manually rename the contract and the constructor in the source file to match the new name file name.");
+                    alert("Warning: You must now manually rename the contract and the constructor in the source file to match the new file name, and finally the app.js file will need to be adjusted for the new contract name.");
                 }
                 finalize();
             });
