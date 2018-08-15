@@ -31,9 +31,8 @@ class NetworkSelector extends Component {
             network: network || defaultEnv,
             showNetworkMenu: false,
             project: project,
-        }, ()=> {
-            this.pushSettings();
         });
+        this.pushSettings();
     }
 
     networkClick=(e)=>{
@@ -126,9 +125,8 @@ class AccountSelector extends Component {
             showAccountMenu: false,
             project: project,
             balances: {},
-        }, ()=> {
-            this.pushSettings();
         });
+        this.pushSettings();
     }
 
     componentDidMount() {
