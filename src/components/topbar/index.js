@@ -1,7 +1,8 @@
 import { Component } from 'preact';
 import PropTypes from 'prop-types';
-import style from './style';
 import classNames from 'classnames';
+import style from './style';
+import { Dropdown, DropdownContainer } from '../dropdown';
 import {
     IconTransactions,
     IconDownload,
@@ -14,72 +15,47 @@ import {
     IconCheck
 } from '../icons';
 
-class DropDownDialog extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            showMenu: false,
-        }
-
-        this.showMenu = this.showMenu.bind(this);
-        this.closeMenu = this.closeMenu.bind(this);
-    }
-
-    showMenu(event) {
-        event.preventDefault();
-        event.stopPropagation();
-
-        this.setState({ showMenu: true }, () => {
-            document.addEventListener('click', this.closeMenu);
-        });
-      }
-
-    closeMenu() {
-        this.setState({ showMenu: false }, () => {
-            document.removeEventListener('click', this.closeMenu);
-        });
+class HelpDropdownAction extends Component {
+    render() {
+        return (
+            <div class={style.action}>
+                <button class={classNames([style.container, "btnNoBg"])}>
+                    <IconHelp />
+                    <span>Help</span>
+                </button>
+            </div>
+        )
     }
 }
 
-class HelpDropdownDialog extends DropDownDialog {
+class HelpDropdownDialog extends Component {
     render() {
-        let { ...props } = this.props;
-
         return (
-            <div {...props}>
-                <div class={style.action}>
-                    <button class={classNames([style.container, "btnNoBg"])} onClick={this.showMenu}>
-                        <IconHelp />
-                        <span>Help</span>
-                    </button>
-                </div>
-                <div class={classNames([style.helpMenu], {[style.show]: this.state.showMenu })}>
-                    <div class={style.title}>General</div>
-                    <ul>
-                        <li>
-                            <a href="">Help Center</a>
-                        </li>
-                        <li>
-                            <div class={style.container}>
-                                <a href="">Join our Community!</a>
-                                <span class={style.telegramIcon}>
-                                    <IconTelegram color="#0088cc"/>
-                                </span>
-                            </div>
+            <div class={classNames([style.helpMenu])}>
+                <div class={style.title}>General</div>
+                <ul>
+                    <li>
+                        <a href="">Help Center</a>
+                    </li>
+                    <li>
+                        <div class={style.container}>
+                            <a href="">Join our Community!</a>
+                            <span class={style.telegramIcon}>
+                                <IconTelegram color="#0088cc"/>
+                            </span>
+                        </div>
 
-                        </li>
-                        <li>
-                            <a href="">What’s new 🚀</a>
-                        </li>
-                    </ul>
-                </div>
+                    </li>
+                    <li>
+                        <a href="">What’s new 🚀</a>
+                    </li>
+                </ul>
             </div>
         );
     }
 }
 
-class ProjectSelector extends Component {
+class ProjectSelector extends Dropdown {
 
     openProject = (e, project, cb) => {
         e.preventDefault();
@@ -280,7 +256,7 @@ ActionOpenTransactions.propTypes = {
     onClick: PropTypes.func.isRequired
 }
 
-export default class TopBar extends DropDownDialog {
+export default class TopBar extends Component {
     constructor(props) {
         super(props);
 
@@ -316,7 +292,12 @@ export default class TopBar extends DropDownDialog {
                         <ProjectSelector router={this.props.router} />
                     ) : (null)
                 }
-                <HelpDropdownDialog class={style.elementsRight}/>
+                <DropdownContainer
+                    class={style.elementsRight}
+                    dropdownContent={<HelpDropdownDialog />}
+                >
+                    <HelpDropdownAction />
+                </DropdownContainer>
             </div>
         );
     }

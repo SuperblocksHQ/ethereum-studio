@@ -1,7 +1,7 @@
 import { h, Component } from 'preact';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import Dropdown from '../dropdown';
+import { Dropdown } from '../dropdown';
 import style from "./style";
 import {
     IconDeployGreen,
