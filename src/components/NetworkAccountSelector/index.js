@@ -1,6 +1,7 @@
 import { h, Component } from 'preact';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import Dropdown from '../dropdown';
 import style from "./style";
 import {
     IconDeployGreen,
@@ -10,6 +11,33 @@ import {
     IconTrash,
     IconEdit
 } from '../icons';
+
+class NetworkDropdown extends Dropdown {
+
+    render() {
+        const networks = this.props.dappfile.environments().map((env) => {
+            const cls={};
+            cls[style.networkLink] = true;
+            cls[style.capitalize] = true;
+            if (env.name==this.props.networkSelected) cls[style.networkLinkChosen] = true;
+            return (<a href="#" onClick={(e)=>{e.preventDefault(); this.props.onNetworkSelected(env.name)}} className={classnames(cls)}>{env.name}</a>);
+        });
+        return (
+            <div class={style.networks}>
+                <div class={style.title}>
+                    Select a Network
+                </div>
+                {networks}
+            </div>
+        );
+    }
+}
+
+NetworkDropdown.propTypes = {
+    dappfile: PropTypes.object.isRequired,
+    networkSelected: PropTypes.string.isRequired,
+    onNetworkSelected: PropTypes.func.isRequired
+}
 
 // Note: We display networks, which really are environments, which map to networks.
 // This is due to a simplification where we do not show environments, only networks, but technically it's environments which we work with.
@@ -39,19 +67,16 @@ class NetworkSelector extends Component {
     networkClick=(e)=>{
         e.preventDefault();
         e.stopPropagation();
-        if(this.state.showNetworkMenu) {
+        if (this.state.showNetworkMenu) {
             this.closeNetworkMenu();
-        }
-        else {
+        } else {
             // Only show if there's an open project.
-            if(!this.state.project) return;
-            this.setState({ showNetworkMenu: true }, () => {
-                document.addEventListener('click', this.closeNetworkMenu);
-            });
+            if (!this.state.project) return;
+            this.setState({ showNetworkMenu: true })
         }
     };
 
-    networkChosen=(network)=>{
+    onNetworkSelectedHandle=(network)=>{
         this.setState({
             network: network,
         });
@@ -64,32 +89,10 @@ class NetworkSelector extends Component {
     };
 
     closeNetworkMenu=(e)=>{
-        this.setState({ showNetworkMenu: false }, () => {
-            document.removeEventListener('click', this.closeNetworkMenu);
-        });
-    };
-
-    networkDropdown=(e)=>{
-        if(!this.state.showNetworkMenu) return;
-        const networks = this.state.dappfile.environments().map((env) => {
-            const cls={};
-            cls[style.networkLink]=true;
-            cls[style.capitalize]=true;
-            if(env.name==this.state.network) cls[style.networkLinkChosen]=true;
-            return (<a href="#" onClick={(e)=>{e.preventDefault();this.networkChosen(env.name)}} className={classnames(cls)}>{env.name}</a>);
-        });
-        return (
-            <div class={style.networks}>
-                <div class={style.title}>
-                    Select a Network
-                </div>
-                {networks}
-            </div>
-        );
+        this.setState({ showNetworkMenu: false });
     };
 
     render() {
-        const droppedDown=this.networkDropdown();
         const endpoint=(this.props.functions.networks.endpoints[this.state.network] || {}).endpoint;
         return (
             <div>
@@ -101,15 +104,21 @@ class NetworkSelector extends Component {
                         <IconDropdown />
                     </div>
                 </a>
-                {droppedDown}
+                { this.state.showNetworkMenu ?
+                    <NetworkDropdown
+                        dappfile={this.state.dappfile}
+                        networkSelected={this.state.network}
+                        onNetworkSelected={this.onNetworkSelectedHandle}
+                        handleClickOutside={this.closeNetworkMenu}
+                    />
+                    : null
+                }
             </div>
         )
     }
 }
 
-import onClickOutside from 'react-onclickoutside';
-
-class AccountDropdown extends Component {
+class AccountDropdown extends Dropdown {
 
     render() {
         const accounts = this.props.dappfile.accounts().map((account, index) => {
@@ -139,24 +148,23 @@ class AccountDropdown extends Component {
                 </div>
                 {accounts}
                 <div class={style.newAccount}>
-                    <button class="btnNoBg" onClick={this.props.accountNew}>+ New Account</button>
+                    <button class="btnNoBg" onClick={this.props.onNewAccountClicked}>+ New Account</button>
                 </div>
             </div>
         );
     }
 }
 
-AccountDropdown.proptypes = {
+AccountDropdown.propTypes = {
     dappfile: PropTypes.object.isRequired,
-    account: PropTypes.object.isRequired,
+    account: PropTypes.string.isRequired,
     showAccountMenu: PropTypes.bool.isRequired,
     handleClickOutside: PropTypes.func.isRequired,
     onAccountChosen: PropTypes.func.isRequired,
     onAccountEdit: PropTypes.func.isRequired,
-    onAccountDelete: PropTypes.func.isRequired
+    onAccountDelete: PropTypes.func.isRequired,
+    onNewAccountClicked: PropTypes.func.isRequired,
 }
-
-const EnhancedAccountDropdown = onClickOutside(AccountDropdown);
 
 class AccountSelector extends Component {
     constructor(props) {
@@ -190,22 +198,21 @@ class AccountSelector extends Component {
         clearInterval(this.timer);
     }
 
-    accountClick=(e)=>{
+    accountClick = (e) => {
         e.preventDefault();
         e.stopPropagation();
-        if(this.state.showAccountMenu) {
+        if (this.state.showAccountMenu) {
             this.closeAccountMenu();
-        }
-        else {
+        } else {
             // Only show if there's an open project.
-            if(!this.state.project) return;
+            if (!this.state.project) return;
             this.setState({ showAccountMenu: true }, () => {
                 document.addEventListener('click', () => this.closeAccountMenu());
             });
         }
     };
 
-    accountChosen=(account)=>{
+    accountChosen=(account) => {
         this.setState({
             account: account,
         });
@@ -213,37 +220,32 @@ class AccountSelector extends Component {
         this.props.router.main.redraw(true);
     };
 
-    accountEdit=(e, index)=>{
+    accountEdit=(e, index) => {
         // Pass on to control.js
         e.preventDefault();
         if(this.state.project) this.props.router.control._clickEditAccount (e, this.state.project, index);
     };
 
-    accountDelete=(e, index)=>{
+    accountDelete = (e, index) => {
         // Pass on to control.js
         e.preventDefault();
         if(this.state.project) this.props.router.control._clickDeleteAccount (e, this.state.project, index);
     };
 
-    accountNew=(e)=>{
+    onNewAccountClickHandle = (e) => {
         // Pass on to control.js
         e.preventDefault();
         if(this.state.project) this.props.router.control._clickNewAccount(e, this.state.project);
     };
 
-    pushSettings=()=>{
+    pushSettings = () => {
         if(this.state.project) this.state.project.props.state.data.account=this.state.account;
     };
 
-    closeAccountMenu=(e)=>{
+    closeAccountMenu = (e) => {
         this.setState({ showAccountMenu: false }, () => {
             document.removeEventListener('click', () => this.closeAccountMenu());
         });
-    };
-
-    accountDropdown = (e) => {
-        if (!this.state.showAccountMenu) return;
-
     };
 
     accountType = (e) => {
@@ -406,7 +408,7 @@ class AccountSelector extends Component {
                 </a>
                 {
                     this.state.showAccountMenu ?
-                        <EnhancedAccountDropdown
+                        <AccountDropdown
                             dappfile={this.state.dappfile}
                             account={this.state.account}
                             showAccountMenu={this.state.showAccountMenu}
@@ -414,6 +416,7 @@ class AccountSelector extends Component {
                             onAccountChosen={this.accountChosen}
                             onAccountEdit={this.accountEdit}
                             onAccountDelete={this.accountDelete}
+                            onNewAccountClicked={this.onNewAccountClickHandle}
                         />
                     : null
                 }
