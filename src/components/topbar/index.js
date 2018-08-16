@@ -282,16 +282,16 @@ export default class TopBar extends Component {
                 <div class={style.tools}>
                     <ActionOpenTransactions onClick={this.onTransactionsClicked}/>
                 </div>
-                <button class={classNames([style.projectButton, style.container, "btnNoBg"])} onClick={this.showMenu}>
-                    <IconProjectSelector class={style.icon}/>
-                    <span class={style.projectText}>{title}</span>
-                    <IconDropdown class={classNames([style.dropDown, "dropDown"])}/>
-                </button>
-                {
-                    this.state.showMenu ? (
-                        <ProjectSelector router={this.props.router} />
-                    ) : (null)
-                }
+                <DropdownContainer
+                    class={style.projectButton}
+                    dropdownContent={<ProjectSelector router={this.props.router} />} >
+                        <button class={classNames([style.container, "btnNoBg"])}>
+                            <IconProjectSelector class={style.icon}/>
+                            <span class={style.projectText}>{title}</span>
+                            <IconDropdown class={classNames([style.dropDown, "dropDown"])}/>
+                        </button>
+                </DropdownContainer>
+
                 <DropdownContainer
                     class={style.elementsRight}
                     dropdownContent={<HelpDropdownDialog />}
