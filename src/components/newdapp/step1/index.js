@@ -55,10 +55,9 @@ export default class Step1 extends Component {
             this.setState({ projectTitle: updatupdatedappfileJSONObj.dappfile.project.info.title});
         }
 
-        // TODO - Make sure we  validate this and don't forget to turn off!
-        // if (this.validateInputs()) {
+        if (this.validateInputs()) {
             this.props.onStep1Done({ name: this.state.projectName, title: this.state.projectTitle });
-        //}
+        }
     };
 
     onCancelClickHandle = () => {
