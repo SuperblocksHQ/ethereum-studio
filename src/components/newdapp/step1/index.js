@@ -36,7 +36,7 @@ export default class Step1 extends Component {
             alert('Illegal projectname. Only A-Za-z0-9 and dash (-) allowed.');
         } else if (projectTitle == "") {
             alert("Please give the project a snappy title.");
-        } else if (projectTitle.match(/([\"\']+)/)) {
+        } else if (projectTitle.match(/([\"\'\\]+)/)) {
             alert('Illegal title. No special characters allowed.');
         } else if (projectName.length > 20 || projectTitle.length > 20) {
             alert('Sorry, the project name or title is way to long! (Max 20 chars).');

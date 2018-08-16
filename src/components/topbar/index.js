@@ -101,6 +101,98 @@ class ProjectSelector extends Component {
         this.props.router.control.downloadProject(project, keepState);
     };
 
+    importProject = (e) => {
+        e.preventDefault();
+        var uploadAnchorNode = document.createElement('input');
+        uploadAnchorNode.setAttribute("id", "importFileInput");
+        uploadAnchorNode.setAttribute("type", "file");
+        uploadAnchorNode.onchange=this.importProject2;
+        document.body.appendChild(uploadAnchorNode); // required for firefox
+        uploadAnchorNode.click();
+        uploadAnchorNode.remove();
+    };
+
+    importProject2 = (e) => {
+        var file = e.target.files[0];
+        var reader = new FileReader();
+
+        reader.onloadend = (evt) => {
+            var dappfileJSONObj;
+            if (evt.target.readyState == FileReader.DONE) {
+                try {
+                    const obj = JSON.parse(evt.target.result);
+                    if (!obj.dappfile || !obj.files) {
+                        alert('Error: Invalid project file');
+                        return;
+                    }
+                    dappfileJSONObj = obj;
+                } catch (e) {
+                    alert('Error: Invalid JSON file.');
+                    return;
+                }
+
+                this.importProject3(dappfileJSONObj);
+            }
+        }
+        var blob = file.slice(0, file.size);
+        reader.readAsBinaryString(blob);
+    }
+
+    importProject3 = (dappfileJSONObj) => {
+        var title;
+        var name = dappfileJSONObj.dir || "";
+        if(dappfileJSONObj.dappfile.project && dappfileJSONObj.dappfile.project.info) {
+            title = dappfileJSONObj.dappfile.project.info.title || "";
+        }
+
+        do {
+            var name2 = prompt("Please give the project a name.", name);
+            if(!name2) {
+                alert("Import cancelled.");
+                return;
+            }
+            if(!name2.match(/^([a-zA-Z0-9-]+)$/) || name2.length > 20) {
+                alert('Illegal projectname. Only A-Za-z0-9 and dash (-) allowed. Max 20 characters.');
+                continue;
+            }
+            name = name2;
+            break;
+        } while (true);
+
+        do {
+            var title2 = prompt("Please give the project a snappy title.", title);
+            if(!title2) {
+                alert("Import cancelled.");
+                return;
+            }
+            if (title2.match(/([\"\'\\]+)/) || title2.length > 20) {
+                alert('Illegal title. No special characters allowed. Max 20 characters.');
+                continue;
+            }
+            title = title2;
+            break;
+        } while (true);
+
+        const cb = (ret) => {
+            if(ret.status == 1) {
+                alert("A project by that name already exists, please choose a different name.");
+                this.importProject3(dappfileJSONObj);
+                return;
+            }
+            this.props.router.control._reloadProjects(null, (status) => {
+                const item=this.props.router.control._projectsList[this.props.router.control._projectsList.length-1];
+                if(item) {
+                    this.props.router.control.openProject(item);
+                }
+            });
+        };
+
+        dappfileJSONObj.dappfile.project = {info:{title: title}};
+        dappfileJSONObj.dir = name;
+
+        this.props.router.control.backend.saveProject(name, {dappfile:dappfileJSONObj.dappfile}, cb, true, dappfileJSONObj.files);
+    };
+
     deleteProject = (e, project) => {
         e.preventDefault();
         this.props.router.control.deleteProject(project);
@@ -166,7 +258,7 @@ class ProjectSelector extends Component {
                 <div class={style.actions}>
                     <button class="btnNoBg" onClick={this.props.router.control._newDapp}>Create New</button>
                     <div class={style.separator} />
-                    <button class="btnNoBg">Import</button>
+                    <button class="btnNoBg" onClick={this.importProject}>Import</button>
                 </div>
             </div>
         )

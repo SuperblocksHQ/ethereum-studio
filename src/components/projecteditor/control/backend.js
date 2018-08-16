@@ -477,7 +477,6 @@ export default class Backend {
 
         const project2 = JSON.parse(JSON.stringify(project));
         delete project2._filecache;
-        delete project2.dir;
         delete project2.inode;
         project2.dappfile.project = {info: {title: (project2.dappfile.project.info || {}).title}};
 
