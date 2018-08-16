@@ -125,7 +125,7 @@ class AccountDropdown extends Component {
             );
         });
         return (
-            <div class={classnames([style.accounts], {[style.show]: this.props.showAccountMenu })}>
+            <div class={classnames([style.accounts])}>
                 <div class={style.title}>
                     Select an Account
                 </div>
@@ -141,7 +141,6 @@ class AccountDropdown extends Component {
 AccountDropdown.propTypes = {
     dappfile: PropTypes.object.isRequired,
     account: PropTypes.string.isRequired,
-    showAccountMenu: PropTypes.bool.isRequired,
     handleClickOutside: PropTypes.func.isRequired,
     onAccountChosen: PropTypes.func.isRequired,
     onAccountEdit: PropTypes.func.isRequired,
@@ -166,7 +165,6 @@ class AccountSelector extends Component {
         this.setState({
             dappfile: dappfile,
             account: account || defaultAccount,
-            showAccountMenu: false,
             project: project,
             balances: {},
         });
@@ -180,20 +178,6 @@ class AccountSelector extends Component {
     componentWillUnmount() {
         clearInterval(this.timer);
     }
-
-    accountClick = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        if (this.state.showAccountMenu) {
-            this.closeAccountMenu();
-        } else {
-            // Only show if there's an open project.
-            if (!this.state.project) return;
-            this.setState({ showAccountMenu: true }, () => {
-                document.addEventListener('click', () => this.closeAccountMenu());
-            });
-        }
-    };
 
     accountChosen=(account) => {
         this.setState({
@@ -223,12 +207,6 @@ class AccountSelector extends Component {
 
     pushSettings = () => {
         if(this.state.project) this.state.project.props.state.data.account=this.state.account;
-    };
-
-    closeAccountMenu = (e) => {
-        this.setState({ showAccountMenu: false }, () => {
-            document.removeEventListener('click', () => this.closeAccountMenu());
-        });
     };
 
     accountType = (e) => {
@@ -376,8 +354,19 @@ class AccountSelector extends Component {
         }
 
         return (
-            <div>
-                <a class={classnames([style.selector, style.account])} href="#" onClick={this.accountClick} >
+            <DropdownContainer
+                dropdownContent={
+                    <AccountDropdown
+                            dappfile={this.state.dappfile}
+                            account={this.state.account}
+                            onAccountChosen={this.accountChosen}
+                            onAccountEdit={this.accountEdit}
+                            onAccountDelete={this.accountDelete}
+                            onNewAccountClicked={this.onNewAccountClickHandle}
+                        />
+                }
+            >
+                <div class={classnames([style.selector, style.account])}>
                     {accountIcon}
                     <div title={address} class={style.nameContainer}>
                         {this.state.account}<br />
@@ -388,22 +377,8 @@ class AccountSelector extends Component {
                     <div class={ style.dropdownIcon }>
                         <IconDropdown height="8" width="10"/>
                     </div>
-                </a>
-                {
-                    this.state.showAccountMenu ?
-                        <AccountDropdown
-                            dappfile={this.state.dappfile}
-                            account={this.state.account}
-                            showAccountMenu={this.state.showAccountMenu}
-                            handleClickOutside={this.closeAccountMenu}
-                            onAccountChosen={this.accountChosen}
-                            onAccountEdit={this.accountEdit}
-                            onAccountDelete={this.accountDelete}
-                            onNewAccountClicked={this.onNewAccountClickHandle}
-                        />
-                    : null
-                }
-            </div>
+                </div>
+            </DropdownContainer>
         );
     }
 }
