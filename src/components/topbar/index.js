@@ -58,7 +58,6 @@ class HelpDropdownDialog extends Component {
 class ProjectSelector extends Dropdown {
 
     openProject = (e, project, cb) => {
-        e.preventDefault();
         this.props.router.control.openProject(project, cb);
     };
 
@@ -71,8 +70,6 @@ class ProjectSelector extends Dropdown {
     };
 
     downloadProject = (e, project) => {
-        e.preventDefault();
-
         const keepState = confirm("Do you also want to save the project state (current contract addresse, ABI's, etc)?");
         this.props.router.control.downloadProject(project, keepState);
     };
@@ -170,16 +167,19 @@ class ProjectSelector extends Dropdown {
     };
 
     deleteProject = (e, project) => {
-        e.preventDefault();
         this.props.router.control.deleteProject(project);
     };
 
     getProjectItems = () => {
-        if(this.props.router.control) {
+        if (this.props.router.control) {
             const openProject = this.props.router.control.getActiveProject();
-            const items=this.props.router.control.getProjects().slice(0).reverse().map((project)=>{
+
+            const items = this.props.router.control
+            .getProjects()
+            .slice(0)
+            .reverse()
+            .map((project) => {
                 const isActive = openProject === project;
-                // TODO: implement icon for isActive flag.
                 return (
                     <li class={style.projSwitcherItem}>
                         <div class={classNames([style.projSwitcherRow, style.container])}>
@@ -208,6 +208,7 @@ class ProjectSelector extends Dropdown {
                     </li>
                 );
             });
+
             return items;
         }
     };
@@ -293,9 +294,8 @@ export default class TopBar extends Component {
                 </DropdownContainer>
 
                 <DropdownContainer
-                    class={style.elementsRight}
-                    dropdownContent={<HelpDropdownDialog />}
-                >
+                    class={style.actionsRight}
+                    dropdownContent={<HelpDropdownDialog />} >
                     <HelpDropdownAction />
                 </DropdownContainer>
             </div>

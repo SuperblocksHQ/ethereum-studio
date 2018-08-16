@@ -12,7 +12,7 @@ import {
     IconEdit
 } from '../icons';
 
-class NetworkDropdown extends Dropdown {
+class NetworkDropdown extends Component {
 
     render() {
         const networks = this.props.dappfile.environments().map((env) => {
@@ -45,14 +45,14 @@ NetworkDropdown.propTypes = {
 class NetworkSelector extends Component {
     constructor(props) {
         super(props);
-        var network,dappfile,defaultEnv="browser";
+        var network, dappfile, defaultEnv = "browser";
         const project = this.props.router.control.getActiveProject();
         if(project) {
-            dappfile=project.props.state.data.dappfile;
+            dappfile = project.props.state.data.dappfile;
             dappfile.environments().map((env) => {
-                if(env.name==project.props.state.data.env) network=project.props.state.data.env;
+                if(env.name == project.props.state.data.env) network = project.props.state.data.env;
             });
-            defaultEnv=dappfile.environments()[0].name;
+            defaultEnv = dappfile.environments()[0].name;
         };
 
         this.setState({
@@ -85,7 +85,7 @@ class NetworkSelector extends Component {
     };
 
     pushSettings=()=>{
-        if(this.state.project) this.state.project.props.state.data.env=this.state.network;
+        if(this.state.project) this.state.project.props.state.data.env = this.state.network;
     };
 
     closeNetworkMenu=(e)=>{
@@ -118,7 +118,7 @@ class NetworkSelector extends Component {
     }
 }
 
-class AccountDropdown extends Dropdown {
+class AccountDropdown extends Component {
 
     render() {
         const accounts = this.props.dappfile.accounts().map((account, index) => {

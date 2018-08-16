@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 class DropdownBasic extends Component {
     render() {
         return (
-            <div>
+            <div onClick={this.props.handleClickInside}>
                 { this.props.children }
             </div>
         )
@@ -19,6 +19,7 @@ export const Dropdown = onClickOutside(DropdownBasic);
 
 Dropdown.proptypes = {
     handleClickOutside: PropTypes.func.isRequired,
+    handleClickInside: PropTypes.func.isRequired,
 }
 
 /**
@@ -31,30 +32,30 @@ export class DropdownContainer extends Component {
         this.state = {
             showMenu: false,
         }
-
-        this.showMenu = this.showMenu.bind(this);
-        this.closeMenu = this.closeMenu.bind(this);
     }
 
-    showMenu(event) {
-        event.preventDefault();
-        event.stopPropagation();
-
+    showMenu = (showMenu) => {
+        console.log("firing1");
         this.setState({ showMenu: true });
-      }
+    }
 
-    closeMenu() {
+    closeMenu = () => {
+        console.log("firing");
         this.setState({ showMenu: false });
     }
 
     render() {
         let { dropdownContent, ...props } = this.props;
         return (
-        <div onClick={this.showMenu} {...props}>
-            { this.props.children }
+        <div {...props}>
+            <div onClick={this.showMenu} >
+                { this.props.children }
+            </div>
+
             { this.state.showMenu ?
                     <Dropdown
-                        handleClickOutside={this.closeMenu}>
+                        handleClickOutside={this.closeMenu}
+                        handleClickInside={this.closeMenu}>
                         { dropdownContent }
                     </Dropdown>
                 : null }
