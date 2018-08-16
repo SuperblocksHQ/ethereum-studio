@@ -1,7 +1,7 @@
 import { h, Component } from 'preact';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { Dropdown } from '../dropdown';
+import { DropdownContainer } from '../dropdown';
 import style from "./style";
 import {
     IconDeployGreen,
@@ -58,23 +58,10 @@ class NetworkSelector extends Component {
         this.setState({
             dappfile: dappfile,
             network: network || defaultEnv,
-            showNetworkMenu: false,
             project: project,
         });
         this.pushSettings();
     }
-
-    networkClick=(e)=>{
-        e.preventDefault();
-        e.stopPropagation();
-        if (this.state.showNetworkMenu) {
-            this.closeNetworkMenu();
-        } else {
-            // Only show if there's an open project.
-            if (!this.state.project) return;
-            this.setState({ showNetworkMenu: true })
-        }
-    };
 
     onNetworkSelectedHandle=(network)=>{
         this.setState({
@@ -88,32 +75,28 @@ class NetworkSelector extends Component {
         if(this.state.project) this.state.project.props.state.data.env = this.state.network;
     };
 
-    closeNetworkMenu=(e)=>{
-        this.setState({ showNetworkMenu: false });
-    };
-
     render() {
         const endpoint=(this.props.functions.networks.endpoints[this.state.network] || {}).endpoint;
         return (
-            <div>
-                <a class={classnames([style.selector])} href="#" onClick={this.networkClick}>
-                    <div class={style.capitalize} title={endpoint}>
-                        {this.state.network}
-                    </div>
-                    <div class={ style.dropdownIcon }>
-                        <IconDropdown />
-                    </div>
-                </a>
-                { this.state.showNetworkMenu ?
+            <DropdownContainer
+                dropdownContent={
                     <NetworkDropdown
                         dappfile={this.state.dappfile}
                         networkSelected={this.state.network}
                         onNetworkSelected={this.onNetworkSelectedHandle}
                         handleClickOutside={this.closeNetworkMenu}
                     />
-                    : null
                 }
-            </div>
+            >
+                <div class={classnames([style.selector])} href="#">
+                    <div class={style.capitalize} title={endpoint}>
+                        {this.state.network}
+                    </div>
+                    <div class={ style.dropdownIcon }>
+                        <IconDropdown />
+                    </div>
+                </div>
+            </DropdownContainer>
         )
     }
 }
