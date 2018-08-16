@@ -278,50 +278,52 @@ export default class ContractEditor extends Component {
         const args=this.renderArgs();
         return (<div id={this.id} class={style.main}>
             <div class="scrollable-y" id={this.id+"_scrollable"}>
-                <h1 class={style.title}>
-                    Edit Contract {this.props.contract}
-                </h1>
-                <div class={style.form}>
-                    <form action="">
-                        <div class={style.field}>
-                            <div class="superInputDark">
-                                <label for="name">Name</label>
-                                <input
-                                    id="name"
-                                    type="text"
-                                    onKeyUp={(e)=>{this.onChange(e, 'name')}}
-                                    value={this.contract.get("name")}
-                                    onChange={(e)=>{this.onChange(e, 'name')}}
-                                    />
+                <div class={style.inner}>
+                    <h1 class={style.title}>
+                        Edit Contract {this.props.contract}
+                    </h1>
+                    <div class={style.form}>
+                        <form action="">
+                            <div class={style.field}>
+                                <div class="superInputDark">
+                                    <label for="name">Name</label>
+                                    <input
+                                        id="name"
+                                        type="text"
+                                        onKeyUp={(e)=>{this.onChange(e, 'name')}}
+                                        value={this.contract.get("name")}
+                                        onChange={(e)=>{this.onChange(e, 'name')}}
+                                        />
+                                </div>
                             </div>
-                        </div>
-                        <div class={style.constructorContainer}>
-                            <h3>Constructor arguments</h3>
-                            <p>When deploying your contract, you need to provide the initial values for the contract's constructor arguments.
-                            <a href="#" target="_blank" rel="noopener noreferrer"> Learn more</a>
-                                <br/>
-                                <br/>
-                                <b>IMPORTANT:</b> The number of arguments must match the number of arguments on the contract constructor.</p>
-                            <div class={style.argumentsContainer}>
-                                <p><b>No. args: </b>{this.contract.obj.args.length}</p>
-                                <div class={style.arguments}>
-                                    <div>
-                                        <b>{this.contract.obj.name} (</b>
-                                        {
-                                            this.contract.obj.args.length ? args : null
-                                        }
-                                        <button class={classNames(["btnNoBg", style.iconAdd])} onClick={this.addArgument}>
-                                            <IconAdd />
-                                        </button>
-                                        <b>)</b>
+                            <div class={style.constructorContainer}>
+                                <h3>Constructor arguments</h3>
+                                <p>When deploying your contract, you need to provide the initial values for the contract's constructor arguments.
+                                <a href="#" target="_blank" rel="noopener noreferrer"> Learn more</a>
+                                    <br/>
+                                    <br/>
+                                    <b>IMPORTANT:</b> The number of arguments must match the number of arguments on the contract constructor.</p>
+                                <div class={style.argumentsContainer}>
+                                    <p><b>No. args: </b>{this.contract.obj.args.length}</p>
+                                    <div class={style.arguments}>
+                                        <div>
+                                            <b>{this.contract.obj.name} (</b>
+                                            {
+                                                this.contract.obj.args.length ? args : null
+                                            }
+                                            <button class={classNames(["btnNoBg", style.iconAdd])} onClick={this.addArgument}>
+                                                <IconAdd />
+                                            </button>
+                                            <b>)</b>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div>
-                            <button href="#" class="btn2" onClick={this.save}>Save</button>
-                        </div>
-                    </form>
+                            <div>
+                                <button href="#" class="btn2" onClick={this.save}>Save</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>);

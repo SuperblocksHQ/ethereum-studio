@@ -70,41 +70,22 @@ export default class AppEditor extends Component {
         this.setState(form);
     };
 
-    renderToolbar = () => {
-        return (
-            <div class={style.toolbar} id={this.id+"_header"}>
-                <div>
-                </div>
-            </div>
-        );
-    };
-
-    getHeight = () => {
-        const a=document.getElementById(this.id);
-        const b=document.getElementById(this.id+"_header");
-        if(!a) return 99;
-        return (a.offsetHeight - b.offsetHeight);
-    };
-
     render() {
-        const toolbar=this.renderToolbar();
-        const maxHeight = {
-            height: this.getHeight() + "px"
-        };
         return (<div id={this.id} class={style.main}>
-            {toolbar}
-            <div class="scrollable-y" style={maxHeight} id={this.id+"_scrollable"}>
-                <h1 class={style.title}>
-                    Edit DApp Configuration
-                </h1>
-                <div class={style.form}>
-                    <form action="">
-                        <div class={style.field}>
-                            <p>Title:</p>
-                            <input maxLength="30" type="text" value={this.state.form.title} onChange={(e)=>{this.onChange(e, 'title')}} />
-                        </div>
-                        <a href="#" class="btn2" onClick={this.save}>Save</a>
-                    </form>
+            <div class="scrollable-y" id={this.id+"_scrollable"}>
+                <div class={style.inner}>
+                    <h1 class={style.title}>
+                        Edit DApp Configuration
+                    </h1>
+                    <div class={style.form}>
+                        <form action="">
+                            <div class={style.field}>
+                                <p>Title:</p>
+                                <input maxLength="30" type="text" value={this.state.form.title} onChange={(e)=>{this.onChange(e, 'title')}} />
+                            </div>
+                            <a href="#" class="btn2" onClick={this.save}>Save</a>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>);

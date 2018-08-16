@@ -25,15 +25,10 @@ export default class TransactionLog extends Component {
         this.id=props.id+"_transaction_log";
         //this.props.parent.childComponent=this;
 
-        console.log(props);
         this.txlog=props.project.props.state.txlog;
 
         setInterval(()=>this.setState(),2000);
     }
-
-    //redraw = (props) => {
-        //this.setState();
-    //};
 
     _renderTransaction=(tx)=>{
         const format=this._format;
@@ -71,11 +66,6 @@ export default class TransactionLog extends Component {
         }
         else {
             return s;
-/*                    <span>*/
-                        //<a href="#" title="Copy to clipbord">
-                            //C
-                        //</a>
-                    /*</span>*/
         }
     };
 
@@ -177,37 +167,43 @@ export default class TransactionLog extends Component {
             return this._renderTransaction(transaction);
         });
         return (
-            <div class={style.txtable}>
-                <table>
-                    <tr>
-                        <th>Origin</th>
-                        <th>Network</th>
-                        <th>Block</th>
-                        <th>Tx #</th>
-                        <th>Nonce</th>
-                        <th>Gas</th>
-                        <th>GasPrice</th>
-                        <th>From</th>
-                        <th>To</th>
-                        <th>Value</th>
-                        <th>Input</th>
+            <table>
+                <tr>
+                    <th>Origin</th>
+                    <th>Network</th>
+                    <th>Block</th>
+                    <th>Tx #</th>
+                    <th>Nonce</th>
+                    <th>Gas</th>
+                    <th>GasPrice</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Value</th>
+                    <th>Input</th>
 
-                        <th>Status</th>
-                        <th>GasUsed</th>
-                        <th>Index</th>
-                        <th>Contract address</th>
-                    </tr>
-                    {transactions}
-                </table>
-            </div>
+                    <th>Status</th>
+                    <th>GasUsed</th>
+                    <th>Index</th>
+                    <th>Contract address</th>
+                </tr>
+                {transactions}
+            </table>
         );
     };
 
     render() {
         const transactions=this._renderTransactions();
         return (
-            <div class={style.transactionlog}>
-                {transactions}
+            <div id={this.id} class={style.main}>
+                <div class="scrollable-y" id={this.id+"_scrollable"}>
+                    <div class={style.inner}>
+                        <div class={style.transactionlog}>
+                            <div class={style.txtable}>
+                                {transactions}
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         );
     }

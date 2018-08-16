@@ -323,56 +323,58 @@ export default class AccountEditor extends Component {
         const accountContent=this._renderAccountContent();
         return (<div id={this.id} class={style.main}>
             <div class="scrollable-y" id={this.id+"_scrollable"}>
-                <h1 class={style.title}>
-                    Edit Account
-                </h1>
-                <div class={style.form}>
-                    <form action="">
-                        <div class={style.field}>
-                            <div class="superInputDarkInline">
-                                <label for="name">Name</label>
-                                <input type="text"
-                                        id="name"
-                                        value={this.form.name}
-                                        onKeyUp={(e)=>{this.onNameChange(e)}}
-                                        onChange={(e)=>{this.onNameChange(e)}} />
-
-                                <button class="btn2" disabled={!this.state.accountNameDirty} onClick={this._nameSave}>Save name</button>
-                            </div>
-                            <div class={style.networkContainer}>
-                                <div class={style.networkHeader}>
-                                    <div class={style.titleContainer}>
-                                        <h3 class={style.title}>Configure the account for each network</h3>
-                                        <IconHelp class={style.icon}/>
+                <div class={style.inner}>
+                    <h1 class={style.title}>
+                        Edit Account
+                    </h1>
+                    <div class={style.form}>
+                        <form action="">
+                            <div class={style.field}>
+                                <div class="superInputDarkInline">
+                                    <label for="name">Name</label>
+                                    <input type="text"
+                                            id="name"
+                                            value={this.form.name}
+                                            onKeyUp={(e)=>{this.onNameChange(e)}}
+                                            onChange={(e)=>{this.onNameChange(e)}} />
+                    
+                                    <button class="btn2" disabled={!this.state.accountNameDirty} onClick={this._nameSave}>Save name</button>
+                                </div>
+                                <div class={style.networkContainer}>
+                                    <div class={style.networkHeader}>
+                                        <div class={style.titleContainer}>
+                                            <h3 class={style.title}>Configure the account for each network</h3>
+                                            <IconHelp class={style.icon}/>
+                                        </div>
+                                        <div class={style.subtitle}>
+                                            Each account must be configured for each of the networks available.
+                                            <a href="#" target="_blank" rel="noopener noreferrer"> Click here</a> to access our Help Center and find more information about this.
+                                        </div>
                                     </div>
-                                    <div class={style.subtitle}>
-                                        Each account must be configured for each of the networks available.
-                                        <a href="#" target="_blank" rel="noopener noreferrer"> Click here</a> to access our Help Center and find more information about this.
+                                    <div class={style.networkSelector}>
+                                        <div class={style.networks}>
+                                            <ul>
+                                                {
+                                                    this.dappfile.environments().map((env) => {
+                                                        const cls={};
+                                                        if (env.name == this.form.env) {
+                                                            cls[style.active] = true;
+                                                        }
+                                                        return (
+                                                            <li className={classnames([cls])}>
+                                                                <div class={style.networkName} onClick={(e)=>{this.onEnvChange(e, env.name)}}>{env.name}</div>
+                                                            </li>);
+                                                })}
+                                            </ul>
+                                        </div>
+                                        <div class={style.networkInfo}>
+                                            {accountContent}
+                                        </div>
                                     </div>
                                 </div>
-                                <div class={style.networkSelector}>
-                                    <div class={style.networks}>
-                                        <ul>
-                                            {
-                                                this.dappfile.environments().map((env) => {
-                                                    const cls={};
-                                                    if (env.name == this.form.env) {
-                                                        cls[style.active] = true;
-                                                    }
-                                                    return (
-                                                        <li className={classnames([cls])}>
-                                                            <div class={style.networkName} onClick={(e)=>{this.onEnvChange(e, env.name)}}>{env.name}</div>
-                                                        </li>);
-                                            })}
-                                        </ul>
-                                    </div>
-                                    <div class={style.networkInfo}>
-                                        {accountContent}
-                                    </div>
-                                </div>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>);

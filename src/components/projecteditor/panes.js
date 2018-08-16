@@ -209,7 +209,7 @@ export default class DevkitProjectEditorPanes extends Component {
     getPaneHeight = () => {
         const a=document.getElementById("panes");
         const b=document.getElementById("panes_header");
-        return a.offsetHeight - b.offsetHeight;
+        return a.offsetHeight - b.offsetHeight - 80;  // 80 is the magic number to adjust for height taken by borders/toolbars.
     };
 
     renderPanes = () => {
