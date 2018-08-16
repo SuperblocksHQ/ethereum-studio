@@ -1,4 +1,5 @@
 import { h, Component } from 'preact';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import style from "./style";
 import {
@@ -106,11 +107,63 @@ class NetworkSelector extends Component {
     }
 }
 
+import onClickOutside from 'react-onclickoutside';
+
+class AccountDropdown extends Component {
+
+    render() {
+        const accounts = this.props.dappfile.accounts().map((account, index) => {
+            const cls={};
+            cls[style.accountLink]=true;
+            if (account.name == this.props.account) cls[style.accountLinkChosen]=true;
+            return (
+                <div>
+                    <div className={classnames(cls)} onClick={(e)=>{e.preventDefault(); this.props.onAccountChosen(account.name)}}>
+                        <div>{account.name}</div>
+                        <div style="margin-left: auto;">
+                            <button class="btnNoBg" onClick={(e)=>{e.preventDefault(); this.props.onAccountEdit(e, index)}}>
+                                <IconEdit />
+                            </button>
+                            <button class="btnNoBg" onClick={(e)=>{e.preventDefault(); this.props.onAccountDelete(e, index)}}>
+                                <IconTrash />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            );
+        });
+        return (
+            <div class={classnames([style.accounts], {[style.show]: this.props.showAccountMenu })}>
+                <div class={style.title}>
+                    Select an Account
+                </div>
+                {accounts}
+                <div class={style.newAccount}>
+                    <button class="btnNoBg" onClick={this.props.accountNew}>+ New Account</button>
+                </div>
+            </div>
+        );
+    }
+}
+
+AccountDropdown.proptypes = {
+    dappfile: PropTypes.object.isRequired,
+    account: PropTypes.object.isRequired,
+    showAccountMenu: PropTypes.bool.isRequired,
+    handleClickOutside: PropTypes.func.isRequired,
+    onAccountChosen: PropTypes.func.isRequired,
+    onAccountEdit: PropTypes.func.isRequired,
+    onAccountDelete: PropTypes.func.isRequired
+}
+
+const EnhancedAccountDropdown = onClickOutside(AccountDropdown);
+
 class AccountSelector extends Component {
     constructor(props) {
         super(props);
         var account,dappfile, defaultAccount="Default";
         const project = this.props.router.control.getActiveProject();
+
         if(project) {
             dappfile=project.props.state.data.dappfile;
             dappfile.accounts().map((accountItem) => {
@@ -147,7 +200,7 @@ class AccountSelector extends Component {
             // Only show if there's an open project.
             if(!this.state.project) return;
             this.setState({ showAccountMenu: true }, () => {
-                document.addEventListener('click', this.closeAccountMenu);
+                document.addEventListener('click', () => this.closeAccountMenu());
             });
         }
     };
@@ -184,43 +237,13 @@ class AccountSelector extends Component {
 
     closeAccountMenu=(e)=>{
         this.setState({ showAccountMenu: false }, () => {
-            document.removeEventListener('click', this.closeAccountMenu);
+            document.removeEventListener('click', () => this.closeAccountMenu());
         });
     };
 
     accountDropdown = (e) => {
         if (!this.state.showAccountMenu) return;
-        const accounts = this.state.dappfile.accounts().map((account, index) => {
-            const cls={};
-            cls[style.accountLink]=true;
-            if (account.name==this.state.account) cls[style.accountLinkChosen]=true;
-            return (
-                <div>
-                    <div className={classnames(cls)} onClick={(e)=>{e.preventDefault(); this.accountChosen(account.name)}}>
-                        <div>{account.name}</div>
-                        <div style="margin-left: auto;">
-                            <button class="btnNoBg" onClick={(e)=>{e.preventDefault(); this.accountEdit(e, index)}}>
-                                <IconEdit />
-                            </button>
-                            <button class="btnNoBg" onClick={(e)=>{e.preventDefault(); this.accountDelete(e, index)}}>
-                                <IconTrash />
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            );
-        });
-        return (
-            <div class={classnames([style.accounts], {[style.show]: this.state.showAccountMenu })}>
-                <div class={style.title}>
-                    Select an Account
-                </div>
-                {accounts}
-                <div class={style.newAccount}>
-                    <button class="btnNoBg" onClick={this.accountNew}>+ New Account</button>
-                </div>
-            </div>
-        );
+
     };
 
     accountType = (e) => {
@@ -336,7 +359,6 @@ class AccountSelector extends Component {
     };
 
     render() {
-        const droppedDown=this.accountDropdown();
         const {accountType, isLocked, network, address}=this.accountType();
         const accountBalance=this.accountBalance(network, address);
         var accountIcon;
@@ -382,7 +404,19 @@ class AccountSelector extends Component {
                         <IconDropdown height="8" width="10"/>
                     </div>
                 </a>
-                {droppedDown}
+                {
+                    this.state.showAccountMenu ?
+                        <EnhancedAccountDropdown
+                            dappfile={this.state.dappfile}
+                            account={this.state.account}
+                            showAccountMenu={this.state.showAccountMenu}
+                            handleClickOutside={this.closeAccountMenu}
+                            onAccountChosen={this.accountChosen}
+                            onAccountEdit={this.accountEdit}
+                            onAccountDelete={this.accountDelete}
+                        />
+                    : null
+                }
             </div>
         );
     }
