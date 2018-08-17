@@ -42,6 +42,7 @@ import iconTelegram from '@fortawesome/fontawesome-free-brands/faTelegram';
 import iconLock from '@fortawesome/fontawesome-free-solid/faLock';
 import iconLockOpen from '@fortawesome/fontawesome-free-solid/faLockOpen';
 import iconPencil from '@fortawesome/fontawesome-free-solid/faPencilAlt';
+import iconDownload from '@fortawesome/fontawesome-free-regular/faArrowAltCircleDown';
 
 
 class IconImg extends Component {
@@ -80,7 +81,7 @@ export const IconPlus = () => <FaIcon icon={iconPlus} />;
 export const IconUp = () => <FaIcon icon={iconUp} />;
 export const IconDown = () => <FaIcon icon={iconDown} />;
 export const IconClone = () => <FaIcon icon={iconClone} />;
-export const IconDownload = ({...props})=> <IconImg src={'/static/img/icon-download.svg'} {...props} />;
+export const IconDownload = ({...props})=> <FaIcon icon={iconDownload} {...props} />;
 export const IconUpload = () => <FaIcon icon={iconUpload} />;
 export const IconDropdown = ({...props}) => <span class="dropDown" {...props}></span>;
 export const IconClose = ({...props}) => <FaIcon icon={iconClose} />;
