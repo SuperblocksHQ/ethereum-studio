@@ -324,6 +324,7 @@ export default class Control extends Component {
             return children;
         };
         var app=this._newItem({title: "APPLICATION", type: "app", type2: "composite", render: this._renderApplicationSectionTitle, _project: projectItem, toggable: true, icon: null, state:{ open: true, children: [
+            this._newItem({title: "README.md", _project: projectItem, type: "file", type2: 'md', _project: projectItem, file: "/app/README.md", onClick: this._openItem, icon: <IconHtml />, state: { }}),
             this._newItem({title: "app.html", _project: projectItem, type: "file", type2: 'html', _project: projectItem, file: "/app/app.html", onClick: this._openItem, icon: <IconHtml />, state: { _tag:0 }}),
             this._newItem({title: "app.js", _project: projectItem, type: "file", type2: 'js', _project: projectItem, file:'/app/app.js', onClick: this._openItem, icon: <IconJS />, state:{ _tag:3 }}),
             this._newItem({title: "app.css", _project: projectItem, type: "file", type2: 'css', _project: projectItem, file: '/app/app.css', onClick: this._openItem, icon: <IconCss />, state:{ _tag:2 }}),

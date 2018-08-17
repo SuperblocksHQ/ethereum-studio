@@ -28,6 +28,7 @@ export default class Editor extends Component {
             js:"javascript",
             sol:"sol",
             sh:"shell",
+            md:"markdown",
         };
         this.editorObj;
         this.monacoObj;
