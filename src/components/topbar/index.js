@@ -2,7 +2,7 @@ import { Component } from 'preact';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import style from './style';
-import { Dropdown, DropdownContainer } from '../dropdown';
+import { DropdownContainer } from '../dropdown';
 import {
     IconTransactions,
     IconDownload,
@@ -15,47 +15,50 @@ import {
     IconCheck
 } from '../icons';
 
-class HelpDropdownAction extends Component {
-    render() {
-        return (
-            <div class={style.action}>
-                <button class={classNames([style.container, "btnNoBg"])}>
-                    <IconHelp />
-                    <span>Help</span>
-                </button>
-            </div>
-        )
-    }
-}
+const HelpDropdownAction = () => (
+    <div class={style.action}>
+        <button class={classNames([style.container, "btnNoBg"])}>
+            <IconHelp />
+            <span>Help</span>
+        </button>
+    </div>
+);
 
-class HelpDropdownDialog extends Component {
-    render() {
-        return (
-            <div class={classNames([style.helpMenu])}>
-                <div class={style.title}>General</div>
-                <ul>
-                    <li>
-                        <a href="">Help Center</a>
-                    </li>
-                    <li>
-                        <div class={style.container}>
-                            <a href="">Join our Community!</a>
-                            <span class={style.telegramIcon}>
-                                <IconTelegram color="#0088cc"/>
-                            </span>
-                        </div>
+const HelpDropdownDialog = () => (
+    <div class={style.helpMenu}>
+        <div class={style.title}>General</div>
+        <ul>
+            <li>
+                <a href="">Help Center</a>
+            </li>
+            <li>
+                <div class={style.container}>
+                    <a href="">Join our Community!</a>
+                    <span class={style.telegramIcon}>
+                        <IconTelegram color="#0088cc"/>
+                    </span>
+                </div>
 
-                    </li>
-                    <li>
-                        <a href="">What’s new 🚀</a>
-                    </li>
-                </ul>
-            </div>
-        );
-    }
-}
+            </li>
+            <li>
+                <a href="">What’s new 🚀</a>
+            </li>
+        </ul>
+    </div>
+);
 
-class ProjectSelector extends Dropdown {
+const ProjectSelector = ({ title } = props) => (
+    <div class={style.action}>
+        <button class="btnNoBg">
+            <IconProjectSelector class={style.icon}/>
+            <span class={style.projectText}>{title}</span>
+            <IconDropdown class={classNames([style.dropDown, "dropDown"])}/>
+        </button>
+    </div>
+
+);
+
+class ProjectDialog extends Component {
 
     openProject = (e, project, cb) => {
         this.props.router.control.openProject(project, cb);
@@ -217,7 +220,7 @@ class ProjectSelector extends Dropdown {
     render() {
         const projectItems = this.getProjectItems();
         return (
-            <div class={classNames([style.projectMenu, "modal"])}>
+            <div class={classNames([style.projectMenu])}>
                 <div class={style.tabs}>
                     <div class={classNames([style.tabList, style.container])}>
                         <button class={style.tab}>
@@ -271,9 +274,9 @@ export default class TopBar extends Component {
 
     render() {
         var title="";
-        if(this.props.router.control) {
+        if (this.props.router.control) {
             const openProject = this.props.router.control.getActiveProject();
-            if(openProject) {
+            if (openProject) {
                 title = openProject.props.state.data.dappfile.getObj().project.info.title;
             }
         }
@@ -285,18 +288,14 @@ export default class TopBar extends Component {
                 </div>
                 <DropdownContainer
                     class={style.projectButton}
-                    dropdownContent={<ProjectSelector router={this.props.router} />} >
-                        <button class={classNames([style.container, "btnNoBg"])}>
-                            <IconProjectSelector class={style.icon}/>
-                            <span class={style.projectText}>{title}</span>
-                            <IconDropdown class={classNames([style.dropDown, "dropDown"])}/>
-                        </button>
+                    dropdownContent={<ProjectDialog router={this.props.router} />} >
+                        <ProjectSelector title={title}/>
                 </DropdownContainer>
 
                 <DropdownContainer
                     class={style.actionsRight}
                     dropdownContent={<HelpDropdownDialog />} >
-                    <HelpDropdownAction />
+                        <HelpDropdownAction />
                 </DropdownContainer>
             </div>
         );
