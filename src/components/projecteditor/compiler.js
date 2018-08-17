@@ -98,6 +98,7 @@ export default class Compiler extends Component {
             setTimeout(()=>{
                 var srcfilename;
                 var contractbody;
+                this.consoleRows.push({channel:1,msg:"Using Solidity compiler version " + this.props.functions.compiler.getVersion()});
                 // Run through all sources loaded and chose one for compilation and the rest for import.
                 // https://solidity.readthedocs.io/en/develop/using-the-compiler.html#compiler-input-and-output-json-description
                 const input={

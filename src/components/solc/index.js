@@ -24,6 +24,7 @@ export default class Solc {
         this.ref=null;
         this._counter=0;
         this._cbMap={};
+        this._version = "0.4.21";
 
         var setRef = (ref)=>{
             this.ref=ref;
@@ -47,6 +48,10 @@ export default class Solc {
 
         setInterval(this._processQueue, 100);
     }
+
+    getVersion = () => {
+        return this._version;
+    };
 
     _response = (msg) => {
         if(this._cbMap[msg.id]) {
