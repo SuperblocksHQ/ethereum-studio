@@ -25,7 +25,7 @@ import Dappfile from './dappfile';
 import NewDapp from '../../newdapp';
 import Modal from '../../modal';
 import TransactionLogData from '../../blockexplorer/transactionlogdata';
-import NetworkAccountSelector from '../../networkAccountSelector';
+import NetworkAccountSelector from '../../NetworkAccountSelector';
 
 import {
     IconTrash,
