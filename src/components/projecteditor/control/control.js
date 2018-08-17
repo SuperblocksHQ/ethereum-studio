@@ -720,7 +720,7 @@ export default class Control extends Component {
 
     _renderLearnSectionTitle = (level, index, item) => {
         return (
-            <div class={classnames([style.projectContractsTitle, 'mt-3', 'p-1'])}>
+            <div class={classnames([style.projectContractsTitle, 'mt-3'])}>
                 <div class={style.title}>
                     <a href="#" onClick={ (e)=>this._angleClicked(e, item) }>{ item.getTitle() }</a>
                 </div>
@@ -1247,7 +1247,7 @@ export default class Control extends Component {
     _renderIcons = (level, index, item) => {
         var caret;
         var isToggable=item.props.toggable && (item.getChildren().length>0 || item.props._lazy);
-        if(isToggable) {
+        if (isToggable) {
             var caretIcon= <IconAngleRight height="8" width="5" />;
             if(item.props.state.open) {
                 caretIcon= <IconAngleDown height="5" width="8" />;
