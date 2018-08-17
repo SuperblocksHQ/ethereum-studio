@@ -128,6 +128,11 @@ export default class DevkitProjectEditorPanes extends Component {
         return true;
     };
 
+    tabRightClicked = (e, id) => {
+        e.preventDefault();
+        this.setState({showContextMenuPaneId:id});
+    };
+
     tabClicked = (e, id) => {
         e.preventDefault();
         this.activePaneId=id;
@@ -139,13 +144,22 @@ export default class DevkitProjectEditorPanes extends Component {
         this.closePane(paneId);
     }
 
-    closeAll = (cb) => {
+    closeAll = (cb, keepPaneId) => {
         const fn = () => {
             if(this.panes.length==0) {
                 if(cb) cb(0);
                 return;
             }
-            const pane = this.panes[0];
+            var pane = this.panes[0];
+            if(keepPaneId == pane.id) {
+                if(this.panes.length > 1) {
+                    pane = this.panes[1];
+                }
+                else {
+                    if(cb) cb(0);
+                    return;
+                }
+            }
             this.closePane(pane.id, (status) => {
                 if(status==0) {
                     fn();
@@ -176,32 +190,59 @@ export default class DevkitProjectEditorPanes extends Component {
         });
     };
 
+    contextMenuClose = () => {
+        this.setState({showContextMenuPaneId:null});
+    };
+
+    closeAllPanes = (e) => {
+        e.preventDefault();
+        this.closeAll();
+    };
+
+    closeAllOtherPanes = (e) => {
+        e.preventDefault();
+        this.closeAll(null, this.state.showContextMenuPaneId);
+    };
+
     renderHeader = () => {
         const tab=style.tab;
         const selected=style.selected;
         const html = this.panes.map( (pane, index) => {
+            var contextMenu="";
+            if(this.state.showContextMenuPaneId == pane.id) {
+                contextMenu=(
+                    <div class={style.contextMenu}>
+                        <a href="#" onClick={this.closeAllPanes}>Close all</a> <br />
+                        <a href="#" onClick={this.closeAllOtherPanes}>Close all others</a> <br />
+                    </div>
+                );
+            }
             var isSelected=(pane.id==this.activePaneId);
             const cls={};
             cls[tab]=true;
             cls[selected]=isSelected;
             return (
-                <a href="#" onClick={(e) => this.tabClicked(e, pane.id)}>
-                    <div className={classnames(cls)}>
-                        <div class={style.title}>
-                            <div class={style.icon}>
-                                {pane.getIcon()}
+                <div>
+                    <a href="#" onClick={(e) => this.tabClicked(e, pane.id)} onContextMenu={(e) => this.tabRightClicked(e, pane.id)}>
+                        <div className={classnames(cls)}>
+                            <div class={style.title}>
+                                <div class={style.icon}>
+                                    {pane.getIcon()}
+                                </div>
+                                <div class={style.title2}>
+                                    {pane.getTitle()}
+                                </div>
                             </div>
-                            <div class={style.title2}>
-                                {pane.getTitle()}
+                            <div class={style.close}>
+                                <a href="#" onClick={(e) => this.tabClickedClose(e, pane.id)}>
+                                    <IconClose />
+                                </a>
                             </div>
                         </div>
-                        <div class={style.close}>
-                            <a href="#" onClick={(e) => this.tabClickedClose(e, pane.id)}>
-                                <IconClose />
-                            </a>
-                        </div>
-                    </div>
-                </a>);
+                    </a>
+                    {contextMenu}
+                </div>
+            );
         });
         return (<div>{html}</div>);
     };
