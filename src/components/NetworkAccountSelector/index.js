@@ -9,7 +9,9 @@ import {
     IconLock,
     IconLockOpen,
     IconTrash,
-    IconEdit
+    IconEdit,
+    IconMetamask,
+    IconMetamaskLocked
 } from '../icons';
 
 class NetworkDropdown extends Component {
@@ -326,13 +328,12 @@ class AccountSelector extends Component {
         const accountBalance=this.accountBalance(network, address);
         var accountIcon;
 
-        // TODO: @Javier plz put icon/imgs here.
-        if (accountType=="metamask") {
-            if(isLocked) {
-                accountIcon=(<img src="" alt="locked metamask account" />);
+        if (accountType == "metamask") {
+            if (isLocked) {
+                accountIcon=(<IconMetamaskLocked alt="locked metamask account" />);
             }
             else {
-                accountIcon=(<img src="" alt="available metamask account" />);
+                accountIcon=(<IconMetamask alt="available metamask account" />);
             }
         }
         else if (accountType=="wallet") {

@@ -89,6 +89,8 @@ export const IconAdd = ({...props}) => <IconImg src={'/static/img/icon-add-contr
 export const IconLock = ({...props}) => <FaIcon icon={iconLock} {...props} />;
 export const IconLockOpen = ({...props}) => <FaIcon icon={iconLockOpen} {...props} />;
 export const IconEdit = ({...props}) => <FaIcon icon={iconPencil} {...props} />;
+export const IconMetamask = ({...props}) => <IconImg src={'/static/img/icon-metamask-logo.svg'} {...props} />;
+export const IconMetamaskLocked = ({...props}) => <IconImg src={'/static/img/icon-metamask-logo-locked.svg'} {...props} />;
 
 // Top Bar
 export const IconTransactions = ({...props}) => <FaIcon icon={iconExchangeAlt} {...props}/>;
