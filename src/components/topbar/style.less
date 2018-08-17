@@ -1,9 +1,6 @@
 .topbar {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
+    position: relative;
+    user-select: none;
     display: flex;
     align-items: center;
     width: 100%;
@@ -64,15 +61,17 @@
         right: 7px;
     }
     .projectButton {
-        position: fixed;
+        position: absolute;
+        display: flex;
+        height: 50px;
         left: 50%;
-        -webkit-transform: translateX(-50%);
         transform: translate(-50%);
         padding: 0;
         border-radius: 3px;
         max-width: none;
         border: none;
         color: #fff;
+        z-index: 2;
         .projectText {
             margin-left: 3px;
             font-size: 1.2em;
@@ -85,6 +84,8 @@
     }
 
     .projectMenu {
+        display: block;
+        position: fixed;
         border-radius: 4px;
         background-color: #fff;
         min-width: 400px;
@@ -93,6 +94,7 @@
         z-index: 1;
         color: #262E33;
         padding: 8px 16px;
+        top: 40px;
         .tabs {
             .tabList {
                 border-bottom: 1px solid #eaeaea;
@@ -190,8 +192,6 @@
     }
 
     .helpMenu {
-        // visibility: hidden;
-        // opacity: 0;
         display: block;
         position: absolute;
         right: 40px;

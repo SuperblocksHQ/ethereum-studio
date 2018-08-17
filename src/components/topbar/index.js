@@ -220,7 +220,7 @@ class ProjectDialog extends Component {
     render() {
         const projectItems = this.getProjectItems();
         return (
-            <div class={classNames([style.projectMenu])}>
+            <div class={classNames([style.projectMenu, "modal"])}>
                 <div class={style.tabs}>
                     <div class={classNames([style.tabList, style.container])}>
                         <button class={style.tab}>
