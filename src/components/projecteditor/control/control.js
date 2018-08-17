@@ -279,7 +279,7 @@ export default class Control extends Component {
             item.props.state._children=children;
             return children;
         };
-        var contracts=this._newItem({ title: "contracts", type: "folder", type2: "contracts", _project: projectItem, render: this._renderContractsSectionTitle, toggable: true, icon: <IconFolder />, state: { open: true, children: contractsChildren }});
+        var contracts=this._newItem({ title: "contracts", type: "folder", type2: "contracts", _project: projectItem, render: this._renderContractsSectionTitle, toggable: true, iconCollapsed: <IconFolder />, icon: <IconFolderOpen />, state: { open: true, children: contractsChildren }});
         children.push(contracts);
 
         var constantsChildren=(item) => {
@@ -323,7 +323,7 @@ export default class Control extends Component {
             item.props.state._children=children;
             return children;
         };
-        var app=this._newItem({title: "app", type: "app", type2: "folder", render: this._renderApplicationSectionTitle, _project: projectItem, toggable: true, icon: <IconFolder />, state:{ open: true, children: [
+        var app=this._newItem({title: "app", type: "app", type2: "folder", render: this._renderApplicationSectionTitle, _project: projectItem, toggable: true, iconCollapsed: <IconFolder />, icon: <IconFolderOpen />, state:{ open: true, children: [
             this._newItem({title: "app.html", _project: projectItem, type: "file", type2: 'html', _project: projectItem, file: "/app/app.html", onClick: this._openItem, icon: <IconHtml />, state: { _tag:0 }}),
             this._newItem({title: "app.js", _project: projectItem, type: "file", type2: 'js', _project: projectItem, file:'/app/app.js', onClick: this._openItem, icon: <IconJS />, state:{ _tag:3 }}),
             this._newItem({title: "app.css", _project: projectItem, type: "file", type2: 'css', _project: projectItem, file: '/app/app.css', onClick: this._openItem, icon: <IconCss />, state:{ _tag:2 }}),
