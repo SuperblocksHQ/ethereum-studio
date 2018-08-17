@@ -35,12 +35,10 @@ export class DropdownContainer extends Component {
     }
 
     showMenu = (showMenu) => {
-        console.log("firing1");
         this.setState({ showMenu: true });
     }
 
     closeMenu = () => {
-        console.log("firing");
         this.setState({ showMenu: false });
     }
 
