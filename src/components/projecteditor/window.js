@@ -30,6 +30,7 @@ import ConstantEditor from './editor-constant.js';
 import ContractInteraction from './contractinteraction.js';
 import TransactionLog from '../blockexplorer/transactionlog.js';
 import Welcome from './welcome.js';
+import { IconClose } from '../icons';
 
 export class WindowComponent extends Component {
     constructor(props) {
@@ -48,9 +49,9 @@ export class WindowComponent extends Component {
         const sub=this.props.obj.renderSub();
         return (
             <div key="window" class="full">
-                <div class={style.close_btn}>
-                    <a href="#" title="Close" onClick={this.props.obj.close}>X</a>
-                </div>
+                <button class={classnames([style.close_btn, "btnNoBg"])} onClick={this.props.obj.close} title="Close">
+                    <IconClose />
+                </button>
                 {sub}
             </div>
         );

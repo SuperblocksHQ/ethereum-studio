@@ -84,7 +84,7 @@ export const IconClone = () => <FaIcon icon={iconClone} />;
 export const IconDownload = ({...props})=> <FaIcon icon={iconDownload} {...props} />;
 export const IconUpload = () => <FaIcon icon={iconUpload} />;
 export const IconDropdown = ({...props}) => <span class="dropDown" {...props}></span>;
-export const IconClose = ({...props}) => <FaIcon icon={iconClose} />;
+export const IconClose = ({...props}) => <FaIcon icon={iconClose} {...props}/>;
 export const IconAdd = ({...props}) => <IconImg src={'/static/img/icon-add-contract.svg'} {...props} />;
 export const IconLock = ({...props}) => <FaIcon icon={iconLock} {...props} />;
 export const IconLockOpen = ({...props}) => <FaIcon icon={iconLockOpen} {...props} />;
