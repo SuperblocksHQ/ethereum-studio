@@ -317,7 +317,7 @@ export default class Control extends Component {
             this._newItem({title: "app.html", _project: projectItem, type: "file", type2: 'html', _project: projectItem, file: "/app/app.html", onClick: this._openItem, icon: <IconHtml />, state: { _tag:0 }}),
             this._newItem({title: "app.js", _project: projectItem, type: "file", type2: 'js', _project: projectItem, file:'/app/app.js', onClick: this._openItem, icon: <IconJS />, state:{ _tag:3 }}),
             this._newItem({title: "app.css", _project: projectItem, type: "file", type2: 'css', _project: projectItem, file: '/app/app.css', onClick: this._openItem, icon: <IconCss />, state:{ _tag:2 }}),
-            this._newItem({title: "Show Preview", _project: projectItem, type: "app", type2: "view", _project: projectItem, onClick: this._openItem, icon: <IconShowPreview />, state:{ _tag:1 }}),
+            this._newItem({classes: ["hidden"], title: "Show Preview", _project: projectItem, type: "app", type2: "view", _project: projectItem, onClick: this._openItem, icon: <IconShowPreview />, state:{ _tag:1 }}),
         ]}});
         filesChildren.push(app);
 
@@ -489,25 +489,37 @@ export default class Control extends Component {
         return new Item(props);
     };
 
-    _openAppComposite=(e,item)=>{
-        e.preventDefault();
-        if(!this.props.router.panes) return;
-        var item2=this._filterItem(item, {type2: "html"});
-        if(!this.props.router.panes.openItem(item2)) return;
-        var {pane, winId} = this.props.router.panes.getWindowByItem(item2);
-        var item2=this._filterItem(item, {type2: "js"});
+    _openAppPreview = (e,item) => {
+        if (!this.props.router.panes) return;
+
+        var item2 = this._filterItem(item, {type2: "view"});
+        var { pane, winId } = this.props.router.panes.getWindowByItem(item2);
         this.props.router.panes.openItem(item2, pane.id);
-        var item2=this._filterItem(item, {type2: "css"});
+    };
+
+    _openAppComposite = (e,item) => {
+        if (!this.props.router.panes) return;
+        var item2 = this._filterItem(item, {type2: "html"});
+
+        if (!this.props.router.panes.openItem(item2)) return;
+
+        var { pane, winId } = this.props.router.panes.getWindowByItem(item2);
+
+        var item2 = this._filterItem(item, {type2: "js"});
         this.props.router.panes.openItem(item2, pane.id);
-        var item2=this._filterItem(item, {type2: "view"});
+
+        var item2 = this._filterItem(item, {type2: "css"});
+        this.props.router.panes.openItem(item2, pane.id);
+
+        var item2 = this._filterItem(item, {type2: "view"});
         this.props.router.panes.openItem(item2, pane.id);
     };
 
     _openExternalLink=(e,item)=>{
         e.preventDefault();
-        if(!this.props.router.panes) return;
-        var item2=this._filterItem(item, {type2: "html"});
-        if(!this.props.router.panes.openItem(item2)) return;
+        if (!this.props.router.panes) return;
+        var item2 = this._filterItem(item, {type2: "html"});
+        if (!this.props.router.panes.openItem(item2)) return;
         var {pane, winId} = this.props.router.panes.getWindowByItem(item2);
         var item2=this._filterItem(item, {type2: "js"});
         this.props.router.panes.openItem(item2, pane.id);
@@ -729,12 +741,12 @@ export default class Control extends Component {
     _renderApplicationSectionTitle = (level, index, item) => {
         var projectItem = item.props._project;
         return (
-            <div class={classnames([style.projectContractsTitle])}>
+            <div class={style.projectContractsTitle}>
                 <div onClick={ (e)=>this._angleClicked(e, item) }>
                     { item.getTitle() }
                 </div>
                 <div class={style.buttons}>
-                    <button class="btnNoBg" onClick={(e)=>{ this._openAppComposite(e, item)} } title="Show Preiew">
+                    <button class="btnNoBg" onClick={(e)=>{ this._openAppPreview(e, item)} } title="Show Preview">
                         <IconShowPreview />
                     </button>
                     <button class="btnNoBg" onClick={(e)=>{ this._openAppComposite(e, item)} } title="Mosaic View">
