@@ -29,7 +29,8 @@ html, body {
 }
 html {
     ::-webkit-scrollbar {
-        width: 7px;
+        width: .5rem;
+        height: .5rem;
     }
 
     ::-webkit-scrollbar-track {
@@ -37,10 +38,13 @@ html {
     }
 
     ::-webkit-scrollbar-thumb {
-        border-radius: 4px;
-        background-color: rgba(0,0,0,.5);
-        -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
-        box-shadow: 0 0 1px rgba(255,255,255,.5);
+        transition: all .3s ease;
+        border-color: transparent;
+        background-color: hsla(0, 0%, 100%,.1);
+        z-index: 40;
+        &:hover {
+            background-color: hsla(0, 0%, 100%,.2);
+        }
     }
 }
 
