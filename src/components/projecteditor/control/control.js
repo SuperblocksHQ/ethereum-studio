@@ -750,7 +750,7 @@ export default class Control extends Component {
     _renderLearnSectionTitle = (level, index, item) => {
         return (
             <div class={classnames([style.projectContractsTitleContainer, 'mt-3'])} onClick={ (e)=>this._angleClicked(e, item) }>
-                <div class={style.title}>
+                <div>
                     { item.getTitle() }
                 </div>
             </div>
