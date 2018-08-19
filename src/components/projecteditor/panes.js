@@ -19,6 +19,7 @@ import classnames from 'classnames';
 import style from './style';
 import { Pane, PaneComponent } from './pane';
 import { IconClose } from '../icons';
+import { DropdownContainer } from '../dropdown';
 
 export default class DevkitProjectEditorPanes extends Component {
     constructor(props) {
@@ -129,6 +130,7 @@ export default class DevkitProjectEditorPanes extends Component {
     };
 
     tabRightClicked = (e, id) => {
+        // We save the pane id for when closing all other panes.
         e.preventDefault();
         this.setState({showContextMenuPaneId:id});
     };
@@ -190,10 +192,6 @@ export default class DevkitProjectEditorPanes extends Component {
         });
     };
 
-    contextMenuClose = () => {
-        this.setState({showContextMenuPaneId:null});
-    };
-
     closeAllPanes = (e) => {
         e.preventDefault();
         this.closeAll();
@@ -208,39 +206,37 @@ export default class DevkitProjectEditorPanes extends Component {
         const tab=style.tab;
         const selected=style.selected;
         const html = this.panes.map( (pane, index) => {
-            var contextMenu="";
-            if(this.state.showContextMenuPaneId == pane.id) {
-                contextMenu=(
+            const contextMenu=(
                     <div class={style.contextMenu}>
-                        <a href="#" onClick={this.closeAllPanes}>Close all</a> <br />
-                        <a href="#" onClick={this.closeAllOtherPanes}>Close all others</a> <br />
+                        <a href="#" onClick={this.closeAllPanes}>Close all</a>
+                        <a href="#" onClick={this.closeAllOtherPanes}>Close all other</a>
                     </div>
-                );
-            }
+            );
             var isSelected=(pane.id==this.activePaneId);
             const cls={};
             cls[tab]=true;
             cls[selected]=isSelected;
             return (
                 <div>
-                    <a href="#" onClick={(e) => this.tabClicked(e, pane.id)} onContextMenu={(e) => this.tabRightClicked(e, pane.id)}>
-                        <div className={classnames(cls)}>
-                            <div class={style.title}>
-                                <div class={style.icon}>
-                                    {pane.getIcon()}
+                    <a href="#" className={classnames(cls)} onClick={(e) => this.tabClicked(e, pane.id)} onContextMenu={(e) => this.tabRightClicked(e, pane.id)}>
+                        <DropdownContainer dropdownContent={contextMenu} useRightClick={true}>
+                            <div>
+                                <div class={style.title}>
+                                    <div class={style.icon}>
+                                        {pane.getIcon()}
+                                    </div>
+                                    <div class={style.title2}>
+                                        {pane.getTitle()}
+                                    </div>
                                 </div>
-                                <div class={style.title2}>
-                                    {pane.getTitle()}
+                                <div class={style.close}>
+                                    <a href="#" onClick={(e) => this.tabClickedClose(e, pane.id)}>
+                                        <IconClose />
+                                    </a>
                                 </div>
                             </div>
-                            <div class={style.close}>
-                                <a href="#" onClick={(e) => this.tabClickedClose(e, pane.id)}>
-                                    <IconClose />
-                                </a>
-                            </div>
-                        </div>
+                        </DropdownContainer>
                     </a>
-                    {contextMenu}
                 </div>
             );
         });

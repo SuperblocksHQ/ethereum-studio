@@ -92,11 +92,27 @@
                 }
             }
             .contextMenu {
+                display: block;
                 position: absolute;
-                width: 200px;
-                height: 80px;
-                background-color: pink;
+                margin-left: -40px;
+                margin-top: 10px;
+                background-color: #2D2D2D;
                 z-index: 1;
+                border: solid 1px #333;
+                a {
+                    display: block;
+                    color: #A5A5A5;
+                    padding: 10px;
+                    border-left: 2px solid;
+                    border-color: transparent;
+                    margin: 0;
+                    &:hover {
+                        background-color: rgba(128, 46, 255, 0.10);
+                        cursor: pointer;
+                        color: #fff;
+                        border-color: #7237CF;
+                    }
+                }
             }
         }
         .panes {
