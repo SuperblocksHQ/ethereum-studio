@@ -43,13 +43,24 @@ export class DropdownContainer extends Component {
     }
 
     render() {
-        let { dropdownContent, ...props } = this.props;
+        let { dropdownContent, useRightClick, ...props } = this.props;
+        if (useRightClick) {
+            var main = (
+                <div onContextMenu={this.showMenu} >
+                    { this.props.children }
+                </div>
+            );
+        }
+        else {
+            var main = (
+                <div onClick={this.showMenu} >
+                    { this.props.children }
+                </div>
+            );
+        }
         return (
         <div {...props}>
-            <div onClick={this.showMenu} >
-                { this.props.children }
-            </div>
-
+            {main}
             { this.state.showMenu ?
                     <Dropdown
                         handleClickOutside={this.closeMenu}
