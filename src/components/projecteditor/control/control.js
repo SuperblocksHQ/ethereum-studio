@@ -26,6 +26,8 @@ import NewDapp from '../../newdapp';
 import Modal from '../../modal';
 import TransactionLogData from '../../blockexplorer/transactionlogdata';
 import NetworkAccountSelector from '../../networkAccountSelector';
+import ItemContract from './itemContract';
+
 
 import {
     IconTrash,
@@ -39,8 +41,6 @@ import {
     IconConfigure,
     IconCompile,
     IconDeploy,
-    IconUp,
-    IconDown,
     IconClone,
     IconInteract,
     IconContract,
@@ -912,6 +912,7 @@ export default class Control extends Component {
 
     _clickDeleteContract = (e, projectItem, contractIndex) => {
         e.preventDefault();
+        e.stopPropagation();
         if(!confirm("Really delete contract?")) return;
         const contract=projectItem.props.state.data.dappfile.contracts()[contractIndex];
         projectItem.deleteFile(contract.source, (status)=>{
@@ -927,6 +928,7 @@ export default class Control extends Component {
 
     _clickDownContract = (e, projectItem, contractIndex) => {
         e.preventDefault();
+        e.stopPropagation();
         const c1 = projectItem.props.state.data.dappfile.contracts()[contractIndex];
         const c2 = projectItem.props.state.data.dappfile.contracts()[contractIndex+1];
         projectItem.props.state.data.dappfile.contracts()[contractIndex] = c2;
@@ -937,6 +939,7 @@ export default class Control extends Component {
 
     _clickUpContract = (e, projectItem, contractIndex) => {
         e.preventDefault();
+        e.stopPropagation();
         const c1 = projectItem.props.state.data.dappfile.contracts()[contractIndex];
         const c2 = projectItem.props.state.data.dappfile.contracts()[contractIndex-1];
         projectItem.props.state.data.dappfile.contracts()[contractIndex] = c2;
@@ -947,6 +950,7 @@ export default class Control extends Component {
 
     _clickDeleteConstant = (e, projectItem, constantIndex) => {
         e.preventDefault();
+        e.stopPropagation();
         projectItem.props.state.data.dappfile.constants().splice(constantIndex,1);
         projectItem.save();
         this.setState();
@@ -991,7 +995,7 @@ export default class Control extends Component {
         var projectItem=item.props._project;
         var accountIndex=item.props._index;
         return (<div class={style.projectContractsTitleContainer} onClick={(e)=>this._openItem(e, item)}>
-            <div class={style.title}>
+            <div>
                 <a href="#">
                     {item.getTitle()}
                 </a>
@@ -1004,45 +1008,15 @@ export default class Control extends Component {
         </div>);
     };
 
-    _renderContractTitle = (level, index, item) => {
-        var projectItem=item.props._project;
-        var contractIndex=item.props._index;
-        return (
-            <div class={style.projectContractsTitleContainer} onClick={(e)=>this._openItem(e, item)}>
-                <div class={style.title}>
-                    {item.getTitle()}
-                </div>
-                <div class={style.buttons}>
-                    <div class={style.buttonsMoveContracts}>
-                        { contractIndex > 0
-                            &&
-                                <button class="btnNoBg" title="Move up" onClick={(e)=>{this._clickUpContract(e, projectItem, contractIndex);}}>
-                                    <IconUp />
-                                </button>
-                            ||
-                                <button class="btnNoBg" style="opacity:0.3; display:inline;">
-                                    <IconUp />
-                                </button>
-                        }
-
-                        { contractIndex < item.props._nrContracts - 1
-                            &&
-                                <button class="btnNoBg" title="Move down" onClick={(e)=>{this._clickDownContract(e, projectItem, contractIndex);}}>
-                                    <IconDown />
-                                </button>
-                            ||
-                                <button class="btnNoBg" style="opacity:0.3; display:inline;">
-                                    <IconDown />
-                                </button>
-                        }
-                    </div>
-                    <button class="btnNoBg" title="Delete contract" onClick={(e)=>{this._clickDeleteContract(e, projectItem, contractIndex);}}>
-                        <IconTrash />
-                    </button>
-                </div>
-            </div>
-        );
-    };
+    _renderContractTitle = (level, index, item) => (
+        <ItemContract
+            item={item}
+            openItem={this._openItem}
+            clickUpContract={this._clickUpContract}
+            clickDownContract={this._clickDownContract}
+            clickDeleteContract={this._clickDeleteContract}
+        />
+    );
 
     _clickNewFile = (e, item) => {
         e.preventDefault();
