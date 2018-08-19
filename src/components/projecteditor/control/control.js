@@ -250,6 +250,12 @@ export default class Control extends Component {
         var transactionlog=this._newItem({ classes: ["hidden"], title: "Transaction history", type: "transaction_log", icon: <IconCube />, onClick:this._openItem, _project: projectItem });
         children.push(transactionlog);
 
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////// Files Section //////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        var filesChildren = [];
+
         var contractsChildren=(item) => {
             // Upvalue: state.
             var contracts=state.data.dappfile.contracts();
@@ -280,7 +286,7 @@ export default class Control extends Component {
             return children;
         };
         var contracts=this._newItem({ title: "contracts", type: "folder", type2: "contracts", _project: projectItem, render: this._renderContractsSectionTitle, toggable: true, iconCollapsed: <IconFolder />, icon: <IconFolderOpen />, state: { open: true, children: contractsChildren }});
-        children.push(contracts);
+        filesChildren.push(contracts);
 
         var constantsChildren=(item) => {
             // Upvalue: state.
@@ -303,6 +309,28 @@ export default class Control extends Component {
             return children;
         };
 
+        var constants=this._newItem({classes: ["hidden"], title: "Constants", type: "folder", type2: "constants", _project: projectItem, render:this._renderConstantsTitle ,toggable: true, state:{open: false, children: constantsChildren}});
+        filesChildren.push(constants);
+
+        var app=this._newItem({title: "app", type: "app", type2: "folder", render: this._renderApplicationSectionTitle, _project: projectItem, toggable: true, iconCollapsed: <IconFolder />, icon: <IconFolderOpen />, state:{ open: true, children: [
+            this._newItem({title: "app.html", _project: projectItem, type: "file", type2: 'html', _project: projectItem, file: "/app/app.html", onClick: this._openItem, icon: <IconHtml />, state: { _tag:0 }}),
+            this._newItem({title: "app.js", _project: projectItem, type: "file", type2: 'js', _project: projectItem, file:'/app/app.js', onClick: this._openItem, icon: <IconJS />, state:{ _tag:3 }}),
+            this._newItem({title: "app.css", _project: projectItem, type: "file", type2: 'css', _project: projectItem, file: '/app/app.css', onClick: this._openItem, icon: <IconCss />, state:{ _tag:2 }}),
+            this._newItem({title: "Show Preview", _project: projectItem, type: "app", type2: "view", _project: projectItem, onClick: this._openItem, icon: <IconShowPreview />, state:{ _tag:1 }}),
+        ]}});
+        filesChildren.push(app);
+
+
+        let readme = this._newItem({title: "README.md", _project: projectItem, type: "file", type2: 'md', _project: projectItem, file: "/app/README.md", onClick: this._openItem, icon: <IconHtml />, state: { }});
+        filesChildren.push(readme);
+
+        var files = this._newItem({ title: "Files", type: "app", type2: "folder", render: this._renderLearnSectionTitle, onClick: this._openExternalLink, _project: projectItem, toggable: true, icon: null, state: { open: true, children: filesChildren }});
+        children.push(files);
+
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////// Accounts Section (Hiden) //////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         var accountsChildren=(item) => {
             // Upvalue: state.
 
@@ -323,25 +351,16 @@ export default class Control extends Component {
             item.props.state._children=children;
             return children;
         };
-        var app=this._newItem({title: "app", type: "app", type2: "folder", render: this._renderApplicationSectionTitle, _project: projectItem, toggable: true, iconCollapsed: <IconFolder />, icon: <IconFolderOpen />, state:{ open: true, children: [
-            this._newItem({title: "app.html", _project: projectItem, type: "file", type2: 'html', _project: projectItem, file: "/app/app.html", onClick: this._openItem, icon: <IconHtml />, state: { _tag:0 }}),
-            this._newItem({title: "app.js", _project: projectItem, type: "file", type2: 'js', _project: projectItem, file:'/app/app.js', onClick: this._openItem, icon: <IconJS />, state:{ _tag:3 }}),
-            this._newItem({title: "app.css", _project: projectItem, type: "file", type2: 'css', _project: projectItem, file: '/app/app.css', onClick: this._openItem, icon: <IconCss />, state:{ _tag:2 }}),
-            this._newItem({title: "Show Preview", _project: projectItem, type: "app", type2: "view", _project: projectItem, onClick: this._openItem, icon: <IconShowPreview />, state:{ _tag:1 }}),
-        ]}});
-        children.push(app);
-
-        let readme = this._newItem({title: "README.md", _project: projectItem, type: "file", type2: 'md', _project: projectItem, file: "/app/README.md", onClick: this._openItem, icon: <IconHtml />, state: { }});
-        children.push(readme);
-
-        var constants=this._newItem({classes: ["hidden"], title: "Constants", type: "folder", type2: "constants", _project: projectItem, render:this._renderConstantsTitle ,toggable: true, state:{open: false, children: constantsChildren}});
-        children.push(constants);
 
         // Accounts items are hidden and accessed from the accounts dropdown menu.
         var accounts=this._newItem({classes: ["hidden"], title: "Accounts", type: "folder", type2: "accounts", _project: projectItem, toggable: true, state:{open: false, children: accountsChildren}});
         children.push(accounts);
 
-        var learningAndResources=this._newItem({ title: "LEARNING AND RESOURCES", type: "app", type2: "composite", render: this._renderLearnSectionTitle, onClick: this._openExternalLink, _project: projectItem, toggable: true, icon: null, state: { open: true, children: [
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////// Learn and resources //////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        var learningAndResources=this._newItem({ title: "Learning and Resources", type: "app", type2: "composite", render: this._renderLearnSectionTitle, onClick: this._openExternalLink, _project: projectItem, toggable: true, icon: null, state: { open: true, children: [
             this._newItem({ title: "Guide to Superblocks Studio", _project: projectItem, type: "file", type2: 'html', _project: projectItem, onClick: this._openItem, icon: <IconGuide />, state: { _tag:0 }}),
             this._newItem({ title: "Video tutorials", _project: projectItem, type: "file", type2: 'js', _project: projectItem, onClick: this._openItem, icon: <IconVideoTutorials />, state:{ _tag:3 }}),
             this._newItem({ title: "Help Center", _project: projectItem, type: "file", type2: 'css', _project: projectItem, onClick: this._openItem, icon: <IconHelpCenter />, state:{ _tag:2 }}),

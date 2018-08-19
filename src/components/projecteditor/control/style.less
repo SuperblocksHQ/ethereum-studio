@@ -51,24 +51,24 @@ select {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    line-height: 30px;
     .icons {
         .caret {
             float: left;
-            width: 20px;
+            width: 25px;
             overflow: hidden;
             text-align: center;
         }
         .nocaret {
             float: left;
-            width: 20px;
-            height: 10px;
+            // width: 25px;
+            // height: 10px;
             overflow: hidden;
         }
         .icon {
             float: left;
             width: 25px;
             overflow: hidden;
+            margin-top: 2px;
         }
         .noicon {
             float: left;
@@ -81,9 +81,12 @@ select {
             color: inherit;
             padding: 0;
             margin: 0;
+            text-align: center;
         }
     }
     .header {
+        border-left: 2px solid;
+        border-color: transparent;
         &:after {
             content: " ";
             display: block;
@@ -103,69 +106,119 @@ select {
     }
     .level0 {
         display: block;
+        line-height: 0;
     }
     .level1 {
         display: block;
         color: #fff;
+        line-height: 28px;
+        margin-top: -15px;
         .header {
             &:hover {
-                background-color: #454343;
+                background-color: rgba(128, 46, 255, 0.10);
+                cursor: pointer;
+                color: #fff;
+                border-color: #7237CF;
             }
         }
     }
     .level2 {
         display: block;
+        line-height: 28px;
+        .header {
+            padding-left: 5px;
+        }
     }
     .level3 {
         display: block;
+        line-height: 28px;
+        .header {
+            padding-left: 20px;
+        }
     }
     .level4 {
         display: block;
-        padding-left: 20px;
+        line-height: 28px;
+        .header {
+            padding-left: 45px;
+        }
     }
     .level5 {
         display: block;
-        padding-left: 20px;
+        line-height: 28px;
+        .header {
+            padding-left: 65px;
+        }
     }
     .level6 {
         display: block;
-        padding-left: 20px;
+        line-height: 28px;
+        .header {
+            padding-left: 85px;
+        }
     }
     .level7 {
         display: block;
-        padding-left: 20px;
+        line-height: 28px;
+        .header {
+            padding-left: 105px;
+        }
     }
     .level8 {
         display: block;
-        padding-left: 20px;
+        line-height: 28px;
+        .header {
+            padding-left: 125px;
+        }
     }
     .level9 {
         display: block;
-        padding-left: 20px;
+        line-height: 28px;
+        .header {
+            padding-left: 145px;
+        }
     }
     .level10 {
         display: block;
-        padding-left: 20px;
+        line-height: 28px;
+        .header {
+            padding-left: 165px;
+        }
     }
     .level11 {
         display: block;
-        padding-left: 20px;
+        line-height: 28px;
+        .header {
+            padding-left: 185px;
+        }
     }
     .level12 {
         display: block;
-        padding-left: 20px;
+        line-height: 28px;
+        .header {
+            padding-left: 205px;
+        }
     }
     .level13 {
         display: block;
-        padding-left: 20px;
+        line-height: 28px;
+        .header {
+            padding-left: 225px;
+        }
     }
     .level14 {
         display: block;
-        padding-left: 20px;
+        line-height: 28px;
+        .header {
+            padding-left: 245px;
+        }
     }
     .level15 {
         display: block;
-        padding-left: 20px;
+        line-height: 28px;
+        .header {
+            padding-left: 265px;
+        }
     }
     .hidden {
         display: none;
@@ -253,10 +306,6 @@ select {
 }
 .projectContractsTitle {
     display: flex;
-    .title {
-        font-weight: 600;
-        font-size: 12px;
-    }
     .buttons {
         margin-left: auto;
         float: right;
