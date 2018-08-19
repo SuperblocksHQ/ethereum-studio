@@ -489,12 +489,10 @@ export default class Control extends Component {
         return new Item(props);
     };
 
-    _openAppPreview = (e,item) => {
+    _openAppPreview = (e, item) => {
         if (!this.props.router.panes) return;
-
         var item2 = this._filterItem(item, {type2: "view"});
-        var { pane, winId } = this.props.router.panes.getWindowByItem(item2);
-        this.props.router.panes.openItem(item2, pane.id);
+        this.props.router.panes.openItem(item2);
     };
 
     _openAppComposite = (e,item) => {
