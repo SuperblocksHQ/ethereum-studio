@@ -78,19 +78,25 @@ export default class ProjectEditor extends Component {
         return (
             <div class={style.projecteditor} id="main_container">
                 <TopBar router={this.props.router} />
-                <div key="main_control" id="main_control" class={style.control}>
-                    <Control router={this.props.router} functions={this.props.functions} />
-                    <ContactContainer />
+                <div style="display: flex; height: 100%">
+                    <div key="main_control" id="main_control" class={style.control}>
+                        <Control router={this.props.router} functions={this.props.functions} />
+                        <ContactContainer />
+                    </div>
+                    <span class="resizer vertical"></span>
+                    <div style="position: relative;">
+                        <div key="main_panes" id="main_panes" class={style.panescontainer}>
+                            <Panes router={this.props.router} functions={this.props.functions} />
+                        </div>
+                        <div class="bottom-status-bar">
+                        <span class="left">
+                            <span class="note">Note</span>
+                            <span class="note-text">All files are stored in the browser only, download to backup</span>
+                        </span>
+                        <span class="right">{endpoint}</span>
+                    </div>
+
                 </div>
-                <div key="main_panes" id="main_panes" class={style.panescontainer}>
-                    <Panes router={this.props.router} functions={this.props.functions} />
-                </div>
-                <div class="bottom-status-bar">
-                    <span class="left">
-                        <span class="note">Note</span>
-                        <span class="note-text">All files are stored in the browser only, download to backup</span>
-                    </span>
-                    <span class="right">{endpoint}</span>
                 </div>
             </div>
         );
