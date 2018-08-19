@@ -325,7 +325,7 @@ export default class Control extends Component {
         let readme = this._newItem({title: "README.md", _project: projectItem, type: "file", type2: 'md', _project: projectItem, file: "/README.md", onClick: this._openItem, icon: <IconMd />, state: { }});
         filesChildren.push(readme);
 
-        var files = this._newItem({ title: "Files", type: "app", type2: "folder", render: this._renderLearnSectionTitle, onClick: this._openExternalLink, _project: projectItem, toggable: true, icon: null, state: { open: true, children: filesChildren }});
+        var files = this._newItem({ title: "Files", type: "app", type2: "folder", render: this._renderLearnSectionTitle, _project: projectItem, toggable: true, icon: null, state: { open: true, children: filesChildren }});
         children.push(files);
 
 
@@ -361,7 +361,7 @@ export default class Control extends Component {
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////// Learn and resources //////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        var learningAndResources=this._newItem({ title: "Learning and Resources", type: "app", type2: "composite", render: this._renderLearnSectionTitle, onClick: this._openExternalLink, _project: projectItem, toggable: true, icon: null, state: { open: true, children: [
+        var learningAndResources=this._newItem({ title: "Learning and Resources", type: "app", type2: "composite", render: this._renderLearnSectionTitle, _project: projectItem, toggable: true, icon: null, state: { open: true, children: [
             this._newItem({ title: "Guide to Superblocks Studio", _project: projectItem, type: "file", type2: 'html', _project: projectItem, onClick: this._openItem, icon: <IconGuide />, state: { _tag:0 }}),
             this._newItem({ title: "Video tutorials", _project: projectItem, type: "file", type2: 'js', _project: projectItem, onClick: this._openItem, icon: <IconVideoTutorials />, state:{ _tag:3 }}),
             this._newItem({ title: "Help Center", _project: projectItem, type: "file", type2: 'css', _project: projectItem, onClick: this._openItem, icon: <IconHelpCenter />, state:{ _tag:2 }}),
@@ -517,22 +517,10 @@ export default class Control extends Component {
         this.props.router.panes.openItem(item2, pane.id);
     };
 
-    _openExternalLink=(e,item)=>{
-        e.preventDefault();
-        if (!this.props.router.panes) return;
-        var item2 = this._filterItem(item, {type2: "html"});
-        if (!this.props.router.panes.openItem(item2)) return;
-        var {pane, winId} = this.props.router.panes.getWindowByItem(item2);
-        var item2=this._filterItem(item, {type2: "js"});
-        this.props.router.panes.openItem(item2, pane.id);
-        var item2=this._filterItem(item, {type2: "css"});
-        this.props.router.panes.openItem(item2, pane.id);
-        var item2=this._filterItem(item, {type2: "view"});
-        this.props.router.panes.openItem(item2, pane.id);
-    };
-
     _openItem = (e, item) => {
         e.preventDefault();
+        e.stopPropagation();
+
         if(this.props.router.panes) this.props.router.panes.openItem(item);
     };
 
@@ -1434,7 +1422,7 @@ export default class Control extends Component {
         const childrenPkg = this._packageChildren(level, index, item, renderedChildren);
         const classes = this._getClasses(level, index, item);
         return (
-            <div className={classnames(classes)} onClick={(e) => item.props.onClick(e, item)}>
+            <div className={classnames(classes)} onClick={item.props.onClick ? (e) => item.props.onClick(e, item) : null}>
                 <div class={style.header}>
                     {icons}
                     {output}
