@@ -178,11 +178,11 @@ contract `+this.props.contract.name+` {
         return (
             <div class={style.toolbar} id={this.id+"_header"}>
                 <div class={style.buttons}>
-                    <a href="#" title="Save" style={stl} onClick={this.save}><IconSave /></a>
-                    {this.props.type2=="contract" && <a href="#" title="Compile" onClick={this.compile}><IconCompile /></a>}
-                    {this.props.type2=="contract" && <a href="#" title="Deploy" onClick={this.deploy}><IconDeploy /></a>}
-                    {this.props.type2=="contract" && <a href="#" title="Configure" onClick={this.configure}><IconConfigure /></a>}
-                    {this.props.type2=="contract" && <a href="#" title="Interact" onClick={this.interact}><IconInteract /></a>}
+                    <button class="btnNoBg" title="Save" style={stl} onClick={this.save}><IconSave /></button>
+                    {this.props.type2=="contract" && <button class="btnNoBg" title="Compile" onClick={this.compile}><IconCompile /></button>}
+                    {this.props.type2=="contract" && <button class="btnNoBg" title="Deploy" onClick={this.deploy}><IconDeploy /></button>}
+                    {this.props.type2=="contract" && <button class="btnNoBg" title="Configure" onClick={this.configure}><IconConfigure /></button>}
+                    {this.props.type2=="contract" && <button class="btnNoBg" title="Interact" onClick={this.interact}><IconInteract /></button>}
                 </div>
                 <div class={style.info}>
                     <span>
