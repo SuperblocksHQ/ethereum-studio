@@ -11,7 +11,8 @@ import {
     IconTrash,
     IconEdit,
     IconMetamask,
-    IconMetamaskLocked
+    IconMetamaskLocked,
+    IconPublicAddress
 } from '../icons';
 
 class NetworkDropdown extends Component {
@@ -327,27 +328,31 @@ class AccountSelector extends Component {
 
         if (accountType == "metamask") {
             if (isLocked) {
-                accountIcon=(<IconMetamaskLocked alt="locked metamask account" />);
+                accountIcon = (
+                    <IconMetamaskLocked alt="locked metamask account" />
+                );
             }
             else {
-                accountIcon=(<IconMetamask alt="available metamask account" />);
+                accountIcon = (
+                    <IconMetamask alt="available metamask account" />
+                );
             }
         }
-        else if (accountType=="wallet") {
+        else if (accountType == "wallet") {
             if (isLocked) {
-                accountIcon=(
+                accountIcon = (
                     <IconLock alt="locked wallet account" size="xs" />
                 );
             }
             else {
-                accountIcon=(
+                accountIcon = (
                     <IconLockOpen alt="open wallet account" size="xs" />
-                )
+                );
             }
         }
         else if (accountType=="pseudo") {
-            accountIcon=(
-                <img src="" alt="pseudo account with only a public address" />
+            accountIcon = (
+                <IconPublicAddress alt="pseudo account with only a public address"/>
             );
         }
 
