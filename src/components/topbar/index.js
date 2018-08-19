@@ -65,6 +65,8 @@ class ProjectDialog extends Component {
     };
 
     openProjectConfig = (e, project) => {
+        e.stopPropagation();
+
         this.openProject(e, project, (status) => {
             if (status == 0) {
                 this.props.router.control.openProjectConfig(project);
@@ -73,6 +75,8 @@ class ProjectDialog extends Component {
     };
 
     downloadProject = (e, project) => {
+        e.stopPropagation();
+
         const keepState = confirm("Do you also want to save the project state (current contract addresse, ABI's, etc)?");
         this.props.router.control.downloadProject(project, keepState);
     };
@@ -170,6 +174,8 @@ class ProjectDialog extends Component {
     };
 
     deleteProject = (e, project) => {
+        e.stopPropagation();
+
         this.props.router.control.deleteProject(project);
     };
 
@@ -184,7 +190,7 @@ class ProjectDialog extends Component {
             .map((project) => {
                 const isActive = openProject === project;
                 return (
-                    <li class={style.projSwitcherItem}>
+                    <li class={style.projSwitcherItem} onClick={(e)=>{this.openProject(e, project)}}>
                         <div class={classNames([style.projSwitcherRow, style.container])}>
                             { isActive ? (
                                 <div class={style.active}>
@@ -192,10 +198,10 @@ class ProjectDialog extends Component {
                                 </div>
                                 ) : (null)
                             }
-                            <a href="#" class={style.container} onClick={(e)=>{this.openProject(e, project)}}>
+                            <div class={style.container}>
                                 <div>{project.props.state.data.dappfile.getObj().project.info.title || ""} - </div>
                                 <div>&nbsp;{project.props.state.data.dir}</div>
-                            </a>
+                            </div>
                             <div class={classNames([style.projSwitcherRowActions, style.container])}>
                                 <button class="btnNoBg" onClick={(e)=>{this.openProjectConfig(e, project)}}>
                                     <IconConfigure />
