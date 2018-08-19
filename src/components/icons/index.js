@@ -43,6 +43,7 @@ import iconLock from '@fortawesome/fontawesome-free-solid/faLock';
 import iconLockOpen from '@fortawesome/fontawesome-free-solid/faLockOpen';
 import iconPencil from '@fortawesome/fontawesome-free-solid/faPencilAlt';
 import iconDownload from '@fortawesome/fontawesome-free-regular/faArrowAltCircleDown';
+import iconMosaic from '@fortawesome/fontawesome-free-solid/faThLarge';
 
 
 class IconImg extends Component {
@@ -91,6 +92,7 @@ export const IconLockOpen = ({...props}) => <FaIcon icon={iconLockOpen} {...prop
 export const IconEdit = ({...props}) => <FaIcon icon={iconPencil} {...props} />;
 export const IconMetamask = ({...props}) => <IconImg src={'/static/img/icon-metamask-logo.svg'} {...props} />;
 export const IconMetamaskLocked = ({...props}) => <IconImg src={'/static/img/icon-metamask-logo-locked.svg'} {...props} />;
+export const IconMosaic = ({...props}) => <FaIcon icon={iconMosaic} {...props} />;
 
 // Top Bar
 export const IconTransactions = ({...props}) => <FaIcon icon={iconExchangeAlt} {...props}/>;

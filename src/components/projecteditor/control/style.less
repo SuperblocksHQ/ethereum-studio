@@ -87,6 +87,7 @@ select {
     .header {
         border-left: 2px solid;
         border-color: transparent;
+        padding-right: 10px;
         &:after {
             content: " ";
             display: block;
@@ -307,23 +308,25 @@ select {
 .projectContractsTitle {
     display: flex;
     .buttons {
+        display: inherit;
         margin-left: auto;
         float: right;
         overflow: hidden;
         text-align: right;
-        a {
-            -webkit-border-radius: 3;
-            -moz-border-radius: 3;
-            border-radius: 3px;
-            font-size: 0.9em;
-            background-color: transparent;
-            padding: 0px 2px;
-            text-decoration: none;
+        button {
+            color: #E0E0E0;
+            font-size: 0.8em;
             &:hover {
                 color: #fff;
                 text-decoration: none;
             }
-
+        }
+    }
+    .buttonsMoveContracts {
+        margin-right: 2px;
+        button {
+            padding-left: 3px;
+            padding-right: 3px;
         }
     }
 }

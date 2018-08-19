@@ -54,6 +54,7 @@ import {
     IconAskQuestion,
     IconWhatsNew,
     IconShowPreview,
+    IconMosaic,
 } from '../../icons';
 
 
@@ -711,39 +712,47 @@ export default class Control extends Component {
 
     _renderContractsSectionTitle = (level, index, item) => {
         var projectItem = item.props._project;
-        return (<div class={classnames([style.projectContractsTitle])}>
-            <div>
-                <a href="#" onClick={(e)=>this._angleClicked(e, item)}>{item.getTitle()}</a>
+        return (
+            <div class={classnames([style.projectContractsTitle])}>
+                <div>
+                    <a href="#" onClick={(e)=>this._angleClicked(e, item)}>{item.getTitle()}</a>
+                </div>
+                <div class={style.buttons}>
+                    <button class="btnNoBg" title="New contract" onClick={(e)=>{this._clickNewContract(e, projectItem);}}>
+                        <IconAddContract />
+                    </button>
+                </div>
             </div>
-            <div class={style.buttons}>
-                <a href="#" title="New contract" onClick={(e)=>{this._clickNewContract(e, projectItem);}}>
-                    <IconAddContract />
-                </a>
-            </div>
-        </div>);
+        );
     };
 
     _renderApplicationSectionTitle = (level, index, item) => {
         var projectItem = item.props._project;
-        return (<div class={classnames([style.projectContractsTitle])}>
-            <div>
-                <a href="#" onClick={ (e)=>this._angleClicked(e, item) }>{ item.getTitle() }</a>
+        return (
+            <div class={classnames([style.projectContractsTitle])}>
+                <div onClick={ (e)=>this._angleClicked(e, item) }>
+                    { item.getTitle() }
+                </div>
+                <div class={style.buttons}>
+                    <button class="btnNoBg" onClick={(e)=>{ this._openAppComposite(e, item)} } title="Show Preiew">
+                        <IconShowPreview />
+                    </button>
+                    <button class="btnNoBg" onClick={(e)=>{ this._openAppComposite(e, item)} } title="Mosaic View">
+                        <IconMosaic />
+                    </button>
+                </div>
             </div>
-            <div class={style.buttons}>
-                <a href="#" onClick={(e)=>{ this._openAppComposite(e, item)} }>
-                    Mosaic
-                </a>
-            </div>
-        </div>);
+        );
     };
 
     _renderLearnSectionTitle = (level, index, item) => {
         return (
             <div class={classnames([style.projectContractsTitle, 'mt-3'])}>
-                <div class={style.title}>
-                    <a href="#" onClick={ (e)=>this._angleClicked(e, item) }>{ item.getTitle() }</a>
+                <div class={style.title} onClick={ (e)=>this._angleClicked(e, item) }>
+                    { item.getTitle() }
                 </div>
-            </div>);
+            </div>
+        );
     };
 
     openTransactionHistory = () => {
@@ -998,34 +1007,41 @@ export default class Control extends Component {
     _renderContractTitle = (level, index, item) => {
         var projectItem=item.props._project;
         var contractIndex=item.props._index;
-        return (<div class={style.projectContractsTitle}>
-            <div>
-                <a href="#" onClick={(e)=>this._openItem(e, item)}>
+        return (
+            <div class={style.projectContractsTitle}>
+                <div onClick={(e)=>this._openItem(e, item)}>
                     {item.getTitle()}
-                </a>
-            </div>
-            <div class={style.buttons}>
-                {contractIndex>0&&
-                <a href="#" title="Move up" onClick={(e)=>{this._clickUpContract(e, projectItem, contractIndex);}}>
-                    <IconUp />
-                </a> ||
-                    <div style="opacity:0.3;display:inline;">
-                        <IconUp />
+                </div>
+                <div class={style.buttons}>
+                    <div class={style.buttonsMoveContracts}>
+                        { contractIndex > 0
+                            &&
+                                <button class="btnNoBg" title="Move up" onClick={(e)=>{this._clickUpContract(e, projectItem, contractIndex);}}>
+                                    <IconUp />
+                                </button>
+                            ||
+                                <button class="btnNoBg" style="opacity:0.3; display:inline;">
+                                    <IconUp />
+                                </button>
+                        }
+
+                        { contractIndex < item.props._nrContracts - 1
+                            &&
+                                <button class="btnNoBg" title="Move down" onClick={(e)=>{this._clickDownContract(e, projectItem, contractIndex);}}>
+                                    <IconDown />
+                                </button>
+                            ||
+                                <button class="btnNoBg" style="opacity:0.3; display:inline;">
+                                    <IconDown />
+                                </button>
+                        }
                     </div>
-                }
-                {contractIndex<item.props._nrContracts-1 &&
-                <a href="#" title="Move down" onClick={(e)=>{this._clickDownContract(e, projectItem, contractIndex);}}>
-                    <IconDown />
-                </a> ||
-                    <div style="opacity:0.3;display:inline;">
-                        <IconDown />
-                    </div>
-                }
-                <a href="#" title="Delete contract" onClick={(e)=>{this._clickDeleteContract(e, projectItem, contractIndex);}}>
-                    <IconTrash />
-                </a>
+                    <button class="btnNoBg" title="Delete contract" onClick={(e)=>{this._clickDeleteContract(e, projectItem, contractIndex);}}>
+                        <IconTrash />
+                    </button>
+                </div>
             </div>
-        </div>);
+        );
     };
 
     _clickNewFile = (e, item) => {
@@ -1265,36 +1281,38 @@ export default class Control extends Component {
 
     _renderIcons = (level, index, item) => {
         var caret;
-        var isToggable=item.props.toggable && (item.getChildren().length>0 || item.props._lazy);
+        var isToggable = item.props.toggable && (item.getChildren().length>0 || item.props._lazy);
         if (isToggable) {
             var caretIcon= <IconAngleRight height="8" width="5" />;
-            if(item.props.state.open) {
+            if (item.props.state.open) {
                 caretIcon= <IconAngleDown height="5" width="8" />;
             }
-            caret = (<div class={style.caret}>
-                    <a href="#" onClick={(e)=>this._angleClicked(e, item)}>
-                        { caretIcon }
-                    </a>
-                </div>);
+            caret = (
+                <div class={style.caret} onClick={(e)=>this._angleClicked(e, item)}>
+                    { caretIcon }
+                </div>
+            );
         }
         else {
-            caret = (<div class={style.nocaret}></div>);
+            caret = (
+                <div class={style.nocaret}></div>
+            );
         }
 
         var iconOpen;
         var iconCollapsed;
-        if(item.props.icon !== undefined) {
-            iconOpen=item.props.icon;
-            iconCollapsed=item.props.iconCollapsed || iconOpen;
+        if (item.props.icon !== undefined) {
+            iconOpen = item.props.icon;
+            iconCollapsed = item.props.iconCollapsed || iconOpen;
         }
         else {
-            if(item.props.type=="folder") {
-                iconOpen= <IconFolderOpen />;
-                iconCollapsed= <IconFolder />;
+            if (item.props.type == "folder") {
+                iconOpen = <IconFolderOpen />;
+                iconCollapsed = <IconFolder />;
             }
             else if (item.props.type2=="contract") {
-                iconOpen= <IconContract />;
-                iconCollapsed= <IconContract />;
+                iconOpen = <IconContract />;
+                iconCollapsed = <IconContract />;
             }
             else {
                 iconOpen= <IconFile />;
@@ -1304,32 +1322,36 @@ export default class Control extends Component {
 
         var icon;
         if(iconOpen == null) {
-            icon = (<div class={style.noicon}></div>);
+            icon = (
+                <div class={style.noicon}></div>
+            );
         }
         else {
             var iconIcon=iconCollapsed;;
-            if(item.props.state.open) {
+            if (item.props.state.open) {
                 iconIcon = iconOpen;
             }
-            if(isToggable) {
-                icon = (<div class={style.icon}>
-                        <a href="#" onClick={(e)=>this._angleClicked(e, item)}>
-                            { iconIcon }
-                        </a>
-                    </div>);
+            if (isToggable) {
+                icon = (
+                    <div class={style.icon} onClick={(e)=>this._angleClicked(e, item)}>
+                        { iconIcon }
+                    </div>
+                );
             }
             else {
-                if(item.props.onClick) {
-                    icon = (<div class={style.icon}>
-                            <a href="#" onClick={(e)=>{item.props.onClick(e,item)}}>
-                                { iconIcon }
-                            </a>
-                        </div>);
+                if (item.props.onClick) {
+                    icon = (
+                        <div class={style.icon} onClick={(e)=>{item.props.onClick(e,item)}}>
+                            { iconIcon }
+                        </div>
+                    );
                 }
                 else {
-                    icon = (<div class={style.icon}>
-                        { iconIcon }
-                    </div>);
+                    icon = (
+                        <div class={style.icon}>
+                            { iconIcon }
+                        </div>
+                    );
                 }
             }
         }
