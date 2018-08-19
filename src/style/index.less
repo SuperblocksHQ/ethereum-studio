@@ -148,20 +148,17 @@ a:active,a:focus {
     background: #000;
     opacity: .4;
     z-index: 30;
-    background-clip: padding;
     background-clip: padding-box;
-    &:hover {
-        border-left: 5px solid rgba(0,0,0,.5);
-        border-right: 5px solid rgba(0,0,0,.5);
-    }
-}
-
-.resizer.vertical {
     width: 11px;
     margin: 0 -5px;
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;
     cursor: col-resize;
+    &:hover {
+        transition: all .3s ease;
+        border-left: 5px solid rgba(0,0,0,.5);
+        border-right: 5px solid rgba(0,0,0,.5);
+    }
 }
 
 .maincontent {

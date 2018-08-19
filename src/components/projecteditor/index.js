@@ -22,14 +22,17 @@ import TopBar from '../topbar';
 import ContactContainer from '../contactContainer';
 
 export default class ProjectEditor extends Component {
+
+    state = {
+        controlPanelWidth: 310,
+        draggin: false
+    }
+
     constructor(props) {
         super(props);
 
         this.props.router.register("main", this);
 
-        window.addEventListener("resize", (e) =>{
-            this._updatePanesWidth();
-        });
         // Mute defalt ctrl-s behavior.
         window.addEventListener("keydown", function(e) {
             if (e.keyCode == 83 && (navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)) {
@@ -38,12 +41,19 @@ export default class ProjectEditor extends Component {
         }, false);
     }
 
-    componentWillReceiveProps = (props) => {
+    // we could get away with not having this (and just having the listeners on
+    // our div), but then the experience would be possibly be janky. If there's
+    // anything w/ a higher z-index that gets in the way, then you're toast,
+    // etc.
+    componentDidUpdate(props, state) {
+        if (this.state.dragging && !state.dragging) {
+            document.addEventListener('mousemove', this.onMouseMove)
+            document.addEventListener('mouseup', this.onMouseUp)
+        } else if (!this.state.dragging && state.dragging) {
+            document.removeEventListener('mousemove', this.onMouseMove)
+            document.removeEventListener('mouseup', this.onMouseUp)
+        }
     };
-
-    componentDidMount() {
-        this._updatePanesWidth();
-    }
 
     redraw = (all) => {
         if(this.props.router.control) {
@@ -57,12 +67,37 @@ export default class ProjectEditor extends Component {
         }
     };
 
-    _updatePanesWidth=()=>{
-        const a=document.getElementById("main_container");
-        const b=document.getElementById("main_control");
-        const c=document.getElementById("main_panes");
-        if(!a) return;
-        c.style.width=(a.offsetWidth-b.offsetWidth-3)+"px";
+    changePanelSize = () => {
+
+    }
+
+    onMouseMove = (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+
+        if (!this.state.dragging) return;
+        this.setState({
+            controlPanelWidth: e.pageX
+        });
+    }
+
+    onMouseUp = (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+
+        this.setState({ dragging: false });
+    }
+
+    onMouseDown = (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+
+        // only left mouse button
+        if (e.button !== 0) return;
+        this.setState({
+            dragging: true,
+            controlPanelWidth: e.screenX
+        });
     }
 
     render() {
@@ -75,21 +110,22 @@ export default class ProjectEditor extends Component {
                 endpoint = (this.props.functions.networks.endpoints[network] || {}).endpoint;
             }
         }
+        const { controlPanelWidth } = this.state;
         return (
             <div class={style.projecteditor} id="main_container">
                 <TopBar router={this.props.router} />
                 <div style="display: flex; height: 100%">
-                    <div key="main_control" id="main_control" class={style.control}>
+                    <div key="main_control" id="main_control" class={style.control} style={{width: controlPanelWidth}}>
                         <Control router={this.props.router} functions={this.props.functions} />
                         <ContactContainer />
                     </div>
-                    <span class="resizer vertical"></span>
-                    <div style="position: relative;">
+                    <span class="resizer vertical" onMouseDown={this.onMouseDown}></span>
+                    <div style="position: relative; width: 100%">
                         <div key="main_panes" id="main_panes" class={style.panescontainer}>
                             <Panes router={this.props.router} functions={this.props.functions} />
                         </div>
                         <div class="bottom-status-bar">
-                        <span class="left">
+                        <span class="left" onMouseDown={this.changePanelSize}>
                             <span class="note">Note</span>
                             <span class="note-text">All files are stored in the browser only, download to backup</span>
                         </span>
