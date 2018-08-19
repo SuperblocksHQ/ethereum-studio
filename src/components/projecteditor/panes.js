@@ -143,6 +143,7 @@ export default class DevkitProjectEditorPanes extends Component {
 
     tabClickedClose = (e, paneId) => {
         e.preventDefault();
+        e.stopPropagation();  // Important so we don't trigger tabClicked
         this.closePane(paneId);
     }
 
