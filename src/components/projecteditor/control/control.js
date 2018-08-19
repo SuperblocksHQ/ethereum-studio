@@ -683,7 +683,7 @@ export default class Control extends Component {
     _renderConstantsTitle = (level, index, item) => {
         var projectItem = item.props._project;
         return (
-            <div class={style.projectContractsTitle} onClick={(e)=>this._angleClicked(e, item)}>
+            <div class={style.projectContractsTitleContainer} onClick={(e)=>this._angleClicked(e, item)}>
                 <div class={style.title}>
                     <a href="#">{item.getTitle()}</a>
                 </div>
@@ -715,9 +715,9 @@ export default class Control extends Component {
     _renderContractsSectionTitle = (level, index, item) => {
         var projectItem = item.props._project;
         return (
-            <div class={classnames([style.projectContractsTitle])} onClick={(e)=>this._angleClicked(e, item)}>
+            <div class={classnames([style.projectContractsTitleContainer])} onClick={(e)=>this._angleClicked(e, item)}>
                 <div>
-                    <a href="#">{item.getTitle()}</a>
+                    <div>{item.getTitle()}</div>
                 </div>
                 <div class={style.buttons}>
                     <button class="btnNoBg" title="New contract" onClick={(e)=>{this._clickNewContract(e, projectItem);}}>
@@ -731,7 +731,7 @@ export default class Control extends Component {
     _renderApplicationSectionTitle = (level, index, item) => {
         var projectItem = item.props._project;
         return (
-            <div class={style.projectContractsTitle} onClick={ (e)=>this._angleClicked(e, item) }>
+            <div class={style.projectContractsTitleContainer} onClick={ (e)=>this._angleClicked(e, item) }>
                 <div>
                     { item.getTitle() }
                 </div>
@@ -749,7 +749,7 @@ export default class Control extends Component {
 
     _renderLearnSectionTitle = (level, index, item) => {
         return (
-            <div class={classnames([style.projectContractsTitle, 'mt-3'])} onClick={ (e)=>this._angleClicked(e, item) }>
+            <div class={classnames([style.projectContractsTitleContainer, 'mt-3'])} onClick={ (e)=>this._angleClicked(e, item) }>
                 <div class={style.title}>
                     { item.getTitle() }
                 </div>
@@ -976,11 +976,9 @@ export default class Control extends Component {
     _renderConstantTitle = (level, index, item) => {
         var projectItem=item.props._project;
         var constantIndex=item.props._index;
-        return (<div class={style.projectContractsTitle} onClick={(e)=>this._openItem(e, item)}>
+        return (<div class={style.projectContractsTitleContainer} onClick={(e)=>this._openItem(e, item)}>
             <div class={style.title}>
-                <a href="#">
-                    {item.getTitle()}
-                </a>
+                {item.getTitle()}
             </div>
             <div class={style.buttons}>
                 <a href="#" title="Delete constant" onClick={(e)=>{this._clickDeleteConstant(e, projectItem, constantIndex);}}>
@@ -993,7 +991,7 @@ export default class Control extends Component {
     _renderAccountTitle = (level, index, item) => {
         var projectItem=item.props._project;
         var accountIndex=item.props._index;
-        return (<div class={style.projectContractsTitle} onClick={(e)=>this._openItem(e, item)}>
+        return (<div class={style.projectContractsTitleContainer} onClick={(e)=>this._openItem(e, item)}>
             <div class={style.title}>
                 <a href="#">
                     {item.getTitle()}
@@ -1011,8 +1009,8 @@ export default class Control extends Component {
         var projectItem=item.props._project;
         var contractIndex=item.props._index;
         return (
-            <div class={style.projectContractsTitle} onClick={(e)=>this._openItem(e, item)}>
-                <div>
+            <div class={style.projectContractsTitleContainer} onClick={(e)=>this._openItem(e, item)}>
+                <div class={style.title}>
                     {item.getTitle()}
                 </div>
                 <div class={style.buttons}>
@@ -1106,7 +1104,7 @@ export default class Control extends Component {
     _renderFileTitle = (level, index, item) => {
         var projectItem=item.props._project;
         if(item.props.type=="file") {
-            return (<div class={style.projectContractsTitle} onClick={(e)=>this._openItem(e, item)}>
+            return (<div class={style.projectContractsTitleContainer} onClick={(e)=>this._openItem(e, item)}>
                 <div class={style.title}>
                     <a title={item.getTitle()} href="#">
                         {item.getTitle()}
@@ -1123,7 +1121,7 @@ export default class Control extends Component {
             </div>);
         }
         else if(item.props.type=="folder") {
-            return (<div class={style.projectContractsTitle} onClick={(e)=>this._angleClicked(e, item)}>
+            return (<div class={style.projectContractsTitleContainer} onClick={(e)=>this._angleClicked(e, item)}>
                 <div class={style.title} title={item.getTitle()}>
                     <a href="#">{item.getTitle()}</a>
                 </div>

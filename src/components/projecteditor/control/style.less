@@ -305,8 +305,13 @@ select {
         text-align: right;
     }
 }
-.projectContractsTitle {
+.projectContractsTitleContainer {
     display: flex;
+    .title {
+        max-width: 142px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
     .buttons {
         display: inherit;
         margin-left: auto;
