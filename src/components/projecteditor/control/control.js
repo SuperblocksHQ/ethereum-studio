@@ -267,7 +267,7 @@ export default class Control extends Component {
                 var contract=contracts[index];
 
                 const contractChildChildren=[];
-                var contractChild=this._newItem({title: contract.name, _index: index, _nrContracts: contracts.length, _key: contract.name+":"+contract.source, render: this._renderContractTitle, icon: <IconContract />, _project: projectItem, _contract: contract, type: "file", type2: "contract", file: contract.source, toggable: true, state:{_tag: 0, open:false, children: contractChildChildren}});
+                var contractChild=this._newItem({title: contract.name+".sol", _index: index, _nrContracts: contracts.length, _key: contract.name+":"+contract.source, render: this._renderContractTitle, icon: <IconContract />, _project: projectItem, _contract: contract, type: "file", type2: "contract", file: contract.source, toggable: true, state:{_tag: 0, open:false, children: contractChildChildren}});
 
                 var contractConfig=this._newItem({title: "Configure", _contract: contract.name, _project: projectItem, type: "contract", type2: "configure", onClick: this._openItem, icon: <IconConfigure />, state: {_tag: 1}});
                 var contractInteract=this._newItem({title: "Interact", _parentItem: contractChild, _contract: contract.name, _project: projectItem, type: "contract", type2: "interact", onClick: this._openItem, icon: <IconInteract /> , state: {_tag: 2}});
@@ -322,8 +322,7 @@ export default class Control extends Component {
         ]}});
         filesChildren.push(app);
 
-
-        let readme = this._newItem({title: "README.md", _project: projectItem, type: "file", type2: 'md', _project: projectItem, file: "/app/README.md", onClick: this._openItem, icon: <IconMd />, state: { }});
+        let readme = this._newItem({title: "README.md", _project: projectItem, type: "file", type2: 'md', _project: projectItem, file: "/README.md", onClick: this._openItem, icon: <IconMd />, state: { }});
         filesChildren.push(readme);
 
         var files = this._newItem({ title: "Files", type: "app", type2: "folder", render: this._renderLearnSectionTitle, onClick: this._openExternalLink, _project: projectItem, toggable: true, icon: null, state: { open: true, children: filesChildren }});
