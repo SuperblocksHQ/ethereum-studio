@@ -955,14 +955,13 @@ export default class Control extends Component {
     _clickEditAccount = (e, projectItem, accountIndex) => {
         // Find item in menu
         // TODO: this lookup is bad, because it depends on the order of the items in the menu.
-        const accnts=projectItem.props.state.children[4].props.state._children;
+        const accnts=projectItem.props.state.children[2].props.state._children;
         const account=accnts[accountIndex];
 
         this._openItem(e, account);
     };
 
     _clickDeleteAccount = (e, projectItem, accountIndex) => {
-        e.preventDefault();
         if(accountIndex==0) {
             alert("You cannot delete the default account.");
             return;

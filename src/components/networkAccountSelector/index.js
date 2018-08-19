@@ -22,7 +22,10 @@ class NetworkDropdown extends Component {
             cls[style.networkLink] = true;
             cls[style.capitalize] = true;
             if (env.name==this.props.networkSelected) cls[style.networkLinkChosen] = true;
-            return (<a href="#" onClick={(e)=>{e.preventDefault(); this.props.onNetworkSelected(env.name)}} className={classnames(cls)}>{env.name}</a>);
+            return (
+                <div onClick={(e)=>{e.preventDefault(); this.props.onNetworkSelected(env.name)}} className={classnames(cls)}>
+                    {env.name}
+                </div>);
         });
         return (
             <div class={style.networks}>
@@ -90,7 +93,7 @@ class NetworkSelector extends Component {
                     />
                 }
             >
-                <div class={classnames([style.selector])} href="#">
+                <div class={classnames([style.selector])}>
                     <div class={style.capitalize} title={endpoint}>
                         {this.state.network}
                     </div>
@@ -115,10 +118,10 @@ class AccountDropdown extends Component {
                     <div className={classnames(cls)} onClick={(e)=>{e.preventDefault(); this.props.onAccountChosen(account.name)}}>
                         <div>{account.name}</div>
                         <div style="margin-left: auto;">
-                            <button class="btnNoBg" onClick={(e)=>{e.preventDefault(); this.props.onAccountEdit(e, index)}}>
+                            <button class="btnNoBg" onClick={(e)=>{this.props.onAccountEdit(e, index)}}>
                                 <IconEdit />
                             </button>
-                            <button class="btnNoBg" onClick={(e)=>{e.preventDefault(); this.props.onAccountDelete(e, index)}}>
+                            <button class="btnNoBg" onClick={(e)=>{this.props.onAccountDelete(e, index)}}>
                                 <IconTrash />
                             </button>
                         </div>
@@ -190,20 +193,14 @@ class AccountSelector extends Component {
     };
 
     accountEdit=(e, index) => {
-        // Pass on to control.js
-        e.preventDefault();
         if(this.state.project) this.props.router.control._clickEditAccount (e, this.state.project, index);
     };
 
     accountDelete = (e, index) => {
-        // Pass on to control.js
-        e.preventDefault();
         if(this.state.project) this.props.router.control._clickDeleteAccount (e, this.state.project, index);
     };
 
     onNewAccountClickHandle = (e) => {
-        // Pass on to control.js
-        e.preventDefault();
         if(this.state.project) this.props.router.control._clickNewAccount(e, this.state.project);
     };
 
