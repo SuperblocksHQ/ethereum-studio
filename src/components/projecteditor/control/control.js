@@ -490,12 +490,16 @@ export default class Control extends Component {
     };
 
     _openAppPreview = (e, item) => {
+        e.stopPropagation();
+
         if (!this.props.router.panes) return;
         var item2 = this._filterItem(item, {type2: "view"});
         this.props.router.panes.openItem(item2);
     };
 
     _openAppComposite = (e,item) => {
+        e.stopPropagation();
+
         if (!this.props.router.panes) return;
         var item2 = this._filterItem(item, {type2: "html"});
 
@@ -691,9 +695,9 @@ export default class Control extends Component {
     _renderConstantsTitle = (level, index, item) => {
         var projectItem = item.props._project;
         return (
-            <div class={style.projectContractsTitle}>
+            <div class={style.projectContractsTitle} onClick={(e)=>this._angleClicked(e, item)}>
                 <div class={style.title}>
-                    <a href="#" onClick={(e)=>this._angleClicked(e, item)}>{item.getTitle()}</a>
+                    <a href="#">{item.getTitle()}</a>
                 </div>
                 <div class={style.buttons}>
                     <a href="#" title="New constant" onClick={(e)=>{this._clickNewConstant(e, projectItem);}}>
@@ -723,9 +727,9 @@ export default class Control extends Component {
     _renderContractsSectionTitle = (level, index, item) => {
         var projectItem = item.props._project;
         return (
-            <div class={classnames([style.projectContractsTitle])}>
+            <div class={classnames([style.projectContractsTitle])} onClick={(e)=>this._angleClicked(e, item)}>
                 <div>
-                    <a href="#" onClick={(e)=>this._angleClicked(e, item)}>{item.getTitle()}</a>
+                    <a href="#">{item.getTitle()}</a>
                 </div>
                 <div class={style.buttons}>
                     <button class="btnNoBg" title="New contract" onClick={(e)=>{this._clickNewContract(e, projectItem);}}>
@@ -739,8 +743,8 @@ export default class Control extends Component {
     _renderApplicationSectionTitle = (level, index, item) => {
         var projectItem = item.props._project;
         return (
-            <div class={style.projectContractsTitle}>
-                <div onClick={ (e)=>this._angleClicked(e, item) }>
+            <div class={style.projectContractsTitle} onClick={ (e)=>this._angleClicked(e, item) }>
+                <div>
                     { item.getTitle() }
                 </div>
                 <div class={style.buttons}>
@@ -757,8 +761,8 @@ export default class Control extends Component {
 
     _renderLearnSectionTitle = (level, index, item) => {
         return (
-            <div class={classnames([style.projectContractsTitle, 'mt-3'])}>
-                <div class={style.title} onClick={ (e)=>this._angleClicked(e, item) }>
+            <div class={classnames([style.projectContractsTitle, 'mt-3'])} onClick={ (e)=>this._angleClicked(e, item) }>
+                <div class={style.title}>
                     { item.getTitle() }
                 </div>
             </div>
@@ -861,6 +865,7 @@ export default class Control extends Component {
 
     _clickNewContract = (e, projectItem) => {
         e.preventDefault();
+        e.stopPropagation();
 
         var name;
         for(var index=0;index<100000;index++) {
@@ -983,9 +988,9 @@ export default class Control extends Component {
     _renderConstantTitle = (level, index, item) => {
         var projectItem=item.props._project;
         var constantIndex=item.props._index;
-        return (<div class={style.projectContractsTitle}>
+        return (<div class={style.projectContractsTitle} onClick={(e)=>this._openItem(e, item)}>
             <div class={style.title}>
-                <a href="#" onClick={(e)=>this._openItem(e, item)}>
+                <a href="#">
                     {item.getTitle()}
                 </a>
             </div>
@@ -1000,9 +1005,9 @@ export default class Control extends Component {
     _renderAccountTitle = (level, index, item) => {
         var projectItem=item.props._project;
         var accountIndex=item.props._index;
-        return (<div class={style.projectContractsTitle}>
+        return (<div class={style.projectContractsTitle} onClick={(e)=>this._openItem(e, item)}>
             <div class={style.title}>
-                <a href="#" onClick={(e)=>this._openItem(e, item)}>
+                <a href="#">
                     {item.getTitle()}
                 </a>
             </div>
@@ -1018,8 +1023,8 @@ export default class Control extends Component {
         var projectItem=item.props._project;
         var contractIndex=item.props._index;
         return (
-            <div class={style.projectContractsTitle}>
-                <div onClick={(e)=>this._openItem(e, item)}>
+            <div class={style.projectContractsTitle} onClick={(e)=>this._openItem(e, item)}>
+                <div>
                     {item.getTitle()}
                 </div>
                 <div class={style.buttons}>
@@ -1113,9 +1118,9 @@ export default class Control extends Component {
     _renderFileTitle = (level, index, item) => {
         var projectItem=item.props._project;
         if(item.props.type=="file") {
-            return (<div class={style.projectContractsTitle}>
+            return (<div class={style.projectContractsTitle} onClick={(e)=>this._openItem(e, item)}>
                 <div class={style.title}>
-                    <a title={item.getTitle()} href="#" onClick={(e)=>this._openItem(e, item)}>
+                    <a title={item.getTitle()} href="#">
                         {item.getTitle()}
                     </a>
                 </div>
@@ -1130,9 +1135,9 @@ export default class Control extends Component {
             </div>);
         }
         else if(item.props.type=="folder") {
-            return (<div class={style.projectContractsTitle}>
+            return (<div class={style.projectContractsTitle} onClick={(e)=>this._angleClicked(e, item)}>
                 <div class={style.title} title={item.getTitle()}>
-                    <a href="#" onClick={(e)=>this._angleClicked(e, item)}>{item.getTitle()}</a>
+                    <a href="#">{item.getTitle()}</a>
                 </div>
                 <div class={style.buttons}>
                     <a href="#" title="New..." onClick={(e)=>{this._clickNewFile(e, item);}}>
@@ -1407,26 +1412,29 @@ export default class Control extends Component {
     };
 
     _defaultRender = (level, index, item) => {
-        if(item.props.onClick) {
-            return (<div title={item.props.title2} class={style.title}><a href="#" onClick={(e)=>{item.props.onClick(e, item)}}>{item.getTitle()}</a></div>);
-        }
-        return (<div title={item.props.title2} class={style.title}>{item.getTitle()}</div>);
+        return (
+            <div title={item.props.title2} class={style.title}>
+                {item.getTitle()}
+            </div>
+        );
     };
 
     _renderItem = (level, index, item, renderedChildren) => {
-        if(item.props._hidden) return;
+        if (item.props._hidden) return;
+
         var output;
-        if(item.props.render) {
+        if (item.props.render) {
             output = item.props.render(level, index, item);
         }
         else {
             output = this._defaultRender(level, index, item);
         }
-        const icons=this._renderIcons(level, index, item);
-        const childrenPkg=this._packageChildren(level, index, item, renderedChildren);
-        const classes=this._getClasses(level, index, item);
+
+        const icons = this._renderIcons(level, index, item);
+        const childrenPkg = this._packageChildren(level, index, item, renderedChildren);
+        const classes = this._getClasses(level, index, item);
         return (
-            <div className={classnames(classes)}>
+            <div className={classnames(classes)} onClick={(e) => item.props.onClick(e, item)}>
                 <div class={style.header}>
                     {icons}
                     {output}
