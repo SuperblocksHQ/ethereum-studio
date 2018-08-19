@@ -88,7 +88,7 @@ export default class Compiler extends Component {
 
         this._loadFiles(sources, (status, bodies) => {
             if(status!=0) {
-                alert("Could not load contract source code. Contract not saved?");
+                alert("Could not load contract source code. Is there any contract not saved?");
                 this.setState({status:"Space Invaders could not find the true meaning of life and dissolved into pixels... To become a higher being."});
                 this.isRunning=false;
                 return;
