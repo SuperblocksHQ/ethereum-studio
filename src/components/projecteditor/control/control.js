@@ -48,6 +48,7 @@ import {
     IconHtml,
     IconJS,
     IconCss,
+    IconMd,
     IconGuide,
     IconVideoTutorials,
     IconHelpCenter,
@@ -322,7 +323,7 @@ export default class Control extends Component {
         filesChildren.push(app);
 
 
-        let readme = this._newItem({title: "README.md", _project: projectItem, type: "file", type2: 'md', _project: projectItem, file: "/app/README.md", onClick: this._openItem, icon: <IconHtml />, state: { }});
+        let readme = this._newItem({title: "README.md", _project: projectItem, type: "file", type2: 'md', _project: projectItem, file: "/app/README.md", onClick: this._openItem, icon: <IconMd />, state: { }});
         filesChildren.push(readme);
 
         var files = this._newItem({ title: "Files", type: "app", type2: "folder", render: this._renderLearnSectionTitle, onClick: this._openExternalLink, _project: projectItem, toggable: true, icon: null, state: { open: true, children: filesChildren }});
