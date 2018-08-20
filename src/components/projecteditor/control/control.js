@@ -27,7 +27,8 @@ import Modal from '../../modal';
 import TransactionLogData from '../../blockexplorer/transactionlogdata';
 import NetworkAccountSelector from '../../networkAccountSelector';
 import ItemContract from './itemContract';
-
+import LearnAndResources from '../../learnAndResources';
+import Caret from '../../caret';
 
 import {
     IconTrash,
@@ -356,19 +357,6 @@ export default class Control extends Component {
         // Accounts items are hidden and accessed from the accounts dropdown menu.
         var accounts=this._newItem({classes: ["hidden"], title: "Accounts", type: "folder", type2: "accounts", _project: projectItem, toggable: true, state:{open: false, children: accountsChildren}});
         children.push(accounts);
-
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        ////////////////// Learn and resources //////////////////
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        var learningAndResources=this._newItem({ title: "Learning and Resources", type: "app", type2: "composite", render: this._renderLearnSectionTitle, _project: projectItem, toggable: true, icon: null, state: { open: true, children: [
-            this._newItem({ title: "Guide to Superblocks Studio", _project: projectItem, type: "file", type2: 'html', _project: projectItem, onClick: this._openItem, icon: <IconGuide />, state: { _tag:0 }}),
-            this._newItem({ title: "Video tutorials", _project: projectItem, type: "file", type2: 'js', _project: projectItem, onClick: this._openItem, icon: <IconVideoTutorials />, state:{ _tag:3 }}),
-            this._newItem({ title: "Help Center", _project: projectItem, type: "file", type2: 'css', _project: projectItem, onClick: this._openItem, icon: <IconHelpCenter />, state:{ _tag:2 }}),
-            this._newItem({ title: "Ask a question", _project: projectItem, type: "file", type2: 'css', _project: projectItem, onClick: this._openItem, icon: <IconAskQuestion />, state:{ _tag:2 }}),
-            this._newItem({ title: "What's new", _project: projectItem, type: "file", type2: 'css', _project: projectItem, onClick: this._openItem, icon: <IconWhatsNew />, state:{ _tag:2 }}),
-        ]}});
-        children.push(learningAndResources);
 
         var files=this._newItem({classes: ["hidden"], title: "Files", type: "folder", type2: "files", _project: projectItem, _level: 0, _lazy:true, _path: '/', _key: '/', toggable: true, render: this._renderFileTitle, state:{open: false, children: this._renderFilesChildren}});
         children.push(files);
@@ -1257,14 +1245,10 @@ export default class Control extends Component {
         var caret;
         var isToggable = item.props.toggable && (item.getChildren().length>0 || item.props._lazy);
         if (isToggable) {
-            var caretIcon= <IconAngleRight height="8" width="5" />;
-            if (item.props.state.open) {
-                caretIcon= <IconAngleDown height="5" width="8" />;
-            }
             caret = (
-                <div class={style.caret} onClick={(e)=>this._angleClicked(e, item)}>
-                    { caretIcon }
-                </div>
+                <Caret
+                    expanded={item.props.state.open}
+                    onClick={(e)=>this._angleClicked(e, item)} />
             );
         }
         else {
@@ -1417,6 +1401,7 @@ export default class Control extends Component {
             <div class="full">
                 <div class={style.treemenu}>
                     {item}
+                    <LearnAndResources class="mt-3"/>
                 </div>
             </div>
         );
