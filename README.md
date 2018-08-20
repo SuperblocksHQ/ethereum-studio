@@ -1,5 +1,7 @@
 # Superblocks Studio
 
+[![CircleCI](https://circleci.com/gh/SuperblocksHQ/studio.svg?style=shield&circle-token=c798fc7a66f88cff97b4d77e4082752568b33195)](https://circleci.com/gh/SuperblocksHQ/studio)
+
 [Superblocks](https://superblocks.com) Studio is an IDE to learn, build and deploy DApps for Ethereum. It's a full browser experience which requires no installations to run.
 
 Studio has a built in Solidity compiler and Ethereum Virtual Machine, it also works with local and public networks.
