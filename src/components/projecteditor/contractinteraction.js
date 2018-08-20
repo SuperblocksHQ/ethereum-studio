@@ -303,28 +303,126 @@ export default class ContractInteraction extends Component {
         `+(endpoint!=null?this._getProvider(endpoint, accounts):"")+`
     </head>
     <style>
-            body {
-                background-color: #333;
-                color: #eee;
+            html, body {
+                width: 100%;
+                padding: 0;
+                margin: 0;
+                background-color: #1e1e1e;
+                color: #fff;
+                font-family: 'Untitled Sans';
+                font-weight: 400;
+                font-size: 15px;
             }
-            div {
-                display: block;
-            }
+            html {
+                ::-webkit-scrollbar {
+                    width: 7px;
+                }
 
-            form {
-                padding: 10px;
+                ::-webkit-scrollbar-track {
+                    background: transparent;
+                }
+
+                ::-webkit-scrollbar-thumb {
+                    border-radius: 4px;
+                    background-color: rgba(0,0,0,.5);
+                    -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+                    box-shadow: 0 0 1px rgba(255,255,255,.5);
+                }
             }
-            input[disabled="true"] {
-                background-color: #4f7595;
+            h1 {
+            font-size: 1.33em;
             }
-            input[type="submit"] {
-                background-color: orange;
+            h2 {
+            font-size: 1.2em;
             }
-            .constant input[type="submit"] {
-                background-color: green;
+            .intro {
             }
-            .payable input[type="submit"] {
-                background-color: red;
+            .item {
+                padding: 20px;
+                padding-top: 0;
+                margin-bottom: 10px;
+                border-bottom: dotted 1px #ccc;
+            }
+            .constant {
+            }
+            .regular {
+            }
+            .payable {
+            }
+            .inputs {
+            }
+            .gas {
+            }
+            .value {
+            }
+            .constant .functionName {
+                background-color: #008000;
+            }
+            .regular .functionName {
+                background-color: #f5a623;
+            }
+            .payable .functionName {
+                background-color: #ff3939;
+            }
+            .function .functionName {
+                display: block;
+                margin-top: 5px;
+                border-radius: 4px;
+                -webkit-border-radius: 4;
+                -moz-border-radius: 4;
+                color: #fff;
+                padding: 7px 20px;
+                text-decoration: none;
+                font-weight: 600;
+                border: none;
+                user-select: none;
+                outline: none;
+            }
+            .function .functionName:hover {
+                opacity: 0.8;
+            }
+            .function span {
+            }
+            .arguments {
+                display: inline;
+            }
+            .argument {
+                display: block;
+                margin-left: 60px;
+            }
+            .argument span {
+                display: inline-block;
+                overflow: hidden;
+                width: 150px;
+            }
+            .argument input {
+                overflow: hidden;
+                width: 150px;
+            }
+            .call {
+                display: inline;
+            }
+            .call button {
+                margin-left: 10px;
+            }
+            .returns {
+                margin-top: 10px;
+            }
+            .txhash {
+                dispay: block;
+            }
+            .btn2 {
+                display: inline-block;
+                border-radius: 4px;
+                -webkit-border-radius: 4;
+                -moz-border-radius: 4;
+                color: #fff;
+                padding: 7px 20px;
+                text-decoration: none;
+                font-weight: 600;
+                border: none;
+                user-select: none;
+                outline: none;
             }
     </style>
     <script type="text/javascript">
