@@ -1,18 +1,18 @@
 # Superblocks Studio
 
-[Superblocks](https://superblocks.com) Studio is an IDE to learn, build and deploy DApps for Ethereum. It's a full browser experience which requires no installations to run.  
+[Superblocks](https://superblocks.com) Studio is an IDE to learn, build and deploy DApps for Ethereum. It's a full browser experience which requires no installations to run.
 
-Studio has a built in Solidity compiler and Ethereum Virtual Machine, it also works with local and public networks.  
+Studio has a built in Solidity compiler and Ethereum Virtual Machine, it also works with local and public networks.
 
 To try it out go to [studio.superblocks.com](https://studio.superblocks.com).
 
 ## Features
-`TODO`  
+`TODO`
 
-Below is described how to get the Studio PreactJS project setup and running locally.  
+Below is described how to get the Studio PreactJS project setup and running locally.
 
 ## License
-Superblocks Studio is free software and GPLv3 licensed. See the COPYING file for details.  
+Superblocks Studio is free software and GPLv3 licensed. See the COPYING file for details.
 
 ## Install node modules
 Use `yarn` [Yarn](yarnpkg.com/).
@@ -35,9 +35,9 @@ make dist
 The dist files will be inside `./dist`.
 
 ## Bumping version
-Set the new version both in app.js and in manifest.json.  
+Set the new version both in app.js and in manifest.json.
 
-Run this script to fix that for you:  
+Run this script to fix that for you:
 
 ```sh
 ./bump_version "1.1.0"
