@@ -29,7 +29,7 @@ import AppView from './appview.js';
 import ConstantEditor from './editor-constant.js';
 import ContractInteraction from './contractinteraction.js';
 import TransactionLog from '../blockexplorer/transactionlog.js';
-import Welcome from './welcome.js';
+import Welcome from './welcome';
 import { IconClose } from '../icons';
 
 export class WindowComponent extends Component {
@@ -168,7 +168,9 @@ export class Window {
         }
         else if(this.props.item.props.type=="info" && this.props.item.props.type2=="welcome") {
             return (
-                <Welcome />
+                <Welcome
+                    router={this.props.router}
+                />
             );
         }
     };

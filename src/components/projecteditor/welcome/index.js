@@ -15,17 +15,30 @@
 // along with Superblocks Studio.  If not, see <http://www.gnu.org/licenses/>.
 
 import { h, Component } from 'preact';
+import PropTypes from 'prop-types';
+import style from './style';
 
 export default class Welcome extends Component {
-    constructor(props) {
-        super(props);
+
+    onCreateNewProjectClick = (e) => {
+        console.log(this.props);
+        this.props.router.control._newDapp(e);
     }
 
     render() {
         return (
-            <div class="full">
-                Hello and welcome!
+            <div class={style.container}>
+                <div class={style.content}>
+                    <img src={'/static/img/img-welcome.svg'}/>;
+                    <h3>Looks like you don’t have any project created just yet</h3>
+                    <p><a href="#" target="_blank" rel="noopener noreferrer">Create a new project</a> from any of our existing templates to get started</p>
+                    <button class="btn2 mt-3" onClick={this.onCreateNewProjectClick}>Create New Project</button>
+                </div>
             </div>
         );
     }
+}
+
+Welcome.propTypes = {
+    router: PropTypes.object.isRequired
 }
