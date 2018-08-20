@@ -525,9 +525,9 @@ export default class Control extends Component {
                     if(item) {
                         this.openProject(item, () => {
                             const data={
-                                title: "Create new DApp successful",
-                                body: "Your DApp has been successfully created.",
-                                buttons: []
+                                title: "DApp created successfully!",
+                                body: "You've successfully created the DApp. Add contracts to it to get started.",
+                                style: {"text-align":"center"},
                             };
                             this.props.functions.modal.show({render: () => {return (<Modal functions={this.props.functions} data={data} />)}});
                         });
