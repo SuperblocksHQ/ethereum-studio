@@ -4,7 +4,7 @@ export const initialState = Store;
 
 export default function settingsReducer(state = initialState, action) {
     switch (action.type) {
-        case 'SHOW_SPLASH_NO_MORE': {
+        case 'SHOW_SPLASH': {
             return {
             ...state,
             showSplash: action.data,

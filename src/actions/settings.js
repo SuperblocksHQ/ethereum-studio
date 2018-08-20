@@ -3,7 +3,7 @@
  */
 export function showSplashNoMore() {
     return {
-        type: 'SHOW_SPLASH_NO_MORE',
+        type: 'SHOW_SPLASH',
         data: false
     }
 }
