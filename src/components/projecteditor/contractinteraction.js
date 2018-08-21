@@ -338,11 +338,13 @@ export default class ContractInteraction extends Component {
             h3 {
                 font-size: 1.0em;
             }
-            input {
+            input, input:focus {
                 background-color: #3A3A3A;
                 color: #FFF;
                 border: none;
                 border-radius: 4px;
+                padding: 8px 16px;
+                margin: 5px;
             }
             .intro {
             }
