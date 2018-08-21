@@ -831,7 +831,7 @@ export default class Control extends Component {
         projectItem.save((status)=>{
             if(status==0) {
                 // TODO: this lookup is bad, because it depends on the order of the items in the menu.
-                const accnts=projectItem.props.state.children[4].props.state._children;
+                const accnts=projectItem.props.state.children[2].props.state._children;
                 const account=accnts[accnts.length-1];
                 if(this.props.router.panes) this.props.router.panes.openItem(account);
             }
