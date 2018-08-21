@@ -18,7 +18,7 @@ if (typeof (module) === "undefined") module = {};
 
 var render_item=function(item, item_index, handler, prefix) {
     if(!item.name || item.type!="function") {
-        return {html:"",js:""};
+        return null;
     }
 
     var functionName = item.name;
@@ -177,13 +177,6 @@ var render=function(abi, contract) {
     </div>
 </div>
 `;
-    if(abi.length==0) {
-        intro += `
-<div class="item">
-    <h1>This contract has no public functions to interact with</h1>
-</div>
-`;
-    }
     var prefix=contract+"_";
     var renderings=[];
     var html_snippets=[intro];
@@ -191,8 +184,18 @@ var render=function(abi, contract) {
     for(var index=0;index<abi.length;index++) {
         var item=abi[index];
         var o = render_item(item, index, prefix+"Handler", prefix);
-        html_snippets.push(o.html);
-        js_snippets.push(o.js);
+        if(o) {
+            html_snippets.push(o.html);
+            js_snippets.push(o.js);
+        }
+    }
+    if(html_snippets.length==1) {
+        var nofuncs = `
+<div class="item">
+    <h1>This contract has no public functions to interact with</h1>
+</div>
+`;
+        html_snippets.push(nofuncs);
     }
 
     var js=`var module={};
