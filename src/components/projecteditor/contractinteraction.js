@@ -330,10 +330,19 @@ export default class ContractInteraction extends Component {
                 }
             }
             h1 {
-            font-size: 1.33em;
+                font-size: 1.33em;
             }
             h2 {
-            font-size: 1.2em;
+                font-size: 1.2em;
+            }
+            h3 {
+                font-size: 1.0em;
+            }
+            input {
+                background-color: #3A3A3A;
+                color: #FFF;
+                border: none;
+                border-radius: 4px;
             }
             .intro {
             }
@@ -380,6 +389,9 @@ export default class ContractInteraction extends Component {
             }
             .function .functionName:hover {
                 opacity: 0.8;
+            }
+            .function .functionName.nohover:hover {
+                opacity: 1.0;
             }
             .function span {
             }

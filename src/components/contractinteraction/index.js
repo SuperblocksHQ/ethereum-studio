@@ -159,22 +159,31 @@ var render=function(abi, contract) {
     var intro=`
 <div class="item">
     <h1>Interact directly with the deployed contract</h1>
+    <h3>All public contract functions are represented as colored buttons below, click them to call the function.</h3>
+    <h3>Legend of colors:</h3>
     <div class="constant function" style="margin-bottom:10px;">
-        <span class="functionName" style="text-align: center;width: 145px;" type="submit">Constant</span>
+        <span class="functionName nohover" style="text-align: center;font-weight:unset;padding: 3px 16px;width: unset; display: inline;" type="submit">Constant</span>
         <span>This is a constant function which runs outside of a transaction and can return one or many values. Running it does not consume any gas nor can it mutate the state of the contract.</span>
     </div>
     <div class="regular function" style="margin-bottom:10px;">
-        <span class="functionName" style="text-align: center;width: 145px;" type="submit">Transaction</span>
+        <span class="functionName nohover" style="text-align: center;font-weight:unset;padding: 3px 16px;width: unset; display: inline;" type="submit">Transaction</span>
         <span>This is a function which always runs inside a transaction. It consumes gas and you cannot send any ether to the function.</span>
         <span>A transaction always only returns a transaction hash, to learn the status of the transaction we must look at the mined transaction.</span>
     </div>
     <div class="payable function" style="margin-bottom:10px;">
-        <span class="functionName" style=";text-align: center;width: 145px;" type="submit">Payable</span>
+        <span class="functionName nohover" style=";text-align: center;font-weight:unset;padding: 3px 16px;width: unset; display: inline;" type="submit">Payable</span>
         <span>This is a payable function which always runs inside a transaction. It consumes gas and you can send ether to the function.</span>
         <span>A transaction always only returns a transaction hash, to learn the status of the transaction we must look at the mined transaction.</span>
     </div>
 </div>
 `;
+    if(abi.length==0) {
+        intro += `
+<div class="item">
+    <h1>This contract has no public functions to interact with</h1>
+</div>
+`;
+    }
     var prefix=contract+"_";
     var renderings=[];
     var html_snippets=[intro];
