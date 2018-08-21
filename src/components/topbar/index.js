@@ -77,8 +77,8 @@ class ProjectDialog extends Component {
     downloadProject = (e, project) => {
         e.stopPropagation();
 
-        const keepState = confirm("Do you also want to save the project state (current contract addresse, ABI's, etc)?");
-        this.props.router.control.downloadProject(project, keepState);
+        const keepState = prompt("Do you also want to save the project state (current contract addresse, ABI's, etc)?", "yes") || "no";
+        this.props.router.control.downloadProject(project, keepState.toLowerCase() == "yes");
     };
 
     importProject = (e) => {
