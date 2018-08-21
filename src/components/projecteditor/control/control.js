@@ -524,12 +524,12 @@ export default class Control extends Component {
                     const item=this._projectsList[this._projectsList.length-1];
                     if(item) {
                         this.openProject(item, () => {
-                            const data={
-                                title: "DApp created successfully!",
-                                body: "You've successfully created the DApp. Add contracts to it to get started.",
-                                style: {"text-align":"center"},
-                            };
-                            this.props.functions.modal.show({render: () => {return (<Modal functions={this.props.functions} data={data} />)}});
+                            //const data={
+                                //title: "DApp created successfully!",
+                                //body: "You've successfully created the DApp. Add contracts to it to get started.",
+                                //style: {"text-align":"center"},
+                            //};
+                            //this.props.functions.modal.show({render: () => {return (<Modal functions={this.props.functions} data={data} />)}});
                         });
                     }
                 });
