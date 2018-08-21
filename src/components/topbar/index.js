@@ -77,7 +77,11 @@ class ProjectDialog extends Component {
     downloadProject = (e, project) => {
         e.stopPropagation();
 
-        const keepState = prompt("Do you also want to save the project state (current contract addresse, ABI's, etc)?", "yes") || "no";
+        const keepState = prompt("Do you also want to save the project state (current contract addresse, ABI's, etc)?", "yes");
+        if(!keepState) {
+            alert("Download aborted. Yes or No answer expected.");
+            return;
+        }
         this.props.router.control.downloadProject(project, keepState.toLowerCase() == "yes");
     };
 
