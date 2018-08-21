@@ -194,7 +194,7 @@ export default class ContractEditor extends Component {
                     // Fall through
                 }
                 else if (status > 0) {
-                    alert("Error: Could not rename contract source file. Close the editor and try again.");
+                    alert("Error: Could not rename contract source file. Please close the tab containing the contract's source code and try again.");
                     return;
                 }
                 else {
