@@ -34,9 +34,13 @@
                     "children": {
                         "HelloWorld.sol": {
                             "type": "f",
-                            "contents": "pragma solidity ^0.4.17;\n\ncontract HelloWorld {\n    string public message;\n    \n    function HelloWorld(string initMessage) public {\n        message = initMessage;\n    }\n\n    function update(string newMessage) public {\n        message = newMessage;\n    }\n}"
+                            "contents": "pragma solidity ^0.4.21;\n\ncontract HelloWorld {\n    string public message;\n    \n    function HelloWorld(string initMessage) public {\n        message = initMessage;\n    }\n\n    function update(string newMessage) public {\n        message = newMessage;\n    }\n}"
                         }
                     }
+                },
+                "README.md": {
+                    "type": "f",
+                    "contents": "# Hello World start DApp\n\nWelcome to a simple Hello World starter!"
                 }
             }
         }
@@ -71,11 +75,12 @@
                 "source": "/contracts/HelloWorld.sol",
                 "args": [
                     {
-                        "value": "Hello World!"
+                        "value": "Hello Wodl!"
                     }
                 ],
                 "blockchain": "ethereum",
-                "name": "HelloWorld"
+                "name": "HelloWorld",
+                "network": "browser"
             }
         ],
         "wallets": [

@@ -34,9 +34,13 @@
                     "children": {
                         "MyContract.sol": {
                             "type": "f",
-                            "contents": "pragma solidity ^0.4.17;\n\ncontract MyContract {\n    function MyContract() public {\n    }\n}"
+                            "contents": "pragma solidity ^0.4.21;\n\ncontract MyContract {\n    function MyContract() public {\n    }\n}"
                         }
                     }
+                },
+                "README.md": {
+                    "type": "f",
+                    "contents": "# Empty DApp project\n\nThis is a bare bones dapp project containg a smart contract and boilerplate app files to get started.\n\n## Where to go from here\n\nCheck out the tutorials to find our more how to build your dapp.\n"
                 }
             }
         }
