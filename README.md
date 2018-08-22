@@ -21,7 +21,7 @@ To try it out, go to [studio.superblocks.com](https://studio.superblocks.com).
 * Powered by Monaco Editor
 
 ## Quick start
-Below is described how to get the **Studio** PreactJS project setup and running locally.
+Below is described how to get the **Studio** _PreactJS_ project setup and running locally.
 
 ### Install node modules
 Use `yarn` [Yarn](https://yarnpkg.com/).
@@ -44,7 +44,7 @@ make dist
 The dist files will be inside `./dist`.
 
 ### Bumping version
-Set the new version both in app.js and in manifest.json.
+Set the new version both in `app.js` and in `manifest.json`.
 
 Run this script to fix that for you:
 
