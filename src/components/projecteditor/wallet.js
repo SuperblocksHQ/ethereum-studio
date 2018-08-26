@@ -89,7 +89,7 @@ export class Wallet {
 
     openWallet = (name, seed, cb) => {
         if(!seed) {
-            seed=prompt("Give the seed for wallet " + name);
+            seed=prompt("Please enter the 12 word seed to unlock the wallet: " + name);
             if(!seed) {
                 cb && cb(1);
                 return;
