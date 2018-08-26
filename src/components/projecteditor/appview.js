@@ -137,6 +137,7 @@ export default class AppView extends Component {
                         this._checkContracts(contracts2, (status)=>{
                             if(status!=0) {
                                 this.writeContent(1, "Contract(s) does not exist. When running the in-browser blockchain contracts get wiped on every refresh.");
+                                this.exportableContent = null;
                                 return;
                             }
                             contractjs=bodies.join("\n");
@@ -158,6 +159,11 @@ export default class AppView extends Component {
 
     download = (e) => {
         e.preventDefault();
+
+        if (!this.exportableContent) {
+            alert('Error: Cannot download DApp. The DApp contracts are not deployed yet.');
+            return;
+        }
 
         if(this.state.network=="browser") {
             const body=(
