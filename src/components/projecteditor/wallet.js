@@ -36,7 +36,13 @@ export class Wallet {
 
     _newWallet = (name, seed, hdpath, cb) => {
         hdpath=hdpath||"m/44'/60'/0'/0";
-        if(!lightwallet.keystore.isSeedValid(seed)) {
+        try {
+            if(!lightwallet.keystore.isSeedValid(seed)) {
+                cb && cb(2);
+                return;
+            }
+        }
+        catch (err) {
             cb && cb(2);
             return;
         }
@@ -65,7 +71,7 @@ export class Wallet {
         }, function (err, ks) {
             ks.keyFromPassword(password, function (err, pwDerivedKey) {
                 if (err) {
-                    cb && cb(1);
+                    cb && cb(3);
                     return;
                 }
                 wallet.secret.ks=ks;
