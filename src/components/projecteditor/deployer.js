@@ -290,7 +290,8 @@ export default class Deployer extends Component {
                                     }
                                     this._stdout("Got receipt: " + res);
                                     obj.txhash2=res;
-                                    this.props.project.props.state.txlog.addTx({hash:res,context:'Contract deployment using external provider',network:obj.network});
+                                    const args=obj.contract.get("args") || [];
+                                    this.props.project.props.state.txlog.addTx({deployArgs:args,contract:this.props.contract,hash:res,context:'Contract deployment using external provider',network:obj.network});
                                     finalize(obj);
                                 });
                             }
@@ -501,7 +502,7 @@ export default class Deployer extends Component {
                 }
             });
         };
-        const args=obj.contract.get("args", obj.env) || [];
+        const args=obj.contract.get("args") || [];
         const args2=[];
 
         fn(args, args2, obj.env, obj.tag, (status)=>{
@@ -771,7 +772,8 @@ export default class Deployer extends Component {
             if(err==null) {
                 this._stdout("Got receipt: " + res);
                 obj.txhash2=res;
-                this.props.project.props.state.txlog.addTx({hash:res,context:'Contract deployment',network:obj.network});
+                const args=obj.contract.get("args") || [];
+                this.props.project.props.state.txlog.addTx({deployArgs:args,contract:this.props.contract,hash:res,context:'Contract deployment',network:obj.network});
                 cb(0);
             }
             else {

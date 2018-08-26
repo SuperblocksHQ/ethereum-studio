@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import style from './style';
 import { DropdownContainer } from '../dropdown';
+import TransactionLogFloat from '../blockexplorer/transactionlogfloat';
 import {
     IconTransactions,
     IconDownload,
@@ -295,6 +296,7 @@ export default class TopBar extends Component {
                 <img class={style.logo} src="/static/img/img-studio-logo.svg" alt="Superblocks Studio logo"></img>
                 <div class={style.tools}>
                     <ActionOpenTransactions onClick={this.onTransactionsClicked}/>
+                    <TransactionLogFloat router={this.props.router} />
                 </div>
                 <DropdownContainer
                     class={style.projectButton}

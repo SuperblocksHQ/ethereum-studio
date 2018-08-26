@@ -228,7 +228,6 @@ export default class Control extends Component {
             data: {
             },
             children: children,
-            txlog: new TransactionLogData({functions:this.props.functions}),
         };
         var projectItem = this._newItem({
             inode: project.inode,
@@ -240,6 +239,7 @@ export default class Control extends Component {
             state: state,
         });
         projectItem.props._project=projectItem;
+        state.txlog = new TransactionLogData({functions:this.props.functions, project:projectItem});
 
         projectItem.save=(cb) => {this._saveProject(projectItem, cb)};
         projectItem.delete=(cb) => {this._deleteProject(projectItem, cb)};

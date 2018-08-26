@@ -1,0 +1,99 @@
+.address {
+    word-wrap: break-word;
+}
+
+.status {
+    width: 20px;
+    display: block;
+}
+
+.fadein {
+    animation: fadein 0.5s;
+}
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+.fadeout {
+    animation: fadeout 2s;
+}
+
+@keyframes fadeout {
+    from { opacity: 1; }
+    to   { opacity: 0; }
+}
+
+.txbox {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 30px;
+    max-width: 800px;
+    background-color: white;
+    .header {
+        position: relative;
+        display: block;
+        width: 100%;
+        background-color: purple;
+        .title {
+            text-align: center;
+            font-size: 1.3em;
+            display: block;
+            background-color: blue;
+        }
+        .status {
+            position: absolute;
+            display: block;
+            right: 0;
+            top: 0;
+            width: 20px;
+            height: 100%;
+            overflow: hidden;
+            &.failure {
+                background-color: red;
+            }
+            &.success {
+                background-color: green;
+            }
+            &.pending {
+                background-color: grey;
+            }
+        }
+    }
+    .left {
+        width: 60%;
+        min-width: 150px;
+        float: left;
+        height: 100%;
+        background-color: red;
+    }
+    .right {
+        width: 40%;
+        min-width: 150px;
+        float: left;
+        height: 100%;
+        background-color: green;
+    }
+    .row {
+        width: 100%;
+        background-color: orange;
+    }
+    .bottom {
+        clear: both;
+        width: 100%;
+        background-color: pink;
+        &:after {
+            content: " ";
+            display: block;
+            clear: both;
+        }
+    }
+    .bottomButton {
+    }
+    .bottomContent {
+        .deployArgs {
+        }
+    }
+}

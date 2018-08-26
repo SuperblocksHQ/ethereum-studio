@@ -18,128 +18,16 @@
     background-color: #1e1e1e;
     width: 100%;
     height: 100%;
-    color: #eee;
     .inner {
+        margin-left: 10px;
         padding: 16px 10px 80px 50px;
     }
-    .title {
-        font-weight: 700;
-    }
 }
 
-.transactionlog {
+.float {
+    position: absolute;
+    right: 0;
+    margin-right: 10px;
     margin-top: 30px;
-    color: #fff;
-    display: block;
-    height: 100%;
-    overflow-y: auto;
-    overflow-x: auto;
-    table {
-        margin-left: auto;
-        margin-right: auto;
-        border: 1px solid #eee;
-        td, th {
-            border: 1px solid #ccc;
-            background-color: #666;
-            color: #fff;
-            padding: 5px;
-            text-align: center;
-        }
-    }
-}
-
-.blockexplorer {
-    width: 100%;
-    height: 100%;
-    .title {
-        clear: both;
-        color: #eee;
-        margin-left: 15px;
-        margin-right: 15px;
-        border-bottom: dotted 1px #ccc;
-    }
-    .blocks {
-        width: 360px;
-        height: 100%;
-        float: left;
-        margin-left: 10px;
-        overflow: auto;
-        &:after {
-            content: " ";
-            display: block;
-            clear: both;
-        }
-    }
-    .transactions {
-        display: block;
-        width: 780px;
-        height: 100%;
-        overflow-y: auto;
-        overflow-x: hidden;
-        float: left;
-        margin-left: 10px;
-        .txtable {
-            padding: 10px;
-            border: 1px solid #eee;
-            td {
-                color: #fff;
-                min-width: 100px;
-            }
-        }
-    }
-    .transaction {
-        display: block;
-        width: 300px;
-        float: left;
-        margin-left: 10px;
-    }
-    .block {
-        padding: 3px;
-        margin: 5px;
-        float: left;
-        width: 103px;
-        background-color: #333;
-        border: solid 1px #ccc;
-        -webkit-border-radius: 1;
-        -moz-border-radius: 1;
-        border-radius: 1px;
-    }
-    .block_nr {
-        color: #eee;
-        font-weight: bold;
-    }
-    .bg_fadein {
-        animation: fadein 1s;
-    }
-    .bg0 {
-        background-color: #999;
-    }
-    .bg1 {
-        background-color: #888;
-    }
-    .bg2 {
-        background-color: #777;
-    }
-    .bg3 {
-        background-color: #666;
-    }
-    .bg4 {
-        background-color: #555;
-    }
-    .bg5 {
-        background-color: #444;
-    }
-    .tx_failed {
-        color: red;
-    }
-    .tx_success {
-        color: green;
-    }
-    .tx_summary {
-        text-align: center;
-    }
-    @keyframes fadein {
-        from { opacity: 0.1; }
-        to   { opacity: 1; }
-    }
+    z-index: 2;
 }

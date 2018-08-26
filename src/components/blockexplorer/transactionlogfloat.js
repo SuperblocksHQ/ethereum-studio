@@ -20,30 +20,41 @@ import style from './style';
 import classNames from 'classnames';
 import RenderTransactions from './rendertransactions';
 
-export default class TransactionLog extends Component {
+export default class TransactionLogFloat extends Component {
     constructor(props) {
         super(props);
-        this.id=props.id+"_transaction_log";
 
-        const txlog=props.project.props.state.txlog;
-        this.renderTransactions = new RenderTransactions(txlog, false, () => {
-            this.setState();
-        });
-
-        setInterval(()=>this.setState(), 1000);
+        setInterval(()=>this.setState(),1000);
     }
 
+    _getRender = (txlog) => {
+        if (this.renderTransactions) {
+            return this.renderTransactions;
+        }
+        this.renderTransactions = new RenderTransactions(txlog, true, () => {
+            this.setState();
+        });
+        return this.renderTransactions;
+    };
+
+    _getTxLog = () => {
+        if (!this.props.router.control) return;
+        const project=this.props.router.control.getActiveProject();
+        if (!project) return;
+        return project.props.state.txlog;
+    };
+
     render() {
-        const env=this.props.project.props.state.data.env;
+        const txlog = this._getTxLog();
+        if (!txlog) return;
+        const env=this.props.router.control.getActiveProject().props.state.data.env;
         const network = env;
-        const transactions=this.renderTransactions.renderTransactions(network);
+
+        const renderTransactions = this._getRender(txlog);
+        const transactions=renderTransactions.renderTransactionsFloat(network, 5, 30);
         return (
-            <div id={this.id} class={style.main}>
-                <div class="scrollable-y" id={this.id+"_scrollable"}>
-                    <div class={style.inner}>
-                        {transactions}
-                    </div>
-                </div>
+            <div class={style.float}>
+                {transactions}
             </div>
         );
     }

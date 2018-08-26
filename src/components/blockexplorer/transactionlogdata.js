@@ -22,34 +22,65 @@ export default class TransactionLogData {
 
         this._web3s={};
         this._transactions=[];
+        this._addressMappingAccounts = {};
+        this._addressMappingContracts = {};
     }
 
-    transactions=()=>{
-        return this._transactions;
+    transactions=(network)=> {
+        return this._transactions.filter((item) => {
+            return item.network == network;
+        });
+    };
+
+    _getNames = (network) => {
+        // Get a fresh list of account and contract names and addresses for the given network.
+        // TODO:
+        //const dappfile = this.props.project.props.state.data.dappfile;
+        //if (dappfile) {
+            //const accounts = dappfile.accounts();
+            //console.log("got accounts", accounts);
+            //accounts.map((account) => {
+                //dappfile.getItem("accounts", {name:account.name}, network);
+            //});
+        //}
+    };
+
+    accounts = (network) => {
+        return this._addressMappingAccounts[network] || {};
+    };
+
+    contracts = (network) => {
+        return this._addressMappingContracts[network] || {};
     };
 
     addTx=(data)=>{
         const tx={
+            ts: Date.now(),
             hash: data.hash,
+            contract: data.contract,  // the name of the contract when deploying
             network: data.network,
             origin: data.origin||"Studio",
             context: data.context,
+            deployArgs: data.deployArgs,  // When Studio deploys a contract we can simply save the constructor arguments.
             obj: null,
+            objTS: null,  // Timestamp when transaction object become available.
             receipt: null,  // This will be filled when tx has been mined.
+            receiptTS: null,  // Timestamp when receipt become available.
+            state: {},  // Local state data for displaying the tx.
         };
         this._transactions.unshift(tx);
         this._fillData(tx);
+        this._getNames(tx.network);
     };
 
-    // Fill the tx with data and final receipt
-    // Issue a rerender when new data has arrived.
+    // Fill the tx with tx obj and then final receipt
     _fillData=tx=>{
         this._getTxObj(tx, (obj)=>{
             tx.obj=obj;
-            //this.setState();
+            tx.objTS=Date.now();
             this._getTxReceipt(tx, (receipt)=>{
                 tx.receipt=receipt;
-                //this.setState();
+                tx.receiptTS=Date.now();
             });
         });
     };
