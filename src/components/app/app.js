@@ -100,7 +100,6 @@ export default class App extends Component {
         this.functions.wallet = new Wallet({functions: this.functions, length:30});
         // The development wallets seed is well known and the first few addresses are seeded
         // with ether in the genesis block.
-        this.functions.wallet.openWallet("development", this.knownWalletSeed);
         this.setState({modals:[]});
         console.log("Known development Ethereum wallet seed is: "+this.knownWalletSeed);
 
@@ -151,15 +150,17 @@ export default class App extends Component {
         let { showSplash } = this.props;
         const modalData={
             title: "Loading Superblocks Studio " + this._version,
-            body: "Initializing Solidity compiler and Ethereum Virtual Machine...",
+            body: "Initializing Wallet, Solidity compiler and Ethereum Virtual Machine...",
             style: {"text-align":"center"},
         };
+        var walletSeeded=false;
         const modal=(<Modal data={modalData} />);
         this.functions.modal.show({cancel: ()=>{return false}, render: () => {return modal;}});
         this.functions.compiler=new Solc({id:this.generateId()});
         this.functions.EVM=new EVM({id:this.generateId()});
+        this.functions.wallet.openWallet("development", this.knownWalletSeed, () => {walletSeeded=true;});
         const fn=()=>{
-            if (this.functions.EVM.isReady() && this.functions.compiler.isReady()) {
+            if (this.functions.EVM.isReady() && this.functions.compiler.isReady() && walletSeeded) {
                 console.log("Superblocks Studio "+this._version+" Ready.");
                 this.functions.modal.close();
 
@@ -168,7 +169,7 @@ export default class App extends Component {
                 }
             }
             else {
-                setTimeout(fn,1000);
+                setTimeout(fn,500);
             }
         };
         fn();
