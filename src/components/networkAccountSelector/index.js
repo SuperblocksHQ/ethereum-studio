@@ -115,6 +115,11 @@ class NetworkSelector extends Component {
 class AccountDropdown extends Component {
 
     render() {
+        // Early return when project data is not available
+        if(!this.props.dappfile || this.props.dappfile === undefined) {
+            return;
+        }
+
         const accounts = this.props.dappfile.accounts().map((account, index) => {
             const cls={};
             cls[style.accountLink]=true;
