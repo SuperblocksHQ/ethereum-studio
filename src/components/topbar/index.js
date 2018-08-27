@@ -4,6 +4,8 @@ import classNames from 'classnames';
 import style from './style';
 import { DropdownContainer } from '../dropdown';
 import TransactionLogFloat from '../blockexplorer/transactionlogfloat';
+import Backend from  '../projecteditor/control/backend';
+import Modal from '../modal';
 import {
     IconTransactions,
     IconDownload,
@@ -127,7 +129,36 @@ class ProjectDialog extends Component {
         reader.readAsBinaryString(blob);
     }
 
-    importProject3 = (dappfileJSONObj) => {
+    importProject3 = (project) => {
+        const backend = new Backend();
+        backend.convertProject(project, (status, project2) => {
+            if (status == 1) {
+                const modalData={
+                    title: "Project converted",
+                    body: (
+                        <div>
+                            <div>
+                                The imported project has been converted to the new Superblocks Studio format.<br />
+                                You might need to reconfigure your accounts and contract arguments due to these
+                                changes. We are sorry for any inconvenience.
+                            </div>
+                            <div>
+                                Please see the Superblocks Studio help center for more information on this topic.
+                            </div>
+                        </div>
+                    ),
+                    style: {width:"680px"},
+                };
+                const modal=(<Modal data={modalData} />);
+                this.props.functions.modal.show({cancel:()=>{this.importProject4(project2);return true;}, render: () => {return modal;}});
+            }
+            else {
+                this.importProject4(project);
+            }
+        });
+    };
+
+    importProject4 = (dappfileJSONObj) => {
         var title;
         var name = dappfileJSONObj.dir || "";
         if(dappfileJSONObj.dappfile.project && dappfileJSONObj.dappfile.project.info) {
@@ -304,7 +335,7 @@ export default class TopBar extends Component {
                 </div>
                 <DropdownContainer
                     class={style.projectButton}
-                    dropdownContent={<ProjectDialog router={this.props.router} />} >
+                    dropdownContent={<ProjectDialog functions={this.props.functions} router={this.props.router} />} >
                         <ProjectSelector title={title}/>
                 </DropdownContainer>
 

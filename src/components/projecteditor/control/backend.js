@@ -14,21 +14,22 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Studio.  If not, see <http://www.gnu.org/licenses/>.
 
-const DAPP_FORMAT_VERSION = "dapps2.0";
+const DAPP_FORMAT_VERSION = "dapps1.0.0";
 export default class Backend {
     constructor() {
     }
 
     // Make sure projects created for an older version are converted to the current format.
+    // dapps1.0 is the 1.0 BETA, dapps1.0.0 is the released 1.0 format.
     convertProjects = (cb) => {
         if (!localStorage.getItem(DAPP_FORMAT_VERSION)) {
             if (localStorage.getItem("dapps1.0")) {
-                // Convert from 1.0 to 2.0
+                // Convert from 1.0 (beta) to 1.0.0.
                 const data=JSON.parse(localStorage.getItem("dapps1.0"));
                 const newProjects=[];
                 for (let i=0; i<data.projects.length; i++) {
                     const project=data.projects[i];
-                    const newProject=this._convertProject1_0to2_0(project);
+                    const newProject=this._convertProject1_0to1_0_0(project);
                     if (newProject) {
                         newProjects.push(newProject);
                     }
@@ -51,7 +52,18 @@ export default class Backend {
         }
     };
 
-    _convertProject1_0to2_0 = (project) => {
+    // Check single project and convert it if needed.
+    convertProject = (project, cb) => {
+        if (!project.format) {
+            const project2 = this._convertProject1_0to1_0_0(project);
+            cb(1, project2);
+        }
+        else {
+            cb(0);
+        }
+    };
+
+    _convertProject1_0to1_0_0 = (project) => {
         const environments = [
             {
                 "name": "browser"
@@ -479,7 +491,7 @@ export default class Backend {
         delete project2._filecache;
         delete project2.inode;
         project2.dappfile.project = {info: {title: (project2.dappfile.project.info || {}).title}};
-        project2.format = "1.0.0";
+        project2.format = DAPP_FORMAT_VERSION;
 
         if(!keepState) {
             this._clearDotfiles(project2.files);

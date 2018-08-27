@@ -113,7 +113,7 @@ export default class ProjectEditor extends Component {
         const { controlPanelWidth } = this.state;
         return (
             <div class={style.projecteditor} id="main_container">
-                <TopBar router={this.props.router} />
+                <TopBar router={this.props.router} functions={this.props.functions} />
                 <div style="display: flex; height: 100%">
                     <div key="main_control" id="main_control" class={style.control} style={{width: controlPanelWidth}}>
                         <Control router={this.props.router} functions={this.props.functions} />
