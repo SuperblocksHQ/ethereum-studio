@@ -30,11 +30,11 @@ const HelpDropdownDialog = () => (
         <div class={style.title}>General</div>
         <ul>
             <li>
-                <a href="">Help Center</a>
+                <a href="https://www.superblocks.com" target="_blank" rel="noopener noreferrer">Help Center</a>
             </li>
             <li>
                 <div class={style.container}>
-                    <a href="">Join our Community!</a>
+                    <a href="https://www.superblocks.com" target="_blank" rel="noopener noreferrer">Join our Community!</a>
                     <span class={style.telegramIcon}>
                         <IconTelegram color="#0088cc"/>
                     </span>
@@ -42,7 +42,7 @@ const HelpDropdownDialog = () => (
 
             </li>
             <li>
-                <a href="">What’s new 🚀</a>
+                <a href="https://www.superblocks.com" target="_blank" rel="noopener noreferrer">What’s new 🚀</a>
             </li>
         </ul>
     </div>
