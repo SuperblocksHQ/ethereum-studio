@@ -18,6 +18,11 @@ import {
 class NetworkDropdown extends Component {
 
     render() {
+        // Early return when project data is not available
+        if(!this.props.dappfile || this.props.dappfile === undefined) {
+            return;
+        }
+
         const networks = this.props.dappfile.environments().map((env) => {
             const cls={};
             cls[style.networkLink] = true;
