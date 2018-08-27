@@ -479,6 +479,7 @@ export default class Backend {
         delete project2._filecache;
         delete project2.inode;
         project2.dappfile.project = {info: {title: (project2.dappfile.project.info || {}).title}};
+        project2.format = "1.0.0";
 
         if(!keepState) {
             this._clearDotfiles(project2.files);
