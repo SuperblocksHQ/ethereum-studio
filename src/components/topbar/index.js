@@ -80,6 +80,10 @@ class ProjectDialog extends Component {
 
         const keepState = prompt("Do you also want to save the project state (current contract addresses, ABIs, etc)?", "yes");
         if(!keepState) {
+            return;
+        }
+        const s = keepState.toLowerCase();
+        if (s != "yes" && s != "no") {
             alert("Download aborted. Yes or No answer expected.");
             return;
         }
