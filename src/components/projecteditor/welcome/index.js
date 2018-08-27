@@ -31,7 +31,7 @@ export default class Welcome extends Component {
                 <div class={style.content}>
                     <img src={'/static/img/img-welcome.svg'}/>;
                     <h3>Looks like you don’t have any project created just yet</h3>
-                    <p><a href="#" target="_blank" rel="noopener noreferrer">Create a new project</a> from any of our existing templates to get started</p>
+                    <p><a href="#" onClick={this.onCreateNewProjectClick}>Create a new project</a> from any of our existing templates to get started</p>
                     <button class="btn2 mt-3" onClick={this.onCreateNewProjectClick}>Create New Project</button>
                 </div>
             </div>
