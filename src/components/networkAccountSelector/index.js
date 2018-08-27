@@ -124,6 +124,18 @@ class AccountDropdown extends Component {
             const cls={};
             cls[style.accountLink]=true;
             if (account.name == this.props.account) cls[style.accountLinkChosen]=true;
+
+            var deleteButton;
+            if(index !== 0) {
+                deleteButton=(<button class="btnNoBg" onClick={(e)=>{this.props.onAccountDelete(e, index)}}>
+                                  <IconTrash />
+                              </button>)
+            } else {
+                deleteButton=(<button class="btnNoBg">
+                                  <i>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                              </button>)
+            }
+
             return (
                 <div>
                     <div className={classnames(cls)} onClick={(e)=>{e.preventDefault(); this.props.onAccountChosen(account.name)}}>
@@ -132,10 +144,9 @@ class AccountDropdown extends Component {
                             <button class="btnNoBg" onClick={(e)=>{this.props.onAccountEdit(e, index)}}>
                                 <IconEdit />
                             </button>
-                            <button class="btnNoBg" onClick={(e)=>{this.props.onAccountDelete(e, index)}}>
-                                <IconTrash />
-                            </button>
+                            { deleteButton }
                         </div>
+
                     </div>
                 </div>
             );
