@@ -101,7 +101,7 @@ export default class Step1 extends Component {
                                     <input
                                         id="html"
                                         type="text"
-                                        maxLength="30"
+                                        maxLength="20"
                                         value={this.state.projectTitle}
                                         onChange={this.handleTitleChange}
                                         placeholder="Project HTML page title"/>
