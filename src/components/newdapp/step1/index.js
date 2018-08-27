@@ -21,10 +21,14 @@ import style from '../style';
 
 export default class Step1 extends Component {
 
-    state = {
-        projectName: "",
-        projectTitle: "",
-        isValid: false
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            projectName: this.props.projectName ? this.props.projectName : "",
+            projectTitle: this.props.projectTitle ? this.props.projectTitle : "",
+            isValid: false
+        }
     }
 
     validateInputs () {

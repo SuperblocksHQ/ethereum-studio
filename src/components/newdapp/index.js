@@ -65,7 +65,10 @@ export default class NewDapp extends Component {
         let step;
         switch (this.state.currentStep) {
             case 1:
-                step = <Step1 onStep1Done={this.onStep1DoneHandle}
+                step = <Step1
+                            projectName={this.state.projectInfo ? this.state.projectInfo.name : ""}
+                            projectTitle={this.state.projectInfo ? this.state.projectInfo.title : ""}
+                            onStep1Done={this.onStep1DoneHandle}
                             onCancelClick={this.onCancelClickHandle}/>;
                 break;
             case 2:
