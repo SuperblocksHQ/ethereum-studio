@@ -308,6 +308,14 @@ export default class AccountEditor extends Component {
                         </div>
                     );
                 } else {
+                    var unlockDifferentAccountButton;
+                    if(this.form.walletName === "private") {
+                        unlockDifferentAccountButton = (
+                            <button class="btn2" onClick={(e)=>{e.preventDefault(); this.unlockWallet(this.form.walletName); }}>
+                                Unlock a different account
+                            </button>);
+                    }
+
                     return (
                         <div>
                             <p>
@@ -316,6 +324,7 @@ export default class AccountEditor extends Component {
                             <p>
                                 <b>Balance:</b> {this.form.balance} wei ({this.form.balanceFormatted} Ether)
                             </p>
+                            { unlockDifferentAccountButton }
                         </div>
                     );
                 }
