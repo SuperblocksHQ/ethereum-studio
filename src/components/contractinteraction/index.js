@@ -249,7 +249,23 @@ var render=function(abi, contract) {
             if(item.outputs.length==0) {
                 var id2=id+"_res";
                 if(iserr) {
-                    res=err;
+                    //
+                    // Compress error message
+                    const splitErrorMessages = err.toString().split("Error:");
+                    const splitErrorMessagesLen = splitErrorMessages.length;
+
+                    // If there are multiple splits as result,
+                    // then only take the very last message into account
+                    var splitErrorMessage;
+                    if(splitErrorMessagesLen > 1) {
+                        splitErrorMessage = splitErrorMessages[splitErrorMessagesLen - 1]
+                    }
+
+                    if(splitErrorMessage) {
+                        res="Error: " + splitErrorMessage;
+                    } else {
+                        res=err;
+                    }
                 }
                 document.getElementById(id2).textContent=res.toString();
             }
