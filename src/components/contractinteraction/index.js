@@ -221,7 +221,7 @@ var render=function(abi, contract) {
         else {
             const accounts=(typeof(web3)!="undefined"?web3.eth.accounts:[]);
             if(accounts.length==0) {
-                const msg="There is no account available to do the transaction.";
+                const msg="There is no account available to do the transaction. Unlock the Custom network wallet or unlock Metamask.";
                 alert(msg);
                 console.warn(msg);
                 return;
