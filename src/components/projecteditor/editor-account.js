@@ -53,7 +53,13 @@ export default class AccountEditor extends Component {
             walletType=wallet.get('type');
             if(walletType=="external") {
                 if(!window.web3) {
-                    isLocked=true;
+                    if(this.props.functions.wallet.isOpen(walletName)) {
+                        address=this.props.functions.wallet.getAddress(walletName, accountIndex);
+                    }
+                    else {
+                        isLocked=true;
+                    }
+
                 }
                 else {
                     const extAccounts = window.web3.eth.accounts || [];
@@ -311,7 +317,7 @@ export default class AccountEditor extends Component {
                     );
                 } else {
                     var unlockDifferentAccountButton;
-                    if(this.form.walletName === "private") {
+                    if(this.form.walletName === "private" || (this.form.walletName === "external" && !window.web3) ) {
                         unlockDifferentAccountButton = (
                             <button class="btn2" onClick={(e)=>{e.preventDefault(); this.unlockWallet(this.form.walletName); }}>
                                 Unlock a different account
