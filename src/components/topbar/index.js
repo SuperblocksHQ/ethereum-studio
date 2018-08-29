@@ -320,19 +320,24 @@ export default class TopBar extends Component {
 
     render() {
         var title="";
+        var transactionsButton;
+
         if (this.props.router.control) {
             const openProject = this.props.router.control.getActiveProject();
             if (openProject) {
                 title = openProject.props.state.data.dappfile.getObj().project.info.title;
+
+                transactionsButton=(<div class={style.tools}>
+                                        <ActionOpenTransactions onClick={this.onTransactionsClicked}/>
+                                        <TransactionLogFloat router={this.props.router} />
+                                    </div>);
             }
         }
+
         return (
             <div class={style.topbar}>
                 <img class={style.logo} src="/static/img/img-studio-logo.svg" alt="Superblocks Studio logo"></img>
-                <div class={style.tools}>
-                    <ActionOpenTransactions onClick={this.onTransactionsClicked}/>
-                    <TransactionLogFloat router={this.props.router} />
-                </div>
+                { transactionsButton }
                 <DropdownContainer
                     class={style.projectButton}
                     dropdownContent={<ProjectDialog functions={this.props.functions} router={this.props.router} />} >
