@@ -56,7 +56,7 @@ export default class RenderTransactions {
         if (!tx.obj ) {
             // Waiting for tx to be propagated around network.
             return (
-                <div class={style.txbox}>
+                <div class={this.style.txbox}>
                     Waiting for tx to propagate
                 </div>
             );
