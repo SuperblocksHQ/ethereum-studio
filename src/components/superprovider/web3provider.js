@@ -39,7 +39,7 @@ window.DevKitProvider={};
             };
             postMessage({type: "ack", channel: parentWindow.channel});
         }
-        else if(event.data.channel==parentWindow.channel) {
+        else if(parentWindow && event.data.channel==parentWindow.channel) {
             const data=event.data;
             if(data.type=="reply") {
                 if(_pending[data.id]) {
@@ -54,7 +54,7 @@ window.DevKitProvider={};
             }
         }
         else {
-            console.warn("Parent window sending on wrong channel.");
+            console.warn("Parent window sending on wrong channel.", event);
             return;
         }
     };
