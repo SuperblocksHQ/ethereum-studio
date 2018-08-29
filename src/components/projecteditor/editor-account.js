@@ -87,6 +87,7 @@ export default class AccountEditor extends Component {
             address: address,
             balance: 0,
             balanceFormatted: "0",
+            balanceError: "",
             isLocked: isLocked,
             web3: this._getWeb3((this.props.functions.networks.endpoints[network] || {}).endpoint),
         };
@@ -116,12 +117,14 @@ export default class AccountEditor extends Component {
 
         this.form.web3.eth.getBalance(address,(err,res)=>{
             if(err) {
-                this.form.balance="<could not get balance>";
+                this.form.balance=0;
+                this.form.balanceError="<could not get balance>";
             }
             else {
                 this.form.balance=res.toNumber();
                 this.form.balanceOriginal=this.form.balance;
                 this.form.balanceFormatted=this.form.web3.fromWei(this.form.balance);
+                this.form.balanceError="";
             }
             this.redraw();
         });
@@ -288,7 +291,7 @@ export default class AccountEditor extends Component {
                                 <b>Address:</b> {this.form.address}
                             </p>
                             <p>
-                                <b>Balance:</b> {this.form.balance} wei ({this.form.balanceFormatted} Ether)
+                                <b>Balance:</b> {this.form.balance} wei ({this.form.balanceFormatted} Ether) {this.form.balanceError}
                             </p>
                         </div>
                     );
@@ -322,7 +325,7 @@ export default class AccountEditor extends Component {
                                 <b>Address:</b> {this.form.address}
                             </p>
                             <p>
-                                <b>Balance:</b> {this.form.balance} wei ({this.form.balanceFormatted} Ether)
+                                <b>Balance:</b> {this.form.balance} wei ({this.form.balanceFormatted} Ether) {this.form.balanceError}
                             </p>
                             { unlockDifferentAccountButton }
                         </div>
