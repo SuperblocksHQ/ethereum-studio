@@ -88,6 +88,7 @@ export default class AppView extends Component {
 
     render2 = (cb) => {
         var js,css,html,contractjs;
+        this.exportableContent = null;
         this.props.project.loadFile("/app/app.html", (body) => {
             if(body.status!=0) {
             this.writeContent(1, "Missing file(s)");
@@ -137,7 +138,6 @@ export default class AppView extends Component {
                         this._checkContracts(contracts2, (status)=>{
                             if(status!=0) {
                                 this.writeContent(1, "Contract(s) does not exist. When running the in-browser blockchain contracts get wiped on every refresh.");
-                                this.exportableContent = null;
                                 return;
                             }
                             contractjs=bodies.join("\n");
