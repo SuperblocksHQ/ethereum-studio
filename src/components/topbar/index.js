@@ -325,7 +325,7 @@ export default class TopBar extends Component {
         if (this.props.router.control) {
             const openProject = this.props.router.control.getActiveProject();
             if (openProject) {
-                title = openProject.props.state.data.dappfile.getObj().project.info.title;
+                title = openProject.props.state.data.dappfile.getObj().project.info.name;
 
                 transactionsButton=(<div class={style.tools}>
                                         <ActionOpenTransactions onClick={this.onTransactionsClicked}/>
