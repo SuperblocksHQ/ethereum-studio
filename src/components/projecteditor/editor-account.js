@@ -18,7 +18,6 @@ import { h, Component } from 'preact';
 import classnames from 'classnames';
 import Web3 from 'web3';
 import style from './style-editor-account';
-import { IconHelp } from '../icons';
 
 export default class AccountEditor extends Component {
     constructor(props) {
@@ -360,7 +359,6 @@ export default class AccountEditor extends Component {
                                     <div class={style.networkHeader}>
                                         <div class={style.titleContainer}>
                                             <h3 class={style.title}>Configure the account for each network</h3>
-                                            <IconHelp class={style.icon}/>
                                         </div>
                                         <div class={style.subtitle}>
                                             Each account must be configured for each of the networks available.
