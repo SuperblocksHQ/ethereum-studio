@@ -167,13 +167,13 @@ var render=function(abi, contract) {
     </div>
     <div class="regular function" style="margin-bottom:10px;">
         <span class="functionName nohover" style="text-align: center;font-weight:unset;padding: 3px 16px;width: unset; display: inline;" type="submit">Transaction</span>
-        <span>This is a function which always runs inside a transaction. It consumes gas and you cannot send any ether to the function.</span>
-        <span>A transaction always only returns a transaction hash, to learn the status of the transaction we must look at the mined transaction.</span>
+        <span>This is a function which always runs inside a transaction. It consumes gas and doesn't allow any ether to be sent with it.</span>
+        <span>A transaction always returns a transaction hash. In order to retrieve the transaction status it is necessary to read the transaction receipt.</span>
     </div>
     <div class="payable function" style="margin-bottom:10px;">
         <span class="functionName nohover" style=";text-align: center;font-weight:unset;padding: 3px 16px;width: unset; display: inline;" type="submit">Payable</span>
-        <span>This is a payable function which always runs inside a transaction. It consumes gas and you can send ether to the function.</span>
-        <span>A transaction always only returns a transaction hash, to learn the status of the transaction we must look at the mined transaction.</span>
+        <span>This is a payable function which always runs inside a transaction. It consumes gas and allows ether to be sent along with it.</span>
+        <span>A transaction always returns a transaction hash. In order to retrieve the transaction status it is necessary to read the transaction receipt.</span>
     </div>
 </div>
 `;
