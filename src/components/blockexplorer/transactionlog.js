@@ -37,10 +37,17 @@ export default class TransactionLog extends Component {
         const env=this.props.project.props.state.data.env;
         const network = env;
         const transactions=this.renderTransactions.renderTransactions(network);
+
+        var noTransactionsMessage;
+        if(!transactions.children || transactions.children.length < 1) {
+            noTransactionsMessage = ( <div>No transactions to show</div> );
+        }
+
         return (
             <div id={this.id} class={style.main}>
                 <div class="scrollable-y" id={this.id+"_scrollable"}>
                     <div class={style.inner}>
+                        {noTransactionsMessage}
                         {transactions}
                     </div>
                 </div>
