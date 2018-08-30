@@ -514,7 +514,23 @@ export default class ContractInteraction extends Component {
         return (a.offsetHeight - b.offsetHeight);
     };
 
+    updateAccount=()=>{
+        if(window.web3) {
+            const currentAccount = window.web3.eth.accounts[0];
+            if(this.lastAccountRead !== currentAccount) {
+                this.lastAccountRead=currentAccount;
+                this.lastContent=null;  // To force a render.
+                this.render2();
+            }
+        }
+    };
+
     componentDidMount() {
+        if(window.web3) {
+            this.lastAccountRead=window.web3.eth.accounts[0];
+        }
+
+        this.accountTimer=setInterval(this.updateAccount, 3000);
         this.timer=setInterval(this.updateBalance, 3000);
         this.provider._attachListener();
         // We need to do a first redraw to get the height right, since toolbar didn't exist in the first sweep.
@@ -524,6 +540,7 @@ export default class ContractInteraction extends Component {
     componentWillUnmount() {
         this.provider._detachListener();
         clearInterval(this.timer);
+        clearInterval(this.accountTimer);
     }
 
 
