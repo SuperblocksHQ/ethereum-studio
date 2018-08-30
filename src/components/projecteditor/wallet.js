@@ -37,7 +37,8 @@ export class Wallet {
     _newWallet = (name, seed, hdpath, cb) => {
         hdpath=hdpath||"m/44'/60'/0'/0";
         try {
-            if(!lightwallet.keystore.isSeedValid(seed)) {
+            const words=seed.split(" ");
+            if(words.length !== 12 || !lightwallet.keystore.isSeedValid(seed)) {
                 cb && cb(2);
                 return;
             }
