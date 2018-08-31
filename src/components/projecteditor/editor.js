@@ -180,9 +180,9 @@ contract `+this.props.contract.name+` {
                 <div class={style.buttons}>
                     <button class="btnNoBg" title="Save" style={stl} onClick={this.save}><IconSave /></button>
                     {this.props.type2=="contract" && <button class="btnNoBg" title="Compile" onClick={this.compile}><IconCompile /></button>}
-                    {this.props.type2=="contract" && <button class="btnNoBg" title="Deploy" onClick={this.deploy}><IconDeploy /></button>}
+                    {this.props.type2=="contract" && <button class="btnNoBg" title="Deploy" onClick={this.deploy}><IconDeploy style={{ verticalAlign:'middle'}} /></button>}
                     {this.props.type2=="contract" && <button class="btnNoBg" title="Configure" onClick={this.configure}><IconConfigure /></button>}
-                    {this.props.type2=="contract" && <button class="btnNoBg" title="Interact" onClick={this.interact}><IconInteract /></button>}
+                    {this.props.type2=="contract" && <button class="btnNoBg" title="Interact" onClick={this.interact}><IconInteract style={{ verticalAlign:'middle'}}/></button>}
                 </div>
                 <div class={style.info}>
                     <span>
