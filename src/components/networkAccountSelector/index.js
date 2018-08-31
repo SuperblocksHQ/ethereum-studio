@@ -216,6 +216,7 @@ class AccountSelector extends Component {
 
     accountEdit=(e, index) => {
         if(this.state.project) this.props.router.control._clickEditAccount (e, this.state.project, index);
+        this.props.router.main.redraw(true);
     };
 
     accountDelete = (e, index) => {
@@ -376,7 +377,6 @@ class AccountSelector extends Component {
                 <IconPublicAddress alt="pseudo account with only a public address"/>
             );
         }
-
         return (
             <DropdownContainer
                 dropdownContent={
