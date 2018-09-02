@@ -15,16 +15,14 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { h, Component } from 'preact';
-import classnames from 'classnames';
 import style from './style';
-import classNames from 'classnames';
 import RenderTransactions from './rendertransactions';
 
 export default class TransactionLogFloat extends Component {
     constructor(props) {
         super(props);
 
-        setInterval(()=>this.setState(),1000);
+        setInterval(() => this.setState(),1000);
     }
 
     _getRender = (txlog) => {
@@ -51,7 +49,7 @@ export default class TransactionLogFloat extends Component {
         const network = env;
 
         const renderTransactions = this._getRender(txlog);
-        const transactions=renderTransactions.renderTransactionsFloat(network, 5, 30);
+        const transactions=renderTransactions.renderTransactionsFloat(network, 5, 0);
         return (
             <div class={style.float}>
                 {transactions}

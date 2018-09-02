@@ -21,6 +21,7 @@ import Control from './control';
 import Panes from './panes';
 import TopBar from '../topbar';
 import ContactContainer from '../contactContainer';
+import TransactionLogFloat from '../blockexplorer/transactionlogfloat';
 import { IconTransactions } from '../icons';
 
 export default class ProjectEditor extends Component {
@@ -125,6 +126,10 @@ export default class ProjectEditor extends Component {
                     <div style="position: relative; width: 100%">
                         <div key="main_panes" id="main_panes" class={style.panescontainer}>
                             <Panes router={this.props.router} functions={this.props.functions} />
+                            <div class={style.actionContainer}>
+                                <div class={style.title}>Transactions History</div>
+                                <TransactionLogFloat router={this.props.router} />
+                            </div>
                         </div>
                         <div class={style.actionPanel}>
                             <div class={style.actions}>
