@@ -22,13 +22,14 @@ import Panes from './panes';
 import TopBar from '../topbar';
 import ContactContainer from '../contactContainer';
 import TransactionLogFloat from '../blockexplorer/transactionlogfloat';
-import { IconTransactions } from '../icons';
+import { IconTransactions, IconClose } from '../icons';
 
 export default class ProjectEditor extends Component {
 
     state = {
         controlPanelWidth: 280,
-        draggin: false
+        draggin: false,
+        showTransactions: false
     }
 
     constructor(props) {
@@ -70,10 +71,6 @@ export default class ProjectEditor extends Component {
         }
     };
 
-    changePanelSize = () => {
-
-    }
-
     onMouseMove = (e) => {
         e.stopPropagation();
         e.preventDefault();
@@ -103,6 +100,14 @@ export default class ProjectEditor extends Component {
         });
     }
 
+    onShowHideTransactionsClicked = () => {
+        this.setState({
+            showTransactions: !this.state.showTransactions
+        });
+
+        this.redraw(true);
+    }
+
     render() {
         var endpoint="";
         var project;
@@ -113,7 +118,7 @@ export default class ProjectEditor extends Component {
                 endpoint = (this.props.functions.networks.endpoints[network] || {}).endpoint;
             }
         }
-        const { controlPanelWidth } = this.state;
+        const { controlPanelWidth, showTransactions } = this.state;
         return (
             <div class={style.projecteditor} id="main_container">
                 <TopBar router={this.props.router} functions={this.props.functions} />
@@ -126,20 +131,29 @@ export default class ProjectEditor extends Component {
                     <div style="position: relative; width: 100%">
                         <div key="main_panes" id="main_panes" class={style.panescontainer}>
                             <Panes router={this.props.router} functions={this.props.functions} />
-                            <div class={style.actionContainer}>
-                                <div class={style.title}>Transactions History</div>
-                                <TransactionLogFloat router={this.props.router} />
-                            </div>
+                            {
+                                showTransactions ?
+                                    <div class={style.actionContainer}>
+                                        <div class={style.header}>
+                                            <span class={style.title}>Transactions History</span>
+                                            <button class={classNames([style.icon, "btnNoBg"])} onClick={this.onShowHideTransactionsClicked}>
+                                                <IconClose />
+                                            </button>
+                                        </div>
+                                        <TransactionLogFloat router={this.props.router} />
+                                    </div>
+                                : null
+                            }
                         </div>
                         <div class={style.actionPanel}>
                             <div class={style.actions}>
-                                <button class={classNames([style.action, "btnNoBg"])}>
+                                <button class={classNames([style.action, "btnNoBg"])} onClick={this.onShowHideTransactionsClicked}>
                                     <IconTransactions />
                                 </button>
                             </div>
                         </div>
                         <div class="bottom-status-bar">
-                            <span class="left" onMouseDown={this.changePanelSize}>
+                            <span class="left">
                                 <span class="note">Note</span>
                                 <span class="note-text">All files are stored in the browser only, download to backup</span>
                             </span>

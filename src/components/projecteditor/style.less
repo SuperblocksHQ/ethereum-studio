@@ -161,12 +161,24 @@
         width: 600px;
         background-color: #272727;
         border-left: 1px solid #121516;
-        .title {
-            color: #fff;
-            font-weight: 600;
-            height: 38px;
+        .header {
             background-color: #141618;
+            display: flex;
+            align-content: center;
+            align-items: center;
+            height: 38px;
             padding: 9px;
+            .title {
+                color: #fff;
+                font-weight: 600;
+            }
+            .icon {
+                margin-left: auto;
+                color: #c7c7c7;
+                &:hover {
+                    color: white;
+                }
+            }
         }
     }
     .actionPanel {
@@ -182,7 +194,15 @@
             flex-direction: column;
             align-items: center;
             .action {
+                border-right: 2px solid;
+                border-color: transparent;
                 padding: 15px;
+                transition: all 0.3s ease;
+                &:hover {
+                    background-color:rgba(64, 169, 243, 0.1);
+                    cursor: pointer;
+                    border-color: #40a9f3;
+                }
             }
         }
     }
