@@ -18,7 +18,7 @@ import { h, Component } from 'preact';
 import style from './style';
 import RenderTransactions from './rendertransactions';
 
-export default class TransactionLogFloat extends Component {
+export default class TransactionLogPanel extends Component {
     constructor(props) {
         super(props);
 
@@ -51,7 +51,7 @@ export default class TransactionLogFloat extends Component {
         const renderTransactions = this._getRender(txlog);
         const transactions=renderTransactions.renderTransactionsFloat(network, 5, 0);
         return (
-            <div class={style.float}>
+            <div class={style.transactionlogPanel}>
                 {transactions}
             </div>
         );

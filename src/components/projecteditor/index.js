@@ -21,7 +21,7 @@ import Control from './control';
 import Panes from './panes';
 import TopBar from '../topbar';
 import ContactContainer from '../contactContainer';
-import TransactionLogFloat from '../blockexplorer/transactionlogfloat';
+import TransactionLogPanel from '../blockexplorer/transactionLogPanel';
 import { IconTransactions, IconClose } from '../icons';
 
 export default class ProjectEditor extends Component {
@@ -140,7 +140,7 @@ export default class ProjectEditor extends Component {
                                                 <IconClose />
                                             </button>
                                         </div>
-                                        <TransactionLogFloat router={this.props.router} />
+                                        <TransactionLogPanel router={this.props.router} />
                                     </div>
                                 : null
                             }
