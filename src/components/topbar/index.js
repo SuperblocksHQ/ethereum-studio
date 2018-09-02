@@ -290,52 +290,21 @@ class ProjectDialog extends Component {
     }
 }
 
-const ActionOpenTransactions = ( { onClick } = this.props) => {
-    return (
-        <div class={style.action}>
-            <button class={classNames([style.container, "btnNoBg"])} onClick={onClick}>
-                <IconTransactions class={style.icon} alt="Open the transactions log screen"/>
-                <span>Transactions</span>
-            </button>
-        </div>
-    )
-}
-
-ActionOpenTransactions.propTypes = {
-    onClick: PropTypes.func.isRequired
-}
-
 export default class TopBar extends Component {
-    constructor(props) {
-        super(props);
-
-        this.onTransactionsClicked = this.onTransactionsClicked.bind(this);
-    }
-
-    onTransactionsClicked(e) {
-        e.preventDefault();
-        this.props.router.control.openTransactionHistory();
-    }
 
     render() {
         var title="";
-        var transactionsButton;
 
         if (this.props.router.control) {
             const openProject = this.props.router.control.getActiveProject();
             if (openProject) {
                 title = openProject.props.state.data.dappfile.getObj().project.info.name;
-
-                transactionsButton=(<div class={style.tools}>
-                                        <ActionOpenTransactions onClick={this.onTransactionsClicked}/>
-                                    </div>);
             }
         }
 
         return (
             <div class={style.topbar}>
                 <img class={style.logo} src="/static/img/img-lab-logo.svg" alt="Superblocks Lab logo"></img>
-                { transactionsButton }
                 <DropdownContainer
                     class={style.projectButton}
                     dropdownContent={<ProjectDialog functions={this.props.functions} router={this.props.router} />} >
