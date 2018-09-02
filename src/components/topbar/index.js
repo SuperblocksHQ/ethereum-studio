@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import style from './style';
 import { DropdownContainer } from '../dropdown';
-import TransactionLogFloat from '../blockexplorer/transactionlogfloat';
 import Backend from  '../projecteditor/control/backend';
 import Modal from '../modal';
 import {
@@ -329,7 +328,6 @@ export default class TopBar extends Component {
 
                 transactionsButton=(<div class={style.tools}>
                                         <ActionOpenTransactions onClick={this.onTransactionsClicked}/>
-                                        <TransactionLogFloat router={this.props.router} />
                                     </div>);
             }
         }

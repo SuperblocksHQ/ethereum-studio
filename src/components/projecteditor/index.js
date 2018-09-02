@@ -15,16 +15,18 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { Component } from 'preact';
+import classNames from 'classnames';
 import style from './style';
 import Control from './control';
 import Panes from './panes';
 import TopBar from '../topbar';
 import ContactContainer from '../contactContainer';
+import { IconTransactions } from '../icons';
 
 export default class ProjectEditor extends Component {
 
     state = {
-        controlPanelWidth: 310,
+        controlPanelWidth: 280,
         draggin: false
     }
 
@@ -124,14 +126,20 @@ export default class ProjectEditor extends Component {
                         <div key="main_panes" id="main_panes" class={style.panescontainer}>
                             <Panes router={this.props.router} functions={this.props.functions} />
                         </div>
+                        <div class={style.actionPanel}>
+                            <div class={style.actions}>
+                                <button class={classNames([style.action, "btnNoBg"])}>
+                                    <IconTransactions />
+                                </button>
+                            </div>
+                        </div>
                         <div class="bottom-status-bar">
-                        <span class="left" onMouseDown={this.changePanelSize}>
-                            <span class="note">Note</span>
-                            <span class="note-text">All files are stored in the browser only, download to backup</span>
-                        </span>
-                        <span class="right">{endpoint}</span>
-                    </div>
-
+                            <span class="left" onMouseDown={this.changePanelSize}>
+                                <span class="note">Note</span>
+                                <span class="note-text">All files are stored in the browser only, download to backup</span>
+                            </span>
+                            <span class="right">{endpoint}</span>
+                        </div>
                 </div>
                 </div>
             </div>

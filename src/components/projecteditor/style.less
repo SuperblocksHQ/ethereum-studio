@@ -39,6 +39,8 @@
         display: block;
         height: 100%;
         width: 100%;
+        right: 0;
+        padding-right: 60px;
         background-color: #1E1E1E;
         .header {
             -webkit-touch-callout: none;
@@ -151,6 +153,23 @@
                         font-size: 0.85em;
                     }
                 }
+            }
+        }
+    }
+    .actionPanel {
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        background-color: #1C2022;
+        width: 60px;
+        border-left: 1px solid #121516;
+        .actions {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            .action {
+                padding: 15px;
             }
         }
     }
