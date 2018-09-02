@@ -1,18 +1,18 @@
 // Copyright 2018 Superblocks AB
 //
-// This file is part of Superblocks Studio.
+// This file is part of Superblocks Lab.
 //
-// Superblocks Studio is free software: you can redistribute it and/or modify
+// Superblocks Lab is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation version 3 of the License.
 //
-// Superblocks Studio is distributed in the hope that it will be useful,
+// Superblocks Lab is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Superblocks Studio.  If not, see <http://www.gnu.org/licenses/>.
+// along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { h, Component } from 'preact';
 import sha256 from 'crypto-js/sha256';
@@ -182,7 +182,7 @@ export default class Compiler extends Component {
                             if(data.contracts) contractObj=data.contracts[filename][contractName];
                             if(contractObj && Object.keys(contractObj.evm.bytecode.linkReferences || {}).length>0) {
                                 contractObj=null;
-                                this.consoleRows.push({channel:2,msg:"[ERROR] The contract " + contractName + " references library contracts. Studio does not yet support library contract linking, only contract imports."});
+                                this.consoleRows.push({channel:2,msg:"[ERROR] The contract " + contractName + " references library contracts. Superblocks Lab does not yet support library contract linking, only contract imports."});
                             }
                             if(contractObj) {
                                 const metadata=JSON.parse(contractObj.metadata);

@@ -138,12 +138,12 @@ class ProjectDialog extends Component {
                     body: (
                         <div>
                             <div>
-                                The imported project has been converted to the new Superblocks Studio format.<br />
+                                The imported project has been converted to the new Superblocks Lab format.<br />
                                 You might need to reconfigure your accounts and contract arguments due to these
                                 changes. We are sorry for any inconvenience.
                             </div>
                             <div>
-                                Please see the Superblocks Studio help center for more information on this topic.
+                                Please see the Superblocks Lab help center for more information on this topic.
                             </div>
                         </div>
                     ),
@@ -336,7 +336,7 @@ export default class TopBar extends Component {
 
         return (
             <div class={style.topbar}>
-                <img class={style.logo} src="/static/img/img-studio-logo.svg" alt="Superblocks Studio logo"></img>
+                <img class={style.logo} src="/static/img/img-lab-logo.svg" alt="Superblocks Lab logo"></img>
                 { transactionsButton }
                 <DropdownContainer
                     class={style.projectButton}

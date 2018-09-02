@@ -1,19 +1,19 @@
 
 // Copyright 2018 Superblocks AB
 //
-// This file is part of Superblocks Studio.
+// This file is part of Superblocks Lab.
 //
-// Superblocks Studio is free software: you can redistribute it and/or modify
+// Superblocks Lab is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation version 3 of the License.
 //
-// Superblocks Studio is distributed in the hope that it will be useful,
+// Superblocks Lab is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Superblocks Studio.  If not, see <http://www.gnu.org/licenses/>.
+// along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { Component } from 'preact';
 import classNames from 'classnames';
@@ -118,12 +118,12 @@ export default class App extends Component {
                     body: (
                         <div>
                             <div>
-                                Your projects have been converted to the new Superblocks Studio format.<br />
+                                Your projects have been converted to the new Superblocks Lab format.<br />
                                 You might need to reconfigure your accounts and contract arguments due to these
                                 changes. We are sorry for any inconvenience.
                             </div>
                             <div>
-                                Please see the Superblocks Studio help center for more information on this topic.
+                                Please see the Superblocks Lab help center for more information on this topic.
                             </div>
                         </div>
                     ),
@@ -149,7 +149,7 @@ export default class App extends Component {
     _init=()=>{
         let { showSplash } = this.props;
         const modalData={
-            title: "Loading Superblocks Studio " + this._version,
+            title: "Loading Superblocks Lab " + this._version,
             body: "Initializing Wallet, Solidity compiler and Ethereum Virtual Machine...",
             style: {"text-align":"center"},
         };
@@ -161,7 +161,7 @@ export default class App extends Component {
         this.functions.wallet.openWallet("development", this.knownWalletSeed, () => {walletSeeded=true;});
         const fn=()=>{
             if (this.functions.EVM.isReady() && this.functions.compiler.isReady() && walletSeeded) {
-                console.log("Superblocks Studio "+this._version+" Ready.");
+                console.log("Superblocks Lab "+this._version+" Ready.");
                 this.functions.modal.close();
 
                 if (showSplash) {
@@ -196,7 +196,7 @@ export default class App extends Component {
             </div>
         );
         const modalData={
-            title: "Welcome to Superblocks Studio!",
+            title: "Welcome to Superblocks Lab!",
             body: body,
             style: {width:"680px","xbackground-color":"#73618b",xcolor:"#fef7ff"},
         };
@@ -213,7 +213,7 @@ export default class App extends Component {
             //})
             //.then(function(manifest) {
                 //if(manifest.version!=self._version) {
-                    //alert("This is not the newest version, hard reload your browser to make it fetch the newest version of Studio.");
+                    //alert("This is not the newest version, hard reload your browser to make it fetch the newest version of Superblocks Lab.");
                 //}
             //});
     //};

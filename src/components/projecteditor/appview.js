@@ -1,18 +1,18 @@
 // Copyright 2018 Superblocks AB
 //
-// This file is part of Superblocks Studio.
+// This file is part of Superblocks Lab.
 //
-// Superblocks Studio is free software: you can redistribute it and/or modify
+// Superblocks Lab is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation version 3 of the License.
 //
-// Superblocks Studio is distributed in the hope that it will be useful,
+// Superblocks Lab is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Superblocks Studio.  If not, see <http://www.gnu.org/licenses/>.
+// along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { h, Component } from 'preact';
 import style from './style-appview';
@@ -171,7 +171,7 @@ export default class AppView extends Component {
                     <p>Computer says no.</p>
                     <p>
                         When you download your creation, it is configured for the specific network you have chosen (up to the far left).
-                        Right now you have chosen the Browser network, which only exists in your browser when using Studio, so downloading your DApp
+                        Right now you have chosen the Browser network, which only exists in your browser when using Superblocks Lab, so downloading your DApp
                         makes no sense until you choose any other network than Browser.
                     </p>
                     <div style="margin-top: 54px;">

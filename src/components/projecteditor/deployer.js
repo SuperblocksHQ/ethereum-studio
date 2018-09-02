@@ -1,18 +1,18 @@
 // Copyright 2018 Superblocks AB
 //
-// This file is part of Superblocks Studio.
+// This file is part of Superblocks Lab.
 //
-// Superblocks Studio is free software: you can redistribute it and/or modify
+// Superblocks Lab is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation version 3 of the License.
 //
-// Superblocks Studio is distributed in the hope that it will be useful,
+// Superblocks Lab is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Superblocks Studio.  If not, see <http://www.gnu.org/licenses/>.
+// along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { h, Component } from 'preact';
 import sha256 from 'crypto-js/sha256';
@@ -260,7 +260,7 @@ export default class Deployer extends Component {
                                 // Check the Metamask network so that it matches
                                 const chainId=(this.props.functions.networks.endpoints[this.network] || {}).chainId;
                                 if(chainId && window.web3.version.network != chainId) {
-                                    this._stderr("The Metamask network does not match the Studio network. Check so that you have the same network chosen in Metamask as in Studio, then try again.");
+                                    this._stderr("The Metamask network does not match the Superblocks Lab network. Check so that you have the same network chosen in Metamask as in Superblocks Lab, then try again.");
                                     this.callback(1);
                                     return;
                                 }
@@ -275,7 +275,7 @@ export default class Deployer extends Component {
                                 this._stdout("External account detected. Opening external account provider...");
                                 const modalData={
                                     title: "WARNING: Invoking external account provider",
-                                    body: "Please understand that Superblocks Studio has no power over which network is targeted when using an external provider. It is your responsibility that the network is the same as it is expected to be.",
+                                    body: "Please understand that Superblocks Lab has no power over which network is targeted when using an external provider. It is your responsibility that the network is the same as it is expected to be.",
                                     class: style.externalProviderWarning,
                                 };
                                 const modal=(<Modal data={modalData} />);

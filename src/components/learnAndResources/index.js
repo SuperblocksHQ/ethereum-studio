@@ -49,7 +49,7 @@ export default class LearnAndResources extends Component {
                             <li>
                                 <LinkItem
                                     icon={<IconGuide />}
-                                    title={"Guide to Superblocks Studio"}
+                                    title={"Guide to Superblocks Lab"}
                                     link={"https://www.superblocks.com"}
                                 />
                                 <LinkItem
@@ -86,7 +86,7 @@ export default class LearnAndResources extends Component {
 ////////////////// Learn and resources //////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // var learningAndResources=this._newItem({ title: "Learning and Resources", type: "app", type2: "composite", render: this._renderLearnSectionTitle, _project: projectItem, toggable: true, icon: null, state: { open: true, children: [
-//     this._newItem({ title: "Guide to Superblocks Studio", _project: projectItem, type: "file", type2: 'html', _project: projectItem, onClick: this._openItem, icon: <IconGuide />, state: { _tag:0 }}),
+//     this._newItem({ title: "Guide to Superblocks Lab", _project: projectItem, type: "file", type2: 'html', _project: projectItem, onClick: this._openItem, icon: <IconGuide />, state: { _tag:0 }}),
 //     this._newItem({ title: "Video tutorials", _project: projectItem, type: "file", type2: 'js', _project: projectItem, onClick: this._openItem, icon: <IconVideoTutorials />, state:{ _tag:3 }}),
 //     this._newItem({ title: "Help Center", _project: projectItem, type: "file", type2: 'css', _project: projectItem, onClick: this._openItem, icon: <IconHelpCenter />, state:{ _tag:2 }}),
 //     this._newItem({ title: "Ask a question", _project: projectItem, type: "file", type2: 'css', _project: projectItem, onClick: this._openItem, icon: <IconAskQuestion />, state:{ _tag:2 }}),

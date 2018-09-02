@@ -1,10 +1,10 @@
-# Superblocks Studio
+# Superblocks Lab
 
 [![CircleCI](https://circleci.com/gh/SuperblocksHQ/studio.svg?style=shield&circle-token=c798fc7a66f88cff97b4d77e4082752568b33195)](https://circleci.com/gh/SuperblocksHQ/studio)
 
-[Superblocks](https://superblocks.com) **Studio** is an integrated development environment (IDE) to learn, build and deploy decentralized apps (DApps) for _Ethereum_. It's a full browser experience which requires no installations to run.
+[Superblocks](https://superblocks.com) **Lab** is an integrated development environment (IDE) to learn, build and deploy decentralized apps (DApps) for _Ethereum_. It's a full browser experience which requires no installations to run.
 
-**Studio** has a built in _Solidity_ compiler and _Ethereum Virtual Machine_. It also works with local and public networks.
+**Superblocks Lab** has a built in _Solidity_ compiler and _Ethereum Virtual Machine_. It also works with local and public networks.
 
 To try it out, go to [studio.superblocks.com](https://studio.superblocks.com).
 
@@ -21,7 +21,7 @@ To try it out, go to [studio.superblocks.com](https://studio.superblocks.com).
 * Powered by Monaco Editor
 
 ## Quick start
-Below is described how to get the **Studio** _PreactJS_ project setup and running locally.
+Below is described how to get the **Superblocks Lab** _PreactJS_ project setup and running locally.
 
 ### Install node modules
 Use `yarn` [Yarn](https://yarnpkg.com/).
@@ -55,11 +55,11 @@ Run this script to fix that for you:
 Consider double-checking and updating the `CHANGELOG` to reflect the changes. Tag the new version.
 
 ## Issues
-Bug reports and suggestions can be filed at the project [Issues](https://github.com/SuperblocksHQ/studio/issues) page.  
-For more information about the process involved, please refer to the Wiki: [Submitting Bugs and Suggestions](https://github.com/SuperblocksHQ/studio/wiki/Submitting-Bugs-and-Suggestions).
+Bug reports and suggestions can be filed at the project [Issues](https://github.com/SuperblocksHQ/superblocks-lab/issues) page.  
+For more information about the process involved, please refer to the Wiki: [Submitting Bugs and Suggestions](https://github.com/SuperblocksHQ/superblocks-lab/wiki/Submitting-Bugs-and-Suggestions).
 
 ## Contributing
-Contributions are welcome. Please, visit the Wiki for a guide on [How to Contribute](https://github.com/SuperblocksHQ/studio/wiki/How-to-Contribute).
+Contributions are welcome. Please, visit the Wiki for a guide on [How to Contribute](https://github.com/SuperblocksHQ/superblocks-lab/wiki/How-to-Contribute).
 
 ## License
-**Superblocks Studio** is free software and GPLv3 licensed. See the COPYING file for details.
+**Superblocks Lab** is free software and GPLv3 licensed. See the COPYING file for details.
