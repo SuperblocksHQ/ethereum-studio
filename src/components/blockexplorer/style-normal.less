@@ -31,17 +31,19 @@
     margin-right: auto;
     margin-bottom: 30px;
     max-width: 800px;
-    background-color: white;
+    color: #fff;
+    padding: 6px;
     .header {
         position: relative;
         display: block;
         width: 100%;
-        background-color: purple;
+        background-color: #2F2F2F;
         .title {
-            text-align: center;
-            font-size: 1.3em;
+            padding: 9px;
+            text-align: left;
             display: block;
-            background-color: blue;
+            font-weight: 600;
+            color: #fff;
         }
         .status {
             position: absolute;
@@ -62,38 +64,43 @@
             }
         }
     }
-    .left {
-        width: 60%;
-        min-width: 150px;
-        float: left;
-        height: 100%;
-        background-color: red;
-    }
-    .right {
-        width: 40%;
-        min-width: 150px;
-        float: left;
-        height: 100%;
-        background-color: green;
-    }
-    .row {
-        width: 100%;
-        background-color: orange;
-    }
-    .bottom {
-        clear: both;
-        width: 100%;
-        background-color: pink;
-        &:after {
-            content: " ";
-            display: block;
-            clear: both;
+    .infoContainer {
+        padding: 10px 0;
+        background-color: #202020;
+        .left {
+            width: 60%;
+            min-width: 350px;
+            float: left;
+            height: 100%;
+            margin-left: 10px;
         }
-    }
-    .bottomButton {
-    }
-    .bottomContent {
-        .deployArgs {
+        .right {
+            width: 40%;
+            min-width: 350px;
+            float: left;
+            height: 100%;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+        .row {
+            width: 100%;
+            margin: 2px 0;
+        }
+        .bottom {
+            clear: both;
+            width: 100%;
+            padding-top: 10px;
+            &:after {
+                content: " ";
+                display: block;
+                clear: both;
+            }
+            button {
+                padding: 0 10px;
+            }
+            .bottomContent {
+                padding-top: 10px;
+            }
         }
     }
 }

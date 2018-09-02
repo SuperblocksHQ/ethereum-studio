@@ -145,7 +145,7 @@ export default class RenderTransactions {
         const age = this._formatAge(tx.ts);
         return(
             <div>
-                Age: {age}
+                <b>Age:</b> {age}
             </div>
         );
     };
@@ -153,7 +153,7 @@ export default class RenderTransactions {
     _renderOrigin = (tx) => {
         return (
             <div>
-                Origin: {tx.origin}
+                <b>Origin:</b> {tx.origin}
             </div>
         );
     };
@@ -167,7 +167,7 @@ export default class RenderTransactions {
         }
         return (
             <div>
-                Block #{blockNr} <span title="Order of this transaction inside the block">(Index {index})</span>
+                <b>Block</b> #{blockNr} <span title="Order of this transaction inside the block">(Index {index})</span>
             </div>
         );
     };
@@ -178,12 +178,12 @@ export default class RenderTransactions {
         const args2 = [];
         tx.deployArgs.map((arg) => {
             if (arg.value !== undefined) args2.push(arg.value);
-            else if (arg.account !== undefined) args2.push("Account: " + arg.account);
-            else if (arg.contract !== undefined) args2.push("Contract: " + arg.contract);
+            else if (arg.account !== undefined) args2.push(arg.account);
+            else if (arg.contract !== undefined) args2.push(arg.contract);
         });
         return (
             <div>
-                Constructor arguments {args2.join(', ')}
+                <b>Constructor arguments:</b> {args2.join(', ')}
             </div>
         );
     };
@@ -216,10 +216,10 @@ export default class RenderTransactions {
             return (
                 <div class={this.style.left}>
                     <div class={this.style.row}>
-                        Creator: {this._renderAddress(tx.obj.from, network)}
+                        <b>Creator:</b> {this._renderAddress(tx.obj.from, network)}
                     </div>
                     <div class={this.style.row}>
-                        Contract address: {this._renderAddress((tx.receipt||{}).contractAddress)}
+                        <b>Contract address:</b> {this._renderAddress((tx.receipt||{}).contractAddress)}
                     </div>
                 </div>
             );
@@ -230,13 +230,13 @@ export default class RenderTransactions {
             return (
                 <div class={this.style.left}>
                     <div class={this.style.row}>
-                        From: {this._renderAddress(tx.obj.from)}
+                        <b>From:</b> {this._renderAddress(tx.obj.from)}
                     </div>
                     <div class={this.style.row}>
-                        To: {this._renderAddress(tx.obj.to)}
+                        <b>To:</b> {this._renderAddress(tx.obj.to)}
                     </div>
                     <div class={this.style.row}>
-                        Value: <span title="{value} wei">{valueFormatted} ether</span>
+                        <b>Value:</b> <span title="{value} wei">{valueFormatted} ether</span>
                     </div>
                 </div>
             );
@@ -285,48 +285,52 @@ export default class RenderTransactions {
         return (
             <div className={classnames(classes)}>
                 {this._renderHeader(tx, type)}
-                {this._renderLeft(tx, type, network)}
-                <div class={this.style.right}>
-                    <div class={this.style.row}>
-                        {this._renderAge(tx)}
-                    </div>
-                    <div class={this.style.row}>
-                        {this._renderOrigin(tx)}
-                    </div>
-                    <div class={this.style.row}>
-                        {this._renderBlockNr(tx)}
-                    </div>
-                    <div class={this.style.row}>
-                        Gas used: {gasUsed}
-                    </div>
-                </div>
-                <div class={this.style.bottom}>
-                    <div class={this.style.bottomButton}>
-                        <a href="" onClick={(e)=>{this._toggleBottom(tx);e.preventDefault()}}>Show more</a>
-                    </div>
-                    {this.bottomVisible[tx.hash] &&
-                    <div class={this.style.bottomContent}>
-                        {this._renderBottomContentLeft(tx, type)}
-                        <div class={this.style.right}>
-                            <div class={this.style.row}>
-                                Gas Limit: {tx.obj.gas}
-                            </div>
-                            <div class={this.style.row}>
-                                Gas Price: {gasPriceFormatted} GWei
-                            </div>
-                            <div class={this.style.row}>
-                                Gas cost: {gasCostFormatted} Ether
-                            </div>
+                <div class={this.style.infoContainer}>
+                    {this._renderLeft(tx, type, network)}
+                    <div class={this.style.right}>
+                        <div class={this.style.row}>
+                            {this._renderAge(tx)}
+                        </div>
+                        <div class={this.style.row}>
+                            {this._renderOrigin(tx)}
+                        </div>
+                        <div class={this.style.row}>
+                            {this._renderBlockNr(tx)}
+                        </div>
+                        <div class={this.style.row}>
+                            <b>Gas used:</b> {gasUsed}
                         </div>
                     </div>
-                    }
+                    <div class={this.style.bottom}>
+                        <div class={this.style.bottomButton}>
+                            <button class="btnNoBg" onClick={(e)=>{this._toggleBottom(tx);e.preventDefault()}}>
+                            { this.bottomVisible[tx.hash] ? <b>Hide more</b> : <b>Show more</b> }
+                            </button>
+                        </div>
+                        {
+                            this.bottomVisible[tx.hash] &&
+                            <div class={this.style.bottomContent}>
+                                {this._renderBottomContentLeft(tx, type)}
+                                <div class={this.style.right}>
+                                    <div class={this.style.row}>
+                                        <b>Gas Limit:</b> {tx.obj.gas}
+                                    </div>
+                                    <div class={this.style.row}>
+                                        <b>Gas Price:</b> {gasPriceFormatted} GWei
+                                    </div>
+                                    <div class={this.style.row}>
+                                        <b>Gas cost:</b> {gasCostFormatted} Ether
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
                 </div>
             </div>
         );
     };
 
     _toggleBottom = (tx) => {
-        const obj = this.bottomVisible;
         this.bottomVisible[tx.hash] = !this.bottomVisible[tx.hash];
         this.redraw();
     };
