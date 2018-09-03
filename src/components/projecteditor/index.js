@@ -21,7 +21,7 @@ import Control from './control';
 import Panes from './panes';
 import TopBar from '../topbar';
 import ContactContainer from '../contactContainer';
-import TransactionLogPanel from '../blockexplorer/transactionLogPanel';
+import TransactionLogPanel from '../blockexplorer/transactionlogPanel';
 import { IconTransactions, IconClose } from '../icons';
 
 export default class ProjectEditor extends Component {
