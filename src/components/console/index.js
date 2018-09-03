@@ -149,11 +149,10 @@ export default class DevkitConsole extends Component {
             return <div class={style.waiting}>Loading...</div>;
         }
         else if(!this.state.running && this.state.consoleRows.length == 0) {
-            return <div class={style.space_invaders}>
+            return <div class={style.ready}>
                     <p>
                         Click Run to start
                     </p>
-                    <img src="/static/img/space-invaders.jpg" alt="" />
                 </div>;
         }
     }
