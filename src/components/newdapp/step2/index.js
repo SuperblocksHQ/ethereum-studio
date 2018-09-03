@@ -7,7 +7,7 @@ const TemplateCategory = ({ onCategorySelected, title } = props) => (
     <div onClick={onCategorySelected}>{title}</div>
 )
 
-TemplateCategory.protoTypes = {
+TemplateCategory.propTypes = {
     title: Proptypes.string.isRequired,
     onCategorySelected: Proptypes.func.isRequired,
 }
@@ -30,7 +30,7 @@ const GridLayout = ({ templates, onTemplateSelected, templateSelectedId, categor
     </div>
 );
 
-GridLayout.protoTypes = {
+GridLayout.propTypes = {
     templates: Proptypes.array.isRequired,
     onCategorySelected: Proptypes.func.isRequired,
     templateSelectedId: Proptypes.number,
@@ -47,7 +47,7 @@ const TemplateLayout = ({ image, name, description, selected, onTemplateSelected
     </div>
 );
 
-TemplateLayout.protoTypes = {
+TemplateLayout.propTypes = {
     image: Proptypes.string.isRequired,
     name: Proptypes.string.isRequired,
     description: Proptypes.string.isRequired,

@@ -16,18 +16,21 @@
 
 import { h, Component } from 'preact';
 import classnames from 'classnames';
+import PropTypes from 'prop-types';
 import style from './style';
 import { Pane, PaneComponent } from './pane';
 import { IconClose } from '../icons';
 import { DropdownContainer } from '../dropdown';
 
-export default class DevkitProjectEditorPanes extends Component {
+export default class Panes extends Component {
+
     constructor(props) {
         super(props);
         this.panes=[];
         this.activePaneId=null;
         props.router.register("panes", this);
     }
+
     componentDidMount() {
         window.addEventListener('resize', ()=>{this.redraw()});
     }
@@ -286,8 +289,11 @@ export default class DevkitProjectEditorPanes extends Component {
     render() {
         const header=this.renderHeader();
         const panes=this.renderPanes();
+
+        const { isActionPanelShowing } = this.props;
+
         return (
-           <div key="panes" id="panes" class="full">
+           <div key="panes" id="panes" class="full" style={{ width: isActionPanelShowing ? 'calc(100% - 450px)' : '100%'}}>
                <div key="header" id="panes_header" class={style.header}>
                    {header}
                </div>
@@ -297,4 +303,10 @@ export default class DevkitProjectEditorPanes extends Component {
            </div>
         );
     }
+}
+
+Panes.propTypes = {
+    router: PropTypes.object.isRequired,
+    functions: PropTypes.object.isRequired,
+    isActionPanelShowing: PropTypes.bool.isRequired
 }

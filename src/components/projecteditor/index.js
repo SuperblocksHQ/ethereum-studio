@@ -57,7 +57,7 @@ export default class ProjectEditor extends Component {
             document.removeEventListener('mousemove', this.onMouseMove)
             document.removeEventListener('mouseup', this.onMouseUp)
         }
-    };
+    }
 
     redraw = (all) => {
         if(this.props.router.control) {
@@ -69,7 +69,7 @@ export default class ProjectEditor extends Component {
         if(this.props.router.panes) {
             this.props.router.panes.redraw(all);
         }
-    };
+    }
 
     onMouseMove = (e) => {
         e.stopPropagation();
@@ -104,8 +104,13 @@ export default class ProjectEditor extends Component {
         this.setState({
             showTransactions: !this.state.showTransactions
         });
-
         this.redraw(true);
+    }
+
+    onProjectSelectedHandle = () => {
+        this.setState({
+            showTransactions: false
+        });
     }
 
     render() {
@@ -121,7 +126,7 @@ export default class ProjectEditor extends Component {
         const { controlPanelWidth, showTransactions } = this.state;
         return (
             <div class={style.projecteditor} id="main_container">
-                <TopBar router={this.props.router} functions={this.props.functions} />
+                <TopBar router={this.props.router} functions={this.props.functions} onProjectSelected={this.onProjectSelectedHandle} />
                 <div style="display: flex; height: 100%">
                     <div key="main_control" id="main_control" class={style.control} style={{width: controlPanelWidth}}>
                         <Control router={this.props.router} functions={this.props.functions} />
@@ -129,11 +134,11 @@ export default class ProjectEditor extends Component {
                     </div>
                     <span class="resizer vertical" onMouseDown={this.onMouseDown}></span>
                     <div style="position: relative; width: 100%">
-                        <div key="main_panes" id="main_panes" class={style.panescontainer}>
-                            <Panes router={this.props.router} functions={this.props.functions} />
+                        <div key="main_panes" id="main_panes" class={style.panescontainer} >
+                            <Panes router={this.props.router} functions={this.props.functions} isActionPanelShowing={showTransactions} />
                             {
                                 showTransactions ?
-                                    <div class={style.actionContainer}>
+                                    <div class={style.actionContainer} >
                                         <div class={style.header}>
                                             <span class={style.title}>Transactions History</span>
                                             <button class={classNames([style.icon, "btnNoBg"])} onClick={this.onShowHideTransactionsClicked}>
@@ -149,6 +154,7 @@ export default class ProjectEditor extends Component {
                             <div class={style.actions}>
                                 <button class={classNames([style.action, "btnNoBg"])} onClick={this.onShowHideTransactionsClicked}>
                                     <IconTransactions />
+                                    <span class={style.verticalText}>Transactions</span>
                                 </button>
                             </div>
                         </div>

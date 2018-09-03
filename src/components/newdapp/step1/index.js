@@ -123,7 +123,7 @@ export default class Step1 extends Component {
     }
 }
 
-Step1.protoTypes = {
+Step1.propTypes = {
     onStep1Done: Proptypes.func.isRequired,
     onCancelClick: Proptypes.func.isRequired,
 }
