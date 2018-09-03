@@ -75,7 +75,7 @@
                 "source": "/contracts/HelloWorld.sol",
                 "args": [
                     {
-                        "value": "Hello Wodl!"
+                        "value": "Hello World!"
                     }
                 ],
                 "blockchain": "ethereum",
