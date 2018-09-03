@@ -14,7 +14,7 @@ TemplateCategory.protoTypes = {
 
 const GridLayout = ({ templates, onTemplateSelected, templateSelectedId, categorySelectedId } = props) => (
     <div class={style.gridLayout}>
-        <div id="mainContent" className="container" style={{display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gridGap: '10px', gridAutoRows: 'minMax(100px, auto)'}}>
+        <div id="mainContent" className="container" style={{display: 'grid', gridTemplateColumns: 'repeat(2, 0fr)', gridGap: '10px', gridAutoRows: 'minMax(100px, auto)'}}>
         { templates
             .filter((template) => template.categories.indexOf(categorySelectedId) > -1)
             .map((template) => (
@@ -38,10 +38,12 @@ GridLayout.protoTypes = {
 }
 
 const TemplateLayout = ({ image, name, description, selected, onTemplateSelected } = props) => (
-    <div onClick={onTemplateSelected} class={classNames([style.templateLayout], { [style.selected]: selected })}>
+    <div onClick={onTemplateSelected} class={classNames([style.templateLayout], { [style.selected]: selected }, style.alignContnetCenter)}>
         <img src={image} width="300"/>
+        <div style={{height: '90px'}}>
         <div class={style.title}>{name}</div>
         <div class={style.description}>{description}</div>
+        </div>
     </div>
 );
 

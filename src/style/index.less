@@ -14,6 +14,14 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
+// Variables
+@white-color-hover: #ecebeb;
+
+// Generic to all the application
+* {
+    box-sizing: border-box;
+}
+
 html, body {
     width: 100%;
     padding: 0;
@@ -27,6 +35,7 @@ html, body {
     -moz-osx-font-smoothing: grayscale;
     font-size: 15px;
 }
+
 html {
     ::-webkit-scrollbar {
         width: .5rem;
@@ -46,10 +55,6 @@ html {
             background-color: hsla(0, 0%, 100%,.2);
         }
     }
-}
-
-* {
-    box-sizing: border-box;
 }
 
 a:active,a:focus {
@@ -331,7 +336,7 @@ a:active,a:focus {
         background-color: transparent;
         border: 0;
         &:hover {
-            background-color: #f4f4f4;
+            background-color: @white-color-hover;
         }
     }
     &:disabled {

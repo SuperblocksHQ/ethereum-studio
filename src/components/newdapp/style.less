@@ -14,6 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
+@import '../../style/index';
+
 .centerScreen {
     display: flex;
     flex-direction: column;
@@ -44,7 +46,7 @@
         }
     }
     .area {
-        padding: 63px 32px 40px 32px;
+        padding: 63px 15px 40px 32px;
     }
     .step1 {
         width: 512px;
@@ -86,13 +88,13 @@
                     line-height: 40px;
                     padding: 0 16px;
                     &:hover {
-                        background-color: #F4F4F4;
+                        background-color: @white-color-hover;
                         color: #8641F2;
                         cursor: pointer;
                     }
                 }
                 .selected {
-                    background-color: #F4F4F4;
+                    background-color: @white-color-hover;
                     color: #8641F2;
                 }
             }
@@ -101,7 +103,8 @@
             width: 80%;
             overflow-y: auto;
             .gridLayout {
-                height: 500px;
+                height: 540px;
+                padding-left: 20px;
                 .templateLayout {
                     padding: 15px;
                     img {
@@ -110,18 +113,19 @@
                     .title {
                         font-weight: 700;
                         margin-top: 10px;
+                        text-align: left;
                     }
                     .description {
                         margin-top: 7px;
                     }
                     &:hover {
-                        background-color: #F4F4F4;
+                        background-color: @white-color-hover;
                         cursor: pointer;
                     }
                 }
             }
             .selected {
-                background-color: #F4F4F4;
+                background-color: @white-color-hover;
             }
         }
     }
@@ -129,5 +133,11 @@
         position: absolute;
         right: 40px;
         bottom: 40px;
+    }
+    .alignContnetCenter {
+        align-items :center;
+        justify-content: center;
+        flex-direction: column;
+        display:grid;
     }
 }
