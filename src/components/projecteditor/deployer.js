@@ -28,7 +28,6 @@ export default class Deployer extends Component {
         super(props);
         this.id=props.id+"_deployer";
         this.props.parent.childComponent=this;
-        this.setState({status:"Space Invaders ready to deploy."});
         this.consoleRows=[];
         const projectname=this.props.project.props.state.dir;
         this.dappfile = this.props.project.props.state.data.dappfile;
@@ -85,9 +84,9 @@ export default class Deployer extends Component {
     };
 
     callback = (status) => {
-        var msg="Space Invaders chilling down after task well done";
+        var msg="Chilling down after task well done";
         if(status!=0) {
-            msg="Space Invaders failed in deploying your contract";
+            msg="Failed in deploying your contract";
         }
         this._stop(msg);
         const callback=this.props.parent.callback;
@@ -127,7 +126,6 @@ export default class Deployer extends Component {
         if(this.isRunning) return;
         this.isRunning=true;
         this.consoleRows.length=0;
-        this.setState({status:"Space Invaders preparing..."});
         this.redraw();
 
         const env=this.props.project.props.state.data.env;
@@ -897,8 +895,8 @@ if(typeof(Contracts)==="undefined") var Contracts={};
 
     getWait = () => {
         if(this.consoleRows.length == 0) {
-            return <div class={style.space_invaders}>
-                    <img src="/static/img/space-invaders.jpg" alt="" />
+            return <div class={style.loading}>
+                    <span>Loading...</span>
                 </div>;
         }
     };

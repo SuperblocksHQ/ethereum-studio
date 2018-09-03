@@ -25,7 +25,6 @@ export default class Compiler extends Component {
         super(props);
         this.id=props.id+"_compiler";
         this.props.parent.childComponent=this;
-        this.setState({status:"Space Invaders ready."});
         this.consoleRows=[];
         const projectname=this.props.project.props.state.dir;
         this.dappfile = this.props.project.props.state.data.dappfile;
@@ -71,7 +70,6 @@ export default class Compiler extends Component {
         }
         if(this.isRunning) return;
         this.isRunning=true;
-        this.setState({status:"Space Invaders chewing source code..."});
         this.redraw();
 
         const contracts=this.dappfile.contracts();
@@ -89,12 +87,12 @@ export default class Compiler extends Component {
         this._loadFiles(sources, (status, bodies) => {
             if(status!=0) {
                 alert("Could not load contract source code. Is there any contract not saved?");
-                this.setState({status:"Space Invaders could not find the true meaning of life and dissolved into pixels... To become a higher being."});
+                this.setState({status:"Your code could not find the true meaning of life and dissolved into pixels... To become a higher being."});
                 this.isRunning=false;
                 return;
             }
             this.consoleRows.length=0;
-            // We have a short delay to show the nice Space Invaders image.
+            // This timeout can be removed.
             setTimeout(()=>{
                 var srcfilename;
                 var contractbody;
@@ -158,7 +156,6 @@ export default class Compiler extends Component {
                 this.props.functions.compiler.queue({input:JSON.stringify(input), files:files}, (data)=>{
                     if(data) data=JSON.parse(data);
                     if(!data) {
-                        this.setState({status:"Space Invaders shot down."});
                         (["Sorry! We hit a compiler internal error. Please report the problem and in the meanwhile try using a different browser."]).map((row)=>{
                             this.consoleRows.push({channel:3,msg:row.formattedMessage});
                         });
@@ -170,12 +167,12 @@ export default class Compiler extends Component {
                             this.consoleRows.push({channel:3,msg:row.formattedMessage});
                         });
                         if(!data.contracts || Object.keys(data.contracts).length==0) {
-                            this.setState({status:"Space Invaders ate bad code and died, compilation aborted."});
+                            this.setState({status:"Ate bad code and died, compilation aborted."});
                             // Clear ABI and BIN
                             delFiles();
                         }
                         else {
-                            this.setState({status:"Space Invaders successfully digested the source code."});
+                            this.setState({status:"Successfully digested the source code."});
                             const contractName=this.props.contract;
                             var contractObj;
                             const filename=srcfilename.match(".*/(.*)$")[1];
@@ -240,7 +237,7 @@ export default class Compiler extends Component {
                     this.isRunning=false;
                     this.redraw();
                 });
-            },500);
+            },1);
         },true);
     };
 
@@ -306,8 +303,8 @@ export default class Compiler extends Component {
 
     getWait = () => {
         if(this.consoleRows.length == 0) {
-            return <div class={style.space_invaders}>
-                    <img src="/static/img/space-invaders.jpg" alt="" />
+            return <div class={style.loading}>
+                    <span>Loading...</span>
                 </div>;
         }
     };
