@@ -239,7 +239,7 @@ class ProjectDialog extends Component {
                                 ) : (null)
                             }
                             <div class={style.container}>
-                                <div class={style.overflowText}>{project.props.state.data.dappfile.getObj().project.info.title || ""} - </div>
+                                <div class={style.overflowTextName}>{project.props.state.data.dappfile.getObj().project.info.title || ""} - </div>
                                 <div class={style.overflowText}>&nbsp;{project.props.state.data.dir}</div>
                             </div>
                             <div class={classNames([style.projSwitcherRowActions, style.container])}>
