@@ -38,7 +38,7 @@ GridLayout.propTypes = {
 }
 
 const TemplateLayout = ({ image, name, description, selected, onTemplateSelected } = props) => (
-    <div onClick={onTemplateSelected} class={classNames([style.templateLayout], { [style.selected]: selected }, style.alignContnetCenter)}>
+    <div onClick={onTemplateSelected} class={classNames([style.templateLayout], { [style.selected]: selected }, style.alignContentCenter)}>
         <img src={image} width="300"/>
         <div style={{height: '90px'}}>
         <div class={style.title}>{name}</div>
@@ -116,7 +116,7 @@ export default class Step2 extends Component {
                         </div>
                     </div>
                     <div class={style.footer}>
-                        <button onClick={this.back} class="btn2 noBg">Back</button>
+                        <button onClick={this.back} class="btn2 noBg mr-2">Back</button>
                         <button onClick={this.onCreateProjectHandle} disabled={!templateSelected} class="btn2">Create Project</button>
                     </div>
                 </div>

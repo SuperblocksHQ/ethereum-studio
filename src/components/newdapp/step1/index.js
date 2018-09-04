@@ -90,7 +90,7 @@ export default class Step1 extends Component {
                     <div class={style.area}>
                         <div class={style.form}>
                             <div class={style.info}>
-                                <div class="superInput">
+                                <div class="superInputDark">
                                     <label for="project">Project name</label>
                                     <input
                                         id="project"
@@ -100,7 +100,7 @@ export default class Step1 extends Component {
                                         onChange={this.handleNameChange}
                                         placeholder="Enter project name"/>
                                 </div>
-                                <div class="superInput my-3">
+                                <div class="superInputDark my-4">
                                     <label for="html">DApp (HTML) Title: </label>
                                     <input
                                         id="html"
@@ -114,7 +114,7 @@ export default class Step1 extends Component {
                         </div>
                     </div>
                     <div class={style.footer}>
-                        <button onClick={this.onCancelClickHandle} class="btn2 noBg">Cancel</button>
+                        <button onClick={this.onCancelClickHandle} class="btn2 noBg mr-2">Cancel</button>
                         <button onClick={this.onNextClickHandle} class="btn2">Next</button>
                     </div>
                 </div>

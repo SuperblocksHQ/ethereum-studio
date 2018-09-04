@@ -30,19 +30,19 @@
     -webkit-border-radius: 4;
     -moz-border-radius: 4;
     border-radius: 4px;
-    background-color: #fff;
-    color: #333;
+    background-color: @modal-background-color;
+    color: #fff;
     .header {
         position: absolute;
         top: 0;
         left: 0;
         right: 0;
-        background-color: #F3F3F3;
         padding: 18px 32px;
+        border-bottom: 1px solid @modal-separator-color;
         .title {
-            color: #383E40;
-            font-weight: 700;
+            font-weight: 600;
             text-align: left;
+            font-size: 1.3em;
         }
     }
     .area {
@@ -75,7 +75,7 @@
         }
         .categoriesArea {
             width: 20%;
-            border-right: 1px solid #D8DDE6;
+            border-right: 1px solid @modal-separator-color;
             .categoriesTitle {
                 font-weight: 600;
                 margin-bottom: 16px;
@@ -84,18 +84,23 @@
                 list-style-type: none;
                 margin: 0;
                 padding: 0;
+                color: #c7c7c7;
                 li {
                     line-height: 40px;
                     padding: 0 16px;
+                    border-radius: 2px;
                     &:hover {
-                        background-color: @white-color-hover;
-                        color: #8641F2;
+                        background-color: @modal-color-hover;
                         cursor: pointer;
+                        color: #fff;
                     }
                 }
                 .selected {
-                    background-color: @white-color-hover;
-                    color: #8641F2;
+                    background-color: @primary-color;
+                    color: #fff;
+                    &:hover {
+                        background-color: @primary-color;
+                    }
                 }
             }
         }
@@ -107,6 +112,7 @@
                 padding-left: 20px;
                 .templateLayout {
                     padding: 15px;
+                    border-radius: 4px;
                     img {
                         border-radius: 4px;
                     }
@@ -119,13 +125,16 @@
                         margin-top: 7px;
                     }
                     &:hover {
-                        background-color: @white-color-hover;
+                        background-color: @modal-color-hover;
                         cursor: pointer;
                     }
                 }
-            }
-            .selected {
-                background-color: @white-color-hover;
+                .selected {
+                    background-color: rgba(128, 46, 255, 0.7);
+                    &:hover {
+                        background-color: rgba(128, 46, 255, 0.7);
+                    }
+                }
             }
         }
     }
@@ -134,7 +143,7 @@
         right: 40px;
         bottom: 40px;
     }
-    .alignContnetCenter {
+    .alignContentCenter {
         align-items :center;
         justify-content: center;
         flex-direction: column;

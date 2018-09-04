@@ -14,8 +14,24 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-// Variables
+@import './spacing';
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////// Variables //////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Generic
+@primary-color: #8641F2;
 @white-color-hover: #ecebeb;
+
+// modal
+@modal-background-color: #2b2b2b;
+@modal-color-hover: #353535;
+@modal-separator-color: #3C3C3C;
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////// Generic //////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Generic to all the application
 * {
@@ -73,23 +89,6 @@ a:active,a:focus {
 
 .full-x {
     width: 100%;
-}
-
-.my-3 {
-    margin-top: 2em;
-    margin-bottom: 2em;
-}
-
-.mt-3 {
-    margin-top: 2em;
-}
-
-.mb-2 {
-    margin-bottom: 1em;
-}
-
-.p-1 {
-    padding: 0.5em;
 }
 
 #app {
@@ -332,11 +331,12 @@ a:active,a:focus {
         background-color: #7237CF;
     }
     &.noBg {
-        color: #646464;
+        color: #c7c7c7;
         background-color: transparent;
         border: 0;
         &:hover {
-            background-color: @white-color-hover;
+            background-color: @modal-color-hover;
+            color: #fff;
         }
     }
     &:disabled {
