@@ -186,6 +186,12 @@ export default class ContractEditor extends Component {
                 alert("A contract by this name already exists, choose a different name, please.");
                 return;
             }
+            // Check if any affected windows are open.
+            if (this.props.router.control._anyContractItemsOpen(this.props.contract)) {
+                alert("Please close any editor, compile or deploy window which is open for this contract, then try again to rename it.");
+                return
+            }
+
             // Rename the source file too.
             const file=this.contract.get('source').match(".*/([^/]+$)")[1];
             this.props.project.renameFile(this._originalsourcepath, file, (status) => {

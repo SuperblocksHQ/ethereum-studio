@@ -505,6 +505,18 @@ export default class Control extends Component {
         if(this.props.router.panes) this.props.router.panes.openItem(item);
     };
 
+    _anyContractItemsOpen = (contractName) => {
+        const project = this.getActiveProject();
+        if(project) {
+            // TODO: this lookup is bad since it depends on the order of the menu items.
+            // TODO: look through project object for the contract named contractName, then get the item for the Editor, Compiler, Deployer and Interact window.
+            // Check if any of these items are open, using 
+            //this.props.router.panes.getWindowByItem(item)
+            //if any match then return true, else false.
+        }
+        return false;
+    };
+
     redraw = () => {
         this.setState();
     };
