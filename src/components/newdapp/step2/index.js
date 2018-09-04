@@ -2,6 +2,7 @@ import { h, Component } from 'preact';
 import Proptypes from 'prop-types';
 import classNames from 'classnames';
 import style from '../style';
+import { IconClose } from '../../icons';
 
 const TemplateCategory = ({ onCategorySelected, title } = props) => (
     <div onClick={onCategorySelected}>{title}</div>
@@ -82,6 +83,10 @@ export default class Step2 extends Component {
         })
     }
 
+    onCloseClickHandle = () => {
+        this.props.onCloseClickHandle();
+    };
+
     render() {
         let { categories, templates } = this.props;
         let { categorySelectedId, templateSelected } = this.state;
@@ -91,6 +96,9 @@ export default class Step2 extends Component {
                 <div class={style.step2}>
                     <div class={style.header}>
                         <div class={style.title}>Select Template</div>
+                        <button class={classNames([style.closeIcon, "btnNoBg"])} onClick={this.onCloseClickHandle}>
+                            <IconClose />
+                        </button>
                     </div>
                     <div class={classNames([style.area, style.container])}>
                         <div class={style.categoriesArea}>
@@ -130,4 +138,5 @@ Step2.proptypes = {
     templates: Proptypes.array.isRequired,
     onTemplateSelected: Proptypes.func.isRequired,
     onBackPress: Proptypes.func.isRequired,
+    onCloseClicked: Proptypes.func.isRequired
 }

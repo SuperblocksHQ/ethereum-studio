@@ -38,11 +38,19 @@
         left: 0;
         right: 0;
         padding: 18px 32px;
+        display: flex;
         border-bottom: 1px solid @modal-separator-color;
         .title {
             font-weight: 600;
             text-align: left;
             font-size: 1.3em;
+        }
+        .closeIcon {
+            margin-left: auto;
+            color: #c7c7c7;
+            &:hover {
+                color: #fff;
+            }
         }
     }
     .area {

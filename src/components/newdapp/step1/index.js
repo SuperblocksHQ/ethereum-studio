@@ -18,6 +18,7 @@ import { h, Component } from 'preact';
 import Proptypes from 'prop-types';
 import classNames from 'classnames';
 import style from '../style';
+import { IconClose } from '../../icons';
 
 export default class Step1 extends Component {
 
@@ -64,8 +65,8 @@ export default class Step1 extends Component {
         }
     };
 
-    onCancelClickHandle = () => {
-        this.props.onCancelClick();
+    onCloseClickHandle = () => {
+        this.props.onCloseClickHandle();
     };
 
     handleNameChange = changeEvent => {
@@ -86,6 +87,9 @@ export default class Step1 extends Component {
                 <div class={style.step1}>
                     <div class={style.header}>
                         <div class={style.title}>Create a new project</div>
+                        <button class={classNames([style.closeIcon, "btnNoBg"])} onClick={this.onCloseClickHandle}>
+                            <IconClose />
+                        </button>
                     </div>
                     <div class={style.area}>
                         <div class={style.form}>
@@ -114,7 +118,7 @@ export default class Step1 extends Component {
                         </div>
                     </div>
                     <div class={style.footer}>
-                        <button onClick={this.onCancelClickHandle} class="btn2 noBg mr-2">Cancel</button>
+                        <button onClick={this.onCloseClickHandle} class="btn2 noBg mr-2">Cancel</button>
                         <button onClick={this.onNextClickHandle} class="btn2">Next</button>
                     </div>
                 </div>
@@ -125,5 +129,5 @@ export default class Step1 extends Component {
 
 Step1.propTypes = {
     onStep1Done: Proptypes.func.isRequired,
-    onCancelClick: Proptypes.func.isRequired,
+    onCloseClickHandle: Proptypes.func.isRequired
 }

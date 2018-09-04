@@ -34,7 +34,7 @@ export default class NewDapp extends Component {
         });
     }
 
-    onCancelClickHandle = () => {
+    onCloseClickHandle = () => {
         this.closeModal();
     }
 
@@ -69,14 +69,15 @@ export default class NewDapp extends Component {
                             projectName={this.state.projectInfo ? this.state.projectInfo.name : ""}
                             projectTitle={this.state.projectInfo ? this.state.projectInfo.title : ""}
                             onStep1Done={this.onStep1DoneHandle}
-                            onCancelClick={this.onCancelClickHandle}/>;
+                            onCloseClickHandle={this.onCloseClickHandle}/>;
                 break;
             case 2:
                 step = <Step2
                             categories={Templates.categories}
                             templates={Templates.templates}
                             onTemplateSelected={this.onTemplateSelectedHandle}
-                            onBackPress={this.pop}/>;
+                            onBackPress={this.pop}
+                            onCloseClickHandle={this.onCloseClickHandle}/>;
                 break;
             default:
                 step = <Step1 onStep1Done={this.onStep1DoneHandle}/>;
