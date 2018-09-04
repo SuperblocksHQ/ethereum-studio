@@ -238,7 +238,7 @@ class ProjectDialog extends Component {
                                 ) : (null)
                             }
                             <div class={style.container}>
-                                <div class={style.overflowText}>{project.props.state.data.dappfile.getObj().project.info.title || ""} - &nbsp;{project.props.state.data.dir}</div>
+                                <div class={style.overflowText}>{project.props.state.data.dir} - &nbsp;{project.props.state.data.dappfile.getObj().project.info.title || ""}</div>
                             </div>
                             <div class={classNames([style.projSwitcherRowActions, style.container])}>
                                 <button class="btnNoBg" onClick={(e)=>{this.openProjectConfig(e, project)}}>
