@@ -189,7 +189,7 @@ export default class ContractEditor extends Component {
             // Check if any affected windows are open.
             if (this.props.router.control._anyContractItemsOpen(this.props.contract)) {
                 alert("Please close any editor, compile or deploy window which is open for this contract, then try again to rename it.");
-                return
+                return;
             }
 
             // Rename the source file too.
@@ -294,6 +294,7 @@ export default class ContractEditor extends Component {
                                 <div class="superInputDark">
                                     <label for="name">Name</label>
                                     <input
+                                        disabled
                                         id="name"
                                         type="text"
                                         onKeyUp={(e)=>{this.onChange(e, 'name')}}
