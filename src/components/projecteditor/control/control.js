@@ -510,9 +510,21 @@ export default class Control extends Component {
         if(project) {
             // TODO: this lookup is bad since it depends on the order of the menu items.
             // TODO: look through project object for the contract named contractName, then get the item for the Editor, Compiler, Deployer and Interact window.
-            // Check if any of these items are open, using 
-            //this.props.router.panes.getWindowByItem(item)
-            //if any match then return true, else false.
+            const items = [];
+            const item = project.props.state.children[1].getChildren()[0].props.state._children[0];
+            items.push(item);
+            items.push(item.props.state.children[0]);  // Configure item
+            items.push(item.props.state.children[1]);
+            items.push(item.props.state.children[2]);
+            items.push(item.props.state.children[3]);
+            console.log(items);
+
+            for(let index=0;index<items.length;index++) {
+                const item = items[index];
+                if (this.props.router.panes.getWindowByItem(item).pane) {
+                    return true;
+                }
+            }
         }
         return false;
     };
@@ -849,14 +861,26 @@ export default class Control extends Component {
         e.stopPropagation();
 
         var name;
-        for(var index=0;index<100000;index++) {
-            name="Contract"+index;
-            if(projectItem.props.state.data.dappfile.contracts().filter((c)=>{
-                return c.name==name;
-            }).length==0) {
-                break;
-            }
+        name = prompt("Please give the contract a name:");
+        if (!name) return;
+        if(!name.match(/^([a-zA-Z0-9-_]+)$/) || name.length > 16) {
+            alert('Illegal contract name. Only A-Za-z0-9, dash (-) and underscore (_) allowed. Max 16 characters.');
+            return;
         }
+        if(projectItem.props.state.data.dappfile.contracts().filter((c)=>{
+            return c.name==name;
+        }).length>0) {
+            alert("A contract by this name already exists, choose a different name, please.");
+            return;
+        }
+        //for(var index=0;index<100000;index++) {
+            //name="Contract"+index;
+            //if(projectItem.props.state.data.dappfile.contracts().filter((c)=>{
+                //return c.name==name;
+            //}).length==0) {
+                //break;
+            //}
+        //}
         var account="";
         if(projectItem.props.state.data.dappfile.accounts().length>0) account=projectItem.props.state.data.dappfile.accounts()[0].name
         projectItem.props.state.data.dappfile.contracts().push({
@@ -864,21 +888,6 @@ export default class Control extends Component {
             account: account,
             source: "/contracts/"+name+".sol",
             blockchain: "ethereum",
-            network: "browser",
-            _environments: [
-                {
-                    name: "browser",
-                    data: {
-                        network: "browser"
-                    }
-                },
-                {
-                    name: "local",
-                    data: {
-                        network: "local"
-                    }
-                },
-            ]
         });
         projectItem.save((status)=>{
             if(status==0) {
@@ -908,6 +917,10 @@ export default class Control extends Component {
         e.stopPropagation();
         if(!confirm("Really delete contract?")) return;
         const contract=projectItem.props.state.data.dappfile.contracts()[contractIndex];
+        if (this._anyContractItemsOpen(contract.name)) {
+            alert("Could not delete contract, close editor/compiler/deployer/interaction windows and try again.");
+            return;
+        }
         projectItem.deleteFile(contract.source, (status)=>{
             if(status>0) {
                 alert("Could not delete contract, close editor and try again.");
