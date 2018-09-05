@@ -1,18 +1,18 @@
 // Copyright 2018 Superblocks AB
 //
-// This file is part of Superblocks Studio.
+// This file is part of Superblocks Lab.
 //
-// Superblocks Studio is free software: you can redistribute it and/or modify
+// Superblocks Lab is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation version 3 of the License.
 //
-// Superblocks Studio is distributed in the hope that it will be useful,
+// Superblocks Lab is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Superblocks Studio.  If not, see <http://www.gnu.org/licenses/>.
+// along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 // Ethereum
 const abi           = require('ethereumjs-abi');
@@ -804,7 +804,9 @@ function sendRawTransaction(data, callback) {
             _vm.runBlock({block: nextBlock, generate: true}, function(err, results) {
                 if(err) {
                     console.error(err);
+                    callback(err, null);
                 } else {
+                    callback(null, transactionHash);
                     _debugLog("[Block] finished running");
                     _debugLog(results);
                     //console.info("[Transaction] returned: " + results.results[0].vm.return.toString("hex"));
@@ -885,7 +887,6 @@ function sendRawTransaction(data, callback) {
         "status": null,
     };
 
-    callback(null, transactionHash);
     });
 }
 

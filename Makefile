@@ -1,18 +1,18 @@
 # Copyright 2018 Superblocks AB
 #
-# This file is part of Superblocks Studio.
+# This file is part of Superblocks Lab.
 #
-# Superblocks Studio is free software: you can redistribute it and/or modify
+# Superblocks Lab is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation version 3 of the License.
 #
-# Superblocks Studio is distributed in the hope that it will be useful,
+# Superblocks Lab is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with Superblocks Studio.  If not, see <http://www.gnu.org/licenses/>.
+# along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 PREACT = ./node_modules/preact-cli/lib/index.js
 
@@ -34,10 +34,10 @@ build: build_external_dist
 	$(PREACT) build --no-prerender --service-worker=false --production --clean
 build_external_dev:
 	mkdir -p ./src/components/superprovider/dist
-	sed 's#ORIGIN#"$(ORIGIN_DEV)"#g' ./src/components/superprovider/web3provider.js | ./node_modules/babel-cli/bin/babel.js --presets es2015 >./src/components/superprovider/dist/web3provider.js
+	sed 's#ORIGIN#"$(ORIGIN_DEV)"#g' ./src/components/superprovider/web3provider.js | ./node_modules/babel-cli/bin/babel.js --presets env >./src/components/superprovider/dist/web3provider.js
 build_external_dist:
 	mkdir -p ./src/components/superprovider/dist
-	sed 's#ORIGIN#"$(ORIGIN_DIST)"#g' ./src/components/superprovider/web3provider.js | ./node_modules/babel-cli/bin/babel.js --presets es2015 >./src/components/superprovider/dist/web3provider.js
+	sed 's#ORIGIN#"$(ORIGIN_DIST)"#g' ./src/components/superprovider/web3provider.js | ./node_modules/babel-cli/bin/babel.js --presets env >./src/components/superprovider/dist/web3provider.js
 dist: build
 	rm -rf dist
 	mkdir dist

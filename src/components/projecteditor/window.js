@@ -1,18 +1,18 @@
 // Copyright 2018 Superblocks AB
 //
-// This file is part of Superblocks Studio.
+// This file is part of Superblocks Lab.
 //
-// Superblocks Studio is free software: you can redistribute it and/or modify
+// Superblocks Lab is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation version 3 of the License.
 //
-// Superblocks Studio is distributed in the hope that it will be useful,
+// Superblocks Lab is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Superblocks Studio.  If not, see <http://www.gnu.org/licenses/>.
+// along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { h, Component } from 'preact';
 import classnames from 'classnames';
@@ -29,6 +29,8 @@ import AppView from './appview.js';
 import ConstantEditor from './editor-constant.js';
 import ContractInteraction from './contractinteraction.js';
 import TransactionLog from '../blockexplorer/transactionlog.js';
+import Welcome from './welcome';
+import { IconClose } from '../icons';
 
 export class WindowComponent extends Component {
     constructor(props) {
@@ -47,9 +49,9 @@ export class WindowComponent extends Component {
         const sub=this.props.obj.renderSub();
         return (
             <div key="window" class="full">
-                <div class={style.close_btn}>
-                    <a href="#" title="Close" onClick={this.props.obj.close}>X</a>
-                </div>
+                <button class={classnames([style.close_btn, "btnNoBg"])} onClick={this.props.obj.close} title="Close">
+                    <IconClose />
+                </button>
                 {sub}
             </div>
         );
@@ -164,6 +166,13 @@ export class Window {
                 <TransactionLog id={this.subId} parent={this} name={this.props.item.props._name} project={this.props.item.props._project} router={this.props.router} functions={this.props.functions} />
             );
         }
+        else if(this.props.item.props.type=="info" && this.props.item.props.type2=="welcome") {
+            return (
+                <Welcome
+                    router={this.props.router}
+                />
+            );
+        }
     };
 
     close = (e) => {
@@ -184,7 +193,16 @@ export class Window {
     getTitle = () => {
         if(this.childComponent && this.childComponent.getTitle) return this.childComponent.getTitle();
         if(this.props.item.props.type=="file") return this.props.item.props.title;
-        if(this.props.item.props.type=="contract") return this.props.item.props.title;
+        if(this.props.item.props.type=="contract") {
+            switch(this.props.item.props.type2) {
+                case "configure":
+                case "interact":
+                case "compile":
+                case "deploy":
+                    return this.props.item.props._contract;
+
+            }
+        }
         return this.props.item.props.title;
     };
 

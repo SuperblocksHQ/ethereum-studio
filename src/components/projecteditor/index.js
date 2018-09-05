@@ -1,38 +1,42 @@
 // Copyright 2018 Superblocks AB
 //
-// This file is part of Superblocks Studio.
+// This file is part of Superblocks Lab.
 //
-// Superblocks Studio is free software: you can redistribute it and/or modify
+// Superblocks Lab is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation version 3 of the License.
 //
-// Superblocks Studio is distributed in the hope that it will be useful,
+// Superblocks Lab is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Superblocks Studio.  If not, see <http://www.gnu.org/licenses/>.
+// along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { h, Component } from 'preact';
-import classnames from 'classnames';
+import { Component } from 'preact';
+import classNames from 'classnames';
 import style from './style';
-import Control from './control.js';
-import Panes from './panes.js';
+import Control from './control';
+import Panes from './panes';
+import TopBar from '../topbar';
+import ContactContainer from '../contactContainer';
+import TransactionLogPanel from '../blockexplorer/transactionlogPanel';
+import { IconTransactions, IconClose } from '../icons';
 
-export default class DevkitProjectEditor extends Component {
+export default class ProjectEditor extends Component {
+
+    state = {
+        controlPanelWidth: 280,
+        draggin: false,
+        showTransactions: false
+    }
+
     constructor(props) {
         super(props);
 
-        // Used to communicate between components, events is probably a bettter way of doing this.
-        this.router={
-            register: this.register,
-        };
-        this.router.register("main", this);
+        this.props.router.register("main", this);
 
-        window.addEventListener("resize", (e) =>{
-            this._updatePanesWidth();
-        });
         // Mute defalt ctrl-s behavior.
         window.addEventListener("keydown", function(e) {
             if (e.keyCode == 83 && (navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)) {
@@ -41,42 +45,127 @@ export default class DevkitProjectEditor extends Component {
         }, false);
     }
 
-    componentWillReceiveProps = (props) => {
-    };
-
-    componentDidMount() {
-        this._updatePanesWidth();
+    // we could get away with not having this (and just having the listeners on
+    // our div), but then the experience would be possibly be janky. If there's
+    // anything w/ a higher z-index that gets in the way, then you're toast,
+    // etc.
+    componentDidUpdate(props, state) {
+        if (this.state.dragging && !state.dragging) {
+            document.addEventListener('mousemove', this.onMouseMove)
+            document.addEventListener('mouseup', this.onMouseUp)
+        } else if (!this.state.dragging && state.dragging) {
+            document.removeEventListener('mousemove', this.onMouseMove)
+            document.removeEventListener('mouseup', this.onMouseUp)
+        }
     }
 
     redraw = (all) => {
-        if(this.router.control) {
-            this.router.control.redraw();
+        if(this.props.router.control) {
+            this.props.router.control.redraw();
         }
-        if(this.router.panes) {
-            this.router.panes.redraw(all);
+        if(this.props.router.app) {
+            this.props.router.app.redraw(all);
         }
-    };
+        if(this.props.router.panes) {
+            this.props.router.panes.redraw(all);
+        }
+    }
 
-    register = (name, obj) => {
-        this.router[name] = obj;
-    };
+    onMouseMove = (e) => {
+        e.stopPropagation();
+        e.preventDefault();
 
-    _updatePanesWidth=()=>{
-        const a=document.getElementById("main_container");
-        const b=document.getElementById("main_control");
-        const c=document.getElementById("main_panes");
-        if(!a) return;
-        c.style.width=(a.offsetWidth-b.offsetWidth-3)+"px";
+        if (!this.state.dragging) return;
+        this.setState({
+            controlPanelWidth: e.pageX
+        });
+    }
+
+    onMouseUp = (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+
+        this.setState({ dragging: false });
+    }
+
+    onMouseDown = (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+
+        // only left mouse button
+        if (e.button !== 0) return;
+        this.setState({
+            dragging: true,
+            controlPanelWidth: e.screenX
+        });
+    }
+
+    onShowHideTransactionsClicked = () => {
+        this.setState({
+            showTransactions: !this.state.showTransactions
+        });
+        this.redraw(true);
+    }
+
+    onProjectSelectedHandle = () => {
+        this.setState({
+            showTransactions: false
+        });
     }
 
     render() {
+        var endpoint="";
+        var project;
+        if (this.props.router && this.props.router.control) {
+            project = this.props.router.control && this.props.router.control.getActiveProject();
+            if (project) {
+                const network = project.props.state.data.env;
+                endpoint = (this.props.functions.networks.endpoints[network] || {}).endpoint;
+            }
+        }
+        const { controlPanelWidth, showTransactions } = this.state;
         return (
             <div class={style.projecteditor} id="main_container">
-                <div key="main_control" id="main_control" class={style.control}>
-                    <Control router={this.router} functions={this.props.functions} />
+                <TopBar router={this.props.router} functions={this.props.functions} onProjectSelected={this.onProjectSelectedHandle} />
+                <div style="display: flex; height: 100%">
+                    <div key="main_control" id="main_control" class={style.control} style={{width: controlPanelWidth}}>
+                        <Control router={this.props.router} functions={this.props.functions} />
+                        <ContactContainer />
+                    </div>
+                    <span class="resizer vertical" onMouseDown={this.onMouseDown}></span>
+                    <div style="position: relative; width: 100%">
+                        <div key="main_panes" id="main_panes" class={style.panescontainer} >
+                            <Panes router={this.props.router} functions={this.props.functions} isActionPanelShowing={showTransactions} />
+                            {
+                                showTransactions ?
+                                    <div class={style.actionContainer} >
+                                        <div class={style.header}>
+                                            <span class={style.title}>Transactions History</span>
+                                            <button class={classNames([style.icon, "btnNoBg"])} onClick={this.onShowHideTransactionsClicked}>
+                                                <IconClose />
+                                            </button>
+                                        </div>
+                                        <TransactionLogPanel router={this.props.router} />
+                                    </div>
+                                : null
+                            }
+                        </div>
+                        <div class={style.actionPanel}>
+                            <div class={style.actions}>
+                                <button class={classNames([style.action, "btnNoBg"])} onClick={this.onShowHideTransactionsClicked}>
+                                    <IconTransactions />
+                                    <span class={style.verticalText}>Transactions</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="bottom-status-bar">
+                            <span class="left">
+                                <span class="note">Note</span>
+                                <span class="note-text">All files are stored in the browser only, download to backup</span>
+                            </span>
+                            <span class="right">{endpoint}</span>
+                        </div>
                 </div>
-                <div key="main_panes" id="main_panes" class={style.panescontainer}>
-                    <Panes router={this.router} functions={this.props.functions} />
                 </div>
             </div>
         );

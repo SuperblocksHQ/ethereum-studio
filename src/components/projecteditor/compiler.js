@@ -1,32 +1,30 @@
 // Copyright 2018 Superblocks AB
 //
-// This file is part of Superblocks Studio.
+// This file is part of Superblocks Lab.
 //
-// Superblocks Studio is free software: you can redistribute it and/or modify
+// Superblocks Lab is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation version 3 of the License.
 //
-// Superblocks Studio is distributed in the hope that it will be useful,
+// Superblocks Lab is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Superblocks Studio.  If not, see <http://www.gnu.org/licenses/>.
+// along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { h, Component } from 'preact';
 import sha256 from 'crypto-js/sha256';
 import classnames from 'classnames';
 import style from './style-console';
-import FaIcon  from '@fortawesome/react-fontawesome';
-import iconRun from '@fortawesome/fontawesome-free-solid/faBolt';
+import { IconRun } from '../icons';
 
 export default class Compiler extends Component {
     constructor(props) {
         super(props);
         this.id=props.id+"_compiler";
         this.props.parent.childComponent=this;
-        this.setState({status:"Space Invaders ready."});
         this.consoleRows=[];
         const projectname=this.props.project.props.state.dir;
         this.dappfile = this.props.project.props.state.data.dappfile;
@@ -72,7 +70,6 @@ export default class Compiler extends Component {
         }
         if(this.isRunning) return;
         this.isRunning=true;
-        this.setState({status:"Space Invaders chewing source code..."});
         this.redraw();
 
         const contracts=this.dappfile.contracts();
@@ -89,16 +86,17 @@ export default class Compiler extends Component {
 
         this._loadFiles(sources, (status, bodies) => {
             if(status!=0) {
-                alert("Could not load contract source code. Contract not saved?");
-                this.setState({status:"Space Invaders could not find the true meaning of life and dissolved into pixels... To become a higher being."});
+                alert("Could not load contract source code. Is there any contract not saved?");
+                this.setState({status:"Your code could not find the true meaning of life and dissolved into pixels... To become a higher being."});
                 this.isRunning=false;
                 return;
             }
             this.consoleRows.length=0;
-            // We have a short delay to show the nice Space Invaders image.
+            // This timeout can be removed.
             setTimeout(()=>{
                 var srcfilename;
                 var contractbody;
+                this.consoleRows.push({channel:1,msg:"Using Solidity compiler version " + this.props.functions.compiler.getVersion()});
                 // Run through all sources loaded and chose one for compilation and the rest for import.
                 // https://solidity.readthedocs.io/en/develop/using-the-compiler.html#compiler-input-and-output-json-description
                 const input={
@@ -158,7 +156,6 @@ export default class Compiler extends Component {
                 this.props.functions.compiler.queue({input:JSON.stringify(input), files:files}, (data)=>{
                     if(data) data=JSON.parse(data);
                     if(!data) {
-                        this.setState({status:"Space Invaders shot down."});
                         (["Sorry! We hit a compiler internal error. Please report the problem and in the meanwhile try using a different browser."]).map((row)=>{
                             this.consoleRows.push({channel:3,msg:row.formattedMessage});
                         });
@@ -170,19 +167,19 @@ export default class Compiler extends Component {
                             this.consoleRows.push({channel:3,msg:row.formattedMessage});
                         });
                         if(!data.contracts || Object.keys(data.contracts).length==0) {
-                            this.setState({status:"Space Invaders ate bad code and died, compilation aborted."});
+                            this.setState({status:"Ate bad code and died, compilation aborted."});
                             // Clear ABI and BIN
                             delFiles();
                         }
                         else {
-                            this.setState({status:"Space Invaders successfully digested the source code."});
+                            this.setState({status:"Successfully digested the source code."});
                             const contractName=this.props.contract;
                             var contractObj;
                             const filename=srcfilename.match(".*/(.*)$")[1];
                             if(data.contracts) contractObj=data.contracts[filename][contractName];
                             if(contractObj && Object.keys(contractObj.evm.bytecode.linkReferences || {}).length>0) {
                                 contractObj=null;
-                                this.consoleRows.push({channel:2,msg:"[ERROR] The contract " + contractName + " references library contracts. Studio does not yet support library contract linking, only contract imports."});
+                                this.consoleRows.push({channel:2,msg:"[ERROR] The contract " + contractName + " references library contracts. Superblocks Lab does not yet support library contract linking, only contract imports."});
                             }
                             if(contractObj) {
                                 const metadata=JSON.parse(contractObj.metadata);
@@ -219,7 +216,7 @@ export default class Compiler extends Component {
                                     };
                                     cb(metasrc, JSON.stringify(meta), ()=>{
                                         cb(binsrc, "0x"+contractObj.evm.bytecode.object, ()=>{
-                                            const hash=sha256(contractbody.contents).toString();
+                                            const hash=sha256(contractbody).toString();
                                             cb(hashsrc, hash, ()=>{
                                                 // This is the success exit point.
                                                 // Reload projects to update file list and open tabs.
@@ -240,7 +237,7 @@ export default class Compiler extends Component {
                     this.isRunning=false;
                     this.redraw();
                 });
-            },500);
+            },1);
         },true);
     };
 
@@ -283,7 +280,7 @@ export default class Compiler extends Component {
         return (
             <div class={style.toolbar} id={this.id+"_header"}>
                 <div class={style.buttons}>
-                    <a class={classnames(cls)} href="#" title="Recompile" onClick={this.run}><FaIcon icon={iconRun}/></a>
+                    <a class={classnames(cls)} href="#" title="Recompile" onClick={this.run}><IconRun /></a>
                 </div>
                 <div class={style.status}>
                     {this.state.status}
@@ -306,8 +303,8 @@ export default class Compiler extends Component {
 
     getWait = () => {
         if(this.consoleRows.length == 0) {
-            return <div class={style.space_invaders}>
-                    <img src="/static/img/space-invaders.jpg" alt="" />
+            return <div class={style.loading}>
+                    <span>Loading...</span>
                 </div>;
         }
     };

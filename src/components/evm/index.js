@@ -1,18 +1,18 @@
 // Copyright 2018 Superblocks AB
 //
-// This file is part of Superblocks Studio.
+// This file is part of Superblocks Lab.
 //
-// Superblocks Studio is free software: you can redistribute it and/or modify
+// Superblocks Lab is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation version 3 of the License.
 //
-// Superblocks Studio is distributed in the hope that it will be useful,
+// Superblocks Lab is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Superblocks Studio.  If not, see <http://www.gnu.org/licenses/>.
+// along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { h, render } from 'preact';
 
@@ -41,7 +41,7 @@ export default class EVM {
 
         render((
             <div style="display:none;" id={this.id}>
-                <iframe ref={setRef} src="/evm/index-v5.html" frameborder="0"></iframe>
+                <iframe ref={setRef} src="/evm/index-v6.html" frameborder="0"></iframe>
             </div>
         ), document.body);
 
@@ -50,11 +50,11 @@ export default class EVM {
         this.queue({},(result)=>{
             this.devkitVm=result.devkitVm;
             this.provider= new this.devkitVm.Provider(this.devkitVm);
-            this.devkitVm.setBalance("0xa48f2e0be8ab5a04a5eb1f86ead1923f03a207fd", "0x10000000000000000");
-            this.devkitVm.setBalance("0x95c2332b26bb22153a689ae619d81a6c59e0a804", "0x10000000000000000");
-            this.devkitVm.setBalance("0x96a893548257af28a362015e70a95cf6f4ddf56f", "0x10000000000000000");
-            this.devkitVm.setBalance("0xa48f2e0be8ab5a04a5eb1f86ead1923f03a207fd", "0x10000000000000000");
-            this.devkitVm.setBalance("0x105e8df6456765bf8f0f360b66ed86d9ace92363", "0x10000000000000000");
+            this.devkitVm.setBalance("0xa48f2e0be8ab5a04a5eb1f86ead1923f03a207fd", "0x56bc75e2d63100000");
+            this.devkitVm.setBalance("0x95c2332b26bb22153a689ae619d81a6c59e0a804", "0x56bc75e2d63100000");
+            this.devkitVm.setBalance("0x96a893548257af28a362015e70a95cf6f4ddf56f", "0x56bc75e2d63100000");
+            this.devkitVm.setBalance("0x105e8df6456765bf8f0f360b66ed86d9ace92363", "0x56bc75e2d63100000");
+            this.devkitVm.setBalance("0x842f47affb5b810a8f2c967dcb666ba1d75c5c8a", "0x56bc75e2d63100000");
             console.log("[VM] ready");
         });
 

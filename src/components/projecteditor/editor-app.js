@@ -1,30 +1,23 @@
 // Copyright 2018 Superblocks AB
 //
-// This file is part of Superblocks Studio.
+// This file is part of Superblocks Lab.
 //
-// Superblocks Studio is free software: you can redistribute it and/or modify
+// Superblocks Lab is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation version 3 of the License.
 //
-// Superblocks Studio is distributed in the hope that it will be useful,
+// Superblocks Lab is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Superblocks Studio.  If not, see <http://www.gnu.org/licenses/>.
+// along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { h, Component } from 'preact';
-import classnames from 'classnames';
 import style from './style-editor-contract';
-import Backend from  './backend';
+import Backend from './control/backend';
 
-import FaIcon  from '@fortawesome/react-fontawesome';
-import iconSave from '@fortawesome/fontawesome-free-regular/faSave';
-import iconCompile from '@fortawesome/fontawesome-free-solid/faPuzzlePiece';
-import iconDeploy from '@fortawesome/fontawesome-free-regular/faPlayCircle';
-import iconTest from '@fortawesome/fontawesome-free-solid/faFlask';
-import iconDebug from '@fortawesome/fontawesome-free-solid/faBug';
 
 export default class AppEditor extends Component {
     constructor(props) {
@@ -70,22 +63,6 @@ export default class AppEditor extends Component {
         });
     };
 
-    delete = (e) => {
-        e.preventDefault();
-        if(confirm("Are you sure you want to delete this DApp?")) {
-            if(this.props.router.control._getProjectWindowCount(this.props.project)>1) {
-                alert("You must first close all open tabs for this project.");
-                return;
-            }
-            this.props.project.delete(()=>{
-                this.props.parent.close();
-            });
-        }
-    };
-
-    _download=()=>{
-    };
-
     onChange = (e, key) => {
         var value=e.target.value;
         const form=this.state.form;
@@ -93,72 +70,23 @@ export default class AppEditor extends Component {
         this.setState(form);
     };
 
-    renderToolbar = () => {
-        return (
-            <div class={style.toolbar} id={this.id+"_header"}>
-                <div>
-                </div>
-            </div>
-        );
-    };
-
-    getHeight = () => {
-        const a=document.getElementById(this.id);
-        const b=document.getElementById(this.id+"_header");
-        if(!a) return 99;
-        return (a.offsetHeight - b.offsetHeight);
-    };
-
     render() {
-        // Copy
-        const dappfilejson=JSON.parse(JSON.stringify(this.props.dappfilejson));
-        // Clear
-        delete dappfilejson.dir;
-        delete dappfilejson.inode;
-        delete dappfilejson._filecache;
-        if(dappfilejson.project) delete dappfilejson.project.info;
-        // TODO delete all dotfiles.
-        const clearDotfiles=(root)=>{
-            const keys=Object.keys(root);
-            for(var index=0;index<keys.length;index++) {
-                const key=keys[index];
-                if(key[0]=='.') {
-                    delete root[key];
-                    continue;
-                }
-                const node=root[key];
-                if(node.type=='d') {
-                    clearDotfiles(node.children);
-                }
-            }
-        };
-        clearDotfiles(dappfilejson.files);
-
-        const toolbar=this.renderToolbar();
-        const maxHeight = {
-            height: this.getHeight() + "px"
-        };
         return (<div id={this.id} class={style.main}>
-            {toolbar}
-            <div class="scrollable-y" style={maxHeight} id={this.id+"_scrollable"}>
-                <h1 class={style.title}>
-                    Edit DApp Configuration
-                </h1>
-                <div class={style.form}>
-                    <form action="">
-                        <div class={style.field}>
-                            <p>Title:</p>
-                            <input maxLength="30" type="text" value={this.state.form.title} onChange={(e)=>{this.onChange(e, 'title')}} />
-                        </div>
-                        <a href="#" class="btn2" onClick={this.save}>Save</a>
-                    </form>
+            <div class="scrollable-y" id={this.id+"_scrollable"}>
+                <div class={style.inner}>
+                    <h1 class={style.title}>
+                        Edit DApp Configuration
+                    </h1>
+                    <div class={style.form}>
+                        <form action="">
+                            <div class={style.field}>
+                                <p>Title:</p>
+                                <input maxLength="30" type="text" value={this.state.form.title} onChange={(e)=>{this.onChange(e, 'title')}} />
+                            </div>
+                            <a href="#" class="btn2" onClick={this.save}>Save</a>
+                        </form>
+                    </div>
                 </div>
-            <div>
-                <a href="#" onClick={(e)=>{e.preventDefault();this.backend.downloadProject(this.props.dappfilejson.dir);}}>Download project as JSON file</a>
-            </div>
-            <div>
-                <a href="#" class={style.deleteBtn} onClick={this.delete}>Delete this DApp</a>
-            </div>
             </div>
         </div>);
     }

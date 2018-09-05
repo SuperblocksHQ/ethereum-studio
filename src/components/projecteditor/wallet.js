@@ -1,18 +1,18 @@
 // Copyright 2018 Superblocks AB
 //
-// This file is part of Superblocks Studio.
+// This file is part of Superblocks Lab.
 //
-// Superblocks Studio is free software: you can redistribute it and/or modify
+// Superblocks Lab is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation version 3 of the License.
 //
-// Superblocks Studio is distributed in the hope that it will be useful,
+// Superblocks Lab is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Superblocks Studio.  If not, see <http://www.gnu.org/licenses/>.
+// along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { h, Component } from 'preact';
 import classNames from 'classnames';
@@ -36,7 +36,14 @@ export class Wallet {
 
     _newWallet = (name, seed, hdpath, cb) => {
         hdpath=hdpath||"m/44'/60'/0'/0";
-        if(!lightwallet.keystore.isSeedValid(seed)) {
+        try {
+            const words=seed.split(" ");
+            if(words.length !== 12 || !lightwallet.keystore.isSeedValid(seed)) {
+                cb && cb(2);
+                return;
+            }
+        }
+        catch (err) {
             cb && cb(2);
             return;
         }
@@ -65,7 +72,7 @@ export class Wallet {
         }, function (err, ks) {
             ks.keyFromPassword(password, function (err, pwDerivedKey) {
                 if (err) {
-                    cb && cb(1);
+                    cb && cb(3);
                     return;
                 }
                 wallet.secret.ks=ks;
@@ -83,7 +90,7 @@ export class Wallet {
 
     openWallet = (name, seed, cb) => {
         if(!seed) {
-            seed=prompt("Give the seed for wallet " + name);
+            seed=prompt("Please enter the 12 word seed to unlock the wallet: " + name);
             if(!seed) {
                 cb && cb(1);
                 return;

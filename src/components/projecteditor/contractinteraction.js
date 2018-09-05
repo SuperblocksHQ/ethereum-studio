@@ -1,24 +1,23 @@
 // Copyright 2018 Superblocks AB
 //
-// This file is part of Superblocks Studio.
+// This file is part of Superblocks Lab.
 //
-// Superblocks Studio is free software: you can redistribute it and/or modify
+// Superblocks Lab is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation version 3 of the License.
 //
-// Superblocks Studio is distributed in the hope that it will be useful,
+// Superblocks Lab is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Superblocks Studio.  If not, see <http://www.gnu.org/licenses/>.
+// along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { h, Component } from 'preact';
-import classnames from 'classnames';
 import style from './style-appview';
-import FaIcon  from '@fortawesome/react-fontawesome';
-import iconRun from '@fortawesome/fontawesome-free-solid/faBolt';
+import { IconRun } from '../icons';
+
 var Generator = require('../contractinteraction');
 import SuperProvider from '../superprovider';
 import Web3 from 'web3';
@@ -30,9 +29,11 @@ export default class ContractInteraction extends Component {
         this.props.parent.childComponent=this;
         this.dappfile = this.props.project.props.state.data.dappfile;
         this.provider=new SuperProvider({that:this});
-        this.setState({account:0});
+        this.setState({account:null});
         this.contract_address="";
-        this.contract_balance="?";
+        this.contract_balance="? eth";
+        this.contract_balance_wei="";
+        this._getEnv();
     }
 
     notifyTx=(hash, endpoint)=>{
@@ -44,7 +45,15 @@ export default class ContractInteraction extends Component {
         this.props.project.props.state.txlog.addTx({hash:hash,context:'Contract interaction',network:network});
     };
 
+    _getEnv=()=>{
+        // Update the chosen network and account
+        const accountName = this.props.project.props.state.data.account;
+        const env=this.props.project.props.state.data.env;
+        this.setState({account:accountName, network:env});
+    };
+
     redraw = (props) => {
+        this._getEnv();
         if((props||{}).all) this.lastContent=null;  // To force a render.
         this.setState();
         this.render2();
@@ -83,10 +92,10 @@ export default class ContractInteraction extends Component {
     };
 
     render2 = () => {
-        const env=this.props.project.props.state.data.env;
+        const env=this.state.network;
         const contract = this.dappfile.getItem("contracts", [{name: this.props.contract}]);
         const src=contract.get('source');
-        const network=contract.get('network', env);
+        const network=this.state.network;
         const endpoint=(this.props.functions.networks.endpoints[network] || {}).endpoint;
         const tag=env;
         const srcabi=this._makeFileName(src, tag, "abi");
@@ -120,13 +129,6 @@ export default class ContractInteraction extends Component {
                             return;
                         }
                         const rendered=Generator.render(abi, this.props.contract);
-                        if(this.state.showSource=="on") {
-                            var jscontent=rendered.js.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-                            var htmlcontent=rendered.html.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-                            const content="<html><body style='color: #fff;'>HTML:<br/><pre><code>"+htmlcontent+"</code></pre><br/>JS:<br/><pre><code>"+jscontent+"</code></pre></body></html>";
-                            this.writeContent(0, content);
-                            return;
-                        }
                         const content=this.getOuterContent(rendered.html, jsbodies.join("\n")+rendered.js, endpoint, this._getAccountAddress());
                         this.writeContent(0, content);
                     });
@@ -136,19 +138,15 @@ export default class ContractInteraction extends Component {
     };
 
     _getAccount=()=>{
-        const items=this.getAccounts().filter((item)=>{
-            return this.state.account==item.value;
-        });
-        if(items.length>0) return items[0].name;
+        return this.state.account;
     };
 
     _getAccountAddress=()=>{
         // Check given account, try to open and get address, else return [].
         const accountName=this._getAccount();
-        if(accountName=="(locked)") return [];
         if(!accountName) return [];
 
-        const env=this.props.project.props.state.data.env;
+        const env=this.state.network;
         const account = this.dappfile.getItem("accounts", [{name: accountName}]);
         const accountIndex=account.get('index', env);
         const walletName=account.get('wallet', env);
@@ -160,7 +158,8 @@ export default class ContractInteraction extends Component {
 
         if(walletType=="external") {
             // Metamask seems to always only provide one (the chosen) account.
-            const extAccounts = web3.eth.accounts || [];
+            var extAccounts = [];
+            if(window.web3 && window.web3.eth) extAccounts = window.web3.eth.accounts || [];
             if(extAccounts.length<accountIndex+1) {
                 // Account not matched
                 return [];
@@ -304,28 +303,140 @@ export default class ContractInteraction extends Component {
         `+(endpoint!=null?this._getProvider(endpoint, accounts):"")+`
     </head>
     <style>
-            body {
-                background-color: #333;
-                color: #eee;
+            html, body {
+                width: 100%;
+                padding: 0;
+                margin: 0;
+                background-color: #1e1e1e;
+                color: #fff;
+                font-family: 'Untitled Sans';
+                font-weight: 400;
+                font-size: 15px;
             }
-            div {
-                display: block;
-            }
+            html {
+                ::-webkit-scrollbar {
+                    width: 7px;
+                }
 
-            form {
-                padding: 10px;
+                ::-webkit-scrollbar-track {
+                    background: transparent;
+                }
+
+                ::-webkit-scrollbar-thumb {
+                    border-radius: 4px;
+                    background-color: rgba(0,0,0,.5);
+                    -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+                    box-shadow: 0 0 1px rgba(255,255,255,.5);
+                }
             }
-            input[disabled="true"] {
-                background-color: #4f7595;
+            h1 {
+                font-size: 1.33em;
             }
-            input[type="submit"] {
-                background-color: orange;
+            h2 {
+                font-size: 1.2em;
             }
-            .constant input[type="submit"] {
-                background-color: green;
+            h3 {
+                font-size: 1.0em;
             }
-            .payable input[type="submit"] {
-                background-color: red;
+            input, input:focus {
+                background-color: #3A3A3A;
+                color: #FFF;
+                border: none;
+                border-radius: 4px;
+                padding: 8px 16px;
+                margin: 5px;
+            }
+            .intro {
+            }
+            .item {
+                padding: 20px;
+                padding-top: 0;
+                margin-bottom: 10px;
+                border-bottom: dotted 1px #ccc;
+            }
+            .constant {
+            }
+            .regular {
+            }
+            .payable {
+            }
+            .inputs {
+            }
+            .gas {
+            }
+            .value {
+            }
+            .constant .functionName {
+                background-color: #008000;
+            }
+            .regular .functionName {
+                background-color: #f5a623;
+            }
+            .payable .functionName {
+                background-color: #ff3939;
+            }
+            .function .functionName {
+                display: block;
+                margin-top: 5px;
+                border-radius: 4px;
+                -webkit-border-radius: 4;
+                -moz-border-radius: 4;
+                color: #fff;
+                padding: 7px 20px;
+                text-decoration: none;
+                font-weight: 600;
+                border: none;
+                user-select: none;
+                outline: none;
+            }
+            .function .functionName:hover {
+                opacity: 0.8;
+            }
+            .function .functionName.nohover:hover {
+                opacity: 1.0;
+            }
+            .function span {
+            }
+            .arguments {
+                display: inline;
+            }
+            .argument {
+                display: block;
+                margin-left: 60px;
+            }
+            .argument span {
+                display: inline-block;
+                overflow: hidden;
+                width: 150px;
+            }
+            .argument input {
+                overflow: hidden;
+                width: 150px;
+            }
+            .call {
+                display: inline;
+            }
+            .call button {
+                margin-left: 10px;
+            }
+            .returns {
+                margin-top: 10px;
+            }
+            .txhash {
+                dispay: block;
+            }
+            .btn2 {
+                display: inline-block;
+                border-radius: 4px;
+                -webkit-border-radius: 4;
+                -moz-border-radius: 4;
+                color: #fff;
+                padding: 7px 20px;
+                text-decoration: none;
+                font-weight: 600;
+                border: none;
+                user-select: none;
+                outline: none;
             }
     </style>
     <script type="text/javascript">
@@ -346,92 +457,51 @@ export default class ContractInteraction extends Component {
         this.render2();
     };
 
-    _selectAccount=(e)=>{
-        e.preventDefault();
-        this.setState({account:e.target.value});
-        this.redraw();
-    };
-
-    getAccounts = (useDefault) => {
-        var index=0;
-        const ret=[{name:"(locked)",value:index++}];
-        this.dappfile.accounts().map((account) => {
-            ret.push({name:account.name,value:index++});
-        })
-        return ret;
-    };
-
     renderToolbar = () => {
-        const accounts=this.getAccounts();
         const contract = this.dappfile.getItem("contracts", [{name: this.props.contract}]);
-        const env=this.props.project.props.state.data.env;
-        const network=contract.get("network", env);
-        const endpoint=(this.props.functions.networks.endpoints[network] || {}).endpoint;
+        const env=this.state.network;
+        const network=this.state.network;
         return (
             <div class={style.toolbar} id={this.id+"_header"}>
                 <div class={style.buttons}>
-                    <a href="#" title="Recompile" onClick={this.run}><FaIcon icon={iconRun}/></a>
-                    <span><input checked={this.state.showSource=="on"} onChange={(e)=>{this.setState({showSource:(e.target.checked?"on":"off")});this.redraw();}} type="checkbox" />&nbsp;Show source</span>
-                </div>
-                <div class={style.accounts}>
-                    Account: <select onChange={this._selectAccount} value={this.state.account}>
-                        {accounts.map((account) => {
-                            return (<option
-                                value={account.value}>{account.name}</option>);
-                        })}
-                    </select>
-                    &nbsp;<a href="#" title="Click to get account balance" onClick={this._getUserBalance}>{this.accountinfo}</a>&nbsp;Balance: {this.account_balance}
+                    <a href="#" title="Recompile" onClick={this.run}><IconRun /></a>
                 </div>
                 <div class={style.info}>
                     <span>
-                        Endpoint: {endpoint} Contract: <a href="#" title="Click to get contract balance" onClick={this._getBalance}>{this.contract_address}</a> Balance: {this.contract_balance} wei
+                        Contract address: {this.contract_address}&nbsp;
+                    </span>
+                    <span title={this.contract_balance_wei}>
+                        Balance: {this.contract_balance}&nbsp;
                     </span>
                 </div>
             </div>
         );
     };
 
-    _getUserBalance=(e)=>{
-        e.preventDefault();
-        const env=this.props.project.props.state.data.env;
+    updateBalance=()=>{
+        if(this.updateBalanceBusy) return;
+        this.updateBalanceBusy=true;
+        const env=this.state.network;
         const contract = this.dappfile.getItem("contracts", [{name: this.props.contract}]);
-        const network=contract.get('network', env);
-        const endpoint=(this.props.functions.networks.endpoints[network] || {}).endpoint;
-        const web3=this._getWeb3(endpoint);
-        if(this.account_address.length<5) {
-            this.account_balance="?";
-            this.setState();
-            return;
-        }
-        web3.eth.getBalance(this.account_address,(err,res)=>{
-            if(err) {
-                alert("Could not get balance of user.");
-            }
-            else {
-                this.account_balance=res.toNumber();
-                this.setState();
-            }
-        });
-    };
-
-    _getBalance=(e)=>{
-        e.preventDefault();
-        const env=this.props.project.props.state.data.env;
-        const contract = this.dappfile.getItem("contracts", [{name: this.props.contract}]);
-        const network=contract.get('network', env);
+        const network=this.state.network;
         const endpoint=(this.props.functions.networks.endpoints[network] || {}).endpoint;
         const web3=this._getWeb3(endpoint);
         if(this.contract_address.length<5) {
-            this.contract_balance="?";
+            this.updateBalanceBusy=false;
+            this.contract_balance="? eth";
+            this.contract_balance_wei="";
             this.setState();
             return;
         }
         web3.eth.getBalance(this.contract_address,(err,res)=>{
+            this.updateBalanceBusy=false;
             if(err) {
-                alert("Could not get balance of contract.");
+                this.contract_balance="? eth";
+                this.contract_balance_wei="";
             }
             else {
-                this.contract_balance=res.toNumber();
+                this.contract_balance_wei=res.toNumber() + " wei";
+                this.contract_balance=web3.fromWei(res.toNumber()) + " eth";
                 this.setState();
             }
         });
@@ -444,7 +514,24 @@ export default class ContractInteraction extends Component {
         return (a.offsetHeight - b.offsetHeight);
     };
 
+    updateAccount=()=>{
+        if(window.web3) {
+            const currentAccount = window.web3.eth.accounts[0];
+            if(this.lastAccountRead !== currentAccount) {
+                this.lastAccountRead=currentAccount;
+                this.lastContent=null;  // To force a render.
+                this.render2();
+            }
+        }
+    };
+
     componentDidMount() {
+        if(window.web3) {
+            this.lastAccountRead=window.web3.eth.accounts[0];
+        }
+
+        this.accountTimer=setInterval(this.updateAccount, 3000);
+        this.timer=setInterval(this.updateBalance, 3000);
         this.provider._attachListener();
         // We need to do a first redraw to get the height right, since toolbar didn't exist in the first sweep.
         this.redraw();
@@ -452,6 +539,8 @@ export default class ContractInteraction extends Component {
 
     componentWillUnmount() {
         this.provider._detachListener();
+        clearInterval(this.timer);
+        clearInterval(this.accountTimer);
     }
 
 
@@ -461,16 +550,6 @@ export default class ContractInteraction extends Component {
     };
 
     render() {
-        const addresses=this._getAccountAddress();
-        if(addresses.length==0) {
-            this.accountinfo="Account not accessible";
-            this.account_address="0x0";
-            this.account_balance="?";
-        }
-        else {
-            this.accountinfo=addresses[0];
-            this.account_address=addresses[0];
-        }
         const toolbar=this.renderToolbar();
         const maxHeight = {
             height: this.getHeight() + "px"

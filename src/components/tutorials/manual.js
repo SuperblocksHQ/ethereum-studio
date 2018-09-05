@@ -1,18 +1,18 @@
 // Copyright 2018 Superblocks AB
 //
-// This file is part of Superblocks Studio.
+// This file is part of Superblocks Lab.
 //
-// Superblocks Studio is free software: you can redistribute it and/or modify
+// Superblocks Lab is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation version 3 of the License.
 //
-// Superblocks Studio is distributed in the hope that it will be useful,
+// Superblocks Lab is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Superblocks Studio.  If not, see <http://www.gnu.org/licenses/>.
+// along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { h, Component } from 'preact';
 import style from './style';
@@ -35,8 +35,8 @@ export default class TutorialsManual extends Component {
                     </h1>
                     <div class={style.body}>
 
-                    <p>Superblocks Studio is a toolchain for coding, building, testing and deploying smart contracts and blockchain-based applications.</p>
-                    <p>Superblocks Studio provides local execution of projects, as well as other services and tools for developing decentralized applications through a friendly browser-based experience.</p>
+                    <p>Superblocks Lab is a toolchain for coding, building, testing and deploying smart contracts and blockchain-based applications.</p>
+                    <p>Superblocks Lab provides local execution of projects, as well as other services and tools for developing decentralized applications through a friendly browser-based experience.</p>
 
                     <h2>Typical, single-contract, development workflow</h2>
                     <ol>
@@ -95,7 +95,7 @@ export default class TutorialsManual extends Component {
 
                     <h3>Inspect transaction history</h3>
                     <p>All transactions that occur within a project can be inspected by accessing the <b>Transaction history</b> section, located inside each project in the main menu.</p>
-                    <p>Latest transactions are listed first, describing all common details such as the transaction hash, gas price, amount of gas used. Other details specific to Superblocks Studio includes who originated the transaction and which network it relates to.</p>
+                    <p>Latest transactions are listed first, describing all common details such as the transaction hash, gas price, amount of gas used. Other details specific to Superblocks Lab includes who originated the transaction and which network it relates to.</p>
 
                     </div>
                 </div>

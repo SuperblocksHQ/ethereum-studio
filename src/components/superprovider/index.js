@@ -1,22 +1,22 @@
 // Copyright 2018 Superblocks AB
 //
-// This file is part of Superblocks Studio.
+// This file is part of Superblocks Lab.
 //
-// Superblocks Studio is free software: you can redistribute it and/or modify
+// Superblocks Lab is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation version 3 of the License.
 //
-// Superblocks Studio is distributed in the hope that it will be useful,
+// Superblocks Lab is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Superblocks Studio.  If not, see <http://www.gnu.org/licenses/>.
+// along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import Web3 from 'web3';
 import Tx from '../../ethereumjs-tx-1.3.3.min.js';
-import Modal from '../modal';
+import Modal from '../modal/index.js';
 
 export default class SuperProvider {
     constructor(props) {
@@ -60,7 +60,11 @@ export default class SuperProvider {
             if((payload.method=="eth_sendTransaction" || payload.method=="eth_sendRawTransaction") && !err && res && res.result && this.that.notifyTx) {
                 this.that.notifyTx(res.result, data.endpoint);
             }
-            this.iframe.contentWindow.postMessage({type:"reply",channel:this.that.id,id:data.id,payload:{err:err,res:res}}, '*');
+            try {
+                this.iframe.contentWindow.postMessage({type:"reply",channel:this.that.id,id:data.id,payload:{err:err,res:res}}, '*');
+            }
+            catch (e) {
+            }
         };
 
         const send=(payload, endpoint, callback)=>{
@@ -131,7 +135,7 @@ export default class SuperProvider {
                     }
                     const modalData={
                         title: "WARNING: Invoking external account provider",
-                        body: "Please understand that Superblocks Studio has no power over which network is targeted when using an external provider. It is your responsibility that the network is the same as it is expected to be.",
+                        body: "Please understand that Superblocks Lab has no power over which network is targeted when using an external provider. It is your responsibility that the network is the same as it is expected to be.",
                         style: {"background-color":"#cd5c5c",color:"#fef7ff"},
                     };
                     const modal=(<Modal data={modalData} />);

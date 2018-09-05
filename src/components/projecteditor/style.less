@@ -1,44 +1,50 @@
 // Copyright 2018 Superblocks AB
 //
-// This file is part of Superblocks Studio.
+// This file is part of Superblocks Lab.
 //
-// Superblocks Studio is free software: you can redistribute it and/or modify
+// Superblocks Lab is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation version 3 of the License.
 //
-// Superblocks Studio is distributed in the hope that it will be useful,
+// Superblocks Lab is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Superblocks Studio.  If not, see <http://www.gnu.org/licenses/>.
+// along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
+
+@import '../../style/index';
 
 .projecteditor {
     display: block;
     width: 100%;
     height: 100%;
-    border: 1px solid #433753;
     &:after {
         content: " ";
         display: block;
         clear: both;
     }
     .control {
+        position: relative;
         float: left;
         display: block;
         height: 100%;
-        min-width: 326px;
-        width: 20%;
-        max-width: 430px;
-        background-color: #282727;
+        flex: 0 0 auto;
+        background-color: #252525;
+        padding-bottom: 105px;
+        border-right: 1px solid #121516;
     }
     .panescontainer {
+        position: absolute;
         float: left;
         display: block;
         height: 100%;
-        width: 80%;
-        background-color: #1e1e1e;
+        width: 100%;
+        right: 0;
+        padding-right: 50px;
+        background-color: #1E1E1E;
+        display: flex;
         .header {
             -webkit-touch-callout: none;
             -webkit-user-select: none;
@@ -46,44 +52,69 @@
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
-            background-color: #282727;
-            min-height: 30px;
+            background-color: #252525;
+            min-height: 38px;
             width: 100%;
             overflow-y: hidden;
             overflow-x: auto;
             .tab {
-                padding: 3px;
-                display: block;
+                padding: 10px 12px 10px 12px;
+                display: flex;
+                align-items: center;
+                align-content: center;
                 float: left;
-                border-top-left-radius: 6px;
-                margin-top: 3px;
-                margin-right: 5px;
                 min-width: 60px;
-                background-color: #433753;
-                a { color: #888; }
-                font-size: 0.95em;
+                background-color: #2D2D2D;
+                a {
+                    color: #969696;
+                }
                 div {
                     float: left;
                 }
                 .title {
                     padding-right: 10px;
                     .icon {
-                        margin-right: 4px;
+                        margin-right: 10px;
                     }
                 }
                 .close {
-                    line-height: 130%;
-                    margin-left: -6px;
-                    margin-bottom: 3px;
+                    margin-left: 10px;
                     display: none;
-                    width: 10px;
-                    height: 10px;
+                    font-size: 0.85em;
+                    a {
+                        font-weight: 700;
+                    }
                 }
                 &.selected {
                     background-color: #1e1e1e;
-                    a { color: #ddcdf8; }
+                    a {
+                        color: #FFFFFF;
+                    }
                     .close {
                         display: block;
+                    }
+                }
+            }
+            .contextMenu {
+                display: block;
+                position: absolute;
+                margin-left: -40px;
+                margin-top: 10px;
+                background-color: #2D2D2D;
+                z-index: 1;
+                border: solid 1px #333;
+                a {
+                    display: block;
+                    color: #A5A5A5;
+                    padding: 10px;
+                    border-left: 2px solid;
+                    border-color: transparent;
+                    margin: 0;
+                    &:hover {
+                        background-color: rgba(128, 46, 255, 0.10);
+                        cursor: pointer;
+                        color: #fff;
+                        border-color: #7237CF;
                     }
                 }
             }
@@ -109,6 +140,8 @@
                     width: 100%;
                     display: inherit;
                     overflow: hidden;
+                    border-top: 1px solid #121516;
+                    border-right: 1px solid #121516;
                     &:only-child {
                         .close_btn {
                             display: none;
@@ -116,11 +149,71 @@
                     }
                     .close_btn {
                         position: absolute;
-                        margin-top: 3px;
-                        margin-left: 20px;
+                        margin-top: 12px;
+                        margin-right: 12px;
+                        right: 0;
+                        z-index: 1;
+                        font-size: 0.85em;
                     }
                 }
             }
         }
+    }
+    .actionContainer {
+        position: absolute;
+        top: 0;
+        right: 50px;
+        bottom: 0;
+        width: 450px;
+        background-color: #272727;
+        border-left: 1px solid #121516;
+        .header {
+            background-color: #141618;
+            display: flex;
+            align-content: center;
+            align-items: center;
+            height: 38px;
+            padding: 9px;
+            .title {
+                color: #fff;
+                font-weight: 600;
+            }
+            .icon {
+                margin-left: auto;
+                color: #c7c7c7;
+                &:hover {
+                    color: white;
+                }
+            }
+        }
+    }
+    .actionPanel {
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        background-color: #1C2022;
+        width: 50px;
+        border-left: 1px solid #121516;
+        .actions {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            .action {
+                border-right: 2px solid;
+                border-color: transparent;
+                padding: 15px;
+                transition: all 0.3s ease;
+                &:hover {
+                    background-color:rgba(64, 169, 243, 0.1);
+                    cursor: pointer;
+                    border-color: @primary-color;
+                }
+            }
+        }
+    }
+    .verticalText{
+        writing-mode: vertical-rl;
+        text-orientation: mixed;
     }
 }

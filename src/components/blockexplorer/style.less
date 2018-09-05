@@ -1,131 +1,30 @@
 // Copyright 2018 Superblocks AB
 //
-// This file is part of Superblocks Studio.
+// This file is part of Superblocks Lab.
 //
-// Superblocks Studio is free software: you can redistribute it and/or modify
+// Superblocks Lab is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation version 3 of the License.
 //
-// Superblocks Studio is distributed in the hope that it will be useful,
+// Superblocks Lab is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Superblocks Studio.  If not, see <http://www.gnu.org/licenses/>.
+// along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-.transactionlog {
-    margin-top: 30px;
-    color: #fff;
-    display: block;
-    height: 100%;
-    overflow-y: auto;
-    overflow-x: auto;
-    table {
-        margin-left: auto;
-        margin-right: auto;
-        border: 1px solid #eee;
-        td, th {
-            border: 1px solid #ccc;
-            background-color: #666;
-            color: #fff;
-            padding: 5px;
-            text-align: center;
-        }
-    }
-}
-
-.blockexplorer {
+.main {
+    background-color: #1e1e1e;
     width: 100%;
     height: 100%;
-    .title {
-        clear: both;
-        color: #eee;
-        margin-left: 15px;
-        margin-right: 15px;
-        border-bottom: dotted 1px #ccc;
-    }
-    .blocks {
-        width: 360px;
-        height: 100%;
-        float: left;
+    .inner {
         margin-left: 10px;
-        overflow: auto;
-        &:after {
-            content: " ";
-            display: block;
-            clear: both;
-        }
+        padding: 16px 10px 80px 50px;
     }
-    .transactions {
-        display: block;
-        width: 780px;
-        height: 100%;
-        overflow-y: auto;
-        overflow-x: hidden;
-        float: left;
-        margin-left: 10px;
-        .txtable {
-            border: 1px solid #eee;
-            td {
-                color: #fff;
-                min-width: 100px;
-            }
-        }
-    }
-    .transaction {
-        display: block;
-        width: 300px;
-        float: left;
-        margin-left: 10px;
-    }
-    .block {
-        padding: 3px;
-        margin: 5px;
-        float: left;
-        width: 103px;
-        background-color: #333;
-        border: solid 1px #ccc;
-        -webkit-border-radius: 1;
-        -moz-border-radius: 1;
-        border-radius: 1px;
-    }
-    .block_nr {
-        color: #eee;
-        font-weight: bold;
-    }
-    .bg_fadein {
-        animation: fadein 1s;
-    }
-    .bg0 {
-        background-color: #999;
-    }
-    .bg1 {
-        background-color: #888;
-    }
-    .bg2 {
-        background-color: #777;
-    }
-    .bg3 {
-        background-color: #666;
-    }
-    .bg4 {
-        background-color: #555;
-    }
-    .bg5 {
-        background-color: #444;
-    }
-    .tx_failed {
-        color: red;
-    }
-    .tx_success {
-        color: green;
-    }
-    .tx_summary {
-        text-align: center;
-    }
-    @keyframes fadein {
-        from { opacity: 0.1; }
-        to   { opacity: 1; }
-    }
+}
+.transactionlogPanel {
+    height: 100%;
+    overflow-y: auto;
+    padding-bottom: 110px;
 }

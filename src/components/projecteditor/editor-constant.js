@@ -1,28 +1,21 @@
 // Copyright 2018 Superblocks AB
 //
-// This file is part of Superblocks Studio.
+// This file is part of Superblocks Lab.
 //
-// Superblocks Studio is free software: you can redistribute it and/or modify
+// Superblocks Lab is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation version 3 of the License.
 //
-// Superblocks Studio is distributed in the hope that it will be useful,
+// Superblocks Lab is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Superblocks Studio.  If not, see <http://www.gnu.org/licenses/>.
+// along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { h, Component } from 'preact';
-import classnames from 'classnames';
 import style from './style-editor-account';
-import FaIcon  from '@fortawesome/react-fontawesome';
-import iconSave from '@fortawesome/fontawesome-free-regular/faSave';
-import iconCompile from '@fortawesome/fontawesome-free-solid/faPuzzlePiece';
-import iconDeploy from '@fortawesome/fontawesome-free-regular/faPlayCircle';
-import iconTest from '@fortawesome/fontawesome-free-solid/faFlask';
-import iconDebug from '@fortawesome/fontawesome-free-solid/faBug';
 
 export default class AccountConstant extends Component {
     constructor(props) {

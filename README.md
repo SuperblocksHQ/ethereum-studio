@@ -1,43 +1,56 @@
-# Superblocks Studio
+# Superblocks Lab
 
-[Superblocks](https://superblocks.com) Studio is an IDE to learn, build and deploy DApps for Ethereum. It's a full browser experience which requires no installations to run.  
+[![CircleCI](https://circleci.com/gh/SuperblocksHQ/superblocks-lab.svg?style=shield)](https://circleci.com/gh/SuperblocksHQ/superblocks-lab)
 
-Studio has a built in Solidity compiler and Ethereum Virtual Machine, it also works with local and public networks.  
+[Superblocks](https://superblocks.com) **Lab** is an integrated development environment (IDE) to learn, build and deploy decentralized apps (DApps) for _Ethereum_. It's a full browser experience which requires no installations to run.
 
-To try it out go to [studio.superblocks.com](https://studio.superblocks.com).
+<p align="center">
+  <img alt="Superblocks Lab in action" src="https://user-images.githubusercontent.com/7814134/45118436-d135c300-b158-11e8-8271-648495d35d29.png">
+</p>
+
+**Superblocks Lab** has a built in _Solidity_ compiler and _Ethereum Virtual Machine_. It also works with local and public networks.
+
+To try it out, go to [lab.superblocks.com](https://lab.superblocks.com).
 
 ## Features
-`TODO`  
+* In-browser Blockchain
+* Code Autocompletion
+* Bootstrap your App
+* Live code your WebApp
+* Deploy to Networks
+* Run with custom node
+* Built-in wallets
+* Export your full DApp
+* Metamask Integration
+* Powered by Monaco Editor
 
-Below is described how to get the Studio PreactJS project setup and running locally.  
+## Quick start
+Below is described how to get the **Superblocks Lab** _PreactJS_ project setup and running locally.
 
-## License
-Superblocks Studio is free software and GPLv3 licensed. See the COPYING file for details.  
-
-## Install node modules
-Use `yarn` [Yarn](yarnpkg.com/).
+### Install node modules
+Use `yarn` [Yarn](https://yarnpkg.com/).
 ```sh
 yarn install
 ```
 
-## Run in dev mode
+### Run in development mode
 ```sh
 make
 ```
 
 Browse to `http://localhost:8181`. Note that if you use any other hostname/IP than `localhost`, then instead run `ORIGIN_DEV=http://127.0.0.1 make`, this is important so that the iframes can communicate with the main window.
 
-## Make a production build
+### Make a production build
 ```sh
 make dist
 ```
 
 The dist files will be inside `./dist`.
 
-## Bumping version
-Set the new version both in app.js and in manifest.json.  
+### Bumping version
+Set the new version both in `app.js` and in `manifest.json`.
 
-Run this script to fix that for you:  
+Run this script to fix that for you:
 
 ```sh
 ./bump_version "1.1.0"
@@ -45,9 +58,12 @@ Run this script to fix that for you:
 
 Consider double-checking and updating the `CHANGELOG` to reflect the changes. Tag the new version.
 
+## Issues
+Bug reports and suggestions can be filed at the project [Issues](https://github.com/SuperblocksHQ/superblocks-lab/issues) page.  
+For more information about the process involved, please refer to the Wiki: [Submitting Bugs and Suggestions](https://github.com/SuperblocksHQ/superblocks-lab/wiki/Submitting-Bugs-and-Suggestions).
 
 ## Contributing
-Contributions are welcome, a `TODO` list will be presented.
+Contributions are welcome. Please, visit the Wiki for a guide on [How to Contribute](https://github.com/SuperblocksHQ/superblocks-lab/wiki/How-to-Contribute).
 
-## Blockchain agnostic
-Studio is only for Ethereum DApp development as for now. However the goal is for Studio to support many different blockchain technologies and smart contract languages.
+## License
+**Superblocks Lab** is free software and GPLv3 licensed. See the COPYING file for details.

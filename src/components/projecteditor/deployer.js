@@ -1,25 +1,24 @@
 // Copyright 2018 Superblocks AB
 //
-// This file is part of Superblocks Studio.
+// This file is part of Superblocks Lab.
 //
-// Superblocks Studio is free software: you can redistribute it and/or modify
+// Superblocks Lab is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation version 3 of the License.
 //
-// Superblocks Studio is distributed in the hope that it will be useful,
+// Superblocks Lab is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Superblocks Studio.  If not, see <http://www.gnu.org/licenses/>.
+// along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { h, Component } from 'preact';
 import sha256 from 'crypto-js/sha256';
 import classnames from 'classnames';
 import style from './style-console';
-import FaIcon  from '@fortawesome/react-fontawesome';
-import iconRun from '@fortawesome/fontawesome-free-solid/faBolt';
+import { iconRun, IconRun } from '../icons';
 import Web3 from 'web3';
 import Tx from '../../ethereumjs-tx-1.3.3.min.js';
 import Modal from '../modal';
@@ -29,7 +28,6 @@ export default class Deployer extends Component {
         super(props);
         this.id=props.id+"_deployer";
         this.props.parent.childComponent=this;
-        this.setState({status:"Space Invaders ready to deploy."});
         this.consoleRows=[];
         const projectname=this.props.project.props.state.dir;
         this.dappfile = this.props.project.props.state.data.dappfile;
@@ -86,14 +84,14 @@ export default class Deployer extends Component {
     };
 
     callback = (status) => {
-        var msg="Space Invaders chilling down after task well done";
+        var msg="Chilling down after task well done";
         if(status!=0) {
-            msg="Space Invaders failed in deploying your contract";
+            msg="Failed in deploying your contract";
         }
         this._stop(msg);
         const callback=this.props.parent.callback;
         delete this.props.parent.callback;
-        this.props.router.control._reloadProjects();
+        this.props.router.control._reloadProjects(null, null, true);
         if(callback) callback(status);
     };
 
@@ -128,24 +126,24 @@ export default class Deployer extends Component {
         if(this.isRunning) return;
         this.isRunning=true;
         this.consoleRows.length=0;
-        this.setState({status:"Space Invaders preparing..."});
         this.redraw();
 
         const env=this.props.project.props.state.data.env;
         const contract = this.dappfile.getItem("contracts", [{name: this.props.contract}]);
         const src=contract.get('source');
         const tag=env;
-        const network=contract.get("network", env);
-        const endpoint=(this.props.functions.networks.endpoints[network] || {}).endpoint;
+        this.network=env;
+
+        const endpoint=(this.props.functions.networks.endpoints[this.network] || {}).endpoint;
         if(!endpoint) {
-            this._stderr("No endpoint matched network " + network + ".");
+            this._stderr("No endpoint matched network " + this.network + ".");
             this.callback(1);
             return;
         }
         const obj={
             web3: this._getWeb3(endpoint),
             endpoint: endpoint,
-            network: network,
+            network: this.network,
             gasPrice: "0x3B9ACA00", //TODO
             gasLimit: "0x3b8260", //TODO
             recompile: this.recompile,
@@ -158,11 +156,27 @@ export default class Deployer extends Component {
             binsrc: this._makeFileName(src, tag, "bin"),
             hashsrc: this._makeFileName(src, tag, "hash"),
             metasrc: this._makeFileName(src, tag, "meta"),
-            addresssrc: this._makeFileName(src, tag+"."+network, "address"),
-            txsrc: this._makeFileName(src, tag+"."+network, "tx"),
+            addresssrc: this._makeFileName(src, tag+"."+this.network, "address"),
+            txsrc: this._makeFileName(src, tag+"."+this.network, "tx"),
             deploysrc: this._makeFileName(src, tag, "deploy"),
             contractsjssrc: "/app/contracts/." + this.props.contract + "." + env + ".js",
         };
+
+        this.accountName = this.props.project.props.state.data.account;
+        if(!this.accountName || this.accountName == "(locked)") {
+            this._stderr("No account chosen. Please choose an account for the network in the left menu.");
+            this.callback(1);
+            return;
+        }
+        const account = this.dappfile.getItem("accounts", [{name: this.accountName}]);
+        const accountIndex=account.get('index', env);
+        const walletName=account.get('wallet', env);
+        const wallet = this.dappfile.getItem("wallets", [{name: walletName}]);
+        if(!wallet) {
+            this._stderr("Can not deploy with chosen account on public network. Choose the first account in the list.");
+            this.callback(1);
+            return;
+        }
 
         this._buildArgs(obj, (status)=>{
             if(status!=0) {
@@ -181,16 +195,6 @@ export default class Deployer extends Component {
                     }
                     this._buildBin(obj, (status)=>{
                         if(status!=0) {
-                            this.callback(1);
-                            return;
-                        }
-                        const accountName = obj.contract.get("account");
-                        const account = this.dappfile.getItem("accounts", [{name: accountName}]);
-                        const accountIndex=account.get('index', env);
-                        const walletName=account.get('wallet', env);
-                        const wallet = this.dappfile.getItem("wallets", [{name: walletName}]);
-                        if(!wallet) {
-                            this._stderr("Wallet not found.");
                             this.callback(1);
                             return;
                         }
@@ -251,6 +255,13 @@ export default class Deployer extends Component {
                                     this.callback(1);
                                     return;
                                 }
+                                // Check the Metamask network so that it matches
+                                const chainId=(this.props.functions.networks.endpoints[this.network] || {}).chainId;
+                                if(chainId && window.web3.version.network != chainId) {
+                                    this._stderr("The Metamask network does not match the Superblocks Lab network. Check so that you have the same network chosen in Metamask as in Superblocks Lab, then try again.");
+                                    this.callback(1);
+                                    return;
+                                }
                                 const params={
                                     from: extAccounts[accountIndex],
                                     to: "",
@@ -262,7 +273,7 @@ export default class Deployer extends Component {
                                 this._stdout("External account detected. Opening external account provider...");
                                 const modalData={
                                     title: "WARNING: Invoking external account provider",
-                                    body: "Please understand that Superblocks Studio has no power over which network is targeted when using an external provider. It is your responsibility that the network is the same as it is expected to be.",
+                                    body: "Please understand that Superblocks Lab has no power over which network is targeted when using an external provider. It is your responsibility that the network is the same as it is expected to be.",
                                     class: style.externalProviderWarning,
                                 };
                                 const modal=(<Modal data={modalData} />);
@@ -277,12 +288,13 @@ export default class Deployer extends Component {
                                     }
                                     this._stdout("Got receipt: " + res);
                                     obj.txhash2=res;
-                                    this.props.project.props.state.txlog.addTx({hash:res,context:'Contract deployment using external provider',network:obj.network});
+                                    const args=obj.contract.get("args") || [];
+                                    this.props.project.props.state.txlog.addTx({deployArgs:args,contract:this.props.contract,hash:res,context:'Contract deployment using external provider',network:obj.network});
                                     finalize(obj);
                                 });
                             }
                             else {
-                                this._openWallet(obj, obj.contract.get("account"), (status)=>{
+                                this._openWallet(obj, this.accountName, (status)=>{
                                     if(status!=0) {
                                         this.callback(1);
                                         return;
@@ -317,7 +329,7 @@ export default class Deployer extends Component {
     _buildArgs2=(obj, args, args2, env, tag, cb)=>{
         if(args.length==0) {cb(0);return;}
         const arg=args.shift();
-        if(arg.value) {
+        if(arg.value !== undefined) {
             args2.push(arg.value);
             cb(0);
             return;
@@ -325,12 +337,25 @@ export default class Deployer extends Component {
         else if(arg.account) {
             const accountName = arg.account;
             const account = this.dappfile.getItem("accounts", [{name: accountName}]);
+            if(!account) {
+                this._stderr("Account " + (accountName||"") + " is referred to as constructor argument to the contract, but the account does not exist. Please reconfigure the contract.");
+                cb(1);
+                return;
+            }
             const accountIndex=account.get('index', env);
             const walletName=account.get('wallet', env);
             const wallet = this.dappfile.getItem("wallets", [{name: walletName}]);
             if(!wallet) {
-                this._stderr("Wallet not found for constructor argument.");
-                cb(1);
+                // We expect a static value to have been set as the account address.
+                const accountAddress=account.get('address', env);
+                if(!accountAddress) {
+                    this._stderr("Wallet/Address not found for account: "+accountName);
+                    cb(1);
+                }
+                else {
+                    args2.push(accountAddress);
+                    cb(0);
+                }
                 return;
             }
             const walletType=wallet.get('type');
@@ -376,12 +401,21 @@ export default class Deployer extends Component {
                 cb(1);
                 return;
             }
+            var index1=-1,index2=-1;
+            this.dappfile.contracts().map((c, index)=>{
+                if(c.name==arg.contract) index1=index;
+                if(c.name==this.props.contract) index2=index;
+            });
+            if(index1>index2) {
+                this._stderr("Contract " + arg.contract + " is referenced as argument but is below this contract in the order. Readjust order or reconfigure this contract.");
+                cb(1);
+                return;
+            }
             const src=contract.get('source');
-            const network=contract.get("network", env);
             const tag=env;
-            const addresssrc=this._makeFileName(src, tag+"."+network, "address");
-            const txsrc=this._makeFileName(src, tag+"."+network, "tx");
+            const txsrc=this._makeFileName(src, tag+"."+this.network, "tx");
             const deploysrc=this._makeFileName(src, tag, "deploy");
+            const addresssrc=this._makeFileName(src, tag+"."+this.network, "address");
             const files=[txsrc, addresssrc, deploysrc];
             this._loadRawFiles(files, (status, bodies)=>{
                 if(status>0) {
@@ -466,7 +500,7 @@ export default class Deployer extends Component {
                 }
             });
         };
-        const args=obj.contract.get("args", obj.env) || [];
+        const args=obj.contract.get("args") || [];
         const args2=[];
 
         fn(args, args2, obj.env, obj.tag, (status)=>{
@@ -736,7 +770,8 @@ export default class Deployer extends Component {
             if(err==null) {
                 this._stdout("Got receipt: " + res);
                 obj.txhash2=res;
-                this.props.project.props.state.txlog.addTx({hash:res,context:'Contract deployment',network:obj.network});
+                const args=obj.contract.get("args") || [];
+                this.props.project.props.state.txlog.addTx({deployArgs:args,contract:this.props.contract,hash:res,context:'Contract deployment',network:obj.network});
                 cb(0);
             }
             else {
@@ -832,22 +867,19 @@ if(typeof(Contracts)==="undefined") var Contracts={};
 
     renderToolbar = () => {
         const contract = this.dappfile.getItem("contracts", [{name: this.props.contract}]);
-        const env=this.props.project.props.state.data.env;
-        const network=contract.get("network", env);
-        const endpoint=(this.props.functions.networks.endpoints[network] || {}).endpoint;
         const cls={};
         cls[style.running] = this.isRunning;
         return (
             <div class={style.toolbar} id={this.id+"_header"}>
                 <div class={style.buttons}>
-                    <a class={classnames(cls)} href="#" title="Redeploy" onClick={this.run}><FaIcon icon={iconRun}/></a>
+                    <a class={classnames(cls)} href="#" title="Redeploy" onClick={this.run}><IconRun /></a>
                 </div>
                 <div class={style.status}>
                     {this.state.status}
                 </div>
                 <div class={style.info}>
                     <span>
-                        Deploy {this.props.contract}, Network: {network}, Endpoint: {endpoint}
+                        Deploy {this.props.contract}
                     </span>
                 </div>
             </div>
@@ -863,8 +895,8 @@ if(typeof(Contracts)==="undefined") var Contracts={};
 
     getWait = () => {
         if(this.consoleRows.length == 0) {
-            return <div class={style.space_invaders}>
-                    <img src="/static/img/space-invaders.jpg" alt="" />
+            return <div class={style.loading}>
+                    <span>Loading...</span>
                 </div>;
         }
     };

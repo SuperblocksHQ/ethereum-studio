@@ -2,21 +2,21 @@
 #
 # Copyright 2018 Superblocks AB
 #
-# This file is part of Superblocks Studio.
+# This file is part of Superblocks Lab.
 #
-# Superblocks Studio is free software: you can redistribute it and/or modify
+# Superblocks Lab is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation version 3 of the License.
 #
-# Superblocks Studio is distributed in the hope that it will be useful,
+# Superblocks Lab is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with Superblocks Studio.  If not, see <http://www.gnu.org/licenses/>.
+# along with Superblocks Lab. If not, see <http://www.gnu.org/licenses/>.
 #
-# Bump studio version
+# Bump Superblocks Lab version
 #
 
 set -o errexit
@@ -44,7 +44,7 @@ _version_date=$(date "+%Y-%m-%d")
 
 #
 # Files to change
-_src_components_app_file="./src/components/app.js"
+_src_components_app_file="./src/components/app/app.js"
 _src_manifest_file="./src/manifest.json"
 
 # Update files

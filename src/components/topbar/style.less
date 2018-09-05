@@ -1,0 +1,264 @@
+// Copyright 2018 Superblocks AB
+//
+// This file is part of Superblocks Lab.
+//
+// Superblocks Lab is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation version 3 of the License.
+//
+// Superblocks Lab is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
+
+@import '../../style/index';
+
+.topbar {
+    position: relative;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 50px;
+    background-color: #1C2022;
+    line-height: 190%;
+    color: #fff;
+    border-bottom: 1px solid rgb(18, 21, 22);
+    .container {
+        display: flex;
+        align-content: center;
+        align-items: center;
+        span {
+            padding-left: 0.5rem;
+        }
+    }
+    a {
+        color: #fff;
+    }
+    .left {
+        margin-left: 30px;
+        float: left;
+    }
+    .right {
+        margin-right: 30px;
+        float: right;
+        margin-left: auto;
+    }
+    .logo {
+        margin-left: 30px;
+    }
+    .tools {
+        margin-left: 45px;
+        height: 100%;
+    }
+    .actionsRight {
+        display: flex;
+        margin-right: 14px;
+        margin-left: auto;
+        height: 100%;
+    }
+    .action {
+        display: flex;
+        align-items: center;
+        align-content: center;
+        border-bottom: 2px solid transparent;
+        transition: all 0.3s ease;
+        height: 100%;
+        &:hover {
+            color: #E0E0E0;
+            border-color: @primary-color;
+        }
+    }
+    .icon {
+        position: relative;
+        width: 15px;
+        height: 15px;
+        right: 7px;
+    }
+    .projectButton {
+        position: absolute;
+        display: flex;
+        height: 50px;
+        left: 50%;
+        transform: translate(-50%);
+        padding: 0;
+        border-radius: 3px;
+        max-width: none;
+        border: none;
+        color: #fff;
+        z-index: 2;
+        .projectText {
+            margin-left: 3px;
+            font-size: 1.2em;
+            font-weight: 700;
+        }
+        .dropDown {
+            padding: 4px;
+            margin-left: 12px;
+        }
+    }
+
+    .projectMenu {
+        display: block;
+        position: fixed;
+        border-radius: 4px;
+        background-color: @modal-background-color;
+        min-width: 400px;
+        min-height: 320px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+        color: #262E33;
+        padding: 8px 16px;
+        top: 40px;
+        .tabs {
+            .tabList {
+                border-bottom: 1px solid #3C3C3C;
+                .tab {
+                    box-shadow: inset 0 -3px 0 #8641f2;
+                    height: 40px;
+                    border: none;
+                    background: transparent;
+                    border-radius: 0;
+                    cursor: pointer;
+                    padding: 8px 0;
+                    text-align: center;
+                    margin: 0;
+                    font-weight: 600;
+                    color: #fff;
+                }
+            }
+            .paneList {
+                padding: 16px 0 8px 0;
+                max-height: 256px;
+                overflow-y: auto;
+                .pane {
+                    flex: auto;
+                    max-height: 256px;
+                    display: block;
+                    .projectSwitcherList {
+                        list-style: none;
+                        margin: 0;
+                        padding: 0;
+                        .projSwitcherItem {
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            -webkit-touch-callout: none;
+                            -webkit-user-select: none;
+                            -khtml-user-select: none;
+                            -moz-user-select: none;
+                            -ms-user-select: none;
+                            user-select: none;
+                            height: 40px;
+                            cursor: pointer;
+                            max-width: 400px;
+                            line-height: 40px;
+                            font-size: 14px;
+                            border-radius: 3px;
+                            color: #fff;
+                            &:hover {
+                                background: @modal-color-hover;
+                            }
+                            .projSwitcherRow {
+                                padding: 0 16px;
+                                .active {
+                                    margin-right: 10px;
+                                    color: #8641f2;
+                                }
+                                >a {
+                                    color: inherit;
+                                    text-decoration: none;
+                                }
+                                .projSwitcherRowActions {
+                                    margin-left: auto;
+                                    >button {
+                                        margin: 0;
+                                        color: #c7c7c7;
+                                        &:hover {
+                                            color: #fff;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .actions {
+            position: absolute;
+            right: 16px;
+            top: 16px;
+            list-style: none;
+            display: flex;
+            margin-left: auto;
+            >button {
+                color: #fff;
+                text-decoration: none;
+                font-weight: 600;
+                &:hover {
+                    color: #c5a2ff;
+                    cursor: pointer;
+                    text-decoration: underline;
+                }
+            }
+            .separator {
+                border-left: 1px solid #3C3C3C;
+                height: 12px;
+                margin-top: 7px;
+            }
+        }
+    }
+
+    .helpMenu {
+        display: block;
+        position: absolute;
+        right: 40px;
+        top: 45px;
+        border-radius: 4px;
+        background-color: #fff;
+        min-width: 200px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+        color: #262E33;
+        padding: 10px 0;
+        transition: visibility 0s, opacity 0.2s ease;
+        .title {
+            font-weight: 600;
+            margin-bottom: 5px;
+            padding-left: 24px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            >li {
+                padding: 2px 24px;
+                &:hover {
+                    background: @white-color-hover;
+                }
+            }
+        }
+        a {
+            color: #262E33;
+        }
+        .telegramIcon {
+            margin-left: 10px;
+        }
+    }
+    .show {
+        visibility: visible;
+        opacity: 1;
+    }
+    .overflowText {
+        max-width: 263px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+

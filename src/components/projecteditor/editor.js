@@ -1,31 +1,23 @@
 // Copyright 2018 Superblocks AB
 //
-// This file is part of Superblocks Studio.
+// This file is part of Superblocks Lab.
 //
-// Superblocks Studio is free software: you can redistribute it and/or modify
+// Superblocks Lab is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation version 3 of the License.
 //
-// Superblocks Studio is distributed in the hope that it will be useful,
+// Superblocks Lab is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Superblocks Studio.  If not, see <http://www.gnu.org/licenses/>.
+// along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { h, Component } from 'preact';
-import classnames from 'classnames';
 import style from './style-editor';
 import MonacoEditor from 'react-monaco-editor';
-import FaIcon  from '@fortawesome/react-fontawesome';
-import iconSave from '@fortawesome/fontawesome-free-regular/faSave';
-import iconCompile from '@fortawesome/fontawesome-free-solid/faPuzzlePiece';
-import iconDeploy from '@fortawesome/fontawesome-free-regular/faPlayCircle';
-import iconTest from '@fortawesome/fontawesome-free-solid/faFlask';
-import iconDebug from '@fortawesome/fontawesome-free-solid/faBug';
-import iconCog from '@fortawesome/fontawesome-free-solid/faCog';
-import iconChess from '@fortawesome/fontawesome-free-solid/faChess';
+import { IconSave, IconCompile, IconDeploy, IconConfigure, IconInteract } from '../icons';
 
 export default class Editor extends Component {
     constructor(props) {
@@ -36,6 +28,7 @@ export default class Editor extends Component {
             js:"javascript",
             sol:"sol",
             sh:"shell",
+            md:"markdown",
         };
         this.editorObj;
         this.monacoObj;
@@ -185,11 +178,11 @@ contract `+this.props.contract.name+` {
         return (
             <div class={style.toolbar} id={this.id+"_header"}>
                 <div class={style.buttons}>
-                    <a href="#" title="Save" style={stl} onClick={this.save}><FaIcon icon={iconSave}/></a>
-                    {this.props.type2=="contract" && <a href="#" title="Compile" onClick={this.compile}><FaIcon icon={iconCompile}/></a>}
-                    {this.props.type2=="contract" && <a href="#" title="Deploy" onClick={this.deploy}><FaIcon icon={iconDeploy}/></a>}
-                    {this.props.type2=="contract" && <a href="#" title="Configure" onClick={this.configure}><FaIcon icon={iconCog}/></a>}
-                    {this.props.type2=="contract" && <a href="#" title="Interact" onClick={this.interact}><FaIcon icon={iconChess}/></a>}
+                    <button class="btnNoBg" title="Save" style={stl} onClick={this.save}><IconSave /></button>
+                    {this.props.type2=="contract" && <button class="btnNoBg" title="Compile" onClick={this.compile}><IconCompile /></button>}
+                    {this.props.type2=="contract" && <button class="btnNoBg" title="Deploy" onClick={this.deploy}><IconDeploy style={{ verticalAlign:'middle'}} /></button>}
+                    {this.props.type2=="contract" && <button class="btnNoBg" title="Configure" onClick={this.configure}><IconConfigure /></button>}
+                    {this.props.type2=="contract" && <button class="btnNoBg" title="Interact" onClick={this.interact}><IconInteract style={{ verticalAlign:'middle'}}/></button>}
                 </div>
                 <div class={style.info}>
                     <span>
