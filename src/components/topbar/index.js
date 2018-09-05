@@ -67,8 +67,6 @@ class ProjectDialog extends Component {
     };
 
     openProjectConfig = (e, project) => {
-        e.stopPropagation();
-
         this.openProject(e, project, (status) => {
             if (status == 0) {
                 this.props.router.control.openProjectConfig(project);
