@@ -1,12 +1,13 @@
 # Superblocks Lab
 
-[![CircleCI](https://circleci.com/gh/SuperblocksHQ/studio.svg?style=shield&circle-token=c798fc7a66f88cff97b4d77e4082752568b33195)](https://circleci.com/gh/SuperblocksHQ/studio)
+[![CircleCI](https://circleci.com/gh/SuperblocksHQ/superblocks-lab.svg?style=shield)](https://circleci.com/gh/SuperblocksHQ/superblocks-lab)
 
-[Superblocks](https://superblocks.com) **Lab** is an integrated development environment (IDE) to learn, build and deploy decentralized apps (DApps) for _Ethereum_. It's a full browser experience which requires no installations to run.
+[Superblocks](https://superblocks.com) **Superblocks Lab** is an integrated development environment (IDE) to learn, build and deploy decentralized apps (DApps) for _Ethereum_. It's a full browser experience which requires no installations to run.
+
 
 **Superblocks Lab** has a built in _Solidity_ compiler and _Ethereum Virtual Machine_. It also works with local and public networks.
 
-To try it out, go to [studio.superblocks.com](https://studio.superblocks.com).
+To try it out, go to [lab.superblocks.com](https://lab.superblocks.com).
 
 ## Features
 * In-browser Blockchain
