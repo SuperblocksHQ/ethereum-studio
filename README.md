@@ -2,7 +2,7 @@
 
 [![CircleCI](https://circleci.com/gh/SuperblocksHQ/superblocks-lab.svg?style=shield)](https://circleci.com/gh/SuperblocksHQ/superblocks-lab)
 
-[Superblocks](https://superblocks.com) **Superblocks Lab** is an integrated development environment (IDE) to learn, build and deploy decentralized apps (DApps) for _Ethereum_. It's a full browser experience which requires no installations to run.
+[Superblocks](https://superblocks.com) **Lab** is an integrated development environment (IDE) to learn, build and deploy decentralized apps (DApps) for _Ethereum_. It's a full browser experience which requires no installations to run.
 
 <p align="center">
   <img alt="Superblocks Lab in action" src="https://user-images.githubusercontent.com/7814134/45118436-d135c300-b158-11e8-8271-648495d35d29.png">
