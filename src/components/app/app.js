@@ -30,7 +30,6 @@ export default class App extends Component {
         super(props);
         this.idCounter=0;
 
-        this._version="1.0-beta25";
         this.session={
             start_time: Date.now(),
         };
@@ -147,9 +146,9 @@ export default class App extends Component {
     };
 
     _init=()=>{
-        let { showSplash } = this.props;
+        let { showSplash, appVersion } = this.props;
         const modalData={
-            title: "Loading Superblocks Lab " + this._version,
+            title: "Loading Superblocks Lab",
             body: "Initializing Wallet, Solidity compiler and Ethereum Virtual Machine...",
             style: {"text-align":"center"},
         };
@@ -161,7 +160,7 @@ export default class App extends Component {
         this.functions.wallet.openWallet("development", this.knownWalletSeed, () => {walletSeeded=true;});
         const fn=()=>{
             if (this.functions.EVM.isReady() && this.functions.compiler.isReady() && walletSeeded) {
-                console.log("Superblocks Lab "+this._version+" Ready.");
+                console.log("Superblocks Lab " + appVersion + " Ready.");
                 this.functions.modal.close();
 
                 if (showSplash) {
@@ -203,20 +202,6 @@ export default class App extends Component {
         const modal=(<Modal data={modalData} />);
         this.functions.modal.show({render: () => {return modal;}});
     };
-
-    //_checkVersion=()=>{
-        //const self=this;
-        //fetch('/manifest.json', {cache: 'no-cache'})
-            //.then(function(response) {
-                //if(response.ok) return response.json();
-                //else alert("Could not load manifest.json.");
-            //})
-            //.then(function(manifest) {
-                //if(manifest.version!=self._version) {
-                    //alert("This is not the newest version, hard reload your browser to make it fetch the newest version of Superblocks Lab.");
-                //}
-            //});
-    //};
 
     session_start_time = ()=>{
         return this.session.start_time;

@@ -4,7 +4,7 @@ about: Create a report to help us improve
 ---
 
 <!-- Please search existing issues to avoid creating duplicates. -->
-<!-- Also please test using the latest beta version to make sure your issue has not already been fixed: https://studio-beta.superblocks.com/ -->
+<!-- Also please test using the latest beta version to make sure your issue has not already been fixed: https://lab-beta.superblocks.com/ -->
 
 ## Environment/Browser
 Simply tell which browser and version of it you are using

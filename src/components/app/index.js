@@ -1,10 +1,12 @@
 import { connect } from 'react-redux';
 import { showSplashNoMore } from '../../actions/settings';
 import { getShowSplashScreen } from '../../selectors/settings'
+import { getAppVersion } from '../../selectors/app'
 import App from './app';
 
 const mapStateToProps = state => ({
     showSplash: getShowSplashScreen(state),
+    appVersion: getAppVersion(state),
   });
 
 const mapDispatchToProps = (dispatch) => {
