@@ -94,7 +94,6 @@ export default class NewDapp extends Component {
     }
 }
 
-
 NewDapp.proptypes = {
     modal: Proptypes.object.isRequired,
     functions: Proptypes.object.isRequired,
