@@ -113,6 +113,14 @@ var render_item=function(item, item_index, handler, prefix) {
 <div class="returns">
     <div class="btn2">Returns:</div>
 `;
+    if(item.outputs.length>0 && !item.constant) {
+        returns+=`
+<div class="argument">
+    <span>Warning</span>
+    <span style="width: unset;">Non constant function can't return values in transaction.</span>
+</div>
+`;
+    }
     if(!item.constant) {
         // Show tx hash
         returns+=`
@@ -208,7 +216,8 @@ var render=function(abi, contract) {
         const item=abi[index];
         for(var index=0;index<item.outputs.length;index++) {
             var id2=id+"_output_"+index;;
-            document.getElementById(id2).textContent="";
+            var elm = document.getElementById(id2);
+            if (elm) elm.textContent="";
         }
         const args=[];
         for(var index=0;index<item.inputs.length;index++) {
@@ -246,7 +255,7 @@ var render=function(abi, contract) {
                 iserr=true;
                 res=[];
             }
-            if(item.outputs.length==0) {
+            if(item.outputs.length==0 || !item.constant) {
                 var id2=id+"_res";
                 if(iserr) {
                     //
@@ -267,7 +276,8 @@ var render=function(abi, contract) {
                         res=err;
                     }
                 }
-                document.getElementById(id2).textContent=res.toString();
+                var elm = document.getElementById(id2);
+                if (elm) elm.textContent=res.toString();
             }
             else {
                 if(! (res instanceof Array)) res=[res];
@@ -278,10 +288,12 @@ var render=function(abi, contract) {
                     var isBool = typeof val =='boolean'
                     var isString = typeof val =='string'
                     var value=val || isBool?val:isString?"(Empty)":iserr?"(ERROR)":"(NO DATA)";
+                    // TODO: Is this really necessary or if it is, is it complete? Why not check for all integer types?
                     if(item.type=="uint256") {
                         value=res.toNumber();
                     }
-                    document.getElementById(id2).textContent=value;
+                    var elm = document.getElementById(id2);
+                    if (elm) elm.textContent=value;
                 }
             }
         };
