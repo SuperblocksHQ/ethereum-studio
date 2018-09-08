@@ -16,8 +16,8 @@
 
 import { h, Component } from 'preact';
 import Proptypes from 'prop-types';
-import Step1 from './step1';
-import Step2 from './step2';
+import SelectedTemplate from './selectTemplate';
+import ProjectDetails from './projectDetails';
 import Templates from '../templates';
 
 export default class NewDapp extends Component {
@@ -65,14 +65,14 @@ export default class NewDapp extends Component {
         let step;
         switch (this.state.currentStep) {
             case 1:
-                step = <Step1
+                step = <ProjectDetails
                             projectName={this.state.projectInfo ? this.state.projectInfo.name : ""}
                             projectTitle={this.state.projectInfo ? this.state.projectInfo.title : ""}
                             onStep1Done={this.onStep1DoneHandle}
                             onCloseClickHandle={this.onCloseClickHandle}/>;
                 break;
             case 2:
-                step = <Step2
+                step = <SelectedTemplate
                             categories={Templates.categories}
                             templates={Templates.templates}
                             onTemplateSelected={this.onTemplateSelectedHandle}
@@ -80,7 +80,7 @@ export default class NewDapp extends Component {
                             onCloseClickHandle={this.onCloseClickHandle}/>;
                 break;
             default:
-                step = <Step1 onStep1Done={this.onStep1DoneHandle}/>;
+                step = <AddProjectDetails onStep1Done={this.onStep1DoneHandle}/>;
                 break;
         }
 

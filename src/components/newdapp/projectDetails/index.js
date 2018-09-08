@@ -20,7 +20,7 @@ import classNames from 'classnames';
 import style from '../style';
 import { IconClose } from '../../icons';
 
-export default class Step1 extends Component {
+export default class ProjectDetails extends Component {
 
     constructor(props) {
         super(props);
@@ -127,7 +127,7 @@ export default class Step1 extends Component {
     }
 }
 
-Step1.propTypes = {
+ProjectDetails.propTypes = {
     onStep1Done: Proptypes.func.isRequired,
     onCloseClickHandle: Proptypes.func.isRequired
 }

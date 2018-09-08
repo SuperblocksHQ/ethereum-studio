@@ -56,7 +56,7 @@ TemplateLayout.propTypes = {
     onTemplateSelected: Proptypes.func.isRequired
 }
 
-export default class Step2 extends Component {
+export default class SelectTemplate extends Component {
 
     state = {
         categorySelectedId: 0,
@@ -133,7 +133,7 @@ export default class Step2 extends Component {
     }
 }
 
-Step2.proptypes = {
+SelectTemplate.proptypes = {
     categories: Proptypes.array.isRequired,
     templates: Proptypes.array.isRequired,
     onTemplateSelected: Proptypes.func.isRequired,
