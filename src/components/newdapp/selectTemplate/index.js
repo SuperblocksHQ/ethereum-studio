@@ -67,8 +67,8 @@ export default class SelectTemplate extends Component {
         this.props.onTemplateSelected(this.state.templateSelected);
     }
 
-    back = () => {
-        this.props.onBackPress();
+    onCancelClickHandle = () => {
+        this.props.onCloseClick();
     }
 
     onCategorySelected(id) {
@@ -84,7 +84,7 @@ export default class SelectTemplate extends Component {
     }
 
     onCloseClickHandle = () => {
-        this.props.onCloseClickHandle();
+        this.props.onCloseClick();
     };
 
     render() {
@@ -124,8 +124,8 @@ export default class SelectTemplate extends Component {
                         </div>
                     </div>
                     <div class={style.footer}>
-                        <button onClick={this.back} class="btn2 noBg mr-2">Back</button>
-                        <button onClick={this.onCreateProjectHandle} disabled={!templateSelected} class="btn2">Create Project</button>
+                        <button onClick={this.onCancelClickHandle} class="btn2 noBg mr-2">Cancel</button>
+                        <button onClick={this.onCreateProjectHandle} disabled={!templateSelected} class="btn2">Select Template</button>
                     </div>
                 </div>
             </div>
@@ -137,6 +137,5 @@ SelectTemplate.proptypes = {
     categories: Proptypes.array.isRequired,
     templates: Proptypes.array.isRequired,
     onTemplateSelected: Proptypes.func.isRequired,
-    onBackPress: Proptypes.func.isRequired,
-    onCloseClicked: Proptypes.func.isRequired
+    onCloseClick: Proptypes.func.isRequired
 }

@@ -61,12 +61,16 @@ export default class ProjectDetails extends Component {
         }
 
         if (this.validateInputs()) {
-            this.props.onStep1Done({ name: this.state.projectName, title: this.state.projectTitle });
+            this.props.onProjectDetailsDone({ name: this.state.projectName, title: this.state.projectTitle });
         }
     };
 
     onCloseClickHandle = () => {
-        this.props.onCloseClickHandle();
+        this.props.onCloseClick();
+    };
+
+    onBackClickHandle = () => {
+        this.props.onBackClick();
     };
 
     handleNameChange = changeEvent => {
@@ -118,8 +122,8 @@ export default class ProjectDetails extends Component {
                         </div>
                     </div>
                     <div class={style.footer}>
-                        <button onClick={this.onCloseClickHandle} class="btn2 noBg mr-2">Cancel</button>
-                        <button onClick={this.onNextClickHandle} class="btn2">Next</button>
+                        <button onClick={this.onBackClickHandle} class="btn2 noBg mr-2">Back</button>
+                        <button onClick={this.onNextClickHandle} class="btn2">Create Project</button>
                     </div>
                 </div>
             </div>
@@ -128,6 +132,7 @@ export default class ProjectDetails extends Component {
 }
 
 ProjectDetails.propTypes = {
-    onStep1Done: Proptypes.func.isRequired,
-    onCloseClickHandle: Proptypes.func.isRequired
+    onProjectDetailsDone: Proptypes.func.isRequired,
+    onCloseClick: Proptypes.func.isRequired,
+    onBackClick: Proptypes.func.isRequired
 }
