@@ -23,18 +23,17 @@ import TopBar from '../topbar';
 import ContactContainer from '../contactContainer';
 import TransactionLogPanel from '../blockexplorer/transactionlogPanel';
 import { IconTransactions, IconClose } from '../icons';
-
 export default class ProjectEditor extends Component {
 
     state = {
         controlPanelWidth: 280,
         draggin: false,
-        showTransactions: false
+        showTransactions: false,
+        isDragging:false,
     }
 
     constructor(props) {
         super(props);
-
         this.props.router.register("main", this);
 
         // Mute defalt ctrl-s behavior.
@@ -44,6 +43,18 @@ export default class ProjectEditor extends Component {
             }
         }, false);
     }
+    moveAt(pageX) {
+    if (this.state.isDragging) {
+    document.getElementById('transview').style.width = screen.width - pageX + 'px';
+     }
+      }
+    componentDidMount(){
+
+}
+
+    onMouseMove=(event)=> {
+        this.moveAt(event.pageX, event.pageY);
+    };
 
     // we could get away with not having this (and just having the listeners on
     // our div), but then the experience would be possibly be janky. If there's
@@ -56,6 +67,18 @@ export default class ProjectEditor extends Component {
         } else if (!this.state.dragging && state.dragging) {
             document.removeEventListener('mousemove', this.onMouseMove)
             document.removeEventListener('mouseup', this.onMouseUp)
+        }
+        if (this.state.showTransactions) {
+            document.getElementById('transview').addEventListener('mousedown', (event) => {
+                event.preventDefault();
+                this.setState({ isDragging: true });
+                document.getElementById('transview').style.zIndex = 10;
+                // this.moveAt(event.pageX, event.pageY);
+            });
+            document.getElementById('transview').addEventListener('mousemove', this.onMouseMove);
+            document.getElementById('transview').addEventListener('mouseup', () => {
+                this.setState({ isDragging: false })
+            });
         }
     }
 
@@ -71,15 +94,15 @@ export default class ProjectEditor extends Component {
         }
     }
 
-    onMouseMove = (e) => {
-        e.stopPropagation();
-        e.preventDefault();
-
-        if (!this.state.dragging) return;
-        this.setState({
-            controlPanelWidth: e.pageX
-        });
-    }
+    // onMouseMove = (e) => {
+    //     e.stopPropagation();
+    //     e.preventDefault();
+    //
+    //     if (!this.state.dragging) return;
+    //     this.setState({
+    //         controlPanelWidth: e.pageX
+    //     });
+    // }
 
     onMouseUp = (e) => {
         e.stopPropagation();
@@ -105,6 +128,7 @@ export default class ProjectEditor extends Component {
             showTransactions: !this.state.showTransactions
         });
         this.redraw(true);
+
     }
 
     onProjectSelectedHandle = () => {
@@ -112,7 +136,6 @@ export default class ProjectEditor extends Component {
             showTransactions: false
         });
     }
-
     render() {
         var endpoint="";
         var project;
@@ -134,18 +157,21 @@ export default class ProjectEditor extends Component {
                     </div>
                     <span class="resizer vertical" onMouseDown={this.onMouseDown}></span>
                     <div style="position: relative; width: 100%">
-                        <div key="main_panes" id="main_panes" class={style.panescontainer} >
+                        <div key="main_panes" id="main_panes" class={style.panescontainer} id="container" >
                             <Panes router={this.props.router} functions={this.props.functions} isActionPanelShowing={showTransactions} />
                             {
                                 showTransactions ?
-                                    <div class={style.actionContainer} >
+                                        <div class={style.actionContainer} id="transview">
                                         <div class={style.header}>
+
                                             <span class={style.title}>Transactions History</span>
                                             <button class={classNames([style.icon, "btnNoBg"])} onClick={this.onShowHideTransactionsClicked}>
                                                 <IconClose />
                                             </button>
                                         </div>
+                                            <div class={style.dragBar}>
                                         <TransactionLogPanel router={this.props.router} />
+                                            </div>
                                     </div>
                                 : null
                             }
