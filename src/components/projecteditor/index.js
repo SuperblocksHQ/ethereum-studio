@@ -45,13 +45,9 @@ export default class ProjectEditor extends Component {
     }
     moveAt(pageX) {
     if (this.state.isDragging) {
-    document.getElementById('transview').style.width = screen.width - pageX + 'px';
+    document.getElementById('transview').style.width = (screen.width) - pageX + 'px';
      }
       }
-    componentDidMount(){
-
-}
-
     onMouseMove=(event)=> {
         this.moveAt(event.pageX, event.pageY);
     };
@@ -69,19 +65,14 @@ export default class ProjectEditor extends Component {
             document.removeEventListener('mouseup', this.onMouseUp)
         }
         if (this.state.showTransactions) {
-            document.getElementById('transview').addEventListener('mousedown', (event) => {
-                event.preventDefault();
-                this.setState({ isDragging: true });
-                document.getElementById('transview').style.zIndex = 10;
-                // this.moveAt(event.pageX, event.pageY);
-            });
+            document.getElementById('transview').addEventListener('mousedown',this.onMouseDown);
             document.getElementById('transview').addEventListener('mousemove', this.onMouseMove);
-            document.getElementById('transview').addEventListener('mouseup', () => {
-                this.setState({ isDragging: false })
-            });
+            document.getElementById('transview').addEventListener('mouseup',this.onMouseUp);
         }
     }
-
+      onMouseDown=()=>{
+    this.setState({ isDragging: true });
+     };
     redraw = (all) => {
         if(this.props.router.control) {
             this.props.router.control.redraw();
@@ -108,20 +99,23 @@ export default class ProjectEditor extends Component {
         e.stopPropagation();
         e.preventDefault();
 
-        this.setState({ dragging: false });
-    }
+        this.setState({ isDragging: false });
+        document.removeEventListener('mousemove', this.onMouseMove);
+        document.removeEventListener('mouseup', this.onMouseUp);
+        document.removeEventListener('mousedown', this.onMouseDown);
+    };
 
-    onMouseDown = (e) => {
-        e.stopPropagation();
-        e.preventDefault();
-
-        // only left mouse button
-        if (e.button !== 0) return;
-        this.setState({
-            dragging: true,
-            controlPanelWidth: e.screenX
-        });
-    }
+    // onMouseDown = (e) => {
+    //     e.stopPropagation();
+    //     e.preventDefault();
+    //
+    //     // only left mouse button
+    //     if (e.button !== 0) return;
+    //     this.setState({
+    //         dragging: true,
+    //         controlPanelWidth: e.screenX
+    //     });
+    // }
 
     onShowHideTransactionsClicked = () => {
         this.setState({

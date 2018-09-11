@@ -293,7 +293,7 @@ export default class Panes extends Component {
         const { isActionPanelShowing } = this.props;
 
         return (
-           <div key="panes" id="panes" class="full" style={{ width: isActionPanelShowing ? 'calc(100% - 450px)' : '100%'}}>
+           <div key="panes" id="panes" class="full">
                <div key="header" id="panes_header" class={style.header}>
                    {header}
                </div>
