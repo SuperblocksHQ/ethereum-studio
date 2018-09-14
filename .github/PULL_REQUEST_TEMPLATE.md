@@ -1,7 +1,12 @@
-### Requirements
+
+<!--
 
 * Filling out the template is required. Any pull request that does not include enough information to be reviewed in a timely manner may be closed at the maintainers' discretion.
+
 * Please provide relevant tests to make sure we can keep improving our coverage and try to minizime regressions while developing the app.
+
+-->
+
 
 ### Description of the Change
 
@@ -37,6 +42,6 @@ Describe the actions you performed (e.g., buttons you clicked, text you typed, c
 
 -->
 
-### Applicable Issues
+### Github Issues
 
 <!-- Enter any applicable Issues here -->
