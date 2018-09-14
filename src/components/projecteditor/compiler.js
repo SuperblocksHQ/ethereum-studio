@@ -164,7 +164,13 @@ export default class Compiler extends Component {
                     }
                     else {
                         (data.errors || []).map((row)=>{
-                            this.consoleRows.push({channel:3,msg:row.formattedMessage});
+                            if(row.severity==="warning")
+                            {
+                                this.consoleRows.push({channel:3,msg:row.formattedMessage});
+                            }
+                            else {
+                                this.consoleRows.push({channel: 2, msg: row.formattedMessage});
+                            }
                         });
                         if(!data.contracts || Object.keys(data.contracts).length==0) {
                             this.setState({status:"Ate bad code and died, compilation aborted."});
