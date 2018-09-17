@@ -464,7 +464,7 @@ export default class ContractInteraction extends Component {
         return (
             <div class={style.toolbar} id={this.id+"_header"}>
                 <div class={style.buttons}>
-                    <a href="#" title="Recompile" onClick={this.run}><IconRun /></a>
+                    <a href="#" title="Refresh" onClick={this.run}><IconRun /></a>
                 </div>
                 <div class={style.info}>
                     <span>
