@@ -441,7 +441,7 @@ export default class AppView extends Component {
         return (
             <div class={style.toolbar} id={this.id+"_header"}>
                 <div class={style.buttons}>
-                    <a href="#" title="Recompile" onClick={this.run}><IconRun /></a>
+                    <a href="#" title="Refresh" onClick={this.run}><IconRun /></a>
                     <a href="#" title="Download DApp" onClick={this.download}>Download DApp</a>
                 </div>
                 <div class={style.accounts}>
