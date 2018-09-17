@@ -165,10 +165,9 @@ export default class Compiler extends Component {
                     else {
                         (data.errors || []).map((row)=>{
                             if (row.severity === "warning") {
-                                this.consoleRows.push({channel:3,msg:row.formattedMessage});
-                            }
-                            else {
-                                this.consoleRows.push({channel: 2, msg: row.formattedMessage});
+                                this.consoleRows.push({ channel: 3, msg: row.formattedMessage });
+                            } else {
+                                this.consoleRows.push({ channel: 2, msg: row.formattedMessage });
                             }
                         });
                         if(!data.contracts || Object.keys(data.contracts).length==0) {
