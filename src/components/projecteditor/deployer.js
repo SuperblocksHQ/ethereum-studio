@@ -145,7 +145,7 @@ export default class Deployer extends Component {
             endpoint: endpoint,
             network: this.network,
             gasPrice: "0x3B9ACA00", //TODO
-            gasLimit: "0x3b8260", //TODO
+            gasLimit: "0x788B60", //TODO
             recompile: this.recompile,
             redeploy: redeploy,
             contract: contract,
