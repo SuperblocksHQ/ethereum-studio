@@ -180,8 +180,9 @@ export default class Compiler extends Component {
                             if(contractObj && Object.keys(contractObj.evm.bytecode.linkReferences || {}).length>0) {
                                 contractObj=null;
                                 this.consoleRows.push({channel:2,msg:"[ERROR] The contract " + contractName + " references library contracts. Superblocks Lab does not yet support library contract linking, only contract imports."});
+                                delFiles();
                             }
-                            if(contractObj) {
+                            else if(contractObj) {
                                 const metadata=JSON.parse(contractObj.metadata);
                                 // Save ABI and BIN
                                 // First load, then save and close.
@@ -229,7 +230,12 @@ export default class Compiler extends Component {
                                 });
                             }
                             else {
-                                this.consoleRows.push({channel:2,msg:"[ERROR] The contract " + contractName + " could not be compiled."});
+                                if (data.contracts) {
+                                    this.consoleRows.push({channel:2,msg:"[ERROR] The contract " + contractName + " could not be compiled. The contract needs to be named the same as the contract's source file."});
+                                }
+                                else {
+                                    this.consoleRows.push({channel:2,msg:"[ERROR] The contract " + contractName + " could not be compiled."});
+                                }
                                 delFiles();
                             }
                         }

@@ -16,22 +16,15 @@
 
 import { h, Component } from 'preact';
 import Proptypes from 'prop-types';
-import Step1 from './step1';
-import Step2 from './step2';
+import SelectedTemplate from './selectTemplate';
+import ProjectDetails from './projectDetails';
 import Templates from '../templates';
 
 export default class NewDapp extends Component {
 
     state = {
-        projectInfo: null,
+        selectedTemplate: null,
         currentStep: 1,
-    }
-
-    onStep1DoneHandle = (projectInfo) => {
-        this.setState({
-            currentStep: 2,
-            projectInfo: projectInfo
-        });
     }
 
     onCloseClickHandle = () => {
@@ -39,15 +32,23 @@ export default class NewDapp extends Component {
     }
 
     onTemplateSelectedHandle = (selectedTemplate) => {
-        var dappfile = selectedTemplate.dappfile;
+        this.setState({
+            currentStep: 2,
+            selectedTemplate: selectedTemplate
+        })
+    }
+
+    onProjectDetailsDone = (projectInfo) => {
+        var dappfile = this.state.selectedTemplate.dappfile;
 
         // Make sure we include the info of the current project in the dappFile, in order to do not break anything in the app...
-        const project = { info: this.state.projectInfo }
+        const project = { info: projectInfo }
         dappfile.project = project;
 
-        const files = selectedTemplate.files;
+        const files = this.state.selectedTemplate.files;
 
-        this.props.backend.saveProject(this.state.projectInfo.name, { dappfile: dappfile }, o => this.props.cb(o.status, o.code), true, files);
+        this.props.backend.saveProject(projectInfo.name, { dappfile: dappfile }, o => this.props.cb(o.status, o.code), true, files);
+
         this.closeModal();
     }
 
@@ -65,22 +66,23 @@ export default class NewDapp extends Component {
         let step;
         switch (this.state.currentStep) {
             case 1:
-                step = <Step1
-                            projectName={this.state.projectInfo ? this.state.projectInfo.name : ""}
-                            projectTitle={this.state.projectInfo ? this.state.projectInfo.title : ""}
-                            onStep1Done={this.onStep1DoneHandle}
-                            onCloseClickHandle={this.onCloseClickHandle}/>;
-                break;
-            case 2:
-                step = <Step2
+                step = <SelectedTemplate
                             categories={Templates.categories}
                             templates={Templates.templates}
                             onTemplateSelected={this.onTemplateSelectedHandle}
-                            onBackPress={this.pop}
-                            onCloseClickHandle={this.onCloseClickHandle}/>;
+                            onBackPress={this.closeModal}
+                            onCloseClick={this.onCloseClickHandle}/>;
+                break;
+            case 2:
+                step = <ProjectDetails
+                            projectName={this.state.projectInfo ? this.state.projectInfo.name : ""}
+                            projectTitle={this.state.projectInfo ? this.state.projectInfo.title : ""}
+                            onProjectDetailsDone={this.onProjectDetailsDone}
+                            onCloseClick={this.onCloseClickHandle}
+                            onBackClick={this.pop}/>;
                 break;
             default:
-                step = <Step1 onStep1Done={this.onStep1DoneHandle}/>;
+                step = <AddProjectDetails onStep1Done={this.onStep1DoneHandle}/>;
                 break;
         }
 
@@ -91,6 +93,7 @@ export default class NewDapp extends Component {
         );
     }
 }
+
 
 NewDapp.proptypes = {
     modal: Proptypes.object.isRequired,
