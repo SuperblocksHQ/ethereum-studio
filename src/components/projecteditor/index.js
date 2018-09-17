@@ -29,7 +29,7 @@ export default class ProjectEditor extends Component {
     state = {
         controlPanelWidth: 280,
         draggin: false,
-        showTransactions: false
+        showTransactions: false,
     }
 
     constructor(props) {
@@ -71,22 +71,28 @@ export default class ProjectEditor extends Component {
         }
     }
 
-    onMouseMove = (e) => {
+     onMouseMove = (e) => {
         e.stopPropagation();
         e.preventDefault();
-
-        if (!this.state.dragging) return;
-        this.setState({
-            controlPanelWidth: e.pageX
-        });
-    }
+        const { dragging } = this.state;
+        const maxSize = screen.width * 0.35;
+        if (!dragging) return;
+        if (e.pageX < maxSize ) {
+            this.setState({
+                controlPanelWidth: e.pageX
+            });
+        }
+        else {
+            this.onMouseUp(e);
+        }
+    };
 
     onMouseUp = (e) => {
         e.stopPropagation();
         e.preventDefault();
 
-        this.setState({ dragging: false });
-    }
+        this.setState({ dragging: false});
+    };
 
     onMouseDown = (e) => {
         e.stopPropagation();
