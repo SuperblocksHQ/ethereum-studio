@@ -91,7 +91,7 @@ export default class ProjectEditor extends Component {
         e.stopPropagation();
         e.preventDefault();
 
-        this.setState({ dragging: false});
+        this.setState({ dragging: false });
     };
 
     onMouseDown = (e) => {
