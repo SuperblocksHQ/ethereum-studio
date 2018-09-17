@@ -29,7 +29,6 @@ export default class Deployer extends Component {
         this.id=props.id+"_deployer";
         this.props.parent.childComponent=this;
         this.consoleRows=[];
-        const projectname=this.props.project.props.state.dir;
         this.dappfile = this.props.project.props.state.data.dappfile;
         this.recompile=this.props.recompile || false;
         this.redeploy=this.props.redeploy || false;

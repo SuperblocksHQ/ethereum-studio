@@ -26,7 +26,6 @@ export default class Compiler extends Component {
         this.id=props.id+"_compiler";
         this.props.parent.childComponent=this;
         this.consoleRows=[];
-        const projectname=this.props.project.props.state.dir;
         this.dappfile = this.props.project.props.state.data.dappfile;
         this.run();
     }

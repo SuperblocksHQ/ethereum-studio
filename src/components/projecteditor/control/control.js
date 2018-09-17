@@ -505,28 +505,51 @@ export default class Control extends Component {
         if(this.props.router.panes) this.props.router.panes.openItem(item);
     };
 
-    _anyContractItemsOpen = (contractName) => {
+    _closeAnyContractItemsOpen = (contractName, includeConfigure, cb) => {
         const project = this.getActiveProject();
         if(project) {
             // TODO: this lookup is bad since it depends on the order of the menu items.
             // TODO: look through project object for the contract named contractName, then get the item for the Editor, Compiler, Deployer and Interact window.
             const items = [];
-            const item = project.props.state.children[1].getChildren()[0].props.state._children[0];
+            const item = project.props.state.children[1].getChildren()[0].props.state._children.filter( (item) => {
+                return item.props._contract && item.props._contract.name == contractName;
+            })[0];
+            if (!item) {
+                if (cb) cb(2);
+                    return;
+            }
             items.push(item);
-            items.push(item.props.state.children[0]);  // Configure item
+            if (includeConfigure) {
+                items.push(item.props.state.children[0]);  // Configure item
+            }
             items.push(item.props.state.children[1]);
             items.push(item.props.state.children[2]);
             items.push(item.props.state.children[3]);
-            console.log(items);
 
-            for(let index=0;index<items.length;index++) {
-                const item = items[index];
-                if (this.props.router.panes.getWindowByItem(item).pane) {
-                    return true;
+            const close = (items, cb) => {
+                if (items.length == 0) {
+                    if (cb) cb(0);
+                    return;
                 }
-            }
+                const item = items.pop();
+                const {pane, winId} = this.props.router.panes.getWindowByItem(item);
+                if (pane && winId) {
+                    this.props.router.panes.closeWindow(pane.id, winId, (status) => {
+                        if (status != 0) {
+                            if (cb) cb(status);
+                            return;
+                        }
+                        close(items, cb);
+                    });
+                }
+                else {
+                    close(items, cb);
+                }
+            };
+            close(items, cb);
+            return;
         }
-        return false;
+        if (cb) cb(1);
     };
 
     redraw = () => {
@@ -917,18 +940,20 @@ export default class Control extends Component {
         e.stopPropagation();
         if(!confirm("Really delete contract?")) return;
         const contract=projectItem.props.state.data.dappfile.contracts()[contractIndex];
-        if (this._anyContractItemsOpen(contract.name)) {
-            alert("Could not delete contract, close editor/compiler/deployer/interaction windows and try again.");
-            return;
-        }
-        projectItem.deleteFile(contract.source, (status)=>{
-            if(status>0) {
-                alert("Could not delete contract, close editor and try again.");
+        this._closeAnyContractItemsOpen(contract.name, true, (status) => {
+            if (status != 0) {
+                alert("Could not delete contract, close editor/compiler/deployer/interaction windows and try again.");
                 return;
             }
-            projectItem.props.state.data.dappfile.contracts().splice(contractIndex,1);
-            projectItem.save();
-            this.props.router.main.redraw(true);
+            projectItem.deleteFile(contract.source, (status)=>{
+                if(status>0) {
+                    alert("Could not delete contract, close editor and try again.");
+                    return;
+                }
+                projectItem.props.state.data.dappfile.contracts().splice(contractIndex,1);
+                projectItem.save();
+                this.props.router.main.redraw(true);
+            });
         });
     };
 

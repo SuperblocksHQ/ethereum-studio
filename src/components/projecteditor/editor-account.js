@@ -30,6 +30,10 @@ export default class AccountEditor extends Component {
         this.setEnv("browser");
     }
 
+    componentWillReceiveProps(props) {
+        this.dappfile = props.project.props.state.data.dappfile;
+    }
+
     componentDidMount() {
         this.redraw();
     }
