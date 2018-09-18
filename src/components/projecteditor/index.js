@@ -74,30 +74,28 @@ export default class ProjectEditor extends Component {
      onMouseMove = (e) => {
         e.stopPropagation();
         e.preventDefault();
+
         const { dragging } = this.state;
         const maxSize = screen.width * 0.35;
-        console.log('e.pageX ', e.pageX )
-        console.log('maxSize ', maxSize )
         if (!dragging) return;
+
         if (e.pageX < maxSize ) {
             this.setState({
                 controlPanelWidth: e.pageX
             });
-        }
-         else if ( e.pageX >= maxSize ) {
+        } else if ( e.pageX >= maxSize ) {
              return null;
-         }
-        else {
+         } else {
             this.onMouseUp(e);
         }
-    };
+    }
 
     onMouseUp = (e) => {
         e.stopPropagation();
         e.preventDefault();
 
         this.setState({ dragging: false });
-    };
+    }
 
     onMouseDown = (e) => {
         e.stopPropagation();
