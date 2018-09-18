@@ -29,7 +29,8 @@ export default class ProjectEditor extends Component {
         controlPanelWidth: 280,
         draggin: false,
         showTransactions: false,
-        isDragging:false,
+        changeTranView: false,
+        screenWidth: screen.width - 40,
     }
 
     constructor(props) {
@@ -43,14 +44,14 @@ export default class ProjectEditor extends Component {
             }
         }, false);
     }
-    moveAt(pageX) {
-    if (this.state.isDragging) {
-    document.getElementById('transview').style.width = (screen.width) - pageX + 'px';
-     }
-      }
-    onMouseMove=(event)=> {
-        this.moveAt(event.pageX, event.pageY);
-    };
+    // moveAt(pageX) {
+    // if (this.state.isDragging) {
+    // document.getElementById('transview').style.width = (this.state.screenSize) - pageX + 'px';
+    //  }
+    //   }
+    // onMouseMove=(event)=> {
+    //     this.moveAt(event.pageX, event.pageY);
+    // };
 
     // we could get away with not having this (and just having the listeners on
     // our div), but then the experience would be possibly be janky. If there's
@@ -58,21 +59,31 @@ export default class ProjectEditor extends Component {
     // etc.
     componentDidUpdate(props, state) {
         if (this.state.dragging && !state.dragging) {
-            document.addEventListener('mousemove', this.onMouseMove)
+            document.addEventListener('mousemove', this.onMouseMove);
             document.addEventListener('mouseup', this.onMouseUp)
         } else if (!this.state.dragging && state.dragging) {
-            document.removeEventListener('mousemove', this.onMouseMove)
+            document.removeEventListener('mousemove', this.onMouseMove);
             document.removeEventListener('mouseup', this.onMouseUp)
         }
-        if (this.state.showTransactions) {
-            document.getElementById('transview').addEventListener('mousedown',this.onMouseDown);
-            document.getElementById('transview').addEventListener('mousemove', this.onMouseMove);
-            document.getElementById('transview').addEventListener('mouseup',this.onMouseUp);
-        }
+        // if (this.state.showTransactions) {
+        //     document.getElementById('transview').addEventListener('mousedown',this.onMouseDown);
+        //     document.getElementById('transview').addEventListener('mousemove', this.onMouseMove);
+        //     document.getElementById('transview').addEventListener('mouseup',this.onMouseUp);
+        // }
     }
-      onMouseDown=()=>{
-    this.setState({ isDragging: true });
-     };
+    onMouseDown = (e, resizeTranView) => {
+        e.stopPropagation();
+        e.preventDefault();
+
+        // only left mouse button
+        if (e.button !== 0) return;
+        if(resizeTranView){
+            this.setState({ changeTranView: true })
+        }
+        this.setState({
+            dragging: true,
+        });
+    }
     redraw = (all) => {
         if(this.props.router.control) {
             this.props.router.control.redraw();
@@ -85,24 +96,38 @@ export default class ProjectEditor extends Component {
         }
     }
 
-    // onMouseMove = (e) => {
-    //     e.stopPropagation();
-    //     e.preventDefault();
-    //
-    //     if (!this.state.dragging) return;
-    //     this.setState({
-    //         controlPanelWidth: e.pageX
-    //     });
-    // }
+    onMouseMove = (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        const { dragging, changeTranView, screenWidth} = this.state;
+        const maxSize = screen.width * 0.35;
+        if (!changeTranView) {
+            if (!dragging) return;
+            if (e.pageX < maxSize) {
+                this.setState({
+                    controlPanelWidth: e.pageX
+                });
+            }
+            else if (e.pageX >= maxSize) {
+                return null;
+            }
+            else {
+                this.onMouseUp(e);
+            }
+        } else {
+            this.setState({transViewWidth: e.pageX});
+            console.log('transViewWidth state::',e.pageX);
+            console.log('event is ::',e);
+            console.log('transview::',screenWidth - e.pageX)
+            document.getElementById('transview').style.width = `calc(98% - ${(e.pageX)}px`;
+        }
+    };
 
     onMouseUp = (e) => {
         e.stopPropagation();
         e.preventDefault();
 
-        this.setState({ isDragging: false });
-        document.removeEventListener('mousemove', this.onMouseMove);
-        document.removeEventListener('mouseup', this.onMouseUp);
-        document.removeEventListener('mousedown', this.onMouseDown);
+        this.setState({ dragging: false });
     };
 
     // onMouseDown = (e) => {
@@ -152,7 +177,7 @@ export default class ProjectEditor extends Component {
                     <span class="resizer vertical" onMouseDown={this.onMouseDown}></span>
                     <div style="position: relative; width: 100%">
                         <div key="main_panes" id="main_panes" class={style.panescontainer} id="container" >
-                            <Panes router={this.props.router} functions={this.props.functions} isActionPanelShowing={showTransactions} />
+                            <Panes router={this.props.router} functions={this.props.functions} isActionPanelShowing={showTransactions} transViewWidth={this.state.transViewWidth} />
                             {
                                 showTransactions ?
                                         <div class={style.actionContainer} id="transview">
@@ -163,9 +188,9 @@ export default class ProjectEditor extends Component {
                                                 <IconClose />
                                             </button>
                                         </div>
-                                            <div class={style.dragBar}>
+                                            <div class={style.dragBar} onMouseDown={(e)=>this.onMouseDown(e,{ resizeTranView: true })} />
                                         <TransactionLogPanel router={this.props.router} />
-                                            </div>
+
                                     </div>
                                 : null
                             }
