@@ -292,9 +292,8 @@ export default class Panes extends Component {
 
         const { isActionPanelShowing, transViewWidth } = this.props;
         console.log('transViewWidth in pane ::', transViewWidth);
-
         return (
-           <div key="panes" id="panes" class="full"  style={{ width: isActionPanelShowing ? transViewWidth : '100%'}}>
+           <div key="panes" id="panes" class="full"  style={{ width: isActionPanelShowing ? (transViewWidth ? transViewWidth  : 'calc(100% - 450px)') : '100%'}}>
                <div key="header" id="panes_header" class={style.header}>
                    {header}
                </div>

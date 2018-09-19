@@ -101,6 +101,7 @@ export default class ProjectEditor extends Component {
         e.preventDefault();
         const { dragging, changeTranView, screenWidth} = this.state;
         const maxSize = screen.width * 0.35;
+        debugger;
         if (!changeTranView) {
             if (!dragging) return;
             if (e.pageX < maxSize) {
@@ -115,11 +116,11 @@ export default class ProjectEditor extends Component {
                 this.onMouseUp(e);
             }
         } else {
-            this.setState({transViewWidth: e.pageX});
-            console.log('transViewWidth state::',e.pageX);
+            this.setState({transViewWidth: e.pageX - 270 });
+            console.log('transViewWidth state::',e.pageX - 240);
             console.log('event is ::',e);
-            console.log('transview::',screenWidth - e.pageX)
-            document.getElementById('transview').style.width = `calc(98% - ${(e.pageX)}px`;
+            console.log('transview::',screenWidth - e.pageX);
+            document.getElementById('transview').style.width = `calc(97% - ${(e.pageX - 270)}px`;
         }
     };
 
@@ -127,24 +128,13 @@ export default class ProjectEditor extends Component {
         e.stopPropagation();
         e.preventDefault();
 
-        this.setState({ dragging: false });
+        this.setState({ dragging: false, changeTranView: false });
     };
-
-    // onMouseDown = (e) => {
-    //     e.stopPropagation();
-    //     e.preventDefault();
-    //
-    //     // only left mouse button
-    //     if (e.button !== 0) return;
-    //     this.setState({
-    //         dragging: true,
-    //         controlPanelWidth: e.screenX
-    //     });
-    // }
 
     onShowHideTransactionsClicked = () => {
         this.setState({
-            showTransactions: !this.state.showTransactions
+            showTransactions: !this.state.showTransactions,
+            transViewWidth: null,
         });
         this.redraw(true);
 
