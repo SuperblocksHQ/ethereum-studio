@@ -23,14 +23,15 @@ import TopBar from '../topbar';
 import ContactContainer from '../contactContainer';
 import TransactionLogPanel from '../blockexplorer/transactionlogPanel';
 import { IconTransactions, IconClose } from '../icons';
+
+const mouseVariance = 45;
 export default class ProjectEditor extends Component {
 
-    state = {
+  state = {
         controlPanelWidth: 280,
         draggin: false,
         showTransactions: false,
         changeTranView: false,
-        screenWidth: screen.width - 40,
     }
 
     constructor(props) {
@@ -99,35 +100,30 @@ export default class ProjectEditor extends Component {
     onMouseMove = (e) => {
         e.stopPropagation();
         e.preventDefault();
-        const { dragging, changeTranView, screenWidth} = this.state;
+        const { dragging, changeTranView, controlPanelWidth } = this.state;
         const maxSize = screen.width * 0.35;
-        debugger;
         if (!changeTranView) {
             if (!dragging) return;
             if (e.pageX < maxSize) {
                 this.setState({
                     controlPanelWidth: e.pageX
                 });
-            }
-            else if (e.pageX >= maxSize) {
+            } else if (e.pageX >= maxSize) {
                 return null;
-            }
-            else {
+            } else {
                 this.onMouseUp(e);
             }
         } else {
-            this.setState({transViewWidth: e.pageX - 270 });
-            console.log('transViewWidth state::',e.pageX - 240);
-            console.log('event is ::',e);
-            console.log('transview::',screenWidth - e.pageX);
-            document.getElementById('transview').style.width = `calc(97% - ${(e.pageX - 270)}px`;
+            this.setState({
+                transViewWidth: e.pageX - controlPanelWidth
+            });
+            document.getElementById('transview').style.width = `calc(100% - ${(e.pageX - (controlPanelWidth - mouseVariance))}px`;
         }
     };
 
     onMouseUp = (e) => {
         e.stopPropagation();
         e.preventDefault();
-
         this.setState({ dragging: false, changeTranView: false });
     };
 
