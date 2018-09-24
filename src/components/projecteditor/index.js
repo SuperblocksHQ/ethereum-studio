@@ -45,15 +45,6 @@ export default class ProjectEditor extends Component {
             }
         }, false);
     }
-    // moveAt(pageX) {
-    // if (this.state.isDragging) {
-    // document.getElementById('transview').style.width = (this.state.screenSize) - pageX + 'px';
-    //  }
-    //   }
-    // onMouseMove=(event)=> {
-    //     this.moveAt(event.pageX, event.pageY);
-    // };
-
     // we could get away with not having this (and just having the listeners on
     // our div), but then the experience would be possibly be janky. If there's
     // anything w/ a higher z-index that gets in the way, then you're toast,
@@ -66,11 +57,6 @@ export default class ProjectEditor extends Component {
             document.removeEventListener('mousemove', this.onMouseMove);
             document.removeEventListener('mouseup', this.onMouseUp)
         }
-        // if (this.state.showTransactions) {
-        //     document.getElementById('transview').addEventListener('mousedown',this.onMouseDown);
-        //     document.getElementById('transview').addEventListener('mousemove', this.onMouseMove);
-        //     document.getElementById('transview').addEventListener('mouseup',this.onMouseUp);
-        // }
     }
     onMouseDown = (e, resizeTranView) => {
         e.stopPropagation();
@@ -115,7 +101,7 @@ export default class ProjectEditor extends Component {
             }
         } else {
             this.setState({
-                transViewWidth: e.pageX - controlPanelWidth
+                mainPanelWidth: e.pageX - controlPanelWidth
             });
             document.getElementById('transview').style.width = `calc(100% - ${(e.pageX - (controlPanelWidth - mouseVariance))}px`;
         }
@@ -130,7 +116,7 @@ export default class ProjectEditor extends Component {
     onShowHideTransactionsClicked = () => {
         this.setState({
             showTransactions: !this.state.showTransactions,
-            transViewWidth: null,
+            mainPanelWidth: null,
         });
         this.redraw(true);
 
@@ -151,7 +137,7 @@ export default class ProjectEditor extends Component {
                 endpoint = (this.props.functions.networks.endpoints[network] || {}).endpoint;
             }
         }
-        const { controlPanelWidth, showTransactions } = this.state;
+        const { controlPanelWidth, showTransactions, mainPanelWidth } = this.state;
         return (
             <div class={style.projecteditor} id="main_container">
                 <TopBar router={this.props.router} functions={this.props.functions} onProjectSelected={this.onProjectSelectedHandle} />
@@ -163,7 +149,7 @@ export default class ProjectEditor extends Component {
                     <span class="resizer vertical" onMouseDown={this.onMouseDown}></span>
                     <div style="position: relative; width: 100%">
                         <div key="main_panes" id="main_panes" class={style.panescontainer} id="container" >
-                            <Panes router={this.props.router} functions={this.props.functions} isActionPanelShowing={showTransactions} transViewWidth={this.state.transViewWidth} />
+                            <Panes router={this.props.router} functions={this.props.functions} isActionPanelShowing={showTransactions} mainPanelWidth={mainPanelWidth} />
                             {
                                 showTransactions ?
                                         <div class={style.actionContainer} id="transview">
