@@ -2,11 +2,103 @@
 
 ## [current]
 
-+ Add error checking to ctrs in clickNewContract
-+ Add length check to ctrs in clickNewContract
-+ Add comments explaning the magic indices in clickNewContract
-+ Add error checking when reading evm return data in call()
-* Fix erroneous index referencing ctrs in clickNewContract
+
+## [1.0.1]
+
+* Fix: Compiler does not display the error for failure when contract name and
+filename does not match #104
+* Fix: Compiling with warnings breaks interaction page #102
+* Fix: Uncensorable newsfeed template contains errors #103
+* Improvement: Updated the "New Project" flow to first select a template #108
+* Improvement: Increase deployer gas limit #173
+* Improvement: Lightning icon in Show Preview window reads as "Recompile" #163
+* Fix: Change the compiler's error strings from orange to red #139
+* Fix renaming issue #168
+* Fix typo in category crowdfunding #174
+
+
+## [1.0.0]
+
+* Update all Help links
+* Update all Learning and Resources links
+* Updated YouTube landing video
+
+
+## [1.0-beta25]
+
++ Add new dialog for asking the contract name during creation
+* Change Configuration (gears icon) to close after clicking #94
+* Fix overflow in Transactions View #96
+- Disable renaming
+- Remove erroneous semicolon in CSS file #96
+
+
+## [1.0-beta24]
+
++ Add spacing props from bootstrap to manage spacing #89
++ Add x button to the New Project dialog in order to be able to close it #92
+* Rename to Superblocks Lab
+* Move Transaction History to a separate side action panel
+* Update New Dapp layout to be responsive #87
+* Improve project menu to support very long project title and name #85
+* Fix code typo in TransactionLogPanel import
+* Change Transactions View to close when changing projects #86
+* Fix Transactions View to work when editing files #86
+* Fix typo in Hello World template json
+* Update the color schema for project dialogs to match current palette #89
+* Minor color code updates to match branding #89
+* Change the order of items in the projects list to name and title #93
+- Remove placeholder images and texts
+- Remove unused icons
+
+
+## [1.0-beta23]
+
++ Add error checking to ctrs in clickNewContract #16
++ Add length check to ctrs in clickNewContract #16
++ Add comments explaning the magic indices in clickNewContract #16
++ Add error checking when reading evm return data in call() #17
++ Add new graphics and user interface
++ Add new and improved user experience
++ Add empty project template
++ Add network selector
++ Add account selector
++ Add project menu bar: improved Create Project flow, Import and download option
++ Add missing callback call on error in sendRawTransaction
++ Add check to ensure external network matches currently selected one
++ Add ability to convert old projects to new file format
++ Add Welcome tab for when no project is open
++ Add Solidity compiler version output to compilation
++ Add "close all/others" context menu
++ New Transaction History
++ Add error checking when clicking Select an Account button #37
+* Fix erroneous index referencing ctrs in clickNewContract #16
+* Rename local network to custom network
+* Simplify configuration files
+* Set first five browser accounts to 100 ether
+* Change sendRawTransaction result callback to only get called on success
+* Change project file format
+* Fix so that at most four windows are open in one pane
+* Update less package to fix security vulnerability #25
+* Fix misleading error message when trying to change contract name #11
+* Fix typo in question asked right before downloading a project #77
+* Prevent downloading broken DApp when the contracts have not been deployed #75
+* Allow cancelling seed input in custom account configuration settings #56
+* Improve unlock wallet text #55
+* Update links settings presented in Help top bar #35
+* Fix "Create a new project" link in the welcome screen #39
+* Change "DApp (HTML) Title" max length to match max supported characters #40
+* Improve Step1 component to consider existing state #41
+* Change Default account listing to not render unallowed action #45
+* Improve message when cancelling project download #44
+* Fix problem when reading balance from custom account loaded from seed #57
+* Improve error messages in Interact mode #69
+* Various improvements to better integrate with MetaMask
+* Miscellaneous code improvements
+* Miscellaneous bugfixes to core functionalities and rendering
+* Miscellaneous stability improvements
+- Remove miscellaneous unused code
+
 
 ## [1.0-beta22]
 
@@ -14,9 +106,11 @@
 + Add single dapp project import and export functionality
 + Add delete project functionality
 
+
 ## [1.0-beta21]
 
 + Add Solidity import feature to compiler
+
 
 ## [1.0-beta20]
 
@@ -26,5 +120,6 @@
 * Bug fix \#8 contract interaction displaying confusing results. Cred: Richard Bondi.
 - Remove unused Explorer component
 - Remove system.log trace
+
 
 ## [1.0-beta19]
