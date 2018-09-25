@@ -149,8 +149,8 @@ export default class ContractEditor extends Component {
             alert('Error: Missing fields.');
             return;
         }
-        if(!this.contract.obj.name.match(/^([a-zA-Z0-9-_]+)$/) || this.contract.obj.name.length > 16) {
-            alert('Illegal contract name. Only A-Za-z0-9, dash (-) and underscore (_) allowed. Max 16 characters.');
+        if(!this.contract.obj.name.match(/^([a-zA-Z0-9-_]+)$/) || this.contract.obj.name.length > 255) {
+            alert('Illegal contract name. Only A-Za-z0-9, dash (-) and underscore (_) allowed. Max 255 characters.');
             return;
         }
         for(var index=0;index<this.contract.obj.args.length;index++) {
