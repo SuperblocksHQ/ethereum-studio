@@ -29,7 +29,6 @@ export default class Deployer extends Component {
         this.id=props.id+"_deployer";
         this.props.parent.childComponent=this;
         this.consoleRows=[];
-        const projectname=this.props.project.props.state.dir;
         this.dappfile = this.props.project.props.state.data.dappfile;
         this.recompile=this.props.recompile || false;
         this.redeploy=this.props.redeploy || false;
@@ -145,7 +144,7 @@ export default class Deployer extends Component {
             endpoint: endpoint,
             network: this.network,
             gasPrice: "0x3B9ACA00", //TODO
-            gasLimit: "0x3b8260", //TODO
+            gasLimit: "0x788B60", //TODO
             recompile: this.recompile,
             redeploy: redeploy,
             contract: contract,

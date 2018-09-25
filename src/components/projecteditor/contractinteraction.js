@@ -94,6 +94,7 @@ export default class ContractInteraction extends Component {
     render2 = () => {
         const env=this.state.network;
         const contract = this.dappfile.getItem("contracts", [{name: this.props.contract}]);
+        if (!contract) return;  // This gets called twice, with the previous contract name, after renaming a contract.
         const src=contract.get('source');
         const network=this.state.network;
         const endpoint=(this.props.functions.networks.endpoints[network] || {}).endpoint;
@@ -464,7 +465,7 @@ export default class ContractInteraction extends Component {
         return (
             <div class={style.toolbar} id={this.id+"_header"}>
                 <div class={style.buttons}>
-                    <a href="#" title="Recompile" onClick={this.run}><IconRun /></a>
+                    <a href="#" title="Refresh" onClick={this.run}><IconRun /></a>
                 </div>
                 <div class={style.info}>
                     <span>

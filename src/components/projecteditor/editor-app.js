@@ -33,6 +33,10 @@ export default class AppEditor extends Component {
         this.setState({form:{title:this.project.info.title}});
     }
 
+    componentWillReceiveProps(props) {
+        this.dappfile = props.project.props.state.data.dappfile;
+    }
+
     componentDidMount() {
         this.redraw();
     }
