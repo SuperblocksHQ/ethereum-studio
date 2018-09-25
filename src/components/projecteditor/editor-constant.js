@@ -27,6 +27,10 @@ export default class AccountConstant extends Component {
         this.form={env:""};
     }
 
+    componentWillReceiveProps(props) {
+        this.dappfile = props.project.props.state.data.dappfile;
+    }
+
     componentDidMount() {
         this.redraw();
     }

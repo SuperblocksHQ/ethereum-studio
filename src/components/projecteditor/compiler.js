@@ -26,7 +26,6 @@ export default class Compiler extends Component {
         this.id=props.id+"_compiler";
         this.props.parent.childComponent=this;
         this.consoleRows=[];
-        const projectname=this.props.project.props.state.dir;
         this.dappfile = this.props.project.props.state.data.dappfile;
         this.run();
     }
@@ -164,7 +163,11 @@ export default class Compiler extends Component {
                     }
                     else {
                         (data.errors || []).map((row)=>{
-                            this.consoleRows.push({channel:3,msg:row.formattedMessage});
+                            if (row.severity === "warning") {
+                                this.consoleRows.push({ channel: 3, msg: row.formattedMessage });
+                            } else {
+                                this.consoleRows.push({ channel: 2, msg: row.formattedMessage });
+                            }
                         });
                         if(!data.contracts || Object.keys(data.contracts).length==0) {
                             this.setState({status:"Ate bad code and died, compilation aborted."});
@@ -180,8 +183,9 @@ export default class Compiler extends Component {
                             if(contractObj && Object.keys(contractObj.evm.bytecode.linkReferences || {}).length>0) {
                                 contractObj=null;
                                 this.consoleRows.push({channel:2,msg:"[ERROR] The contract " + contractName + " references library contracts. Superblocks Lab does not yet support library contract linking, only contract imports."});
+                                delFiles();
                             }
-                            if(contractObj) {
+                            else if(contractObj) {
                                 const metadata=JSON.parse(contractObj.metadata);
                                 // Save ABI and BIN
                                 // First load, then save and close.
@@ -229,7 +233,12 @@ export default class Compiler extends Component {
                                 });
                             }
                             else {
-                                this.consoleRows.push({channel:2,msg:"[ERROR] The contract " + contractName + " could not be compiled."});
+                                if (data.contracts) {
+                                    this.consoleRows.push({channel:2,msg:"[ERROR] The contract " + contractName + " could not be compiled. The contract needs to be named the same as the contract's source file."});
+                                }
+                                else {
+                                    this.consoleRows.push({channel:2,msg:"[ERROR] The contract " + contractName + " could not be compiled."});
+                                }
                                 delFiles();
                             }
                         }

@@ -28,7 +28,7 @@ export default class Templates {
         },
         {
             "id": 1,
-            "name": "Crowfunding"
+            "name": "Crowdfunding"
         },
         {
             "id": 2,

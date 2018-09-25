@@ -55,6 +55,11 @@ export default class Panes extends Component {
         pane.focusWindow(winId, rePerform, cb);
     };
 
+    closeWindow = (paneId, winId, cb) => {
+        var {pane}=this.getPane(paneId);
+        pane.closeWindow(winId, cb);
+    };
+
     removePane = (id) => {
         this.panes = this.panes.filter((pane) => {
             return pane.id!=id;
