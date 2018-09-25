@@ -5,7 +5,7 @@
   "license": "GPL",
   "scripts": {
     "start": "make",
-    "test": "jest",
+    "test": "mocha ./test/*.js && jest",
     "test:watch": "npm test -- --watch"
   },
   "eslintConfig": {
@@ -31,6 +31,7 @@
     "if-env": "^1.0.0",
     "jest": "^23.5.0",
     "merkle-patricia-tree": "^2.3.1",
+    "mocha": "^5.2.0",
     "preact-cli": "^2.1.1",
     "solc": "^0.4.21"
   },
