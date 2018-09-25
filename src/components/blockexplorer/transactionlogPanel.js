@@ -52,6 +52,7 @@ export default class TransactionLogPanel extends Component {
         const transactions=renderTransactions.renderTransactionsFloat(network, 5, 0);
         return (
             <div class={style.transactionlogPanel}>
+                <div onMouseDown={(e)=>this.props.onResize(e,{ resizeTranView: true })} class={style.dragBar}/>
                 {transactions}
             </div>
         );

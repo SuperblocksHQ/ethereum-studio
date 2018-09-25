@@ -100,10 +100,12 @@ export default class ProjectEditor extends Component {
                 this.onMouseUp(e);
             }
         } else {
-            this.setState({
-                mainPanelWidth: e.pageX - controlPanelWidth
-            });
-            document.getElementById('transview').style.width = `calc(100% - ${(e.pageX - (controlPanelWidth - mouseVariance))}px`;
+            if(e.pageX > 800) {
+                this.setState({
+                    mainPanelWidth: e.pageX - controlPanelWidth
+                });
+                document.getElementById('transview').style.width = `calc(100% - ${(e.pageX - (controlPanelWidth - mouseVariance))}px`;
+            }
         }
     };
 
@@ -160,9 +162,7 @@ export default class ProjectEditor extends Component {
                                                 <IconClose />
                                             </button>
                                         </div>
-                                            <div class={style.dragBar} onMouseDown={(e)=>this.onMouseDown(e,{ resizeTranView: true })} />
-                                        <TransactionLogPanel router={this.props.router} />
-
+                                        <TransactionLogPanel onResize={this.onMouseDown} router={this.props.router} />
                                     </div>
                                 : null
                             }
