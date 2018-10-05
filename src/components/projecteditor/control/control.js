@@ -886,8 +886,8 @@ export default class Control extends Component {
         var name;
         name = prompt("Please give the contract a name:");
         if (!name) return;
-        if(!name.match(/^([a-zA-Z0-9-_]+)$/) || name.length > 16) {
-            alert('Illegal contract name. Only A-Za-z0-9, dash (-) and underscore (_) allowed. Max 16 characters.');
+        if(!name.match(/^([a-zA-Z0-9-_]+)$/) || name.length > 255) {
+            alert('Illegal contract name. Only A-Za-z0-9, dash (-) and underscore (_) allowed. Max 255 characters.');
             return;
         }
         if(projectItem.props.state.data.dappfile.contracts().filter((c)=>{
