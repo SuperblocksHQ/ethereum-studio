@@ -24,18 +24,17 @@ import ContactContainer from '../contactContainer';
 import TransactionLogPanel from '../blockexplorer/transactionlogPanel';
 import { IconTransactions, IconClose } from '../icons';
 
-const mouseVariance = 45;
 export default class ProjectEditor extends Component {
 
-  state = {
+    state = {
         controlPanelWidth: 280,
         draggin: false,
         showTransactions: false,
-        changeTranView: false,
     }
 
     constructor(props) {
         super(props);
+
         this.props.router.register("main", this);
 
         // Mute defalt ctrl-s behavior.
@@ -45,32 +44,21 @@ export default class ProjectEditor extends Component {
             }
         }, false);
     }
+
     // we could get away with not having this (and just having the listeners on
     // our div), but then the experience would be possibly be janky. If there's
     // anything w/ a higher z-index that gets in the way, then you're toast,
     // etc.
     componentDidUpdate(props, state) {
         if (this.state.dragging && !state.dragging) {
-            document.addEventListener('mousemove', this.onMouseMove);
+            document.addEventListener('mousemove', this.onMouseMove)
             document.addEventListener('mouseup', this.onMouseUp)
         } else if (!this.state.dragging && state.dragging) {
-            document.removeEventListener('mousemove', this.onMouseMove);
+            document.removeEventListener('mousemove', this.onMouseMove)
             document.removeEventListener('mouseup', this.onMouseUp)
         }
     }
-    onMouseDown = (e, resizeTranView) => {
-        e.stopPropagation();
-        e.preventDefault();
 
-        // only left mouse button
-        if (e.button !== 0) return;
-        if(resizeTranView){
-            this.setState({ changeTranView: true })
-        }
-        this.setState({
-            dragging: true,
-        });
-    }
     redraw = (all) => {
         if(this.props.router.control) {
             this.props.router.control.redraw();
@@ -86,42 +74,43 @@ export default class ProjectEditor extends Component {
     onMouseMove = (e) => {
         e.stopPropagation();
         e.preventDefault();
-        const { dragging, changeTranView, controlPanelWidth } = this.state;
+        const { dragging } = this.state;
         const maxSize = screen.width * 0.35;
-        if (!changeTranView) {
-            if (!dragging) return;
-            if (e.pageX < maxSize) {
-                this.setState({
-                    controlPanelWidth: e.pageX
-                });
-            } else if (e.pageX >= maxSize) {
-                return null;
-            } else {
-                this.onMouseUp(e);
-            }
+        if (!dragging) return;
+        if (e.pageX < maxSize) {
+            this.setState({
+                controlPanelWidth: e.pageX
+            });
+        } else if (e.pageX >= maxSize) {
+            return null;
         } else {
-            if(e.pageX > 800) {
-                this.setState({
-                    mainPanelWidth: e.pageX - controlPanelWidth
-                });
-                document.getElementById('transview').style.width = `calc(100% - ${(e.pageX - (controlPanelWidth - mouseVariance))}px`;
-            }
+            this.onMouseUp(e);
         }
-    };
+    }
 
     onMouseUp = (e) => {
         e.stopPropagation();
         e.preventDefault();
-        this.setState({ dragging: false, changeTranView: false });
-    };
+
+        this.setState({ dragging: false });
+    }
+
+    onMouseDown = (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+
+        // only left mouse button
+        if (e.button !== 0) return;
+        this.setState({
+            dragging: true,
+        });
+    }
 
     onShowHideTransactionsClicked = () => {
         this.setState({
-            showTransactions: !this.state.showTransactions,
-            mainPanelWidth: null,
+            showTransactions: !this.state.showTransactions
         });
         this.redraw(true);
-
     }
 
     onProjectSelectedHandle = () => {
@@ -129,6 +118,7 @@ export default class ProjectEditor extends Component {
             showTransactions: false
         });
     }
+
     render() {
         var endpoint="";
         var project;
@@ -139,7 +129,7 @@ export default class ProjectEditor extends Component {
                 endpoint = (this.props.functions.networks.endpoints[network] || {}).endpoint;
             }
         }
-        const { controlPanelWidth, showTransactions, mainPanelWidth } = this.state;
+        const { controlPanelWidth, showTransactions } = this.state;
         return (
             <div class={style.projecteditor} id="main_container">
                 <TopBar router={this.props.router} functions={this.props.functions} onProjectSelected={this.onProjectSelectedHandle} />
@@ -150,19 +140,18 @@ export default class ProjectEditor extends Component {
                     </div>
                     <span class="resizer vertical" onMouseDown={this.onMouseDown}></span>
                     <div style="position: relative; width: 100%">
-                        <div key="main_panes" id="main_panes" class={style.panescontainer} id="container" >
-                            <Panes router={this.props.router} functions={this.props.functions} isActionPanelShowing={showTransactions} mainPanelWidth={mainPanelWidth} />
+                        <div key="main_panes" id="main_panes" class={style.panescontainer} >
+                            <Panes router={this.props.router} functions={this.props.functions} isActionPanelShowing={showTransactions} />
                             {
                                 showTransactions ?
-                                        <div class={style.actionContainer} id="transview">
+                                    <div class={style.actionContainer} >
                                         <div class={style.header}>
-
                                             <span class={style.title}>Transactions History</span>
                                             <button class={classNames([style.icon, "btnNoBg"])} onClick={this.onShowHideTransactionsClicked}>
                                                 <IconClose />
                                             </button>
                                         </div>
-                                        <TransactionLogPanel onResize={this.onMouseDown} router={this.props.router} />
+                                        <TransactionLogPanel router={this.props.router} />
                                     </div>
                                 : null
                             }
