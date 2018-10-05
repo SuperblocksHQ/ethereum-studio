@@ -34,7 +34,7 @@
                     "children": {
                         "HelloWorld.sol": {
                             "type": "f",
-                            "contents": "pragma solidity ^0.4.21;\n\ncontract HelloWorld {\n    string public message;\n    \n    function HelloWorld(string initMessage) public {\n        message = initMessage;\n    }\n\n    function update(string newMessage) public {\n        message = newMessage;\n    }\n}"
+                            "contents": "pragma solidity ^0.4.25;\n\ncontract HelloWorld {\n    string public message;\n    \n    constructor(string initMessage) public {\n        message = initMessage;\n    }\n\n    function update(string newMessage) public {\n        message = newMessage;\n    }\n}"
                         }
                     }
                 },

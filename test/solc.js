@@ -34,7 +34,7 @@ describe('solc', function() {
     const raiseToSummonTemplateFile = require(raiseToSummonTemplatePath);
 
     // Compiler settings
-    const compilerPath = "../src/components/solc/dist/soljson-v0.4.21+commit.dfe3193c.js"
+    const compilerPath = "../src/components/solc/dist/soljson-v0.4.25+commit.59dbf8f1.js"
     const compiler = require(compilerPath);
     const compile = compiler.cwrap("compileStandard", "string", ["string", "number"]);
 

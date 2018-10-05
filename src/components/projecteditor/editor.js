@@ -78,7 +78,7 @@ export default class Editor extends Component {
                 body.status=0;
                 body.state=1;
                 if(this.language=="sol") {
-                    this.body.contents=`pragma solidity ^0.4.17;
+                    this.body.contents=`pragma solidity ^0.4.25;
 
 contract `+this.props.contract.name+` {
 }

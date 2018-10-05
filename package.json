@@ -33,7 +33,7 @@
     "merkle-patricia-tree": "^2.3.1",
     "mocha": "^5.2.0",
     "preact-cli": "^2.1.1",
-    "solc": "^0.4.21"
+    "solc": "^0.4.25"
   },
   "dependencies": {
     "@fortawesome/fontawesome": "^1.1.3",

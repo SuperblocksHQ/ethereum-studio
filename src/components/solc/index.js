@@ -24,7 +24,7 @@ export default class Solc {
         this.ref=null;
         this._counter=0;
         this._cbMap={};
-        this._version = "0.4.21";
+        this._version = "0.4.25";
 
         var setRef = (ref)=>{
             this.ref=ref;
@@ -42,7 +42,7 @@ export default class Solc {
 
         render((
             <div style="display:none;" id={this.id}>
-                <iframe ref={setRef} src="/solc/index-v0.4.21-1.html" frameborder="0"></iframe>
+                <iframe ref={setRef} src="/solc/index-v0.4.25.html" frameborder="0"></iframe>
             </div>
         ), document.body);
 
