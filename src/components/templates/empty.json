@@ -34,7 +34,7 @@
                     "children": {
                         "MyContract.sol": {
                             "type": "f",
-                            "contents": "pragma solidity ^0.4.21;\n\ncontract MyContract {\n    function MyContract() public {\n    }\n}"
+                            "contents": "pragma solidity ^0.4.25;\n\ncontract MyContract {\n    constructor() public {\n    }\n}"
                         }
                     }
                 },
