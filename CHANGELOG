@@ -1,6 +1,15 @@
 # Superblocks Lab - Change log
 
-## [current]
+## [1.0.2]
+
+* Fix: list changes in CHANGELOG file #178
+* Improvement: limit left side panel width when resizing #170
+* Fix: rendering glitch in Help/General menu #182
+* Fix: items alignment in Files hierarchy #187
+* Improvement: reference tests covering base compile functionality #176
+* Improvement: update Solidity compiler to version 0.4.25 #180
+* Fix: continuous integration base environment to use Node version 8.12 #190
+* Improvement: increase maximum file name length to 255 characters #183
 
 
 ## [1.0.1]
