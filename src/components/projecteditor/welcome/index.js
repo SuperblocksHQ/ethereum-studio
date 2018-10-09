@@ -33,7 +33,7 @@ export default class Welcome extends Component {
                     <h1>Superblocks Lab</h1>
                     <h2>Buidl your thing</h2>
                     <img src={'/static/img/img-welcome.svg'}/>
-                    <h3>Looks like you don’t have any project created just yet</h3>
+                    <h3>Looks like you don’t have any project created just yet</h3>     
                     <p>Create a new project from any of our existing templates to get started</p>
                     <button class="btn2 mt-4" onClick={this.onCreateNewProjectClick}>Create New Project</button>
                 </div>
@@ -45,7 +45,7 @@ export default class Welcome extends Component {
                         <a href="https://github.com/SuperblocksHQ/superblocks-lab/issues/167" target="_blank" rel="noopener noreferrer">Github integration</a>
                         <a href="https://github.com/SuperblocksHQ/superblocks-lab/projects/1" target="_blank" rel="noopener noreferrer"><IconRight class={style.arrow} />Find the latest updates</a>
                    </div>
-                   <h2>Learn</h2>
+                   <h2>Getting started</h2>
                    <div class={style.linksContainer}>
                         <a href="https://help.superblocks.com/hc/en-us/articles/360008277034-Introduction-to-Superblocks-Lab" target="_blank" rel="noopener noreferrer">Introduction to Superblocks Lab</a>
                         <a href="https://help.superblocks.com/hc/en-us/articles/360008422273-Creating-a-new-project" target="_blank" rel="noopener noreferrer">Creating a new project</a>
