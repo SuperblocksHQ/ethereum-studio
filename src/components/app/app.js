@@ -183,7 +183,7 @@ export default class App extends Component {
                     Let's watch a short video to help you get started.
                 </p>
                 <p class="splash_video">
-                    <iframe width="560" height="315" src="https://youtube-nocookie.com/embed/KSF24hkf0-o?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                    <iframe width="560" height="315" src="https://youtube-nocookie.com/embed/LK-kVMzrdno" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                 </p>
                 <p class="splash_cancel">
                     <a href="#" onClick={()=>{
