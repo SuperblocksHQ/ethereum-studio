@@ -1,20 +1,126 @@
+.centerVertically {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+    padding-right: 30px;
+    padding-left: 30px;
+}
+
+.textWrap {
+    width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 15px;
+
+    h1, h2 {
+        margin: 0px;
+    }
+
+    h1 {
+        font-weight: 500;
+        color: white;
+    }
+
+    h2 {
+        margin-bottom: 20px;
+        font-weight: 500;
+        color: #e4e4e4;
+    }
+
+}
+
 .container {
     display: flex;
     align-content: center;
     align-items: center;
-    margin-top: 100px;
+    justify-content: center;
+    flex-wrap: wrap;
+
     .content {
         display: flex;
         flex-direction: column;
         align-content: center;
         align-items: center;
-        width: 100%;
-        color: #fff;
-        h3 {
-            margin-bottom: 0;
+        flex-wrap: wrap;
+        width: 50%;
+        color: #fff;  
+        padding-left: 15px; 
+        padding-right: 15px;     
+        max-width: 600px;
+    }
+
+    .contentLeft {
+        padding-right: 100px;
+
+        h1, h3 {
+            font-weight: 500;
         }
+
+
+        h3 {
+            margin-bottom: 0px;
+        }
+
+        h3, p {
+            align-self: flex-start;
+        }
+
+        p {
+            color: #e4e4e4;
+        }
+
+        img {
+            margin-bottom: 24px;
+        }
+
         a {
-            color: #8641F2;
+            color: #e4e4e4;
+        }
+    }
+
+    .contentRight {
+        padding-left: 100px;
+        border-left: 1px solid #3c3c3c;
+
+        h2 {
+            font-weight: 500;
+            align-self: flex-start;
+            color: #e4e4e4;
+            margin-top: 0px;
+        }
+
+        .linksContainer {
+            background: #141618;
+            padding: 20px;
+            width: 100%;
+            border-radius: 4px;
+
+
+            a {
+                display: block;
+                color: #e4e4e4;
+                transition: opacity .2s;
+                margin-bottom: 15px;
+
+                svg {
+                    margin-right: 5px;
+                }
+
+                &:hover {
+                    opacity: .6;
+                }
+            }
+
+            a:last-child {
+                margin-bottom: 0px;
+                margin-top: 30px;
+            }
+        }
+
+        .linksContainer:first-of-type {
+            margin-bottom: 50px;
         }
     }
 }
+
