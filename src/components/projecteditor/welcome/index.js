@@ -17,6 +17,7 @@
 import { h, Component } from 'preact';
 import PropTypes from 'prop-types';
 import { IconRight } from '../../icons';
+import classNames from 'classnames';
 import style from './style';
 
 export default class Welcome extends Component {
@@ -34,26 +35,32 @@ export default class Welcome extends Component {
                     <h2>Buidl your thing</h2>
                 </div>
                 <div class={style.container}>
-                    <div class={[style.content, style.contentLeft].join(" ")}>
+                    <div class={classNames([style.content, style.contentLeft])}>
                         <img src={'/static/img/img-welcome.svg'}/>
                         <h3>Looks like you don’t have any project created just yet</h3>     
                         <p>Create a new project from any of our existing templates to get started</p>
                         <button class="btn2 mt-4" onClick={this.onCreateNewProjectClick}>Create New Project</button>
                     </div>
-                    <div class={[style.content, style.contentRight].join(" ")}>
+                    <div class={classNames([style.content, style.contentRight])}>
                        <h2>Upcoming features</h2>
                        <div class={style.linksContainer}>
-                            <a href="https://github.com/SuperblocksHQ/superblocks-lab/issues/189" target="_blank" rel="noopener noreferrer">Testing support for your Smart Contract</a>
-                            <a href="https://github.com/SuperblocksHQ/superblocks-lab/issues/166" target="_blank" rel="noopener noreferrer">Full emulated file system support</a>
-                            <a href="https://github.com/SuperblocksHQ/superblocks-lab/issues/167" target="_blank" rel="noopener noreferrer">Github integration</a>
-                            <a href="https://github.com/SuperblocksHQ/superblocks-lab/projects/1" target="_blank" rel="noopener noreferrer"><IconRight class={style.arrow} />Find the latest updates</a>
+                            <a href="https://github.com/SuperblocksHQ/superblocks-lab/issues/189" target="_blank" rel="noopener noreferrer" title="Testing support">Testing support for your Smart Contract</a>
+                            <a href="https://github.com/SuperblocksHQ/superblocks-lab/issues/166" target="_blank" rel="noopener noreferrer" title="File system support">Full emulated file system support</a>
+                            <a href="https://github.com/SuperblocksHQ/superblocks-lab/issues/167" target="_blank" rel="noopener noreferrer" title="Github integration">Github integration</a>
+                            <a href="https://github.com/SuperblocksHQ/superblocks-lab/projects/1" target="_blank" rel="noopener noreferrer" title="Latest updates">
+                                <IconRight class={style.arrow} />
+                                Find the latest updates
+                            </a>
                        </div>
                        <h2>Getting started</h2>
                        <div class={style.linksContainer}>
-                            <a href="https://help.superblocks.com/hc/en-us/articles/360008277034-Introduction-to-Superblocks-Lab" target="_blank" rel="noopener noreferrer">Introduction to Superblocks Lab</a>
-                            <a href="https://help.superblocks.com/hc/en-us/articles/360008422273-Creating-a-new-project" target="_blank" rel="noopener noreferrer">Creating a new project</a>
-                            <a href="https://help.superblocks.com/hc/en-us/articles/360008423653-Exporting-DApps-to-be-published-on-the-Internet" target="_blank" rel="noopener noreferrer">Export your DApp</a>
-                            <a href="https://help.superblocks.com/hc/en-us/categories/360000486714-Using-Superblocks-Lab" target="_blank" rel="noopener noreferrer"><IconRight class={style.arrow} />Check out all the documentation</a>
+                            <a href="https://help.superblocks.com/hc/en-us/articles/360008277034-Introduction-to-Superblocks-Lab" target="_blank" rel="noopener noreferrer" title="Introduction">Introduction to Superblocks Lab</a>
+                            <a href="https://help.superblocks.com/hc/en-us/articles/360008422273-Creating-a-new-project" target="_blank" rel="noopener noreferrer" title="New project">Creating a new project</a>
+                            <a href="https://help.superblocks.com/hc/en-us/articles/360008423653-Exporting-DApps-to-be-published-on-the-Internet" target="_blank" rel="noopener noreferrer" title="Export">Export your DApp</a>
+                            <a href="https://help.superblocks.com/hc/en-us/categories/360000486714-Using-Superblocks-Lab" target="_blank" rel="noopener noreferrer" title="Documentation">
+                                <IconRight class={style.arrow} />
+                                Check out all the documentation
+                            </a>
                        </div>
                     </div>
                 </div>
