@@ -22,7 +22,7 @@ import style from './style';
 export default class Welcome extends Component {
 
     onCreateNewProjectClick = (e) => {
-        console.log(this.props);
+        console.log(this.props); 
         this.props.router.control._newDapp(e);
     }
 
@@ -30,8 +30,10 @@ export default class Welcome extends Component {
         return (
             <div class={style.container}>
                 <div class={[style.content, style.contentLeft].join(" ")}>
-                    <h1>Superblocks Lab</h1>
-                    <h2>Buidl your thing</h2>
+                    <div class={style.textWrap}>
+                        <h1>Superblocks Lab</h1>
+                        <h2>Buidl your thing</h2>
+                    </div>
                     <img src={'/static/img/img-welcome.svg'}/>
                     <h3>Looks like you don’t have any project created just yet</h3>     
                     <p>Create a new project from any of our existing templates to get started</p>
