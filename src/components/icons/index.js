@@ -39,7 +39,7 @@ import iconClose from '@fortawesome/fontawesome-free-solid/faTimes';
 import iconQuestionCircle from '@fortawesome/fontawesome-free-regular/faQuestionCircle';
 import iconTwitter from '@fortawesome/fontawesome-free-brands/faTwitter';
 import iconGithub from '@fortawesome/fontawesome-free-brands/faGithub';
-import iconTelegram from '@fortawesome/fontawesome-free-brands/faTelegram';
+import iconDiscord from '@fortawesome/fontawesome-free-brands/faDiscord';
 import iconLock from '@fortawesome/fontawesome-free-solid/faLock';
 import iconLockOpen from '@fortawesome/fontawesome-free-solid/faLockOpen';
 import iconPencil from '@fortawesome/fontawesome-free-solid/faPencilAlt';
@@ -123,5 +123,5 @@ export const IconWhatsNew = ({...props}) => <IconImg src={'/static/img/icon-what
 // External services
 export const IconTwitter = ({...props}) => <FaIcon icon={iconTwitter} {...props} />;
 export const IconGithub = ({...props}) => <FaIcon icon={iconGithub} {...props} />;
-export const IconTelegram = ({...props}) => <FaIcon icon={iconTelegram} {...props}/>;
+export const IconDiscord = ({...props}) => <FaIcon icon={iconDiscord} {...props}/>;
 
