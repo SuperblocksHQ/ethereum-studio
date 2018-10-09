@@ -1,5 +1,10 @@
 # Superblocks Lab - Change log
 
+## [1.0.3]
+
+* Improvement: Changed telegram for discord (community) #193
+* Improvement: Update welcome screen #195
+
 ## [1.0.2]
 
 * Fix: list changes in CHANGELOG file #178

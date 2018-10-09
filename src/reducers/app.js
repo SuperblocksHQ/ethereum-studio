@@ -1,5 +1,5 @@
 export const initialState = {
-    version: '1.0.2',
+    version: '1.0.3',
 };
 
 export default function appReducer(state = initialState, action) {
