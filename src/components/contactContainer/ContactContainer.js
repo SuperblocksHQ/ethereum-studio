@@ -34,7 +34,7 @@ export default class ContactContainer extends Component {
                     <a href="https://github.com/SuperblocksHQ/superblocks-lab" target="_blank" rel="noopener noreferrer" class={style.contactIcon} title="Superblocks Lab Github">
                         <IconGithub />
                     </a>
-                    <a href="https://discord.gg/RZundp" target="_blank" rel="noopener noreferrer" class={style.contactIcon} title="Superblocks' Community (Discord)">
+                    <a href="https://discord.gg/6Cgg2Dw" target="_blank" rel="noopener noreferrer" class={style.contactIcon} title="Superblocks' Community (Discord)">
                         <IconDiscord />
                     </a>
                 </div>
