@@ -34,7 +34,7 @@ const HelpDropdownDialog = () => (
             </li>
             <li>
                 <div class={style.container}>
-                    <a href="https://discord.gg/RZundp" target="_blank" rel="noopener noreferrer" title="Superblocks' community">Join our Community!</a>
+                    <a href="https://discord.gg/6Cgg2Dw" target="_blank" rel="noopener noreferrer" title="Superblocks' community">Join our Community!</a>
                     <span class={style.communityIcon}>
                         <IconDiscord color="#7289DA"/>
                     </span>
