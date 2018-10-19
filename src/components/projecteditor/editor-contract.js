@@ -187,7 +187,7 @@ export default class ContractEditor extends Component {
         if (this.props.contract != this.contract.get('name')) {
             const contract2 = this.dappfile.getItem("contracts", [{name:this.contract.get("name")}]);
             if (contract2) {
-                alert("A contract by this name already exists, choose a different name, please.");
+                alert("A contract by this name already exists, please choose a different name.");
                 return;
             }
             // Check if any affected windows are open.

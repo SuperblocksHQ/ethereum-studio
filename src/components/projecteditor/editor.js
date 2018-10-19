@@ -57,7 +57,7 @@ export default class Editor extends Component {
 
     canClose = (cb) => {
         if(this.body.state!=0) {
-            if(confirm("File is not saved, close anyways?")) {
+            if(confirm("File is not saved, close anyway?")) {
                 this._finalize();
                 cb(0);
                 return

@@ -108,7 +108,7 @@ export default class DevkitConsole extends Component {
             this.done();
         }
         else {
-            console.log("Console could not decode message buffer.", this.state.buffer);
+            console.log("Console could not decode the message buffer.", this.state.buffer);
             return;
         }
         this.state.buffer=m[3].slice(msg.length);

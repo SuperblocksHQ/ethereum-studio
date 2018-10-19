@@ -32,12 +32,12 @@ export default class Welcome extends Component {
             <div class={style.centerVertically}>
                 <div class={style.textWrap}>
                     <h1>Superblocks Lab</h1>
-                    <h2>Buidl your thing</h2>
+                    <h2>Build your thing</h2>
                 </div>
                 <div class={style.container}>
                     <div class={classNames([style.content, style.contentLeft])}>
                         <img src={'/static/img/img-welcome.svg'}/>
-                        <h3>Looks like you don’t have any project created just yet</h3>     
+                        <h3>Looks like you don’t have any projects created just yet</h3>     
                         <p>Create a new project from any of our existing templates to get started</p>
                         <button class="btn2 mt-4" onClick={this.onCreateNewProjectClick}>Create New Project</button>
                     </div>

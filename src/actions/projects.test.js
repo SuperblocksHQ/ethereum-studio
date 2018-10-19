@@ -1,7 +1,7 @@
 import * as actions from './projects';
 
 describe('actions', () => {
-  it('should create an action to select the projec to open when re-loading the app', () => {
+  it('should create an action to select the project to open when re-loading the app', () => {
     const data = { props: { state: { data: { dir : 'project-name' }}}};
     const expectedAction = {
       type: 'SELECT_PROJECT',
