@@ -32,7 +32,7 @@ export default class Welcome extends Component {
             <div class={style.centerVertically}>
                 <div class={style.textWrap}>
                     <h1>Superblocks Lab</h1>
-                    <h2>Build your thing</h2>
+                    <h2>Buidl your thing</h2>
                 </div>
                 <div class={style.container}>
                     <div class={classNames([style.content, style.contentLeft])}>
