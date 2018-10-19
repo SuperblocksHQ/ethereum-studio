@@ -282,7 +282,7 @@ export default class AccountEditor extends Component {
         }
         else {
             // Check for external web3 provider
-            if (this.form.walletTyp == "external") {
+            if (this.form.walletType == "external") {
                 if (this.form.isLocked) {
                     return (
                         <p>
