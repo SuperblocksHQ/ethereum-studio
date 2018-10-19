@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 
 /**
- * Simple wrapper component over the react-onclickoutside to maek easier the usage of the component
+ * Simple wrapper component over the react-onclickoutside to make easier the usage of the component
  */
 class DropdownBasic extends Component {
     render() {

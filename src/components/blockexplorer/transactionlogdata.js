@@ -63,9 +63,9 @@ export default class TransactionLogData {
             context: data.context,
             deployArgs: data.deployArgs,  // When Superblocks Lab deploys a contract we can simply save the constructor arguments.
             obj: null,
-            objTS: null,  // Timestamp when transaction object become available.
+            objTS: null,  // Timestamp when transaction object becomes available.
             receipt: null,  // This will be filled when tx has been mined.
-            receiptTS: null,  // Timestamp when receipt become available.
+            receiptTS: null,  // Timestamp when receipt becomes available.
             state: {},  // Local state data for displaying the tx.
         };
         this._transactions.unshift(tx);

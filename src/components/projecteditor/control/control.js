@@ -79,7 +79,7 @@ export default class Control extends Component {
 
     componentDidMount() {
         this._reloadProjects(null, (status) => {
-            // NOTE: Ideally all this logic should not leave in the component itself but most likely in an epic
+            // NOTE: Ideally all this logic should not live in the component itself but most likely in an epic
             // which we can actually properly test
             let { selectedProjectId } = this.props;
             this._projectsList.forEach((project) => {
@@ -575,7 +575,7 @@ export default class Control extends Component {
                 });
             }
             else {
-                alert("A DApp with that name already exists, choose a different name.");
+                alert("A DApp with that name already exists, please choose a different name.");
             }
         };
         const modal={};
@@ -592,7 +592,7 @@ export default class Control extends Component {
 
     _clickWorkspace = (e) => {
         e.preventDefault();
-        document.querySelector('#wsFileInput').dispatchEvent(new MouseEvent('click')); // ref does not work fhttps://github.com/developit/preact/issues/477
+        document.querySelector('#wsFileInput').dispatchEvent(new MouseEvent('click')); // ref does not work https://github.com/developit/preact/issues/477
     }
     _uploadWorkspace = (e) => {
         e.preventDefault();
@@ -893,7 +893,7 @@ export default class Control extends Component {
         if(projectItem.props.state.data.dappfile.contracts().filter((c)=>{
             return c.name==name;
         }).length>0) {
-            alert("A contract by this name already exists, choose a different name, please.");
+            alert("A contract by this name already exists, please choose a different name.");
             return;
         }
         //for(var index=0;index<100000;index++) {
@@ -942,12 +942,12 @@ export default class Control extends Component {
         const contract=projectItem.props.state.data.dappfile.contracts()[contractIndex];
         this._closeAnyContractItemsOpen(contract.name, true, (status) => {
             if (status != 0) {
-                alert("Could not delete contract, close editor/compiler/deployer/interaction windows and try again.");
+                alert("Could not delete the contract, close the editor/compiler/deployer/interaction windows and try again.");
                 return;
             }
             projectItem.deleteFile(contract.source, (status)=>{
                 if(status>0) {
-                    alert("Could not delete contract, close editor and try again.");
+                    alert("Could not delete the contract, close the editor and try again.");
                     return;
                 }
                 projectItem.props.state.data.dappfile.contracts().splice(contractIndex,1);
@@ -1001,7 +1001,7 @@ export default class Control extends Component {
             alert("You cannot delete the default account.");
             return;
         }
-        if(!confirm("Are you sure to delete account?")) return;
+        if(!confirm("Are you sure you want to delete this account?")) return;
         projectItem.props.state.data.dappfile.accounts().splice(accountIndex,1);
         projectItem.save();
         this.props.router.main.redraw(true);
@@ -1074,7 +1074,7 @@ export default class Control extends Component {
     _clickDeleteFile = (e, item) => {
         e.preventDefault();
         var projectItem=item.props._project;
-        if(!confirm("Are you sure to delete " + item.props._path + "?")) return false;
+        if(!confirm("Are you sure you want to delete " + item.props._path + "?")) return false;
         this.backend.deleteFile(projectItem.props.state.data.dir, item.props._path, (status) => {
             if(status==0) {
                 this._reloadProjects();
