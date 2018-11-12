@@ -19,6 +19,7 @@
     height: 100%;
     .toolbar {
         display: block;
+        border-bottom: 1px solid rgba(60, 60, 60, 0.4);
         &:after {
             content: " ";
             display: block;
@@ -29,13 +30,21 @@
         padding: 12px 14px 12px 14px;
         .buttons {
             float: left;
-            >a {
-                margin-right: 10px;
+            display: flex;
+            align-content: center;
+            align-items: center;
+            >button {
                 color: #fff;
                 opacity: 0.6;
                 &:hover {
                     opacity: 1.0;
                 }
+            }
+            .separator {
+                border-left: 1px solid #979797;
+                height: 12px;
+                margin-left: 10px;
+                margin-right: 10px;
             }
         }
         .info {
@@ -54,7 +63,7 @@
             margin-left: 25px;
             color: #cecece;
             font-size: 0.9em;
-            select {
+            select, input {
                 width: auto;
             }
         }

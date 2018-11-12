@@ -26,6 +26,7 @@
         clear: both;
     }
     .control {
+        overflow: hidden;
         position: relative;
         float: left;
         display: block;
@@ -65,31 +66,27 @@
                 float: left;
                 min-width: 60px;
                 background-color: #2D2D2D;
-                a {
-                    color: #969696;
-                }
-                div {
-                    float: left;
-                }
-                .title {
-                    padding-right: 10px;
-                    .icon {
-                        margin-right: 10px;
+                cursor: pointer;
+                color: #969696;
+                .tabContainer {
+                    div {
+                        float: left;
                     }
-                }
-                .close {
-                    margin-left: 10px;
-                    display: none;
-                    font-size: 0.85em;
-                    a {
-                        font-weight: 700;
+                    .title {
+                        padding-right: 10px;
+                        .icon {
+                            margin-right: 10px;
+                        }
+                    }
+                    .close {
+                        margin-left: 10px;
+                        display: none;
+                        font-size: 0.85em;
                     }
                 }
                 &.selected {
                     background-color: #1e1e1e;
-                    a {
-                        color: #FFFFFF;
-                    }
+                    color: #FFFFFF;
                     .close {
                         display: block;
                     }
@@ -97,23 +94,28 @@
             }
             .contextMenu {
                 display: block;
-                position: absolute;
-                margin-left: -40px;
-                margin-top: 10px;
-                background-color: #2D2D2D;
+                position: fixed;
+                margin-left: 40px;
+                margin-top: 15px;
+                background-color: #141414;
                 z-index: 1;
-                border: solid 1px #333;
-                a {
-                    display: block;
-                    color: #A5A5A5;
-                    padding: 10px;
+                min-width: 180px;
+                padding: 4px 0;
+                z-index: 5;
+                border-radius: 4px;
+                .item {
+                    display: flex;
+                    align-items: center;
+                    color: #c7c7c7;
                     border-left: 2px solid;
                     border-color: transparent;
                     margin: 0;
+                    padding: 6px 8px;
+                    padding-left: 20px;
                     &:hover {
                         background-color: rgba(128, 46, 255, 0.10);
                         cursor: pointer;
-                        color: #fff;
+                        color: #ffffff;
                         border-color: #7237CF;
                     }
                 }

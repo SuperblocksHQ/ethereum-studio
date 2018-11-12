@@ -14,84 +14,135 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { h, Component } from 'preact';
-import style from './style-editor-contract';
+import React, { Component } from 'react';
+import classNames from 'classnames';
+import style from './style-editor-contract.less';
 import Backend from './control/backend';
 
-
 export default class AppEditor extends Component {
+
+    state = {
+        form: null,
+        isDirty: false
+    }
+
     constructor(props) {
         super(props);
         this.backend = new Backend();
-        this.id=props.id+"_editor";
-        this.props.parent.childComponent=this;
-        this.dappfile = this.props.project.props.state.data.dappfile;
-        this.app = this.dappfile.getObj().app || {};
-        this.project = this.dappfile.getObj().project || {};
-        this.project.info=this.project.info||{};
-        this.project.info.title=this.project.info.title||"";
-        this.setState({form:{title:this.project.info.title}});
+        this.id = props.id + '_editor';
+        this.props.parent.childComponent = this;
     }
 
-    componentWillReceiveProps(props) {
-        this.dappfile = props.project.props.state.data.dappfile;
-    }
-
-    componentDidMount() {
-        this.redraw();
+    componentWillMount() {
+        this.setState({
+            form: {
+                title: this.props.item.getProject().getTitle(),
+                name: this.props.item.getProject().getName(),
+            }
+        });
     }
 
     redraw = () => {
-        this.setState();
+        this.forceUpdate();
     };
 
-    focus = (rePerform) => {
+    canClose = (cb, silent) => {
+        if (this.state.isDirty && !silent) {
+            const flag = confirm(
+                'There is unsaved data. Do you want to close tab and loose the changes?'
+            );
+            cb(flag ? 0 : 1);
+            return;
+        }
+        cb(0);
     };
 
-    save = (e) => {
+    save = e => {
         e.preventDefault();
-        if(this.state.form.title.length==0) {
-            alert("Please give the project a snappy title.");
+        if (this.state.form.title.length == 0) {
+            alert('Please give the project a snappy title.');
             return false;
         }
-        if(this.state.form.title.match(/([\"\']+)/)) {
-            alert('Illegal title. No special characters allowed.');
+        if (this.state.form.title.length > 20) {
+            alert('Illegal title. Max 20 characters.');
             return false;
         }
-        this.project.info.title=this.state.form.title;
-        this.dappfile.getObj().project=this.project;
-        this.props.project.save((status)=>{
-            if(status==0) {
-                this.props.parent.close();
-            }
-        });
+        if (!this.state.form.name.match(/^([a-zA-Z0-9-]+)$/) || this.state.form.name.length > 20) {
+            alert(
+                'Illegal projectname. Only A-Za-z0-9 and dash (-) allowed. Max 20 characters.'
+            );
+            return false;
+        }
+        this.props.item.getProject().setName(this.state.form.name);
+        this.props.item.getProject().setTitle(this.state.form.title);
+        this.props.item
+            .getProject()
+            .saveDappfile()
+            .then(() => {
+                this.setState({ isDirty: false });
+                this.props.router.control.redrawMain(true);
+            });
     };
 
     onChange = (e, key) => {
-        var value=e.target.value;
-        const form=this.state.form;
-        form[key]=value;
-        this.setState(form);
+        var value = e.target.value;
+        const form = this.state.form;
+        form[key] = value;
+        this.setState({ isDirty: true, form: form });
     };
 
     render() {
-        return (<div id={this.id} class={style.main}>
-            <div class="scrollable-y" id={this.id+"_scrollable"}>
-                <div class={style.inner}>
-                    <h1 class={style.title}>
-                        Edit DApp Configuration
-                    </h1>
-                    <div class={style.form}>
-                        <form action="">
-                            <div class={style.field}>
-                                <p>Title:</p>
-                                <input maxLength="30" type="text" value={this.state.form.title} onChange={(e)=>{this.onChange(e, 'title')}} />
-                            </div>
-                            <a href="#" class="btn2" onClick={this.save}>Save</a>
-                        </form>
+        const { form } = this.state;
+        return (
+            <div id={this.id} className={style.main}>
+                <div className="scrollable-y" id={this.id + '_scrollable'}>
+                    <div className={style.inner}>
+                        <h1 className={style.title}>Edit DApp Configuration</h1>
+                        <div className={style.form}>
+                            <form action="">
+                                <div className={classNames(['superInputDark', style.field])}>
+                                    <label htmlFor="name">Name</label>
+                                    <input
+                                        id="name"
+                                        maxLength="20"
+                                        type="text"
+                                        value={form.name}
+                                        onKeyUp={e => {
+                                            this.onChange(e, 'name');
+                                        }}
+                                        onChange={e => {
+                                            this.onChange(e, 'name');
+                                        }}
+                                    />
+                                </div>
+                                <div className={classNames(['superInputDark', style.field])}>
+                                    <label htmlFor="title">Title</label>
+                                    <input
+                                        id="title"
+                                        maxLength="20"
+                                        type="text"
+                                        value={form.title}
+                                        onKeyUp={e => {
+                                            this.onChange(e, 'title');
+                                        }}
+                                        onChange={e => {
+                                            this.onChange(e, 'title');
+                                        }}
+                                    />
+                                </div>
+                                <button
+                                    href="#"
+                                    className="btn2"
+                                    disabled={!this.state.isDirty}
+                                    onClick={this.save}
+                                >
+                                    Save
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>);
+        );
     }
 }

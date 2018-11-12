@@ -14,8 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { h, render } from 'preact';
-import normalizecss from 'normalize-css/normalize.css';
+import React from 'react'
+import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import App from './components/app';
 import configureStore from './store';
@@ -30,12 +30,12 @@ import './style/index.less';
 const { persistor, store } = configureStore();
 // persistor.purge(); // Debug to clear persist
 
-render((
+ReactDOM.render((
     <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
             <App />
         </PersistGate>
     </Provider>
-), document.body);
+), document.getElementById('root'));
 
 

@@ -26,15 +26,18 @@
     padding: 12px 14px 12px 14px;
     .buttons {
         float: left;
-        >a {
-            position: absolute;
+        display: flex;
+        align-content: center;
+        align-items: center;
+        >button {
             margin-right: 10px;
-            color: #ccc;
+            color: #fff;
+            opacity: 0.6;
             &:hover {
-                color: #ffe800;
+                opacity: 1;
             }
             &.running {
-                color: #ffe800;
+                opacity: 1;
                 &:hover {
                     color: none;
                 }
@@ -134,6 +137,7 @@
         width: 100%;
         background-color: #100c0d;
         overflow-y: scroll;
+        padding: 10px;
         .waiting {
             color: #fff;
             font-size: 2.3em;

@@ -1,6 +1,6 @@
 export function selectProject(project) {
     return {
         type: 'SELECT_PROJECT',
-        data: project.props.state.data.dir
-    }
+        data: project ? project.getInode() : 0,
+    };
 }

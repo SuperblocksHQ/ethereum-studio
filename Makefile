@@ -1,4 +1,4 @@
-# Copyright 2018 Superblocks AB
+ # Copyright 2018 Superblocks AB
 #
 # This file is part of Superblocks Lab.
 #
@@ -14,10 +14,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-PREACT = ./node_modules/preact-cli/lib/index.js
-
 ifndef PORT
-PORT=8181
+PORT=3000
 endif
 
 ifndef ORIGIN_DEV
@@ -29,34 +27,20 @@ ORIGIN_DIST=https://studio.superblocks.com
 endif
 
 watch: build_external_dev
-	PORT=$(PORT) $(PREACT) watch
+	yarn start
 build: build_external_dist
-	$(PREACT) build --no-prerender --service-worker=false --production --clean
+	yarn build
 build_external_dev:
 	mkdir -p ./src/components/superprovider/dist
 	sed 's#ORIGIN#"$(ORIGIN_DEV)"#g' ./src/components/superprovider/web3provider.js | ./node_modules/babel-cli/bin/babel.js --presets env >./src/components/superprovider/dist/web3provider.js
 build_external_dist:
 	mkdir -p ./src/components/superprovider/dist
 	sed 's#ORIGIN#"$(ORIGIN_DIST)"#g' ./src/components/superprovider/web3provider.js | ./node_modules/babel-cli/bin/babel.js --presets env >./src/components/superprovider/dist/web3provider.js
-dist: build
-	rm -rf dist
-	mkdir dist
-	cp -r ./build/static ./dist
-	cp ./build/*.js ./dist
-	cp ./build/*.css ./dist
-	cp ./build/index.html ./dist
-	cp ./build/favicon.ico ./dist
-	cp ./build/manifest.json ./dist
-	cp -r ./build/vs ./dist
-	cp -r ./build/solc ./dist
-	cp -r ./build/evm ./dist
-	rm ./dist/sw.js
-	@echo "Done."
+dist: clean build
 	@echo "You did bump the version (./bump_version.sh) prio, right?"
 clean:
 	rm -rf build
-	rm -rf dist
 npm:
-	yarn install
+	yarn
 
 .PHONY: npm watch build dist clean build_external

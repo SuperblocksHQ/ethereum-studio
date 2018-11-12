@@ -1,1 +1,1 @@
-export const getSelectedProjectId = (state) => state.projects.selectedProjectId;
+export const getSelectedProjectId = state => state.projects.selectedProjectId;

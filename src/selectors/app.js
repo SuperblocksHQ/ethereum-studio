@@ -1,1 +1,1 @@
-export const getAppVersion = (state) => state.app.version || '';
+export const getAppVersion = state => state.app.version || '';

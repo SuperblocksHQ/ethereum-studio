@@ -14,26 +14,28 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-(function () {
+(function() {
     var evm = require('./evm.js');
     var _replyMessage = (msg, data) => {
         // Send msg to parent.
-        if(window.queueMessageReply) {
-            setTimeout(()=>{window.queueMessageReply({data:data,id:msg.id})},1);
+        if (window.queueMessageReply) {
+            setTimeout(() => {
+                window.queueMessageReply({ data: data, id: msg.id });
+            }, 1);
         }
     };
-    var _queueMessage = (msg) => {
+    var _queueMessage = msg => {
         // Got msg from parent.
-        var cmd=msg.data;
-        var result={devkitVm:devkitVm};
+        var cmd = msg.data;
+        var result = { devkitVm: devkitVm };
         replyMessage(msg, result);
     };
     devkitVm.init(function(err, block) {
-        if(err) {
+        if (err) {
             console.error(err);
         }
     });
 
-    window.replyMessage=_replyMessage;
-    window.queueMessage=_queueMessage;
+    window.replyMessage = _replyMessage;
+    window.queueMessage = _queueMessage;
 })();

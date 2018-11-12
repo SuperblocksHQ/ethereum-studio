@@ -14,46 +14,51 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { h, Component } from 'preact';
-import style from './style';
+import React, { Component } from 'react';
+import style from './style.less';
 import RenderTransactions from './rendertransactions';
 
 export default class TransactionLogPanel extends Component {
-    constructor(props) {
-        super(props);
 
-        setInterval(() => this.setState(),1000);
+    componentDidMount() {
+        this.timer = setInterval(() => this.forceUpdate(), 1000);
     }
 
-    _getRender = (txlog) => {
+    componentWillUnmount() {
+        clearInterval(this.timer);
+    }
+
+    _getRender = txlog => {
         if (this.renderTransactions) {
             return this.renderTransactions;
         }
         this.renderTransactions = new RenderTransactions(txlog, true, () => {
-            this.setState();
+            this.forceUpdate();
         });
         return this.renderTransactions;
     };
 
     _getTxLog = () => {
         if (!this.props.router.control) return;
-        const project=this.props.router.control.getActiveProject();
+        const project = this.props.router.control.getActiveProject();
         if (!project) return;
-        return project.props.state.txlog;
+        return project.getTxLog();
     };
 
     render() {
         const txlog = this._getTxLog();
-        if (!txlog) return;
-        const env=this.props.router.control.getActiveProject().props.state.data.env;
+        if (!txlog) return null;
+        const env = this.props.router.control
+            .getActiveProject()
+            .getEnvironment();
         const network = env;
 
         const renderTransactions = this._getRender(txlog);
-        const transactions=renderTransactions.renderTransactionsFloat(network, 5, 0);
-        return (
-            <div class={style.transactionlogPanel}>
-                {transactions}
-            </div>
+        const transactions = renderTransactions.renderTransactionsFloat(
+            network,
+            5,
+            0
         );
+        return <div className={style.transactionlogPanel}>{transactions}</div>;
     }
 }

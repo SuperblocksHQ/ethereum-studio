@@ -17,21 +17,16 @@
 const assert = require("assert");
 const fs = require("fs");
 const path = require("path");
+const JSZip = require("jszip");
 
 describe('solc', function() {
     this.timeout(10000);
 
     // Template file paths
-    const emptyTemplatePath = "../src/components/templates/empty.json";
-    const helloWorldTemplatePath = "../src/components/templates/hello.json";
-    const newsFeedTemplatePath = "../src/components/templates/newsfeed.json";
-    const raiseToSummonTemplatePath = "../src/components/templates/raisetosummon.json";
-
-    // Template files
-    const emptyTemplateFile = require(emptyTemplatePath);
-    const helloWorldTemplateFile = require(helloWorldTemplatePath);
-    const newsFeedTemplateFile = require(newsFeedTemplatePath);
-    const raiseToSummonTemplateFile = require(raiseToSummonTemplatePath);
+    const emptyTemplatePath = "./src/templates/empty.zip";
+    const helloWorldTemplatePath = "./src/templates/hello.zip";
+    const newsFeedTemplatePath = "./src/templates/newsfeed.zip";
+    const raiseToSummonTemplatePath = "./src/templates/raisetosummon.zip";
 
     // Compiler settings
     const compilerPath = "../src/components/solc/dist/soljson-v0.4.25+commit.59dbf8f1.js"
@@ -118,6 +113,19 @@ describe('solc', function() {
         assert.strictEqual(metadata.settings.optimizer.runs, expectedContractMetadataOptimizerRuns);
     }
 
+    function loadContractInZip(path, contractName, callback) {
+        fs.readFile(path, function(err, data) {
+            if (err) {
+                callback(err);
+            }
+            JSZip.loadAsync(data).then(function(zip) {
+                return zip.file("contracts/"+ contractName).async("string");
+            }).then(function (result) {
+                callback(null, result);
+            });
+        });
+    }
+
     it('should compile a simple contract', function() {
         const fileContents = referenceDummyContract;
 
@@ -145,7 +153,7 @@ describe('solc', function() {
             expectedContractBytecode, expectedContractMetadataABI, expectedContractMetadataLanguage, expectedContractMetadataEvmVersion, expectedContractMetadataOptimizerEnabled, expectedContractMetadataOptimizerRuns);
     });
 
-    it('should compile Empty template', function() {
+    it('should compile Empty template', function(done) {
         // Expected data length settings
         const expectedContractsLength = 1;
         const expectedSourcesLength = 1;
@@ -164,15 +172,16 @@ describe('solc', function() {
         const expectedContractMetadataOptimizerEnabled = false;
         const expectedContractMetadataOptimizerRuns = 200;
 
-        const fileContents = emptyTemplateFile.files["/"].children.contracts.children[expectedContractFileName].contents;
-
-        call_compile(fileContents,
-            expectedContractsLength, expectedSourcesLength, expectedErrorsLength,
-            expectedContractFileName, expectedSourcesFileName, expectedContractName,
-            expectedContractBytecode, expectedContractMetadataABI, expectedContractMetadataLanguage, expectedContractMetadataEvmVersion, expectedContractMetadataOptimizerEnabled, expectedContractMetadataOptimizerRuns);
+        loadContractInZip(emptyTemplatePath, expectedContractFileName, function(err, fileContents) {
+            call_compile(fileContents,
+                expectedContractsLength, expectedSourcesLength, expectedErrorsLength,
+                expectedContractFileName, expectedSourcesFileName, expectedContractName,
+                expectedContractBytecode, expectedContractMetadataABI, expectedContractMetadataLanguage, expectedContractMetadataEvmVersion, expectedContractMetadataOptimizerEnabled, expectedContractMetadataOptimizerRuns);
+            done();
+        });
     });
 
-    it('should compile Hello World template', function() {
+    it('should compile Hello World template', function(done) {
         // Expected data length settings
         const expectedContractsLength = 1;
         const expectedSourcesLength = 1;
@@ -191,15 +200,16 @@ describe('solc', function() {
         const expectedContractMetadataOptimizerEnabled = false;
         const expectedContractMetadataOptimizerRuns = 200;
 
-        const fileContents = helloWorldTemplateFile.files["/"].children.contracts.children[expectedContractFileName].contents;
-
-        call_compile(fileContents,
-            expectedContractsLength, expectedSourcesLength, expectedErrorsLength,
-            expectedContractFileName, expectedSourcesFileName, expectedContractName,
-            expectedContractBytecode, expectedContractMetadataABI, expectedContractMetadataLanguage, expectedContractMetadataEvmVersion, expectedContractMetadataOptimizerEnabled, expectedContractMetadataOptimizerRuns);
+        loadContractInZip(helloWorldTemplatePath, expectedContractFileName, function(err, fileContents) {
+            call_compile(fileContents,
+                expectedContractsLength, expectedSourcesLength, expectedErrorsLength,
+                expectedContractFileName, expectedSourcesFileName, expectedContractName,
+                expectedContractBytecode, expectedContractMetadataABI, expectedContractMetadataLanguage, expectedContractMetadataEvmVersion, expectedContractMetadataOptimizerEnabled, expectedContractMetadataOptimizerRuns);
+            done();
+        });
     });
 
-    it('should compile Uncensorable News Feed template', function() {
+    it('should compile Uncensorable News Feed template', function(done) {
         // Expected data length settings
         const expectedContractsLength = 1;
         const expectedSourcesLength = 1;
@@ -218,15 +228,16 @@ describe('solc', function() {
         const expectedContractMetadataOptimizerEnabled = false;
         const expectedContractMetadataOptimizerRuns = 200;
 
-        const fileContents = newsFeedTemplateFile.files["/"].children.contracts.children[expectedContractFileName].contents;
-
-        call_compile(fileContents,
-            expectedContractsLength, expectedSourcesLength, expectedErrorsLength,
-            expectedContractFileName, expectedSourcesFileName, expectedContractName,
-            expectedContractBytecode, expectedContractMetadataABI, expectedContractMetadataLanguage, expectedContractMetadataEvmVersion, expectedContractMetadataOptimizerEnabled, expectedContractMetadataOptimizerRuns);
+        loadContractInZip(newsFeedTemplatePath, expectedContractFileName, function(err, fileContents) {
+            call_compile(fileContents,
+                expectedContractsLength, expectedSourcesLength, expectedErrorsLength,
+                expectedContractFileName, expectedSourcesFileName, expectedContractName,
+                expectedContractBytecode, expectedContractMetadataABI, expectedContractMetadataLanguage, expectedContractMetadataEvmVersion, expectedContractMetadataOptimizerEnabled, expectedContractMetadataOptimizerRuns);
+            done();
+        });
     });
 
-    it('should compile Raise to Summon template', function() {
+    it('should compile Raise to Summon template', function(done) {
         // Expected data length settings
         const expectedContractsLength = 1;
         const expectedSourcesLength = 1;
@@ -245,11 +256,12 @@ describe('solc', function() {
         const expectedContractMetadataOptimizerEnabled = false;
         const expectedContractMetadataOptimizerRuns = 200;
 
-        const fileContents = raiseToSummonTemplateFile.files["/"].children.contracts.children[expectedContractFileName].contents;
-
-        call_compile(fileContents,
-            expectedContractsLength, expectedSourcesLength, expectedErrorsLength,
-            expectedContractFileName, expectedSourcesFileName, expectedContractName,
-            expectedContractBytecode, expectedContractMetadataABI, expectedContractMetadataLanguage, expectedContractMetadataEvmVersion, expectedContractMetadataOptimizerEnabled, expectedContractMetadataOptimizerRuns);
+        loadContractInZip(raiseToSummonTemplatePath, expectedContractFileName, function(err, fileContents) {
+            call_compile(fileContents,
+                expectedContractsLength, expectedSourcesLength, expectedErrorsLength,
+                expectedContractFileName, expectedSourcesFileName, expectedContractName,
+                expectedContractBytecode, expectedContractMetadataABI, expectedContractMetadataLanguage, expectedContractMetadataEvmVersion, expectedContractMetadataOptimizerEnabled, expectedContractMetadataOptimizerRuns);
+            done();
+        });
     });
 });

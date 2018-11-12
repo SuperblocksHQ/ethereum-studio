@@ -14,93 +14,131 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-if (typeof (module) === "undefined") module = {};
+if (typeof module === 'undefined') module = {};
 
-var render_item=function(item, item_index, handler, prefix) {
-    if(!item.name || item.type!="function") {
+var render_item = function(item, item_index, handler, prefix) {
+    if (!item.name || item.type != 'function') {
         return null;
     }
 
     var functionName = item.name;
-    var classes="item";
-    if(item.constant) {
-        classes+=" constant";
+    var classes = 'item';
+    if (item.constant) {
+        classes += ' constant';
     }
-    if(item.payable) {
-        classes+= " payable";
+    if (item.payable) {
+        classes += ' payable';
     }
-    if(!item.payable && !item.constant) {
-        classes+= " regular";
+    if (!item.payable && !item.constant) {
+        classes += ' regular';
     }
-    var intro=`
+    var intro =
+        `
 <div>
-    <h2>`+functionName+`</h2>
+    <h2>` +
+        functionName +
+        `</h2>
 </div>
 `;
-    var html=`<div class="`+classes+`">
-`+intro+`
-<form id="`+prefix+item.name+`" action="/static/error/404.html" onsubmit="`+handler+`(`+item_index+`, event);return false;">
+    var html =
+        `<div class="` +
+        classes +
+        `">
+` +
+        intro +
+        `
+<form id="` +
+        prefix +
+        item.name +
+        `" action="/static/error/404.html" onsubmit="` +
+        handler +
+        `(` +
+        item_index +
+        `, event);return false;">
 `;
-    var js="";
-    var input_value="";
+    var js = '';
+    var input_value = '';
 
-    if(!item.constant || item.payable) {
-        input_value+=`
+    if (!item.constant || item.payable) {
+        input_value += `
 <div class="inputs">
     `;
-        if(!item.constant) {
-            var id=prefix+item.name+"_gas";
-            input_value+=`
+        if (!item.constant) {
+            var id = prefix + item.name + '_gas';
+            input_value +=
+                `
     <div class="arguments">
         <div class="btn2">Gas</div>
         <div class="argument">
             <span>Limit</span>
-            <input type="text" placeholder="300000" name="`+id+`" id="`+id+`" />
+            <input type="text" placeholder="300000" name="` +
+                id +
+                `" id="` +
+                id +
+                `" />
         </div>
 `;
-            var id=prefix+item.name+"_gasPrice";
-            input_value+=`
+            var id = prefix + item.name + '_gasPrice';
+            input_value +=
+                `
         <div class="argument">
             <span>Price</span>
-            <input type="text" name="`+id+`" id="`+id+`" placeholder="1000000000" />&nbsp;Wei
+            <input type="text" name="` +
+                id +
+                `" id="` +
+                id +
+                `" placeholder="1000000000" />&nbsp;Wei
         </div>
 `;
-            input_value+=`
+            input_value += `
     </div>
 `;
         }
 
-        if(item.payable) {
-            var id=prefix+item.name+"_payable";
-            input_value+=`
+        if (item.payable) {
+            var id = prefix + item.name + '_payable';
+            input_value +=
+                `
     <div class="arguments">
         <div class="btn2">Value</div>
         <div class="argument">
             <span>Value</span>
-            <input type="text" name="`+id+`" id="`+id+`" placeholder="0" />&nbsp;Wei
+            <input type="text" name="` +
+                id +
+                `" id="` +
+                id +
+                `" placeholder="0" />&nbsp;Wei
         </div>
     </div>
     `;
         }
 
-        input_value+=
-`</div>
+        input_value += `</div>
 `;
     }
 
-    var fnArguments="";
-    if(item.inputs.length>0) {
+    var fnArguments = '';
+    if (item.inputs.length > 0) {
         fnArguments += `
 <div class="arguments">
     <div class="btn2">Arguments</div>
 `;
-        for(var index=0;index<item.inputs.length;index++) {
-            var input=item.inputs[index];
-            var id=prefix+item.name+"__"+input.name;
-            fnArguments+=`
+        for (var index = 0; index < item.inputs.length; index++) {
+            var input = item.inputs[index];
+            var id = prefix + item.name + '__' + input.name;
+            fnArguments +=
+                `
     <div class="argument">
-        <span>`+input.name+`</span>
-        <input type="text" placeholder="(`+input.type+`)" name="`+id+`" id="`+id+`" />
+        <span>` +
+                input.name +
+                `</span>
+        <input type="text" placeholder="(` +
+                input.type +
+                `)" name="` +
+                id +
+                `" id="` +
+                id +
+                `" />
     </div>
 `;
         }
@@ -109,62 +147,79 @@ var render_item=function(item, item_index, handler, prefix) {
 `;
     }
 
-    var returns=`
+    var returns = `
 <div class="returns">
     <div class="btn2">Returns:</div>
 `;
-    if(item.outputs.length>0 && !item.constant) {
-        returns+=`
+    if (item.outputs.length > 0 && !item.constant) {
+        returns += `
 <div class="argument">
     <span>Warning</span>
     <span style="width: unset;">Non constant function can't return values in transaction.</span>
 </div>
 `;
     }
-    if(!item.constant) {
+    if (!item.constant) {
         // Show tx hash
-        returns+=`
+        returns +=
+            `
 <div class="argument">
     <span>Transaction hash</span>
-    <span style="width: unset;" id="`+prefix+item.name+`_res"></span>
+    <span style="width: unset;" id="` +
+            prefix +
+            item.name +
+            `_res"></span>
 </div>
 `;
-    }
-    else if(item.outputs.length>0) {
+    } else if (item.outputs.length > 0) {
         // Show return values
-        for(var index=0;index<item.outputs.length;index++) {
-            var output=item.outputs[index];
-            var id=prefix+item.name+"_output_"+index;
-            returns+=`
+        for (var index = 0; index < item.outputs.length; index++) {
+            var output = item.outputs[index];
+            var id = prefix + item.name + '_output_' + index;
+            returns +=
+                `
     <div class="argument">
-        <span>`+output.type+`</span>
-        <span style="width: unset;" id="`+id+`"></span>
+        <span>` +
+                output.type +
+                `</span>
+        <span style="width: unset;" id="` +
+                id +
+                `"></span>
     </div>
 `;
         }
     }
 
-    returns+=`
+    returns += `
 </div>
 `;
 
-    html+=`
+    html +=
+        `
 <div>
-    `+fnArguments+`
-    `+input_value+`
+    ` +
+        fnArguments +
+        `
+    ` +
+        input_value +
+        `
     <div class="function">
-        <button class="functionName" type="submit">`+functionName+`</button>
+        <button class="functionName" type="submit">` +
+        functionName +
+        `</button>
     </div>
-    `+returns+`
+    ` +
+        returns +
+        `
 </div>
 </div>
 </form>
 `;
-    return {html:html,js:js};
+    return { html: html, js: js };
 };
 
-var render=function(abi, contract) {
-    var intro=`
+var render = function(abi, contract) {
+    var intro = `
 <div class="item">
     <h1>Interact directly with the deployed contract</h1>
     <h3>All public contract functions are represented as colored buttons below, click them to call the function.</h3>
@@ -185,19 +240,19 @@ var render=function(abi, contract) {
     </div>
 </div>
 `;
-    var prefix=contract+"_";
-    var renderings=[];
-    var html_snippets=[intro];
-    var js_snippets=[];
-    for(var index=0;index<abi.length;index++) {
-        var item=abi[index];
-        var o = render_item(item, index, prefix+"Handler", prefix);
-        if(o) {
+    var prefix = contract + '_';
+    var renderings = [];
+    var html_snippets = [intro];
+    var js_snippets = [];
+    for (var index = 0; index < abi.length; index++) {
+        var item = abi[index];
+        var o = render_item(item, index, prefix + 'Handler', prefix);
+        if (o) {
             html_snippets.push(o.html);
             js_snippets.push(o.js);
         }
     }
-    if(html_snippets.length==1) {
+    if (html_snippets.length == 1) {
         var nofuncs = `
 <div class="item">
     <h1>This contract has no public functions to interact with</h1>
@@ -206,7 +261,8 @@ var render=function(abi, contract) {
         html_snippets.push(nofuncs);
     }
 
-    var js=`var module={};
+    var js =
+        `var module={};
 (function(module, abi, address, provider) {
     const _web3 = new Web3(provider);
     const contract=_web3.eth.contract(abi);
@@ -237,10 +293,10 @@ var render=function(abi, contract) {
             }
             var value=0;
             if(item.payable) {
-                value=parseInt(document.getElementById(id+"_payable").value)||0;
+                value=new _web3.BigNumber(document.getElementById(id+"_payable").value||"0");
             }
-            var gas=parseInt(document.getElementById(id+"_gas").value)||"300000";
-            var gasPrice=parseInt(document.getElementById(id+"_gasPrice").value)||"1000000000";
+            var gas=document.getElementById(id+"_gas").value||"300000";
+            var gasPrice=document.getElementById(id+"_gasPrice").value||"1000000000";
             args.push({from: accounts[0], value: value, gas: gas, gasPrice: gasPrice});
         }
         const fn=item.name;
@@ -306,17 +362,25 @@ var render=function(abi, contract) {
         }
     };
     module.handler=handler;
-})(module, Contracts['`+contract+`'].abi, Contracts['`+contract+`'].address,
+})(module, Contracts['` +
+        contract +
+        `'].abi, Contracts['` +
+        contract +
+        `'].address,
     (function(endpoint) {
         if(typeof(web3)!="undefined" && web3.currentProvider) return web3.currentProvider;
         return new Web3.providers.HttpProvider(endpoint);
-})(Contracts['`+contract+`'].endpoint));
-var `+prefix+`Handler=module.handler;
+})(Contracts['` +
+        contract +
+        `'].endpoint));
+var ` +
+        prefix +
+        `Handler=module.handler;
 `;
     js_snippets.unshift(js);
-    return {html:html_snippets.join("\n"),js:js_snippets.join("\n")};
+    return { html: html_snippets.join('\n'), js: js_snippets.join('\n') };
 };
 
-module.exports={
-    render: render
+module.exports = {
+    render: render,
 };

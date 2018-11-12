@@ -52,6 +52,11 @@ html, body {
     font-size: 15px;
 }
 
+body, input, textarea, button, select {
+    font-family: inherit;
+    font-size: inherit;
+}
+
 html {
     ::-webkit-scrollbar {
         width: .5rem;
@@ -184,52 +189,6 @@ a:active,a:focus {
     }
 }
 
-.bottom-status-bar {
-    position: absolute;
-    height: 27px;
-	background-color: #141618;
-    box-shadow: 0 -2px 4px 0 rgba(0, 0, 0, 0.0);
-    z-index: 1;
-    overflow: hidden;
-    margin: 0 auto;
-    font-size: 0.80em;
-    display: flex;
-    align-items: center;
-    right: 0;
-    bottom: 50px;
-    width: 100%;
-    a {
-        color: #fff;
-        text-decoration: none;
-    }
-    span {
-        color: #fff;
-    }
-    .left {
-        margin-left: 15px;
-        float: left;
-    }
-    .right {
-        margin-right: 15px;
-        float: right;
-        margin-left: auto;
-    }
-    .note {
-        background-color: #F8E71C;
-        color: #262E33;
-        font-weight: 600;
-        padding: 1px 8px 1px 8px;
-        border-radius: 4px;
-
-        span {
-            font-size: 10px;
-        }
-    }
-    .note-text {
-        margin-left: 10px;
-    }
-}
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////// Fonts //////////////////
@@ -296,6 +255,7 @@ a:active,a:focus {
     max-width: none;
     border: none;
     color: #fff;
+    cursor: pointer;
     &:focus {
         outline: none;
     }
@@ -309,6 +269,7 @@ a:active,a:focus {
     background-color: #ffffff;
     padding: 15px 25px;
     text-decoration: none;
+    cursor: pointer;
     &:hover {
         background-color: #8641f2;
         color: #fff;
@@ -327,6 +288,7 @@ a:active,a:focus {
     border: none;
     user-select: none;
     outline: none;
+    cursor: pointer;
     &:hover {
         background-color: #7237CF;
     }
@@ -408,11 +370,17 @@ a:active,a:focus {
     overflow-y: auto;
 }
 .splash {
+    text-align: center;
+    p {
+        margin-right: 0px;
+    }
     h2 {
         color: #73618b;
     }
     color: green;
     .splash_text {
+        margin-top: 0px;
+        margin-bottom: 0px;
         padding: 10px;
         color: #444;
         text-align: center;
@@ -422,9 +390,33 @@ a:active,a:focus {
     }
     .splash_cancel {
         padding-top: 16px;
+        margin-top: 0px;
         text-align: center;
         a {
             color: #444;
         }
     }
 }
+
+.tippy-popper {
+    position: absolute;
+  }
+
+  .tippy-popper,
+  .tippy-popper * {
+    pointer-events: none;
+  }
+
+  .tippy-tooltip [x-circle] {
+    background-color: rgb(21, 24, 25) !important;
+  }
+
+  .tippy-tooltip.update-theme {
+    .arrow-regular {
+      border-bottom: 7px solid #fff !important;
+    }
+
+    background-color: #fff;
+    border-radius: 2px;
+    padding: 0 !important;
+  }

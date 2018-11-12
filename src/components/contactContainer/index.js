@@ -22,4 +22,7 @@ const mapStateToProps = state => ({
     appVersion: getAppVersion(state),
 });
 
-export default connect(mapStateToProps, null)(ContactContainer);
+export default connect(
+    mapStateToProps,
+    null
+)(ContactContainer);

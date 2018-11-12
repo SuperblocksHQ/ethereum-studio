@@ -6,7 +6,7 @@ export default function appReducer(state = initialState, action) {
     switch (action.type) {
         case 'APP_REPLACE': {
             return {
-            ...state,
+                ...state,
             };
         }
         default:

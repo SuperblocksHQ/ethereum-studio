@@ -3310,9 +3310,9 @@ MemoryDuplexStream.prototype.init = function init (data, options) {
         });
 
     }
-    
+
     options = options || {};
-    
+
     this.maxbufsize = options.hasOwnProperty('maxbufsize') ? options.maxbufsize
             : null;
     this.bufoverflow = options.hasOwnProperty('bufoverflow') ? options.bufoverflow
@@ -3324,12 +3324,12 @@ MemoryDuplexStream.prototype.init = function init (data, options) {
 function MemoryStream (data, options) {
     if (!(this instanceof MemoryStream))
         return new MemoryStream(data, options);
-    
+
     options = options || {};
-    
+
     var readable = options.hasOwnProperty('readable') ? options.readable : true,
         writable = options.hasOwnProperty('writable') ? options.writable : true;
-    
+
     if (readable && writable) {
         return new MemoryDuplexStream(data, options);
     } else if (readable) {
@@ -3390,11 +3390,11 @@ MemoryDuplexStream.prototype._write = function _write (chunk, encoding, cb) {
     } catch (err){
         return cb(err);
     }
-    
+
     var decoded_chunk = decoder ? decoder.write(chunk) : chunk,
         queue_size = this._getQueueSize(),
         chunk_size = decoded_chunk.length;
-    
+
     if (this.maxbufsize && (queue_size + chunk_size) > this.maxbufsize ) {
         if (this.bufoverflow) {
             return cb("Buffer overflowed (" + this.bufoverflow + "/" + queue_size + ")");
@@ -3402,7 +3402,7 @@ MemoryDuplexStream.prototype._write = function _write (chunk, encoding, cb) {
             return cb();
         }
     }
-    
+
     if (this instanceof STREAM.Duplex) {
         while (this.queue.length) {
             this.push(this.queue.shift());
@@ -3424,8 +3424,8 @@ MemoryDuplexStream.prototype.end = function (chunk, encoding, cb) {
 };
 
 
-MemoryReadableStream.prototype._getQueueSize =  
-MemoryWritableStream.prototype._getQueueSize = 
+MemoryReadableStream.prototype._getQueueSize =
+MemoryWritableStream.prototype._getQueueSize =
 MemoryDuplexStream.prototype._getQueueSize = function () {
     var queuesize = 0, i;
     for (i = 0; i < this.queue.length; i++) {
@@ -3436,11 +3436,11 @@ MemoryDuplexStream.prototype._getQueueSize = function () {
 };
 
 
-MemoryWritableStream.prototype.toString = 
-MemoryDuplexStream.prototype.toString = 
-MemoryReadableStream.prototype.toString = 
-MemoryWritableStream.prototype.getAll = 
-MemoryDuplexStream.prototype.getAll = 
+MemoryWritableStream.prototype.toString =
+MemoryDuplexStream.prototype.toString =
+MemoryReadableStream.prototype.toString =
+MemoryWritableStream.prototype.getAll =
+MemoryDuplexStream.prototype.getAll =
 MemoryReadableStream.prototype.getAll = function () {
     var self = this,
         ret = '';
@@ -3451,8 +3451,8 @@ MemoryReadableStream.prototype.getAll = function () {
 };
 
 
-MemoryWritableStream.prototype.toBuffer = 
-MemoryDuplexStream.prototype.toBuffer = 
+MemoryWritableStream.prototype.toBuffer =
+MemoryDuplexStream.prototype.toBuffer =
 MemoryReadableStream.prototype.toBuffer = function () {
     var buffer = new Buffer(this._getQueueSize()),
         currentOffset = 0;
@@ -8201,7 +8201,7 @@ var IncomingMessage = exports.IncomingMessage = function (xhr, response, mode, f
 		self.url = response.url
 		self.statusCode = response.status
 		self.statusMessage = response.statusText
-		
+
 		response.headers.forEach(function (header, key){
 			self.headers[key.toLowerCase()] = header
 			self.rawHeaders.push(key, header)
@@ -8331,7 +8331,7 @@ IncomingMessage.prototype._onXHRProgress = function () {
 				self.push(new Buffer(response))
 				break
 			}
-			// Falls through in IE8	
+			// Falls through in IE8
 		case 'text':
 			try { // This will fail when readyState = 3 in IE9. Switch mode and wait for readyState = 4
 				response = xhr.responseText

@@ -1,0 +1,86 @@
+// Copyright 2018 Superblocks AB
+//
+// This file is part of Superblocks Lab.
+//
+// Superblocks Lab is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation version 3 of the License.
+//
+// Superblocks Lab is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
+
+.bottomStatusBar {
+    position: absolute;
+    height: 30px;
+	background-color: #141618;
+    box-shadow: 0 -2px 4px 0 rgba(0, 0, 0, 0.0);
+    z-index: 1;
+    overflow: hidden;
+    margin: 0 auto;
+    font-size: 0.80em;
+    display: flex;
+    align-items: center;
+    right: 0;
+    bottom: 50px;
+    width: 100%;
+    a {
+        color: #fff;
+        text-decoration: none;
+    }
+    span {
+        color: #fff;
+    }
+    .left {
+        margin-left: 15px;
+        float: left;
+        span {
+            @media only screen and (max-width: 700px) {
+                display: none;
+            }
+        }
+    }
+    .right {
+        margin-right: 15px;
+        float: right;
+        margin-left: auto;
+
+        span {
+            margin: 0px 10px;
+
+            @media only screen and (max-width: 1200px) {
+                &:nth-child(1) {
+                    display: none;
+                }
+            }
+            @media only screen and (max-width: 1050px) {
+                &:nth-child(2) {
+                    display: none;
+                }
+            }
+            @media only screen and (max-width: 900px) {
+                &:nth-child(3) {
+                    display: none;
+                }
+            }
+        }
+    }
+    .note {
+        background-color: #F8E71C;
+        color: #262E33;
+        font-weight: 600;
+        padding: 1px 8px 1px 8px;
+        border-radius: 4px;
+
+        span {
+            font-size: 10px;
+        }
+    }
+    .noteText {
+        margin-left: 10px;
+    }
+}

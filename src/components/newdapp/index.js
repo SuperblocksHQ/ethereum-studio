@@ -14,43 +14,68 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { h, Component } from 'preact';
+import React, { Component } from 'react';
 import Proptypes from 'prop-types';
 import SelectedTemplate from './selectTemplate';
 import ProjectDetails from './projectDetails';
-import Templates from '../templates';
+import Templates from '../../templates';
+import DappfileItem from '../projecteditor/control/item/dappfileItem';
+import JSZipUtils from 'jszip-utils';
 
 export default class NewDapp extends Component {
-
     state = {
         selectedTemplate: null,
         currentStep: 1,
-    }
+    };
 
     onCloseClickHandle = () => {
         this.closeModal();
-    }
+    };
 
-    onTemplateSelectedHandle = (selectedTemplate) => {
+    onTemplateSelectedHandle = selectedTemplate => {
         this.setState({
             currentStep: 2,
-            selectedTemplate: selectedTemplate
-        })
-    }
+            selectedTemplate: selectedTemplate,
+        });
+    };
 
-    onProjectDetailsDone = (projectInfo) => {
-        var dappfile = this.state.selectedTemplate.dappfile;
+    onProjectDetailsDone = async projectInfo => {
+        const fn = (files) => {
+            // Try to decode the `/dappfile.json`.
+            var dappfile;
+            try {
+                dappfile = JSON.parse(
+                    files['/'].children['dappfile.json'].contents
+                );
+            } catch (e) {
+                dappfile = DappfileItem.getDefaultDappfile();
+                files['/'].children['dappfile.json'] = { type: 'f' };
+            }
+            dappfile.project.info.name = name;
+            dappfile.project.info.title = title;
+            files['/'].children['dappfile.json'].contents = JSON.stringify(
+                dappfile, null, 4
+            );
 
-        // Make sure we include the info of the current project in the dappFile, in order to do not break anything in the app...
-        const project = { info: projectInfo }
-        dappfile.project = project;
+            this.props.backend.createProject(files, status =>
+                this.props.cb(status)
+            );
 
-        const files = this.state.selectedTemplate.files;
+            this.closeModal();
+        };
 
-        this.props.backend.saveProject(projectInfo.name, { dappfile: dappfile }, o => this.props.cb(o.status, o.code), true, files);
+        const name = projectInfo.name;
+        const title = projectInfo.title;
 
-        this.closeModal();
-    }
+        JSZipUtils.getBinaryContent(this.state.selectedTemplate.zip, async (err, data) => {
+            if (err) {
+                alert('Error: Could not load zip file.');
+                return;
+            }
+            const project = await this.props.backend.unZip(data);
+            fn(project.files);
+        });
+    };
 
     closeModal() {
         this.props.functions.modal.cancel();
@@ -58,45 +83,62 @@ export default class NewDapp extends Component {
 
     pop = () => {
         this.setState({
-            currentStep:  this.state.currentStep - 1
-        })
-    }
+            currentStep: this.state.currentStep - 1,
+        });
+    };
 
     render() {
         let step;
         switch (this.state.currentStep) {
             case 1:
-                step = <SelectedTemplate
-                            categories={Templates.categories}
-                            templates={Templates.templates}
-                            onTemplateSelected={this.onTemplateSelectedHandle}
-                            onBackPress={this.closeModal}
-                            onCloseClick={this.onCloseClickHandle}/>;
+                step = (
+                    <SelectedTemplate
+                        categories={Templates.categories}
+                        templates={Templates.templates}
+                        onTemplateSelected={this.onTemplateSelectedHandle}
+                        onBackPress={this.closeModal}
+                        onCloseClick={this.onCloseClickHandle}
+                    />
+                );
                 break;
             case 2:
-                step = <ProjectDetails
-                            projectName={this.state.projectInfo ? this.state.projectInfo.name : ""}
-                            projectTitle={this.state.projectInfo ? this.state.projectInfo.title : ""}
-                            onProjectDetailsDone={this.onProjectDetailsDone}
-                            onCloseClick={this.onCloseClickHandle}
-                            onBackClick={this.pop}/>;
+                step = (
+                    <ProjectDetails
+                        projectName={
+                            this.state.projectInfo
+                                ? this.state.projectInfo.name
+                                : ''
+                        }
+                        projectTitle={
+                            this.state.projectInfo
+                                ? this.state.projectInfo.title
+                                : ''
+                        }
+                        onProjectDetailsDone={this.onProjectDetailsDone}
+                        onCloseClick={this.onCloseClickHandle}
+                        onBackClick={this.pop}
+                    />
+                );
                 break;
             default:
-                step = <AddProjectDetails onStep1Done={this.onStep1DoneHandle}/>;
+                step = (
+                    <SelectedTemplate
+                        categories={Templates.categories}
+                        templates={Templates.templates}
+                        onTemplateSelected={this.onTemplateSelectedHandle}
+                        onBackPress={this.closeModal}
+                        onCloseClick={this.onCloseClickHandle}
+                    />
+                );
                 break;
         }
 
-        return (
-            <div>
-                {step}
-            </div>
-        );
+        return <div>{step}</div>;
     }
 }
-
 
 NewDapp.proptypes = {
     modal: Proptypes.object.isRequired,
     functions: Proptypes.object.isRequired,
-    cb: Proptypes.func.isRequired
-}
+    cb: Proptypes.func.isRequired,
+};

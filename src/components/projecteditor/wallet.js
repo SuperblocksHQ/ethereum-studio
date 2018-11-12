@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { h, Component } from 'preact';
+import React, { Component } from 'react';
 import classNames from 'classnames';
 import lightwallet from 'eth-lightwallet/dist/lightwallet.min.js';
 
@@ -26,8 +26,8 @@ export class WalletDialog extends Component {
 
 export class Wallet {
     constructor(props) {
-        this.props=props;
-        this.wallets={};
+        this.props = props;
+        this.wallets = {};
     }
 
     static generateSeed() {
@@ -35,19 +35,21 @@ export class Wallet {
     }
 
     _newWallet = (name, seed, hdpath, cb) => {
-        hdpath=hdpath||"m/44'/60'/0'/0";
+        hdpath = hdpath || "m/44'/60'/0'/0";
         try {
-            const words=seed.split(" ");
-            if(words.length !== 12 || !lightwallet.keystore.isSeedValid(seed)) {
+            const words = seed.split(' ');
+            if (
+                words.length !== 12 ||
+                !lightwallet.keystore.isSeedValid(seed)
+            ) {
                 cb && cb(2);
                 return;
             }
-        }
-        catch (err) {
+        } catch (err) {
             cb && cb(2);
             return;
         }
-        const wallet={
+        const wallet = {
             name: name,
             secret: {
                 seed: seed,
@@ -61,37 +63,42 @@ export class Wallet {
                 seed: 1,
             },
         };
-        this.wallets[name]=wallet;
+        this.wallets[name] = wallet;
 
-        const password="";
-        const self=this;
-        lightwallet.keystore.createVault({
-            password: password,
-            seedPhrase: seed,
-            hdPathString: hdpath,
-        }, function (err, ks) {
-            ks.keyFromPassword(password, function (err, pwDerivedKey) {
-                if (err) {
-                    cb && cb(3);
-                    return;
-                }
-                wallet.secret.ks=ks;
-                wallet.secret.key=pwDerivedKey;
-                ks.generateNewAddress(pwDerivedKey, self.props.length);
-                wallet.addresses = ks.getAddresses();
-                cb && cb(0);
-            });
-        });
+        const password = '';
+        const self = this;
+        lightwallet.keystore.createVault(
+            {
+                password: password,
+                seedPhrase: seed,
+                hdPathString: hdpath,
+            },
+            function(err, ks) {
+                ks.keyFromPassword(password, function(err, pwDerivedKey) {
+                    if (err) {
+                        cb && cb(3);
+                        return;
+                    }
+                    wallet.secret.ks = ks;
+                    wallet.secret.key = pwDerivedKey;
+                    ks.generateNewAddress(pwDerivedKey, self.props.length);
+                    wallet.addresses = ks.getAddresses();
+                    cb && cb(0);
+                });
+            }
+        );
     };
 
-    isOpen = (name) => {
-        return (this.wallets[name] && true);
+    isOpen = name => {
+        return this.wallets[name] && true;
     };
 
     openWallet = (name, seed, cb) => {
-        if(!seed) {
-            seed=prompt("Please enter the 12 word seed to unlock the wallet: " + name);
-            if(!seed) {
+        if (!seed) {
+            seed = prompt(
+                'Please enter the 12 word seed to unlock the wallet: ' + name
+            );
+            if (!seed) {
                 cb && cb(1);
                 return;
             }
@@ -100,61 +107,74 @@ export class Wallet {
     };
 
     getAddress = (walletName, index) => {
-        const wallet=this.wallets[walletName];
-        if(!wallet) return;
+        const wallet = this.wallets[walletName];
+        if (!wallet) return;
         return wallet.addresses[index];
     };
 
     getKey = (walletName, index, cb) => {
-        const wallet=this.wallets[walletName];
-        if(!wallet) {
+        const wallet = this.wallets[walletName];
+        if (!wallet) {
             cb(1);
             return;
         }
-        const address=wallet.addresses[index];
-        if(!address) {
+        const address = wallet.addresses[index];
+        if (!address) {
             cb(1);
             return;
         }
-        if(wallet.permissions.key===1) {
-            const key=wallet.secret.ks.exportPrivateKey(address, wallet.secret.key);
+        if (wallet.permissions.key === 1) {
+            const key = wallet.secret.ks.exportPrivateKey(
+                address,
+                wallet.secret.key
+            );
             cb(0, key);
-            return
+            return;
         }
-        this._authorize(wallet, "key", (status) => {
-            if(status===0) {
-                const key=wallet.secret.ks.exportPrivateKey(address, wallet.secret.key);
+        this._authorize(wallet, 'key', status => {
+            if (status === 0) {
+                const key = wallet.secret.ks.exportPrivateKey(
+                    address,
+                    wallet.secret.key
+                );
                 cb(0, key);
-                return
+                return;
             }
             cb(status);
         });
     };
 
     getSeed = (walletName, cb) => {
-        const wallet=this.wallets[walletName];
-        if(!wallet) {
+        const wallet = this.wallets[walletName];
+        if (!wallet) {
             cb(1);
             return;
         }
-        if(wallet.permissions.seed===1) {
+        if (wallet.permissions.seed === 1) {
             cb(0, wallet.secret.seed);
-            return
+            return;
         }
-        this._authorize(wallet, "seed", (status) => {
-            if(status===0) {
+        this._authorize(wallet, 'seed', status => {
+            if (status === 0) {
                 cb(0, wallet.secret.seed);
-                return
+                return;
             }
             cb(status);
         });
     };
 
     _authorize = (wallet, type, cb) => {
-        if(confirm("Authorize access to "+type+" in wallet "+wallet.name+"?")) {
+        if (
+            window.confirm(
+                'Authorize access to ' +
+                    type +
+                    ' in wallet ' +
+                    wallet.name +
+                    '?'
+            )
+        ) {
             cb(0);
-        }
-        else {
+        } else {
             cb(1);
         }
     };

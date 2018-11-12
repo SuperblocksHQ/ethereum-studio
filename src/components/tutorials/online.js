@@ -14,24 +14,26 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { h, Component } from 'preact';
-import style from './style';
+import React, { Component } from 'react';
+import style from './style.less';
 
 export default class TutorialsOnline extends Component {
     constructor(props) {
         super(props);
-        this.id=props.id+"_tutorial_online";
+        this.id = props.id + '_tutorial_online';
     }
 
     redraw = () => {
-        this.setState();
+        this.forceUpdate();
     };
 
     render() {
-        return (<div id={this.id} class={style.main}>
-                <div class="scrollable-y" id={this.id+"_scrollable"}>
-                    <iframe src="https://superblocks.com/studio/tutorials/"></iframe>
+        return (
+            <div id={this.id} className={style.main}>
+                <div className="scrollable-y" id={this.id + '_scrollable'}>
+                    <iframe src="https://superblocks.com/studio/tutorials/" />
                 </div>
-                </div>);
+            </div>
+        );
     }
 }

@@ -45,30 +45,22 @@ select {
 }
 
 .item {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
     user-select: none;
+    position: relative;
     .icons {
-        .caret {
-            float: left;
-            width: 25px;
-            overflow: hidden;
-            text-align: center;
-        }
+        display: flex;
         .nocaret {
             float: left;
-            // width: 25px;
-            // height: 10px;
             overflow: hidden;
+            width: 25px;
         }
         .icon {
             float: left;
             width: 25px;
             overflow: hidden;
             margin-top: 2px;
+            text-align: center;
+            margin-right: 3px;
         }
         .noicon {
             float: left;
@@ -88,6 +80,8 @@ select {
         border-left: 2px solid;
         border-color: transparent;
         padding-right: 10px;
+        width: 100%;
+        display: flex;
         &:after {
             content: " ";
             display: block;
@@ -95,15 +89,14 @@ select {
         }
     }
     .title {
-        display: inline-block;
+        display: flex;
         max-width: 99%;
-        overflow: hidden;
         float: left;
     }
     .collapsed {
-        height: 0;
         overflow: hidden;
         transition: ease-out;
+        height: 0;
     }
     .level0 {
         display: block;
@@ -141,84 +134,84 @@ select {
         display: block;
         line-height: 28px;
         .header {
-            padding-left: 45px;
+            padding-left: 35px;
         }
     }
     .level5 {
         display: block;
         line-height: 28px;
         .header {
-            padding-left: 70px;
+            padding-left: 50px;
         }
     }
     .level6 {
         display: block;
         line-height: 28px;
         .header {
-            padding-left: 90px;
+            padding-left: 65px;
         }
     }
     .level7 {
         display: block;
         line-height: 28px;
         .header {
-            padding-left: 110px;
+            padding-left: 80px;
         }
     }
     .level8 {
         display: block;
         line-height: 28px;
         .header {
-            padding-left: 130px;
+            padding-left: 95px;
         }
     }
     .level9 {
         display: block;
         line-height: 28px;
         .header {
-            padding-left: 150px;
+            padding-left: 110px;
         }
     }
     .level10 {
         display: block;
         line-height: 28px;
         .header {
-            padding-left: 170px;
+            padding-left: 125px;
         }
     }
     .level11 {
         display: block;
         line-height: 28px;
         .header {
-            padding-left: 190px;
+            padding-left: 140px;
         }
     }
     .level12 {
         display: block;
         line-height: 28px;
         .header {
-            padding-left: 210px;
+            padding-left: 155px;
         }
     }
     .level13 {
         display: block;
         line-height: 28px;
         .header {
-            padding-left: 230px;
+            padding-left: 170px;
         }
     }
     .level14 {
         display: block;
         line-height: 28px;
         .header {
-            padding-left: 250px;
+            padding-left: 185px;
         }
     }
     .level15 {
         display: block;
         line-height: 28px;
         .header {
-            padding-left: 270px;
+            padding-left: 200px;
         }
     }
     .hidden {
@@ -277,6 +270,9 @@ select {
         display: none;
     }
 }
+.files {
+    margin-top: 24px;
+}
 .environment {
     >.header {
         >.icons {
@@ -307,25 +303,51 @@ select {
 }
 .projectContractsTitleContainer {
     display: flex;
+    align-items: center;
     position: relative;
     align-items: center;
+    .icons {
+        display: flex;
+    }
     .title {
-        overflow: hidden;
-        text-overflow: ellipsis;
+        display: flex;
+        width: 100%;
+        min-width: 50px;
+        a {
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+    .buttonsWrapper {
+        display: flex;
+        order: 3;
+        justify-content: flex-end;
+        min-width: 90px;
+    }
+    &.directoryEntry {
+        .buttonsWrapper {
+            min-width: 90px;
+        }
+    }
+    &.fileEntry {
+        .buttonsWrapper {
+            min-width: 40px;
+        }
     }
     .buttons {
-        position: absolute;
-        right: 0;
-        display: inherit;
-        margin-left: auto;
-        float: right;
+        display: flex;
         overflow: hidden;
-        text-align: right;
-        button {
-            color: #c7c7c7;
+        justify-content: flex-end;
+        width: 100%;
+        button, a {
+            color: #fff;
+            opacity: .6;
             font-size: 0.8em;
+            padding-left: 4px;
+            padding-right: 4px;
+            transition: opacity .2s;
             &:hover {
-                color: #fff;
+                opacity: 1;
                 text-decoration: none;
             }
         }
@@ -335,6 +357,44 @@ select {
         button {
             padding-left: 3px;
             padding-right: 3px;
+        }
+    }
+}
+
+.contextMenu {
+    display: block;
+    position: absolute;
+    margin-top: -1px;
+    margin-left: 30px;
+    background-color: #141414;
+    z-index: 1;
+    min-width: 245px;
+    z-index: 5;
+    border-radius: 4px;
+    padding: 4px 0;
+    div {
+        display: flex;
+        align-items: center;
+        color: #c7c7c7;
+        padding: 2px 4px;
+        border-left: 2px solid;
+        border-color: transparent;
+        margin: 0;
+        &:hover {
+            background-color: rgba(128, 46, 255, 0.10);
+            cursor: pointer;
+            color: #ffffff;
+            border-color: #7237CF;
+            .icon {
+                border-color: transparent;
+                background: transparent;
+                color: #ffffff;
+            }
+        }
+        .icon {
+            margin-left: 10px;
+            margin-right: 20px;
+            color: #c7c7c7;
         }
     }
 }

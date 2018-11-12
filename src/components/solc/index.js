@@ -14,37 +14,40 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { h, render } from 'preact';
+import React from 'react';
+import ReactDOM from 'react-dom';
 
 export default class Solc {
-    constructor(props) {
-        this.props=props;
-        this.id=props.id+"_solc";
-        this._queue=[];
-        this.ref=null;
-        this._counter=0;
-        this._cbMap={};
-        this._version = "0.4.25";
 
-        var setRef = (ref)=>{
-            this.ref=ref;
+    constructor(props) {
+        this.props = props;
+        this.id = props.id + "_solc";
+        this._queue = [];
+        this.ref = null;
+        this._counter = 0;
+        this._cbMap = {};
+        this._version = "0.4.25";
+    }
+
+    init() {
+        var setRef = (ref) => {
+            this.ref = ref;
             var cb;
             cb = () => {
-                if(this.isLoaded()) {
-                    this.ref.contentWindow.queueMessageReply=this._response;
-                }
-                else {
+                if (this.isLoaded()) {
+                    this.ref.contentWindow.queueMessageReply = this._response;
+                } else {
                     setTimeout(cb, 100);
                 }
             };
             cb();
         };
 
-        render((
-            <div style="display:none;" id={this.id}>
-                <iframe ref={setRef} src="/solc/index-v0.4.25.html" frameborder="0"></iframe>
+        ReactDOM.render((
+            <div style={{display: 'none'}} id={this.id}>
+                <iframe ref={setRef} src="/solc/index-v0.4.25.html" frameBorder="0"></iframe>
             </div>
-        ), document.body);
+        ), document.getElementById('solc'));
 
         setInterval(this._processQueue, 100);
     }
@@ -54,17 +57,17 @@ export default class Solc {
     };
 
     _response = (msg) => {
-        if(this._cbMap[msg.id]) {
-            const cb=this._cbMap[msg.id];
+        if (this._cbMap[msg.id]) {
+            const cb = this._cbMap[msg.id];
             delete this._cbMap[msg.id];
             cb(msg.data);
         }
     };
 
     queue = (cmd, cb) => {
-        const id=++this._counter;
-        this._cbMap[id]=cb;
-        this._queue.push({data:cmd, id:id});
+        const id = ++this._counter;
+        this._cbMap[id] = cb;
+        this._queue.push({ data:cmd, id:id });
     };
 
     isLoaded = () => {
@@ -76,11 +79,16 @@ export default class Solc {
     };
 
     _processQueue = () => {
-        if(this._processBusy) return;
-        this._processBusy=true;
-        if(this.isReady() && this._queue.length>0) {
+        if (this._processBusy) {
+            return;
+        }
+
+        this._processBusy = true;
+
+        if (this.isReady() && this._queue.length > 0) {
             this.ref.contentWindow.queueMessage(this._queue.pop());
         }
-        this._processBusy=false;
+
+        this._processBusy = false;
     };
 }

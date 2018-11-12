@@ -1,39 +1,76 @@
 {
   "private": true,
-  "name": "Superblocks",
+  "name": "superblocks-lab",
   "version": "1.0.0",
   "license": "GPL",
   "scripts": {
-    "start": "make",
+    "start": "node scripts/start.js",
+    "build": "node scripts/build.js",
     "test": "mocha ./test/*.js && jest",
-    "test:watch": "npm test -- --watch"
-  },
-  "eslintConfig": {
-    "extends": "eslint-config-synacor"
+    "test:watch": "npm test -- --watch",
+    "format": "prettier --trailing-comma es5 --single-quote --write 'src/*/*.js' 'src/*/!(node_modules)/**/*.js' '!src/components/solc/**/*.js' '!src/components/evm/**/*.js' webpack.config.js",
+    "lint-javascript": "exec eslint --config ./config/eslint/eslint.json --ext \".js\" ./src",
+    "lint": "yarn run lint-javascript"
   },
   "eslintIgnore": [
-    "build/*"
+    "ethereumjs-tx-*.js",
+    "src/components/evm/dist/*",
+    "src/components/solc/dist/*",
+    "src/components/superprovider/dist/*"
   ],
   "devDependencies": {
+    "@babel/core": "7.1.0",
+    "@svgr/webpack": "2.4.1",
     "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.0",
-    "babel-jest": "^23.4.2",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-eslint": "9.0.0",
+    "babel-jest": "23.6.0",
+    "babel-loader": "8.0.4",
+    "babel-plugin-named-asset-import": "^0.2.2",
     "babel-preset-env": "^1.7.0",
+    "babel-preset-react-app": "^5.0.4",
     "babelify": "^8.0.0",
     "browserify": "^16.1.1",
-    "eslint": "^4.9.0",
-    "eslint-config-synacor": "^2.0.2",
-    "ethereumjs-abi": "^0.6.5",
-    "ethereumjs-account": "^2.0.4",
-    "ethereumjs-blockchain": "^2.1.0",
-    "ethereumjs-util": "^5.1.5",
-    "ethereumjs-vm": "^2.3.3",
+    "case-sensitive-paths-webpack-plugin": "2.1.2",
+    "chalk": "2.4.1",
+    "copy-webpack-plugin": "^4.5.4",
+    "css-loader": "1.0.0",
+    "dotenv": "6.0.0",
+    "dotenv-expand": "4.2.0",
+    "eslint": "5.6.0",
+    "eslint-config-react-app": "^3.0.4",
+    "eslint-loader": "2.1.1",
+    "eslint-plugin-flowtype": "2.50.1",
+    "eslint-plugin-import": "2.14.0",
+    "eslint-plugin-jsx-a11y": "6.1.2",
+    "eslint-plugin-react": "7.11.1",
+    "file-loader": "2.0.0",
+    "fs-extra": "7.0.0",
+    "html-webpack-plugin": "4.0.0-alpha.2",
+    "identity-obj-proxy": "3.0.0",
     "if-env": "^1.0.0",
-    "jest": "^23.5.0",
-    "merkle-patricia-tree": "^2.3.1",
+    "jest": "23.6.0",
+    "jest-pnp-resolver": "1.0.1",
+    "jest-resolve": "23.6.0",
+    "less-loader": "^4.1.0",
+    "mini-css-extract-plugin": "0.4.3",
     "mocha": "^5.2.0",
-    "preact-cli": "^2.1.1",
-    "solc": "^0.4.25"
+    "optimize-css-assets-webpack-plugin": "5.0.1",
+    "pnp-webpack-plugin": "1.1.0",
+    "postcss-flexbugs-fixes": "4.1.0",
+    "postcss-loader": "3.0.0",
+    "postcss-preset-env": "6.0.6",
+    "postcss-safe-parser": "4.0.1",
+    "prettier": "^1.14.3",
+    "resolve": "1.8.1",
+    "sass-loader": "7.1.0",
+    "style-loader": "0.23.0",
+    "terser-webpack-plugin": "1.1.0",
+    "url-loader": "1.1.1",
+    "webpack": "4.19.1",
+    "webpack-dev-server": "3.1.9",
+    "webpack-manifest-plugin": "2.0.4",
+    "workbox-webpack-plugin": "3.6.2"
   },
   "dependencies": {
     "@fortawesome/fontawesome": "^1.1.3",
@@ -41,24 +78,81 @@
     "@fortawesome/fontawesome-free-regular": "^5.0.6",
     "@fortawesome/fontawesome-free-solid": "^5.0.6",
     "@fortawesome/react-fontawesome": "^0.0.17",
+    "bfj": "6.1.1",
     "classnames": "^2.2.5",
     "crypto-js": "^3.1.9-1",
     "eth-lightwallet": "^3.0.1",
+    "ethereumjs-abi": "^0.6.5",
+    "ethereumjs-account": "^2.0.4",
+    "ethereumjs-blockchain": "^2.1.0",
     "ethereumjs-tx": "^1.3.4",
+    "ethereumjs-util": "^5.1.5",
+    "ethereumjs-vm": "^2.3.3",
+    "file-saver": "^2.0.0-rc.4",
+    "jszip": "^3.1.5",
+    "jszip-utils": "^0.0.2",
     "less": "^3.8.1",
-    "less-loader": "^4.1.0",
+    "merkle-patricia-tree": "^2.3.1",
     "normalize-css": "^2.3.1",
-    "preact": "^8.2.6",
-    "preact-compat": "^3.17.0",
     "prop-types": "^15.6.2",
+    "react": "^16.5.2",
+    "react-app-polyfill": "^0.1.3",
+    "react-dev-utils": "^6.0.5",
+    "react-dnd": "^5.0.0",
+    "react-dnd-html5-backend": "^5.0.1",
+    "react-dom": "^16.5.2",
     "react-fetch": "^0.0.9",
     "react-monaco-editor": "^0.13.0",
     "react-onclickoutside": "^6.7.1",
     "react-redux": "^5.0.7",
+    "react-tippy": "^1.2.3",
     "redux": "^4.0.0",
     "redux-persist": "^5.10.0",
     "redux-thunk": "^2.3.0",
     "reselect": "^3.0.1",
+    "solc": "^0.4.25",
     "web3": "0.19"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx}"
+    ],
+    "resolver": "jest-pnp-resolver",
+    "setupFiles": [
+      "react-app-polyfill/jsdom"
+    ],
+    "testMatch": [
+      "<rootDir>/src/**/__tests__/**/*.{js,jsx}",
+      "<rootDir>/src/**/?(*.)(spec|test).{js,jsx}"
+    ],
+    "testEnvironment": "jsdom",
+    "testURL": "http://localhost",
+    "transform": {
+      "^.+\\.(js|jsx)$": "<rootDir>/node_modules/babel-jest",
+      "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
+      "^(?!.*\\.(js|jsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
+    },
+    "transformIgnorePatterns": [
+      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$",
+      "^.+\\.module\\.(css|sass|scss)$"
+    ],
+    "moduleNameMapper": {
+      "^react-native$": "react-native-web",
+      "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy"
+    },
+    "moduleFileExtensions": [
+      "web.js",
+      "js",
+      "json",
+      "web.jsx",
+      "jsx",
+      "node"
+    ]
   }
 }

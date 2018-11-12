@@ -14,21 +14,19 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { h, Component } from 'preact';
+import React, { Component } from 'react';
 import classnames from 'classnames';
-import style from './style';
+import style from './style.less';
 import Editor from './editor.js';
-import ContractEditor from './editor-contract.js';
-import AppEditor from './editor-app.js';
-import AccountEditor from './editor-account.js';
-import Compiler from './compiler.js';
-import Deployer from './deployer.js';
-import TutorialsManual from '../tutorials/manual.js';
-import TutorialsOnline from '../tutorials/online.js';
+import ContractEditor from './editor-contract';
+import AppEditor from './editor-app';
+import AccountEditor from './editor-account';
+import Compiler from './compiler';
+import Deployer from './deployer';
+import TutorialsManual from '../tutorials/manual';
+import TutorialsOnline from '../tutorials/online';
 import AppView from './appview.js';
-import ConstantEditor from './editor-constant.js';
-import ContractInteraction from './contractinteraction.js';
-import TransactionLog from '../blockexplorer/transactionlog.js';
+import ContractInteraction from './contractinteraction';
 import Welcome from './welcome';
 import { IconClose } from '../icons';
 
@@ -38,32 +36,36 @@ export class WindowComponent extends Component {
     }
 
     componentDidMount() {
-        this.props.obj.component=this;
+        this.props.obj.component = this;
     }
 
     redraw = () => {
-        this.setState();
+        this.forceUpdate();
     };
 
     render() {
-        const sub=this.props.obj.renderSub();
+        const sub = this.props.obj.renderSub();
         return (
-            <div key="window" class="full">
-                <button class={classnames([style.close_btn, "btnNoBg"])} onClick={this.props.obj.close} title="Close">
+            <div key="window" className="full">
+                <button
+                    className={classnames([style.close_btn, 'btnNoBg'])}
+                    onClick={this.props.obj.close}
+                    title="Close"
+                >
                     <IconClose />
                 </button>
                 {sub}
             </div>
         );
-    };
+    }
 }
 
 export class Window {
     constructor(props) {
-        this.props=props;
-        this.subId="winitem_"+this.props.item.getId();
+        this.props = props;
+        this.subId = 'winitem_' + this.props.item.getId();
         this.component;
-        this.childComponent;  // Optionally registered by the sub component.
+        this.childComponent; // Optionally registered by the sub component.
     }
 
     getItemId = () => {
@@ -71,147 +73,215 @@ export class Window {
     };
 
     focus = (rePerform, cb) => {
-        if(cb) {
-            this.callback=cb;
+        if (cb) {
+            this.callback = cb;
         }
-        if(this.childComponent && this.childComponent.focus) this.childComponent.focus(rePerform);
+        if (this.childComponent && this.childComponent.focus)
+            this.childComponent.focus(rePerform);
     };
 
     _clickedUpon = () => {
-        if(this.props.parent.activeWindowId!=this.props.item.getId()) {
+        if (this.props.parent.activeWindowId != this.props.item.getId()) {
             this.props.parent.focusWindow(this.props.item.getId());
             this.props.parent.props.parent.redraw();
         }
     };
 
     renderSub = () => {
-        if(this.props.item.props.type=="file") {
+        if (this.props.item.getType() == 'file') {
             return (
-                <div class="full" onClick={(e)=>{this._clickedUpon()}}>
-                    <Editor id={this.subId} key={this.subId} contract={this.props.item.props._contract} project={this.props.item.props._project} file={this.props.item.props.file} router={this.props.router} item={this.props.item} parent={this} type={this.props.item.props.type} type2={this.props.item.props.type2} />
+                <div
+                    className="full"
+                    onClick={e => {
+                        this._clickedUpon();
+                    }}
+                >
+                    <Editor
+                        id={this.subId}
+                        key={this.subId}
+                        router={this.props.router}
+                        item={this.props.item}
+                        parent={this}
+                    />
                 </div>
             );
-        }
-        else if(this.props.item.props.type=="contract" && this.props.item.props.type2=="configure") {
+        } else if (
+            this.props.item.getType() == 'contract' &&
+            this.props.item.getType2() == 'configure'
+        ) {
             return (
-                <ContractEditor id={this.subId} key={this.subId} project={this.props.item.props._project} contract={this.props.item.props._contract} parent={this} router={this.props.router} />
+                <ContractEditor
+                    id={this.subId}
+                    key={this.subId}
+                    item={this.props.item}
+                    parent={this}
+                    router={this.props.router}
+                />
             );
-        }
-        else if(this.props.item.props.type=="project") {
+        } else if (this.props.item.getType() == 'project') {
             return (
-                <AppEditor id={this.subId} key={this.subId} project={this.props.item.props._project} dappfilejson={this.props.item.props._dappfilejson} parent={this} router={this.props.router} />
+                <AppEditor
+                    id={this.subId}
+                    key={this.subId}
+                    item={this.props.item}
+                    parent={this}
+                    router={this.props.router}
+                />
             );
-        }
-        else if(this.props.item.props.type=="contract" && this.props.item.props.type2=="compile") {
+        } else if (
+            this.props.item.getType() == 'contract' &&
+            this.props.item.getType2() == 'compile'
+        ) {
             return (
-                <div class="full" onClick={(e)=>{this._clickedUpon()}}>
-                    <Compiler type="contract_compile"
+                <div
+                    className="full"
+                    onClick={e => {
+                        this._clickedUpon();
+                    }}
+                >
+                    <Compiler
+                        type="contract_compile"
                         id={this.subId}
                         key={this.subId}
                         functions={this.props.functions}
-                        project={this.props.item.props._project}
-                        contract={this.props.item.props._contract}
+                        item={this.props.item}
                         parent={this}
-                        router={this.props.router} />
+                        router={this.props.router}
+                    />
                 </div>
             );
-        }
-        else if(this.props.item.props.type=="contract" && this.props.item.props.type2=="deploy") {
+        } else if (
+            this.props.item.getType() == 'contract' &&
+            this.props.item.getType2() == 'deploy'
+        ) {
             return (
-                <div class="full" onClick={(e)=>{this._clickedUpon()}}>
-                    <Deployer type="contract_deploy"
+                <div
+                    className="full"
+                    onClick={e => {
+                        this._clickedUpon();
+                    }}
+                >
+                    <Deployer
+                        type="contract_deploy"
                         id={this.subId}
                         key={this.subId}
                         item={this.props.item}
                         functions={this.props.functions}
-                        project={this.props.item.props._project}
-                        contract={this.props.item.props._contract}
                         parent={this}
-                        router={this.props.router} />
+                        router={this.props.router}
+                    />
                 </div>
             );
-        }
-        else if(this.props.item.props.type=="account") {
+        } else if (this.props.item.getType() == 'account') {
             return (
-                <AccountEditor id={this.subId} key={this.subId} project={this.props.item.props._project} account={this.props.item.props._account} parent={this} router={this.props.router} functions={this.props.functions} />
-            );
-        }
-        else if(this.props.item.props.type=="constant") {
-            return (
-                <ConstantEditor id={this.subId} key={this.subId} project={this.props.item.props._project} constant={this.props.item.props._constant} parent={this} router={this.props.router} functions={this.props.functions} />
-            );
-        }
-        else if(this.props.item.props.type=="tutorials" && this.props.item.props.type2=="manual") {
-            return (
-                <TutorialsManual id={this.subId} parent={this} router={this.props.router} functions={this.props.functions} />
-            );
-        }
-        else if(this.props.item.props.type=="tutorials" && this.props.item.props.type2=="online") {
-            return (
-                <TutorialsOnline id={this.subId} parent={this} router={this.props.router} functions={this.props.functions} />
-            );
-        }
-        else if(this.props.item.props.type=="app" && this.props.item.props.type2=="view") {
-            return (
-                <AppView id={this.subId} parent={this} project={this.props.item.props._project} router={this.props.router} functions={this.props.functions} />
-            );
-        }
-        else if(this.props.item.props.type=="contract" && this.props.item.props.type2=="interact") {
-            return (
-                <ContractInteraction id={this.subId} parent={this} contract={this.props.item.props._contract} project={this.props.item.props._project} router={this.props.router} functions={this.props.functions} />
-            );
-        }
-        else if(this.props.item.props.type=="transaction_log") {
-            return (
-                <TransactionLog id={this.subId} parent={this} name={this.props.item.props._name} project={this.props.item.props._project} router={this.props.router} functions={this.props.functions} />
-            );
-        }
-        else if(this.props.item.props.type=="info" && this.props.item.props.type2=="welcome") {
-            return (
-                <Welcome
+                <AccountEditor
+                    id={this.subId}
+                    key={this.subId}
+                    item={this.props.item}
+                    parent={this}
                     router={this.props.router}
+                    functions={this.props.functions}
                 />
             );
+        } else if (
+            this.props.item.getType() == 'tutorials' &&
+            this.props.item.getType2() == 'manual'
+        ) {
+            return (
+                <TutorialsManual
+                    id={this.subId}
+                    parent={this}
+                    router={this.props.router}
+                    functions={this.props.functions}
+                />
+            );
+        } else if (
+            this.props.item.getType() == 'tutorials' &&
+            this.props.item.getType2() == 'online'
+        ) {
+            return (
+                <TutorialsOnline
+                    id={this.subId}
+                    parent={this}
+                    router={this.props.router}
+                    functions={this.props.functions}
+                />
+            );
+        } else if (
+            this.props.item.getType() == 'app' &&
+            this.props.item.getType2() == 'view'
+        ) {
+            return (
+                <AppView
+                    id={this.subId}
+                    parent={this}
+                    item={this.props.item}
+                    router={this.props.router}
+                    functions={this.props.functions}
+                />
+            );
+        } else if (
+            this.props.item.getType() == 'contract' &&
+            this.props.item.getType2() == 'interact'
+        ) {
+            return (
+                <ContractInteraction
+                    id={this.subId}
+                    parent={this}
+                    item={this.props.item}
+                    router={this.props.router}
+                    functions={this.props.functions}
+                />
+            );
+        } else if (
+            this.props.item.getType() == 'info' &&
+            this.props.item.getType2() == 'welcome'
+        ) {
+            return <Welcome router={this.props.router} />;
         }
     };
 
-    close = (e) => {
-        if(e) e.preventDefault();
+    close = e => {
+        if (e) e.preventDefault();
         this.props.parent.closeWindow(this.getItemId());
     };
 
-    canClose = (cb) => {
-        if(this.childComponent && this.childComponent.canClose) {
-            this.childComponent.canClose((status)=>{
+    canClose = (cb, silent) => {
+        if (this.childComponent && this.childComponent.canClose) {
+            this.childComponent.canClose(status => {
                 cb(status);
-            });
+            }, silent);
             return;
         }
         cb(0);
     };
 
     getTitle = () => {
-        if(this.childComponent && this.childComponent.getTitle) return this.childComponent.getTitle();
-        if(this.props.item.props.type=="file") return this.props.item.props.title;
-        if(this.props.item.props.type=="contract") {
-            switch(this.props.item.props.type2) {
-                case "configure":
-                case "interact":
-                case "compile":
-                case "deploy":
-                    return this.props.item.props._contract;
-
+        if (this.props.item.getType() == 'contract') {
+            switch (this.props.item.getType2()) {
+                case 'configure':
+                case 'interact':
+                case 'compile':
+                case 'deploy':
+                    return this.props.item.props.state.__parent.props.state.title;
             }
         }
-        return this.props.item.props.title;
+
+        if (this.props.item.props.state.title)
+            return this.props.item.props.state.title;
+
+        if (this.childComponent && this.childComponent.getTitle)
+            return this.childComponent.getTitle();
+
+        return "<no name>";
     };
 
     getIcon = () => {
         return this.props.item.getIcon();
     };
 
-    redraw = (props) => {
-        if(this.component) this.component.redraw();
-        if(this.childComponent) this.childComponent.redraw(props);
+    redraw = props => {
+        if (this.component) this.component.redraw();
+        if (this.childComponent && this.childComponent.redraw) this.childComponent.redraw(props);
     };
 }

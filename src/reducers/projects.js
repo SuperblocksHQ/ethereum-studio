@@ -6,8 +6,8 @@ export default function projectsReducer(state = initialState, action) {
     switch (action.type) {
         case 'SELECT_PROJECT': {
             return {
-            ...state,
-            selectedProjectId: action.data,
+                ...state,
+                selectedProjectId: action.data,
             };
         }
         default:

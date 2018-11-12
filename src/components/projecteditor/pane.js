@@ -14,144 +14,166 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { h, Component } from 'preact';
+import React, { Component } from 'react';
 import classnames from 'classnames';
-import style from './style';
-import {Window, WindowComponent} from './window';
+import style from './style.less';
+import { Window, WindowComponent } from './window';
+
+const paneDimensions = {
+    default: {
+        height: '50%',
+        width: '50%'
+    },
+    onlyHeight: {
+        height: '50%',
+    }
+}
 
 export class PaneComponent extends Component {
     constructor(props) {
         super(props);
-        this.obj=props.obj;
+        this.obj = props.obj;
     }
 
     componentDidMount() {
-        this.obj.component=this;
+        this.obj.component = this;
     }
 
     redraw = () => {
-        this.setState();
+        this.forceUpdate();
     };
 
     render() {
-        const windows=this.obj.renderWindows();
+        const windows = this.obj.renderWindows();
         return (
-            <div key="windows" class="full">{windows}</div>
+            <div key="windows" className="full">
+                {windows}
+            </div>
         );
-    };
+    }
 }
 
 export class Pane {
     constructor(props) {
-        this.props=props;
-        this.id=props.id;
-        this.windows=[];
+        this.props = props;
+        this.id = props.id;
+        this.windows = [];
         this.component;
-        this.activeWindowId=null;
+        this.activeWindowId = null;
     }
 
     windowsCount = () => {
         return this.windows.length;
     };
 
-    addWindow = (props) => {
-        if(props.item.props.state._tag) {
+    addWindow = props => {
+        if (props.item.props.state._tag) {
             // Check if a window with the tag already exists,
             // if so try to close it.
             var win = this.getWindowByTag(props.item.props.state._tag);
-            if(win) {
+            if (win) {
                 this._closeWindow(win.getItemId());
             }
         }
-        props.parent=this;
-        var win=new Window(props);
-        if(win) {
+        props.parent = this;
+        var win = new Window(props);
+        if (win) {
             this.windows.push(win);
-            /*if(this.windows.length==1)*/ this.activeWindowId=win.getItemId();
+            /*if(this.windows.length==1)*/ this.activeWindowId = win.getItemId();
             return win.getItemId();
         }
     };
 
-    closeAll = (cb) => {
+    closeAll = (cb, silent) => {
         //                                 _       _
         // A recursive callback function... \_(~)_/
-        const fn=(status, cb)=>{
-            if(status!=0) {
+        const fn = (status, cb) => {
+            if (status != 0) {
                 cb(status);
                 return;
             }
-            if(this.windows.length==0) {
+            if (this.windows.length == 0) {
                 cb(0);
                 return;
             }
-            const win=this.windows[0];
-            this.closeWindow(win.getItemId(), (status)=>{fn(status, cb)}, true);
+            const win = this.windows[0];
+            this.closeWindow(
+                win.getItemId(),
+                status => {
+                    fn(status, cb);
+                },
+                silent
+            );
         };
         fn(0, cb);
     };
 
     closeWindow = (winId, cb, silent) => {
+        if (silent) {
+            // On silent we don't check, we just close the window.
+            this._closeWindow(winId);
+            if (cb) cb(0);
+            return;
+        }
+
         // Check if window can close
-        const win=this.getWindow(winId);
-        win.canClose((status)=>{
-            if(status==0) {
+        const win = this.getWindow(winId);
+        win.canClose(status => {
+            if (status == 0) {
                 this._closeWindow(winId);
-                if(silent!==true) {
-                    if(this.windows.length>0) {
-                        this.focusWindow(this.windows[0].getItemId());
-                    }
-                    else {
-                        this.props.parent.closePane(this.id);
-                    }
-                    this.props.parent.redraw();
-                }
             }
-            if(cb) cb(status);
-        });
+            if (cb) cb(status);
+        }, silent);
     };
 
-    _closeWindow = (winId) => {
-        this.windows=this.windows.filter((obj) => {
+    _closeWindow = winId => {
+        this.windows = this.windows.filter(obj => {
             return obj.getItemId() != winId;
         });
+        if (this.windows.length > 0) {
+            this.focusWindow(this.windows[0].getItemId());
+        } else {
+            this.props.parent.closePane(this.id);
+        }
+        this.props.parent.redraw();
     };
 
     focusWindow = (winId, rePerform, cb) => {
-        this.activeWindowId=winId;
+        this.activeWindowId = winId;
         this.getWindow(winId).focus(rePerform, cb);
     };
 
-    getWindow = (id) => {
-        var win=null;
-        for(var winIndex=0;winIndex<this.windows.length;winIndex++) {
-            var win2=this.windows[winIndex];
-            if(win2.getItemId()==id) {
-                win=win2;
+    getWindow = id => {
+        var win = null;
+        for (var winIndex = 0; winIndex < this.windows.length; winIndex++) {
+            var win2 = this.windows[winIndex];
+            if (win2.getItemId() == id) {
+                win = win2;
                 break;
             }
         }
         return win;
     };
 
-    getWindowByTag = (tag) => {
-        var win=null;
-        for(var winIndex=0;winIndex<this.windows.length;winIndex++) {
-            var win2=this.windows[winIndex];
-            if(win2.props.item.props.state._tag==tag) {
-                win=win2;
+    getWindowByTag = tag => {
+        var win = null;
+        for (var winIndex = 0; winIndex < this.windows.length; winIndex++) {
+            var win2 = this.windows[winIndex];
+            if (win2.props.item.props.state._tag == tag) {
+                win = win2;
                 break;
             }
         }
         return win;
     };
 
-    getWindowByItem = (item) => {
-        var win=null;
-        for(var winIndex=0;winIndex<this.windows.length;winIndex++) {
-            var win2=this.windows[winIndex];
+    getWindowByItem = item => {
+        var win = null;
+        for (var winIndex = 0; winIndex < this.windows.length; winIndex++) {
+            var win2 = this.windows[winIndex];
             //if(win2.keys.length==keys.length && win2.keys.every((v,i)=> v === keys[i])) {
-            if(win2.getItemId() == item.getId()) {
-                win=win2;
+            if (win2.getItemId() == item.getId()) {
+                win = win2;
                 break;
             }
         }
@@ -162,67 +184,76 @@ export class Pane {
         return this.getWindow(this.activeWindowId);
     };
 
-    redraw = (props) => {
-        for(var winIndex=0;winIndex<this.windows.length;winIndex++) {
-            var win=this.windows[winIndex];
+    redraw = props => {
+        for (var winIndex = 0; winIndex < this.windows.length; winIndex++) {
+            var win = this.windows[winIndex];
             win.redraw(props);
         }
-        if(this.component) this.component.redraw();
+        if (this.component) this.component.redraw();
     };
 
     getTitle = () => {
-        var win=this.getActiveWindow();
-        if(win) {
+        var win = this.getActiveWindow();
+        if (win) {
             return win.getTitle();
         }
-        return "[ untitled ]";
+        return '[ untitled ]';
     };
 
     getIcon = () => {
-        var win=this.getActiveWindow();
-        if(win) {
+        var win = this.getActiveWindow();
+        if (win) {
             return win.getIcon();
         }
     };
 
     _naiveLayout = () => {
-        const default1=style.window;
-        const height=(100/this.windows.length||1);
-        const html = this.windows.map( (win, index) => {
-            const cls={};
-            cls[default1]=true;
-            const key="win_"+win.getItemId();
-            const stl={height:height+"%"};
+        const default1 = style.window;
+        const height = 100 / this.windows.length || 1;
+        const html = this.windows.map((win, index) => {
+            const cls = {};
+            cls[default1] = true;
+            const key = 'win_' + win.getItemId();
+            const stl = { height: height + '%' };
             return (
                 <div style={stl} key={key} className={classnames(cls)}>
                     <WindowComponent obj={win} />
-                </div>);
+                </div>
+            );
         });
-        return (<div class="full">{html}</div>);
+        return <div className="full">{html}</div>;
     };
 
     _tripleLayout = () => {
-        const wins=this.windows.concat();
-        wins.sort((a,b)=>{
-            const tagA=a.props.item.props.state._tag || 0;
-            const tagB=b.props.item.props.state._tag || 0;
-            return tagA-tagB;
+        const wins = this.windows.concat();
+        wins.sort((a, b) => {
+            const tagA = a.props.item.props.state._tag || 0;
+            const tagB = b.props.item.props.state._tag || 0;
+            return tagA - tagB;
         });
-        const default1=style.window;
-        const cls={};
-        cls[default1]=true;
-        const key1="win_"+wins[0].getItemId();
-        const key2="win_"+wins[1].getItemId();
-        const key3="win_"+wins[2].getItemId();
-        const html=(
-            <div class="full">
-                <div style="height:50%;" key={key1} className={classnames(cls)}>
+        const default1 = style.window;
+        const cls = {};
+        cls[default1] = true;
+        const key1 = 'win_' + wins[0].getItemId();
+        const key2 = 'win_' + wins[1].getItemId();
+        const key3 = 'win_' + wins[2].getItemId();
+        const html = (
+            <div className="full">
+                <div style={paneDimensions.onlyHeight} key={key1} className={classnames(cls)}>
                     <WindowComponent obj={wins[0]} />
                 </div>
-                <div style="height:50%;width:50%;" key={key2} className={classnames(cls)}>
+                <div
+                    style={paneDimensions.default}
+                    key={key2}
+                    className={classnames(cls)}
+                >
                     <WindowComponent obj={wins[1]} />
                 </div>
-                <div style="height:50%;width:50%;" key={key3} className={classnames(cls)}>
+                <div
+                    style={paneDimensions.default}
+                    key={key3}
+                    className={classnames(cls)}
+                >
                     <WindowComponent obj={wins[2]} />
                 </div>
             </div>
@@ -231,31 +262,47 @@ export class Pane {
     };
 
     _quadrupleLayout = () => {
-        const wins=this.windows.concat();
-        wins.sort((a,b)=>{
-            const tagA=a.props.item.props.state._tag || 0;
-            const tagB=b.props.item.props.state._tag || 0;
-            return tagA-tagB;
+        const wins = this.windows.concat();
+        wins.sort((a, b) => {
+            const tagA = a.props.item.props.state._tag || 0;
+            const tagB = b.props.item.props.state._tag || 0;
+            return tagA - tagB;
         });
-        const default1=style.window;
-        const cls={};
-        cls[default1]=true;
-        const key1="win_"+wins[0].getItemId();
-        const key2="win_"+wins[1].getItemId();
-        const key3="win_"+wins[2].getItemId();
-        const key4="win_"+wins[3].getItemId();
-        const html=(
-            <div class="full">
-                <div style="height:50%;width:50%;" key={key1} className={classnames(cls)}>
+        const default1 = style.window;
+        const cls = {};
+        cls[default1] = true;
+        const key1 = 'win_' + wins[0].getItemId();
+        const key2 = 'win_' + wins[1].getItemId();
+        const key3 = 'win_' + wins[2].getItemId();
+        const key4 = 'win_' + wins[3].getItemId();
+        const html = (
+            <div className="full">
+                <div
+                    style={paneDimensions.default}
+                    key={key1}
+                    className={classnames(cls)}
+                >
                     <WindowComponent obj={wins[0]} />
                 </div>
-                <div style="height:50%;width:50%;" key={key2} className={classnames(cls)}>
+                <div
+                    style={paneDimensions.default}
+                    key={key2}
+                    className={classnames(cls)}
+                >
                     <WindowComponent obj={wins[1]} />
                 </div>
-                <div style="height:50%;width:50%;" key={key3} className={classnames(cls)}>
+                <div
+                    style={paneDimensions.default}
+                    key={key3}
+                    className={classnames(cls)}
+                >
                     <WindowComponent obj={wins[2]} />
                 </div>
-                <div style="height:50%;width:50%;" key={key4} className={classnames(cls)}>
+                <div
+                    style={paneDimensions.default}
+                    key={key4}
+                    className={classnames(cls)}
+                >
                     <WindowComponent obj={wins[3]} />
                 </div>
             </div>
@@ -264,9 +311,9 @@ export class Pane {
     };
 
     renderWindows = () => {
-        if(this.windows.length<=2) return this._naiveLayout();
-        if(this.windows.length==3) return this._tripleLayout();
-        if(this.windows.length==4) return this._quadrupleLayout();
+        if (this.windows.length <= 2) return this._naiveLayout();
+        if (this.windows.length == 3) return this._tripleLayout();
+        if (this.windows.length == 4) return this._quadrupleLayout();
         return this._naiveLayout();
     };
 }

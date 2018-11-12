@@ -47,12 +47,13 @@
         }
         .status {
             position: absolute;
-            display: block;
             right: 0;
             top: 0;
             width: 20px;
             height: 100%;
             overflow: hidden;
+            display: flex;
+            justify-content: center;
             &.failure {
                 background-color: red;
             }
@@ -61,6 +62,19 @@
             }
             &.pending {
                 background-color: grey;
+                .running {
+                    transform-origin: center center;
+                    animation-name: spin;
+                    animation-duration: 1000ms;
+                    animation-iteration-count: infinite;
+                    animation-timing-function: linear;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    svg {
+                        width: 10px;
+                    }
+                }
             }
         }
     }
@@ -103,4 +117,17 @@
             }
         }
     }
+}
+
+@-moz-keyframes spin {
+    from { -moz-transform: rotate(0deg); }
+    to { -moz-transform: rotate(360deg); }
+}
+@-webkit-keyframes spin {
+    from { -webkit-transform: rotate(0deg); }
+    to { -webkit-transform: rotate(360deg); }
+}
+@keyframes spin {
+    from {transform:rotate(0deg);}
+    to {transform:rotate(360deg);}
 }
