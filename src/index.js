@@ -17,9 +17,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import amplitude from "amplitude-js";
+import { AmplitudeProvider, Amplitude, LogOnMount } from "@amplitude/react-amplitude";
 import App from './components/app';
 import configureStore from './store';
 import { PersistGate } from 'redux-persist/es/integration/react';
+import * as analytics from './analytics';
 
 // Load generic CSS
 import './style/index.less';
@@ -33,7 +36,15 @@ const { persistor, store } = configureStore();
 ReactDOM.render((
     <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-            <App />
+            <AmplitudeProvider
+                amplitudeInstance={amplitude.getInstance()}
+                apiKey={analytics.AMPLITUDE_KEY}
+            >
+                <Amplitude>
+                    <LogOnMount eventType="APP_START" />
+                    <App />
+                </Amplitude>
+            </AmplitudeProvider>
         </PersistGate>
     </Provider>
 ), document.getElementById('root'));
