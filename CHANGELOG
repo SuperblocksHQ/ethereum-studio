@@ -1,13 +1,37 @@
 # Superblocks Lab - Change log
 
+## [1.1.0]
+
++ Addition: Show the actual underlying filesystem in the left menu #166
++ Addition: Ability to hide the left side menu #114
++ Addition: Ability to inspect compiled contract data #122
++ Addition: Ability to inspect the contract ABI #123
++ Addition: Change cursor state when hovering buttons in Interact #208
++ Addition: New Preferences dialog (settings)
++ Addition: Enable custom Network parameters (new dialog)
++ Addition: New voting example template
++ Addition: New ERC20 example template
++ Addition: New SafeMath example template
+* Improvement: Change project download format from JSON to ZIP #169
+* Improvement: Change from Preact to React
+* Fix: Buffer deprecation warning during package install #23
+* Fix: Unmet dependencies warning during yarn install #24
+* Fix: Clicking the window tab opens up a new browser tab #60
+* Fix: Unable to click on highlighted area in Help/General #137
+* Fix: Unable to see left menu actions when contract name is too long #164
+* Miscellaneous other minor improvements and bug fixes
+
+
 ## [1.0.4]
 
 * Fix: Changed Discord's link from a temporary one to a permanent one
+
 
 ## [1.0.3]
 
 * Improvement: Changed telegram for discord (community) #193
 * Improvement: Update welcome screen #195
+
 
 ## [1.0.2]
 
