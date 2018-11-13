@@ -24,6 +24,7 @@ import {faTrashAlt as iconTrash} from '@fortawesome/free-regular-svg-icons/faTra
 import {faGem as iconGem} from '@fortawesome/free-regular-svg-icons/faGem';
 import {faFile as iconFile} from '@fortawesome/free-solid-svg-icons/faFile';
 import {faFileAlt as iconFileAlt} from '@fortawesome/free-regular-svg-icons/faFileAlt';
+import {faFileImport as IconFileImport} from '@fortawesome/free-solid-svg-icons/faFileImport';
 import {faFolder as iconFolder} from '@fortawesome/free-solid-svg-icons/faFolder';
 import {faFolder as iconFolderOpen} from '@fortawesome/free-regular-svg-icons/faFolder';
 import {faCube as iconCube} from '@fortawesome/free-solid-svg-icons/faCube';
@@ -77,6 +78,7 @@ export const IconTrash = () => <FaIcon icon={iconTrash} />;
 export const IconGem = () => <FaIcon icon={iconGem} />;
 export const IconFile = () => <FaIcon icon={iconFile} />;
 export const IconFileAlt = () => <FaIcon icon={iconFileAlt} />;
+export const IconImportFile = () => <FaIcon icon={IconFileImport} />;
 export const IconFolder = () => <FaIcon icon={iconFolder} color="#49616C" />;
 export const IconFolderOpen = () => (
     <FaIcon icon={iconFolderOpen} color="#49616C" />
