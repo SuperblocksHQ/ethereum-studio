@@ -394,6 +394,11 @@ export default class FileItem extends Item {
         }
     };
 
+    _clickImportFile = e => {
+        e.preventDefault();
+
+    };
+
     _clickNewFolder = e => {
         e.preventDefault();
 
@@ -539,6 +544,7 @@ export default class FileItem extends Item {
                     isReadOnly={this.isReadOnly()}
                     fullPath={this.getFullPath()}
                     clickNewFile={this._clickNewFile}
+                    clickImportFile={this._clickImportFile}
                     clickNewFolder={this._clickNewFolder}
                     clickRenameFile={this._clickRenameFile}
                     clickDeleteFile={this._clickDeleteFile}
@@ -829,6 +835,7 @@ export default class FileItem extends Item {
         }
     };
 }
+
 
 
 
