@@ -16,11 +16,10 @@
 
 import React, { Component } from 'react';
 import Proptypes from 'prop-types';
-import { Amplitude } from "@amplitude/react-amplitude";
 import SelectedTemplate from './selectTemplate';
 import ProjectDetails from './projectDetails';
 import Templates from '../../templates';
-import * as analytics from "../../analytics";
+import { logEvent, Analytics } from "../../analytics";
 import DappfileItem from '../projecteditor/control/item/dappfileItem';
 import JSZipUtils from 'jszip-utils';
 
@@ -63,7 +62,7 @@ export default class NewDapp extends Component {
                 this.props.cb(status)
             );
 
-            analytics.logEvent('PROJECT_CREATED', { template: this.state.selectedTemplate.name});
+            logEvent('PROJECT_CREATED', { template: this.state.selectedTemplate.name});
 
             this.closeModal();
         };
@@ -138,14 +137,14 @@ export default class NewDapp extends Component {
         }
 
         return (
-            <Amplitude
+            <Analytics
                 eventProperties={{
                     scope: ["NEW_PROJECT"],
                     "current step": this.state.currentStep
                 }}
             >
                 <div>{step}</div>;
-            </Amplitude>
+            </Analytics>
         );
     }
 }

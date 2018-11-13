@@ -14,7 +14,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
+import React from 'react';
 import amplitude from "amplitude-js";
+import {
+    AmplitudeProvider,
+    Amplitude,
+    LogOnMount as AmplitudeLogOnMount
+} from "@amplitude/react-amplitude";
 
 /**
  * A simple wrapper around the analytic providers to encapsulate them, making sure
@@ -32,3 +38,26 @@ export const AMPLITUDE_KEY = "1889a5439f9ff971ee38b86964e337a5";
 export function logEvent(eventType, eventProperties) {
   return amplitude.getInstance().logEvent(eventType, eventProperties);
 }
+
+export const AnalyticsProvider = ({children}) => (
+    <AmplitudeProvider
+        amplitudeInstance={amplitude.getInstance()}
+        apiKey={AMPLITUDE_KEY}
+    >
+        {children}
+    </AmplitudeProvider>
+);
+
+export const Analytics = ({eventProperties, children}) => (
+    <Amplitude
+        eventProperties={eventProperties}
+    >
+        {children}
+    </Amplitude>
+);
+
+export const LogOnMount = ({eventType}) => (
+    <AmplitudeLogOnMount eventType={eventType} />
+);
+
+
