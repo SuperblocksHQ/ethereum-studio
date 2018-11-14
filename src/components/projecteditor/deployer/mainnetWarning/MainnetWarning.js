@@ -22,9 +22,6 @@ import ModalHeader from '../../../modal/modalHeader';
 import TextInput from '../../../textInput';
 import { validateMainnetWarning } from '../../../../validations';
 
-// Make sure to bind modal to your appElement (http://reactcommunity.org/react-modal/accessibility/)
-// Modal.setAppElement('#app')
-
 export default class MainnetWarning extends Component {
 
     state = {
