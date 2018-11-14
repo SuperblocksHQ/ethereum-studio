@@ -209,51 +209,38 @@ export default class DeployerRunner {
                                     this.callback(1);
                                     return;
                                 }
+
                                 // Check the Metamask network so that it matches
-                                const chainId = (
-                                    this.props.functions.networks.endpoints[
-                                        this.network
-                                    ] || {}
-                                ).chainId;
-                                if (
-                                    chainId &&
-                                    window.web3.version.network != chainId
-                                ) {
-                                    this._stderr(
-                                        'The Metamask network does not match the Superblocks Lab network. Check so that you have the same network chosen in Metamask as in Superblocks Lab, then try again.'
-                                    );
+                                const chainId = (this.props.functions.networks.endpoints[this.network] || {}).chainId;
+                                if (chainId && window.web3.version.network != chainId) {
+                                    this._stderr("The Metamask network does not match the Superblocks Lab network. Check so that you have the same network chosen in Metamask as in Superblocks Lab, then try again.");
                                     this.callback(1);
                                     return;
                                 }
-                                const params = {
+
+                                const params={
                                     from: extAccounts[accountIndex],
-                                    to: '',
-                                    value: '0x0',
+                                    to: "",
+                                    value: "0x0",
                                     gasPrice: obj.gasPrice,
                                     gasLimit: obj.gasLimit,
                                     data: obj.bin2,
                                 };
-                                this._stdout(
-                                    'External account detected. Opening external account provider...'
-                                );
-                                const modalData = {
-                                    title:
-                                        'WARNING: Invoking external account provider',
-                                    body:
-                                        'Please understand that Superblocks Lab has no power over which network is targeted when using an external provider. It is your responsibility that the network is the same as it is expected to be.',
-                                    class: style.externalProviderWarning,
-                                };
-                                const modal = <Modal data={modalData} />;
-                                this.props.functions.modal.show({
-                                    cancel: () => {
-                                        return false;
-                                    },
-                                    render: () => {
-                                        return modal;
-                                    },
-                                });
+                                this._stdout("External account detected. Opening external account provider...");
 
-                                this._sendExternalTransaction(obj, params, finalize);
+                                if (window.web3.version.network == Networks.mainnet.chainId && this.props.functions.networks.endpoints[this.network].chainId == Networks.mainnet.chainId) {
+                                    console.log("Deploying to Mainnet!");
+                                    this.showMainnetWarning()
+                                        .then(() => this._sendExternalTransaction(obj, params, finalize))
+                                        .catch(() => {
+                                            this._stderr("Deployment to Mainnet cancelled");
+                                            this.callback(1);
+                                        });
+                                } else {
+                                    this._sendExternalTransaction(obj, params, finalize)
+                                }
+
+                                this._stdout('External account detected. Opening external account provider...');
                             } else {
                                 this._openWallet(
                                     obj,
@@ -319,12 +306,29 @@ export default class DeployerRunner {
         });
     }
 
-    _makeFileName(path, tag, suffix) {
+    _makeFileName = (path, tag, suffix) => {
         const a = path.match(/^(.*\/)([^/]+)$/);
         const dir = a[1];
         const filename = a[2];
-        return dir + "." + filename + "." + tag + "." + suffix;
-    }
+        const a2 = filename.match(/^(.+)[.][Ss][Oo][Ll]$/);
+        const contractName = a2[1];
+        if (tag) {
+            return (
+                '/build' +
+                dir +
+                contractName +
+                '/' +
+                contractName +
+                '.' +
+                tag +
+                '.' +
+                suffix
+            );
+        }
+        return (
+            '/build' + dir + contractName + '/' + contractName + '.' + suffix
+        );
+    };
 
     _getWeb3(endpoint) {
         var provider;
@@ -972,17 +976,26 @@ export default class DeployerRunner {
     }
 
     _buildJs(obj,cb) {
-        obj.contractsjs = `/* Autogenerated - do not fiddle */
+        obj.contractsjs =
+            `/* Autogenerated - do not fiddle */
             if(typeof(Contracts)==="undefined") var Contracts={};
             (function(module, Contracts) {
                 var data={
-                    address: "` + obj.address2 + `",
-                    network: "` + obj.network + `",
-                    endpoint: "` + obj.endpoint + `",
-                    abi: `+ obj.abi + `
-                };
-                Contracts["` + this.props.contract + `"]=data;
-                module.exports=data;
+                    address: "` +
+                        obj.address2 +
+                    `",
+                    network: "` +
+                        obj.network +
+                    `",
+                    endpoint: "` +
+                        obj.endpoint +
+                    `",
+                    abi: ` +
+                        obj.abi +
+                    `
+            };
+            Contracts["` + this.props.item.getParent().getName() + `"]=data;
+            module.exports=data;
             })((typeof(module)==="undefined"?{}:module), Contracts);
             `;
         cb(0);

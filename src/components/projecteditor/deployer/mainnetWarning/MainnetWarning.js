@@ -67,7 +67,7 @@ export default class MainnetWarning extends Component {
                         <div className={style.form}>
                             <div className={style.info}>
                                 <div className="superInputDark my-2">
-                                    <label for="html">Type the name of the project to confirm: </label>
+                                    <label forHtml="html">Type the name of the project to confirm: </label>
                                     <input
                                         id="projectName"
                                         type="text"
