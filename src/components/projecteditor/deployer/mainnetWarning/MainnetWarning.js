@@ -19,6 +19,7 @@ import Proptypes from 'prop-types';
 import classNames from 'classnames';
 import style from './style.less';
 import ModalHeader from '../../../modal/modalHeader';
+import TextInput from '../../../textInput';
 
 // Make sure to bind modal to your appElement (http://reactcommunity.org/react-modal/accessibility/)
 // Modal.setAppElement('#app')
@@ -66,15 +67,13 @@ export default class MainnetWarning extends Component {
                         </div>
                         <div className={style.form}>
                             <div className={style.info}>
-                                <div className="superInputDark my-2">
-                                    <label forHtml="html">Type the name of the project to confirm: </label>
-                                    <input
-                                        id="projectName"
-                                        type="text"
-                                        value={projectTitle}
-                                        onKeyUp={this.handleTitleChange}
-                                        autoComplete={"off"}/>
-                                </div>
+                                <TextInput
+                                    id="projectName"
+                                    type="text"
+                                    label="Type the name of the project to confirm:"
+                                    onChangeText={this.handleTitleChange}
+                                    defaultValue={projectTitle}
+                                />
                             </div>
                         </div>
                         <button disabled={!isEnabled} className={style.buttonConfirm} onClick={this.onCreateProjectHandle}>I understand, start deploying to Mainnet</button>

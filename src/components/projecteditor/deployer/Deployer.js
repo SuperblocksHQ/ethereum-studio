@@ -175,8 +175,6 @@ export default class Deployer extends Component {
             height: height + "px"
         };
 
-        console.log("rendering");
-        console.log(this.state.consoleRows);
         return (
           <div className="full" id={this.id}>
             <Toolbar
