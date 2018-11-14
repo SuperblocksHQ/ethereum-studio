@@ -22,7 +22,6 @@ import Networks from './networks';
 export default class DeployerRunner {
 
     constructor(props,
-                consoleRows,
                 recompile,
                 redeploy,
                 redraw,
@@ -34,7 +33,6 @@ export default class DeployerRunner {
                 item,
                 log) {
         this.props = props;
-        this.consoleRows = consoleRows;
         this.recompile = recompile;
         this.redeploy = redeploy;
         this.redraw = redraw;
@@ -62,7 +60,6 @@ export default class DeployerRunner {
 
         // Make sure we reset everything first
         this.isRunning = true;
-        this.consoleRows = [];
 
         const project = this.item.getProject();
         const env = project.getEnvironment();
@@ -255,36 +252,8 @@ export default class DeployerRunner {
                                         return modal;
                                     },
                                 });
-                                obj.web3.eth.sendTransaction(
-                                    params,
-                                    (err, res) => {
-                                        this.props.functions.modal.close();
-                                        if (err) {
-                                            this._stderr(
-                                                'Could not deploy contract using external provider.'
-                                            );
-                                            console.error(res);
-                                            this.callback(1);
-                                            return;
-                                        }
-                                        this._stdout('Got receipt: ' + res);
-                                        obj.txhash2 = res;
-                                        const args = (
-                                            obj.contract.getArgs() || []
-                                        ).slice(0); // We MUST copy the array since we are shifting out the elements.
-                                        project.getTxLog().addTx({
-                                            deployArgs: args,
-                                            contract: this.item
-                                                .getParent()
-                                                .getName(),
-                                            hash: res,
-                                            context:
-                                                'Contract deployment using external provider',
-                                            network: obj.network,
-                                        });
-                                        finalize(obj);
-                                    }
-                                );
+
+                                this._sendExternalTransaction(obj, params, finalize);
                             } else {
                                 this._openWallet(
                                     obj,
@@ -336,15 +305,16 @@ export default class DeployerRunner {
             }
             this._stdout("Got receipt: " + res);
             obj.txhash2 = res;
-            const args = obj.contract.get("args") || [];
-            this.props.project.props.state.txlog.addTx({
+            const args = (obj.contract.getArgs() || []).slice(0); // We MUST copy the array since we are shifting out the elements.
+            project.getTxLog().addTx({
                 deployArgs: args,
-                contract: this.props.contract,
-                hash:res,
+                contract: this.props.item
+                    .getParent()
+                    .getName(),
+                hash: res,
                 context: 'Contract deployment using external provider',
-                network: obj.network
+                network: obj.network,
             });
-
             finalize(obj);
         });
     }
@@ -368,7 +338,7 @@ export default class DeployerRunner {
     }
 
     _compile = cb => {
-        const subitem = this.props.item
+        const subitem = this.item
             .getParent()
             .getChildren()
             .filter(elm => {
@@ -571,7 +541,7 @@ export default class DeployerRunner {
                 return;
             }
             const file = files.pop();
-            this.props.item.getProject().loadFile(
+            this.item.getProject().loadFile(
                 file,
                 body => {
                     if (body.status != 0) {
@@ -653,7 +623,7 @@ export default class DeployerRunner {
 
     _isCompileFresh(obj, cb) {
         // Check for fresh abi and bin.
-        const project = this.props.item.getProject();
+        const project = this.item.getProject();
         project.loadFile(
             obj.src,
             srcbody => {
@@ -694,7 +664,7 @@ export default class DeployerRunner {
     }
 
     _loadFiles(obj,cb) {
-        const project = this.props.item.getProject();
+        const project = this.item.getProject();
         project.loadFile(
             obj.src,
             srcbody => {
@@ -867,7 +837,7 @@ export default class DeployerRunner {
     }
 
     _openWallet(obj, accountName, cb) {
-        const accounts = this.props.item.getProject().getHiddenItem('accounts');
+        const accounts = this.item.getProject().getHiddenItem('accounts');
         const account = accounts.getByName(accountName);
         const accountIndex = account.getAccountIndex(obj.env);
         const walletName = account.getWallet(obj.env);
@@ -950,12 +920,12 @@ export default class DeployerRunner {
                     this._stdout('Got receipt: ' + res);
                     obj.txhash2 = res;
                     const args = (obj.contract.getArgs() || []).slice(0); // We MUST copy the array since we are shifting out the elements.
-                    this.props.item
+                    this.item
                         .getProject()
                         .getTxLog()
                         .addTx({
                             deployArgs: args,
-                            contract: this.props.item.getParent().getName(),
+                            contract: this.item.getParent().getName(),
                             hash: res,
                             context: 'Contract deployment',
                             network: obj.network,
@@ -1019,7 +989,7 @@ export default class DeployerRunner {
     }
 
     _saveFiles(obj,cb) {
-        const project = this.props.item.getProject();
+        const project = this.item.getProject();
         const list = [
             {
                 fullPath: obj.addresssrc,

@@ -38,7 +38,7 @@ export default class Deployer extends Component {
         const recompile = this.props.recompile || false;
         const redeploy = this.props.redeploy || false;
 
-        this.deployer = new DeployerRunner(props, this.state.consoleRows, recompile, redeploy, this.redraw,
+        this.deployer = new DeployerRunner(props, recompile, redeploy, this.redraw,
             this.updateStatus, this.showExternalProviderModal, this.closeExternalProviderModal, this.showMainnetWarning,
             this.props.networkPreferences, this.props.item, this.log);
     }
