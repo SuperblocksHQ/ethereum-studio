@@ -44,7 +44,7 @@ export default class Deployer extends Component {
     }
 
     componentDidMount() {
-        this.deployer.run();
+        this.deploy();
     }
 
     canClose = (cb) => {
@@ -54,7 +54,7 @@ export default class Deployer extends Component {
     focus = (rePerform) => {
         if (rePerform) {
             if (!this.deployer.isRunning) {
-                this.deployer.run();
+                this.deploy();
             }
         }
     }
@@ -66,7 +66,7 @@ export default class Deployer extends Component {
     }
 
     onRedeployClickHandle = () => {
-        this.deployer.run();
+        this.deploy();
     }
 
     getHeight = () => {
@@ -143,6 +143,13 @@ export default class Deployer extends Component {
                 }
             });
         });
+    }
+
+    deploy() {
+        // Make sure to reset the state to its intial values
+        this.setState(Deployer.state);
+
+        this.deployer.run();
     }
 
     renderContents = () => {
