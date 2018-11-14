@@ -147,9 +147,12 @@ export default class Deployer extends Component {
 
     deploy() {
         // Make sure to reset the state to its intial values
-        this.setState(Deployer.state);
-
-        this.deployer.run();
+        this.setState({
+            deployToMainnetConfirmed: false,
+            consoleRows: [],
+            status: ''
+        },
+        () => this.deployer.run());
     }
 
     renderContents = () => {

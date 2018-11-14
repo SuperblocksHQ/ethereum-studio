@@ -817,7 +817,7 @@ export default class DeployerRunner {
                     }
                     if (input == obj.bin2) {
                         this._stdout(
-                            'Contract on chain is same, not redeploying.'
+                            'Contract on chain is the same, not redeploying.'
                         );
                         this._stdout('Done.');
                         cb(1);
