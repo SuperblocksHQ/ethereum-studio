@@ -20,6 +20,7 @@ import classNames from 'classnames';
 import style from './style.less';
 import ModalHeader from '../../../modal/modalHeader';
 import TextInput from '../../../textInput';
+import { validateMainnetWarning } from '../../../../validations';
 
 // Make sure to bind modal to your appElement (http://reactcommunity.org/react-modal/accessibility/)
 // Modal.setAppElement('#app')
@@ -27,7 +28,7 @@ import TextInput from '../../../textInput';
 export default class MainnetWarning extends Component {
 
     state = {
-        projectTitle: ""
+        isValid: false,
     }
 
     onCloseClickHandle = () => {
@@ -35,25 +36,21 @@ export default class MainnetWarning extends Component {
     };
 
     handleTitleChange = (e) => {
-        const title = e.target.value;
+        const error = validateMainnetWarning(this.props.selectedProject.name, e.target.value);
         this.setState({
-            projectTitle: e.target.value,
+            isValid: error != null ? false : true
         });
     }
 
     onCreateProjectHandle = () => {
-        if (this.state.positiveMatch) {
+        if (this.state.isValid) {
             this.props.onDeployConfirmed();
         }
     }
 
-    validate(projectTitle) {
-        return projectTitle === "hola";
-    }
-
     render() {
-        const { projectTitle } = this.state;
-        const isEnabled = this.validate(projectTitle);
+        const { isValid } = this.state;
+        const { selectedProject } = this.props;
         return(
             <div className={classNames([style.mainnetWarning, "modal"])}>
                 <div className={style.container}>
@@ -63,7 +60,7 @@ export default class MainnetWarning extends Component {
                     />
                     <div className={style.area}>
                         <div>
-                            This action <b>cannot</b> be undone. This will deploy your contract from the <b>HelloWorld</b> project all the way to Mainnet.
+                            This action <b>cannot</b> be undone. This will deploy your contract from the <b>{selectedProject.name}</b> project all the way to Mainnet.
                         </div>
                         <div className={style.form}>
                             <div className={style.info}>
@@ -72,11 +69,10 @@ export default class MainnetWarning extends Component {
                                     type="text"
                                     label="Type the name of the project to confirm:"
                                     onChangeText={this.handleTitleChange}
-                                    defaultValue={projectTitle}
                                 />
                             </div>
                         </div>
-                        <button disabled={!isEnabled} className={style.buttonConfirm} onClick={this.onCreateProjectHandle}>I understand, start deploying to Mainnet</button>
+                        <button disabled={!isValid} className={style.buttonConfirm} onClick={this.onCreateProjectHandle}>I understand, start deploying to Mainnet</button>
                     </div>
                 </div>
             </div>

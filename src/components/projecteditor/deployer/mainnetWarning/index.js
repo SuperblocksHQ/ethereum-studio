@@ -15,19 +15,11 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { connect } from 'react-redux';
-//import { getSelectedProjectName } from '../../selectors/project';
+import { getSelectedProject } from '../../../../selectors/projects';
 import MainnetWarning from './MainnetWarning';
 
-// const mapStateToProps = state => ({
-//     selectedProjectName: getSelectedProjectName(state),
-//   });
+const mapStateToProps = state => ({
+    selectedProject: getSelectedProject(state),
+});
 
-// const mapDispatchToProps = (dispatch) => {
-//     return {
-//         validateProjectName: () => {
-//             dispatch(showSplashNoMore())
-//         }
-//     }
-// }
-
-export default connect(null, null)(MainnetWarning);
+export default connect(mapStateToProps, null)(MainnetWarning);
