@@ -12,19 +12,62 @@
 + Addition: New voting example template
 + Addition: New ERC20 example template
 + Addition: New SafeMath example template
++ Addition: Ability to create new files and folders
++ Addition: Ability to rename and move files and folders
++ Addition: New context menu in Files hierarchy (right mouse button)
++ Addition: Several in-code comments
++ Addition: Tooltips for every action button
++ Addition: Bottom status bar includes gas settings
++ Addition: Support REVERT with reason (extended require)
++ Addition: Ability to close open file window with middle click
++ Addition: Animated action items in Files hierarchy
 * Improvement: Change project download format from JSON to ZIP #169
 * Improvement: Change from Preact to React
+* Improvement: Better projecteditor and application view code organization
+* Improvement: Better backend and control code organization
+* Improvement: Better control items code organization
+* Improvement: Backend data (dappfile version 1.1.0)
+* Improvement: More clear text messages in prompts and alerts
+* Improvement: Change the order of appearance of contract action items
+* Improvement: Updated Files hierarchy UI
+* Improvement: Better FileItem code organization
+* Improvement: Move component specific actions from constructor to events
+* Improvement: Properly handle various state changes
+* Improvement: Call forceUpdate instead of setState when refreshing
+* Improvement: Set minimum size for Files hierarchy panel
+* Improvement: Error checking when trying to deploy contract with broken ABI
+* Improvement: Account balance fits minimum available width
+* Improvement: Miscellaneous styling changes
 * Fix: Buffer deprecation warning during package install #23
 * Fix: Unmet dependencies warning during yarn install #24
 * Fix: Clicking the window tab opens up a new browser tab #60
 * Fix: Unable to click on highlighted area in Help/General #137
 * Fix: Unable to see left menu actions when contract name is too long #164
+* Fix: Control items alignment (center icons)
+* Fix: Code typo in AccountEditor #199
+* Fix: Properly register and uninstall component timers
+* Fix: Various grammar and spelling errors #201
+* Fix: "Learn more" link in Configure window
+* Fix: Miscellaneous message typos
+* Fix: Typos in templates
+* Fix: "Click here" link in Account settings
+* Fix: "HOW TO" text section in Raise Funds template
+* Fix: Inconsistency between project name and title character limitation
+* Fix: Browser EVM block timestamp to report according to the specification
+* Fix: Select account overflow
+* Change: Build environment and settings to reflect switch to React
+* Change: Rearrange package dependencies
+* Change: Badges in the README file
+* Change: Switch from lightning icon to refresh icon
+* Change: File name length limited to 255 characters
+* Change: New eslint configuration
+* Change: Allow app preview to show without requiring contracts to be built
 * Miscellaneous other minor improvements and bug fixes
 
 
 ## [1.0.4]
 
-* Fix: Changed Discord's link from a temporary one to a permanent one
+* Fix: Changed Discord's link from a temporary one to a permanent one #197
 
 
 ## [1.0.3]
