@@ -239,8 +239,6 @@ export default class DeployerRunner {
                                 } else {
                                     this._sendExternalTransaction(obj, params, finalize)
                                 }
-
-                                this._stdout('External account detected. Opening external account provider...');
                             } else {
                                 this._openWallet(
                                     obj,
