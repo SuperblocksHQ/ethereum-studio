@@ -12,6 +12,6 @@ describe('actions', () => {
                 project: projectItem
             },
         };
-        expect(actions.selectProject(projectItem).toEqual(expectedAction));
+        expect(actions.selectProject(projectItem)).toEqual(expectedAction);
     });
 });
