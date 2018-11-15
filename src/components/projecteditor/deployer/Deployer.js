@@ -110,7 +110,7 @@ export default class Deployer extends Component {
     }
 
     onDeployToMainnetConfirmed = () => {
-        this.onMainnetCloseHandle();
+        this.props.functions.modal.close();
         this.resolveShowMainnetWarning();
     }
 

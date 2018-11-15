@@ -293,7 +293,7 @@ export default class DeployerRunner {
             this._stdout("Got receipt: " + res);
             obj.txhash2 = res;
             const args = (obj.contract.getArgs() || []).slice(0); // We MUST copy the array since we are shifting out the elements.
-            project.getTxLog().addTx({
+            this.item.getProject().getTxLog().addTx({
                 deployArgs: args,
                 contract: this.props.item
                     .getParent()
@@ -959,6 +959,7 @@ export default class DeployerRunner {
                 this._stdout('Transaction mined, verifying code...');
                 obj.address2 = res.contractAddress;
                 obj.deployMeta = { gasUsed: res.gasUsed };
+
                 obj.web3.eth.getCode(obj.address2, 'latest', (err, res) => {
                     if (res && res.length > 4) {
                         this._stdout('Contract deployed at address ' + obj.address2 + '.');

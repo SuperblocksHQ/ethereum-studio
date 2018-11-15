@@ -19,6 +19,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import style from './style.less';
 import { IconRun } from '../../icons';
+import Tooltip from '../../tooltip';
 
 const Toolbar = ({
         id,
@@ -30,12 +31,18 @@ const Toolbar = ({
         infoTitle
     } = props) => {
 
-    const cls = {};
-    cls[style.running] = isRunning;
     return (
         <div className={style.toolbar} id={id + "_header"}>
             <div className={style.buttons}>
-                <a className={classnames(cls)} href="#" title={iconTitle} onClick={onTriggerActionClick}><IconRun /></a>
+                <button
+                    className={classnames(['btnNoBg'], {[style.running] : isRunning})}
+                    title={iconTitle}
+                    onClick={onTriggerActionClick}
+                >
+                    <Tooltip title={iconTitle}>
+                        <IconRun />
+                    </Tooltip>
+                </button>
             </div>
             <div className={style.status}>
                 {status}
@@ -48,8 +55,6 @@ const Toolbar = ({
         </div>
     );
 }
-
-// {contract}
 
 Toolbar.propTypes = {
     id: PropTypes.string.isRequired,
