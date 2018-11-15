@@ -19,7 +19,7 @@ import Proptypes from 'prop-types';
 import SelectedTemplate from './selectTemplate';
 import ProjectDetails from './projectDetails';
 import Templates from '../../templates';
-import { logEvent, Analytics } from "../../utils/analytics";
+import { logEvent, Analytics, LogOnMount } from "../../utils/analytics";
 import DappfileItem from '../projecteditor/control/item/dappfileItem';
 import JSZipUtils from 'jszip-utils';
 
@@ -136,16 +136,7 @@ export default class NewDapp extends Component {
                 break;
         }
 
-        return (
-            <Analytics
-                eventProperties={{
-                    scope: ["NEW_PROJECT"],
-                    "current step": this.state.currentStep
-                }}
-            >
-                <div>{step}</div>;
-            </Analytics>
-        );
+        return <div>{step}</div>;
     }
 }
 
