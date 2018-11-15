@@ -20,7 +20,7 @@ import { Provider } from 'react-redux';
 import App from './components/app';
 import configureStore from './store';
 import { PersistGate } from 'redux-persist/es/integration/react';
-import { AnalyticsProvider, Analytics, LogOnMount } from './analytics';
+import { AnalyticsProvider, Analytics, LogOnMount } from './utils/analytics';
 
 // Load generic CSS
 import './style/index.less';
@@ -35,10 +35,8 @@ ReactDOM.render((
     <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
             <AnalyticsProvider>
-                <Analytics>
-                    <LogOnMount eventType="APP_START" />
-                    <App />
-                </Analytics>
+                <LogOnMount eventType="APP_START" />
+                <App />
             </AnalyticsProvider>
         </PersistGate>
     </Provider>

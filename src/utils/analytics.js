@@ -15,12 +15,12 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from 'react';
-import amplitude from "amplitude-js";
+import amplitude from 'amplitude-js';
 import {
     AmplitudeProvider,
     Amplitude,
     LogOnMount as AmplitudeLogOnMount
-} from "@amplitude/react-amplitude";
+} from '@amplitude/react-amplitude';
 
 /**
  * A simple wrapper around the analytic providers to encapsulate them, making sure
@@ -48,13 +48,15 @@ export const AnalyticsProvider = ({children}) => (
     </AmplitudeProvider>
 );
 
-export const Analytics = ({eventProperties, children}) => (
-    <Amplitude
-        eventProperties={eventProperties}
-    >
-        {children}
-    </Amplitude>
-);
+export const Analytics = ({eventProperties, children}) => {
+    return (
+        <Amplitude
+            eventProperties={eventProperties}
+        >
+            {children}
+        </Amplitude>
+    );
+}
 
 export const LogOnMount = ({eventType}) => (
     <AmplitudeLogOnMount eventType={eventType} />

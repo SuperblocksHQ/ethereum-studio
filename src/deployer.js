@@ -18,7 +18,7 @@ import sha256 from 'crypto-js/sha256';
 import Web3 from 'web3';
 import Tx from './ethereumjs-tx-1.3.3.min';
 import Networks from './networks';
-import * as analytics from './analytics';
+import * as analytics from './utils/analytics';
 
 export default class DeployerRunner {
 
