@@ -16,10 +16,8 @@
 
 import React, { Component } from 'react';
 import sha256 from 'crypto-js/sha256';
-import classnames from 'classnames';
 import style from './style-console.less';
-import { IconRun } from '../icons';
-import Tooltip from '../tooltip';
+import Toolbar from './toolbar';
 
 export default class Compiler extends Component {
 
@@ -404,27 +402,18 @@ export default class Compiler extends Component {
     }
 
     renderToolbar = () => {
-        const { isRunning } = this.state;
+        const { isRunning, status } = this.state;
+        const { item } = this.props;
         return (
-            <div className={style.toolbar} id={this.id + '_header'}>
-                <div className={style.buttons}>
-                    <button
-                        className={classnames(['btnNoBg'], {[style.running] : isRunning})}
-                        title="Recompile"
-                        onClick={this.run}
-                    >
-                        <Tooltip title="Recompile">
-                            <IconRun />
-                        </Tooltip>
-                    </button>
-                </div>
-                <div className={style.status}>{this.state.status}</div>
-                <div className={style.info}>
-                    <span>
-                        Compile {this.props.item.getParent().getSource()}
-                    </span>
-                </div>
-            </div>
+            <Toolbar
+                id={this.id}
+                status={status}
+                contractPath={item.getParent().getSource()}
+                onTriggerActionClick={this.run}
+                isRunning={isRunning}
+                iconTitle="Recompile"
+                infoTitle="compile"
+            />
         );
     };
 
