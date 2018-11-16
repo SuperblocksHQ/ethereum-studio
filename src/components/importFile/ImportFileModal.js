@@ -21,6 +21,7 @@ import style from './style.less';
 import ModalHeader from '../modal/modalHeader';
 import FileFinder from "./sections/fileFinder/FileFinder";
 import ImportCategory from "./ImportCategory";
+import CodeEditor from "./sections/codeEditor/CodeEditor";
 
 export default class ImportFileModal extends Component {
 
@@ -28,7 +29,7 @@ export default class ImportFileModal extends Component {
         super();
         this.state = {
             selectedTitle: "",
-            selectedDescription: "",
+            selectedSource: "",
             categorySelectedId: 0,
             categories: [{ id: 0, name: "OpenZeppelin" }]
         }
@@ -41,10 +42,10 @@ export default class ImportFileModal extends Component {
         })
     }
 
-    onFileSelected = (title, description) => {
+    onFileSelected = (title, source) => {
         this.setState({
             selectedTitle: title,
-            selectedDescription: description
+            selectedSource: source
         })
     }
 
@@ -57,7 +58,7 @@ export default class ImportFileModal extends Component {
     }
 
     render() {
-        const { categories, categorySelectedId } = this.state;
+        const { categories, categorySelectedId, selectedTitle, selectedSource } = this.state;
 
         return(
             <div className={classNames([style.importModal, "modal"])}>
@@ -88,9 +89,9 @@ export default class ImportFileModal extends Component {
                             <FileFinder onFileSelected={this.onFileSelected}/>
                         </div>
                         <div className={style.descriptionArea}>
-                            <div className={style.title}>{this.state.selectedTitle}</div>
+                            <div className={style.title}>{selectedTitle}</div>
                             <div>
-                                <p>{this.state.selectedDescription}</p>
+                                <CodeEditor source={selectedSource}/>
                             </div>
                         </div>
                     </div>
