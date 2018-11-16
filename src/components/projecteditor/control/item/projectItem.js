@@ -169,7 +169,8 @@ export default class ProjectItem extends Item {
                         project: this,
                     },
                 },
-                this.router
+                this.router,
+                this.functions
             );
             this.setChildren([fileItem]);
 

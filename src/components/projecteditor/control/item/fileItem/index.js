@@ -37,9 +37,10 @@ import style from '../../style.less';
 import { DirectoryEntry } from './directoryEntry';
 import { FileEntry } from './fileEntry';
 import Tooltip from '../../../../tooltip';
+import ImportFileModal from "../../../../importFile";
 
 export default class FileItem extends Item {
-    constructor(props, router) {
+    constructor(props, router, functions) {
         props.state = props.state || {};
         props.type = props.type || 'file';
         props.lazy = props.lazy === undefined ? true : props.lazy;
@@ -49,7 +50,7 @@ export default class FileItem extends Item {
                 : props.state.toggable;
         props.state.open =
             props.state.open === undefined ? true : props.state.open;
-        super(props, router);
+        super(props, router, functions);
         if (props.type == "folder") {
             props.state.children = (props.state.children === undefined ? this._createChildren : props.state.children);
         }
@@ -394,8 +395,26 @@ export default class FileItem extends Item {
         }
     };
 
+    onImportModalClose = () => {
+        this.functions.modal.close();
+    };
+
     _clickImportFile = e => {
         e.preventDefault();
+
+        const modal = (
+            <ImportFileModal
+                onCloseClick={this.onImportModalClose}
+            />
+        );
+        this.functions.modal.show({
+            cancel: () => {
+                return false;
+            },
+            render: () => {
+                return modal;
+            }
+        });
 
     };
 
