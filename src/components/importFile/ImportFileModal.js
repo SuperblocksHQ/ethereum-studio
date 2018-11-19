@@ -53,7 +53,7 @@ export default class ImportFileModal extends Component {
         this.props.onCloseClick();
     }
 
-    onSavePreferences = () => {
+    onImportClickHandle = () => {
         this.onCloseClickHandle();
     }
 
@@ -98,7 +98,7 @@ export default class ImportFileModal extends Component {
                     <div className={style.footer}>
                         <div className={style.buttonsContainer}>
                             <button onClick={this.onCloseClickHandle} className="btn2 noBg mr-2">Cancel</button>
-                            <button onClick={this.onSavePreferences} className="btn2">Save</button>
+                            <button onClick={this.onImportClickHandle} className="btn2">Import</button>
                         </div>
                     </div>
                 </div>
