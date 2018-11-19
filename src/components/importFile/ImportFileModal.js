@@ -25,8 +25,8 @@ import CodeEditor from "./sections/codeEditor/CodeEditor";
 
 export default class ImportFileModal extends Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             selectedTitle: "",
             selectedSource: "",
@@ -54,8 +54,38 @@ export default class ImportFileModal extends Component {
     }
 
     onImportClickHandle = () => {
-        this.onCloseClickHandle();
-    }
+
+            const project = this.props.project;
+            const file = this.state.selectedTitle;
+            const source = this.state.selectedSource;
+
+            const path = "/"
+
+            if (file) {
+                if (!file.match('(^[a-zA-Z0-9-_.]+[/]?)$') || file.length > 255) {
+                    alert('Illegal file name. Only A-Za-z0-9, dash (-) and underscore (_) allowed. Max 255 characters.');
+                    return false;
+                }
+                project.newFile(path, file, status => {
+                    if (status == 0) {
+                        project.saveFile(`${path}${file}`, source, operation => {
+                            if (operation.status == 0){
+                               project.redraw()
+                            } else {
+                                alert('An error has occured.', status);
+                            }
+
+                        })
+                    } else {
+                        status == 3 ? alert('A file or folder with that name already exists at this location.', status) : alert('Could not create the file.', status);
+                    }
+                });
+                this.onCloseClickHandle();
+            } else {
+                alert('A file must be selected');
+            }
+
+    };
 
     render() {
         const { categories, categorySelectedId, selectedTitle, selectedSource } = this.state;
@@ -98,7 +128,7 @@ export default class ImportFileModal extends Component {
                     <div className={style.footer}>
                         <div className={style.buttonsContainer}>
                             <button onClick={this.onCloseClickHandle} className="btn2 noBg mr-2">Cancel</button>
-                            <button onClick={this.onImportClickHandle} className="btn2">Import</button>
+                            <button disabled={!selectedTitle} onClick={this.onImportClickHandle} className="btn2">Import</button>
                         </div>
                     </div>
                 </div>
