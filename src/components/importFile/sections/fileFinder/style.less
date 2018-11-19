@@ -1,11 +1,29 @@
 @import '../../../../style/index';
 
 .container{
+    height: 400px;
+    overflow: auto;
     ul {
         background-color: @modal-background-color;
         li {
             div {
                 color: #c7c7c7;
+                div {
+                    div {
+                        div:hover {
+                            cursor: pointer;
+                        }
+                    }
+                }
+            }
+        }
+        li:first-of-type{
+            div {
+                div {
+                    div:hover{
+                        cursor: pointer;
+                    }
+                }
             }
         }
     }
@@ -13,4 +31,5 @@
     svg {
         margin-right: 5px;
     }
+
 }
