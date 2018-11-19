@@ -287,5 +287,5 @@ let tree = buildTree(getAllSolidityFiles(contractsDirectory))
 
 fs.writeFile(jsonFilePath, JSON.stringify(tree), 'utf8', function (err) {
     if (err) throw err;
-    console.log('OpenZeppelin .json successfully file created.');
+    console.log('OpenZeppelin .json successfully created.');
 });
