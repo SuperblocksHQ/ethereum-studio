@@ -21,8 +21,8 @@ import {
     IconFolder,
 } from '../../../icons';
 import style from './style.less';
-
-const data = require('../../../../assets/static/json/openzeppelin.json');
+import Theme from './theme';
+import data from '../../../../assets/static/json/openzeppelin.json';
 
 export default class FileFinder extends Component {
     constructor(props){
@@ -82,7 +82,8 @@ export default class FileFinder extends Component {
             <div className={style.container}>
                 <Treebeard data={data}
                            decorators={{...decorators, Header: decorator.Header}}
-                           onToggle={this.onToggle}/>
+                           onToggle={this.onToggle}
+                           style={Theme}/>
             </div>
         );
     }

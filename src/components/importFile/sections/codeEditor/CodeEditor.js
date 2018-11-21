@@ -15,7 +15,6 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { Component } from 'react';
-import style from './style.less';
 import MonacoEditor from 'react-monaco-editor';
 
 export default class CodeEditor extends Component {
@@ -40,8 +39,8 @@ export default class CodeEditor extends Component {
 
         return (
             <MonacoEditor
-                width="600"
-                height="400"
+                width="640"
+                height="500"
                 language="javascript"
                 theme="vs-dark"
                 value={this.props.source}
