@@ -51,9 +51,9 @@ export default class FileFinder extends Component {
         this.setState({cursor: node});
 
         // only update if a file is selected
-        const isFolder = !node.children;
+        const isFile = !node.children;
 
-        isFolder && this.props.onFileSelected(node.name, node.source);
+        isFile && this.props.onFileSelected(node.name, node.source, node.path, node.dependencies);
     }
 
     render() {
