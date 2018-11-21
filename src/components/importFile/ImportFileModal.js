@@ -23,6 +23,8 @@ import FileFinder from "./sections/fileFinder/FileFinder";
 import ImportCategory from "./ImportCategory";
 import CodeEditor from "./sections/codeEditor/CodeEditor";
 
+import data from '../../assets/static/json/openzeppelin.json';
+
 export default class ImportFileModal extends Component {
 
     constructor(props) {
@@ -30,36 +32,58 @@ export default class ImportFileModal extends Component {
         this.state = {
             selectedTitle: "",
             selectedSource: "",
+            selectedPath: "",
+            selectedDependencies: [],
             categorySelectedId: 0,
             categories: [{ id: 0, name: "OpenZeppelin" }]
         }
-    }
+    };
 
     onCategorySelected(id) {
-        console.log("category selected")
         this.setState({
             categorySelectedId: id
         })
-    }
+    };
 
-    onFileSelected = (title, source) => {
+    onFileSelected = (title, source, selectedPath, dependencies) => {
         this.setState({
             selectedTitle: title,
-            selectedSource: source
-        })
-    }
+            selectedSource: source,
+            selectedPath: selectedPath,
+            selectedDependencies: dependencies
+        });
+        console.log(!!dependencies[0] && this.getSourceFromAbsolutePath(dependencies[0].absolutePath))
+    };
+
+    getSourceFromAbsolutePath = (absolutePath) => {
+        // remove first element from array
+        const pathParts = absolutePath.split("/");
+        let currentNode = data;
+        let source;
+
+        pathParts.map(part => {
+            if (currentNode && currentNode.children) {
+                currentNode = currentNode.children.find(child => child.name === part);
+                if (currentNode.source) {
+                    source = currentNode.source
+                }
+            }
+        });
+        return source;
+    };
 
     onCloseClickHandle = () => {
         this.props.onCloseClick();
-    }
+    };
 
     onImportClickHandle = () => {
 
             const project = this.props.project;
             const file = this.state.selectedTitle;
             const source = this.state.selectedSource;
+            const dependencies = this.state.selectedDependencies;
 
-            const path = "/"
+            const path = "/";
 
             if (file) {
                 if (!file.match('(^[a-zA-Z0-9-_.]+[/]?)$') || file.length > 255) {
@@ -70,6 +94,7 @@ export default class ImportFileModal extends Component {
                     if (status == 0) {
                         project.saveFile(`${path}${file}`, source, operation => {
                             if (operation.status == 0){
+                               //@TODO figure out redraw
                                project.redraw()
                             } else {
                                 alert('An error has occured.', status);
@@ -104,7 +129,7 @@ export default class ImportFileModal extends Component {
                                 <ul>
                                     {
                                         categories.map(category =>
-                                            <li key={category.id} className={categorySelectedId == category.id ? style.selected : null}>
+                                            <li key={category.id} className={categorySelectedId === category.id ? style.selected : null}>
                                                 <ImportCategory
                                                     title={category.name}
                                                     onCategorySelected={() => this.onCategorySelected(category.id)}/>
