@@ -14,11 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export const validateGasLimit = (gasLimit) =>
-    ((gasLimit <= 0 || gasLimit > 7900000) ? 'GAS_LIMIT' : null);
+import { connect } from 'react-redux';
+import { getSelectedProject } from '../../../../selectors/projects';
+import MainnetWarning from './MainnetWarning';
 
-export const validateGasPrice = (gasPrice) =>
-    ((gasPrice <= 0 || gasPrice > 100000000000) ? 'GAS_PRICE' : null);
+const mapStateToProps = state => ({
+    selectedProject: getSelectedProject(state),
+});
 
-export const validateMainnetWarning = (projectName, value) =>
-    (projectName !== value ? 'MAINNNET_WARNING' : null);
+export default connect(mapStateToProps, null)(MainnetWarning);

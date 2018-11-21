@@ -18,6 +18,17 @@ const migrations = {
                 }
             }
         }
+    },
+    2: (state) => {
+        return {
+            ...state,
+            projects: {
+                selectedProjectId: undefined,
+                selectedProject: {
+                    id: selectedProjectId ? selectedProjectId : 0
+                }
+            }
+        }
     }
 }
 
@@ -25,7 +36,7 @@ const migrations = {
 const config = {
     key: 'root',
     storage,
-    version: 1,
+    version: 2,
     blacklist: ['app', 'view'],
     migrate: createMigrate(migrations, { debug: true })
 };

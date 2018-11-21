@@ -1,0 +1,84 @@
+// Copyright 2018 Superblocks AB
+//
+// This file is part of Superblocks Lab.
+//
+// Superblocks Lab is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation version 3 of the License.
+//
+// Superblocks Lab is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
+
+@import '../../../../style/index';
+
+.mainnetWarning {
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+    -webkit-border-radius: 4;
+    -moz-border-radius: 4;
+    border-radius: 4px;
+    background-color: @modal-background-color;
+    color: #fff;
+    .area {
+        padding: 25px 15px 40px 32px;
+    }
+    .container {
+        width: 512px;
+        height: 300px;
+        .form {
+            display: inline-block;
+            -webkit-border-radius: 17;
+            -moz-border-radius: 17;
+            border-radius: 17px;
+            width: 100%;
+            margin: 10px auto;
+            label {
+                margin-left: 3px;
+            }
+        }
+        input {
+            width: 443px;
+        }
+        .buttonConfirm {
+            background-color: #ffffff;
+            border-radius: 4px;
+            -webkit-border-radius: 4;
+            -moz-border-radius: 4;
+            color: #d80000;
+            padding: 7px 20px;
+            text-decoration: none;
+            font-weight: 600;
+            user-select: none;
+            outline: none;
+            border: none;
+            cursor: pointer;
+            &:hover {
+                background-color: #d80000;
+                color: #fff;
+                &:disabled {
+                    background-color: #cacaca;
+                    color: #d8000045;
+                }
+            }
+            &:disabled {
+                background-color: #cacaca;
+                color: #d8000045;
+            }
+        }
+    }
+    .footer {
+        position: absolute;
+        right: 40px;
+        bottom: 40px;
+    }
+    .alignContentCenter {
+        align-items :center;
+        justify-content: center;
+        flex-direction: column;
+        display:grid;
+    }
+}
