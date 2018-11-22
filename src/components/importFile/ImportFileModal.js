@@ -93,12 +93,12 @@ export default class ImportFileModal extends Component {
                     const browserPath = "/contracts/".concat(path);
                     const source = this.getSourceFromAbsolutePath(path);
 
-                    this.addFilesToProject(project, file, browserPath, source)
+                    this.addFilesToProject(project, file, browserPath, source);
 
                     });
 
             } catch (e) {
-
+                // triggered if file with existing filename is imported
             }
 
     };
@@ -109,9 +109,9 @@ export default class ImportFileModal extends Component {
                 alert('Illegal file name. Only A-Za-z0-9, dash (-) and underscore (_) allowed. Max 255 characters.');
                 return false;
             }
-            project.newFile(browserPath, file, status => {
+            project.newFile((browserPath, file, status) => {
                 if (status == 0) {
-                    project.saveFile(browserPath, source, operation => {
+                    project.saveFile((browserPath, source, operation) => {
                         if (operation.status == 0){
                             //@TODO figure out redraw
                             project.redraw()
