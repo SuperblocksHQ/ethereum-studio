@@ -53,7 +53,7 @@ export default class FileFinder extends Component {
         // only update if a file is selected
         const isFile = !node.children;
 
-        isFile && this.props.onFileSelected(node.name, node.source, node.path, node.dependencies);
+        isFile && this.props.onFileSelected(node.name, node.source, "/".concat(node.path), node.dependencies);
     }
 
     render() {

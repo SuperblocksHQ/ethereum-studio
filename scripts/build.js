@@ -235,10 +235,10 @@ function buildTree(paths) {
                 let nameSlice = currentPath.split('/');
                 let name = nameSlice[nameSlice.length-1];
                 if (currentPath.endsWith('.sol')){
-                    // file
+                    // if it is a file
                     let json = getFileJSON(jsonDirectory, name);
                     let relativePath = getLocalPath(json.sourcePath);
-                    // to avoid duplicates
+                    // using a dictionary to avoid duplicates
                     let dict = {};
                     let dependencies = getDependencies(json, relativePath, dict);
                     dependencies = trimDependencies(dependencies);
@@ -250,7 +250,7 @@ function buildTree(paths) {
                         dependencies: dependencies
                     }
                 } else {
-                    // folder
+                    // if it is a folder
                     node = {
                         name: i === 0 ? "contracts" : name,
                         toggled: i === 0 && true,

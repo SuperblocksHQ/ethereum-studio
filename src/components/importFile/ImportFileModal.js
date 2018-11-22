@@ -52,14 +52,13 @@ export default class ImportFileModal extends Component {
             selectedPath: selectedPath,
             selectedDependencies: dependencies
         });
-        console.log(!!dependencies[0] && this.getSourceFromAbsolutePath(dependencies[0].absolutePath))
     };
 
     getSourceFromAbsolutePath = (absolutePath) => {
         // remove first element from array
         const pathParts = absolutePath.split("/");
         let currentNode = data;
-        let source;
+        let source = "";
 
         pathParts.map(part => {
             if (currentNode && currentNode.children) {
@@ -79,38 +78,57 @@ export default class ImportFileModal extends Component {
     onImportClickHandle = () => {
 
             const project = this.props.project;
-            const file = this.state.selectedTitle;
-            const source = this.state.selectedSource;
-            const dependencies = this.state.selectedDependencies;
+            const {selectedDependencies, selectedTitle, selectedPath, selectedSource} = this.state;
 
-            const path = "/";
+            try {
 
-            if (file) {
-                if (!file.match('(^[a-zA-Z0-9-_.]+[/]?)$') || file.length > 255) {
-                    alert('Illegal file name. Only A-Za-z0-9, dash (-) and underscore (_) allowed. Max 255 characters.');
-                    return false;
-                }
-                project.newFile(path, file, status => {
-                    if (status == 0) {
-                        project.saveFile(`${path}${file}`, source, operation => {
-                            if (operation.status == 0){
-                               //@TODO figure out redraw
-                               project.redraw()
-                            } else {
-                                alert('An error has occured.', status);
-                            }
+                // add selected file
+                this.addFilesToProject(project, selectedTitle, selectedPath, selectedSource);
 
-                        })
-                    } else {
-                        status == 3 ? alert('A file or folder with that name already exists at this location.', status) : alert('Could not create the file.', status);
-                    }
-                });
-                this.onCloseClickHandle();
-            } else {
-                alert('A file must be selected');
+                // add dependencies
+                selectedDependencies.map((dependency) => {
+
+                    const file = dependency.fileName;
+                    const path = dependency.absolutePath;
+                    const browserPath = "/contracts/".concat(path);
+                    const source = this.getSourceFromAbsolutePath(path);
+
+                    this.addFilesToProject(project, file, browserPath, source)
+
+                    });
+
+            } catch (e) {
+
             }
 
     };
+
+    addFilesToProject = (project, file, browserPath, source) => {
+        if (file) {
+            if (!file.match('(^[a-zA-Z0-9-_.]+[/]?)$') || file.length > 255) {
+                alert('Illegal file name. Only A-Za-z0-9, dash (-) and underscore (_) allowed. Max 255 characters.');
+                return false;
+            }
+            project.newFile(browserPath, file, status => {
+                if (status == 0) {
+                    project.saveFile(browserPath, source, operation => {
+                        if (operation.status == 0){
+                            //@TODO figure out redraw
+                            project.redraw()
+                        } else {
+                            alert('An error has occured.', status);
+                        }
+
+                    })
+                } else {
+                    status == 3 ? alert('A file or folder with that name already exists at this location.', status) : alert('Could not create the file.', status);
+                }
+            });
+            this.onCloseClickHandle();
+        } else {
+            alert('A file must be selected');
+        }
+    }
 
     render() {
         const { categories, categorySelectedId, selectedTitle, selectedSource } = this.state;
