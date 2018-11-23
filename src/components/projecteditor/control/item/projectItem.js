@@ -27,6 +27,7 @@ import WalletItem from './walletItem';
 import EnvironmentsItem from './environmentsItem';
 import EnvironmentItem from './environmentItem';
 import { IconShowPreview } from '../../../icons';
+import Modal from '../../../modal';
 
 import Backend from '../backend';
 import TransactionLogData from '../../../blockexplorer/transactionlogdata';
@@ -236,6 +237,136 @@ export default class ProjectItem extends Item {
                 console.error('Dappfile not accessible.', err);
                 cb(1);
             });
+    };
+
+    ipfsSyncUp = () => {
+        const modalData = {
+            title: 'Uploading to IPFS',
+            body: (
+                <div>
+                    This project is being uploaded to IPFS. <br />
+                    Please stand by...
+                </div>
+            ),
+            style: { width: '680px' },
+        };
+
+        const modal = <Modal data={modalData} />;
+
+        this.functions.modal.show({
+            cancel: () => {
+                return false;
+            },
+            render: () => {
+                return modal;
+            },
+        });
+
+        this.backend.ipfsSyncUp(this.getInode()).then( (hash) => {
+            alert('Project successfully uploaded to IPFS. Hash: ' + hash);
+            this.functions.modal.close();
+        })
+        .catch( (e) => {
+            console.log(e);
+            alert('Error: Something went wrong when uploading to IPFS. Please try agin later.');
+            this.functions.modal.close();
+        });
+    };
+
+    ipfsSyncDown = (hash) => {
+        return new Promise( (resolve, reject) => {
+            const modalData = {
+                title: 'Syncing project with IPFS',
+                body: (
+                    <div>
+                        Syncing this project with IPFS. <br />
+                        Please stand by...
+                    </div>
+                ),
+                style: { width: '680px' },
+            };
+
+            const modal = <Modal data={modalData} />;
+
+            this.functions.modal.show({
+                cancel: () => {
+                    return false;
+                },
+                render: () => {
+                    return modal;
+                },
+            });
+
+            this.backend.ipfsSyncDown(this.getInode(), hash).then( (files) => {
+
+                // Upvalue: files
+                const fn = () => {
+                    return new Promise( (resolve, reject) => {
+                        const file = files.pop();
+                        if (!file) {
+                            // Done
+                            resolve();
+                            return;
+                        }
+                        if (file.content) {
+                            const a = file.path.match("[^/]+(.*/)([^/]+)$");
+                            if (a) {
+                                const path = a[1];
+                                const filename = a[2];
+                                const content = file.content;
+                                console.log(path, filename);
+                                fn().then(resolve).catch(reject);
+                                this.newFile(path, filename, (status) => {
+                                    //if (path[path.length-1] != '/') {
+                                    //path = path + "/";
+                                    //}
+                                    const fullPath = path + filename;
+                                    this
+                                        .getItemByPath(
+                                            fullPath.split('/'),
+                                            this
+                                        )
+                                        .then(item => {
+                                            item.setContents(
+                                                content.toString()
+                                            );
+                                            item.save()
+                                                .then(resolve)
+                                                .catch(reject);
+                                        })
+                                        .catch(() => {
+                                            reject("Error: Could not  write to file, sync halted.");
+                                        });
+                                });
+                            }
+                            else {
+                                fn().then(resolve).catch(reject);
+                            }
+                        }
+                        else {
+                            fn().then(resolve).catch(reject);
+                        }
+                    });
+                };
+
+                fn().then( () => {
+                    this.functions.modal.close();
+                    resolve();
+                })
+                .catch ( (e) => {
+                    this.functions.modal.close();
+                    console.log(e);
+                    alert('Error: Something went wrong when syncing the project files with the files in IPFS.');
+                    resolve();  // Yes, resolve.
+                });
+            })
+            .catch( (e) => {
+                console.log(e);
+                alert('Error: Something went wrong when syncing with IPFS. Please try agin later.');
+                this.functions.modal.close();
+                resolve();  // Yes, resolve.
+            });
+        });
     };
 
     /**

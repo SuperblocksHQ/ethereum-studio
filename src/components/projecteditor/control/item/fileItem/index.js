@@ -430,6 +430,37 @@ export default class FileItem extends Item {
         this.delete();
     };
 
+    _clickIpfsSyncUp = e => {
+        e.preventDefault();
+
+        if (!confirm("Warning: This will upload your complete project to IPFS, making it visible to the world. Are you sure you want to do this?")) {
+            return;
+        }
+
+        const project = this.getProject();
+
+        project.ipfsSyncUp();
+    };
+
+    _clickIpfsSyncDown = e => {
+        e.preventDefault();
+
+        if (!confirm("Warning: This will download and sync files on IPFS with files in this repo, are you sure you want to do this?")) {
+            return;
+        }
+
+        const hash = prompt("Enter IPFS hash pl0x:");
+
+        if (!hash) return;
+
+        const project = this.getProject();
+
+        project.ipfsSyncDown(hash).then( () => {
+            // Put redraw in a timeout because it seems to be running to early if it runs in the same cycle.
+            setTimeout(()=>{this.redrawMain(true)}, 1);
+        });
+    };
+
     delete = () => {
         return new Promise( (resolve, reject) => {
             // We need to load the file tree below this item (if any) to be able to notify those items about the delete.
@@ -543,6 +574,8 @@ export default class FileItem extends Item {
                     clickRenameFile={this._clickRenameFile}
                     clickDeleteFile={this._clickDeleteFile}
                     icons={this._renderIcons(level, index)}
+                    clickIpfsSyncUp={this._clickIpfsSyncUp}
+                    clickIpfsSyncDown={this._clickIpfsSyncDown}
                 />
             );
         }

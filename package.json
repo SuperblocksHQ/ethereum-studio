@@ -89,6 +89,7 @@
     "ethereumjs-util": "^5.1.5",
     "ethereumjs-vm": "^2.3.3",
     "file-saver": "^2.0.0-rc.4",
+    "ipfs-api": "^26.1.2",
     "jszip": "^3.1.5",
     "jszip-utils": "^0.0.2",
     "less": "^3.8.1",

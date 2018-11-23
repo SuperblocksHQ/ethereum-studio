@@ -16,6 +16,7 @@
 
 const JSZip = require("jszip");
 const FileSaver = require('file-saver');
+const IPFS = require('ipfs-api');
 
 const DAPP_FORMAT_VERSION = 'dapps1.1.0';
 export default class Backend {
@@ -944,5 +945,114 @@ export default class Backend {
                 reject();
             });
         });
-    }
+    };
+
+    ipfsSyncDown = (inode, hash, options) => {
+        return new Promise( (resolve, reject) => {
+            const ipfs = new IPFS({ host: 'ipfs.infura.io', port: 5001,
+                protocol: 'https' });
+
+            ipfs.files.get(hash).then( (res) => {
+                console.log('read', res);
+                resolve(res);
+            })
+            .catch( (e) => {
+                reject(e);
+            });
+        });
+    };
+
+    /**
+     * Upload the given project to IPFS.
+     *
+     */
+    ipfsSyncUp = (inode, keepState) => {
+        return new Promise( (resolve, reject) => {
+            const data =
+                JSON.parse(localStorage.getItem(DAPP_FORMAT_VERSION)) || {};
+
+            if (!data.projects) data.projects = [];
+
+            var project = data.projects.filter(item2 => {
+                return inode == item2.inode;
+            })[0];
+
+            if (!project || !project.files) {
+                reject();
+                return;
+            }
+
+            const ipfs = new IPFS({ host: 'ipfs.infura.io', port: 5001,
+                protocol: 'https' });
+
+            //const ipfs = new IPFS({ host: '172.17.0.3', port: 5001,
+                //protocol: 'http' });
+
+            const files = [];
+
+            var node = project.files['/'];
+
+            const fn = (node, path) => {
+                return new Promise( (resolve) => {
+                    if (path == "build/" && !keepState) {
+                        resolve();
+                        return;
+                    }
+                    if (node.children) {
+                        const childrenKeys = Object.keys(node.children);
+                        const fn2 = () => {
+                            const childKey = childrenKeys.pop();
+                            if (childKey) {
+                                const child = node.children[childKey];
+                                if (child.type == 'f') {
+                                    files.push({
+                                            path: path + childKey,
+                                            content: ipfs.types.Buffer.from(child.contents),
+                                        });
+
+                                    fn2();
+                                    return
+                                }
+                                else {
+                                    // Directory
+                                    fn(child, path + childKey + '/').then( () => {
+                                        fn2();
+                                        return;
+                                    });
+                                }
+                            }
+                            else {
+                                resolve();
+                                return;
+                            }
+                        };
+
+                        fn2();
+                    }
+                    else {
+                        resolve();
+                    }
+                });
+            };
+
+            fn(node, "").then( () => {
+                console.log(files);
+                ipfs.files.add(files, {onlyHash: false, wrapWithDirectory: true}).then( (res) => {
+                    console.log(res);
+
+                    const hash = res.filter( (obj) => {
+                        if (obj.path === "") return true;
+                    })[0].hash;
+
+                    resolve(hash);
+                })
+                .catch( (e) => {
+                    reject(e);
+                });
+            })
+            .catch( (e) => {
+                reject(e);
+            });
+        });
+    };
 }
