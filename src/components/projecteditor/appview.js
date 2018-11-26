@@ -348,7 +348,7 @@ export default class AppView extends Component {
         if (!wallet) {
             return [];
         }
-        const walletType = wallet.getType();
+        const walletType = wallet.getWalletType();
 
         if (walletType == 'external') {
             // Metamask seems to always only provide one (the chosen) account.
