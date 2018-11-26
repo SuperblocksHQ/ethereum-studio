@@ -9479,6 +9479,11 @@ react-redux@^5.0.7:
     react-is "^16.6.0"
     react-lifecycles-compat "^3.0.0"
 
+react-splitter-layout@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/react-splitter-layout/-/react-splitter-layout-3.0.1.tgz#c2e00e69b35d240ab7a44f395d41803c5f4b70ef"
+  integrity sha512-XfFQvrvnow2XKil07FKIT9NuapNgeuQwcAJMZDGHLd/EZ8Ag6fb5U9sSF+g5qIeIux63bDY8RScl63kYaEFu7w==
+
 react-tippy@^1.2.3:
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/react-tippy/-/react-tippy-1.2.3.tgz#8aef183ec4986ca7c5c556465013d95196fecfd8"

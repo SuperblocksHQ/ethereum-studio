@@ -22,6 +22,9 @@ import ModalHeader from '../modal/modalHeader';
 import FileFinder from "./sections/fileFinder/FileFinder";
 import ImportCategory from "./ImportCategory";
 import CodeEditor from "./sections/codeEditor/CodeEditor";
+import SplitterLayout from 'react-splitter-layout';
+
+import './react-splitter-layout.css';
 
 import data from '../../assets/static/json/openzeppelin.json';
 
@@ -141,32 +144,34 @@ export default class ImportFileModal extends Component {
                         onCloseClick={this.onCloseClickHandle}
                     />
                     <div className={style.area}>
-                        <div className={style.categoriesArea}>
-                            <div className={style.title}>Categories</div>
-                            <div className={style.categoriesContainer}>
-                                <ul>
-                                    {
-                                        categories.map(category =>
+                        <SplitterLayout customClassName={style.draggableImport} horizontal={true} percentage secondaryInitialSize={85}>
+                            <div className={style.categoriesArea}>
+                                <div className={style.title}>Categories</div>
+                                <div className={style.categoriesContainer}>
+                                    <ul>
+                                        {categories.map(category =>
                                             <li key={category.id} className={categorySelectedId === category.id ? style.selected : null}>
                                                 <ImportCategory
                                                     title={category.name}
                                                     onCategorySelected={() => this.onCategorySelected(category.id)}/>
                                             </li>
-                                        )
-                                    }
-                                </ul>
+                                        )}
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
-                        <div className={style.finderArea}>
-                            <div className={style.title}>Files</div>
-                            <FileFinder onFileSelected={this.onFileSelected}/>
-                        </div>
-                        <div className={style.descriptionArea}>
-                            <div className={style.title}>{selectedTitle}</div>
-                            <div>
-                                <CodeEditor source={selectedSource}/>
+                            <SplitterLayout customClassName="secondPane" percentage secondaryInitialSize={70} vertical={false} >
+                            <div className={style.finderArea}>
+                                <div className={style.title}>Files</div>
+                                <FileFinder onFileSelected={this.onFileSelected}/>
                             </div>
-                        </div>
+                            <div className={style.descriptionArea}>
+                                <div className={style.title}>{selectedTitle}&nbsp;</div>
+                                <div>
+                                    <CodeEditor source={selectedSource}/>
+                                </div>
+                            </div>
+                            </SplitterLayout>
+                        </SplitterLayout>
                     </div>
                     <div className={style.footer}>
                         <div className={style.buttonsContainer}>

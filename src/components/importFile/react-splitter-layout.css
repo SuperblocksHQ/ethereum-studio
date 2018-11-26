@@ -1,0 +1,3 @@
+.secondPane .layout-pane:last-of-type {
+    overflow: hidden;
+}
