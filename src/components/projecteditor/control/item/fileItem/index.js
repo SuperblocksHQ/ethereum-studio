@@ -433,13 +433,14 @@ export default class FileItem extends Item {
     _clickIpfsSyncUp = e => {
         e.preventDefault();
 
-        if (!confirm("Warning: This will upload your complete project to IPFS, making it visible to the world. Are you sure you want to do this?")) {
-            return;
-        }
+        const response = prompt("Warning: This will upload your complete project to IPFS, making it visible to the world. Do you also want to upload the build files which contain possible sensitive data such as contract addresses? Type 'yes' to upload build files, type 'no' to not upload build files. Esc cancels upload.", "no");
+
+        if (!response) return;
+        const keepState = response.toLowerCase() === "yes";
 
         const project = this.getProject();
 
-        project.ipfsSyncUp();
+        project.ipfsSyncUp(keepState);
     };
 
     _clickIpfsSyncDown = e => {
@@ -456,8 +457,7 @@ export default class FileItem extends Item {
         const project = this.getProject();
 
         project.ipfsSyncDown(hash).then( () => {
-            // Put redraw in a timeout because it seems to be running to early if it runs in the same cycle.
-            setTimeout(()=>{this.redrawMain(true)}, 1);
+            this.redrawMain(true);
         });
     };
 

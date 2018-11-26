@@ -239,7 +239,7 @@ export default class ProjectItem extends Item {
             });
     };
 
-    ipfsSyncUp = () => {
+    ipfsSyncUp = (keepState) => {
         const modalData = {
             title: 'Uploading to IPFS',
             body: (
@@ -262,7 +262,7 @@ export default class ProjectItem extends Item {
             },
         });
 
-        this.backend.ipfsSyncUp(this.getInode()).then( (hash) => {
+        this.backend.ipfsSyncUp(this.getInode(), keepState).then( (hash) => {
             alert('Project successfully uploaded to IPFS. Hash: ' + hash);
             this.functions.modal.close();
         })
@@ -297,6 +297,8 @@ export default class ProjectItem extends Item {
                 },
             });
 
+            var overWriteStrategy = "ask";
+
             this.backend.ipfsSyncDown(this.getInode(), hash).then( (files) => {
 
                 // Upvalue: files
@@ -314,12 +316,43 @@ export default class ProjectItem extends Item {
                                 const path = a[1];
                                 const filename = a[2];
                                 const content = file.content;
-                                console.log(path, filename);
-                                fn().then(resolve).catch(reject);
                                 this.newFile(path, filename, (status) => {
-                                    //if (path[path.length-1] != '/') {
-                                    //path = path + "/";
-                                    //}
+                                    if (status == 1) {
+                                        // File already exists. Overwrite ?
+                                        if (overWriteStrategy === "ask") {
+                                            var response = prompt("Do you want to overwrite the file " + path + filename +"? yes/no/all/never", "no");
+                                            if (!response) response = "no";
+                                            response = response.toLowerCase();
+                                            if (response == "yes") {
+                                                // Fall through, but ask again next time.
+                                            }
+                                            else if (response == "never") {
+                                                overWriteStrategy = "never";
+                                                fn().then(resolve).catch(reject);
+                                                return;
+                                            }
+                                            else if (response == "all") {
+                                                 overWriteStrategy = "all";
+                                                // Fall through
+                                            }
+                                            else {
+                                                // Assume no
+                                                fn().then(resolve).catch(reject);
+                                                return;
+                                            }
+                                        }
+                                        else if (overWriteStrategy === "never") {
+                                            fn().then(resolve).catch(reject);
+                                            return;
+                                        }
+                                        else if (overWriteStrategy === "all") {
+                                            // Fall through
+                                        }
+                                    }
+                                    else if (status > 1) {
+                                        reject();
+                                        return;
+                                    }
                                     const fullPath = path + filename;
                                     this
                                         .getItemByPath(
@@ -331,11 +364,15 @@ export default class ProjectItem extends Item {
                                                 content.toString()
                                             );
                                             item.save()
-                                                .then(resolve)
-                                                .catch(reject);
+                                                .then( () => {
+                                                    fn().then(resolve).catch(reject);
+                                                })
+                                                .catch( () => {
+                                                    reject("Error: Could not write to file, sync halted.");
+                                                });
                                         })
                                         .catch(() => {
-                                            reject("Error: Could not  write to file, sync halted.");
+                                            reject("Error: Could not write to file, sync halted.");
                                         });
                                 });
                             }
