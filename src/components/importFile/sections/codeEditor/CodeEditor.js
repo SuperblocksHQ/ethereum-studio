@@ -34,12 +34,12 @@ export default class CodeEditor extends Component {
     render() {
         const options = {
             selectOnLineNumbers: false,
-            readOnly: true
+            readOnly: true,
+            automaticLayout: true
         };
 
         return (
             <MonacoEditor
-                width="655"
                 height="340"
                 language="javascript"
                 theme="vs-dark"
