@@ -60,7 +60,7 @@ export default class DappfileItem extends FileItem {
                 })
                 .catch(() => {
                     this.props.state.dappfile = new Dappfile(
-                        this.getDefaultDappfile()
+                        DappfileItem.getDefaultDappfile()
                     );
                     this.save()
                         .then(() => {

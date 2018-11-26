@@ -172,14 +172,100 @@ export default class App extends Component {
 
                 this.functions.modal.close();
 
-                if (showSplash) {
-                    this._showSplash();
-                }
+                this._checkIpfsOnUrl().then(status => {
+                    if (status == 1) {
+                        return;
+                    }
+                    if (showSplash) {
+                        this._showSplash();
+                    }
+                });
             } else {
                 setTimeout(fn, 500);
             }
         };
         fn();
+    };
+
+    _checkIpfsOnUrl = () => {
+        return new Promise(resolve => {
+            const a = document.location.href.match("^.*#/ipfs/(.+)$");
+            if (a) {
+                if (!confirm("Do you want to import the project from IPFS?")) {
+                    resolve();
+                    return;
+                }
+
+                // TODO: pop modal
+
+                this._importFromIpfs(a[1]).then( () => {
+                    // TODO
+                    // Rewrite url to remove dash
+                    // Close modal
+                    resolve(1);
+                });
+            }
+            else {
+                resolve(0);
+            }
+        });
+    };
+
+    _importFromIpfs = (hash) => {
+        return new Promise( resolve => {
+            // Load files from IPFS.
+            const backend = new Backend();
+            const files = {
+                '/': {
+                    type: 'd',
+                    children: {}
+                }
+            };
+
+            backend.ipfsFetchFiles(hash).then( result => {
+                // Convert IPFS result into our internal files/dir format.
+                result.map( file => {
+                    if (file.content) {
+                        const a = file.path.match("[^/]+(.*/)([^/]+)$");
+                        const fragments = a[1].split('/');
+                        let node = files['/'].children;
+                        for(let i = 1; i < fragments.length - 1; i++) {
+                            if (!node[fragments[i]]) {
+                                node[fragments[i]] = {
+                                    type: 'd',
+                                    children: {},
+                                };
+                            }
+                            node = node[fragments[i]].children;
+                        }
+                        node[a[2]] = {
+                            type: 'f',
+                            contents: file.content.toString(),
+                        };
+                    }
+                });
+                console.log("such success", files);
+                // We need to wait for control to be loaded.
+                // NOTE: 
+                const fn = () => {
+                    if (this.router.control) {
+                        this.router.control.importProject(files);
+                        resolve();
+                    }
+                    else {
+                        setTimeout( fn, 100);
+                    }
+                };
+
+                fn();
+            })
+            .catch( () => {
+                alert("Error: Could not import project.");
+                resolve();
+                return;
+            });
+
+        });
     };
 
     _showSplash = () => {

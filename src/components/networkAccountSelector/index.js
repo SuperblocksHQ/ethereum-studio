@@ -303,7 +303,7 @@ class AccountSelector extends Component {
         const accountName = project.getAccount();
         if (!project || !accountName) return {};
         const chosenEnv = project.getEnvironment();
-        const network = chosenEnv;
+        var network = chosenEnv;
         var isLocked = false;
         var walletType = null;
         var address = '';
@@ -311,6 +311,11 @@ class AccountSelector extends Component {
 
         const accountsItem = project.getHiddenItem('accounts');
         const accountItem = accountsItem.getByName(accountName);
+
+        if (!accountItem) {
+            network = "";
+            return { accountType, isLocked, network, address };
+        }
 
         const walletName = accountItem.getWallet(chosenEnv);
         const accountIndex = accountItem.getAccountIndex(chosenEnv);

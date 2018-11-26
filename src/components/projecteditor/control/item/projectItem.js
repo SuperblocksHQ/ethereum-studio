@@ -299,7 +299,7 @@ export default class ProjectItem extends Item {
 
             var overWriteStrategy = "ask";
 
-            this.backend.ipfsSyncDown(this.getInode(), hash).then( (files) => {
+            this.backend.ipfsFetchFiles(hash).then( (files) => {
 
                 // Upvalue: files
                 const fn = () => {

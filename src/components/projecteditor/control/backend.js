@@ -947,7 +947,7 @@ export default class Backend {
         });
     };
 
-    ipfsSyncDown = (inode, hash, options) => {
+    ipfsFetchFiles = (hash, options) => {
         return new Promise( (resolve, reject) => {
             const ipfs = new IPFS({ host: 'ipfs.infura.io', port: 5001,
                 protocol: 'https' });
