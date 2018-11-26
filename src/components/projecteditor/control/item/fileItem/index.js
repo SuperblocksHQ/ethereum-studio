@@ -708,7 +708,8 @@ export default class FileItem extends Item {
                                             project: this.getProject(),
                                         },
                                     },
-                                    this.router
+                                    this.router,
+                                    this.functions
                                 )
                             );
                         } else if (file.type == 'f') {
@@ -736,7 +737,8 @@ export default class FileItem extends Item {
                                             _tag: 0,
                                         },
                                     },
-                                    this.router
+                                    this.router,
+                                    this.functions
                                 );
                                 fileItem.props.onClick = fileItem._openItem;
                             }
@@ -824,7 +826,8 @@ export default class FileItem extends Item {
                                             _tag: 4,
                                         },
                                     },
-                                    this.router
+                                    this.router,
+
                                 );
                                 deployItem.props.onClick = deployItem._openItem;
 

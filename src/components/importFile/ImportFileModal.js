@@ -109,9 +109,9 @@ export default class ImportFileModal extends Component {
                 alert('Illegal file name. Only A-Za-z0-9, dash (-) and underscore (_) allowed. Max 255 characters.');
                 return false;
             }
-            project.newFile((browserPath, file, status) => {
+            project.newFile(browserPath, file, status => {
                 if (status == 0) {
-                    project.saveFile((browserPath, source, operation) => {
+                    project.saveFile(browserPath, source, operation => {
                         if (operation.status == 0){
                             //@TODO figure out redraw
                             project.redraw()
@@ -128,7 +128,7 @@ export default class ImportFileModal extends Component {
         } else {
             alert('A file must be selected');
         }
-    }
+    };
 
     render() {
         const { categories, categorySelectedId, selectedTitle, selectedSource } = this.state;
