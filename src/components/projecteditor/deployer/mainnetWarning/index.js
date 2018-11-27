@@ -14,15 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import Item from './item';
+import { connect } from 'react-redux';
+import { getSelectedProject } from '../../../../selectors/projects';
+import MainnetWarning from './MainnetWarning';
 
-export default class WalletItem extends Item {
-    constructor(props, router) {
-        props.type = props.type || 'wallet';
-        super(props, router);
-    }
+const mapStateToProps = state => ({
+    selectedProject: getSelectedProject(state),
+});
 
-    getWalletType = () => {
-        return this.props.state.walletType;
-    };
-}
+export default connect(mapStateToProps, null)(MainnetWarning);

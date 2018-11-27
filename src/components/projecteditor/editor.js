@@ -271,6 +271,8 @@ export default class Editor extends Component {
         const options = {
             selectOnLineNumbers: true,
             readOnly: this.props.item.isReadOnly(),
+            folding: "true",
+            foldingStrategy: "indentation",
         };
         const toolbar = this.renderToolbar();
         const height = this.getHeight();

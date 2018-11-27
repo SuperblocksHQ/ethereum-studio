@@ -1,3 +1,6 @@
 export default {
-    selectedProjectId: null,
+    selectedProject: {
+        id: 0,
+        name: ''
+    }
 };

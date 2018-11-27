@@ -19,3 +19,6 @@ export const validateGasLimit = (gasLimit) =>
 
 export const validateGasPrice = (gasPrice) =>
     ((gasPrice <= 0 || gasPrice > 100000000000) ? 'GAS_PRICE' : null);
+
+export const validateMainnetWarning = (projectName, value) =>
+    (projectName !== value ? 'MAINNNET_WARNING' : null);

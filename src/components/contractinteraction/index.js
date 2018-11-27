@@ -279,7 +279,23 @@ var render = function(abi, contract) {
         for(var index=0;index<item.inputs.length;index++) {
             var input=item.inputs[index];
             var id2=id+"__"+input.name;
-            args.push(document.getElementById(id2).value);
+            var value = document.getElementById(id2).value;
+            // Check if input string is Array, remove [] and convert it to Array
+            if(input.type.includes("[")) {
+                value = value.replace(`+/[[\]]/g+`, '').split(",");
+            } 
+            // If it's array of Booleans, convert them to bool as js thinks of all strings > 0 as true value
+            if(input.type == "bool[]") {
+                for (var i = 0; i < value.length; i++) {
+                    value[i] = value[i] === 'false' || value[i] == 0 ? false : value[i];
+                    value[i] = value[i] === 'true' || value[i] == 1 ? true : value[i];        
+                }
+            }
+            else if(input.type == "bool") {
+                value = value === 'false' || value == 0 ? false : value;
+                value = value === 'true' || value == 1 ? true : value;      
+            }
+            args.push(value);
         }
         if(item.constant) {
         }
@@ -336,20 +352,32 @@ var render = function(abi, contract) {
                 if (elm) elm.textContent=res.toString();
             }
             else {
-                if(! (res instanceof Array)) res=[res];
-                for(var index=0;index<item.outputs.length;index++) {
-                    var output=item.outputs[index];
-                    var id2=id+"_output_"+index;
-                    var val=res.shift()
-                    var isBool = typeof val =='boolean'
-                    var isString = typeof val =='string'
-                    var value=val || isBool?val:isString?"(Empty)":iserr?"(ERROR)":"(NO DATA)";
-                    // TODO: Is this really necessary or if it is, is it complete? Why not check for all integer types?
-                    if(item.type=="uint256") {
-                        value=res.toNumber();
+                if(! (res instanceof Array))  {
+                    res=[res];
+
+                    for(var index=0;index<item.outputs.length;index++) {
+                        var output=item.outputs[index];
+                        var id2=id+"_output_"+index;
+                        var val=res.shift()
+                        var isBool = typeof val =='boolean'
+                        var isString = typeof val =='string'
+                        var value=val || isBool?val:isString?"(Empty)":iserr?"(ERROR)":"(NO DATA)";
+                        // TODO: Is this really necessary or if it is, is it complete? Why not check for all integer types?
+                        if(item.type=="uint256") {
+                            value=res.toNumber();
+                        }
+                        var elm = document.getElementById(id2);
+                        if (elm) elm.textContent=value;
                     }
-                    var elm = document.getElementById(id2);
-                    if (elm) elm.textContent=value;
+                }
+                else {
+                    for(var index=0;index<item.outputs.length;index++) {
+                        var output=item.outputs[index];
+                        var id2=id+"_output_"+index;
+                        var value = res.length != 0 ? res.toString() : "(NO DATA)";
+                        var elm = document.getElementById(id2);
+                        if (elm) elm.textContent=value;
+                    }
                 }
             }
         };

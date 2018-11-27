@@ -14,67 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-.toolbar {
-    &:after {
-        content: " ";
-        display: block;
-        clear: both;
-    }
-    display: block;
-    min-height: 25px;
-    box-shadow: 1px;
-    padding: 12px 14px 12px 14px;
-    .buttons {
-        float: left;
-        display: flex;
-        align-content: center;
-        align-items: center;
-        >button {
-            margin-right: 10px;
-            color: #fff;
-            opacity: 0.6;
-            &:hover {
-                opacity: 1;
-            }
-            &.running {
-                opacity: 1;
-                &:hover {
-                    color: none;
-                }
-                /* The animation part: */
-                animation-name: spin;
-                animation-duration: 1000ms;
-                animation-iteration-count: infinite;
-                animation-timing-function: linear;
-            }
-        }
-    }
-    .status {
-        float: left;
-        margin-left: 80px;
-    }
-    .info {
-        float: right;
-        display: block;
-        overflow: hidden;
-        text-align: right;
-        color: #cecece;
-        font-size: 0.9em;
-        margin-right: 25px;
-    }
-}
-@-moz-keyframes spin {
-    from { -moz-transform: rotate(0deg); }
-    to { -moz-transform: rotate(360deg); }
-}
-@-webkit-keyframes spin {
-    from { -webkit-transform: rotate(0deg); }
-    to { -webkit-transform: rotate(360deg); }
-}
-@keyframes spin {
-    from {transform:rotate(0deg);}
-    to {transform:rotate(360deg);}
-}
 .console {
     position: relative;
     width: 100%;
@@ -95,7 +34,6 @@
         color: #333;
     }
     .heading {
-        /*font-family: "VT323";*/
         display: block;
         text-align: left;
         font-size: 0.9em;
@@ -119,7 +57,6 @@
         }
     }
     .status {
-        /*font-family: "VT323";*/
         display: block;
         height: 1px;
         background-color: #000;
@@ -131,7 +68,6 @@
         }
     }
     .terminal {
-        /*font-family: "VT323";*/
         text-align: left;
         height: 100%;
         width: 100%;
