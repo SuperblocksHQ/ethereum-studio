@@ -10,7 +10,8 @@
     "test:watch": "npm test -- --watch",
     "format": "prettier --trailing-comma es5 --single-quote --write 'src/*/*.js' 'src/*/!(node_modules)/**/*.js' '!src/components/solc/**/*.js' '!src/components/evm/**/*.js' webpack.config.js",
     "lint-javascript": "exec eslint --config ./config/eslint/eslint.json --ext \".js\" ./src",
-    "lint": "yarn run lint-javascript"
+    "lint": "yarn run lint-javascript",
+    "postinstall": "node scripts/postinstall.js"
   },
   "eslintIgnore": [
     "ethereumjs-tx-*.js",
