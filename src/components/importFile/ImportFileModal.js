@@ -100,8 +100,13 @@ export default class ImportFileModal extends Component {
 
                     });
 
+               //@TODO Figure out redraw
+
             } catch (e) {
                 // triggered if file with existing filename is imported
+            } finally {
+                // close the modal
+                this.onCloseClickHandle();
             }
 
     };
@@ -116,8 +121,6 @@ export default class ImportFileModal extends Component {
                 if (status == 0) {
                     project.saveFile(browserPath, source, operation => {
                         if (operation.status == 0){
-                            //@TODO figure out redraw
-                            project.redraw()
                         } else {
                             alert('An error has occured.', status);
                         }
