@@ -23,7 +23,6 @@ export default class CodeEditor extends Component {
     }
 
     editorDidMount(editor, monaco) {
-        console.log('editorDidMount', editor);
         editor.focus();
     }
 

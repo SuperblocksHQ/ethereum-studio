@@ -404,6 +404,7 @@ export default class FileItem extends Item {
 
         const modal = (
             <ImportFileModal
+                context = {this}
                 project = {this.getProject()}
                 onCloseClick={this.onImportModalClose}
             />

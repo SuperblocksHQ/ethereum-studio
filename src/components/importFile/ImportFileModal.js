@@ -80,13 +80,13 @@ export default class ImportFileModal extends Component {
 
     onImportClickHandle = () => {
 
-            const project = this.props.project;
+            const {project, context} = this.props;
             const {selectedDependencies, selectedTitle, selectedPath, selectedSource} = this.state;
 
             try {
 
                 // add selected file
-                this.addFilesToProject(project, selectedTitle, selectedPath, selectedSource);
+                this.addFilesToProject(project, selectedTitle, selectedPath, selectedSource, context);
 
                 // add dependencies
                 selectedDependencies.map((dependency) => {
@@ -96,14 +96,12 @@ export default class ImportFileModal extends Component {
                     const browserPath = "/contracts/".concat(path);
                     const source = this.getSourceFromAbsolutePath(path);
 
-                    this.addFilesToProject(project, file, browserPath, source);
+                    this.addFilesToProject(project, file, browserPath, source, context);
 
                     });
 
-               //@TODO Figure out redraw
-
             } catch (e) {
-                // triggered if file with existing filename is imported
+                // ignore error
             } finally {
                 // close the modal
                 this.onCloseClickHandle();
@@ -111,7 +109,7 @@ export default class ImportFileModal extends Component {
 
     };
 
-    addFilesToProject = (project, file, browserPath, source) => {
+    addFilesToProject = (project, file, browserPath, source, context) => {
         if (file) {
             if (!file.match('(^[a-zA-Z0-9-_.]+[/]?)$') || file.length > 255) {
                 alert('Illegal file name. Only A-Za-z0-9, dash (-) and underscore (_) allowed. Max 255 characters.');
@@ -121,6 +119,9 @@ export default class ImportFileModal extends Component {
                 if (status == 0) {
                     project.saveFile(browserPath, source, operation => {
                         if (operation.status == 0){
+                            context.getChildren(true, () => {
+                                context.redrawMain(true);
+                            });
                         } else {
                             alert('An error has occured.', status);
                         }
