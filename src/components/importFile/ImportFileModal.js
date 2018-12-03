@@ -83,17 +83,30 @@ export default class ImportFileModal extends Component {
             const {project, context} = this.props;
             const {selectedDependencies, selectedTitle, selectedPath, selectedSource} = this.state;
 
+            let baseFolder = "";
+            let selectedModifiedPath = "";
+
+            if (context.getFullPath() === "/") {
+                // if root folder, import to contracts folder
+                baseFolder = "/contracts/";
+                selectedModifiedPath = selectedPath;
+            } else {
+                // else import to selected folder
+                baseFolder = context.getFullPath().concat("/");
+                selectedModifiedPath = selectedPath.replace("/contracts/", baseFolder);
+            }
+
             try {
 
                 // add selected file
-                this.addFilesToProject(project, selectedTitle, selectedPath, selectedSource, context);
+                this.addFilesToProject(project, selectedTitle, selectedModifiedPath, selectedSource, context);
 
                 // add dependencies
                 selectedDependencies.map((dependency) => {
 
                     const file = dependency.fileName;
                     const path = dependency.absolutePath;
-                    const browserPath = "/contracts/".concat(path);
+                    const browserPath = baseFolder.concat(path);
                     const source = this.getSourceFromAbsolutePath(path);
 
                     this.addFilesToProject(project, file, browserPath, source, context);
