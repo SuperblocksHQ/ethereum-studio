@@ -192,23 +192,30 @@ export default class App extends Component {
             const a = document.location.href.match("^.*#/ipfs/(.+)$");
             if (a) {
                 if (!confirm("Do you want to import the project from IPFS?")) {
+                    this._stripIpfsHash();
                     resolve();
                     return;
                 }
 
-                // TODO: pop modal
+                // TODO: pop modal about importing being processed.
 
                 this._importFromIpfs(a[1]).then( () => {
-                    // TODO
-                    // Rewrite url to remove dash
-                    // Close modal
-                    resolve(1);
+                    this._stripIpfsHash();
+                    // TODO Close modal about processing import
+                    resolve(1);  // 1 means do not show splash
                 });
             }
             else {
                 resolve(0);
             }
         });
+    };
+
+    /**
+     * Strip the url from the dash and everything following it.
+     */
+    _stripIpfsHash = () => {
+        history.pushState({}, '', '/');
     };
 
     _importFromIpfs = (hash) => {
@@ -244,7 +251,6 @@ export default class App extends Component {
                         };
                     }
                 });
-                console.log("such success", files);
                 // We need to wait for control to be loaded.
                 // NOTE: 
                 const fn = () => {

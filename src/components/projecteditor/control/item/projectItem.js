@@ -263,7 +263,8 @@ export default class ProjectItem extends Item {
         });
 
         this.backend.ipfsSyncUp(this.getInode(), keepState).then( (hash) => {
-            alert('Project successfully uploaded to IPFS. Hash: ' + hash);
+            alert('Project successfully uploaded to IPFS. Hash: ' + hash + 
+                'Share URL: ' + document.location.href + '#/ipfs/' + hash);
             this.functions.modal.close();
         })
         .catch( (e) => {
@@ -367,11 +368,11 @@ export default class ProjectItem extends Item {
                                                 .then( () => {
                                                     fn().then(resolve).catch(reject);
                                                 })
-                                                .catch( () => {
+                                                .catch( (e) => {
                                                     reject("Error: Could not write to file, sync halted.");
                                                 });
                                         })
-                                        .catch(() => {
+                                        .catch((e) => {
                                             reject("Error: Could not write to file, sync halted.");
                                         });
                                 });
