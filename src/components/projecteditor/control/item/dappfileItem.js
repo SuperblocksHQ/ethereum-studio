@@ -94,6 +94,7 @@ export default class DappfileItem extends FileItem {
             const obj = JSON.parse(contents);
             if (DappfileItem.validateDappfile(obj)) {
                 this.props.state.dappfile = new Dappfile(obj);
+                this._setContents(JSON.stringify(obj, null, 4));
                 return;
             }
         }
