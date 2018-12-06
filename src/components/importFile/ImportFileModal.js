@@ -38,7 +38,7 @@ export default class ImportFileModal extends Component {
             selectedPath: "",
             selectedDependencies: [],
             categorySelectedId: 0,
-            categories: [{ id: 0, name: "OpenZeppelin" }]
+            categories: [{ id: 0, name: "OpenZeppelin" }],
         }
     };
 
@@ -129,9 +129,9 @@ export default class ImportFileModal extends Component {
                 return false;
             }
             project.newFile(browserPath, file, status => {
-                if (status == 0) {
+                if (status === 0) {
                     project.saveFile(browserPath, source, operation => {
-                        if (operation.status == 0){
+                        if (operation.status === 0){
                             context.getChildren(true, () => {
                                 context.redrawMain(true);
                             });
@@ -141,7 +141,7 @@ export default class ImportFileModal extends Component {
 
                     })
                 } else {
-                    status == 3 ? alert('A file or folder with that name already exists at this location.', status) : alert('Could not create the file.', status);
+                    status === 3 ? alert('A file or folder with that name already exists at this location.', status) : alert('Could not create the file.', status);
                 }
             });
             this.onCloseClickHandle();
@@ -205,4 +205,4 @@ export default class ImportFileModal extends Component {
 ImportFileModal.proptypes = {
     onCloseClick: Proptypes.func.isRequired,
     savePreferences: Proptypes.func.isRequired
-}
+};
