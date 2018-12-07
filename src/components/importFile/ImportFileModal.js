@@ -78,9 +78,9 @@ export default class ImportFileModal extends Component {
         this.props.onCloseClick();
     };
 
-    onImportClickHandle = () => {
+    onImportClickHandle = async () => {
 
-            const {project, context} = this.props;
+            let {project, context} = this.props;
             const {selectedDependencies, selectedTitle, selectedPath, selectedSource} = this.state;
 
             let baseFolder = "";
@@ -90,6 +90,7 @@ export default class ImportFileModal extends Component {
                 // if root folder, import to contracts folder
                 baseFolder = "/contracts/";
                 selectedModifiedPath = selectedPath;
+                context = await project.getItemByPath(['', 'contracts'], project);
             } else {
                 // else import to selected folder
                 baseFolder = context.getFullPath().concat("/");
@@ -99,6 +100,7 @@ export default class ImportFileModal extends Component {
             try {
 
                 // add selected file
+                // NOTE: this depends on that backend.js is saving files synchronously, as it currently is.
                 this.addFilesToProject(project, selectedTitle, selectedModifiedPath, selectedSource, context);
 
                 // add dependencies
