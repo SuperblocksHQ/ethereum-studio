@@ -78,9 +78,9 @@ export default class ImportFileModal extends Component {
         this.props.onCloseClick();
     };
 
-    onImportClickHandle = async () => {
+    onImportClickHandle = () => {
 
-            let {project, context} = this.props;
+            const {project, context} = this.props;
             const {selectedDependencies, selectedTitle, selectedPath, selectedSource} = this.state;
 
             let baseFolder = "";
@@ -90,7 +90,6 @@ export default class ImportFileModal extends Component {
                 // if root folder, import to contracts folder
                 baseFolder = "/contracts/";
                 selectedModifiedPath = selectedPath;
-                context = await project.getItemByPath(['', 'contracts'], project);
             } else {
                 // else import to selected folder
                 baseFolder = context.getFullPath().concat("/");
@@ -101,7 +100,7 @@ export default class ImportFileModal extends Component {
 
                 // add selected file
                 // NOTE: this depends on that backend.js is saving files synchronously, as it currently is.
-                this.addFilesToProject(project, selectedTitle, selectedModifiedPath, selectedSource, context);
+                this.addFilesToProject(project, selectedTitle, selectedModifiedPath, selectedSource);
 
                 // add dependencies
                 selectedDependencies.map((dependency) => {
@@ -124,7 +123,7 @@ export default class ImportFileModal extends Component {
 
     };
 
-    addFilesToProject = (project, file, browserPath, source, context) => {
+    addFilesToProject = (project, file, browserPath, source) => {
         if (file) {
             if (!file.match('(^[a-zA-Z0-9-_.]+[/]?)$') || file.length > 255) {
                 alert('Illegal file name. Only A-Za-z0-9, dash (-) and underscore (_) allowed. Max 255 characters.');
@@ -134,9 +133,12 @@ export default class ImportFileModal extends Component {
                 if (status === 0) {
                     project.saveFile(browserPath, source, operation => {
                         if (operation.status === 0){
-                            context.getChildren(true, () => {
-                                context.redrawMain(true);
-                            });
+                            let pathArray = this.createPathArray(browserPath);
+                            project.getItemByPath(pathArray, project).then((context) => {
+                                context.getChildren(true, () => {
+                                    context.redrawMain(true);
+                                });
+                            })
                         } else {
                             alert('An error has occured.', status);
                         }
@@ -150,6 +152,12 @@ export default class ImportFileModal extends Component {
         } else {
             alert('A file must be selected');
         }
+    };
+
+    createPathArray = (pathString) => {
+        let arr = pathString.split("/");
+        arr.pop();
+        return arr;
     };
 
     render() {
