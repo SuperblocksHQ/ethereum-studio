@@ -70,7 +70,8 @@ export default class Compiler extends Component {
         if (this.state.isRunning) return;
 
         this.setState({
-            isRunning: true
+            isRunning: true,
+            consoleRows: []
         });
 
         const contracts = this.props.item
@@ -100,7 +101,6 @@ export default class Compiler extends Component {
                     });
                     return;
                 }
-                this.state.consoleRows.length = 0;
                 // This timeout can be removed.
                 setTimeout(() => {
                     var contractbody;
@@ -239,10 +239,26 @@ export default class Compiler extends Component {
                                                 ' references library contracts. Superblocks Lab does not yet support library contract linking, only contract imports.',
                                         });
                                         delFiles();
-                                    } else if (contractObj) {
-                                        const metadata = JSON.parse(
-                                            contractObj.metadata
-                                        );
+                                    } else if (contractObj && contractObj.metadata) {
+                                        var metadata;
+                                        try {
+                                            metadata = JSON.parse(
+                                                contractObj.metadata
+                                            );
+                                        }
+                                        catch(e) {
+                                            console.error("Could not parse compiler output", contractObj);
+                                            this._updateConsole({
+                                                channel: 2,
+                                                msg:
+                                                    '[ERROR] The contract ' +
+                                                    srcfilename +
+                                                    ' could not be compiled.',
+                                            });
+                                            this.callback(1);
+                                            return;
+                                        }
+
                                         // Save ABI and BIN
                                         // First load, then save and close.
                                         const cb = (
