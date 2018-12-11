@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import Control from './control';
 import { getAppVersion } from '../../../selectors/app';
 import { getSelectedProjectId } from '../../../selectors/projects';
-import { selectProject } from '../../../actions/projects';
-import { closeAllPanels } from '../../../actions/view';
+import { selectProject } from '../../../actions';
+import { closeTransactionsHistoryPanel } from '../../../actions/view';
 
 const mapStateToProps = state => ({
     appVersion: getAppVersion(state),
@@ -13,11 +13,11 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => {
     return {
-        selectProject: project => {
-            dispatch(selectProject(project));
+        selectProject: (id, name) => {
+            dispatch(selectProject(id, name));
         },
-        closeAllPanels: () => {
-            dispatch(closeAllPanels())
+        closeTransactionsHistoryPanel: () => {
+            dispatch(closeTransactionsHistoryPanel())
         }
     };
 };

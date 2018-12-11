@@ -15,6 +15,8 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { panesActions } from '../../actions';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import style from './style.less';
@@ -22,7 +24,7 @@ import { Pane, PaneComponent } from './pane';
 import { IconClose } from '../icons';
 import { DropdownContainer } from '../dropdown';
 
-export default class Panes extends Component {
+class Panes extends Component {
     constructor(props) {
         super(props);
         this.panes = [];
@@ -37,7 +39,7 @@ export default class Panes extends Component {
     }
 
     addWindow = (props, paneId) => {
-        var pane;
+        var pane, newPaneWasAdded = false;
         if (paneId) {
             pane = this.getPane(paneId).pane;
         }
@@ -48,8 +50,12 @@ export default class Panes extends Component {
                 parent: this,
             });
             this.panes.unshift(pane);
+            newPaneWasAdded = true;
         }
         var winId = pane.addWindow(props);
+        if (newPaneWasAdded) {
+            this.props.addPane(pane.id, pane.getTitle()); // lifting some state to redux store
+        }
         if (winId == null) return {};
         return { pane, winId };
     };
@@ -69,6 +75,7 @@ export default class Panes extends Component {
         this.panes = this.panes.filter(pane => {
             return pane.id != id;
         });
+        this.props.removePane(id);
     };
 
     getPane = id => {
@@ -245,7 +252,9 @@ export default class Panes extends Component {
     renderHeader = () => {
         const tab = style.tab;
         const selected = style.selected;
-        const html = this.panes.map((pane, index) => {
+        const html = this.props.panes.map((paneData, index) => {
+            const pane = this.panes[index];
+
             const contextMenu = (
                 <div className={style.contextMenu}>
                     <div className={style.item} onClick={this.closeAllPanes}>
@@ -256,7 +265,8 @@ export default class Panes extends Component {
                     </div>
                 </div>
             );
-            var isSelected = pane.id == this.activePaneId;
+
+            var isSelected = paneData.id == this.activePaneId;
             const cls = {};
             cls[tab] = true;
             cls[selected] = isSelected;
@@ -264,8 +274,8 @@ export default class Panes extends Component {
                 <div key={index}>
                     <div
                         className={classnames(cls)}
-                        onMouseDown={e => this.tabClicked(e, pane.id)}
-                        onContextMenu={e => this.tabRightClicked(e, pane.id)}
+                        onMouseDown={e => this.tabClicked(e, paneData.id)}
+                        onContextMenu={e => this.tabRightClicked(e, paneData.id)}
                     >
                         <DropdownContainer
                             dropdownContent={contextMenu}
@@ -277,13 +287,13 @@ export default class Panes extends Component {
                                         {pane.getIcon()}
                                     </div>
                                     <div className={style.title2}>
-                                        {pane.getTitle()}
+                                        {paneData.name}
                                     </div>
                                 </div>
                                 <div className={style.close}>
                                     <button className="btnNoBg"
                                         onClick={ e =>
-                                            this.tabClickedClose(e, pane.id)
+                                            this.tabClickedClose(e, paneData.id)
                                         }
                                     >
                                         <IconClose />
@@ -374,3 +384,20 @@ Panes.propTypes = {
     functions: PropTypes.object.isRequired,
     isActionPanelShowing: PropTypes.bool.isRequired,
 };
+
+const mapStateToProps = state => ({
+    panes: state.panes.panes,
+});
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addPane: (id, name) => {
+            dispatch(panesActions.addPane(id, name))
+        },
+        removePane: (id) => {
+            dispatch(panesActions.removePane(id))
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Panes);

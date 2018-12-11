@@ -37,7 +37,7 @@ const config = {
     key: 'root',
     storage,
     version: 2,
-    blacklist: ['app', 'view'],
+    blacklist: ['app', 'view', 'panes'],
     migrate: createMigrate(migrations, { debug: true })
 };
 

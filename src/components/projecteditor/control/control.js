@@ -166,7 +166,7 @@ export default class Control extends Component {
      * if all windows successfully closed then remove project from explorer.
      */
     _closeProject = cb => {
-        const { router, closeAllPanels } = this.props;
+        const { router, closeTransactionsHistoryPanel } = this.props;
         router.panes.closeAll(status => {
             if (status == 0) {
                 this.setState({ activeProject: null });
@@ -174,7 +174,7 @@ export default class Control extends Component {
             if (cb) cb(status);
         });
 
-        closeAllPanels();
+        closeTransactionsHistoryPanel();
     };
 
     /**
@@ -224,7 +224,7 @@ export default class Control extends Component {
      */
     _setProjectActive = project => {
         this.setState({ activeProject: project });
-        this.props.selectProject(project);
+        this.props.selectProject(project.getInode(), project.getName());
     };
 
     /**
