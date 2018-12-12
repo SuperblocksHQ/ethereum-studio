@@ -16,6 +16,7 @@
 
 import React, { Component } from 'react';
 import MonacoEditor from 'react-monaco-editor';
+import style from "../../style.less";
 
 export default class CodeEditor extends Component {
     constructor(props) {
@@ -26,27 +27,28 @@ export default class CodeEditor extends Component {
         editor.focus();
     }
 
-    onChange(newValue, e) {
-        console.log('onChange', newValue, e);
-    }
-
     render() {
         const options = {
             selectOnLineNumbers: false,
             readOnly: true,
-            automaticLayout: true
+            automaticLayout: true,
         };
 
+        const selectedTitle = this.props.selectedTitle;
+
         return (
-            <MonacoEditor
-                height="400"
-                language="javascript"
-                theme="vs-dark"
-                value={this.props.source}
-                options={options}
-                onChange={this.onChange}
-                editorDidMount={this.editorDidMount}
-            />
+            <div>
+                <div className={style.title}>{selectedTitle}&nbsp;</div>
+                <MonacoEditor
+                    height="400"
+                    language="sol"
+                    theme="vs-dark"
+                    value={this.props.source}
+                    options={options}
+                    onChange={this.onChange}
+                    editorDidMount={this.editorDidMount}
+                />
+            </div>
         );
     }
 }
