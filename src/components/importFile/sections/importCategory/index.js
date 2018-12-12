@@ -14,13 +14,22 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-.categoryContainer {
-    display: flex;
-    align-content: center;
-    align-items: center;
+import React, { Component } from 'react';
+import Proptypes from 'prop-types';
+import style from './style.less';
 
-    .title {
-        margin-left: 10px;
-    }
+const ImportCategory = ({ onCategorySelected, icon, title } = props) => (
+    <div className={style.categoryContainer} onClick={onCategorySelected}>
+        {icon}
+        <div>
+            {title}
+        </div>
+    </div>
+);
+
+export default ImportCategory;
+
+ImportCategory.propTypes = {
+    title: Proptypes.string.isRequired,
+    onCategorySelected: Proptypes.func.isRequired,
 }
-

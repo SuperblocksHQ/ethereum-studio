@@ -39,7 +39,7 @@ export default class CodeEditor extends Component {
 
         return (
             <MonacoEditor
-                height="340"
+                height="400"
                 language="javascript"
                 theme="vs-dark"
                 value={this.props.source}
