@@ -16,6 +16,14 @@
                 color: #fff;
                 border-color: #7237CF;
             }
+            &.selected {
+                background-color: @modal-selected-color;
+                color: #fff;
+                &:hover {
+                    background-color: @modal-selected-color;
+                    border-color: transparent;
+                }
+            }
             .levelGenerator(@name; @columns; @index: 1) when (@index =< @columns) {
                 .levelGenerator(@name; @columns; (@index + 1));
                 .@{name}@{index} {

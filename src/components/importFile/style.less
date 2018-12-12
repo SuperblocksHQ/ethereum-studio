@@ -23,22 +23,25 @@
     border-radius: 4px;
     background-color: @modal-background-color;
     color: #fff;
-
     h2 {
         margin-top: 0;
     }
     .container {
         width: 1200px;
-        height: 530px;
+        height: 600px;
+        .header {
+            padding: 18px 20px;
+        }
         .area {
-            height: 400px;
-            padding: 15px 32px;
+            height: 470px;
             .draggableImport{
                 position: relative;
             }
             .categoriesArea {
-                border-right: 1px solid @modal-separator-color;
+                margin-top: 15px;
                 .title {
+                    padding-left: 20px;
+                    font-weight: 600;
                     margin-bottom: 16px;
                 }
                 .categoriesContainer {
@@ -49,19 +52,23 @@
                         padding: 0;
                         color: #c7c7c7;
                         li {
+                            padding-left: 20px;
                             line-height: 40px;
                             border-radius: 2px;
+                            border-left: 2px solid transparent;
                             &:hover {
-                                background-color: @modal-color-hover;
+                                background-color: @modal-color-hover-purple;
+                                border-color: #7237CF;
                                 cursor: pointer;
                                 color: #fff;
                             }
                         }
                         .selected {
-                            background-color: @primary-color;
+                            background-color: @modal-selected-color;
                             color: #fff;
                             &:hover {
-                                background-color: @primary-color;
+                                background-color: @modal-selected-color;
+                                border-color: transparent;
                             }
                         }
                     }
@@ -69,21 +76,24 @@
             }
             .finderArea {
                 border-right: 1px solid @modal-separator-color;
+                margin-top: 15px;
                 .title {
+                    font-weight: 600;
                     margin-bottom: 16px;
                     margin-left: 15px;
                 }
             }
             .descriptionArea {
-                margin-left: 15px;
                 position: absolute;
                 width: 100%;
+                margin-top: 15px;
+                padding-right: 20px;
+                padding-left: 15px;
                 .draggableEditor {
                     overflow: hidden;
                 }
                 .title {
                     font-weight: 600;
-                    margin-left: 15px;
                     margin-bottom: 16px;
                 }
                 p {
