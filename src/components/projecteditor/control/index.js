@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Control from './control';
 import { getAppVersion } from '../../../selectors/app';
 import { getSelectedProjectId } from '../../../selectors/projects';
-import { selectProject } from '../../../actions';
+import { selectProject, explorerActions } from '../../../actions';
 import { closeTransactionsHistoryPanel } from '../../../actions/view';
 
 const mapStateToProps = state => ({
@@ -18,6 +18,9 @@ const mapDispatchToProps = dispatch => {
         },
         closeTransactionsHistoryPanel: () => {
             dispatch(closeTransactionsHistoryPanel())
+        },
+        renameFile: (id, name) => {
+            dispatch(explorerActions.renameFile(id, name));
         }
     };
 };

@@ -1,9 +1,9 @@
 export const panesActions = {
     ADD_PANE: 'ADD_PANE',
-    addPane(id, name) {
+    addPane(id, name, fileId) {
         return {
             type: panesActions.ADD_PANE,
-            data: { id, name } 
+            data: { id, name, fileId } 
         }
     },
 

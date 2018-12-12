@@ -276,6 +276,15 @@ export class Window {
         return "<no name>";
     };
 
+    /**
+     * Returns file id if file is diplayed in the window
+     */
+    getFileId = () => {
+        return this.props.item.getType() == 'file'
+            ? this.props.item.props.state.id
+            : null;
+    };
+
     getIcon = () => {
         return this.props.item.getIcon();
     };

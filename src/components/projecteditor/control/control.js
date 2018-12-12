@@ -49,6 +49,7 @@ export default class Control extends Component {
                     return children;
                 },
             },
+            renameFile: props.renameFile
         });
 
         this.state = {
@@ -114,6 +115,7 @@ export default class Control extends Component {
                                     name: lightProject.name,
                                     title: lightProject.title,
                                 },
+                                renameFile: this.props.renameFile
                             },
                             this.props.router,
                             this.props.functions
@@ -156,6 +158,7 @@ export default class Control extends Component {
                 state: {
                     title: 'Welcome',
                 },
+                renameFile: this.props.renameFile
             });
             if (this.props.router.panes) this.props.router.panes.openItem(item);
         }
@@ -604,5 +607,6 @@ export default class Control extends Component {
 Control.propTypes = {
     appVersion: PropTypes.string.isRequired,
     selectProject: PropTypes.func.isRequired,
+    renameFile: PropTypes.func.isRequired,
     selectedProjectId: PropTypes.number,
 };

@@ -200,6 +200,17 @@ export class Pane {
         return '[ untitled ]';
     };
 
+    /**
+     * Returns file id in case pane is currently displaying a file
+     */
+    getFileId = () => {
+        var win = this.getActiveWindow();
+        if (win) {
+            return win.getFileId();
+        }
+        return null;
+    };
+
     getIcon = () => {
         var win = this.getActiveWindow();
         if (win) {

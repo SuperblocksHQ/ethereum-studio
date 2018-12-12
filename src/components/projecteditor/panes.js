@@ -54,7 +54,7 @@ class Panes extends Component {
         }
         var winId = pane.addWindow(props);
         if (newPaneWasAdded) {
-            this.props.addPane(pane.id, pane.getTitle()); // lifting some state to redux store
+            this.props.addPane(pane.id, pane.getTitle(), pane.getFileId()); // lifting some state to redux store
         }
         if (winId == null) return {};
         return { pane, winId };
@@ -391,8 +391,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        addPane: (id, name) => {
-            dispatch(panesActions.addPane(id, name))
+        addPane: (id, name, fileId) => {
+            dispatch(panesActions.addPane(id, name, fileId))
         },
         removePane: (id) => {
             dispatch(panesActions.removePane(id))
