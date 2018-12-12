@@ -28,7 +28,7 @@ class Panes extends Component {
     constructor(props) {
         super(props);
         this.panes = [];
-        this.activePaneId = null;
+        this._activePaneId = null;
         props.router.register('panes', this);
     }
 
@@ -36,6 +36,15 @@ class Panes extends Component {
         window.addEventListener('resize', () => {
             this.redraw();
         });
+    }
+
+    get activePaneId() {
+        return this._activePaneId;
+    }
+
+    set activePaneId(value) {
+        this._activePaneId = value;
+        this.props.setActivePane(value);
     }
 
     addWindow = (props, paneId) => {
@@ -313,7 +322,6 @@ class Panes extends Component {
                 <div key="header" id="panes_header" className={style.header}>
                     <PanesHeader
                         panes={this.props.panes}
-                        activePaneId={this.activePaneId}
                         paneComponents={this.panes}
 
                         closeAllPanes={this.closeAllPanes}
@@ -348,8 +356,11 @@ const mapDispatchToProps = (dispatch) => {
         },
         removePane: (id) => {
             dispatch(panesActions.removePane(id))
+        },
+        setActivePane: (id) => {
+            dispatch(panesActions.setActivePane(id));
         }
-    }
+    };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Panes);

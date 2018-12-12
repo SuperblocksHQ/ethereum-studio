@@ -13,5 +13,13 @@ export const panesActions = {
             type: panesActions.REMOVE_PANE,
             data: { id }
         }
+    },
+
+    SET_ACTIVE_PANE: 'SET_ACTIVE_PANE',
+    setActivePane(id) {
+        return {
+            type: panesActions.SET_ACTIVE_PANE,
+            data: { id }
+        };
     }
 };

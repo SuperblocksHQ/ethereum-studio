@@ -42,13 +42,13 @@ export default class PanesHeader extends Component {
     getClassnames(paneData) {
         const cls = {};
         cls[style.tab] = true;
-        cls[style.selected] = paneData.id == this.props.activePaneId; // TODO: activePaneId should be in redux store
+        cls[style.selected] = paneData.active;
         return classnames(cls);
     }
 
     render() {
         const html = this.props.panes.map((paneData, index) => {
-            const iconElement = this.props.paneComponents[index].getIcon(); // paneComponent are only needed to get an icon
+            const iconElement = this.props.paneComponents[index].getIcon();
             const contextMenu = this.getContextMenuElement();
 
             return (
@@ -85,7 +85,7 @@ export default class PanesHeader extends Component {
 
 PanesHeader.propTypes = {
     panes: PropTypes.array.isRequired,
-    paneComponents: PropTypes.array.isRequired,
+    paneComponents: PropTypes.array.isRequired,  // paneComponents are only needed to get an icon. TODO: remove it as soon as possible
     closeAllPanes: PropTypes.func,
     closeAllOtherPanes: PropTypes.func,
     tabClicked: PropTypes.func,

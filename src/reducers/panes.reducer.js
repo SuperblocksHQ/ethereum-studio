@@ -17,6 +17,13 @@ export default function panesReducer(state = initialState, action) {
                 ...state,
                 panes: state.panes.filter(p => p.id !== action.data.id)
             };
+        case panesActions.SET_ACTIVE_PANE: {
+            const deactivatedPanes = replaceInArray(state.panes, p => p.active, p => ({ ...p, active: false }))
+            return {
+                ...state,
+                panes: replaceInArray(deactivatedPanes, p => p.id === action.data.id, p => ({ ...p, active: true }))
+            };
+        }
         case explorerActions.RENAME_FILE: {
             return {
                 ...state,
