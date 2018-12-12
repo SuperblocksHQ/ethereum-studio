@@ -1,4 +1,4 @@
-import * as actions from './projects';
+import * as actions from './projects.actions';
 
 describe('actions', () => {
     it('should create an action to select the projec to open when re-loading the app', () => {
