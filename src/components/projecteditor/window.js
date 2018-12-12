@@ -17,10 +17,7 @@
 import React, { Component } from 'react';
 import classnames from 'classnames';
 import style from './style.less';
-import Editor from './editor.js';
-import ContractEditor from './editor-contract';
-import AppEditor from './editor-app';
-import AccountEditor from './editor-account';
+import { Editor, ContractEditor, AppEditor, AccountEditor } from './editors';
 import Compiler from './compiler';
 import Deployer from './deployer';
 import TutorialsManual from '../tutorials/manual';
