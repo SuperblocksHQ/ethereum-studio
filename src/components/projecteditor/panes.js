@@ -15,18 +15,20 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { panesActions } from '../../actions';
+
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import style from './style.less';
 import { Pane, PaneComponent } from './pane';
-import { IconClose } from '../icons';
-import { DropdownContainer } from '../dropdown';
+import PanesHeader from './panes-header';
 
-export default class Panes extends Component {
+class Panes extends Component {
     constructor(props) {
         super(props);
         this.panes = [];
-        this.activePaneId = null;
+        this._activePaneId = null;
         props.router.register('panes', this);
     }
 
@@ -36,8 +38,17 @@ export default class Panes extends Component {
         });
     }
 
+    get activePaneId() {
+        return this._activePaneId;
+    }
+
+    set activePaneId(value) {
+        this._activePaneId = value;
+        this.props.setActivePane(value);
+    }
+
     addWindow = (props, paneId) => {
-        var pane;
+        var pane, newPaneWasAdded = false;
         if (paneId) {
             pane = this.getPane(paneId).pane;
         }
@@ -48,8 +59,12 @@ export default class Panes extends Component {
                 parent: this,
             });
             this.panes.unshift(pane);
+            newPaneWasAdded = true;
         }
         var winId = pane.addWindow(props);
+        if (newPaneWasAdded) {
+            this.props.addPane(pane.id, pane.getTitle(), pane.getFileId()); // lifting some state to redux store
+        }
         if (winId == null) return {};
         return { pane, winId };
     };
@@ -69,6 +84,7 @@ export default class Panes extends Component {
         this.panes = this.panes.filter(pane => {
             return pane.id != id;
         });
+        this.props.removePane(id);
     };
 
     getPane = id => {
@@ -242,61 +258,7 @@ export default class Panes extends Component {
         this.closeAll(null, this.state.showContextMenuPaneId);
     };
 
-    renderHeader = () => {
-        const tab = style.tab;
-        const selected = style.selected;
-        const html = this.panes.map((pane, index) => {
-            const contextMenu = (
-                <div className={style.contextMenu}>
-                    <div className={style.item} onClick={this.closeAllPanes}>
-                        Close all
-                    </div>
-                    <div className={style.item} onClick={this.closeAllOtherPanes}>
-                        Close all other
-                    </div>
-                </div>
-            );
-            var isSelected = pane.id == this.activePaneId;
-            const cls = {};
-            cls[tab] = true;
-            cls[selected] = isSelected;
-            return (
-                <div key={index}>
-                    <div
-                        className={classnames(cls)}
-                        onMouseDown={e => this.tabClicked(e, pane.id)}
-                        onContextMenu={e => this.tabRightClicked(e, pane.id)}
-                    >
-                        <DropdownContainer
-                            dropdownContent={contextMenu}
-                            useRightClick={true}
-                        >
-                            <div className={style.tabContainer}>
-                                <div className={style.title}>
-                                    <div className={style.icon}>
-                                        {pane.getIcon()}
-                                    </div>
-                                    <div className={style.title2}>
-                                        {pane.getTitle()}
-                                    </div>
-                                </div>
-                                <div className={style.close}>
-                                    <button className="btnNoBg"
-                                        onClick={ e =>
-                                            this.tabClickedClose(e, pane.id)
-                                        }
-                                    >
-                                        <IconClose />
-                                    </button>
-                                </div>
-                            </div>
-                        </DropdownContainer>
-                    </div>
-                </div>
-            );
-        });
-        return <div>{html}</div>;
-    };
+    
 
     getPaneHeight = () => {
         const a = document.getElementById('panes');
@@ -344,7 +306,6 @@ export default class Panes extends Component {
     };
 
     render() {
-        const header = this.renderHeader();
         const panes = this.renderPanes();
 
         const { isActionPanelShowing } = this.props;
@@ -359,7 +320,16 @@ export default class Panes extends Component {
                 }}
             >
                 <div key="header" id="panes_header" className={style.header}>
-                    {header}
+                    <PanesHeader
+                        panes={this.props.panes}
+                        paneComponents={this.panes}
+
+                        closeAllPanes={this.closeAllPanes}
+                        closeAllOtherPanes={this.closeAllOtherPanes}
+                        tabClicked={this.tabClicked}
+                        tabRightClicked={this.tabRightClicked}
+                        tabClickedClose={this.tabClickedClose}>
+                    </PanesHeader>
                 </div>
                 <div key="panes2" className={style.panes}>
                     {panes}
@@ -374,3 +344,23 @@ Panes.propTypes = {
     functions: PropTypes.object.isRequired,
     isActionPanelShowing: PropTypes.bool.isRequired,
 };
+
+const mapStateToProps = state => ({
+    panes: state.panes.panes,
+});
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addPane: (id, name, fileId) => {
+            dispatch(panesActions.addPane(id, name, fileId))
+        },
+        removePane: (id) => {
+            dispatch(panesActions.removePane(id))
+        },
+        setActivePane: (id) => {
+            dispatch(panesActions.setActivePane(id));
+        }
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Panes);

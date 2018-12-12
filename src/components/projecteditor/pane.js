@@ -135,7 +135,6 @@ export class Pane {
         } else {
             this.props.parent.closePane(this.id);
         }
-        this.props.parent.redraw();
     };
 
     focusWindow = (winId, rePerform, cb) => {
@@ -198,6 +197,17 @@ export class Pane {
             return win.getTitle();
         }
         return '[ untitled ]';
+    };
+
+    /**
+     * Returns file id in case pane is currently displaying a file
+     */
+    getFileId = () => {
+        var win = this.getActiveWindow();
+        if (win) {
+            return win.getFileId();
+        }
+        return null;
     };
 
     getIcon = () => {
