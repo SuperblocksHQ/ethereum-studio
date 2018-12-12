@@ -135,7 +135,6 @@ export class Pane {
         } else {
             this.props.parent.closePane(this.id);
         }
-        // this.props.parent.redraw();
     };
 
     focusWindow = (winId, rePerform, cb) => {
