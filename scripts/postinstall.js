@@ -87,21 +87,14 @@ function getFileJSON(jsonFolderPath, fileName) {
     fileName = path.parse(fileName).name.concat('.json');
     let filePath = path.join(jsonFolderPath, fileName);
 
-    try {
-        const raw = fs.readFileSync(filePath);
-        return JSON.parse(raw);
+    if (fileName === "TokenMetadata.json") {
+        // apply fix
+        fileName = "ERC20".concat(fileName);
+        filePath = path.join(jsonFolderPath, fileName);
     }
-    catch (err) {
-        try {
-            // fix for one of the contracts
-            fileName = "ERC20".concat(fileName);
-            filePath = path.join(jsonFolderPath, fileName);
-            const raw = fs.readFileSync(filePath);
-            return JSON.parse(raw);
-        } catch (err) {
-            console.error(err)
-        }
-    }
+
+    const raw = fs.readFileSync(filePath);
+    return JSON.parse(raw);
 }
 
 // Get ID and dependencies from JSON
@@ -166,19 +159,26 @@ function getAbsoluteDependencyPath(filePath, relativePath) {
     return relative;
 }
 
-// remove "contracts/"
 function trimPath(path) {
-    return path.substr(10);
+    if(path.startsWith("contracts/")){
+        return path.substr(10);
+    } else {
+        console.log("Wrong path");
+    }
 }
 
 // run trimPath on each dependencies
 function trimDependencies(dependencies) {
     let dependenciesArray = [];
 
-    dependencies && dependencies.map(dependency => {
-        const fileName = dependency.fileName;
-        const absolutePath =trimPath(dependency.absolutePath);
-        dependenciesArray.push({ fileName, absolutePath });
+    dependencies.map(dependency => {
+        if (dependency.absolutePath) {
+            const fileName = dependency.fileName;
+            const absolutePath =trimPath(dependency.absolutePath);
+            dependenciesArray.push({ fileName, absolutePath });
+        } else {
+            console.log("Absolute path property is missing!")
+        }
     });
 
     return dependenciesArray;
