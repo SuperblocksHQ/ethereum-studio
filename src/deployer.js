@@ -957,19 +957,28 @@ export default class DeployerRunner {
                 this._stdout('Transaction mined, verifying code...');
                 obj.address2 = res.contractAddress;
                 obj.deployMeta = { gasUsed: res.gasUsed };
-
-                obj.web3.eth.getCode(obj.address2, 'latest', (err, res) => {
-                    if (res && res.length > 4) {
+                var counter = 10;
+                const waitCode = () => {
+                    obj.web3.eth.getCode(obj.address2, 'latest', (err, res) => {
+                        if (err || !res || res.length < 4) {
+                            if (counter-- == 0) {
+                                // Final timeout
+                                this._stderr(
+                                    'Contract code could not be verified on chain. The contract might not have been deployed. This is possibly a mismatch in the number/type of arguments given to the constructor or could also be a temporary issue in reading back the contract code from the chain.'
+                                );
+                                cb(1);
+                                return;
+                            }
+                            setTimeout(waitCode, 2000);
+                            return;
+                        }
                         this._stdout('Contract deployed at address ' + obj.address2 + '.');
                         this._stdout('Done.');
                         cb(0);
-                        return;
-                    } else {
-                        this._stderr('Contract did not get deployed. Wrong arguments to constructor?');
-                        cb(1);
-                        return;
-                    }
-                });
+                    });
+                };
+
+                waitCode();
             }
         });
     }
