@@ -7,7 +7,7 @@ export default function projectsReducer(state = initialState, action) {
         case 'SELECT_PROJECT': {
             return {
                 ...state,
-                selectedProject: { ...action.data },
+                selectedProject: action.data ? { ...action.data } : Store.selectedProject,
             };
         }
         default:

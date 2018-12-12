@@ -1,6 +1,6 @@
-export function selectProject(id, name) {
+export function selectProject(project) {
     return {
         type: 'SELECT_PROJECT',
-        data: { id, name }
+        data: project
     };
 }

@@ -227,7 +227,10 @@ export default class Control extends Component {
      */
     _setProjectActive = project => {
         this.setState({ activeProject: project });
-        this.props.selectProject(project.getInode(), project.getName());
+        const projectData = project
+            ? { id: project.getInode(), name: project.getName() }
+            : null;
+        this.props.selectProject(projectData);
     };
 
     /**
