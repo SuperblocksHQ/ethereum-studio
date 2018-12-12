@@ -17,12 +17,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { panesActions } from '../../actions';
+
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import style from './style.less';
 import { Pane, PaneComponent } from './pane';
-import { IconClose } from '../icons';
-import { DropdownContainer } from '../dropdown';
+import PanesHeader from './panes-header';
 
 class Panes extends Component {
     constructor(props) {
@@ -249,64 +249,7 @@ class Panes extends Component {
         this.closeAll(null, this.state.showContextMenuPaneId);
     };
 
-    renderHeader = () => {
-        const tab = style.tab;
-        const selected = style.selected;
-        const html = this.props.panes.map((paneData, index) => {
-            const pane = this.panes[index];
-
-            const contextMenu = (
-                <div className={style.contextMenu}>
-                    <div className={style.item} onClick={this.closeAllPanes}>
-                        Close all
-                    </div>
-                    <div className={style.item} onClick={this.closeAllOtherPanes}>
-                        Close all other
-                    </div>
-                </div>
-            );
-
-            var isSelected = paneData.id == this.activePaneId;
-            const cls = {};
-            cls[tab] = true;
-            cls[selected] = isSelected;
-            return (
-                <div key={index}>
-                    <div
-                        className={classnames(cls)}
-                        onMouseDown={e => this.tabClicked(e, paneData.id)}
-                        onContextMenu={e => this.tabRightClicked(e, paneData.id)}
-                    >
-                        <DropdownContainer
-                            dropdownContent={contextMenu}
-                            useRightClick={true}
-                        >
-                            <div className={style.tabContainer}>
-                                <div className={style.title}>
-                                    <div className={style.icon}>
-                                        {pane.getIcon()}
-                                    </div>
-                                    <div className={style.title2}>
-                                        {paneData.name}
-                                    </div>
-                                </div>
-                                <div className={style.close}>
-                                    <button className="btnNoBg"
-                                        onClick={ e =>
-                                            this.tabClickedClose(e, paneData.id)
-                                        }
-                                    >
-                                        <IconClose />
-                                    </button>
-                                </div>
-                            </div>
-                        </DropdownContainer>
-                    </div>
-                </div>
-            );
-        });
-        return <div>{html}</div>;
-    };
+    
 
     getPaneHeight = () => {
         const a = document.getElementById('panes');
@@ -354,7 +297,6 @@ class Panes extends Component {
     };
 
     render() {
-        const header = this.renderHeader();
         const panes = this.renderPanes();
 
         const { isActionPanelShowing } = this.props;
@@ -369,7 +311,17 @@ class Panes extends Component {
                 }}
             >
                 <div key="header" id="panes_header" className={style.header}>
-                    {header}
+                    <PanesHeader
+                        panes={this.props.panes}
+                        activePaneId={this.activePaneId}
+                        paneComponents={this.panes}
+
+                        closeAllPanes={this.closeAllPanes}
+                        closeAllOtherPanes={this.closeAllOtherPanes}
+                        tabClicked={this.tabClicked}
+                        tabRightClicked={this.tabRightClicked}
+                        tabClickedClose={this.tabClickedClose}>
+                    </PanesHeader>
                 </div>
                 <div key="panes2" className={style.panes}>
                     {panes}
