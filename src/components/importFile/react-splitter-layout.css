@@ -3,9 +3,21 @@
 }
 
 .splitter-layout >.layout-splitter {
-    background-color: #737373;
+    box-sizing: border-box;
+    z-index: 1;
+    background-clip: padding-box;
+    width: 11px;
+    margin: 0 -5px;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    cursor: col-resize;
+    background-color: #3C3C3C;
 }
 
 .splitter-layout >.layout-splitter:hover {
-    background-color: rgba(255,255,255,.5);
+    -webkit-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    border-left: 5px solid rgba(35, 35, 35, 0.7);
+    border-right: 5px solid rgba(35, 35, 35, 0.7);
+    background-color: #2d2d2d;
 }
