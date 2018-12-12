@@ -20,9 +20,10 @@ import classNames from 'classnames';
 import style from './style.less';
 import ModalHeader from '../modal/modalHeader';
 import FileFinder from "./sections/fileFinder/FileFinder";
-import ImportCategory from "./ImportCategory";
-import CodeEditor from "./sections/codeEditor/CodeEditor";
+import ImportCategory from "./sections/importCategory";
+import CodeEditor from "./sections/descriptionArea/CodeEditor";
 import SplitterLayout from 'react-splitter-layout';
+import Description from "./sections/descriptionArea/Description";
 
 import './react-splitter-layout.css';
 
@@ -36,15 +37,29 @@ export default class ImportFileModal extends Component {
             selectedTitle: "",
             selectedSource: "",
             selectedPath: "",
+            selectedDescription: "",
+            selectedLogo: null,
             selectedDependencies: [],
-            categorySelectedId: 0,
-            categories: [{ id: 0, name: "OpenZeppelin" }],
+            selectedCategoryID: 0,
+            categories: [{ id: 0, name: "OpenZeppelin", description: "The OpenZeppelin is a library for secure smart contract development. It provides implementations of standards like ERC20 and ERC721 which you can deploy as-is or extend to suit your needs, as well as Solidity components to build custom contracts and more complex decentralized systems.", logo: "/static/img/openzeppelin-solidity.svg"}],
         }
     };
 
-    onCategorySelected(id) {
+    componentWillMount() {
+        // set default
+        const {description, logo} = this.state.categories[0];
+
         this.setState({
-            categorySelectedId: id
+            selectedDescription: description,
+            selectedLogo: logo
+        })
+    }
+
+    onCategorySelected(id, description, logo) {
+        this.setState({
+            selectedCategoryID: id,
+            selectedDescription: description,
+            selectedLogo: logo
         })
     };
 
@@ -161,12 +176,13 @@ export default class ImportFileModal extends Component {
     };
 
     render() {
-        const { categories, categorySelectedId, selectedTitle, selectedSource } = this.state;
+        const { categories, selectedCategoryID, selectedTitle, selectedSource, selectedDescription, selectedLogo } = this.state;
 
         return(
             <div className={classNames([style.importModal, "modal"])}>
                 <div className={style.container}>
                     <ModalHeader
+                        classname={style.header}
                         title="Import a Smart Contract"
                         onCloseClick={this.onCloseClickHandle}
                     />
@@ -177,10 +193,10 @@ export default class ImportFileModal extends Component {
                                 <div className={style.categoriesContainer}>
                                     <ul>
                                         {categories.map(category =>
-                                            <li key={category.id} className={categorySelectedId === category.id ? style.selected : null}>
+                                            <li key={category.id} className={selectedCategoryID === category.id ? style.selected : null}>
                                                 <ImportCategory
                                                     title={category.name}
-                                                    onCategorySelected={() => this.onCategorySelected(category.id)}/>
+                                                    onCategorySelected={() => this.onCategorySelected(category.id, category.description, category.logo)}/>
                                             </li>
                                         )}
                                     </ul>
@@ -189,12 +205,14 @@ export default class ImportFileModal extends Component {
                             <SplitterLayout customClassName="secondPane" percentage secondaryInitialSize={70} vertical={false} >
                             <div className={style.finderArea}>
                                 <div className={style.title}>Files</div>
-                                <FileFinder onFileSelected={this.onFileSelected}/>
+                                <FileFinder onFileSelected={this.onFileSelected} selectedTitle={selectedTitle}/>
                             </div>
                             <div className={style.descriptionArea}>
-                                <div className={style.title}>{selectedTitle}&nbsp;</div>
                                 <div>
-                                    <CodeEditor source={selectedSource}/>
+                                    { selectedTitle
+                                        ? <CodeEditor source={selectedSource} selectedTitle={selectedTitle}/>
+                                        : <Description selectedDescription={selectedDescription} selectedLogo={selectedLogo}/>
+                                    }
                                 </div>
                             </div>
                             </SplitterLayout>

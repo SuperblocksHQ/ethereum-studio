@@ -28,14 +28,14 @@ const TreeFileItem = (props) => {
         props.onFileSelected(name, source, "/".concat(path), dependencies);
     };
 
-    const { name, level } = props;
+    const { name, level, selectedTitle } = props;
 
     const levelNumber = `level${level}`;
 
     return (
         <div>
             <div className={style.treeItem}>
-                <div className={style.treeItemContainer} onClick={onClickHandler}>
+                <div className={`${style.treeItemContainer} ${selectedTitle === name ? style.selected : ''}`} onClick={onClickHandler} >
                     <div className={`${style.header} ${style[levelNumber]}`}>
                         <div className={style.icons}>
                             <div className={style.caret} >

@@ -44,7 +44,7 @@ export default class TreeFolderItem extends Component {
     render() {
         const {toggled, level} = this.state;
 
-        const { name, children, onFileSelected } = this.props;
+        const { name, children, onFileSelected, selectedTitle } = this.props;
 
         const levelNumber = `level${level}`;
 
@@ -70,9 +70,9 @@ export default class TreeFolderItem extends Component {
                         const {name, id, children, source, path, dependencies} = child;
 
                         if (children) {
-                            return <TreeFolderItem name={name} children={children} level={Number(level)+1} key={id} onFileSelected={onFileSelected}/>
+                            return <TreeFolderItem name={name} children={children} level={Number(level)+1} key={id} onFileSelected={onFileSelected} selectedTitle={selectedTitle}/>
                         } else {
-                            return <TreeFileItem name={name} source={source} path={path} dependencies={dependencies} level={Number(level)+1} key={id} onFileSelected={onFileSelected}/>
+                            return <TreeFileItem name={name} source={source} path={path} dependencies={dependencies} level={Number(level)+1} key={id} onFileSelected={onFileSelected} selectedTitle={selectedTitle}/>
                         }
                     })}
                 </div>

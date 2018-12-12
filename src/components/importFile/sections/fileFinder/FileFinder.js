@@ -21,9 +21,11 @@ import FolderTree from "../../../folderTree/FolderTree";
 
 const FileFinder = (props) => {
 
+    const {onFileSelected, selectedTitle} = props;
+
     return (
         <div className={style.container}>
-            <FolderTree data={data} onFileSelected={props.onFileSelected}/>
+            <FolderTree data={data} onFileSelected={onFileSelected} selectedTitle={selectedTitle}/>
         </div>
     );
 

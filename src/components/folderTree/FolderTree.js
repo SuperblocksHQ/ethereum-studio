@@ -19,11 +19,11 @@ import style from './style.less';
 import TreeFolderItem from "./TreeFolderItem";
 
 const FolderTree = (props) => {
-    const {data: {name, toggled, id, children}, onFileSelected} = props;
+    const {data: {name, toggled, id, children}, onFileSelected, selectedTitle} = props;
 
     return (
         <div className={style.treeContainer}>
-            <TreeFolderItem name={name} toggled={toggled} id={id} children={children} onFileSelected={onFileSelected}/>
+            <TreeFolderItem name={name} toggled={toggled} id={id} children={children} onFileSelected={onFileSelected} selectedTitle={selectedTitle}/>
         </div>
     );
 
