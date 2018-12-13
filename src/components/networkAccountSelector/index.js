@@ -365,7 +365,11 @@ class AccountSelector extends Component {
     getWeb3 = endpoint => {
         var provider;
         if (endpoint.toLowerCase() == 'http://superblocks-browser') {
-            provider = this.props.functions.EVM.getProvider();
+            if (this.props.functions.EVM.isReady()){
+                provider = this.props.functions.EVM.getProvider();
+            } else {
+                console.log("EVM is not ready!");
+            }
         } else {
             provider = new Web3.providers.HttpProvider(endpoint);
         }
