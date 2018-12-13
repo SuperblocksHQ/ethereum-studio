@@ -16,29 +16,19 @@
 
 import React from 'react';
 import style from './style.less';
+import data from '../../../../assets/static/json/openzeppelin.json';
 import FolderTree from "../../../folderTree/FolderTree";
-import {asyncReactor} from 'async-reactor';
 
-const openZeppelin = () => import(/* webpackChunkName: "openZeppelin" */ '../../../../assets/static/json/openzeppelin.json');
+const FileFinder = (props) => {
 
-function Loader() {
-    return (
-        <b>Loading ...</b>
-    );
-}
-
-async function renderTree(props) {
-    const data = await openZeppelin();
     const {onFileSelected, selectedTitle} = props;
 
     return (
         <div className={style.container}>
-            <FolderTree data={data}
-                        onFileSelected={onFileSelected}
-                        selectedTitle={selectedTitle}
-            />
+            <FolderTree data={data} onFileSelected={onFileSelected} selectedTitle={selectedTitle}/>
         </div>
     );
-}
 
-export default asyncReactor(renderTree, Loader);
+};
+
+export default FileFinder;
