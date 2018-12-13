@@ -16,8 +16,9 @@
 
 import sha256 from 'crypto-js/sha256';
 import Web3 from 'web3';
-import Tx from './ethereumjs-tx-1.3.3.min';
 import Networks from './networks';
+
+const TxEth = () => import(/* webpackChunkName: "ethereumjs-tx" */ './ethereumjs-tx-1.3.3.min');
 
 export default class DeployerRunner {
 
@@ -895,7 +896,9 @@ export default class DeployerRunner {
         });
     }
 
-    _sign(obj, cb) {
+    async _sign(obj, cb) {
+        const asyncTx = await TxEth();
+        const Tx = asyncTx.default;
         const tx = new Tx.Tx({
             from: obj.account.address,
             to: "",
