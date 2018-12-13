@@ -23,8 +23,8 @@ import {
     IconDeploy,
     IconConfigure,
     IconInteract,
-} from '../icons';
-import Tooltip from '../tooltip';
+} from '../../icons';
+import Tooltip from '../../tooltip';
 
 export default class Editor extends Component {
     constructor(props) {

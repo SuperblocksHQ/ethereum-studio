@@ -119,6 +119,7 @@ export default class ProjectItem extends Item {
                         // This is to handle a special case when a non .sol file is renamed into a .sol file.
                         // Since the file item already exsts and it's props will overwrite these new props.
                         _preserveProps: ['source', 'name', 'args', 'toggable', 'children'],
+                        renameFile: this.props.renameFile
                     },
                     this.router
                 );
@@ -168,6 +169,7 @@ export default class ProjectItem extends Item {
                         file: '',
                         project: this,
                     },
+                    renameFile: this.props.renameFile
                 },
                 this.router,
                 this.functions
@@ -367,6 +369,7 @@ export default class ProjectItem extends Item {
                             args: contract.args,
                             project: this,
                         },
+                        renameFile: this.props.renameFile
                     },
                     this.router
                 );

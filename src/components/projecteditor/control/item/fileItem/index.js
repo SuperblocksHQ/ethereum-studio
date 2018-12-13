@@ -292,6 +292,9 @@ export default class FileItem extends Item {
                                     newParent.getChildren(true, () => {
                                         const children2 = newParent.getChildren();
                                         this._copyState(children2, [this]);
+                                        if (this.getType() == 'file') {
+                                            this.props.renameFile(this.props.state.id, filename); // update redux, only for files for now
+                                        }
                                         resolve();
                                     });
                                 });
@@ -491,7 +494,6 @@ export default class FileItem extends Item {
     _clickRenameFile = e => {
         e.preventDefault();
 
-        const project = this.getProject();
         const newFile = prompt('Enter new name.', this.getFullPath());
         if (newFile) {
             // TODO: we should only allow file name change here, not path move. Move we want drag and drop for.
@@ -521,7 +523,6 @@ export default class FileItem extends Item {
                 alert("Max 255 characters.");
                 return;
             }
-            const newFullPath = newFile;
             this.mv(newFile)
                 .then(() => {
                     this.redrawMain(true);
@@ -708,6 +709,7 @@ export default class FileItem extends Item {
                                             __parent: this,
                                             project: this.getProject(),
                                         },
+                                        renameFile: this.props.renameFile
                                     },
                                     this.router,
                                     this.functions
@@ -737,6 +739,7 @@ export default class FileItem extends Item {
                                             project: this.getProject(),
                                             _tag: 0,
                                         },
+                                        renameFile: this.props.renameFile
                                     },
                                     this.router,
                                     this.functions
@@ -859,11 +862,3 @@ export default class FileItem extends Item {
         }
     };
 }
-
-
-
-
-
-
-
-

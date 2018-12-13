@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Control from './control';
 import { getAppVersion } from '../../../selectors/app';
 import { getSelectedProjectId } from '../../../selectors/projects';
-import { selectProject } from '../../../actions/projects';
+import { selectProject, explorerActions } from '../../../actions';
 import { closeAllPanels } from '../../../actions/view';
 
 const mapStateToProps = state => ({
@@ -13,11 +13,14 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => {
     return {
-        selectProject: project => {
-            dispatch(selectProject(project));
+        selectProject: (id, name) => {
+            dispatch(selectProject(id, name));
         },
         closeAllPanels: () => {
             dispatch(closeAllPanels())
+        },
+        renameFile: (id, name) => {
+            dispatch(explorerActions.renameFile(id, name));
         }
     };
 };

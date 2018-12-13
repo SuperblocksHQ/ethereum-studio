@@ -7,10 +7,7 @@ export default function projectsReducer(state = initialState, action) {
         case 'SELECT_PROJECT': {
             return {
                 ...state,
-                selectedProject: {
-                    id: action.data.project.getInode(),
-                    name: action.data.project.getName()
-                },
+                selectedProject: action.data ? { ...action.data } : Store.selectedProject,
             };
         }
         default:
