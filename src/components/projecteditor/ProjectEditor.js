@@ -29,7 +29,7 @@ export default class ProjectEditor extends Component {
     state = {
         controlPanelWidth: 280,
         minSize: 280,
-        draggin: false
+        dragging: false
     }
 
     constructor(props) {

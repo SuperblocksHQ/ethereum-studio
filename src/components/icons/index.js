@@ -15,37 +15,38 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 import React, { Component } from 'react';
 
-import FaIcon from '@fortawesome/react-fontawesome';
-import iconRun from '@fortawesome/fontawesome-free-solid/faSync';
-import iconSave from '@fortawesome/fontawesome-free-regular/faSave';
-import iconCompile from '@fortawesome/fontawesome-free-solid/faPuzzlePiece';
-import iconConfigure from '@fortawesome/fontawesome-free-solid/faCog';
-import iconTrash from '@fortawesome/fontawesome-free-regular/faTrashAlt';
-import iconGem from '@fortawesome/fontawesome-free-regular/faGem';
-import iconFile from '@fortawesome/fontawesome-free-solid/faFile';
-import iconFileAlt from '@fortawesome/fontawesome-free-regular/faFileAlt';
-import iconFolder from '@fortawesome/fontawesome-free-solid/faFolder';
-import iconFolderOpen from '@fortawesome/fontawesome-free-regular/faFolder';
-import iconCube from '@fortawesome/fontawesome-free-solid/faCube';
-import iconPlus from '@fortawesome/fontawesome-free-solid/faPlusSquare';
-import iconUp from '@fortawesome/fontawesome-free-solid/faArrowUp';
-import iconDown from '@fortawesome/fontawesome-free-solid/faArrowDown';
-import iconRight from '@fortawesome/fontawesome-free-solid/faLongArrowAltRight';
-import iconClone from '@fortawesome/fontawesome-free-solid/faClone';
-import iconUpload from '@fortawesome/fontawesome-free-solid/faUpload';
-import iconExchangeAlt from '@fortawesome/fontawesome-free-solid/faExchangeAlt';
-import iconCheck from '@fortawesome/fontawesome-free-solid/faCheck';
-import iconClose from '@fortawesome/fontawesome-free-solid/faTimes';
-import iconQuestionCircle from '@fortawesome/fontawesome-free-regular/faQuestionCircle';
-import iconTwitter from '@fortawesome/fontawesome-free-brands/faTwitter';
-import iconGithub from '@fortawesome/fontawesome-free-brands/faGithub';
-import iconDiscord from '@fortawesome/fontawesome-free-brands/faDiscord';
-import iconLock from '@fortawesome/fontawesome-free-solid/faLock';
-import iconLockOpen from '@fortawesome/fontawesome-free-solid/faLockOpen';
-import iconPencil from '@fortawesome/fontawesome-free-solid/faPencilAlt';
-import iconDownload from '@fortawesome/fontawesome-free-regular/faArrowAltCircleDown';
-import iconMosaic from '@fortawesome/fontawesome-free-solid/faThLarge';
-import iconChain from '@fortawesome/fontawesome-free-solid/faLink';
+import {FontAwesomeIcon as FaIcon} from '@fortawesome/react-fontawesome';
+import {faSync as iconRun} from '@fortawesome/free-solid-svg-icons/faSync'
+import {faSave as iconSave} from '@fortawesome/free-regular-svg-icons/faSave';
+import {faPuzzlePiece as iconCompile} from '@fortawesome/free-solid-svg-icons/faPuzzlePiece';
+import {faCog as iconConfigure} from '@fortawesome/free-solid-svg-icons/faCog';
+import {faTrashAlt as iconTrash} from '@fortawesome/free-regular-svg-icons/faTrashAlt';
+import {faGem as iconGem} from '@fortawesome/free-regular-svg-icons/faGem';
+import {faFile as iconFile} from '@fortawesome/free-solid-svg-icons/faFile';
+import {faFileAlt as iconFileAlt} from '@fortawesome/free-regular-svg-icons/faFileAlt';
+import {faFileImport as IconFileImport} from '@fortawesome/free-solid-svg-icons/faFileImport';
+import {faFolder as iconFolder} from '@fortawesome/free-solid-svg-icons/faFolder';
+import {faFolder as iconFolderOpen} from '@fortawesome/free-regular-svg-icons/faFolder';
+import {faCube as iconCube} from '@fortawesome/free-solid-svg-icons/faCube';
+import {faPlusSquare as iconPlus} from '@fortawesome/free-solid-svg-icons/faPlusSquare';
+import {faArrowUp as iconUp} from '@fortawesome/free-solid-svg-icons/faArrowUp';
+import {faArrowDown as iconDown} from '@fortawesome/free-solid-svg-icons/faArrowDown';
+import {faLongArrowAltRight as iconRight} from '@fortawesome/free-solid-svg-icons/faLongArrowAltRight';
+import {faClone as iconClone} from '@fortawesome/free-solid-svg-icons/faClone';
+import {faUpload as iconUpload} from '@fortawesome/free-solid-svg-icons/faUpload';
+import {faExchangeAlt as iconExchangeAlt} from '@fortawesome/free-solid-svg-icons/faExchangeAlt';
+import {faCheck as iconCheck} from '@fortawesome/free-solid-svg-icons/faCheck';
+import {faTimes as iconClose} from '@fortawesome/free-solid-svg-icons/faTimes';
+import {faQuestionCircle as iconQuestionCircle} from '@fortawesome/free-regular-svg-icons/faQuestionCircle';
+import {faTwitter as iconTwitter} from '@fortawesome/free-brands-svg-icons/faTwitter';
+import {faGithub as iconGithub} from '@fortawesome/free-brands-svg-icons/faGithub';
+import {faDiscord as iconDiscord} from '@fortawesome/free-brands-svg-icons/faDiscord';
+import {faLock as iconLock} from '@fortawesome/free-solid-svg-icons/faLock';
+import {faLockOpen as iconLockOpen} from '@fortawesome/free-solid-svg-icons/faLockOpen';
+import {faPencilAlt as iconPencil} from '@fortawesome/free-solid-svg-icons/faPencilAlt';
+import {faArrowAltCircleDown as iconDownload} from '@fortawesome/free-regular-svg-icons/faArrowAltCircleDown';
+import {faThLarge as iconMosaic} from '@fortawesome/free-solid-svg-icons/faThLarge';
+import {faLink as iconChain} from '@fortawesome/free-solid-svg-icons/faLink';
 
 class IconImg extends Component {
     render() {
@@ -77,6 +78,7 @@ export const IconTrash = () => <FaIcon icon={iconTrash} />;
 export const IconGem = () => <FaIcon icon={iconGem} />;
 export const IconFile = () => <FaIcon icon={iconFile} />;
 export const IconFileAlt = () => <FaIcon icon={iconFileAlt} />;
+export const IconImportFile = () => <FaIcon icon={IconFileImport} />;
 export const IconFolder = () => <FaIcon icon={iconFolder} color="#49616C" />;
 export const IconFolderOpen = () => (
     <FaIcon icon={iconFolderOpen} color="#49616C" />
@@ -174,3 +176,4 @@ export const IconDiscord = ({...props}) => <FaIcon icon={iconDiscord} {...props}
 
 // Preferences
 export const IconChain = ({...props}) => <FaIcon icon={iconChain} {...props} />;
+

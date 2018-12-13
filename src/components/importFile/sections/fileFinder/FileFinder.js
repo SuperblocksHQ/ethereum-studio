@@ -14,23 +14,21 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-@import '../../../style/index';
+import React from 'react';
+import style from './style.less';
+import data from '../../../../assets/static/json/openzeppelin.json';
+import FolderTree from "../../../folderTree/FolderTree";
 
-.header {
-    padding: 18px 20px;
-    display: flex;
-    border-bottom: 1px solid @modal-separator-color;
-    .title {
-        font-weight: 600;
-        text-align: left;
-        font-size: 1.3em;
-    }
-    .closeIcon {
-        margin-left: auto;
-        padding-right: 0;
-        color: #c7c7c7;
-        &:hover {
-            color: #fff;
-        }
-    }
-}
+const FileFinder = (props) => {
+
+    const {onFileSelected, selectedTitle} = props;
+
+    return (
+        <div className={style.container}>
+            <FolderTree data={data} onFileSelected={onFileSelected} selectedTitle={selectedTitle}/>
+        </div>
+    );
+
+};
+
+export default FileFinder;

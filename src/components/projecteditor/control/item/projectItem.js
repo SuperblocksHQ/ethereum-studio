@@ -171,7 +171,8 @@ export default class ProjectItem extends Item {
                     },
                     renameFile: this.props.renameFile
                 },
-                this.router
+                this.router,
+                this.functions
             );
             this.setChildren([fileItem]);
 
