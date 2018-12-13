@@ -27,7 +27,7 @@ import Description from "./sections/descriptionArea/Description";
 
 import './react-splitter-layout.css';
 
-import data from '../../assets/static/json/openzeppelin.json';
+const openZeppelin = () => import(/* webpackChunkName: "openZeppelin" */ '../../assets/static/json/openzeppelin.json');
 
 export default class ImportFileModal extends Component {
 
@@ -72,10 +72,11 @@ export default class ImportFileModal extends Component {
         });
     };
 
-    getSourceFromAbsolutePath = (absolutePath) => {
+    getSourceFromAbsolutePath = async (absolutePath) => {
         // remove first element from array
         const pathParts = absolutePath.split("/");
-        let currentNode = data;
+        let currentAsyncNode = await openZeppelin();
+        let currentNode = currentAsyncNode.default;
         let source = "";
 
         pathParts.map(part => {
