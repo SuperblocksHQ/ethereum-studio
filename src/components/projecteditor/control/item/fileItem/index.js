@@ -502,6 +502,14 @@ export default class FileItem extends Item {
             //alert("Illegal filename.");
             //return false;
             //}
+
+            // Check if user is trying to move directory into a subdirectory, an action we can't support.
+            const forbiddenPrefix = this.getFullPath() + '/';
+            if (newFile.indexOf(forbiddenPrefix) === 0) {
+                alert("Error: Could not move directory into its own subdirectory");
+                return
+            }
+
             if (newFile == this.getFullPath()) {
                 return;
             }
