@@ -28,7 +28,7 @@ export default class Deployer extends Component {
         deployToMainnetConfirmed: false,
         consoleRows: [],
         status: ''
-    }
+    };
 
     constructor(props) {
         super(props);
@@ -45,11 +45,11 @@ export default class Deployer extends Component {
 
     componentDidMount() {
         this.deploy();
-    }
+    };
 
     canClose = (cb) => {
         cb(0);
-    }
+    };
 
     focus = (rePerform) => {
         if (rePerform) {
@@ -57,17 +57,17 @@ export default class Deployer extends Component {
                 this.deploy();
             }
         }
-    }
+    };
 
     updateStatus = (msg) => {
         this.setState({
             status: msg ? msg : ""
         });
-    }
+    };
 
     onRedeployClickHandle = () => {
         this.deploy();
-    }
+    };
 
     getHeight = () => {
         const a = document.getElementById(this.id);
@@ -77,47 +77,47 @@ export default class Deployer extends Component {
     };
 
     getWait = () => {
-        if(this.state.consoleRows.length == 0) {
+        if(this.state.consoleRows.length === 0) {
             return <div className={styleConsole.loading}>
                     <span>Loading...</span>
                 </div>;
         }
-    }
+    };
 
     redraw = () => {
         this.forceUpdate();
-    }
+    };
 
     log = (msg, channel) => {
         this.setState(prevState => ({
             consoleRows: [...prevState.consoleRows, {msg, channel}]
         }));
-    }
+    };
 
     showExternalProviderModal = () => {
         var modalData = {
             title: "WARNING: Invoking external account provider",
             body: "Please understand that Superblocks Lab has no power over which network is targeted when using an external provider. It is your responsibility that the network is the same as it is expected to be.",
             class: style.externalProviderWarning,
-        }
+        };
 
         const modal=(<Modal data={modalData} />);
         this.props.functions.modal.show({cancel: () => { return false }, render: () => { return modal }});
-    }
+    };
 
     closeExternalProviderModal = () => {
         this.props.functions.modal.close();
-    }
+    };
 
     onDeployToMainnetConfirmed = () => {
         this.props.functions.modal.close();
         this.resolveShowMainnetWarning();
-    }
+    };
 
     onMainnetCloseHandle = () => {
         this.props.functions.modal.close();
         this.rejectShowMainnetWarning(new Error("Mainnet deployment aborted"));
-    }
+    };
 
     showMainnetWarning = () => {
         var self = this;
@@ -143,7 +143,7 @@ export default class Deployer extends Component {
                 }
             });
         });
-    }
+    };
 
     deploy() {
         // Make sure to reset the state to its intial values
@@ -153,7 +153,7 @@ export default class Deployer extends Component {
             status: ''
         },
         () => this.deployer.run());
-    }
+    };
 
     renderContents = () => {
         const waiting = this.getWait();
@@ -166,9 +166,9 @@ export default class Deployer extends Component {
                     {consoleRows.map((row, index) => {
                         return row.msg.split("\n").map(i => {
                             var cl = styleConsole.std1;
-                            if (row.channel == 2)
+                            if (row.channel === 2)
                                 cl = styleConsole.std2;
-                            else if (row.channel == 3)
+                            else if (row.channel === 3)
                                 cl = styleConsole.std3;
                             return <div key={row} className={cl}>{i}</div>;
                         })
