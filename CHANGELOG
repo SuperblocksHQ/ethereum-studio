@@ -1,5 +1,15 @@
 # Superblocks Lab - Change log
 
+## [1.3.0]
+
++ Addition: Integrate OpenZeppelin smart contracts #253
++ Addition: New CryptoPizza template (ERC-721) #276
+* Improvement: Add retry to Web3 getCode call during deployment #266
+* Improvement: File renaming operations now use Redux store #278
+* Fix: Unable to move folder with files inside #273
+* Fix: Dappfile not updating correctly when renaming and removing folders #272
+
+
 ## [1.2.0]
 
 + Addition: Add a warning modal when trying to deploy to Mainnet #162
