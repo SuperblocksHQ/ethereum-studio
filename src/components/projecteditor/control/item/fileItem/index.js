@@ -37,9 +37,10 @@ import style from '../../style.less';
 import { DirectoryEntry } from './directoryEntry';
 import { FileEntry } from './fileEntry';
 import Tooltip from '../../../../tooltip';
+import ImportFileModal from "../../../../importFile";
 
 export default class FileItem extends Item {
-    constructor(props, router) {
+    constructor(props, router, functions) {
         props.state = props.state || {};
         props.type = props.type || 'file';
         props.lazy = props.lazy === undefined ? true : props.lazy;
@@ -49,7 +50,7 @@ export default class FileItem extends Item {
                 : props.state.toggable;
         props.state.open =
             props.state.open === undefined ? true : props.state.open;
-        super(props, router);
+        super(props, router, functions);
         if (props.type == "folder") {
             props.state.children = (props.state.children === undefined ? this._createChildren : props.state.children);
         }
@@ -397,6 +398,31 @@ export default class FileItem extends Item {
         }
     };
 
+    onImportModalClose = () => {
+        this.functions.modal.close();
+    };
+
+    _clickImportFile = e => {
+        e.preventDefault();
+
+        const modal = (
+            <ImportFileModal
+                context = {this}
+                project = {this.getProject()}
+                onCloseClick={this.onImportModalClose}
+            />
+        );
+        this.functions.modal.show({
+            cancel: () => {
+                return false;
+            },
+            render: () => {
+                return modal;
+            }
+        });
+
+    };
+
     _clickNewFolder = e => {
         e.preventDefault();
 
@@ -548,6 +574,7 @@ export default class FileItem extends Item {
                     isReadOnly={this.isReadOnly()}
                     fullPath={this.getFullPath()}
                     clickNewFile={this._clickNewFile}
+                    clickImportFile={this._clickImportFile}
                     clickNewFolder={this._clickNewFolder}
                     clickRenameFile={this._clickRenameFile}
                     clickDeleteFile={this._clickDeleteFile}
@@ -692,7 +719,8 @@ export default class FileItem extends Item {
                                         },
                                         renameFile: this.props.renameFile
                                     },
-                                    this.router
+                                    this.router,
+                                    this.functions
                                 )
                             );
                         } else if (file.type == 'f') {
@@ -721,7 +749,8 @@ export default class FileItem extends Item {
                                         },
                                         renameFile: this.props.renameFile
                                     },
-                                    this.router
+                                    this.router,
+                                    this.functions
                                 );
                                 fileItem.props.onClick = fileItem._openItem;
                             }
@@ -809,7 +838,8 @@ export default class FileItem extends Item {
                                             _tag: 4,
                                         },
                                     },
-                                    this.router
+                                    this.router,
+
                                 );
                                 deployItem.props.onClick = deployItem._openItem;
 

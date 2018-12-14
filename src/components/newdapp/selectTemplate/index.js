@@ -118,12 +118,14 @@ export default class SelectTemplate extends Component {
                                     }
                                 </ul>
                             </div>
-                        <div className={style.templateListArea}>
-                            <GridLayout
-                                templates={templates}
-                                onTemplateSelected={this.onTemplateSelected}
-                                templateSelectedId={templateSelected ? templateSelected.id : null}
-                                categorySelectedId={categorySelectedId}/>
+                        <div className={style.templateListContainer}>
+                            <div className={style.templateListArea}>
+                                <GridLayout
+                                    templates={templates}
+                                    onTemplateSelected={this.onTemplateSelected}
+                                    templateSelectedId={templateSelected ? templateSelected.id : null}
+                                    categorySelectedId={categorySelectedId}/>
+                            </div>
                         </div>
                     </div>
                     <div className={style.footer}>

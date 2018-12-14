@@ -1,0 +1,82 @@
+@import '../../style/index';
+
+.treeContainer {
+    .treeItem {
+        display: block;
+        line-height: 28px;
+        user-select: none;
+        .treeItemContainer:first-of-type {
+            display: flex;
+            position: relative;
+            align-items: center;
+            border-left: 2px solid transparent;
+            &:hover {
+                background-color: rgba(128, 46, 255, 0.1);
+                cursor: pointer;
+                color: #fff;
+                border-color: #7237CF;
+            }
+            &.selected {
+                background-color: @modal-selected-color;
+                color: #fff;
+                &:hover {
+                    background-color: @modal-selected-color;
+                    border-color: transparent;
+                }
+            }
+            .levelGenerator(@name; @columns; @index: 1) when (@index =< @columns) {
+                .levelGenerator(@name; @columns; (@index + 1));
+                .@{name}@{index} {
+                    padding-left: ( @index * 15px );
+                }
+            }
+            .levelGenerator(level,15);
+            .header {
+                display: flex;
+                .icons {
+                    display: flex;
+                    .caret {
+                        float: left;
+                        width: 25px;
+                        overflow: hidden;
+                        text-align: center;
+                        img.angleRight {
+                            height: 8px;
+                            width: 5px;
+                        }
+                        img.angleDown {
+                            height: 5px;
+                            width: 8px;
+                        }
+                    }
+                    .icon {
+                        float: left;
+                        width: 25px;
+                        overflow: hidden;
+                        margin-top: 2px;
+                        text-align: center;
+                        margin-right: 3px;
+                        svg {
+                            width: 1em;
+                        }
+                    }
+                }
+                .title {
+                    display: flex;
+                    width: 100%;
+                    min-width: 50px;
+                    a {
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+                }
+            }
+        }
+        .collapsed {
+            overflow: hidden;
+            -webkit-transition: ease-out;
+            transition: ease-out;
+            height: 0;
+        }
+    }
+}

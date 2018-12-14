@@ -1,0 +1,113 @@
+// Copyright 2018 Superblocks AB
+//
+// This file is part of Superblocks Lab.
+//
+// Superblocks Lab is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation version 3 of the License.
+//
+// Superblocks Lab is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
+
+@import '../../style/index';
+
+.importModal {
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    background-color: @modal-background-color;
+    color: #fff;
+    h2 {
+        margin-top: 0;
+    }
+    .container {
+        width: 1200px;
+        height: 600px;
+        .header {
+            padding: 18px 20px;
+        }
+        .area {
+            height: 470px;
+            .draggableImport{
+                position: relative;
+            }
+            .categoriesArea {
+                margin-top: 15px;
+                .title {
+                    padding-left: 20px;
+                    font-weight: 600;
+                    margin-bottom: 16px;
+                }
+                .categoriesContainer {
+                    margin-top: 10px;
+                    ul {
+                        list-style-type: none;
+                        margin: 0;
+                        padding: 0;
+                        color: #c7c7c7;
+                        li {
+                            padding-left: 20px;
+                            line-height: 40px;
+                            border-radius: 2px;
+                            border-left: 2px solid transparent;
+                            &:hover {
+                                background-color: @modal-color-hover-purple;
+                                border-color: #7237CF;
+                                cursor: pointer;
+                                color: #fff;
+                            }
+                        }
+                        .selected {
+                            background-color: @modal-selected-color;
+                            color: #fff;
+                            &:hover {
+                                background-color: @modal-selected-color;
+                                border-color: transparent;
+                            }
+                        }
+                    }
+                }
+            }
+            .finderArea {
+                border-right: 1px solid @modal-separator-color;
+                margin-top: 15px;
+                .title {
+                    font-weight: 600;
+                    margin-bottom: 16px;
+                    margin-left: 15px;
+                }
+            }
+            .descriptionArea {
+                position: absolute;
+                width: 100%;
+                margin-top: 15px;
+                padding-right: 20px;
+                padding-left: 15px;
+                .draggableEditor {
+                    overflow: hidden;
+                }
+                .title {
+                    font-weight: 600;
+                    margin-bottom: 16px;
+                }
+                p {
+                    margin: 0;
+                }
+            }
+        }
+    }
+    .footer {
+        border-top: 1px solid @modal-separator-color;
+        .buttonsContainer {
+            margin-left: auto;
+            padding: 15px 20px;
+            display: table;
+        }
+    }
+}

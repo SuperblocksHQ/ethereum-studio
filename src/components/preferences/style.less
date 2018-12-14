@@ -41,7 +41,6 @@
             border-right: 1px solid @modal-separator-color;
             .categoriesContainer {
                 margin-top: 15px;
-                margin-left: 32px;
                 ul {
                     list-style-type: none;
                     margin: 0;
@@ -49,19 +48,21 @@
                     color: #c7c7c7;
                     li {
                         line-height: 40px;
-                        padding: 0 16px;
+                        padding: 0 20px;
                         border-radius: 2px;
+                        border-left: 2px solid transparent;
                         &:hover {
-                            background-color: @modal-color-hover;
+                            background-color: @modal-color-hover-purple;
                             cursor: pointer;
                             color: #fff;
                         }
                     }
                     .selected {
-                        background-color: @primary-color;
+                        background-color: @modal-selected-color;
                         color: #fff;
                         &:hover {
-                            background-color: @primary-color;
+                            background-color: @modal-selected-color;
+                            border-color: transparent;
                         }
                     }
                 }
