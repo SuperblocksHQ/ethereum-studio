@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Proptypes from 'prop-types';
 import classNames from 'classnames';
 import style from '../style.less';
-import { IconClose } from '../../icons';
+import ModalHeader from '../../modal/modalHeader';
 
 const TemplateCategory = ({ onCategorySelected, title } = props) => (
     <div onClick={onCategorySelected}>{title}</div>
@@ -95,12 +95,10 @@ export default class SelectTemplate extends Component {
         return(
             <div className={classNames([style.newDapp, "modal"])}>
                 <div className={style.step2}>
-                    <div className={style.header}>
-                        <div className={style.title}>Select Template</div>
-                        <button className={classNames([style.closeIcon, "btnNoBg"])} onClick={this.onCloseClickHandle}>
-                            <IconClose />
-                        </button>
-                    </div>
+                    <ModalHeader
+                        title="Select Template"
+                        onCloseClick={this.onCloseClickHandle}
+                    />
                     <div className={classNames([style.area, style.container])}>
                         <div className={style.categoriesArea}>
                             <div className={style.categoriesTitle}>Categories</div>

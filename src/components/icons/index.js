@@ -102,9 +102,7 @@ export const IconUpload = () => <FaIcon icon={iconUpload} />;
 export const IconDropdown = ({ ...props }) => (
     <span className="dropDown" {...props} />
 );
-export const IconClose = ({ ...props }) => (
-    <FaIcon icon={iconClose} {...props} />
-);
+export const IconClose = ({ ...props }) => <svg preserveAspectRatio="xMidYMid meet" fill="currentColor" xmlns="http://www.w3.org/2000/svg" height="14px" width="14px" viewBox="0 0 512 512" style={{ verticalAlign: "middle" }} {...props}><path d="M405 136.798L375.202 107 256 226.202 136.798 107 107 136.798 226.202 256 107 375.202 136.798 405 256 285.798 375.202 405 405 375.202 285.798 256z"/></svg>
 export const IconAdd = ({ ...props }) => (
     <IconImg src={'/static/img/icon-add-contract.svg'} {...props} />
 );
