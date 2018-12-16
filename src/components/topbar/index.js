@@ -23,7 +23,7 @@ import Backend from '../projecteditor/control/backend';
 import Modal from '../modal';
 import Tooltip from '../tooltip';
 import PreferencessModal from '../preferences';
-import ShareDropdownDialog from './share/ShareDropdownDialog';
+import ShareDialog from './share';
 import {
     IconDownload,
     IconTrash,
@@ -469,7 +469,7 @@ export default class TopBar extends Component {
                 />
                 <DropdownContainer
                         className={style.actionHelp}
-                        dropdownContent={<ShareDropdownDialog />} >
+                        dropdownContent={<ShareDialog />} >
                             <ShareDropdownAction />
                 </DropdownContainer>
                 <DropdownContainer

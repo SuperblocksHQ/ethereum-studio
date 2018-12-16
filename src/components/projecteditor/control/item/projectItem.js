@@ -239,41 +239,6 @@ export default class ProjectItem extends Item {
             });
     };
 
-    ipfsSyncUp = (keepState) => {
-        const modalData = {
-            title: 'Uploading to IPFS',
-            body: (
-                <div>
-                    This project is being uploaded to IPFS. <br />
-                    Please stand by...
-                </div>
-            ),
-            style: { width: '680px' },
-        };
-
-        const modal = <Modal data={modalData} />;
-
-        this.functions.modal.show({
-            cancel: () => {
-                return false;
-            },
-            render: () => {
-                return modal;
-            },
-        });
-
-        this.backend.ipfsSyncUp(this.getInode(), keepState).then( (hash) => {
-            alert('Project successfully uploaded to IPFS. Hash: ' + hash +
-                'Share URL: ' + document.location.href + '#/ipfs/' + hash);
-            this.functions.modal.close();
-        })
-        .catch( (e) => {
-            console.log(e);
-            alert('Error: Something went wrong when uploading to IPFS. Please try agin later.');
-            this.functions.modal.close();
-        });
-    };
-
     /**
      * Return the dappfile item.
      *

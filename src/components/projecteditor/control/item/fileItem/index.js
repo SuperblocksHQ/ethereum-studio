@@ -430,19 +430,6 @@ export default class FileItem extends Item {
         this.delete();
     };
 
-    _clickIpfsSyncUp = e => {
-        e.preventDefault();
-
-        const response = prompt("Warning: This will upload your complete project to IPFS, making it visible to the world. Do you also want to upload the build files which contain possible sensitive data such as contract addresses? Type 'yes' to upload build files, type 'no' to not upload build files. Esc cancels upload.", "no");
-
-        if (!response) return;
-        const keepState = response.toLowerCase() === "yes";
-
-        const project = this.getProject();
-
-        project.ipfsSyncUp(keepState);
-    };
-
     delete = () => {
         return new Promise( (resolve, reject) => {
             // We need to load the file tree below this item (if any) to be able to notify those items about the delete.
@@ -556,7 +543,6 @@ export default class FileItem extends Item {
                     clickRenameFile={this._clickRenameFile}
                     clickDeleteFile={this._clickDeleteFile}
                     icons={this._renderIcons(level, index)}
-                    clickIpfsSyncUp={this._clickIpfsSyncUp}
                 />
             );
         }

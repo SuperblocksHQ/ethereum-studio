@@ -39,7 +39,6 @@ export class DirectoryEntry extends Component {
             clickDeleteFile,
             fullPath,
             icons,
-            clickIpfsSyncUp,
         } = this.props;
 
         const alwaysVisible = fullPath === "/";
