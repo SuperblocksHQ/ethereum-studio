@@ -16,7 +16,7 @@ class DropdownBasic extends Component {
 }
 export const Dropdown = onClickOutside(DropdownBasic);
 
-Dropdown.proptypes = {
+DropdownBasic.proptypes = {
     handleClickOutside: PropTypes.func.isRequired,
     handleClickInside: PropTypes.func.isRequired,
 };
@@ -43,7 +43,7 @@ export class DropdownContainer extends Component {
     };
 
     render() {
-        let { dropdownContent, useRightClick, ...props } = this.props;
+        let { dropdownContent, useRightClick, enableClickInside, ...props } = this.props;
         if (useRightClick) {
             var main = (
                 <div onContextMenu={this.showMenu}>{this.props.children}</div>
@@ -57,7 +57,7 @@ export class DropdownContainer extends Component {
                 {this.state.showMenu ? (
                     <Dropdown
                         handleClickOutside={this.closeMenu}
-                        handleClickInside={this.closeMenu}
+                        handleClickInside={!enableClickInside && this.closeMenu}
                     >
                         {dropdownContent}
                     </Dropdown>
@@ -66,3 +66,9 @@ export class DropdownContainer extends Component {
         );
     }
 }
+
+DropdownBasic.proptypes = {
+    enableClickInside: PropTypes.bool,
+    dropdownContent: PropTypes.object,
+    useRightClick: PropTypes.bool,
+};

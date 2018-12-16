@@ -50,7 +50,7 @@ class Switch extends Component {
     }
   }
 
-  setChecked(e, checked) {
+  setChecked(checked) {
     if (this.props.disabled) {
       return;
     }
@@ -59,21 +59,21 @@ class Switch extends Component {
         checked,
       });
     }
-    this.props.onChange(e, checked);
+    this.props.onChange(checked);
   }
 
-  toggle = (e) => {
+  toggle = () => {
     const { onClick } = this.props;
     const checked = !this.state.checked;
-    this.setChecked(e, checked);
+    this.setChecked(checked);
     onClick(checked);
   }
 
   handleKeyDown = (e) => {
     if (e.keyCode === 37) { // Left
-      this.setChecked(e, false);
+      this.setChecked(false);
     } else if (e.keyCode === 39) { // Right
-      this.setChecked(e, true);
+      this.setChecked(true);
     }
   }
 

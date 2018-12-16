@@ -32,7 +32,8 @@ import {
     IconProjectSelector,
     IconDropdown,
     IconDiscord,
-    IconCheck
+    IconCheck,
+    IconShare,
 } from '../icons';
 import Dappfile from '../projecteditor/control/item/dappfileItem';
 
@@ -57,7 +58,7 @@ const HelpDropdownAction = () => (
 const ShareDropdownAction = () => (
     <div className={style.action}>
         <button className={classNames([style.container, 'btnNoBg'])}>
-            <IconHelp />
+            <IconShare />
             <span>Share</span>
         </button>
     </div>
@@ -469,8 +470,10 @@ export default class TopBar extends Component {
                 />
                 <DropdownContainer
                         className={style.actionHelp}
-                        dropdownContent={<ShareDialog />} >
-                            <ShareDropdownAction />
+                        dropdownContent={<ShareDialog />}
+                        enableClickInside={true}
+                >
+                    <ShareDropdownAction />
                 </DropdownContainer>
                 <DropdownContainer
                     className={style.projectButton}

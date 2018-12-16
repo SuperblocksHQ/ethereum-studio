@@ -16,6 +16,9 @@
 
 import React, { Component } from 'react';
 import style from './style.less';
+import {
+    IconCopy
+} from '../../icons';
 import Note from '../../note';
 import Switch from '../../switch';
 import TextInput from '../../textInput';
@@ -29,17 +32,13 @@ class ShareDialog extends Component {
         shareURL: null
     }
 
-    onChange = (e, checked) => {
-        e.stopPropagation();
-
+    onChange = (checked) => {
         this.setState({
             keepState: checked
         });
     }
 
-    ipfsSyncUp = (e) => {
-        e.stopPropagation();
-
+    ipfsSyncUp = () => {
         const { keepState } = this.state;
         const { projectId } = this.props;
 
@@ -97,12 +96,15 @@ class ShareDialog extends Component {
 
     renderShareURL(shareURL) {
         return (
-            <div>
+            <div className={style.share}>
                 <TextInput
                     label="Share your project"
                     defaultValue={shareURL}
                     disabled={true}
                 />
+                <div>
+                    <IconCopy />
+                </div>
             </div>
         );
     }

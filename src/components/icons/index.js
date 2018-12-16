@@ -46,6 +46,9 @@ import iconPencil from '@fortawesome/fontawesome-free-solid/faPencilAlt';
 import iconDownload from '@fortawesome/fontawesome-free-regular/faArrowAltCircleDown';
 import iconMosaic from '@fortawesome/fontawesome-free-solid/faThLarge';
 import iconChain from '@fortawesome/fontawesome-free-solid/faLink';
+import iconShare from '@fortawesome/fontawesome-free-solid/faShareAlt';
+import iconCopy from '@fortawesome/fontawesome-free-regular/faCopy';
+
 
 class IconImg extends Component {
     render() {
@@ -125,6 +128,9 @@ export const IconPublicAddress = ({ ...props }) => (
 export const IconMosaic = ({ ...props }) => (
     <FaIcon icon={iconMosaic} {...props} />
 );
+export const IconCopy = ({ ...props }) => (
+    <FaIcon icon={iconCopy} {...props} />
+);
 
 // Top Bar
 export const IconTransactions = ({ ...props }) => (
@@ -138,6 +144,7 @@ export const IconProjectSelector = ({ ...props }) => (
 );
 export const IconHelp = () => <FaIcon icon={iconQuestionCircle} />;
 export const IconCheck = () => <FaIcon icon={iconCheck} />;
+export const IconShare = () => <FaIcon icon={iconShare} />;
 
 // File types
 export const IconContract = ({...props}) => <IconImg src={'/static/img/icon-solidity.svg'} {...props} />;
