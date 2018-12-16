@@ -263,7 +263,7 @@ export default class ProjectItem extends Item {
         });
 
         this.backend.ipfsSyncUp(this.getInode(), keepState).then( (hash) => {
-            alert('Project successfully uploaded to IPFS. Hash: ' + hash + 
+            alert('Project successfully uploaded to IPFS. Hash: ' + hash +
                 'Share URL: ' + document.location.href + '#/ipfs/' + hash);
             this.functions.modal.close();
         })
@@ -271,139 +271,6 @@ export default class ProjectItem extends Item {
             console.log(e);
             alert('Error: Something went wrong when uploading to IPFS. Please try agin later.');
             this.functions.modal.close();
-        });
-    };
-
-    ipfsSyncDown = (hash) => {
-        return new Promise( (resolve, reject) => {
-            const modalData = {
-                title: 'Syncing project with IPFS',
-                body: (
-                    <div>
-                        Syncing this project with IPFS. <br />
-                        Please stand by...
-                    </div>
-                ),
-                style: { width: '680px' },
-            };
-
-            const modal = <Modal data={modalData} />;
-
-            this.functions.modal.show({
-                cancel: () => {
-                    return false;
-                },
-                render: () => {
-                    return modal;
-                },
-            });
-
-            var overWriteStrategy = "ask";
-
-            this.backend.ipfsFetchFiles(hash).then( (files) => {
-
-                // Upvalue: files
-                const fn = () => {
-                    return new Promise( (resolve, reject) => {
-                        const file = files.pop();
-                        if (!file) {
-                            // Done
-                            resolve();
-                            return;
-                        }
-                        if (file.content) {
-                            const a = file.path.match("[^/]+(.*/)([^/]+)$");
-                            if (a) {
-                                const path = a[1];
-                                const filename = a[2];
-                                const content = file.content;
-                                this.newFile(path, filename, (status) => {
-                                    if (status == 1) {
-                                        // File already exists. Overwrite ?
-                                        if (overWriteStrategy === "ask") {
-                                            var response = prompt("Do you want to overwrite the file " + path + filename +"? yes/no/all/never", "no");
-                                            if (!response) response = "no";
-                                            response = response.toLowerCase();
-                                            if (response == "yes") {
-                                                // Fall through, but ask again next time.
-                                            }
-                                            else if (response == "never") {
-                                                overWriteStrategy = "never";
-                                                fn().then(resolve).catch(reject);
-                                                return;
-                                            }
-                                            else if (response == "all") {
-                                                 overWriteStrategy = "all";
-                                                // Fall through
-                                            }
-                                            else {
-                                                // Assume no
-                                                fn().then(resolve).catch(reject);
-                                                return;
-                                            }
-                                        }
-                                        else if (overWriteStrategy === "never") {
-                                            fn().then(resolve).catch(reject);
-                                            return;
-                                        }
-                                        else if (overWriteStrategy === "all") {
-                                            // Fall through
-                                        }
-                                    }
-                                    else if (status > 1) {
-                                        reject();
-                                        return;
-                                    }
-                                    const fullPath = path + filename;
-                                    this
-                                        .getItemByPath(
-                                            fullPath.split('/'),
-                                            this
-                                        )
-                                        .then(item => {
-                                            item.setContents(
-                                                content.toString()
-                                            );
-                                            item.save()
-                                                .then( () => {
-                                                    fn().then(resolve).catch(reject);
-                                                })
-                                                .catch( (e) => {
-                                                    reject("Error: Could not write to file, sync halted.");
-                                                });
-                                        })
-                                        .catch((e) => {
-                                            reject("Error: Could not write to file, sync halted.");
-                                        });
-                                });
-                            }
-                            else {
-                                fn().then(resolve).catch(reject);
-                            }
-                        }
-                        else {
-                            fn().then(resolve).catch(reject);
-                        }
-                    });
-                };
-
-                fn().then( () => {
-                    this.functions.modal.close();
-                    resolve();
-                })
-                .catch ( (e) => {
-                    this.functions.modal.close();
-                    console.log(e);
-                    alert('Error: Something went wrong when syncing the project files with the files in IPFS.');
-                    resolve();  // Yes, resolve.
-                });
-            })
-            .catch( (e) => {
-                console.log(e);
-                alert('Error: Something went wrong when syncing with IPFS. Please try agin later.');
-                this.functions.modal.close();
-                resolve();  // Yes, resolve.
-            });
         });
     };
 

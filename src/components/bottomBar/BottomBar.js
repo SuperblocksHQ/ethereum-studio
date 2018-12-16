@@ -17,6 +17,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import style from './style.less';
+import Note from '../note';
 
 export default class BottomBar extends Component {
 
@@ -31,8 +32,10 @@ export default class BottomBar extends Component {
         return (
             <div className={style.bottomStatusBar}>
                 <span className={style.left}>
-                    <span className={style.note}>Note</span>
-                    <span className={style.noteText}>All files are stored in the browser only, download to backup</span>
+                    <Note
+                        title="Note"
+                        text="All files are stored in the browser only, download to backup"
+                    />
                 </span>
                 <div className={style.right}>
                 <span>Gas Limit: {networkPreferences.gasLimit}</span>

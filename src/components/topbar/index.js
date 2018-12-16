@@ -1,3 +1,19 @@
+// Copyright 2018 Superblocks AB
+//
+// This file is part of Superblocks Lab.
+//
+// Superblocks Lab is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation version 3 of the License.
+//
+// Superblocks Lab is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
+
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
@@ -7,6 +23,7 @@ import Backend from '../projecteditor/control/backend';
 import Modal from '../modal';
 import Tooltip from '../tooltip';
 import PreferencessModal from '../preferences';
+import ShareDropdownDialog from './share/ShareDropdownDialog';
 import {
     IconDownload,
     IconTrash,
@@ -17,7 +34,6 @@ import {
     IconDiscord,
     IconCheck
 } from '../icons';
-import JSZip from 'jszip';
 import Dappfile from '../projecteditor/control/item/dappfileItem';
 
 const PreferencesAction = () => (
@@ -34,6 +50,15 @@ const HelpDropdownAction = () => (
         <button className={classNames([style.container, 'btnNoBg'])}>
             <IconHelp />
             <span>Help</span>
+        </button>
+    </div>
+);
+
+const ShareDropdownAction = () => (
+    <div className={style.action}>
+        <button className={classNames([style.container, 'btnNoBg'])}>
+            <IconHelp />
+            <span>Share</span>
         </button>
     </div>
 );
@@ -442,6 +467,11 @@ export default class TopBar extends Component {
                     src="/static/img/img-lab-logo.svg"
                     alt="Superblocks Lab logo"
                 />
+                <DropdownContainer
+                        className={style.actionHelp}
+                        dropdownContent={<ShareDropdownDialog />} >
+                            <ShareDropdownAction />
+                </DropdownContainer>
                 <DropdownContainer
                     className={style.projectButton}
                     dropdownContent={

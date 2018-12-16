@@ -443,24 +443,6 @@ export default class FileItem extends Item {
         project.ipfsSyncUp(keepState);
     };
 
-    _clickIpfsSyncDown = e => {
-        e.preventDefault();
-
-        if (!confirm("Warning: This will download and sync files on IPFS with files in this repo, are you sure you want to do this?")) {
-            return;
-        }
-
-        const hash = prompt("Enter IPFS hash pl0x:");
-
-        if (!hash) return;
-
-        const project = this.getProject();
-
-        project.ipfsSyncDown(hash).then( () => {
-            this.redrawMain(true);
-        });
-    };
-
     delete = () => {
         return new Promise( (resolve, reject) => {
             // We need to load the file tree below this item (if any) to be able to notify those items about the delete.
@@ -575,7 +557,6 @@ export default class FileItem extends Item {
                     clickDeleteFile={this._clickDeleteFile}
                     icons={this._renderIcons(level, index)}
                     clickIpfsSyncUp={this._clickIpfsSyncUp}
-                    clickIpfsSyncDown={this._clickIpfsSyncDown}
                 />
             );
         }

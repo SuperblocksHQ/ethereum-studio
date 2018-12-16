@@ -1033,6 +1033,7 @@ export default class Backend {
 
             fn(node, "").then( () => {
                 ipfs.files.add(files, {onlyHash: false, wrapWithDirectory: true}).then( (res) => {
+                    console.log(res);
                     const hash = res.filter( (obj) => {
                         if (obj.path === "") return true;
                     })[0].hash;

@@ -20,8 +20,6 @@ import {
     IconEdit,
     IconAddFile,
     IconAddFolder,
-    IconUpload,
-    IconDownload
 } from '../../../../icons';
 import style from '../../style.less';
 import { DropdownContainer } from '../../../../dropdown';
@@ -42,7 +40,6 @@ export class DirectoryEntry extends Component {
             fullPath,
             icons,
             clickIpfsSyncUp,
-            clickIpfsSyncDown,
         } = this.props;
 
         const alwaysVisible = fullPath === "/";
@@ -106,19 +103,6 @@ export class DirectoryEntry extends Component {
                                                     <a href="#" title="Delete" onClick={clickDeleteFile}>
                                                         <Tooltip title="Delete">
                                                             <IconTrash />
-                                                        </Tooltip>
-                                                    </a>
-                                                </div>
-                                            ||
-                                                <div style={{display: "inline"}}>
-                                                    <a href="#" title="Store to IPFS" onClick={clickIpfsSyncUp}>
-                                                        <Tooltip title="Store to IPFS">
-                                                            <IconUpload />
-                                                        </Tooltip>
-                                                    </a>
-                                                    <a href="#" title="Sync with IPFS" onClick={clickIpfsSyncDown}>
-                                                        <Tooltip title="Sync with IPFS">
-                                                            <IconDownload />
                                                         </Tooltip>
                                                     </a>
                                                 </div>
