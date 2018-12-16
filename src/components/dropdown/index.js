@@ -57,7 +57,7 @@ export class DropdownContainer extends Component {
                 {this.state.showMenu ? (
                     <Dropdown
                         handleClickOutside={this.closeMenu}
-                        handleClickInside={!enableClickInside && this.closeMenu}
+                        handleClickInside={!enableClickInside ? this.closeMenu : undefined}
                     >
                         {dropdownContent}
                     </Dropdown>
