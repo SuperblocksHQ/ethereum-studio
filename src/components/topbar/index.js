@@ -24,6 +24,7 @@ import Modal from '../modal';
 import Tooltip from '../tooltip';
 import PreferencessModal from '../preferences';
 import ShareDialog from './share';
+import Note from '../note';
 import {
     IconDownload,
     IconTrash,
@@ -61,6 +62,11 @@ const ShareDropdownAction = () => (
             <IconShare />
             <span>Share</span>
         </button>
+        <Note
+            title="Beta"
+            backgroundColor="#417505"
+            color="#fff"
+        />
     </div>
 );
 

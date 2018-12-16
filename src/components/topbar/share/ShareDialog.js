@@ -15,6 +15,7 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { Component } from 'react';
+import copy from 'copy-to-clipboard';
 import style from './style.less';
 import {
     IconCopy
@@ -58,7 +59,12 @@ class ShareDialog extends Component {
                 alert('Error: Something went wrong when uploading to IPFS. Please try agin later.');
             })
             .finally(() => this.setState({ uploading: false }));
-    };
+    }
+
+    copyShareUrl = () => {
+        const { shareURL } = this.state;
+        copy(shareURL);
+    }
 
     renderWarning() {
         return (
@@ -102,9 +108,9 @@ class ShareDialog extends Component {
                     defaultValue={shareURL}
                     disabled={true}
                 />
-                <div>
+                <button className="noBg" onClick={this.copyShareUrl}>
                     <IconCopy />
-                </div>
+                </button>
             </div>
         );
     }

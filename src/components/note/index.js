@@ -21,11 +21,11 @@ import style from './style.less';
 const Note = ({
     title,
     text,
-    color = "#F8E71C",
-    textColor = "#262E33"
+    backgroundColor = "#F8E71C",
+    color = "#262E33"
 } = props) => (
     <div>
-        <span className={style.note} style={{backgroundColor: color, color: textColor}}>{title}</span>
+        <span className={style.note} style={{backgroundColor: backgroundColor, color: color}}>{title}</span>
         { text && <span className={style.noteText}>{text}</span> }
     </div>
 );
@@ -35,5 +35,6 @@ export default Note;
 Note.propTypes = {
     title: Proptypes.string.isRequired,
     text: Proptypes.string,
+    backgroundColor: Proptypes.string,
     color: Proptypes.string
 }
