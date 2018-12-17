@@ -20,10 +20,6 @@ import {
     IconEdit,
     IconAddFile,
     IconAddFolder,
-<<<<<<< HEAD
-=======
-    IconImportFile
->>>>>>> master
 } from '../../../../icons';
 import style from '../../style.less';
 import { DropdownContainer } from '../../../../dropdown';
@@ -38,7 +34,6 @@ export class DirectoryEntry extends Component {
             title,
             angleClicked,
             clickNewFile,
-            clickImportFile,
             clickNewFolder,
             clickRenameFile,
             clickDeleteFile,
@@ -55,12 +50,6 @@ export class DirectoryEntry extends Component {
                         <IconAddFile />
                     </div>
                     Create File
-                </div>
-                <div onClick={clickImportFile}>
-                    <div className={style.icon} >
-                        <IconImportFile />
-                    </div>
-                    Import File
                 </div>
                 <div onClick={clickNewFolder}>
                     <div className={style.icon} >
@@ -132,4 +121,3 @@ export class DirectoryEntry extends Component {
         );
     }
 }
-
