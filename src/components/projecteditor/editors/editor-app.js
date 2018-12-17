@@ -17,7 +17,7 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
 import style from './style-editor-contract.less';
-import Backend from './control/backend';
+import Backend from '../control/backend';
 
 export default class AppEditor extends Component {
 

@@ -21,6 +21,7 @@ const RaiseZip = require('./raisetosummon.zip');
 const VotingZip = require('./voting.zip');
 const SafeMathZip = require('./safemath.zip');
 const ERC20TokenZip = require('./erc-20-token.zip');
+const CryptoPizzaZip = require('./cryptopizza.zip');
 
 export default class Templates {
     static categories = [
@@ -73,6 +74,14 @@ export default class Templates {
         },
         {
             "id": 3,
+            "name": "ERC-721 CryptoPizza",
+            "description": "Crypto-collectible game built on top of ERC-721 standard",
+            "image": "/static/img/templates/img-cryptopizza.png",
+            "categories": [0, 2],
+            "zip": CryptoPizzaZip,
+        },
+        {
+            "id": 4,
             "name": "Raise to Summon",
             "description": "Raise Funds to summon a V.I.P. to a meetup/conference/hackathon",
             "image": "/static/img/templates/img-raise-to-summon.png",
@@ -80,7 +89,7 @@ export default class Templates {
             "zip": RaiseZip,
         },
         {
-            "id": 4,
+            "id": 5,
             "name": "Uncensorable News Feed",
             "description": "Publish news that nobody can censor",
             "image": "/static/img/templates/img-news-feed.png",
@@ -88,7 +97,7 @@ export default class Templates {
             "zip": NewsZip,
         },
         {
-            "id": 5,
+            "id": 6,
             "name": "Voting System",
             "description": "Simple voting system that you can tweak according to your needs",
             "image": "/static/img/templates/img-voting-system.png",
@@ -96,7 +105,7 @@ export default class Templates {
             "zip": VotingZip,
         },
         {
-            "id": 6,
+            "id": 7,
             "name": "SafeMath",
             "description": "Math operations with safety checks",
             "image": "/static/img/templates/img-safemath.png",

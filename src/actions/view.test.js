@@ -1,13 +1,6 @@
 import * as actions from './view';
 
 describe('actions', () => {
-    it('should create an action to close all the panels', () => {
-        const expectedAction = {
-            type: 'CLOSE_ALL_PANELS'
-        };
-        expect(actions.closeAllPanels()).toEqual(expectedAction);
-    });
-
     it('should create an action to toggle the transactions history panel', () => {
         const expectedAction = {
             type: 'TOGGLE_TRANSACTIONS_HISTORY_PANEL'

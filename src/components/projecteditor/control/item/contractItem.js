@@ -107,6 +107,10 @@ export default class ContractItem extends FileItem {
                     if (obj) {
                         this.getProject().getItemByPath(obj[0].split('/'), this.getProject()).then( (fileItem) => {
                             fileItem.mv(obj[1]).then(fn);
+                        })
+                        .catch( (e) => {
+                            console.log('Error: could not move file', obj[0], obj[1]);
+                            fn();
                         });
                     }
                     else {
@@ -170,6 +174,7 @@ export default class ContractItem extends FileItem {
      */
     notifyMoved = (oldPath, cb) => {
         return new Promise( (resolve) => {
+            this.props.state.source = this.getFullPath();  // We need to keep the items source up to date with the actual file path.
             this.getProject().moveContract(oldPath, this.getFullPath(), resolve);
             this._moveContractBuildFiles(oldPath, this.getSource());
         });

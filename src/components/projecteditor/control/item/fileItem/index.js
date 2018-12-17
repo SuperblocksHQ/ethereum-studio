@@ -37,9 +37,10 @@ import style from '../../style.less';
 import { DirectoryEntry } from './directoryEntry';
 import { FileEntry } from './fileEntry';
 import Tooltip from '../../../../tooltip';
+import ImportFileModal from "../../../../importFile";
 
 export default class FileItem extends Item {
-    constructor(props, router) {
+    constructor(props, router, functions) {
         props.state = props.state || {};
         props.type = props.type || 'file';
         props.lazy = props.lazy === undefined ? true : props.lazy;
@@ -49,7 +50,7 @@ export default class FileItem extends Item {
                 : props.state.toggable;
         props.state.open =
             props.state.open === undefined ? true : props.state.open;
-        super(props, router);
+        super(props, router, functions);
         if (props.type == "folder") {
             props.state.children = (props.state.children === undefined ? this._createChildren : props.state.children);
         }
@@ -291,6 +292,9 @@ export default class FileItem extends Item {
                                     newParent.getChildren(true, () => {
                                         const children2 = newParent.getChildren();
                                         this._copyState(children2, [this]);
+                                        if (this.getType() == 'file') {
+                                            this.props.renameFile(this.props.state.id, filename); // update redux, only for files for now
+                                        }
                                         resolve();
                                     });
                                 });
@@ -394,6 +398,31 @@ export default class FileItem extends Item {
         }
     };
 
+    onImportModalClose = () => {
+        this.functions.modal.close();
+    };
+
+    _clickImportFile = e => {
+        e.preventDefault();
+
+        const modal = (
+            <ImportFileModal
+                context = {this}
+                project = {this.getProject()}
+                onCloseClick={this.onImportModalClose}
+            />
+        );
+        this.functions.modal.show({
+            cancel: () => {
+                return false;
+            },
+            render: () => {
+                return modal;
+            }
+        });
+
+    };
+
     _clickNewFolder = e => {
         e.preventDefault();
 
@@ -465,7 +494,6 @@ export default class FileItem extends Item {
     _clickRenameFile = e => {
         e.preventDefault();
 
-        const project = this.getProject();
         const newFile = prompt('Enter new name.', this.getFullPath());
         if (newFile) {
             // TODO: we should only allow file name change here, not path move. Move we want drag and drop for.
@@ -474,6 +502,14 @@ export default class FileItem extends Item {
             //alert("Illegal filename.");
             //return false;
             //}
+
+            // Check if user is trying to move directory into a subdirectory, an action we can't support.
+            const forbiddenPrefix = this.getFullPath() + '/';
+            if (newFile.indexOf(forbiddenPrefix) === 0) {
+                alert("Error: Could not move directory into its own subdirectory");
+                return
+            }
+
             if (newFile == this.getFullPath()) {
                 return;
             }
@@ -495,7 +531,6 @@ export default class FileItem extends Item {
                 alert("Max 255 characters.");
                 return;
             }
-            const newFullPath = newFile;
             this.mv(newFile)
                 .then(() => {
                     this.redrawMain(true);
@@ -539,6 +574,7 @@ export default class FileItem extends Item {
                     isReadOnly={this.isReadOnly()}
                     fullPath={this.getFullPath()}
                     clickNewFile={this._clickNewFile}
+                    clickImportFile={this._clickImportFile}
                     clickNewFolder={this._clickNewFolder}
                     clickRenameFile={this._clickRenameFile}
                     clickDeleteFile={this._clickDeleteFile}
@@ -681,8 +717,10 @@ export default class FileItem extends Item {
                                             __parent: this,
                                             project: this.getProject(),
                                         },
+                                        renameFile: this.props.renameFile
                                     },
-                                    this.router
+                                    this.router,
+                                    this.functions
                                 )
                             );
                         } else if (file.type == 'f') {
@@ -709,8 +747,10 @@ export default class FileItem extends Item {
                                             project: this.getProject(),
                                             _tag: 0,
                                         },
+                                        renameFile: this.props.renameFile
                                     },
-                                    this.router
+                                    this.router,
+                                    this.functions
                                 );
                                 fileItem.props.onClick = fileItem._openItem;
                             }
@@ -798,7 +838,8 @@ export default class FileItem extends Item {
                                             _tag: 4,
                                         },
                                     },
-                                    this.router
+                                    this.router,
+
                                 );
                                 deployItem.props.onClick = deployItem._openItem;
 
@@ -829,10 +870,3 @@ export default class FileItem extends Item {
         }
     };
 }
-
-
-
-
-
-
-

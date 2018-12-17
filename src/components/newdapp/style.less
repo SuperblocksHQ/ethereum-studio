@@ -27,17 +27,16 @@
 
 .newDapp {
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
-    -webkit-border-radius: 4;
-    -moz-border-radius: 4;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
     border-radius: 4px;
     background-color: @modal-background-color;
     color: #fff;
     .header {
-        position: absolute;
         top: 0;
         left: 0;
         right: 0;
-        padding: 18px 32px;
+        padding: 18px 20px;
         display: flex;
         border-bottom: 1px solid @modal-separator-color;
         .title {
@@ -47,6 +46,7 @@
         }
         .closeIcon {
             margin-left: auto;
+            padding-right: 0;
             color: #c7c7c7;
             &:hover {
                 color: #fff;
@@ -54,15 +54,17 @@
         }
     }
     .area {
-        padding: 63px 15px 0px 32px;
         border-bottom: 1px solid #3c3c3c;
     }
     .step1 {
         width: 512px;
+        .area{
+            padding-left: 20px;
+        }
         .form {
             display: inline-block;
-            -webkit-border-radius: 17;
-            -moz-border-radius: 17;
+            -webkit-border-radius: 17px;
+            -moz-border-radius: 17px;
             border-radius: 17px;
             width: 100%;
             margin: 10px auto;
@@ -75,17 +77,18 @@
         }
     }
     .step2 {
-        min-width: 920px;
+        min-width: 890px;
         .container {
             display: flex;
-            margin-top: 20px;
         }
         .categoriesArea {
             width: 20%;
             border-right: 1px solid @modal-separator-color;
             .categoriesTitle {
+                margin-top: 20px;
                 font-weight: 600;
                 margin-bottom: 16px;
+                padding-left: 20px;
             }
             ul {
                 list-style-type: none;
@@ -94,52 +97,57 @@
                 color: #c7c7c7;
                 li {
                     line-height: 40px;
-                    padding: 0 16px;
+                    padding: 0 20px;
                     border-radius: 2px;
+                    border-left: 2px solid transparent;
                     &:hover {
-                        background-color: @modal-color-hover;
+                        background-color: @modal-color-hover-purple;
+                        border-color: #7237CF;
                         cursor: pointer;
                         color: #fff;
                     }
                 }
                 .selected {
-                    background-color: @primary-color;
+                    background-color: @modal-selected-color;
                     color: #fff;
                     &:hover {
-                        background-color: @primary-color;
+                        background-color: @modal-selected-color;
+                        border-color: transparent;
                     }
                 }
             }
         }
-        .templateListArea {
-            width: 80%;
-            overflow-y: auto;
-            .gridLayout {
-                height: 540px;
-                padding-left: 20px;
-                .templateLayout {
-                    padding: 15px;
-                    border-radius: 4px;
-                    img {
+        .templateListContainer{
+            margin-top: 10px;
+            padding-left: 15px;
+            .templateListArea {
+                overflow-y: auto;
+                .gridLayout {
+                    height: 540px;
+                    .templateLayout {
+                        padding: 15px;
                         border-radius: 4px;
+                        img {
+                            border-radius: 4px;
+                        }
+                        .title {
+                            font-weight: 700;
+                            margin-top: 10px;
+                            text-align: left;
+                        }
+                        .description {
+                            margin-top: 7px;
+                        }
+                        &:hover {
+                            background-color: @modal-color-hover;
+                            cursor: pointer;
+                        }
                     }
-                    .title {
-                        font-weight: 700;
-                        margin-top: 10px;
-                        text-align: left;
-                    }
-                    .description {
-                        margin-top: 7px;
-                    }
-                    &:hover {
-                        background-color: @modal-color-hover;
-                        cursor: pointer;
-                    }
-                }
-                .selected {
-                    background-color: rgba(128, 46, 255, 0.7);
-                    &:hover {
-                        background-color: rgba(128, 46, 255, 0.7);
+                    .selected {
+                        background-color: @modal-selected-color;
+                        &:hover {
+                            background-color: @modal-selected-color;
+                        }
                     }
                 }
             }
@@ -147,7 +155,7 @@
     }
     .footer {
         text-align: right;
-        padding-right: 40px;
+        padding-right: 20px;
         padding-top: 15px;
         padding-bottom: 15px;
     }

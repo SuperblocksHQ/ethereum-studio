@@ -17,10 +17,7 @@
 import React, { Component } from 'react';
 import classnames from 'classnames';
 import style from './style.less';
-import Editor from './editor.js';
-import ContractEditor from './editor-contract';
-import AppEditor from './editor-app';
-import AccountEditor from './editor-account';
+import { Editor, ContractEditor, AppEditor, AccountEditor } from './editors';
 import Compiler from './compiler';
 import Deployer from './deployer';
 import TutorialsManual from '../tutorials/manual';
@@ -274,6 +271,15 @@ export class Window {
             return this.childComponent.getTitle();
 
         return "<no name>";
+    };
+
+    /**
+     * Returns file id if file is diplayed in the window
+     */
+    getFileId = () => {
+        return this.props.item.getType() == 'file'
+            ? this.props.item.props.state.id
+            : null;
     };
 
     getIcon = () => {
