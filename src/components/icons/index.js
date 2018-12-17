@@ -47,8 +47,8 @@ import {faPencilAlt as iconPencil} from '@fortawesome/free-solid-svg-icons/faPen
 import {faArrowAltCircleDown as iconDownload} from '@fortawesome/free-regular-svg-icons/faArrowAltCircleDown';
 import {faThLarge as iconMosaic} from '@fortawesome/free-solid-svg-icons/faThLarge';
 import {faLink as iconChain} from '@fortawesome/free-solid-svg-icons/faLink';
-import {faShareAlt as iconShare} from '@fortawesome/fontawesome-free-solid/faShareAlt';
-import {faCopy as iconCopy} from '@fortawesome/fontawesome-free-regular/faCopy';
+import {faShareAlt as iconShare} from '@fortawesome/free-solid-svg-icons/faShareAlt';
+import {faCopy as iconCopy} from '@fortawesome/free-regular-svg-icons/faCopy';
 
 class IconImg extends Component {
     render() {
