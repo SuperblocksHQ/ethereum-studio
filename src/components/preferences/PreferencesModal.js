@@ -21,6 +21,7 @@ import style from './style.less';
 import ModalHeader from '../modal/modalHeader';
 import PreferenceCategory from './preferenceCategory';
 import NetworkPreferences from './sections/networkPreferences';
+import AdvancedPreferences from './sections/advancedPreferences';
 import {
     IconChain
 } from '../icons';
@@ -29,7 +30,10 @@ export default class PreferencesModal extends Component {
 
     state = {
         categorySelectedId: 0,
-        categories: [{ id: 0, name: "Chain Network", icon: <IconChain /> }]
+        categories: [
+            { id: 0, name: "Chain Network", icon: <IconChain /> },
+            { id: 1, name: "Advanced", icon: <IconChain /> }
+        ]
     }
 
     onCategorySelected(id) {
@@ -47,6 +51,16 @@ export default class PreferencesModal extends Component {
             network: this.networkPreferences.getPreferences()
         });
         this.onCloseClickHandle();
+    }
+
+    renderPreferenceArea = () => {
+        const { categorySelectedId } = this.state;
+        switch (categorySelectedId) {
+            case 0:
+                return <NetworkPreferences onRef={ref => (this.networkPreferences = ref)}/>
+            case 1:
+                return <AdvancedPreferences onRef={ref => (this.generalPreferences = ref)}/>
+        }
     }
 
     render() {
@@ -76,7 +90,7 @@ export default class PreferencesModal extends Component {
                             </div>
                         </div>
                         <div className={style.preferencesArea}>
-                            <NetworkPreferences onRef={ref => (this.networkPreferences = ref)}/>
+                            {this.renderPreferenceArea()}
                         </div>
                     </div>
                     <div className={style.footer}>

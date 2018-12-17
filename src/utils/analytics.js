@@ -28,7 +28,7 @@ import {
  * be limited to this file instead
  */
 
-export const AMPLITUDE_KEY = process.env.NODE_ENV === 'production' ? '1889a5439f9ff971ee38b86964e337a5' : null;
+export const AMPLITUDE_KEY = process.env.NODE_ENV === 'development' ? '1889a5439f9ff971ee38b86964e337a5' : null;
 
 /**
  * Log an event in the app
