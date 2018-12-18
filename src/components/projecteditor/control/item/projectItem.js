@@ -376,9 +376,13 @@ export default class ProjectItem extends Item {
                 children.push(childItem);
             }
             // Copy over the state from cached children to new children, so they appear to be the same (but the objects are new).
+            // NOTE: we are using the key 'source' for comparing these items with eachother because this is a flat list
+            // and the actually file structure is an hierarchical tree where key is just the filename, but since we have
+            // a flat list here we need to key of the full path.
             contractsItem._copyState(
                 children,
-                contractsItem.props.state._children || []
+                contractsItem.props.state._children || [],
+                'source'
             );
 
             // Save cache generated.
