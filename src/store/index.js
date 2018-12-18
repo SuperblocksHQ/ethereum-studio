@@ -3,34 +3,8 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import { createMigrate, persistStore, persistCombineReducers } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // default: localStorage if web
 import thunk from 'redux-thunk';
+import migrations from './migrations';
 import reducers from '../reducers';
-import settings from './settings';
-
-const migrations = {
-    1: (state) => {
-        return {
-            ...state,
-            settings: {
-                ...state.settings,
-                preferences: {
-                    chain: undefined,
-                    network: settings.preferences.network
-                }
-            }
-        }
-    },
-    2: (state) => {
-        return {
-            ...state,
-            projects: {
-                selectedProjectId: undefined,
-                selectedProject: {
-                    id: selectedProjectId ? selectedProjectId : 0
-                }
-            }
-        }
-    }
-}
 
 // Redux Persist config
 const config = {

@@ -30,6 +30,7 @@ import {
 export default class PreferencesModal extends Component {
 
     state = {
+        canSave: true,
         categorySelectedId: 0,
         categories: [
             { id: 0, name: "Chain Network", icon: <IconChain /> },
@@ -49,23 +50,41 @@ export default class PreferencesModal extends Component {
 
     onSavePreferences = () => {
         this.props.savePreferences({
-            network: this.networkPreferences.getPreferences()
+            network: this.networkPreferences,
+            advanced: this.advancedPreferences
         });
+
         this.onCloseClickHandle();
+    }
+
+    onNetworkPreferencesChange = (preferences) => {
+        this.networkPreferences = preferences;
+
+        this.setState({
+            canSave: preferences.isValid
+        });
+    }
+
+    onAdvancedPreferencesChange = (preferences) => {
+        this.advancedPreferences = preferences;
     }
 
     renderPreferenceArea = () => {
         const { categorySelectedId } = this.state;
         switch (categorySelectedId) {
             case 0:
-                return <NetworkPreferences onRef={ref => (this.networkPreferences = ref)}/>
+                return <NetworkPreferences
+                            onChange={this.onNetworkPreferencesChange}
+                        />
             case 1:
-                return <AdvancedPreferences onRef={ref => (this.generalPreferences = ref)}/>
+                return <AdvancedPreferences
+                            onChange={this.onAdvancedPreferencesChange}
+                        />
         }
     }
 
     render() {
-        const { categories, categorySelectedId } = this.state;
+        const { canSave, categories, categorySelectedId } = this.state;
         return(
             <div className={classNames([style.prefrerencesModal, "modal"])}>
                 <div className={style.container}>
@@ -97,7 +116,7 @@ export default class PreferencesModal extends Component {
                     <div className={style.footer}>
                         <div className={style.buttonsContainer}>
                             <button onClick={this.onCloseClickHandle} className="btn2 noBg mr-2">Cancel</button>
-                            <button onClick={this.onSavePreferences} className="btn2">Save</button>
+                            <button onClick={this.onSavePreferences} className="btn2" disabled={!canSave}>Save</button>
                         </div>
                     </div>
                 </div>

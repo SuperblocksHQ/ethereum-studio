@@ -22,27 +22,18 @@ import Switch from "react-switch";
 export default class AdvancedPreferences extends Component {
 
     state = {
-        trackAnalytics: true,
+        trackAnalytics: this.props.advancedPreferences.trackAnalytics,
     }
 
-    componentDidMount() {
-        this.props.onRef(this)
-    }
-
-    componentWillUnmount() {
-        this.props.onRef(undefined)
-    }
-
-    getPreferences() {
-        return {
-            trackAnalytics: this.state.trackAnalytics
-        }
-    }
-
-    onChange = (value) => {
-        this.setState({
+    onTrackAnalyticsChange = (value) => {
+        const { onChange } = this.props;
+        const state = {
             trackAnalytics: value
-        });
+        }
+        this.setState(state);
+
+        // Make sure to notify the parent about the update
+        onChange(state);
     }
 
     render() {
@@ -57,7 +48,7 @@ export default class AdvancedPreferences extends Component {
                         <div className={style.text}>We use analytics in Lab to gain more insights into how Lab is used. Of course, this tracking is anonymous and we don't track any information about you. Check out our <a href="https://help.superblocks.com">Help Center</a> to learn more about what exactly are we tracking.</div>
                         <Switch
                             checked={trackAnalytics}
-                            onChange={this.onChange}
+                            onChange={this.onTrackAnalyticsChange}
                             id="control-analytics"
                             onColor="#8641F2"
                             className={style.switch}
@@ -74,7 +65,7 @@ export default class AdvancedPreferences extends Component {
 }
 
 AdvancedPreferences.propTypes = {
-    onRef: PropTypes.func.isRequired
+    onChange: PropTypes.func.isRequired
 }
 
 

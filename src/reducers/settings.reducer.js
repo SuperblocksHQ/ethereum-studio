@@ -3,6 +3,7 @@ import Store from '../store/settings';
 export const initialState = Store;
 
 export default function settingsReducer(state = initialState, action) {
+    console.log(action.data);
     switch (action.type) {
         case 'SHOW_SPLASH': {
             return {
@@ -15,9 +16,10 @@ export default function settingsReducer(state = initialState, action) {
                 ...state,
                 preferences: {
                     network: {
-                        gasLimit: action.data.network.gasLimit ? action.data.network.gasLimit : initialState.preferences.network.gasLimit, // Make sure to fallback into the default when left empty
-                        gasPrice: action.data.network.gasPrice ? action.data.network.gasPrice : initialState.preferences.network.gasPrice // Make sure to fallback into the default when left empty
-                    }
+                        gasLimit: action.data.network && action.data.network.gasLimit ? action.data.network.gasLimit : initialState.preferences.network.gasLimit,
+                        gasPrice: action.data.network && action.data.network.gasPrice ? action.data.network.gasPrice : initialState.preferences.network.gasPrice,
+                    },
+                    advanced: action.data.advanced ? { ...action.data.advanced} : state.preferences.advanced
                 },
             };
         }
@@ -25,3 +27,7 @@ export default function settingsReducer(state = initialState, action) {
             return state;
     }
 }
+
+// const a = {
+//     ...(someCondition && {b: 5})
+//  }
