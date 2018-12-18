@@ -100,14 +100,14 @@ class Switch extends Component {
   }
 
   render() {
-    const { className, prefixCls, disabled, loadingIcon,
+    const { className, disabled, loadingIcon,
       checkedChildren, unCheckedChildren, ...restProps } = this.props;
     const checked = this.state.checked;
     const switchClassName = classNames({
       [className]: !!className,
-      [prefixCls]: true,
-      [prefixCls.checked]: checked,
-      [prefixCls.disabled]: disabled,
+      [style.switchPrefixCls]: true,
+      [style.checked]: checked,
+      [style.disabled]: disabled,
     });
 
     return (
@@ -124,7 +124,7 @@ class Switch extends Component {
         onMouseUp={this.handleMouseUp}
       >
         {loadingIcon}
-        <span className={prefixCls.inner}>
+        <span className={style.inner}>
           {checked ? checkedChildren : unCheckedChildren}
         </span>
       </button>
@@ -149,7 +149,6 @@ Switch.propTypes = {
 };
 
 Switch.defaultProps = {
-  prefixCls: style.switchPrefixCls,
   checkedChildren: null,
   unCheckedChildren: null,
   className: '',
