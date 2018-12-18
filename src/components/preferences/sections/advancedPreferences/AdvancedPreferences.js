@@ -17,7 +17,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import style from './style.less';
-import Switch from '../../../switch';
+import Switch from "react-switch";
 
 export default class AdvancedPreferences extends Component {
 
@@ -58,7 +58,13 @@ export default class AdvancedPreferences extends Component {
                         <Switch
                             checked={trackAnalytics}
                             onChange={this.onChange}
-                            disabled={this.state.disabled}
+                            id="control-analytics"
+                            onColor="#8641F2"
+                            className={style.switch}
+                            checkedIcon={false}
+                            uncheckedIcon={false}
+                            height={20}
+                            width={40}
                         />
                     </div>
                 </div>
