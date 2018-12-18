@@ -12,6 +12,8 @@ const jsonDirectory = path.join(__dirname, '../', 'node_modules', 'openzeppelin-
 // Path of the resulting file
 const jsonFilePath = path.join(__dirname, '../', 'src', 'assets', 'static', 'json', 'openzeppelin.json');
 
+const separator = path.sep;
+
 // Read all Solidity files from directory
 const getAllSolidityFiles = dir =>
     fs.readdirSync(dir).reduce((files, file) => {
@@ -19,7 +21,7 @@ const getAllSolidityFiles = dir =>
         const isDirectory = fs.statSync(name).isDirectory();
         const isSolidityFile = path.extname(name) === '.sol';
 
-        const trimmedPath = name.split("openzeppelin-solidity/")[1];
+        const trimmedPath = name.split(`openzeppelin-solidity${separator}`)[1];
         return isDirectory
             ? [...files, ...getAllSolidityFiles(name)]
             : isSolidityFile
@@ -39,13 +41,13 @@ function buildTree(paths) {
 
     let counter = 0;
     for (let path of paths) {
-        let nodes = path.split("/");
+        let nodes = path.split(separator);
         for (let i = 0; i < nodes.length; i++) {
-            currentPath = "/" + nodes.slice(1, i + 1).join("/");
+            currentPath = separator + nodes.slice(1, i + 1).join(separator);
             lastPath = stack[stack.length - 1];
             parent = map[lastPath];
             if (!map[currentPath]) {
-                let nameSlice = currentPath.split('/');
+                let nameSlice = currentPath.split(separator);
                 let name = nameSlice[nameSlice.length-1];
                 if (currentPath.endsWith('.sol')){
                     // if it is a file
@@ -107,7 +109,7 @@ function getDependencies(json, relativePath, dict) {
         if (line.indexOf(importString) !== -1) {
             path = line.split('"')[1];
             let absolutePath = getAbsoluteDependencyPath(path, relativePath);
-            let fileNameArray = path.split('/');
+            let fileNameArray = path.split(separator);
             fileName = fileNameArray[fileNameArray.length-1];
             // don't push the same entry twice
             if (!dict[absolutePath]) {
@@ -134,14 +136,14 @@ function getDependencies(json, relativePath, dict) {
 
 // get local path after openzeppelin directory
 function getLocalPath(absolutePath) {
-    return absolutePath.split('openzeppelin-solidity/')[1]
+    return absolutePath.split("openzeppelin-solidity/")[1]
 }
 
 function getAbsoluteDependencyPath(filePath, relativePath) {
     // remove contracts folder and file from end of path
     let relative = removeLastSlash(relativePath);
 
-    filePath.split('/').map(splitPath => {
+    filePath.split(separator).map(splitPath => {
         switch (splitPath) {
             case "..":
                 relative = removeLastSlash(relative);
@@ -162,6 +164,9 @@ function getAbsoluteDependencyPath(filePath, relativePath) {
 function trimPath(path) {
     if(path.startsWith("contracts/")){
         return path.substr(10);
+    } else if (separator === "\\"){
+        // if windows
+        return path;
     } else {
         console.log("Wrong path");
     }
@@ -185,7 +190,7 @@ function trimDependencies(dependencies) {
 }
 
 function removeLastSlash(path) {
-    return path.substring(0, path.lastIndexOf("/"));
+    return path.substring(0, path.lastIndexOf(separator));
 }
 
 let tree = buildTree(getAllSolidityFiles(contractsDirectory));
