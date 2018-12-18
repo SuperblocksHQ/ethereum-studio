@@ -17,6 +17,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import style from './style.less';
+import Switch from '../../../switch';
 
 export default class AdvancedPreferences extends Component {
 
@@ -38,15 +39,28 @@ export default class AdvancedPreferences extends Component {
         }
     }
 
+    onChange = (value) => {
+        this.setState({
+            trackAnalytics: value
+        });
+    }
+
     render() {
         const { trackAnalytics } = this.state;
 
         return (
             <div className={style.container}>
-                <h2>General Preferences</h2>
+                <h2>Advanced Preferences</h2>
                 <div>
                     <div className={style.title}>Analytics</div>
-                    <div className={style.description}>We use analytics in Lab to gain more insights into how Lab is used. Of course, this tracking is anonymous and we don't track any information about you. Check out our <a href="https://help.superblocks.com">Help Center</a> to learn more about what exactly are we tracking.</div>
+                    <div className={style.description}>
+                        <div className={style.text}>We use analytics in Lab to gain more insights into how Lab is used. Of course, this tracking is anonymous and we don't track any information about you. Check out our <a href="https://help.superblocks.com">Help Center</a> to learn more about what exactly are we tracking.</div>
+                        <Switch
+                            checked={trackAnalytics}
+                            onChange={this.onChange}
+                            disabled={this.state.disabled}
+                        />
+                    </div>
                 </div>
             </div>
         )

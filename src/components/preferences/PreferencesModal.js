@@ -23,7 +23,8 @@ import PreferenceCategory from './preferenceCategory';
 import NetworkPreferences from './sections/networkPreferences';
 import AdvancedPreferences from './sections/advancedPreferences';
 import {
-    IconChain
+    IconChain,
+    IconAdvanced
 } from '../icons';
 
 export default class PreferencesModal extends Component {
@@ -32,7 +33,7 @@ export default class PreferencesModal extends Component {
         categorySelectedId: 0,
         categories: [
             { id: 0, name: "Chain Network", icon: <IconChain /> },
-            { id: 1, name: "Advanced", icon: <IconChain /> }
+            { id: 1, name: "Advanced", icon: <IconAdvanced /> }
         ]
     }
 
