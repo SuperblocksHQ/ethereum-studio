@@ -1,5 +1,7 @@
-import trackAnalytics from './trackAnalytics.epic';
+import initTrackingAnalytics from './initTrackingAnalytics.epic';
+import reportSettings from './reportSettings.epic';
 
 export const settingsEpics = [
-  trackAnalytics
+  initTrackingAnalytics,
+  reportSettings
 ];
