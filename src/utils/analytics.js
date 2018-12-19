@@ -30,6 +30,10 @@ import {
 
 export const AMPLITUDE_KEY = process.env.NODE_ENV === 'development' ? '1889a5439f9ff971ee38b86964e337a5' : null;
 
+export function setOptOut(analyticsEnabled) {
+    amplitude.getInstance().setOptOut(!analyticsEnabled);
+}
+
 /**
  * Log an event in the app
  * @param {string} eventType - The event type needed to be reported

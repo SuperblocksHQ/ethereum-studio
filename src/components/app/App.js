@@ -16,6 +16,7 @@
 
 import React, { Component } from 'react';
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 
 import Backend from '../projecteditor/control/backend';
 import Modal from '../modal';
@@ -77,6 +78,12 @@ export default class App extends Component {
     }
 
     componentDidMount() {
+        const { notifyAppStart }  = this.props;
+
+        // Make sure we fire this event in order to let other parst of the app configure depending
+        // on the initial state (per example turning on/off analytics)
+        notifyAppStart();
+
         this._convertProjects(status => {
             this.setState({ isReady: true })
             this._init();
@@ -324,4 +331,11 @@ export default class App extends Component {
             </div>
         );
     }
+}
+
+App.propTypes = {
+    showSplash: PropTypes.bool.isRequired,
+    appVersion: PropTypes.string.isRequired,
+    notifyAppStart: PropTypes.func.isRequired,
+    showSplashNoMore: PropTypes.func.isRequired
 }

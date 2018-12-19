@@ -113,9 +113,11 @@
     "react-switch": "^3.0.4",
     "react-tippy": "^1.2.3",
     "redux": "^4.0.0",
+    "redux-observable": "^1.0.0",
     "redux-persist": "^5.10.0",
     "redux-thunk": "^2.3.0",
     "reselect": "^3.0.1",
+    "rxjs": "^6.3.3",
     "solc": "^0.4.25",
     "web3": "0.19"
   },
