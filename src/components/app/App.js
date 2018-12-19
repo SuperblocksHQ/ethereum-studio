@@ -139,7 +139,6 @@ export default class App extends Component {
                 'Initializing Wallet and Ethereum Virtual Machine...',
             style: { textAlign: 'center' },
         };
-        var walletSeeded = false;
         const modal = <Modal data={modalData} />;
         this.functions.modal.show({
             cancel: () => {
@@ -152,16 +151,8 @@ export default class App extends Component {
         this.functions.compiler = new Solc({ id: this.generateId() });
         this.functions.EVM = new EVM({ id: this.generateId() });
 
-        this.functions.wallet.openWallet(
-            'development',
-            this.knownWalletSeed,
-            () => {
-                walletSeeded = true;
-            }
-        );
-
         const fn = () => {
-            if (this.functions.compiler && this.functions.EVM && walletSeeded) {
+            if (this.functions.compiler && this.functions.EVM) {
                 console.log('Superblocks Lab ' + appVersion + ' Ready.');
 
                 this.functions.modal.close();
@@ -308,6 +299,7 @@ export default class App extends Component {
                                 key="projedit"
                                 router={this.router}
                                 functions={this.functions}
+                                knownWalletSeed={this.knownWalletSeed}
                             />
                         )}
                     </div>
