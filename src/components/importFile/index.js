@@ -16,14 +16,5 @@
 
 import { connect } from 'react-redux';
 import ImportFileModal from './ImportFileModal';
-import { savePreferences } from '../../actions/settings';
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        savePreferences: (newPreferences) => {
-            dispatch(savePreferences(newPreferences))
-        }
-    }
-}
-
-export default connect(null, mapDispatchToProps)(ImportFileModal);
+export default connect(null, null)(ImportFileModal);

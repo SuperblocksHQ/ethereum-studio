@@ -16,12 +16,12 @@
 
 import { connect } from 'react-redux';
 import PreferencesModal from './PreferencesModal';
-import { savePreferences } from '../../actions/settings';
+import { settingsActions } from '../../actions';
 
 const mapDispatchToProps = (dispatch) => {
     return {
         savePreferences: (newPreferences) => {
-            dispatch(savePreferences(newPreferences))
+            dispatch(settingsActions.savePreferences(newPreferences))
         }
     }
 }

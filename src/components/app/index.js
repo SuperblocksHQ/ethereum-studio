@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { showSplashNoMore } from '../../actions/settings';
+import { settingsActions } from '../../actions';
 import { getShowSplashScreen } from '../../selectors/settings';
 import { getAppVersion } from '../../selectors/app';
 import App from './App';
@@ -12,7 +12,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => {
     return {
         showSplashNoMore: () => {
-            dispatch(showSplashNoMore());
+            dispatch(settingsActions.showSplashNoMore());
         },
     };
 };
