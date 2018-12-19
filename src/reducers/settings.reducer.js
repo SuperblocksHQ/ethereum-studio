@@ -3,7 +3,6 @@ import Store from '../store/settings';
 export const initialState = Store;
 
 export default function settingsReducer(state = initialState, action) {
-    console.log(action.data);
     switch (action.type) {
         case 'SHOW_SPLASH': {
             return {
@@ -28,6 +27,3 @@ export default function settingsReducer(state = initialState, action) {
     }
 }
 
-// const a = {
-//     ...(someCondition && {b: 5})
-//  }
