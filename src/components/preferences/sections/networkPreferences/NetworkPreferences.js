@@ -121,7 +121,6 @@ export default class NetworkPreferences extends Component {
 }
 
 NetworkPreferences.propTypes = {
-    onRef: PropTypes.func.isRequired,
     onChange: PropTypes.func.isRequired
 }
 
