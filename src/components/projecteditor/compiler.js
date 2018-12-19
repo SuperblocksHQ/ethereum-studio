@@ -289,7 +289,13 @@ export default class Compiler extends Component {
                                                         );
                                                         item.save()
                                                             .then(cb2)
-                                                            .catch(delFiles);
+                                                            .catch( e => {
+                                                                this._updateConsole({
+                                                                    channel: 2,
+                                                                    msg: '[ERROR] Could not write to browser local storage. Try to delete some old projects and then try again.'
+                                                                });
+                                                                delFiles();
+                                                            });
                                                     })
                                                     .catch(() => {
                                                         delFiles();
