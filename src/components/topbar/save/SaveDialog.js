@@ -68,23 +68,16 @@ class SaveDialog extends Component {
 
     renderWarning() {
         return (
-            <div>
-                <div>Upload anonymous (public) project into IPFS?</div>
+            <div className={style.content}>
+                <h3>Upload project to IPFS</h3>
+                <div className={style.description}>Backup and share your project by uploading to IPFS. Remember to not include any personal data, and enjoy decentralization!</div>
                 <br/>
-                <div>- Be sure not to include personal data</div>
+                <button className="btn2" onClick={this.ipfsSyncUp}>Upload</button>
+                <br/>
                 <Note
                     title="Warning"
                     text="Due to the nature of IPFS, might not be possible to delete your project from the network."
                 />
-                <div className={style.buildInfo}>
-                    <div className={style.title}>Include build information</div>
-                    <div className={style.descContainer}>
-                        <div>This will upload the content of your build folder</div>
-                    </div>
-                </div>
-
-
-                <button className="btn2" onClick={this.ipfsSyncUp}>Save</button>
             </div>
         );
     }

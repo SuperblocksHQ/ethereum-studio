@@ -30,6 +30,15 @@
     transition: visibility 0s, opacity 0.2s ease;
     padding: 15px;
 
+    .content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        align-content: center;
+        .description {
+            text-align: center;
+        }
+    }
     .buildInfo {
         .title {
             color: #BCBCBC;
@@ -37,9 +46,5 @@
         .descContainer {
             display: flex;
         }
-    }
-
-    .share {
-        display: flex;
     }
 }

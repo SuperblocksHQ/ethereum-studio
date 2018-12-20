@@ -35,7 +35,6 @@ import {
     IconDropdown,
     IconDiscord,
     IconCheck,
-    IconShare,
     IconUpload,
 } from '../icons';
 import Dappfile from '../projecteditor/control/item/dappfileItem';
@@ -58,26 +57,17 @@ const HelpDropdownAction = () => (
     </div>
 );
 
-const SaveDrowdownAction = () => (
+const UploadDrowdownAction = () => (
     <div className={style.action}>
         <button className={classNames([style.container, 'btnNoBg'])}>
             <IconUpload />
-            <span>Save</span>
+            <span>Upload</span>
         </button>
         <Note
             title="Beta"
             backgroundColor="#417505"
             color="#fff"
         />
-    </div>
-);
-
-const ShareDropdownAction = () => (
-    <div className={style.action}>
-        <button className={classNames([style.container, 'btnNoBg'])}>
-            <IconShare />
-            <span>Share</span>
-        </button>
     </div>
 );
 
@@ -490,14 +480,7 @@ export default class TopBar extends Component {
                         dropdownContent={<SaveDialog />}
                         enableClickInside={true}
                 >
-                    <SaveDrowdownAction />
-                </DropdownContainer>
-                <DropdownContainer
-                        className={style.actionHelp}
-                        dropdownContent={<ShareDialog />}
-                        enableClickInside={true}
-                >
-                    <ShareDropdownAction />
+                    <UploadDrowdownAction />
                 </DropdownContainer>
                 <DropdownContainer
                     className={style.projectButton}
