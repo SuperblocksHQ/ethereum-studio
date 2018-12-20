@@ -33,7 +33,10 @@ class SaveDialog extends Component {
         keepState: false,
         uploading: false,
         shareURL: null,
-        showAdvacedPreferences: false
+        showAdvacedPreferences: false,
+        uploadSettings: {
+            includeBuildInfo: false
+        }
     }
 
     onChange = (checked) => {
@@ -120,6 +123,17 @@ class SaveDialog extends Component {
         );
     }
 
+    onUploadSettingsBackClicked = () => {
+        this.setState({
+            showAdvacedPreferences: false
+        });
+    }
+
+    onUploadSettingsChanged = (uploadSettings) => {
+        this.setState({
+            uploadSettings: uploadSettings
+        });
+    }
 
     render() {
         const { uploading, shareURL, showAdvacedPreferences } = this.state;
@@ -129,7 +143,10 @@ class SaveDialog extends Component {
                     this.renderUploading()
                 :
                     showAdvacedPreferences ?
-                        <UploadSettings />
+                        <UploadSettings
+                            onBackClicked={this.onUploadSettingsBackClicked}
+                            onChange={this.onUploadSettingsChanged}
+                        />
                     :
                         shareURL ?
                             this.renderShareURL(shareURL)
