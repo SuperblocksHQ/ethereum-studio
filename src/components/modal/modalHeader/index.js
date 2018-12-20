@@ -24,7 +24,7 @@ const ModalHeader = ({ title, onCloseClick }) => (
     <div className={style.header}>
         <div className={style.title}>{title}</div>
         <button className={classNames([style.closeIcon, "btnNoBg"])} onClick={onCloseClick}>
-            <IconClose />
+            <IconClose className={style.icon}/>
         </button>
     </div>
 );

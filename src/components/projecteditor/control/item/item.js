@@ -163,14 +163,15 @@ export default class Item {
         this.props.state.key = newKey;
     };
 
-    _copyState = (target, source) => {
+    _copyState = (target, source, keyName) => {
+        keyName = keyName || 'key';
         var ret = [];
         for (var index = 0; index < target.length; index++) {
             var targetChild = target[index];
             for (var index2 = 0; index2 < source.length; index2++) {
                 var sourceChild = source[index2];
                 // Compare properties.
-                if (this._cmpItem(targetChild.props, sourceChild.props)) {
+                if (this._cmpItem(targetChild.props, sourceChild.props, keyName)) {
                     // Copy over original state object to new item.
                     // But copy back all value which are double underscored, those we actually want the latest properties of,
                     // such as `__parent`, which will refer to the newly created parent item.
@@ -191,8 +192,8 @@ export default class Item {
         }
     };
 
-    _cmpItem = (item1, item2) => {
-        return item1.state.key === item2.state.key;
+    _cmpItem = (item1, item2, keyName) => {
+        return item1.state[keyName] === item2.state[keyName];
     };
 
     redraw = () => {
