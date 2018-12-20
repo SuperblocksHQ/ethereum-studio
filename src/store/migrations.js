@@ -45,7 +45,7 @@ const migrations = {
             settings: {
                 ...state.settings,
                 preferences: {
-                    ...state.preferences,
+                    ...state.settings.preferences,
                     advanced: settings.preferences.advanced
                 }
             }
