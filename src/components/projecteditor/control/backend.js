@@ -755,7 +755,13 @@ export default class Backend {
             type: 'f',
             contents: payload.contents,
         };
-        localStorage.setItem(DAPP_FORMAT_VERSION, JSON.stringify(data));
+        try {
+            localStorage.setItem(DAPP_FORMAT_VERSION, JSON.stringify(data));
+        } catch (e) {
+            console.error(e);
+            setTimeout(() => cb({ status: 1 }), 1);
+            return;
+        }
         setTimeout(() => cb({ status: 0 }), 1);
     };
 
