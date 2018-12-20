@@ -17,17 +17,21 @@
 import React, { Component } from 'react';
 import style from './style.less';
 
-class AdvabcedUploadSettings extends Component {
+export default class UploadSettings extends Component {
 
     render() {
         return (
-            <div className={style.buildInfo}>
-                <div className={style.title}>Include build information</div>
-                <div className={style.descContainer}>
-                    <div>This will upload the content of your build folder</div>
+            <div>
+                <div>Upload Settings</div>
+                <div className={style.buildInfo}>
+                    <div className={style.title}>Include build information</div>
+                    <div className={style.descContainer}>
+                        <div>This will upload the content of your build folder</div>
+                    </div>
                 </div>
             </div>
+
         )
     }
-}
+};
 

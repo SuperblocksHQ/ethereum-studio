@@ -19,18 +19,21 @@ import PropTypes from 'prop-types';
 import copy from 'copy-to-clipboard';
 import style from './style.less';
 import {
-    IconCopy
+    IconCopy,
+    IconConfigure
 } from '../../icons';
 import Note from '../../note';
 import TextInput from '../../textInput';
 import Backend from '../../projecteditor/control/backend';
+import UploadSettings from './UploadSettings';
 
 class SaveDialog extends Component {
 
     state = {
         keepState: false,
         uploading: false,
-        shareURL: null
+        shareURL: null,
+        showAdvacedPreferences: false
     }
 
     onChange = (checked) => {
@@ -66,13 +69,25 @@ class SaveDialog extends Component {
         copy(shareURL);
     }
 
+    advancedUploadSettingsClick = () => {
+        this.setState({
+            showAdvacedPreferences: true
+        })
+    }
+
     renderWarning() {
         return (
             <div className={style.content}>
+                <img src={'/static/img/img-ipfs-logo.svg'} className={style.logo}/>
                 <h3>Upload project to IPFS</h3>
                 <div className={style.description}>Backup and share your project by uploading to IPFS. Remember to not include any personal data, and enjoy decentralization!</div>
                 <br/>
-                <button className="btn2" onClick={this.ipfsSyncUp}>Upload</button>
+                <div>
+                    <button className="btn2" onClick={this.ipfsSyncUp}>Upload Project</button>
+                    <button className="btnNoBg" onClick={this.advancedUploadSettingsClick} className={style.advancedSettings}>
+                        <IconConfigure />
+                    </button>
+                </div>
                 <br/>
                 <Note
                     title="Warning"
@@ -107,16 +122,19 @@ class SaveDialog extends Component {
 
 
     render() {
-        const { uploading, shareURL } = this.state;
+        const { uploading, shareURL, showAdvacedPreferences } = this.state;
         return (
             <div className={style.shareDialogContainer}>
                 { uploading ?
                     this.renderUploading()
                 :
-                    shareURL ?
-                        this.renderShareURL(shareURL)
+                    showAdvacedPreferences ?
+                        <UploadSettings />
                     :
-                        this.renderWarning()
+                        shareURL ?
+                            this.renderShareURL(shareURL)
+                        :
+                            this.renderWarning()
                 }
             </div>
         )
