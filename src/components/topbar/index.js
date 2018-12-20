@@ -35,6 +35,7 @@ import {
     IconDiscord,
     IconCheck,
     IconUpload,
+    IconFork
 } from '../icons';
 import Dappfile from '../projecteditor/control/item/dappfileItem';
 
@@ -67,6 +68,15 @@ const UploadDrowdownAction = () => (
             backgroundColor="#417505"
             color="#fff"
         />
+    </div>
+);
+
+const ForkDrowdownAction = () => (
+    <div className={style.action}>
+        <button className={classNames([style.container, 'btnNoBg'])}>
+            <IconFork />
+            <span>Fork</span>
+        </button>
     </div>
 );
 
@@ -457,6 +467,10 @@ export default class TopBar extends Component {
         });
     }
 
+    onForkClicked = () => {
+        console.log("Forked Clicked");
+    }
+
     render() {
         var title = '';
 
@@ -481,6 +495,7 @@ export default class TopBar extends Component {
                 >
                     <UploadDrowdownAction />
                 </DropdownContainer>
+                <ForkDrowdownAction onClick={this.onForkClicked}/>
                 <DropdownContainer
                     className={style.projectButton}
                     dropdownContent={
