@@ -15,6 +15,7 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import copy from 'copy-to-clipboard';
 import style from './style.less';
 import {
@@ -24,9 +25,10 @@ import Note from '../../note';
 import TextInput from '../../textInput';
 import Backend from '../../projecteditor/control/backend';
 
-class ShareDialog extends Component {
+class SaveDialog extends Component {
 
     state = {
+        keepState: false,
         uploading: false,
         shareURL: null
     }
@@ -64,6 +66,29 @@ class ShareDialog extends Component {
         copy(shareURL);
     }
 
+    renderWarning() {
+        return (
+            <div>
+                <div>Upload anonymous (public) project into IPFS?</div>
+                <br/>
+                <div>- Be sure not to include personal data</div>
+                <Note
+                    title="Warning"
+                    text="Due to the nature of IPFS, might not be possible to delete your project from the network."
+                />
+                <div className={style.buildInfo}>
+                    <div className={style.title}>Include build information</div>
+                    <div className={style.descContainer}>
+                        <div>This will upload the content of your build folder</div>
+                    </div>
+                </div>
+
+
+                <button className="btn2" onClick={this.ipfsSyncUp}>Save</button>
+            </div>
+        );
+    }
+
     renderUploading() {
         return(
             <div>
@@ -95,11 +120,18 @@ class ShareDialog extends Component {
                 { uploading ?
                     this.renderUploading()
                 :
-                    this.renderShareURL(shareURL)
+                    shareURL ?
+                        this.renderShareURL(shareURL)
+                    :
+                        this.renderWarning()
                 }
             </div>
         )
     }
 }
 
-export default ShareDialog;
+export default SaveDialog;
+
+SaveDialog.propTypes = {
+    projectId: PropTypes.string.isRequired
+}

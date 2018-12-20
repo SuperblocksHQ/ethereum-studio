@@ -14,28 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Switch as ReactSwitch } from "react-switch";
+import { connect } from 'react-redux';
+import { getSelectedProjectId } from '../../../selectors/projects';
+import SaveDialog from './SaveDialog';
 
-const Switch = () => {
-    return (
-        <ReactSwitch
-            checked={trackAnalytics}
-            onChange={this.onChange}
-            id="control-analytics"
-            onColor="#8641F2"
-            className={style.switch}
-            checkedIcon={false}
-            uncheckedIcon={false}
-            height={20}
-            width={40}
-        />
-    )
-};
+const mapStateToProps = state => ({
+    projectId: getSelectedProjectId(state),
+});
 
-export default Switch;
-
-Switch.propTypes = {
-    onChange:
-}
+export default connect(mapStateToProps, null)(SaveDialog);

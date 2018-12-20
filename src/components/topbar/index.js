@@ -24,6 +24,7 @@ import Modal from '../modal';
 import Tooltip from '../tooltip';
 import PreferencessModal from '../preferences';
 import ShareDialog from './share';
+import SaveDialog from './save';
 import Note from '../note';
 import {
     IconDownload,
@@ -35,6 +36,7 @@ import {
     IconDiscord,
     IconCheck,
     IconShare,
+    IconUpload,
 } from '../icons';
 import Dappfile from '../projecteditor/control/item/dappfileItem';
 
@@ -56,17 +58,26 @@ const HelpDropdownAction = () => (
     </div>
 );
 
-const ShareDropdownAction = () => (
+const SaveDrowdownAction = () => (
     <div className={style.action}>
         <button className={classNames([style.container, 'btnNoBg'])}>
-            <IconShare />
-            <span>Share</span>
+            <IconUpload />
+            <span>Save</span>
         </button>
         <Note
             title="Beta"
             backgroundColor="#417505"
             color="#fff"
         />
+    </div>
+);
+
+const ShareDropdownAction = () => (
+    <div className={style.action}>
+        <button className={classNames([style.container, 'btnNoBg'])}>
+            <IconShare />
+            <span>Share</span>
+        </button>
     </div>
 );
 
@@ -474,6 +485,13 @@ export default class TopBar extends Component {
                     src="/static/img/img-lab-logo.svg"
                     alt="Superblocks Lab logo"
                 />
+                <DropdownContainer
+                        className={style.actionHelp}
+                        dropdownContent={<SaveDialog />}
+                        enableClickInside={true}
+                >
+                    <SaveDrowdownAction />
+                </DropdownContainer>
                 <DropdownContainer
                         className={style.actionHelp}
                         dropdownContent={<ShareDialog />}

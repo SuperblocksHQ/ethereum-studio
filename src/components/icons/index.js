@@ -100,7 +100,6 @@ export const IconClone = () => <FaIcon icon={iconClone} />;
 export const IconDownload = ({ ...props }) => (
     <FaIcon icon={iconDownload} {...props} />
 );
-export const IconUpload = () => <FaIcon icon={iconUpload} />;
 export const IconDropdown = ({ ...props }) => (
     <span className="dropDown" {...props} />
 );
@@ -146,6 +145,7 @@ export const IconProjectSelector = ({ ...props }) => (
 export const IconHelp = () => <FaIcon icon={iconQuestionCircle} />;
 export const IconCheck = () => <FaIcon icon={iconCheck} />;
 export const IconShare = () => <FaIcon icon={iconShare} />;
+export const IconUpload = ({...props}) => <svg fill="currentColor" preserveAspectRatio="xMidYMid meet" height="16px" width="16px" viewBox="0 0 512 512" style={{ verticalAlign: "center" }} {...props}><path d="M403.002 217.001C388.998 148.002 328.998 96 256 96c-57.998 0-107.998 32.998-132.998 81.001C63.002 183.002 16 233.998 16 296c0 65.996 53.999 120 120 120h260c55 0 100-45 100-100 0-52.998-40.996-96.001-92.998-98.999zM288 276v76h-64v-76h-68l100-100 100 100h-68z"/></svg>;
 
 // File types
 export const IconContract = ({...props}) => <IconImg src={'/static/img/icon-solidity.svg'} {...props} />;
