@@ -17,6 +17,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import copy from 'copy-to-clipboard';
+import classNames from 'classnames';
 import style from './style.less';
 import {
     IconCopy,
@@ -24,6 +25,7 @@ import {
 } from '../../icons';
 import Note from '../../note';
 import TextInput from '../../textInput';
+import Tooltip from '../../tooltip';
 import Backend from '../../projecteditor/control/backend';
 import UploadSettings from './UploadSettings';
 
@@ -32,11 +34,8 @@ class SaveDialog extends Component {
     state = {
         keepState: false,
         uploading: false,
-        shareURL: null,
-        showAdvacedPreferences: false,
-        uploadSettings: {
-            includeBuildInfo: false
-        }
+        shareURL: "ds",
+        showUploadSettings: false
     }
 
     onChange = (checked) => {
@@ -72,13 +71,25 @@ class SaveDialog extends Component {
         copy(shareURL);
     }
 
-    advancedUploadSettingsClick = () => {
+    uploadSettingsClick = () => {
         this.setState({
-            showAdvacedPreferences: true
+            showUploadSettings: true
         })
     }
 
-    renderWarning() {
+    onUploadSettingsBackClicked = () => {
+        this.setState({
+            showUploadSettings: false
+        });
+    }
+
+    onUploadSettingsChanged = (uploadSettings) => {
+        this.setState({
+            uploadSettings: uploadSettings
+        })
+    }
+
+    renderDialog() {
         return (
             <div className={style.content}>
                 <img src={'/static/img/img-ipfs-logo.svg'} className={style.logo}/>
@@ -87,8 +98,10 @@ class SaveDialog extends Component {
                 <br/>
                 <div>
                     <button className="btn2" onClick={this.ipfsSyncUp}>Upload Project</button>
-                    <button className="btnNoBg" onClick={this.advancedUploadSettingsClick} className={style.advancedSettings}>
-                        <IconConfigure />
+                    <button className={classNames([style.uploadSettings, "btnNoBg"])} onClick={this.uploadSettingsClick}>
+                        <Tooltip title="Upload Settings">
+                            <IconConfigure />
+                        </Tooltip>
                     </button>
                 </div>
                 <br/>
@@ -102,47 +115,51 @@ class SaveDialog extends Component {
 
     renderUploading() {
         return(
-            <div>
-                Uploading...
+            <div className={style.content}>
+                <img src={'/static/img/img-ipfs-logo.svg'} className={style.logo}/>
+                <div>Uploading...</div>
             </div>
         );
     }
 
     renderShareURL(shareURL) {
         return (
-            <div className={style.share}>
-                <TextInput
-                    label="Share your project"
-                    defaultValue={shareURL}
-                    disabled={true}
-                />
-                <button className="noBg" onClick={this.copyShareUrl}>
-                    <IconCopy />
-                </button>
+            <div className={style.content}>
+                <img src={'/static/img/img-ipfs-logo.svg'} className={style.logo}/>
+                <div className={style.share}>
+                    <TextInput
+                        label="Share your project"
+                        defaultValue={shareURL}
+                        disabled={true}
+                    />
+                    <button className="btnNoBg" onClick={this.copyShareUrl}>
+                        <Tooltip title="Copy URL">
+                            <IconCopy />
+                        </Tooltip>
+                    </button>
+                </div>
+                <div className={style.lastUpdate}>Last Update: 23 seconds ago</div>
+                <div>
+                    <button className="btn2" onClick={this.ipfsSyncUp}>New Upload</button>
+                    <button className={classNames([style.uploadSettings, "btnNoBg"])} onClick={this.uploadSettingsClick}>
+                        <Tooltip title="Upload Settings">
+                            <IconConfigure />
+                        </Tooltip>
+                    </button>
+                </div>
+
             </div>
         );
     }
 
-    onUploadSettingsBackClicked = () => {
-        this.setState({
-            showAdvacedPreferences: false
-        });
-    }
-
-    onUploadSettingsChanged = (uploadSettings) => {
-        this.setState({
-            uploadSettings: uploadSettings
-        });
-    }
-
     render() {
-        const { uploading, shareURL, showAdvacedPreferences } = this.state;
+        const { uploading, shareURL, showUploadSettings } = this.state;
         return (
             <div className={style.shareDialogContainer}>
                 { uploading ?
                     this.renderUploading()
                 :
-                    showAdvacedPreferences ?
+                    showUploadSettings ?
                         <UploadSettings
                             onBackClicked={this.onUploadSettingsBackClicked}
                             onChange={this.onUploadSettingsChanged}
@@ -151,7 +168,7 @@ class SaveDialog extends Component {
                         shareURL ?
                             this.renderShareURL(shareURL)
                         :
-                            this.renderWarning()
+                            this.renderDialog()
                 }
             </div>
         )

@@ -32,9 +32,14 @@ export default class UploadSettings extends Component {
     }
 
     onIncludeBuildChange = (checked) => {
-        this.props.onChange({
+        const { onChange } = this.props;
+        const newState = {
             includeBuildInfo: checked
-        });
+        }
+        this.setState(newState);
+
+        // Make sure to notify also the parent
+        onChange(newState);
     }
 
     render() {
