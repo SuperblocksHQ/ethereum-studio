@@ -16,10 +16,10 @@
 
 import { connect } from 'react-redux';
 import { getSelectedProjectId } from '../../../selectors/projects';
-import SaveDialog from './SaveDialog';
+import UploadDialog from './UploadDialog';
 
 const mapStateToProps = state => ({
     projectId: getSelectedProjectId(state),
 });
 
-export default connect(mapStateToProps, null)(SaveDialog);
+export default connect(mapStateToProps, null)(UploadDialog);

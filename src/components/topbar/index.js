@@ -23,8 +23,7 @@ import Backend from '../projecteditor/control/backend';
 import Modal from '../modal';
 import Tooltip from '../tooltip';
 import PreferencessModal from '../preferences';
-import ShareDialog from './share';
-import SaveDialog from './save';
+import UploadDialog from './upload';
 import Note from '../note';
 import {
     IconDownload,
@@ -477,7 +476,7 @@ export default class TopBar extends Component {
                 />
                 <DropdownContainer
                         className={style.actionHelp}
-                        dropdownContent={<SaveDialog />}
+                        dropdownContent={<UploadDialog />}
                         enableClickInside={true}
                 >
                     <UploadDrowdownAction />

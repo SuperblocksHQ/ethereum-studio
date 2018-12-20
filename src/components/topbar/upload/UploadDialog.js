@@ -29,7 +29,7 @@ import Tooltip from '../../tooltip';
 import Backend from '../../projecteditor/control/backend';
 import UploadSettings from './UploadSettings';
 
-class SaveDialog extends Component {
+class UploadDialog extends Component {
 
     state = {
         keepState: false,
@@ -176,8 +176,8 @@ class SaveDialog extends Component {
     }
 }
 
-export default SaveDialog;
+export default UploadDialog;
 
-SaveDialog.propTypes = {
-    projectId: PropTypes.string.isRequired
+UploadDialog.propTypes = {
+    projectId: PropTypes.number.isRequired
 }
