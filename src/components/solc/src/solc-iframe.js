@@ -34,6 +34,7 @@
         };
         console.log("[compiler] start compiling.");
         var result;
+        // Note: We run the compiler 3 times, just in case it needs warming up.
         for(var tries=2;tries>=0;tries--) {
             try {
                 result = compiler.compileStandardWrapper(cmd.input, resolveCb);
@@ -51,6 +52,7 @@
                 }
             }
             replyMessage(msg, result);
+            break;
         }
     };
     var solc = require('solc/wrapper');

@@ -196,6 +196,9 @@ export default class ProjectEditor extends Component {
                             {displayTransactionsPanel ? (
                                 <div className={style.actionContainer}>
                                     <div className={style.header}>
+                                        <div className={style.panelIcon}>
+                                            <IconTransactions/>
+                                        </div>
                                         <span className={style.title}>
                                             Transactions History
                                         </span>
