@@ -16,17 +16,19 @@
 
 import React from 'react';
 import Proptypes from 'prop-types';
+import classNames from 'classnames';
 import style from './style.less';
 
 const Note = ({
     title,
     text,
     backgroundColor = "#F8E71C",
-    color = "#262E33"
+    color = "#262E33",
+    textClassName = {},
 } = props) => (
     <div>
-        <span className={style.note} style={{backgroundColor: backgroundColor, color: color}}>{title}</span>
-        { text && <span className={style.noteText}>{text}</span> }
+        <span className={style.note} style={{backgroundColor: backgroundColor, color: color }}>{title}</span>
+        { text && <span className={classNames([style.noteText, textClassName])}>{text}</span> }
     </div>
 );
 

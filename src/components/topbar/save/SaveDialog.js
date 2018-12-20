@@ -34,7 +34,7 @@ class SaveDialog extends Component {
     state = {
         keepState: false,
         uploading: false,
-        shareURL: "ds",
+        shareURL: null,
         showUploadSettings: false
     }
 
@@ -94,7 +94,7 @@ class SaveDialog extends Component {
             <div className={style.content}>
                 <img src={'/static/img/img-ipfs-logo.svg'} className={style.logo}/>
                 <h3>Upload project to IPFS</h3>
-                <div className={style.description}>Backup and share your project by uploading to IPFS. Remember to not include any personal data, and enjoy decentralization!</div>
+                <div className={style.description}>Backup and share your project by uploading it to IPFS. Remember to not include any personal data, and enjoy decentralization!</div>
                 <br/>
                 <div>
                     <button className="btn2" onClick={this.ipfsSyncUp}>Upload Project</button>
@@ -106,6 +106,7 @@ class SaveDialog extends Component {
                 </div>
                 <br/>
                 <Note
+                    textClassName={style.note}
                     title="Warning"
                     text="Due to the nature of IPFS, might not be possible to delete your project from the network."
                 />

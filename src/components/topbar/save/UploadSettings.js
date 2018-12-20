@@ -45,7 +45,7 @@ export default class UploadSettings extends Component {
     render() {
         const { includeBuildInfo } = this.state;
         return (
-            <div>
+            <div className={style.container}>
                 <div className={style.header}>
                     <button className="btnNoBg" onClick={this.onBackClicked}>
                         <IconBack/>
@@ -55,7 +55,7 @@ export default class UploadSettings extends Component {
                 <div className={style.buildInfo}>
                     <div className={style.title}>Include build information</div>
                     <div className={style.descContainer}>
-                        <div>This will upload the content of your build folder</div>
+                        <div className={style.description}>This will upload the content of your build folder</div>
                         <Switch
                             checked={includeBuildInfo}
                             onChange={this.onIncludeBuildChange}
