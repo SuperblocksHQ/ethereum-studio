@@ -26,6 +26,7 @@ import Solc from '../solc';
 import EVM from '../evm';
 import Networks from '../../networks';
 import AnalyticsDialog from '../analyticsDialog';
+import OnlyIf from '../onlyIf';
 
 export default class App extends Component {
 
@@ -312,21 +313,25 @@ export default class App extends Component {
 
     render() {
         const { isReady } = this.state;
+        const { showTrackingAnalyticsDialog } = this.props;
         const modalContent = this.getModal();
+
         return (
             <div id="app" className={this.getClassNames()}>
                 <div id="app_content">
                     <div className="maincontent">
-                        {isReady && (
+                        <OnlyIf test={isReady}>
                             <ProjectEditor
                                 key="projedit"
                                 router={this.router}
                                 functions={this.functions}
                             />
-                        )}
+                            <OnlyIf test={showTrackingAnalyticsDialog}>
+                                <AnalyticsDialog />
+                            </OnlyIf>
+                        </OnlyIf>
                     </div>
                 </div>
-                <AnalyticsDialog />
                 <div id="app_modal" onClick={this.modalOutside}>
                     {modalContent}
                 </div>

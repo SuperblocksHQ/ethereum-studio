@@ -14,21 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { connect } from 'react-redux';
-import { getAdvancedPreferences } from '../../selectors/settings';
-import { settingsActions } from '../../actions';
-import AnalyticsDialog from './AnalyticsDialog';
+import { PureComponent } from 'react'
 
-const mapStateToProps = state => ({
-    advancedPreferences: getAdvancedPreferences(state),
-});
-
-const mapDispatchToProps = dispatch => {
-    return {
-        updateAnalyticsTracking: (value) => {
-            dispatch(settingsActions.updateAnalyticsTracking(value))
-        }
-    }
+class OnlyIf extends PureComponent {
+  render () {
+    return (this.props.test ? this.props.children : null)
+  }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AnalyticsDialog);
+export default OnlyIf

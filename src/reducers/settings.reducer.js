@@ -1,16 +1,28 @@
-import Store from '../store/settings';
+import { settingsActions } from '../actions';
 
-export const initialState = Store;
+export const initialState = {
+    showSplash: true,
+    preferences: {
+        network: {
+            gasLimit: '7900000', //'0x288B60'
+            gasPrice: '1000000000' //'0x3B9ACA00'
+        },
+        advanced: {
+            trackAnalytics: true
+        }
+    },
+    showTrackingAnalyticsDialog: true
+};
 
 export default function settingsReducer(state = initialState, action) {
     switch (action.type) {
-        case 'SHOW_SPLASH': {
+        case settingsActions.SHOW_SPLASH: {
             return {
                 ...state,
                 showSplash: action.data,
             };
         }
-        case 'SAVE_PREFERENCES': {
+        case settingsActions.SAVE_PREFERENCES: {
             return {
                 ...state,
                 preferences: {
@@ -20,6 +32,19 @@ export default function settingsReducer(state = initialState, action) {
                     },
                     advanced: action.data.advanced ? { ...action.data.advanced} : state.preferences.advanced
                 },
+            };
+        }
+        case settingsActions.UPDATE_ANALYTICS_TRACKING: {
+            return {
+                ...state,
+                preferences: {
+                    ...state.preferences,
+                    advanced: {
+                        ...state.preferences.advanced,
+                        trackAnalytics: action.data
+                    }
+                },
+                showTrackingAnalyticsDialog: false
             };
         }
         default:

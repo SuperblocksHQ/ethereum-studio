@@ -25,6 +25,14 @@ export default class AnalyticsDialog extends Component {
         trackAnalytics: this.props.advancedPreferences.trackAnalytics,
     }
 
+    componentDidUpdate(prevProps) {
+        if (prevProps.advancedPreferences.trackAnalytics !== this.props.advancedPreferences.trackAnalytics) {
+            this.setState({
+                trackAnalytics: this.props.advancedPreferences.trackAnalytics
+            });
+        }
+    }
+
     onTrackAnalyticsChange = (value) => {
         const state = {
             trackAnalytics: value
@@ -33,7 +41,7 @@ export default class AnalyticsDialog extends Component {
     }
 
     onSavePreferences = () => {
-
+        this.props.updateAnalyticsTracking(this.state.trackAnalytics);
     }
 
     render() {
@@ -42,9 +50,7 @@ export default class AnalyticsDialog extends Component {
         return (
             <div className={style.container}>
                 <div className={style.content}>
-                    <div className={style.header}>
-                        <h2>Support Superblocks Lab</h2>
-                    </div>
+                    <h2>Support Superblocks Lab!</h2>
                     <div>Superblocks Lab includes anaytics tracking to simply help us better understand how you use the tool during your normal development practices. Of course, you can always opt-out of this tracking by selecting the option below.</div>
                     <br/>
                     <div>By enabling this feature, you provide the Superblocks team with valuable metrics, allowing us to better analyse usage patterns and add new features and bug fixes faster.</div>
@@ -75,5 +81,6 @@ export default class AnalyticsDialog extends Component {
 }
 
 AnalyticsDialog.propTypes = {
-    advancedPreferences: PropTypes.object.isRequired
+    advancedPreferences: PropTypes.object.isRequired,
+    updateAnalyticsTracking: PropTypes.func.isRequired,
 }

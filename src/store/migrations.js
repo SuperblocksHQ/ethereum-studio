@@ -13,7 +13,7 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
-import settings from './settings';
+import { initialState as settings } from '../reducers/settings.reducer';
 
 const migrations = {
     1: (state) => {
@@ -48,6 +48,15 @@ const migrations = {
                     ...state.settings.preferences,
                     advanced: settings.preferences.advanced
                 }
+            }
+        }
+    },
+    4: (state) => {
+        return {
+            ...state,
+            settings: {
+                ...state.settings,
+                showTrackingAnalyticsDialog: settings.showTrackingAnalyticsDialog
             }
         }
     }
