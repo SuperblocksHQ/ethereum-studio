@@ -49,7 +49,7 @@ export default class DeployerRunner {
     }
 
     run(e) {
-        const { networkPreferences } = this.props;
+        const { networkPreferences, functions: {EVM} } = this.props;
 
         var redeploy = this.redeploy;
         if (e) {
@@ -118,6 +118,14 @@ export default class DeployerRunner {
         if (!wallet) {
             this._stderr(
                 'Can not deploy with chosen account on public network. Choose the first account in the list.'
+            );
+            this.callback(1);
+            return;
+        }
+
+        if (!EVM.isReady()) {
+            this._stderr(
+                'The Ethereum Virtual Machine is not ready yet. Please try again in a few seconds!'
             );
             this.callback(1);
             return;
