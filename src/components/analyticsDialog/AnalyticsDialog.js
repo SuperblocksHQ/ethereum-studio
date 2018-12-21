@@ -42,7 +42,9 @@ export default class AnalyticsDialog extends Component {
         return (
             <div className={style.container}>
                 <div className={style.content}>
-                    <h2>Support Superblocks Lab</h2>
+                    <div className={style.header}>
+                        <h2>Support Superblocks Lab</h2>
+                    </div>
                     <div>Superblocks Lab includes anaytics tracking to simply help us better understand how you use the tool during your normal development practices. Of course, you can always opt-out of this tracking by selecting the option below.</div>
                     <br/>
                     <div>By enabling this feature, you provide the Superblocks team with valuable metrics, allowing us to better analyse usage patterns and add new features and bug fixes faster.</div>
