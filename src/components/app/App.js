@@ -25,6 +25,7 @@ import { Wallet } from '../projecteditor/wallet';
 import Solc from '../solc';
 import EVM from '../evm';
 import Networks from '../../networks';
+import AnalyticsDialog from '../analyticsDialog';
 
 export default class App extends Component {
 
@@ -325,6 +326,7 @@ export default class App extends Component {
                         )}
                     </div>
                 </div>
+                <AnalyticsDialog />
                 <div id="app_modal" onClick={this.modalOutside}>
                     {modalContent}
                 </div>
