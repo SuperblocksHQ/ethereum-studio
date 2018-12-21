@@ -51,13 +51,13 @@ export default class AnalyticsDialog extends Component {
             <div className={style.container}>
                 <div className={style.content}>
                     <h2>Support Superblocks Lab!</h2>
-                    <div>Superblocks Lab includes anaytics tracking to simply help us better understand how you use the tool during your normal development practices. Of course, you can always opt-out of this tracking by selecting the option below.</div>
+                    <div>By allowing us to track (anonymously) how you use Lab, Superblocks can get valuable insights and better understand what the tool needs in order to make you a happier developer. By leaving the tracking on, you will really help us see what can be improved, iterated or removed.</div>
                     <br/>
-                    <div>By enabling this feature, you provide the Superblocks team with valuable metrics, allowing us to better analyse usage patterns and add new features and bug fixes faster.</div>
+                    <div><b>We do not track any personal data, private keys or addresses.</b> Lab is Open Source, so you can either check out the <a onClick={()=>console.log("hola")} href="https://github.com/SuperblocksHQ/superblocks-lab" target="_blank" rel="noopener noreferrer" title="Lab's Github repository">code</a> for yourself or read more on what we track and why in our <a href="https://help.superblocks.com/hc/en-us/articles/360014689153" target="_blank" rel="noopener noreferrer" title="Tracking article">Help Center.</a></div>
                     <br/>
-                    <div>Thank you for your help, and happy coding!</div>
+                    <div>Thanks for your support and happy buidling!</div>
                     <div className={style.switchContainer}>
-                        <div className={style.title}>Allow anonymous tracking</div>
+                        <div className={style.title}>Allow tracking (anonymously)</div>
                         <div className={style.description}>
                             <div className={style.text}>You can always change this from the Settings dialog. </div>
                             <Switch
