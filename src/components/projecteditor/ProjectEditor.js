@@ -75,7 +75,7 @@ export default class ProjectEditor extends Component {
         this.setState({
             EVMInit: true
         }, () => {
-            // start EVM & seed wallet
+            // open wallet & start EVM
             this.props.functions.wallet.openWallet(
                 'development',
                 this.props.knownWalletSeed,
