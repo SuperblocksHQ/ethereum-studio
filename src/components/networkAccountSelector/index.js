@@ -406,7 +406,7 @@ class AccountSelector extends Component {
         const web3 = this.getWeb3(endpoint);
         web3.eth.getBalance(address, (err, res) => {
             if (err) {
-                cb('<unknown balance>');
+                cb(0);
             } else {
                 cb(web3.fromWei(res.toNumber()));
             }
