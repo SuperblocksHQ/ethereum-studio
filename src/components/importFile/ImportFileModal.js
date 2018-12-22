@@ -232,5 +232,4 @@ export default class ImportFileModal extends Component {
 
 ImportFileModal.proptypes = {
     onCloseClick: Proptypes.func.isRequired,
-    savePreferences: Proptypes.func.isRequired
 };
