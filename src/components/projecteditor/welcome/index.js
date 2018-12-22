@@ -44,8 +44,8 @@ export default class Welcome extends Component {
                        <h2>Upcoming features</h2>
                        <div className={style.linksContainer}>
                             <a href="https://github.com/SuperblocksHQ/superblocks-lab/issues/189" target="_blank" rel="noopener noreferrer" title="Testing support">Testing support for your Smart Contract</a>
-                            <a href="https://github.com/SuperblocksHQ/superblocks-lab/issues/252" target="_blank" rel="noopener noreferrer" title="File system support">Share your projects</a>
-                            <a href="https://github.com/SuperblocksHQ/superblocks-lab/issues/253" target="_blank" rel="noopener noreferrer" title="Github integration">OpenZeppelin integration</a>
+                            <a href="https://github.com/SuperblocksHQ/superblocks-lab/issues/252" target="_blank" rel="noopener noreferrer" title="Share your project using IPFS">Share your project using IPFS</a>
+                            <a href="https://github.com/SuperblocksHQ/superblocks-lab/issues/303" target="_blank" rel="noopener noreferrer" title="App view subdomain">App view running on a separate subdomain</a>
                             <a href="https://github.com/SuperblocksHQ/superblocks-lab/projects/1" target="_blank" rel="noopener noreferrer" title="Latest updates">
                                 <IconRight className={style.arrow} />
                                 Find the latest updates
