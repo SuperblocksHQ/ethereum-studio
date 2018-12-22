@@ -44,7 +44,7 @@ _version_date=$(date "+%Y-%m-%d")
 
 #
 # Files to change
-_src_components_app_file="./src/reducers/app.js"
+_src_components_app_file="./src/reducers/app.reducer.js"
 _src_manifest_file="./src/manifest.json"
 _changelog_file="./CHANGELOG"
 
