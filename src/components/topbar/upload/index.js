@@ -17,6 +17,15 @@
 import { connect } from 'react-redux';
 import { ipfsActions } from '../../../actions';
 import UploadDialog from './UploadDialog';
+import { getShareURL, getUploadToIPFSError, getUploadingToIPFS } from '../../../selectors/ipfs';
+
+const mapStateToProps = state => ({
+    ipfs: {
+        uploading: getUploadingToIPFS(state),
+        shareURL: getShareURL(state),
+        error: getUploadToIPFSError(state)
+    }
+});
 
 function mapDispatchToProps(dispatch) {
     return {
@@ -26,4 +35,4 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-export default connect(null, mapDispatchToProps)(UploadDialog);
+export default connect(mapStateToProps, mapDispatchToProps)(UploadDialog);

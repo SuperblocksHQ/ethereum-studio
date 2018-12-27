@@ -31,21 +31,28 @@ import UploadSettings from './UploadSettings';
 class UploadDialog extends Component {
 
     state = {
-        uploading: false,
-        shareURL: null,
+        ipfs: {
+            uploading: this.props.ipfs.uploading,
+            shareURL: this.props.ipfs.shareURL,
+            error: this.props.ipfs.error
+        },
         showUploadSettings: false,
         uploadSettings: {
             includeBuildInfo: false
         }
     }
 
+    componentDidUpdate(prevProps) {
+        if (prevProps.ipfs !== this.props.ipfs) {
+            this.setState({
+                ipfs: {...this.props.ipfs}
+            });
+        }
+    }
+
     ipfsSyncUp = () => {
         const { includeBuildInfo } = this.state.uploadSettings;
         const { uploadToIPFS } = this.props;
-
-        this.setState({
-            uploading: true
-        });
 
         uploadToIPFS(includeBuildInfo);
 
@@ -62,7 +69,7 @@ class UploadDialog extends Component {
     }
 
     copyShareUrl = () => {
-        const { shareURL } = this.state;
+        const { shareURL } = this.state.ipfs;
         copy(shareURL);
     }
 
@@ -124,6 +131,7 @@ class UploadDialog extends Component {
                 <img src={'/static/img/img-ipfs-logo.svg'} className={style.logo}/>
                 <div className={style.share}>
                     <TextInput
+                        id="share-project"
                         label="Share your project"
                         defaultValue={shareURL}
                         disabled={true}
@@ -149,10 +157,11 @@ class UploadDialog extends Component {
     }
 
     render() {
-        const { uploading, shareURL, showUploadSettings, uploadSettings } = this.state;
+        const { ipfs, showUploadSettings, uploadSettings } = this.state;
+        console.log(ipfs);
         return (
             <div className={style.shareDialogContainer}>
-                { uploading ?
+                { ipfs.uploading ?
                     this.renderUploading()
                 :
                     showUploadSettings ?
@@ -162,8 +171,8 @@ class UploadDialog extends Component {
                             onChange={this.onUploadSettingsChanged}
                         />
                     :
-                        shareURL ?
-                            this.renderShareURL(shareURL)
+                        ipfs.shareURL ?
+                            this.renderShareURL(ipfs.shareURL)
                         :
                             this.renderDialog()
                 }
@@ -175,5 +184,6 @@ class UploadDialog extends Component {
 export default UploadDialog;
 
 UploadDialog.propTypes = {
+    ipfs: PropTypes.object.isRequired,
     uploadToIPFS: PropTypes.func.isRequired
 }

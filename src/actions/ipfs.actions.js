@@ -10,14 +10,14 @@ export const ipfsActions = {
     uploadToIPFSSuccess(shareURL) {
         return {
             type: ipfsActions.UPLOAD_TO_IPFS_SUCCESS,
-            data: { shareURL }
+            data: shareURL
         }
     },
     UPLOAD_TO_IPFS_FAIL: 'UPLOAD_TO_IPFS_FAIL',
     uploadToIPFSFail(error) {
         return {
             type: ipfsActions.UPLOAD_TO_IPFS_FAIL,
-            data: { error }
+            data: error
         }
     }
 }

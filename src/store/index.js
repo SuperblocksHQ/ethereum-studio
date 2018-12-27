@@ -15,7 +15,7 @@ const config = {
     key: 'root',
     storage,
     version: 4,
-    blacklist: ['app', 'view', 'panes'],
+    blacklist: ['app', 'view', 'panes', 'ipfs'],
     migrate: createMigrate(migrations, { debug: true })
 };
 
