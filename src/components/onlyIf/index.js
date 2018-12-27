@@ -14,7 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { connect } from 'react-redux';
-import ImportFileModal from './ImportFileModal';
+import { PureComponent } from 'react'
 
-export default connect(null, null)(ImportFileModal);
+class OnlyIf extends PureComponent {
+  render () {
+    return (this.props.test ? this.props.children : null)
+  }
+}
+
+export default OnlyIf

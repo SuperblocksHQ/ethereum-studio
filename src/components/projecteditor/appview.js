@@ -37,10 +37,6 @@ export default class AppView extends Component {
         this.provider = new SuperProvider({ that: this });
     }
 
-    componentDidMount() {
-        this._getEnv();
-    }
-
     _getEnv = () => {
         // Update the chosen network and account
         const project = this.props.item.getProject();
@@ -73,10 +69,8 @@ export default class AppView extends Component {
         this.render2();
     };
 
-    componentWillReceiveProps(props) {}
-
     writeContent = (status, content) => {
-        if (!this.iframeDiv) return;
+        if (!this.iframeDiv) { return; }
         content = content || this.lastContent || 'No content';
         if (status > 0) {
             // Add surrounding html
@@ -85,14 +79,17 @@ export default class AppView extends Component {
                 content +
                 `</h1></body></html>`;
         }
-        if (content == this.lastContent) return;
+        if (content === this.lastContent) { return; }
         this.lastContent = content;
         while (this.iframeDiv.firstChild) {
             this.iframeDiv.removeChild(this.iframeDiv.firstChild);
         }
         const iframe = document.createElement('iframe');
-        iframe.sandbox = 'allow-scripts allow-modals allow-forms';
-        iframe.srcdoc = content;
+        if (window.location.hostname === 'localhost') {
+            iframe.src = `${window.location.protocol}//${window.location.host}/app-view.html`;
+        } else {
+            iframe.src = `${window.location.protocol}//lab-dapp.${window.location.host}/app-view.html`;
+        }
         this.iframeDiv.appendChild(iframe);
         this.iframe = iframe;
         this.provider.initIframe(iframe);
@@ -227,7 +224,7 @@ export default class AppView extends Component {
             return;
         }
 
-        if (this.state.network == 'browser') {
+        if (this.state.network === 'browser') {
             const body = (
                 <div>
                     <p>Computer says no.</p>
@@ -324,7 +321,7 @@ export default class AppView extends Component {
     };
 
     _getAccount = () => {
-        return this.state.disableAccounts == 'on'
+        return this.state.disableAccounts === 'on'
             ? '(no provider)'
             : this.state.account;
     };
@@ -332,9 +329,9 @@ export default class AppView extends Component {
     _getAccountAddress = () => {
         // Check given account, try to open and get address, else return [].
         const accountName = this._getAccount();
-        if (accountName == '(no provider)') return null;
-        if (accountName == '(locked)') return [];
-        if (!accountName) return [];
+        if (accountName === '(no provider)') { return null; }
+        if (accountName === '(locked)') { return []; }
+        if (!accountName) { return []; }
 
         const project = this.props.item.getProject();
         const env = project.getEnvironment();
@@ -350,9 +347,9 @@ export default class AppView extends Component {
         }
         const walletType = wallet.getWalletType();
 
-        if (walletType == 'external') {
+        if (walletType === 'external') {
             // Metamask seems to always only provide one (the chosen) account.
-            if (!window.web3) return [];
+            if (!window.web3) { return []; }
             const extAccounts = window.web3.eth.accounts || [];
             if (extAccounts.length < accountIndex + 1) {
                 // Account not matched
@@ -374,7 +371,7 @@ export default class AppView extends Component {
 
     _getWeb3 = endpoint => {
         var provider;
-        if (endpoint.toLowerCase() == 'http://superblocks-browser') {
+        if (endpoint.toLowerCase() === 'http://superblocks-browser') {
             provider = this.props.functions.EVM.getProvider();
         } else {
             var provider = new Web3.providers.HttpProvider(endpoint);
@@ -424,24 +421,6 @@ export default class AppView extends Component {
         // NOTE: we don't check contract deployemnt as for now
         cb(0);
         return;
-
-        const files = [];
-        for (var index = 0; index < contracts.length; index++) {
-            files.push(contracts[index][0]);
-            files.push(contracts[index][1]);
-        }
-        this._loadFiles(files, (status, bodies) => {
-            if (status > 0) {
-                cb(status);
-                return;
-            }
-            // Switch filesrc for their contents
-            for (var index = 0; index < contracts.length; index++) {
-                contracts[index][0] = bodies[index * 2];
-                contracts[index][1] = bodies[index * 2 + 1];
-            }
-            this._checkContracts2(contracts, cb);
-        });
     };
 
     _checkContracts2 = (contracts, cb) => {
@@ -508,7 +487,7 @@ export default class AppView extends Component {
     _getProvider = (endpoint, accounts) => {
         var ts = this.props.functions.session.start_time();
         const js =
-            `<script type="text/javascript" src="/static/js/web3provider.js?ts=` +
+            `<script type="text/javascript" src="${window.location.origin}/static/js/web3provider.js?ts=` +
             ts +
             `">
     </script>
@@ -634,18 +613,26 @@ export default class AppView extends Component {
     getHeight = () => {
         const a = document.getElementById(this.id);
         const b = document.getElementById(this.id + '_header');
-        if (!a) return 99;
+        if (!a) { return 99; }
         return a.offsetHeight - b.offsetHeight;
     };
 
     componentDidMount() {
         this.provider._attachListener();
+        window.addEventListener('message', this._iframeMessageHandler);
         // We need to do a first redraw to get the height right, since toolbar didn't exist in the first sweep.
         this.redraw();
     }
 
     componentWillUnmount() {
         this.provider._detachListener();
+        window.removeEventListener('message', this._iframeMessageHandler);
+    }
+
+    _iframeMessageHandler = (e) => {
+        if (e.data.type === 'window-ready') {
+            this.iframe.contentWindow.postMessage({ type: 'set-content', payload: this.lastContent }, '*');
+        }
     }
 
     _firstRender = ref => {

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Superblocks App View</title>
+    <style>
+        body, html, #iframe {
+            height: 100%;
+            width: 100%;
+            padding: 0;
+            margin: 0;
+            border: 0;
+        }
+        body {
+            overflow: hidden;
+        }
+    </style>
+    <script>
+        window.onload = function() {
+            var iframe = document.getElementById('iframe');
+            
+            window.addEventListener('message', function(e) {
+                if (e.data.type === 'set-content') {
+                    iframe.srcdoc = e.data.payload;
+                } else {
+                    if (e.source === iframe.contentWindow) {
+                        window.parent.postMessage(e.data, '*');
+                    } else if (e.source === window.parent) {
+                        iframe.contentWindow.postMessage(e.data, '*');
+                    }
+                }
+            }, false);
+
+            window.parent.postMessage({ type: 'window-ready' }, '*');
+        };
+    </script>
+</head>
+<body>
+    <iframe id="iframe"></iframe>
+    <noscript>
+      You need to enable JavaScript to run this app.
+    </noscript>
+</body>

@@ -2,6 +2,13 @@
 # yarn lockfile v1
 
 
+"@amplitude/react-amplitude@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@amplitude/react-amplitude/-/react-amplitude-1.0.0.tgz#60145d02de035fc457e28e173f90aa33af2d149a"
+  dependencies:
+    lodash.debounce "^4.0.8"
+    shallowequal "^1.0.2"
+
 "@babel/code-frame@7.0.0", "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.0.0-beta.35":
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.0.0.tgz#06e2ab19bdb535385559aabb5ba59729482800f8"
@@ -852,6 +859,13 @@
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.3.tgz#2b5a3ab3f918cca48a8c754c08168e3f03eba61b"
   integrity sha512-shAmDyaQC4H92APFoIaVDHCx5bStIocgvbwQyxPRrbUY20V1EYTbSDchWbuwlMG3V17cprZhA6+78JfB+3DTPw==
 
+"@segment/top-domain@^3.0.0":
+  version "3.0.0"
+  resolved "http://registry.npmjs.org/@segment/top-domain/-/top-domain-3.0.0.tgz#02e5a5a4fd42a9f6cf886b05e82f104012a3c3a7"
+  dependencies:
+    component-cookie "^1.1.2"
+    component-url "^0.2.1"
+
 "@svgr/core@^2.4.1":
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/@svgr/core/-/core-2.4.1.tgz#03a407c28c4a1d84305ae95021e8eabfda8fa731"
@@ -1158,6 +1172,16 @@ alphanum-sort@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/alphanum-sort/-/alphanum-sort-1.0.2.tgz#97a1119649b211ad33691d9f9f486a8ec9fbe0a3"
   integrity sha1-l6ERlkmyEa0zaR2fn0hqjsn74KM=
+
+amplitude-js@^4.5.2:
+  version "4.5.2"
+  resolved "https://registry.yarnpkg.com/amplitude-js/-/amplitude-js-4.5.2.tgz#17fd0f1c6a8a1afdbde1a36944dc9dbaa24805c1"
+  dependencies:
+    "@segment/top-domain" "^3.0.0"
+    blueimp-md5 "^2.10.0"
+    json3 "^3.3.2"
+    lodash "^4.17.4"
+    ua-parser-js "github:amplitude/ua-parser-js#ed538f1"
 
 ansi-colors@^3.0.0:
   version "3.2.1"
@@ -2236,6 +2260,10 @@ bluebird@^3.5.1:
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.5.3.tgz#7d01c6f9616c9a51ab0f8c549a79dfe6ec33efa7"
   integrity sha512-/qKPUQlaW1OyR51WeCPBvRnAlnZFUJkCSG5HzGnuIqhgyJtF+T94lFnn33eiazjRm2LAHVy2guNnaq48X9SJuw==
 
+blueimp-md5@^2.10.0:
+  version "2.10.0"
+  resolved "https://registry.yarnpkg.com/blueimp-md5/-/blueimp-md5-2.10.0.tgz#02f0843921f90dca14f5b8920a38593201d6964d"
+
 bn.js@=4.11.8, bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.1.1, bn.js@^4.10.0, bn.js@^4.11.0, bn.js@^4.11.3, bn.js@^4.4.0, bn.js@^4.8.0:
   version "4.11.8"
   resolved "https://registry.yarnpkg.com/bn.js/-/bn.js-4.11.8.tgz#2cde09eb5ee341f484746bb0309b3253b1b1442f"
@@ -3004,10 +3032,20 @@ commondir@^1.0.1:
   resolved "https://registry.yarnpkg.com/commondir/-/commondir-1.0.1.tgz#ddd800da0c66127393cca5950ea968a3aaf1253b"
   integrity sha1-3dgA2gxmEnOTzKWVDqloo6rxJTs=
 
+component-cookie@^1.1.2:
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/component-cookie/-/component-cookie-1.1.4.tgz#1b88b3dda4953d890163dd52fa53df374247cf8d"
+  dependencies:
+    debug "2.2.0"
+
 component-emitter@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/component-emitter/-/component-emitter-1.2.1.tgz#137918d6d78283f7df7a6b7c5a63e140e69425e6"
   integrity sha1-E3kY1teCg/ffemt8WmPhQOaUJeY=
+
+component-url@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/component-url/-/component-url-0.2.1.tgz#4e4f4799c43ead9fd3ce91b5a305d220208fee47"
 
 compressible@~2.0.14:
   version "2.0.15"
@@ -3485,6 +3523,12 @@ date-now@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/date-now/-/date-now-0.1.4.tgz#eaf439fd4d4848ad74e5cc7dbef200672b9e345b"
   integrity sha1-6vQ5/U1ISK105cx9vvIAZyueNFs=
+
+debug@2.2.0:
+  version "2.2.0"
+  resolved "http://registry.npmjs.org/debug/-/debug-2.2.0.tgz#f87057e995b1a1f6ae6a4960664137bc56f039da"
+  dependencies:
+    ms "0.7.1"
 
 debug@2.6.9, debug@^2.1.2, debug@^2.2.0, debug@^2.3.3, debug@^2.6.0, debug@^2.6.6, debug@^2.6.8, debug@^2.6.9:
   version "2.6.9"
@@ -7530,6 +7574,10 @@ move-concurrently@^1.0.1:
     rimraf "^2.5.4"
     run-queue "^1.0.3"
 
+ms@0.7.1:
+  version "0.7.1"
+  resolved "http://registry.npmjs.org/ms/-/ms-0.7.1.tgz#9cd13c03adbff25b65effde7ce864ee952017098"
+
 ms@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
@@ -9325,6 +9373,13 @@ react-splitter-layout@^3.0.1:
   resolved "https://registry.yarnpkg.com/react-splitter-layout/-/react-splitter-layout-3.0.1.tgz#c2e00e69b35d240ab7a44f395d41803c5f4b70ef"
   integrity sha512-XfFQvrvnow2XKil07FKIT9NuapNgeuQwcAJMZDGHLd/EZ8Ag6fb5U9sSF+g5qIeIux63bDY8RScl63kYaEFu7w==
 
+react-switch@^3.0.4:
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/react-switch/-/react-switch-3.0.4.tgz#52958b2736b4d21b4f0050997955c5365019ca7b"
+  integrity sha512-11WipoiPNHZx4fWzF/fsYXu+w+HZb8tzNTo7ymaJES8uc3nJZl46rxg1DAB1u669W7SOnshDNnJZOi28IblOeg==
+  dependencies:
+    prop-types "^15.6.1"
+
 react-tippy@^1.2.3:
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/react-tippy/-/react-tippy-1.2.3.tgz#8aef183ec4986ca7c5c556465013d95196fecfd8"
@@ -9462,6 +9517,11 @@ recursive-readdir@2.2.2:
   integrity sha512-nRCcW9Sj7NuZwa2XvH9co8NPeXUBhZP7CRKJtU+cS6PW9FpCIFoI5ib0NT1ZrbNuPoRy0ylyCaUL8Gih4LSyFg==
   dependencies:
     minimatch "3.0.4"
+
+redux-observable@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/redux-observable/-/redux-observable-1.0.0.tgz#780ff2455493eedcef806616fe286b454fd15d91"
+  integrity sha512-6bXnpqWTBeLaLQjXHyN1giXq4nLxCmv+SUkdmiwBgvmVxvDbdmydvL1Z7DGo0WItyzI/kqXQKiucUuTxnrPRkA==
 
 redux-persist@^5.10.0:
   version "5.10.0"
@@ -9827,7 +9887,7 @@ rustbn.js@~0.2.0:
   resolved "https://registry.yarnpkg.com/rustbn.js/-/rustbn.js-0.2.0.tgz#8082cb886e707155fd1cb6f23bd591ab8d55d0ca"
   integrity sha512-4VlvkRUuCJvr2J6Y0ImW7NvTCriMi7ErOAqWk1y69vAdoNIzCF3yPmgeNzx+RQTLEDFq5sHfscn1MwHxP9hNfA==
 
-rxjs@^6.1.0:
+rxjs@^6.1.0, rxjs@^6.3.3:
   version "6.3.3"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.3.3.tgz#3c6a7fa420e844a81390fb1158a9ec614f4bad55"
   integrity sha512-JTWmoY9tWCs7zvIk/CvRjhjGaOd+OVBM987mxFo+OW66cGpdKjZcpmc74ES1sB//7Kl/PAe8+wEakuhG4pcgOw==
@@ -10867,6 +10927,10 @@ ua-parser-js@^0.7.18:
   version "0.7.19"
   resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.19.tgz#94151be4c0a7fb1d001af7022fdaca4642659e4b"
   integrity sha512-T3PVJ6uz8i0HzPxOF9SWzWAlfN/DavlpQqepn22xgve/5QecC+XMCAtmUNnY7C9StehaV6exjUCI801lOI7QlQ==
+
+"ua-parser-js@github:amplitude/ua-parser-js#ed538f1":
+  version "0.7.10"
+  resolved "https://codeload.github.com/amplitude/ua-parser-js/tar.gz/ed538f16f5c6ecd8357da989b617d4f156dcf35d"
 
 uglify-es@^3.3.4:
   version "3.3.9"

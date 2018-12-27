@@ -17,6 +17,7 @@
 import sha256 from 'crypto-js/sha256';
 import Web3 from 'web3';
 import Networks from './networks';
+import * as analytics from './utils/analytics';
 
 const TxEth = () => import(/* webpackChunkName: "ethereumjs-tx" */ './ethereumjs-tx-1.3.3.min');
 
@@ -183,6 +184,7 @@ export default class DeployerRunner {
                                     'Waiting for contract to be deployed...'
                                 );
                                 this._waitContract(obj, status => {
+                                    analytics.logEvent('CONTRACT_DEPLOYED', { network: env });
                                     this._buildJs(obj, status => {
                                         if (status != 0) {
                                             this.callback(1);

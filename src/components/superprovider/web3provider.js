@@ -22,7 +22,7 @@ window.DevKitProvider = {};
     var _msgCounter = 0;
     var parentWindow;
     const onMsg = event => {
-        if (event.origin !== ORIGIN) {
+        if (event.origin.indexOf(ORIGIN) < 0) {
             return;
         }
 

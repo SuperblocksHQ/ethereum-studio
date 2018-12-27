@@ -1,5 +1,15 @@
 # Superblocks Lab - Change log
 
+## [1.4.0]
+
++ Addition: Anonymous amplitude tracking #305
+* Improvement: Minor UI updates #290
+* Change: List of upcoming features #309
+* Fix: Local storage quota full when performing compiler operations #283
+* Fix: Compiler's replyMessage gets called multiple times #279
+* Fix: Postinstall script error on Windows #301
+
+
 ## [1.3.0]
 
 + Addition: Integrate OpenZeppelin smart contracts #253
