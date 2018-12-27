@@ -1,49 +1,31 @@
-/* global window */
 import { createStore, applyMiddleware, compose } from 'redux';
 import { createMigrate, persistStore, persistCombineReducers } from 'redux-persist';
+import { createEpicMiddleware } from 'redux-observable';
+import { combineEpics } from 'redux-observable';
 import storage from 'redux-persist/lib/storage'; // default: localStorage if web
 import thunk from 'redux-thunk';
+import migrations from './migrations';
 import reducers from '../reducers';
-import settings from './settings';
+import { epics } from '../epics';
 
-const migrations = {
-    1: (state) => {
-        return {
-            ...state,
-            settings: {
-                ...state.settings,
-                preferences: {
-                    chain: undefined,
-                    network: settings.preferences.network
-                }
-            }
-        }
-    },
-    2: (state) => {
-        return {
-            ...state,
-            projects: {
-                selectedProjectId: undefined,
-                selectedProject: {
-                    id: selectedProjectId ? selectedProjectId : 0
-                }
-            }
-        }
-    }
-}
 
 // Redux Persist config
 const config = {
     key: 'root',
     storage,
-    version: 2,
+    version: 4,
     blacklist: ['app', 'view', 'panes'],
     migrate: createMigrate(migrations, { debug: true })
 };
 
 const reducer = persistCombineReducers(config, reducers);
+const rootEpic = combineEpics(...epics);
+const epicMiddleware = createEpicMiddleware();
 
-const middleware = [thunk];
+const middleware = [
+    thunk,
+    epicMiddleware
+];
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -54,6 +36,8 @@ const configureStore = () => {
             applyMiddleware(...middleware)
         )
     );
+
+    epicMiddleware.run(rootEpic);
 
     const persistor = persistStore(store);
 

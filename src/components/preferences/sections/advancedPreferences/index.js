@@ -15,6 +15,11 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { connect } from 'react-redux';
-import ImportFileModal from './ImportFileModal';
+import { getAdvancedPreferences } from '../../../../selectors/settings';
+import AdvancedPreferences from './AdvancedPreferences';
 
-export default connect(null, null)(ImportFileModal);
+const mapStateToProps = state => ({
+    advancedPreferences: getAdvancedPreferences(state),
+});
+
+export default connect(mapStateToProps, null)(AdvancedPreferences);

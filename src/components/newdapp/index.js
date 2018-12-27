@@ -19,6 +19,7 @@ import Proptypes from 'prop-types';
 import SelectedTemplate from './selectTemplate';
 import ProjectDetails from './projectDetails';
 import Templates from '../../templates';
+import { logEvent, Analytics, LogOnMount } from "../../utils/analytics";
 import DappfileItem from '../projecteditor/control/item/dappfileItem';
 import JSZipUtils from 'jszip-utils';
 
@@ -60,6 +61,8 @@ export default class NewDapp extends Component {
             this.props.backend.createProject(files, status =>
                 this.props.cb(status)
             );
+
+            logEvent('PROJECT_CREATED', { template: this.state.selectedTemplate.name});
 
             this.closeModal();
         };

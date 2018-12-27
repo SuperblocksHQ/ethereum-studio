@@ -36,43 +36,44 @@ export default class NetworkPreferences extends Component {
         this.web3 = new Web3();
     }
 
-    componentDidMount() {
-        this.props.onRef(this)
+    onGasLimitChange = (e) => {
+        const { onChange } = this.props;
+        const { tempGasPrice } = this.state;
+
+        const gasLimitValue = e.target.value;
+        const errorGasLimit = gasLimitValue ? validations.validateGasLimit(Number(gasLimitValue)) : null;
+
+        // To make sure we update the input the UI correctly
+        this.setState({
+            errorGasLimit,
+            tempGasLimit: gasLimitValue
+        });
+
+        onChange({
+            isValid: !errorGasLimit,
+            gasLimit: gasLimitValue,
+            gasPrice: tempGasPrice
+        });
     }
 
-    componentWillUnmount() {
-        this.props.onRef(undefined)
-    }
+    onGasPriceChange = (e) => {
+        const { onChange } = this.props;
+        const { tempGasLimit } = this.state;
 
-    getPreferences() {
-        return {
-            gasLimit: this.state.errorGasLimit ? this.props.networkPreferences.gasLimit : this.state.tempGasLimit,
-            gasPrice: this.state.errorGasPrice ? this.props.networkPreferences.gasPrice : this.state.tempGasPrice
-        }
-    }
+        const gasPriceValue = e.target.value;
+        const errorGasPrice = gasPriceValue ? validations.validateGasPrice(Number(gasPriceValue)) : null;
 
-    onChange = (e, key) => {
-        const value = e.target.value;
-        if (key === "gasLimit") {
-            const gasLimitValue = value;
-            const errorGasLimit = gasLimitValue ? validations.validateGasLimit(Number(gasLimitValue)) : null;
+        // To make sure we update the input the UI correctly
+        this.setState({
+            errorGasPrice,
+            tempGasPrice: gasPriceValue
+        });
 
-            // To make sure we update the input the UI correctly
-            this.setState({
-                errorGasLimit,
-                tempGasLimit: gasLimitValue
-            });
-
-        } else if (key === "gasPrice") {
-            const gasPriceValue = value;
-            const errorGasPrice = gasPriceValue ? validations.validateGasPrice(Number(gasPriceValue)) : null;
-
-            // To make sure we update the input the UI correctly
-            this.setState({
-                errorGasPrice,
-                tempGasPrice: gasPriceValue
-            });
-        }
+        onChange({
+            isValid: !errorGasPrice,
+            gasLimit: tempGasLimit,
+            gasPrice: gasPriceValue
+        });
     }
 
     render() {
@@ -96,7 +97,7 @@ export default class NetworkPreferences extends Component {
                                 type="number"
                                 label="Gas Limit"
                                 error={errorGasLimit}
-                                onChangeText={(e)=>{this.onChange(e, 'gasLimit')}}
+                                onChangeText={this.onGasLimitChange}
                                 defaultValue={tempGasLimit}
                             />
                             <div className={style.note}>Maximum amount of gas available to each block and transaction. <b>Leave blank for default.</b></div>
@@ -105,7 +106,7 @@ export default class NetworkPreferences extends Component {
                                 type="number"
                                 label="Gas Price"
                                 error={errorGasPrice}
-                                onChangeText={(e)=>{this.onChange(e, 'gasPrice')}}
+                                onChangeText={this.onGasPriceChange}
                                 defaultValue={tempGasPrice}
                                 tip={gasPriceGwei + ' Gwei'}
                             />
@@ -120,7 +121,7 @@ export default class NetworkPreferences extends Component {
 }
 
 NetworkPreferences.propTypes = {
-    onRef: PropTypes.func.isRequired
+    onChange: PropTypes.func.isRequired
 }
 
 
