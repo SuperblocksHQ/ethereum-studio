@@ -73,12 +73,14 @@
     "workbox-webpack-plugin": "3.6.2"
   },
   "dependencies": {
+    "@amplitude/react-amplitude": "1.0.0",
     "@fortawesome/fontawesome-free": "^5.5.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.8",
     "@fortawesome/free-brands-svg-icons": "^5.5.0",
     "@fortawesome/free-regular-svg-icons": "^5.5.0",
     "@fortawesome/free-solid-svg-icons": "^5.5.0",
     "@fortawesome/react-fontawesome": "^0.1.3",
+    "amplitude-js": "^4.5.2",
     "bfj": "6.1.1",
     "classnames": "^2.2.5",
     "copy-to-clipboard": "^3.0.8",
@@ -113,9 +115,11 @@
     "react-switch": "^3.0.4",
     "react-tippy": "^1.2.3",
     "redux": "^4.0.0",
+    "redux-observable": "^1.0.0",
     "redux-persist": "^5.10.0",
     "redux-thunk": "^2.3.0",
     "reselect": "^3.0.1",
+    "rxjs": "^6.3.3",
     "solc": "^0.4.25",
     "web3": "0.19"
   },

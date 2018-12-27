@@ -3,6 +3,7 @@ import Proptypes from 'prop-types';
 import classNames from 'classnames';
 import style from '../style.less';
 import ModalHeader from '../../modal/modalHeader';
+import { LogOnMount } from "../../../utils/analytics";
 
 const TemplateCategory = ({ onCategorySelected, title } = props) => (
     <div onClick={onCategorySelected}>{title}</div>
@@ -94,6 +95,7 @@ export default class SelectTemplate extends Component {
 
         return(
             <div className={classNames([style.newDapp, "modal"])}>
+                <LogOnMount eventType="NEW_PROJECT_SELECT_TEMPLATE"/>
                 <div className={style.step2}>
                     <ModalHeader
                         title="Select Template"

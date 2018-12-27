@@ -19,6 +19,7 @@ import Proptypes from 'prop-types';
 import classNames from 'classnames';
 import style from '../style.less';
 import ModalHeader from '../../modal/modalHeader';
+import { LogOnMount } from "../../../utils/analytics";
 
 export default class ProjectDetails extends Component {
     constructor(props) {
@@ -97,6 +98,7 @@ export default class ProjectDetails extends Component {
     render() {
         return (
             <div className={classNames([style.newDapp, 'modal'])}>
+                <LogOnMount eventType="NEW_PROJECT_DETAILS"/>
                 <div className={style.step1}>
                     <ModalHeader
                         title="Project Details"
