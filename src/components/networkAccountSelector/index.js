@@ -365,7 +365,11 @@ class AccountSelector extends Component {
     getWeb3 = endpoint => {
         var provider;
         if (endpoint.toLowerCase() == 'http://superblocks-browser') {
-            provider = this.props.functions.EVM.getProvider();
+            if (this.props.functions.EVM.isReady()){
+                provider = this.props.functions.EVM.getProvider();
+            } else {
+                console.log("EVM is not ready!");
+            }
         } else {
             provider = new Web3.providers.HttpProvider(endpoint);
         }
@@ -402,7 +406,7 @@ class AccountSelector extends Component {
         const web3 = this.getWeb3(endpoint);
         web3.eth.getBalance(address, (err, res) => {
             if (err) {
-                cb('<unknown balance>');
+                cb(0);
             } else {
                 cb(web3.fromWei(res.toNumber()));
             }

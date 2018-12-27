@@ -104,12 +104,24 @@ export default class Compiler extends Component {
                 // This timeout can be removed.
                 setTimeout(() => {
                     var contractbody;
-                    this._updateConsole({
-                        channel: 1,
-                        msg:
-                            'Using Solidity compiler version ' +
-                            this.props.functions.compiler.getVersion(),
-                    });
+
+                    this._initCompiler();
+                    if (this.props.functions.compiler.isReady()) {
+
+                        this._updateConsole({
+                            channel: 1,
+                            msg:
+                                'Using Solidity compiler version ' +
+                                this.props.functions.compiler.getVersion(),
+                        });
+                    } else {
+
+                        this._updateConsole({
+                            channel: 1,
+                            msg:
+                                'Loading the compiler...'
+                        });
+                    }
                     // Run through all sources loaded and chose one for compilation and the rest for import.
                     // https://solidity.readthedocs.io/en/develop/using-the-compiler.html#compiler-input-and-output-json-description
                     const input = {
@@ -421,6 +433,11 @@ export default class Compiler extends Component {
         this.setState(prevState => ({
             consoleRows: [...prevState.consoleRows, row]
           }))
+    }
+
+    _initCompiler() {
+        // Init compiler
+        this.props.functions.compiler.init();
     }
 
     renderToolbar = () => {

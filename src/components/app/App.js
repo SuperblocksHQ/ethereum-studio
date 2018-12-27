@@ -33,7 +33,7 @@ export default class App extends Component {
     state = {
         modals: [],
         isReady: false
-    }
+    };
 
     constructor(props) {
         super(props);
@@ -145,10 +145,9 @@ export default class App extends Component {
         const modalData = {
             title: 'Loading Superblocks Lab',
             body:
-                'Initializing Wallet, Solidity compiler and Ethereum Virtual Machine...',
+                'Initializing Wallet and Ethereum Virtual Machine...',
             style: { textAlign: 'center' },
         };
-        var walletSeeded = false;
         const modal = <Modal data={modalData} />;
         this.functions.modal.show({
             cancel: () => {
@@ -161,22 +160,8 @@ export default class App extends Component {
         this.functions.compiler = new Solc({ id: this.generateId() });
         this.functions.EVM = new EVM({ id: this.generateId() });
 
-        // Need to init the compiler and EVM
-        this.functions.compiler.init();
-        this.functions.EVM.init();
-
-        this.functions.wallet.openWallet(
-            'development',
-            this.knownWalletSeed,
-            () => {
-                walletSeeded = true;
-            }
-        );
-
         const fn = () => {
-            if (this.functions.compiler.isReady()
-                && this.functions.EVM.isReady()
-                && walletSeeded) {
+            if (this.functions.compiler && this.functions.EVM) {
                 console.log('Superblocks Lab ' + appVersion + ' Ready.');
 
                 this.functions.modal.close();
@@ -325,6 +310,7 @@ export default class App extends Component {
                                 key="projedit"
                                 router={this.router}
                                 functions={this.functions}
+                                knownWalletSeed={this.knownWalletSeed}
                             />
                             <OnlyIf test={showTrackingAnalyticsDialog}>
                                 <AnalyticsDialog />
