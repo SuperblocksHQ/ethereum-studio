@@ -7,6 +7,7 @@ import thunk from 'redux-thunk';
 import migrations from './migrations';
 import reducers from '../reducers';
 import { epics } from '../epics';
+import Backend from '../components/projecteditor/control/backend';
 
 
 // Redux Persist config
@@ -20,7 +21,9 @@ const config = {
 
 const reducer = persistCombineReducers(config, reducers);
 const rootEpic = combineEpics(...epics);
-const epicMiddleware = createEpicMiddleware();
+const epicMiddleware = createEpicMiddleware({
+    dependencies: { backend: new Backend() }
+});
 
 const middleware = [
     thunk,

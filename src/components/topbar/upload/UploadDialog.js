@@ -26,7 +26,6 @@ import {
 import Note from '../../note';
 import TextInput from '../../textInput';
 import Tooltip from '../../tooltip';
-import Backend from '../../projecteditor/control/backend';
 import UploadSettings from './UploadSettings';
 
 class UploadDialog extends Component {
@@ -42,24 +41,24 @@ class UploadDialog extends Component {
 
     ipfsSyncUp = () => {
         const { includeBuildInfo } = this.state.uploadSettings;
-        const { projectId } = this.props;
+        const { uploadToIPFS } = this.props;
 
         this.setState({
             uploading: true
         });
 
-        const backend = new Backend();
-        backend.ipfsSyncUp(projectId, includeBuildInfo)
-            .then(hash => {
-                this.setState({
-                    shareURL: document.location.href + '#/ipfs/' + hash
-                });
-            })
-            .catch(e => {
-                console.log(e);
-                alert('Error: Something went wrong when uploading to IPFS. Please try agin later.');
-            })
-            .finally(() => this.setState({ uploading: false }));
+        uploadToIPFS(includeBuildInfo);
+
+        // .then(hash => {
+        //     this.setState({
+        //         shareURL: document.location.href + '#/ipfs/' + hash
+        //     });
+        // })
+        // .catch(e => {
+        //     console.log(e);
+        //     alert('Error: Something went wrong when uploading to IPFS. Please try agin later.');
+        // })
+        // .finally(() => this.setState({ uploading: false }));
     }
 
     copyShareUrl = () => {
@@ -176,5 +175,5 @@ class UploadDialog extends Component {
 export default UploadDialog;
 
 UploadDialog.propTypes = {
-    projectId: PropTypes.number.isRequired
+    uploadToIPFS: PropTypes.func.isRequired
 }
