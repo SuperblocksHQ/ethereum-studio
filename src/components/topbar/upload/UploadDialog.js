@@ -32,20 +32,16 @@ import UploadSettings from './UploadSettings';
 class UploadDialog extends Component {
 
     state = {
-        keepState: false,
         uploading: false,
         shareURL: null,
-        showUploadSettings: false
-    }
-
-    onChange = (checked) => {
-        this.setState({
-            keepState: checked
-        });
+        showUploadSettings: false,
+        uploadSettings: {
+            includeBuildInfo: false
+        }
     }
 
     ipfsSyncUp = () => {
-        const { keepState } = this.state;
+        const { includeBuildInfo } = this.state.uploadSettings;
         const { projectId } = this.props;
 
         this.setState({
@@ -53,7 +49,7 @@ class UploadDialog extends Component {
         });
 
         const backend = new Backend();
-        backend.ipfsSyncUp(projectId, keepState)
+        backend.ipfsSyncUp(projectId, includeBuildInfo)
             .then(hash => {
                 this.setState({
                     shareURL: document.location.href + '#/ipfs/' + hash
@@ -154,7 +150,7 @@ class UploadDialog extends Component {
     }
 
     render() {
-        const { uploading, shareURL, showUploadSettings } = this.state;
+        const { uploading, shareURL, showUploadSettings, uploadSettings } = this.state;
         return (
             <div className={style.shareDialogContainer}>
                 { uploading ?
@@ -162,6 +158,7 @@ class UploadDialog extends Component {
                 :
                     showUploadSettings ?
                         <UploadSettings
+                            uploadSettings={uploadSettings}
                             onBackClicked={this.onUploadSettingsBackClicked}
                             onChange={this.onUploadSettingsChanged}
                         />

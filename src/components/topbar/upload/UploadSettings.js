@@ -24,7 +24,7 @@ import Switch from '../../switch';
 
 export default class UploadSettings extends Component {
     state = {
-        includeBuildInfo: false
+        includeBuildInfo: this.props.uploadSettings.includeBuildInfo,
     }
 
     onBackClicked = () => {
@@ -69,6 +69,7 @@ export default class UploadSettings extends Component {
 };
 
 UploadSettings.propTypes = {
+    uploadSettings: PropTypes.object.isRequired,
     onBackClicked: PropTypes.func.isRequired,
     onChange: PropTypes.func.isRequired
 }
