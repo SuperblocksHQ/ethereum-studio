@@ -39,10 +39,7 @@
         "id-blacklist": "error",
         "id-match": "error",
         "jsx-quotes": "error",
-        "linebreak-style": [
-            "error",
-            "unix"
-        ],
+        "linebreak-style": 0,
         "max-nested-callbacks": "error",
         "new-cap": "error",
         "new-parens": "error",
