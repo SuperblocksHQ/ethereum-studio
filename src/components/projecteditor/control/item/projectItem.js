@@ -279,6 +279,7 @@ export default class ProjectItem extends Item {
      */
     getItemByPath = (path, item) => {
         return new Promise((resolve, reject) => {
+            console.log(path);
             const filename = path.shift();
 
             item.getChildren(true, () => {

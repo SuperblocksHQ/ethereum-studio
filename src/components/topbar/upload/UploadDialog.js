@@ -158,7 +158,6 @@ class UploadDialog extends Component {
 
     render() {
         const { ipfs, showUploadSettings, uploadSettings } = this.state;
-        console.log(ipfs);
         return (
             <div className={style.shareDialogContainer}>
                 { ipfs.uploading ?

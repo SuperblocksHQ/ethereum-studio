@@ -43,11 +43,8 @@ export default class App extends Component {
             start_time: Date.now(),
         };
 
-        // Used to communicate between components, events is probably a better way of doing this.
-        this.router = {
-            register: this.register,
-        };
-
+        // Temp solution until we  get the router logic out
+        this.router = this.props.router;
         this.router.register('app', this);
 
         this.functions = {
@@ -134,10 +131,6 @@ export default class App extends Component {
 
     redraw = all => {
         this.forceUpdate();
-    };
-
-    register = (name, obj) => {
-        this.router[name] = obj;
     };
 
     _init = () => {
@@ -246,7 +239,7 @@ export default class App extends Component {
                     }
                 });
                 // We need to wait for control to be loaded.
-                // NOTE: 
+                // NOTE:
                 const fn = () => {
                     if (this.router.control) {
                         this.router.control.importProject(files);
@@ -419,6 +412,7 @@ export default class App extends Component {
 }
 
 App.propTypes = {
+    router: PropTypes.object.isRequired,
     showSplash: PropTypes.bool.isRequired,
     appVersion: PropTypes.string.isRequired,
     notifyAppStart: PropTypes.func.isRequired,
