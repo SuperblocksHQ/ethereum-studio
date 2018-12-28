@@ -4,6 +4,10 @@ import { ofType } from 'redux-observable';
 import { getSelectedProjectId } from '../../selectors/projects';
 import { ipfsActions, explorerActions } from '../../actions';
 
+const addTimeStamp = (shareURL) => {
+    return { shareURL: shareURL, timestamp: Date.now() }
+}
+
 const uploadToIPFS = (action$, state$, { backend }) => action$.pipe(
     ofType(ipfsActions.UPLOAD_TO_IPFS),
     withLatestFrom(state$),
@@ -13,18 +17,22 @@ const uploadToIPFS = (action$, state$, { backend }) => action$.pipe(
         return from(backend.ipfsSyncUp(projectId, includeBuildInfo))
         .pipe(
             map(hash => document.location.href + '#/ipfs/' + hash),
-            tap(shareURL => backend.saveFilePromise(projectId, {
+            map(addTimeStamp),
+            tap(({shareURL, timestamp}) => backend.saveFilePromise(projectId, {
                     path: '/.super/ipfs.json',
-                    contents: JSON.stringify({ timestamp: Date.now(), shareURL: shareURL })
+                    contents: JSON.stringify({ timestamp: timestamp, shareURL: shareURL })
                 })
                 .then(console.log('File Saved'))
                 .catch(e => console.log('[ERROR] Could not save the file.'))
             ),
-            mergeMap(shareURL => of(
+            mergeMap(({shareURL, timestamp}) => of(
                 explorerActions.redrawUI(),
-                ipfsActions.uploadToIPFSSuccess(shareURL))
+                ipfsActions.uploadToIPFSSuccess(timestamp, shareURL))
             ),
-            catchError(error => of(ipfsActions.uploadToIPFSFail(error)))
+            catchError(error => {
+                console.log(error);
+                return of(ipfsActions.uploadToIPFSFail(error))
+            })
         )
     })
 );

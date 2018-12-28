@@ -3,10 +3,12 @@ import { ipfsActions } from '../actions';
 export const initialState = {
     uploading: false,
     shareURL: null,
+    timestamp: null,
     error: null
 };
 
 export default function panesReducer(state = initialState, action) {
+    console.log(action.data);
     switch (action.type) {
         case ipfsActions.UPLOAD_TO_IPFS:
             return {
@@ -17,7 +19,8 @@ export default function panesReducer(state = initialState, action) {
             return {
                 ...state,
                 uploading: false,
-                shareURL: action.data
+                shareURL: action.data.shareURL,
+                timestamp: action.data.timestamp
             };
         case ipfsActions.UPLOAD_TO_IPFS_FAIL: {
             return {

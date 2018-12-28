@@ -7,10 +7,10 @@ export const ipfsActions = {
         };
     },
     UPLOAD_TO_IPFS_SUCCESS: 'UPLOAD_TO_IPFS_SUCCESS',
-    uploadToIPFSSuccess(shareURL) {
+    uploadToIPFSSuccess(timestamp, shareURL) {
         return {
             type: ipfsActions.UPLOAD_TO_IPFS_SUCCESS,
-            data: shareURL
+            data: { timestamp, shareURL }
         }
     },
     UPLOAD_TO_IPFS_FAIL: 'UPLOAD_TO_IPFS_FAIL',

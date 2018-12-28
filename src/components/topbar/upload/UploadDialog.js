@@ -34,6 +34,7 @@ class UploadDialog extends Component {
         ipfs: {
             uploading: this.props.ipfs.uploading,
             shareURL: this.props.ipfs.shareURL,
+            lastUploadTimestamp: this.props.ipfs.lastUploadTimestamp,
             error: this.props.ipfs.error
         },
         showUploadSettings: false,
@@ -55,17 +56,6 @@ class UploadDialog extends Component {
         const { uploadToIPFS } = this.props;
 
         uploadToIPFS(includeBuildInfo);
-
-        // .then(hash => {
-        //     this.setState({
-        //         shareURL: document.location.href + '#/ipfs/' + hash
-        //     });
-        // })
-        // .catch(e => {
-        //     console.log(e);
-        //     alert('Error: Something went wrong when uploading to IPFS. Please try agin later.');
-        // })
-        // .finally(() => this.setState({ uploading: false }));
     }
 
     copyShareUrl = () => {
@@ -125,7 +115,7 @@ class UploadDialog extends Component {
         );
     }
 
-    renderShareURL(shareURL) {
+    renderShareURL(shareURL, lastUploadTimestamp) {
         return (
             <div className={style.content}>
                 <img src={'/static/img/img-ipfs-logo.svg'} className={style.logo}/>
@@ -142,7 +132,7 @@ class UploadDialog extends Component {
                         </Tooltip>
                     </button>
                 </div>
-                <div className={style.lastUpdate}>Last Update: 23 seconds ago</div>
+                <div className={style.lastUpdate}>Last Update: {lastUploadTimestamp} seconds ago</div>
                 <div>
                     <button className="btn2" onClick={this.ipfsSyncUp}>New Upload</button>
                     <button className={classNames([style.uploadSettings, "btnNoBg"])} onClick={this.uploadSettingsClick}>
@@ -171,7 +161,7 @@ class UploadDialog extends Component {
                         />
                     :
                         ipfs.shareURL ?
-                            this.renderShareURL(ipfs.shareURL)
+                            this.renderShareURL(ipfs.shareURL, ipfs.lastUploadTimestamp)
                         :
                             this.renderDialog()
                 }

@@ -17,12 +17,13 @@
 import { connect } from 'react-redux';
 import { ipfsActions } from '../../../actions';
 import UploadDialog from './UploadDialog';
-import { getShareURL, getUploadToIPFSError, getUploadingToIPFS } from '../../../selectors/ipfs';
+import { getShareURL, getUploadToIPFSError, getUploadingToIPFS, getLastUploadTimestamp } from '../../../selectors/ipfs';
 
 const mapStateToProps = state => ({
     ipfs: {
         uploading: getUploadingToIPFS(state),
         shareURL: getShareURL(state),
+        lastUploadTimestamp: getLastUploadTimestamp(state),
         error: getUploadToIPFSError(state)
     }
 });
