@@ -1,4 +1,4 @@
-import { from, of } from 'rxjs';
+import { from, of, throwError } from 'rxjs';
 import { switchMap, withLatestFrom, map, catchError, tap, mergeMap } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import { getSelectedProjectId } from '../../selectors/projects';
@@ -22,8 +22,7 @@ const uploadToIPFS = (action$, state$, { backend }) => action$.pipe(
                     path: '/.super/ipfs.json',
                     contents: JSON.stringify({ timestamp: timestamp, shareURL: shareURL })
                 })
-                .then(console.log('File Saved'))
-                .catch(e => console.log('[ERROR] Could not save the file.'))
+                .catch(e => throwError('[ERROR] Could not save the file.'))
             ),
             mergeMap(({shareURL, timestamp}) => of(
                 explorerActions.redrawUI(),
