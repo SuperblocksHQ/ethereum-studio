@@ -21,10 +21,10 @@ export const ipfsActions = {
         }
     },
     RESTORE_IPFS_STATE_SUCCESS: 'RESTORE_IPFS_STATE_SUCCESS',
-    restoreIPFSStateSuccess(shareURL) {
+    restoreIPFSStateSuccess({ timestamp, shareURL }) {
         return {
             type: ipfsActions.RESTORE_IPFS_STATE_SUCCESS,
-            data: shareURL
+            data: { timestamp, shareURL }
         }
     },
     RESTORE_IPFS_STATE_FAIL: 'RESTORE_IPFS_STATE_FAIL',

@@ -4,7 +4,8 @@ import { ofType } from 'redux-observable';
 import { getSelectedProjectId } from '../../selectors/projects';
 import { ipfsActions, projectActions } from '../../actions';
 
-const extractShareURL = (ipfsFileObject) => {
+const extractInfo = (ipfsFileObject) => {
+    console.log(ipfsFileObject);
     return ipfsFileObject.shareURL;
 }
 
@@ -16,7 +17,7 @@ const restoreIPFSState = (action$, state$, { backend }) => action$.pipe(
         return from(backend.loadFilePromise(projectId, '/.super/ipfs.json'))
         .pipe(
             map(JSON.parse),
-            map(extractShareURL),
+            // map(extractInfo),
             map(ipfsActions.restoreIPFSStateSuccess),
             catchError(() => of(ipfsActions.restoreIPFSStateFail()))
         )

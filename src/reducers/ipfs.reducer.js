@@ -8,7 +8,6 @@ export const initialState = {
 };
 
 export default function panesReducer(state = initialState, action) {
-    console.log(action.data);
     switch (action.type) {
         case ipfsActions.UPLOAD_TO_IPFS:
             return {
@@ -19,8 +18,8 @@ export default function panesReducer(state = initialState, action) {
             return {
                 ...state,
                 uploading: false,
-                shareURL: action.data.shareURL,
-                timestamp: action.data.timestamp
+                timestamp: action.data.timestamp,
+                shareURL: action.data.shareURL
             };
         case ipfsActions.UPLOAD_TO_IPFS_FAIL: {
             return {
@@ -32,13 +31,15 @@ export default function panesReducer(state = initialState, action) {
         case ipfsActions.RESTORE_IPFS_STATE_SUCCESS: {
             return {
                 ...state,
-                shareURL: action.data
+                timestamp: action.data.timestamp,
+                shareURL: action.data.shareURL
             };
         }
         case ipfsActions.RESTORE_IPFS_STATE_FAIL: {
             return {
                 ...state,
-                shareURL: null
+                shareURL: null,
+                timestamp: null
             };
         }
         default:
