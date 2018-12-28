@@ -71,14 +71,17 @@ const UploadDrowdownAction = () => (
     </div>
 );
 
-const ForkDrowdownAction = () => (
-    <div className={style.action}>
-        <button className={classNames([style.container, 'btnNoBg'])}>
-            <IconFork />
-            <span>Fork</span>
-        </button>
-    </div>
-);
+const ForkDropdownAction = (props) => {
+    const { onForkClicked } = props;
+    return(
+        <div className={style.action}>
+            <button className={classNames([style.container, 'btnNoBg'])} onClick={onForkClicked}>
+                <IconFork />
+                <span>Fork</span>
+            </button>
+        </div>
+    )
+};
 
 const HelpDropdownDialog = () => (
     <div className={style.helpMenu}>
@@ -176,21 +179,21 @@ class ProjectDialog extends Component {
                 backend.unZip(evt.target.result).then( (project) => {
                     this.importProject3(project);
                 })
-                .catch( () => {
-                    console.log("Could not parse import as zip, trying JSON.");
-                    try {
-                        const obj = JSON.parse(evt.target.result);
-                        if (!obj.files) {
+                    .catch( () => {
+                        console.log("Could not parse import as zip, trying JSON.");
+                        try {
+                            const obj = JSON.parse(evt.target.result);
+                            if (!obj.files) {
+                                alert('Error: Invalid project file. Must be ZIP-file (or legacy JSON format).');
+                                return;
+                            }
+                            project = obj;
+                        } catch (e) {
                             alert('Error: Invalid project file. Must be ZIP-file (or legacy JSON format).');
                             return;
                         }
-                        project = obj;
-                    } catch (e) {
-                        alert('Error: Invalid project file. Must be ZIP-file (or legacy JSON format).');
-                        return;
-                    }
-                    this.importProject3(project);
-                });
+                        this.importProject3(project);
+                    });
 
             }
         };
@@ -449,7 +452,7 @@ export default class TopBar extends Component {
 
     onSettingsModalClose = () => {
         this.props.functions.modal.close();
-    }
+    };
 
     showPreferencesModal = () => {
         const modal = (
@@ -465,10 +468,12 @@ export default class TopBar extends Component {
                 return modal;
             }
         });
-    }
+    };
 
-    onForkClicked = () => {
-        console.log("Forked Clicked");
+    onForkClicked () {
+        // @todo determine whether own project or not
+        // @todo create new project if button is pushed
+        // @todo save locally if save button is pushed
     }
 
     render() {
@@ -489,13 +494,13 @@ export default class TopBar extends Component {
                     alt="Superblocks Lab logo"
                 />
                 <DropdownContainer
-                        className={style.actionHelp}
-                        dropdownContent={<UploadDialog />}
-                        enableClickInside={true}
+                    className={style.actionHelp}
+                    dropdownContent={<UploadDialog />}
+                    enableClickInside={true}
                 >
                     <UploadDrowdownAction />
                 </DropdownContainer>
-                <ForkDrowdownAction onClick={this.onForkClicked}/>
+                <ForkDropdownAction onForkClicked={this.onForkClicked}/>
                 <DropdownContainer
                     className={style.projectButton}
                     dropdownContent={
@@ -517,7 +522,7 @@ export default class TopBar extends Component {
                     <DropdownContainer
                         className={style.actionHelp}
                         dropdownContent={<HelpDropdownDialog />} >
-                            <HelpDropdownAction />
+                        <HelpDropdownAction />
                     </DropdownContainer>
                 </div>
             </div>
