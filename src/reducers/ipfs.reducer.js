@@ -26,6 +26,18 @@ export default function panesReducer(state = initialState, action) {
                 error: action.data
             };
         }
+        case ipfsActions.RESTORE_IPFS_STATE_SUCCESS: {
+            return {
+                ...state,
+                shareURL: action.data
+            };
+        }
+        case ipfsActions.RESTORE_IPFS_STATE_FAIL: {
+            return {
+                ...state,
+                shareURL: null
+            };
+        }
         default:
             return state;
     }

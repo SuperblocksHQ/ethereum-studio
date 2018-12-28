@@ -35,7 +35,6 @@ const router = {
     }
 };
 
-
 const { persistor, store } = configureStore(router);
 // persistor.purge(); // Debug to clear persist
 

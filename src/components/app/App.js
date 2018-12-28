@@ -43,7 +43,6 @@ export default class App extends Component {
             start_time: Date.now(),
         };
 
-        // Temp solution until we  get the router logic out
         this.router = this.props.router;
         this.router.register('app', this);
 

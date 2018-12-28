@@ -734,6 +734,21 @@ export default class Backend {
     };
 
     /**
+     * Like the newFile method but actually wrapped around a promise
+     */
+    saveFilePromise = (inode, payload) => {
+        return new Promise((resolve, reject) => {
+            this.saveFile(inode, payload, status => {
+                if (status === 0) {
+                    resolve(0);
+                } else {
+                    reject(status);
+                }
+            });
+        })
+    }
+
+    /**
      * Save the contents of a file within a project.
      *
      */
@@ -781,6 +796,22 @@ export default class Backend {
         }
         setTimeout(() => cb({ status: 0 }), 1);
     };
+
+
+    /**
+     * Like the loadFile method but actually wrapped around a promise
+     */
+    loadFilePromise = (inode, patch) => {
+        return new Promise((resolve, reject) => {
+            this.loadFile(inode, patch, ({ status, contents }) => {
+                if (status !== 0) {
+                    reject(status);
+                } else {
+                    resolve(contents);
+                }
+            });
+        })
+    }
 
     /**
      * Load the contents of a file within a project.

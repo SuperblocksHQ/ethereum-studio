@@ -19,5 +19,18 @@ export const ipfsActions = {
             type: ipfsActions.UPLOAD_TO_IPFS_FAIL,
             data: error
         }
+    },
+    RESTORE_IPFS_STATE_SUCCESS: 'RESTORE_IPFS_STATE_SUCCESS',
+    restoreIPFSStateSuccess(shareURL) {
+        return {
+            type: ipfsActions.RESTORE_IPFS_STATE_SUCCESS,
+            data: shareURL
+        }
+    },
+    RESTORE_IPFS_STATE_FAIL: 'RESTORE_IPFS_STATE_FAIL',
+    restoreIPFSStateFail() {
+        return {
+            type: ipfsActions.RESTORE_IPFS_STATE_FAIL,
+        }
     }
 }
