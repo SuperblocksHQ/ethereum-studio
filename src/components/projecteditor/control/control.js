@@ -90,7 +90,6 @@ export default class Control extends Component {
      *
      */
     redrawMain = redrawAll => {
-        console.log("redraw");
         this.props.router.main.redraw(redrawAll);
     };
 

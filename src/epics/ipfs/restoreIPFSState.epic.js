@@ -13,9 +13,9 @@ const restoreIPFSState = (action$, state$, { backend }) => action$.pipe(
         .pipe(
             map(JSON.parse),
             map(ipfsActions.restoreIPFSStateSuccess),
-            catchError((error) => {
-                console.log(error);
-                of(ipfsActions.restoreIPFSStateFail())
+            catchError(() => {
+                console.log("IPFS backup information not available");
+                return of(ipfsActions.restoreIPFSStateFail())
             })
         )
     })
