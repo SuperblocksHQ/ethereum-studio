@@ -26,7 +26,7 @@ import {
 import Note from '../../note';
 import TextInput from '../../textInput';
 import Tooltip from '../../tooltip';
-import UploadSettings from './UploadSettings';
+import UploadSettings from './settings';
 
 class UploadDialog extends Component {
 
@@ -39,7 +39,8 @@ class UploadDialog extends Component {
         },
         showUploadSettings: false,
         uploadSettings: {
-            includeBuildInfo: false
+            includeBuildInfo: false,
+            includeProjectConfig: false
         }
     }
 
@@ -52,10 +53,10 @@ class UploadDialog extends Component {
     }
 
     ipfsSyncUp = () => {
-        const { includeBuildInfo } = this.state.uploadSettings;
+        const { uploadSettings } = this.state;
         const { uploadToIPFS } = this.props;
 
-        uploadToIPFS(includeBuildInfo);
+        uploadToIPFS(uploadSettings);
     }
 
     copyShareUrl = () => {

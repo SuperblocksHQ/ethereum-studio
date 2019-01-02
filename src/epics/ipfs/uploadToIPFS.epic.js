@@ -13,8 +13,8 @@ const uploadToIPFS = (action$, state$, { backend }) => action$.pipe(
     withLatestFrom(state$),
     switchMap(([action, state]) => {
         const projectId = getSelectedProjectId(state);
-        const { includeBuildInfo } = action.data;
-        return from(backend.ipfsSyncUp(projectId, includeBuildInfo))
+        const { uploadSettings } = action.data;
+        return from(backend.ipfsSyncUp(projectId, uploadSettings))
         .pipe(
             map(hash => document.location.href + '#/ipfs/' + hash),
             map(addTimeStamp),
