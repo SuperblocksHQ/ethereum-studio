@@ -8,7 +8,15 @@ const addTimeStamp = (shareURL) => {
     return { shareURL: shareURL, timestamp: Date.now() }
 }
 
-const uploadToIPFS = (action$, state$, { backend }) => action$.pipe(
+/**
+ * This is needed becase atm the file explorer has no way to auto update itself when the
+ * underlying state has actually changed (per example by using the backend.js class)
+ */
+const updateFileSystemState = (project) => {
+    project.getChildren()[0].getChildren(true);
+}
+
+const uploadToIPFS = (action$, state$, { backend, router }) => action$.pipe(
     ofType(ipfsActions.UPLOAD_TO_IPFS),
     withLatestFrom(state$),
     switchMap(([action, state]) => {
@@ -24,10 +32,8 @@ const uploadToIPFS = (action$, state$, { backend }) => action$.pipe(
                 })
                 .catch(e => throwError('[ERROR] Could not save the file.'))
             ),
-            mergeMap(({shareURL, timestamp}) => of(
-                explorerActions.redrawUI(),
-                ipfsActions.uploadToIPFSSuccess(timestamp, shareURL))
-            ),
+            tap(() => updateFileSystemState(router.control.getActiveProject())),
+            map(({shareURL, timestamp}) => ipfsActions.uploadToIPFSSuccess(timestamp, shareURL)),
             catchError(error => {
                 console.log(error);
                 return of(ipfsActions.uploadToIPFSFail(error))
