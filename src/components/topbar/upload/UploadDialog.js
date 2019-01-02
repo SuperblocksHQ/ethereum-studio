@@ -32,7 +32,7 @@ class UploadDialog extends Component {
 
     state = {
         ipfs: {
-            uploading: true,
+            uploading: this.props.ipfs.uploading,
             shareURL: this.props.ipfs.shareURL,
             lastUploadTimestamp: this.props.ipfs.lastUploadTimestamp,
             error: this.props.ipfs.error
