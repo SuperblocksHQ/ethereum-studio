@@ -110,7 +110,15 @@ class UploadDialog extends Component {
         return(
             <div className={style.content}>
                 <img src={'/static/img/img-ipfs-logo.svg'} className={style.logo}/>
-                <div>Uploading...</div>
+                <div className={style.uploadingContainer}>
+                    <h3>Uploading project to IPFS</h3>
+                    <div className={style.loadBar}>
+                        <div className={style.bar}></div>
+                        <div className={style.bar}></div>
+                        <div className={style.bar}></div>
+                    </div>
+                    <div>You can keep working while your project is being uploaded.</div>
+                </div>
             </div>
         );
     }
