@@ -1,9 +1,14 @@
-import { from, of, throwError } from 'rxjs';
-import { switchMap, withLatestFrom, map, catchError, tap, mergeMap } from 'rxjs/operators';
+import { from, of } from 'rxjs';
+import { switchMap, withLatestFrom, map, catchError, tap } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import { getSelectedProjectId } from '../../selectors/projects';
-import { ipfsActions, explorerActions } from '../../actions';
+import { ipfsActions } from '../../actions';
 
+/**
+ * Add a timestamp to the upload object we are about to save in order to have the possibility to build a timeline
+ * of backups
+ * @param {string} shareURL The share URL given to the user
+ */
 const addTimeStamp = (shareURL) => {
     return { shareURL: shareURL, timestamp: Date.now() }
 }
@@ -26,11 +31,25 @@ const uploadToIPFS = (action$, state$, { backend, router }) => action$.pipe(
         .pipe(
             map(hash => document.location.href + '#/ipfs/' + hash),
             map(addTimeStamp),
-            tap(({shareURL, timestamp}) => backend.saveFilePromise(projectId, {
-                    path: '/.super/ipfs.json',
-                    contents: JSON.stringify({ timestamp: timestamp, shareURL: shareURL })
-                })
-                .catch(e => throwError('[ERROR] Could not save the file.'))
+            switchMap(({shareURL, timestamp}) => from(backend.loadFilePromise(projectId, '/.super/ipfs.json'))
+                .pipe(
+                    map(JSON.parse),
+                    catchError(() => of([])), // Make sure that if there is any error while reading the file (ex. does not exists), we can continue
+                    map(array => {
+                        // Keep the history from top to bottom (most recent in the beginning of the array)
+                        array.unshift({ timestamp: timestamp, shareURL: shareURL });
+                        return array;
+                    }),
+                    switchMap(array => from(backend.saveFilePromise(projectId, {
+                        path: '/.super/ipfs.json',
+                        contents: JSON.stringify(array)
+                    }))),
+                    catchError(error => {
+                        console.log(error);
+                        return of('Error saving the file ipfs.json file.')
+                    }),
+                    map(() => ({shareURL, timestamp})) // Finally simply return the original object we are interested on for the UI
+                )
             ),
             tap(() => updateFileSystemState(router.control.getActiveProject())),
             map(({shareURL, timestamp}) => ipfsActions.uploadToIPFSSuccess(timestamp, shareURL)),

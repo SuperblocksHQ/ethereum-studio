@@ -395,10 +395,10 @@ export default class Backend {
     newFilePromise = (inode, patch, file) => {
         return new Promise((resolve, reject) => {
             this.newFile(inode, patch, file, status => {
-                if (status === 0) {
-                    resolve(0);
-                } else {
+                if (status !== 0) {
                     reject(status);
+                } else {
+                    resolve();
                 }
             });
         })
@@ -738,7 +738,7 @@ export default class Backend {
      */
     saveFilePromise = (inode, payload) => {
         return new Promise((resolve, reject) => {
-            this.saveFile(inode, payload, status => {
+            this.saveFile(inode, payload, ({ status }) => {
                 if (status !== 0) {
                     reject(status);
                 } else {
