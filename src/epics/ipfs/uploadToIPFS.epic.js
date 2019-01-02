@@ -52,7 +52,7 @@ const uploadToIPFS = (action$, state$, { backend, router }) => action$.pipe(
                 )
             ),
             tap(() => updateFileSystemState(router.control.getActiveProject())),
-            map(({shareURL, timestamp}) => ipfsActions.uploadToIPFSSuccess(timestamp, shareURL)),
+            map(ipfsActions.uploadToIPFSSuccess),
             catchError(error => {
                 console.log(error);
                 return of(ipfsActions.uploadToIPFSFail(error))
