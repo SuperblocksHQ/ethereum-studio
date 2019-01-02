@@ -33,7 +33,7 @@ export default class App extends Component {
     state = {
         modals: [],
         isReady: false
-    }
+    };
 
     constructor(props) {
         super(props);
@@ -43,11 +43,7 @@ export default class App extends Component {
             start_time: Date.now(),
         };
 
-        // Used to communicate between components, events is probably a better way of doing this.
-        this.router = {
-            register: this.register,
-        };
-
+        this.router = this.props.router;
         this.router.register('app', this);
 
         this.functions = {
@@ -136,19 +132,14 @@ export default class App extends Component {
         this.forceUpdate();
     };
 
-    register = (name, obj) => {
-        this.router[name] = obj;
-    };
-
     _init = () => {
         let { showSplash, appVersion } = this.props;
         const modalData = {
             title: 'Loading Superblocks Lab',
             body:
-                'Initializing Wallet, Solidity compiler and Ethereum Virtual Machine...',
+                'Initializing Wallet and Ethereum Virtual Machine...',
             style: { textAlign: 'center' },
         };
-        var walletSeeded = false;
         const modal = <Modal data={modalData} />;
         this.functions.modal.show({
             cancel: () => {
@@ -161,22 +152,8 @@ export default class App extends Component {
         this.functions.compiler = new Solc({ id: this.generateId() });
         this.functions.EVM = new EVM({ id: this.generateId() });
 
-        // Need to init the compiler and EVM
-        this.functions.compiler.init();
-        this.functions.EVM.init();
-
-        this.functions.wallet.openWallet(
-            'development',
-            this.knownWalletSeed,
-            () => {
-                walletSeeded = true;
-            }
-        );
-
         const fn = () => {
-            if (this.functions.compiler.isReady()
-                && this.functions.EVM.isReady()
-                && walletSeeded) {
+            if (this.functions.compiler && this.functions.EVM) {
                 console.log('Superblocks Lab ' + appVersion + ' Ready.');
 
                 this.functions.modal.close();
@@ -261,7 +238,7 @@ export default class App extends Component {
                     }
                 });
                 // We need to wait for control to be loaded.
-                // NOTE: 
+                // NOTE:
                 const fn = () => {
                     if (this.router.control) {
                         this.router.control.importProject(files);
@@ -417,6 +394,7 @@ export default class App extends Component {
                                 key="projedit"
                                 router={this.router}
                                 functions={this.functions}
+                                knownWalletSeed={this.knownWalletSeed}
                             />
                             <OnlyIf test={showTrackingAnalyticsDialog}>
                                 <AnalyticsDialog />
@@ -433,6 +411,7 @@ export default class App extends Component {
 }
 
 App.propTypes = {
+    router: PropTypes.object.isRequired,
     showSplash: PropTypes.bool.isRequired,
     appVersion: PropTypes.string.isRequired,
     notifyAppStart: PropTypes.func.isRequired,

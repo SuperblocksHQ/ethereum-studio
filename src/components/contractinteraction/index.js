@@ -374,7 +374,7 @@ var render = function(abi, contract) {
                     for(var index=0;index<item.outputs.length;index++) {
                         var output=item.outputs[index];
                         var id2=id+"_output_"+index;
-                        var value = res.length != 0 ? res.toString() : "(NO DATA)";
+                        var value = res.length != 0 && res[index] ? res[index].toString() : "(NO DATA)";
                         var elm = document.getElementById(id2);
                         if (elm) elm.textContent=value;
                     }

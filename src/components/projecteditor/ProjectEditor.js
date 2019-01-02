@@ -29,8 +29,9 @@ export default class ProjectEditor extends Component {
     state = {
         controlPanelWidth: 280,
         minSize: 280,
-        dragging: false
-    }
+        dragging: false,
+        EVMInit: false
+    };
 
     constructor(props) {
         super(props);
@@ -64,7 +65,26 @@ export default class ProjectEditor extends Component {
             document.removeEventListener('mousemove', this.onMouseMove);
             document.removeEventListener('mouseup', this.onMouseUp);
         }
-    }
+        // if project is present, init EVM if not already initialized
+        if(this.props.router.control.getActiveProject() && !this.state.EVMInit){
+            this.initEVM()
+        }
+    };
+
+    initEVM = () => {
+        this.setState({
+            EVMInit: true
+        }, () => {
+            // open wallet & start EVM
+            this.props.functions.wallet.openWallet(
+                'development',
+                this.props.knownWalletSeed,
+                () => {
+                    this.props.functions.EVM.init();
+                }
+            );
+        })
+    };
 
     redraw = all => {
         if (this.props.router.control) {
@@ -77,7 +97,7 @@ export default class ProjectEditor extends Component {
             this.props.router.panes.redraw(all);
         }
         this.forceUpdate();
-    }
+    };
 
     onMouseMove = e => {
         e.stopPropagation();
@@ -98,7 +118,7 @@ export default class ProjectEditor extends Component {
         } else {
             this.onMouseUp(e);
         }
-    }
+    };
 
     onMouseUp = e => {
         e.stopPropagation();
@@ -129,7 +149,7 @@ export default class ProjectEditor extends Component {
         this.setState({
             controlPanelWidth: minSize
         });
-    }
+    };
 
     onShowHideTransactionsClicked = () => {
         const { toggleTransactionsHistoryPanel } = this.props;

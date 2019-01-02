@@ -19,11 +19,11 @@ PORT=3000
 endif
 
 ifndef ORIGIN_DEV
-ORIGIN_DEV=http://localhost:$(PORT)
+ORIGIN_DEV=localhost:$(PORT)
 endif
 
 ifndef ORIGIN_DIST
-ORIGIN_DIST=https://studio.superblocks.com
+ORIGIN_DIST=lab.superblocks.com
 endif
 
 watch: build_external_dev

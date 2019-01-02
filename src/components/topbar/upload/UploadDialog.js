@@ -26,44 +26,40 @@ import {
 import Note from '../../note';
 import TextInput from '../../textInput';
 import Tooltip from '../../tooltip';
-import Backend from '../../projecteditor/control/backend';
 import UploadSettings from './UploadSettings';
 
 class UploadDialog extends Component {
 
     state = {
-        uploading: false,
-        shareURL: null,
+        ipfs: {
+            uploading: this.props.ipfs.uploading,
+            shareURL: this.props.ipfs.shareURL,
+            lastUploadTimestamp: this.props.ipfs.lastUploadTimestamp,
+            error: this.props.ipfs.error
+        },
         showUploadSettings: false,
         uploadSettings: {
             includeBuildInfo: false
         }
     }
 
+    componentDidUpdate(prevProps) {
+        if (prevProps.ipfs !== this.props.ipfs) {
+            this.setState({
+                ipfs: {...this.props.ipfs}
+            });
+        }
+    }
+
     ipfsSyncUp = () => {
         const { includeBuildInfo } = this.state.uploadSettings;
-        const { projectId } = this.props;
+        const { uploadToIPFS } = this.props;
 
-        this.setState({
-            uploading: true
-        });
-
-        const backend = new Backend();
-        backend.ipfsSyncUp(projectId, includeBuildInfo)
-            .then(hash => {
-                this.setState({
-                    shareURL: document.location.href + '#/ipfs/' + hash
-                });
-            })
-            .catch(e => {
-                console.log(e);
-                alert('Error: Something went wrong when uploading to IPFS. Please try agin later.');
-            })
-            .finally(() => this.setState({ uploading: false }));
+        uploadToIPFS(includeBuildInfo);
     }
 
     copyShareUrl = () => {
-        const { shareURL } = this.state;
+        const { shareURL } = this.state.ipfs;
         copy(shareURL);
     }
 
@@ -119,12 +115,13 @@ class UploadDialog extends Component {
         );
     }
 
-    renderShareURL(shareURL) {
+    renderShareURL(shareURL, lastUploadTimestamp) {
         return (
             <div className={style.content}>
                 <img src={'/static/img/img-ipfs-logo.svg'} className={style.logo}/>
                 <div className={style.share}>
                     <TextInput
+                        id="share-project"
                         label="Share your project"
                         defaultValue={shareURL}
                         disabled={true}
@@ -135,8 +132,7 @@ class UploadDialog extends Component {
                         </Tooltip>
                     </button>
                 </div>
-                <div className={style.lastUpdate}>Last Update: 23 seconds ago</div>
-                <div>
+                <div className={style.newUploadContainer}>
                     <button className="btn2" onClick={this.ipfsSyncUp}>New Upload</button>
                     <button className={classNames([style.uploadSettings, "btnNoBg"])} onClick={this.uploadSettingsClick}>
                         <Tooltip title="Upload Settings">
@@ -150,10 +146,10 @@ class UploadDialog extends Component {
     }
 
     render() {
-        const { uploading, shareURL, showUploadSettings, uploadSettings } = this.state;
+        const { ipfs, showUploadSettings, uploadSettings } = this.state;
         return (
             <div className={style.shareDialogContainer}>
-                { uploading ?
+                { ipfs.uploading ?
                     this.renderUploading()
                 :
                     showUploadSettings ?
@@ -163,8 +159,8 @@ class UploadDialog extends Component {
                             onChange={this.onUploadSettingsChanged}
                         />
                     :
-                        shareURL ?
-                            this.renderShareURL(shareURL)
+                        ipfs.shareURL ?
+                            this.renderShareURL(ipfs.shareURL, ipfs.lastUploadTimestamp)
                         :
                             this.renderDialog()
                 }
@@ -176,5 +172,6 @@ class UploadDialog extends Component {
 export default UploadDialog;
 
 UploadDialog.propTypes = {
-    projectId: PropTypes.number.isRequired
+    ipfs: PropTypes.object.isRequired,
+    uploadToIPFS: PropTypes.func.isRequired
 }

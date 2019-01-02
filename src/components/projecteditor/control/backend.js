@@ -390,10 +390,26 @@ export default class Backend {
     };
 
     /**
+     * Like the newFile method but actually wrapped around a promise
+     */
+    newFilePromise = (inode, patch, file) => {
+        return new Promise((resolve, reject) => {
+            this.newFile(inode, patch, file, status => {
+                if (status === 0) {
+                    resolve(0);
+                } else {
+                    reject(status);
+                }
+            });
+        })
+    }
+
+    /**
      * Create a new file for a project.
      *
      */
     newFile = (inode, path, file, cb) => {
+        console.log(file);
         const data =
             JSON.parse(localStorage.getItem(DAPP_FORMAT_VERSION)) || {};
 
@@ -718,6 +734,21 @@ export default class Backend {
     };
 
     /**
+     * Like the newFile method but actually wrapped around a promise
+     */
+    saveFilePromise = (inode, payload) => {
+        return new Promise((resolve, reject) => {
+            this.saveFile(inode, payload, status => {
+                if (status !== 0) {
+                    reject(status);
+                } else {
+                    resolve();
+                }
+            });
+        })
+    }
+
+    /**
      * Save the contents of a file within a project.
      *
      */
@@ -765,6 +796,22 @@ export default class Backend {
         }
         setTimeout(() => cb({ status: 0 }), 1);
     };
+
+
+    /**
+     * Like the loadFile method but actually wrapped around a promise
+     */
+    loadFilePromise = (inode, patch) => {
+        return new Promise((resolve, reject) => {
+            this.loadFile(inode, patch, ({ status, contents }) => {
+                if (status !== 0) {
+                    reject(status);
+                } else {
+                    resolve(contents);
+                }
+            });
+        })
+    }
 
     /**
      * Load the contents of a file within a project.
@@ -1039,7 +1086,6 @@ export default class Backend {
 
             fn(node, "").then( () => {
                 ipfs.files.add(files, {onlyHash: false, wrapWithDirectory: true}).then( (res) => {
-                    console.log(res);
                     const hash = res.filter( (obj) => {
                         if (obj.path === "") return true;
                     })[0].hash;

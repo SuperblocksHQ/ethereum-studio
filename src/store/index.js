@@ -7,29 +7,43 @@ import thunk from 'redux-thunk';
 import migrations from './migrations';
 import reducers from '../reducers';
 import { epics } from '../epics';
-
+import Backend from '../components/projecteditor/control/backend';
 
 // Redux Persist config
 const config = {
     key: 'root',
     storage,
     version: 4,
-    blacklist: ['app', 'view', 'panes'],
+    blacklist: ['app', 'view', 'panes', 'ipfs', 'explorer'],
     migrate: createMigrate(migrations, { debug: true })
 };
 
 const reducer = persistCombineReducers(config, reducers);
-const rootEpic = combineEpics(...epics);
-const epicMiddleware = createEpicMiddleware();
 
-const middleware = [
-    thunk,
-    epicMiddleware
-];
+
+const configureMiddleware = (router) => {
+    const rootEpic = combineEpics(...epics);
+    const epicMiddleware = createEpicMiddleware({
+        dependencies: {
+            backend: new Backend(),
+            router: router
+        }
+    });
+
+    const middleware = [
+        thunk,
+        epicMiddleware
+    ];
+
+    return { middleware, epicMiddleware, rootEpic };
+}
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const configureStore = () => {
+const configureStore = (router) => {
+
+    const { middleware, epicMiddleware, rootEpic } = configureMiddleware(router);
+
     const store = createStore(
         reducer,
         composeEnhancers(

@@ -70,6 +70,13 @@ export default class Control extends Component {
         });
     }
 
+    componentDidUpdate(prevProps) {
+        if (prevProps.redrawUI != this.props.redrawUI) {
+            this.redraw();
+            this.redrawMain(true);
+        }
+    }
+
     /**
      * Redraw this component.
      *
@@ -593,9 +600,7 @@ export default class Control extends Component {
     );
 
     render() {
-        //const item=this._renderItem(0, 0, this.state.menu);
         const item = this.state.menu.render();
-        //item.key="controltree";
         return (
             <div className="full">
                 <div className={style.treemenu}>

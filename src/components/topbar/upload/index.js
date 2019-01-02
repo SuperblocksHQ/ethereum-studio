@@ -15,11 +15,25 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { connect } from 'react-redux';
-import { getSelectedProjectId } from '../../../selectors/projects';
+import { ipfsActions } from '../../../actions';
 import UploadDialog from './UploadDialog';
+import { getShareURL, getUploadToIPFSError, getUploadingToIPFS, getLastUploadTimestamp } from '../../../selectors/ipfs';
 
 const mapStateToProps = state => ({
-    projectId: getSelectedProjectId(state),
+    ipfs: {
+        uploading: getUploadingToIPFS(state),
+        shareURL: getShareURL(state),
+        lastUploadTimestamp: getLastUploadTimestamp(state),
+        error: getUploadToIPFSError(state)
+    }
 });
 
-export default connect(mapStateToProps, null)(UploadDialog);
+function mapDispatchToProps(dispatch) {
+    return {
+        uploadToIPFS: (includeBuildInfo) => {
+            dispatch(ipfsActions.uploadToIPFS(includeBuildInfo))
+        }
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(UploadDialog);

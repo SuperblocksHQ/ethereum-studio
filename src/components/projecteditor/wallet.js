@@ -15,8 +15,8 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { Component } from 'react';
-import classNames from 'classnames';
-import lightwallet from 'eth-lightwallet/dist/lightwallet.min.js';
+
+const walletLight = () => import(/* webpackChunkName: "lightwallet" */ 'eth-lightwallet/dist/lightwallet.min.js');
 
 export class WalletDialog extends Component {
     constructor(props) {
@@ -30,12 +30,18 @@ export class Wallet {
         this.wallets = {};
     }
 
-    static generateSeed() {
+    static async generateSeed() {
+        const asyncWallet = await walletLight();
+        const lightwallet = asyncWallet.default;
         return lightwallet.keystore.generateRandomSeed();
     }
 
-    _newWallet = (name, seed, hdpath, cb) => {
+    _newWallet = async (name, seed, hdpath, cb) => {
         hdpath = hdpath || "m/44'/60'/0'/0";
+
+        const asyncWallet = await walletLight();
+        const lightwallet = asyncWallet.default;
+
         try {
             const words = seed.split(' ');
             if (
