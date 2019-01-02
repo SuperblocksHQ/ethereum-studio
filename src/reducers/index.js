@@ -4,7 +4,6 @@ import settings from './settings.reducer';
 import view from './view.reducer';
 import panes from './panes.reducer';
 import ipfs from './ipfs.reducer';
-import explorer from './explorer.reducer';
 
 const rehydrated = (state = false, action) => {
     switch (action.type) {
@@ -22,6 +21,5 @@ export default {
     projects,
     view,
     panes,
-    ipfs,
-    explorer
+    ipfs
 };

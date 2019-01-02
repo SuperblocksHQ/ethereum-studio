@@ -70,13 +70,6 @@ export default class Control extends Component {
         });
     }
 
-    componentDidUpdate(prevProps) {
-        if (prevProps.redrawUI != this.props.redrawUI) {
-            this.redraw();
-            this.redrawMain(true);
-        }
-    }
-
     /**
      * Redraw this component.
      *
