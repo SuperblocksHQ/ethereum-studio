@@ -44,12 +44,12 @@ const uploadToIPFS = (action$, state$, { backend, router }) => action$.pipe(
             switchMap(({shareURL, timestamp}) => from(backend.loadFilePromise(projectId, '/.super/ipfs.json'))
                 .pipe(
                     map(JSON.parse),
-                    catchError(() => of([])), // Make sure that if there is any error while reading the file (ex. does not exists), we can continue
                     map(array => {
                         // Keep the history from top to bottom (most recent in the beginning of the array)
                         array.unshift({ timestamp: timestamp, shareURL: shareURL });
                         return array;
                     }),
+                    catchError(() => of([])), // Make sure that if there is any error while reading the file (ex. does not exists), we can continue
                     switchMap(array => from(backend.saveFilePromise(projectId, {
                         path: '/.super/ipfs.json',
                         contents: JSON.stringify(array)
