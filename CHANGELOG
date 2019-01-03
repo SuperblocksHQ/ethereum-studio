@@ -1,5 +1,11 @@
 # Superblocks Lab - Change log
 
+## [1.4.2]
+
+* Fix: Hostname for App view domain #319
+* Fix: Amplitude setup for production #317
+
+
 ## [1.4.1]
 
 * Improvement: App view running on separate subdomain #303
