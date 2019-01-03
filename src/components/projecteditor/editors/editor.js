@@ -91,11 +91,30 @@ export default class Editor extends Component {
 
     save = e => {
         if (e) e.preventDefault();
+        const routerControl = this.props.router.control;
         this.props.item
             .save()
             .then(() => {
-                // Trigger other windows to refresh.
-                this.props.parent.props.parent.props.parent.redraw();
+                // if save action is triggered, move temporary to normal projects
+                if (routerControl.getActiveProject().getInode() === 1) {
+                    routerControl.backend.assignNewInode(1, () => {
+                        routerControl._loadProjects(() => {
+                            routerControl._closeProject(status => {
+                                if (status == 0) {
+                                    // Open last project
+                                    routerControl.openProject(
+                                        routerControl._projectsList[
+                                        routerControl._projectsList.length - 1
+                                            ]
+                                    );
+                                }
+                            });
+                        });
+                    });
+                } else {
+                    // Trigger other windows to refresh.
+                    this.props.parent.props.parent.props.parent.redraw();
+                }
             })
             .catch(() => {
                 alert('Error: Could not save file.');
