@@ -102,7 +102,7 @@ export default class Control extends Component {
                 lightProjects.map(lightProject => {
                     const exists =
                         this._projectsList.filter(project => {
-                            if (project.getInode() == lightProject.inode) {
+                            if (project.getInode() === lightProject.inode ) {
                                 projectsList.push(project);
                                 return true;
                             }
@@ -188,6 +188,11 @@ export default class Control extends Component {
         if (this.getActiveProject() === project) {
             if (cb) cb(0);
             return;
+        }
+
+        // if we switch from temporary project, discard it
+        if (this.getActiveProject() && this.getActiveProject().getInode() === 1) {
+            this.props.router.control.backend.deleteProject(1, () => {});
         }
 
         this._closeProject(status => {
@@ -384,7 +389,7 @@ export default class Control extends Component {
         if (cb) cb(1);
     };
 
-    importProject = files => {
+    importProject = (files, isTemporary) => {
         const cb = status => {
             if (status == 0) {
                 this._loadProjects(() => {
@@ -404,7 +409,7 @@ export default class Control extends Component {
             }
         };
 
-        this.props.router.control.backend.createProject(files, cb);
+        this.props.router.control.backend.createProject(files, cb, isTemporary);
     };
 
     deleteProject = (project, cb) => {
