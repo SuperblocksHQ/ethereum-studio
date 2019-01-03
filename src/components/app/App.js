@@ -241,7 +241,7 @@ export default class App extends Component {
                 // NOTE:
                 const fn = () => {
                     if (this.router.control) {
-                        this.router.control.importProject(files);
+                        this.router.control.importProject(files, true);
                         resolve();
                     }
                     else {
