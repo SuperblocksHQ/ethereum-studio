@@ -27,7 +27,6 @@ const paneDimensions = {
     onlyHeight: {
         height: '50%',
     }
-    
 }
 
 export class PaneComponent extends Component {
