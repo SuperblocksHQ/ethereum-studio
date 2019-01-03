@@ -88,7 +88,7 @@ export default class AppView extends Component {
         if (window.location.hostname === 'localhost') {
             iframe.src = `${window.location.protocol}//${window.location.host}/app-view.html`;
         } else {
-            iframe.src = `${window.location.protocol}//lab-dapp.${window.location.host}/app-view.html`;
+            iframe.src = `${window.location.protocol}//${window.location.host.replace('lab', 'lab-dapp')}/app-view.html`;
         }
         this.iframeDiv.appendChild(iframe);
         this.iframe = iframe;
