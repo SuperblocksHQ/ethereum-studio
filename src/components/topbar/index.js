@@ -500,7 +500,9 @@ export default class TopBar extends Component {
                 >
                     <UploadDrowdownAction />
                 </DropdownContainer>
-                <ForkDropdownAction onForkClicked={this.onForkClicked}/>
+                <ForkDropdownAction
+                    onForkClicked={this.onForkClicked}
+                />
                 <DropdownContainer
                     className={style.projectButton}
                     dropdownContent={
