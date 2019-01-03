@@ -26,7 +26,7 @@ import {
 import Note from '../../note';
 import TextInput from '../../textInput';
 import Tooltip from '../../tooltip';
-import UploadSettings from './UploadSettings';
+import UploadSettings from './settings';
 
 class UploadDialog extends Component {
 
@@ -39,7 +39,8 @@ class UploadDialog extends Component {
         },
         showUploadSettings: false,
         uploadSettings: {
-            includeBuildInfo: false
+            includeBuildInfo: false,
+            includeProjectConfig: false
         }
     }
 
@@ -52,10 +53,10 @@ class UploadDialog extends Component {
     }
 
     ipfsSyncUp = () => {
-        const { includeBuildInfo } = this.state.uploadSettings;
+        const { uploadSettings } = this.state;
         const { uploadToIPFS } = this.props;
 
-        uploadToIPFS(includeBuildInfo);
+        uploadToIPFS(uploadSettings);
     }
 
     copyShareUrl = () => {
@@ -110,7 +111,15 @@ class UploadDialog extends Component {
         return(
             <div className={style.content}>
                 <img src={'/static/img/img-ipfs-logo.svg'} className={style.logo}/>
-                <div>Uploading...</div>
+                <div className={style.uploadingContainer}>
+                    <h3>Uploading project to IPFS</h3>
+                    <div className={style.loadBar}>
+                        <div className={style.bar}></div>
+                        <div className={style.bar}></div>
+                        <div className={style.bar}></div>
+                    </div>
+                    <div>You can keep working while your project is being uploaded.</div>
+                </div>
             </div>
         );
     }

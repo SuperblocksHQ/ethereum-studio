@@ -395,10 +395,10 @@ export default class Backend {
     newFilePromise = (inode, patch, file) => {
         return new Promise((resolve, reject) => {
             this.newFile(inode, patch, file, status => {
-                if (status === 0) {
-                    resolve(0);
-                } else {
+                if (status !== 0) {
                     reject(status);
+                } else {
+                    resolve();
                 }
             });
         })
@@ -738,7 +738,7 @@ export default class Backend {
      */
     saveFilePromise = (inode, payload) => {
         return new Promise((resolve, reject) => {
-            this.saveFile(inode, payload, status => {
+            this.saveFile(inode, payload, ({ status }) => {
                 if (status !== 0) {
                     reject(status);
                 } else {
@@ -1018,7 +1018,7 @@ export default class Backend {
      * Upload the given project to IPFS.
      *
      */
-    ipfsSyncUp = (inode, keepState) => {
+    ipfsSyncUp = (inode, { includeBuildInfo, includeProjectConfig }) => {
         return new Promise( (resolve, reject) => {
             const data =
                 JSON.parse(localStorage.getItem(DAPP_FORMAT_VERSION)) || {};
@@ -1034,8 +1034,11 @@ export default class Backend {
                 return;
             }
 
-            const ipfs = new IPFS({ host: 'ipfs.infura.io', port: 5001,
-                protocol: 'https' });
+            const ipfs = new IPFS({
+                    host: 'ipfs.infura.io',
+                    port: 5001,
+                    protocol: 'https'
+                });
 
             const files = [];
 
@@ -1043,10 +1046,14 @@ export default class Backend {
 
             const fn = (node, path) => {
                 return new Promise( (resolve) => {
-                    if (path == "build/" && !keepState) {
+                    if (path === 'build/' && !includeBuildInfo) {
+                        resolve();
+                        return;
+                    } else if (path === '.super/' && !includeProjectConfig) {
                         resolve();
                         return;
                     }
+
                     if (node.children) {
                         const childrenKeys = Object.keys(node.children);
                         const fn2 = () => {

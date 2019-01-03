@@ -30,8 +30,8 @@ const mapStateToProps = state => ({
 
 function mapDispatchToProps(dispatch) {
     return {
-        uploadToIPFS: (includeBuildInfo) => {
-            dispatch(ipfsActions.uploadToIPFS(includeBuildInfo))
+        uploadToIPFS: (uploadSettings) => {
+            dispatch(ipfsActions.uploadToIPFS(uploadSettings))
         }
     };
 }

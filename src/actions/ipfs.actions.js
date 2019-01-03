@@ -1,13 +1,13 @@
 export const ipfsActions = {
     UPLOAD_TO_IPFS: 'UPLOAD_TO_IPFS',
-    uploadToIPFS(includeBuildInfo) {
+    uploadToIPFS(uploadSettings) {
         return {
             type: ipfsActions.UPLOAD_TO_IPFS,
-            data: { includeBuildInfo }
+            data: { uploadSettings }
         };
     },
     UPLOAD_TO_IPFS_SUCCESS: 'UPLOAD_TO_IPFS_SUCCESS',
-    uploadToIPFSSuccess(timestamp, shareURL) {
+    uploadToIPFSSuccess({ timestamp, shareURL }) {
         return {
             type: ipfsActions.UPLOAD_TO_IPFS_SUCCESS,
             data: { timestamp, shareURL }

@@ -16,15 +16,17 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import style from './style.uploadsettings.less';
+import style from './style.less';
 import {
     IconBack
-} from '../../icons';
-import Switch from '../../switch';
+} from '../../../icons';
+import Switch from '../../../switch';
 
 export default class UploadSettings extends Component {
+
     state = {
         includeBuildInfo: this.props.uploadSettings.includeBuildInfo,
+        includeProjectConfig: this.props.uploadSettings.includeProjectConfig,
     }
 
     onBackClicked = () => {
@@ -34,6 +36,7 @@ export default class UploadSettings extends Component {
     onIncludeBuildChange = (checked) => {
         const { onChange } = this.props;
         const newState = {
+            ...this.state,
             includeBuildInfo: checked
         }
         this.setState(newState);
@@ -42,8 +45,20 @@ export default class UploadSettings extends Component {
         onChange(newState);
     }
 
+    onIncludeProjectConfigChange = (checked) => {
+        const { onChange } = this.props;
+        const newState = {
+            ...this.state,
+            includeProjectConfig: checked
+        }
+        this.setState(newState);
+
+        // Make sure to notify also the parent
+        onChange(newState);
+    }
+
     render() {
-        const { includeBuildInfo } = this.state;
+        const { includeBuildInfo, includeProjectConfig } = this.state;
         return (
             <div className={style.container}>
                 <div className={style.header}>
@@ -55,10 +70,22 @@ export default class UploadSettings extends Component {
                 <div className={style.buildInfo}>
                     <div className={style.title}>Include build information</div>
                     <div className={style.descContainer}>
-                        <div className={style.description}>This will upload the content of your build folder</div>
+                        <div className={style.description}>This will upload the content of your build folder.</div>
                         <Switch
+                            className={style.switch}
                             checked={includeBuildInfo}
                             onChange={this.onIncludeBuildChange}
+                        />
+                    </div>
+                </div>
+                <div className={style.buildInfo}>
+                    <div className={style.title}>Upload project settings</div>
+                    <div className={style.descContainer}>
+                        <div className={style.description}>This will upload the content of your .super folder which contain project specific settings.</div>
+                        <Switch
+                            className={style.switch}
+                            checked={includeProjectConfig}
+                            onChange={this.onIncludeProjectConfigChange}
                         />
                     </div>
                 </div>

@@ -38,5 +38,5 @@ export default Switch;
 Switch.propTypes = {
     checked: PropTypes.bool.isRequired,
     onChange: PropTypes.func.isRequired,
-    className: PropTypes.object
+    className: PropTypes.string
 }

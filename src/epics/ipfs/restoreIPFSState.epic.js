@@ -1,5 +1,5 @@
 import { from, of } from 'rxjs';
-import { switchMap, withLatestFrom, map, catchError } from 'rxjs/operators';
+import { switchMap, withLatestFrom, map, catchError, first, tap } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import { getSelectedProjectId } from '../../selectors/projects';
 import { ipfsActions, projectActions } from '../../actions';
@@ -11,7 +11,8 @@ const restoreIPFSState = (action$, state$, { backend }) => action$.pipe(
         const projectId = getSelectedProjectId(state);
         return from(backend.loadFilePromise(projectId, '/.super/ipfs.json'))
         .pipe(
-            map(JSON.parse),
+            switchMap(file => from(JSON.parse(file))),
+            first(),
             map(ipfsActions.restoreIPFSStateSuccess),
             catchError(() => {
                 console.log("IPFS backup information not available");
