@@ -23,9 +23,11 @@ import Backend from './backend';
 import NewDapp from '../../newdapp';
 import NetworkAccountSelector from '../../networkAccountSelector';
 import LearnAndResources from '../../learnAndResources';
+import {toast} from 'react-toastify';
 
 import {
     IconCube,
+    IconInformation
 } from '../../icons';
 
 export default class Control extends Component {
@@ -401,6 +403,9 @@ export default class Control extends Component {
                                     this._projectsList.length - 1
                                 ]
                             );
+                            toast(<ForkSuccessMessage />, {
+                                className: style.toastBody
+                            });
                         }
                     });
                 });
@@ -609,6 +614,13 @@ export default class Control extends Component {
         );
     }
 }
+
+const ForkSuccessMessage = () => (
+    <div className={style.messageContainer}>
+        <IconInformation/>
+        Project Forked!
+    </div>
+);
 
 Control.propTypes = {
     appVersion: PropTypes.string.isRequired,
