@@ -389,6 +389,26 @@ export default class Backend {
         return newProject;
     };
 
+    // Add a new inode number to the project
+    assignNewInode = (inode, cb) => {
+        const data =
+            JSON.parse(localStorage.getItem(DAPP_FORMAT_VERSION)) || {};
+        if (!data.projects) data.projects = [];
+
+        const projects = data.projects.map(project => {
+            if (project.inode === inode) {
+                project.inode = this.generateRandomInode();
+                return project;
+            } else {
+                return project;
+            }
+        });
+
+        data.projects = projects;
+        localStorage.setItem(DAPP_FORMAT_VERSION, JSON.stringify(data));
+        cb();
+    };
+
     /**
      * Like the newFile method but actually wrapped around a promise
      */
@@ -709,19 +729,60 @@ export default class Backend {
         setTimeout(() => cb(0, projects), 1);
     };
 
-    createProject = (files, cb) => {
+    // get Files belonging to a given inode
+    getProjectFiles = (inode, cb) => {
+        const data =
+            JSON.parse(localStorage.getItem(DAPP_FORMAT_VERSION)) || {};
+        if (!data.projects) data.projects = [];
+
+        const project = data.projects.filter(item => {
+            return item.inode === inode;
+        });
+
+        if(project.length){
+            // project is not empty
+            cb(project[0].files);
+        } else {
+            console.error("Project with given inode doesn't exist");
+        }
+
+    };
+
+    createProject = (files, cb, isTemporary) => {
         const data =
             JSON.parse(localStorage.getItem(DAPP_FORMAT_VERSION)) || {};
 
         if (!data.projects) data.projects = [];
 
-        const inode = Math.floor(Math.random() * 10000000);
-        // TODO: check if project with this inode already exists.
-        const project = {
+        let inode = 1;
+
+        if (!isTemporary) {
+            // smallest random number to be generated is 2, 1 is reserved
+            inode = this.generateRandomInode();
+        }
+
+        let project = {
             inode: inode,
             files: files,
         };
-        data.projects.push(project);
+
+        // check if project with given inode already exists.
+         if (this.isDuplicateInode(data.projects, inode)) {
+
+             if (isTemporary) {
+                 // if duplicate with inode == 1, overwrite
+                 data.projects = data.projects.filter(function( project ) {
+                     return project.inode !== inode;
+                 });
+                 data.projects.push(project);
+             } else {
+                 // generate new inode
+                 project.inode = this.generateRandomInode();
+             }
+         } else {
+             data.projects.push(project);
+         }
+
         try {
             localStorage.setItem(DAPP_FORMAT_VERSION, JSON.stringify(data));
         }
@@ -856,6 +917,14 @@ export default class Backend {
             );
         else setTimeout(() => cb({ status: 1 }), 1);
     };
+
+    isDuplicateInode (projects, inode) {
+       return projects.find((project) => project.inode === inode);
+    }
+
+    generateRandomInode() {
+        return Math.floor(Math.random() * 10000000 + 2);
+    }
 
     downloadProject = (item, keepState) => {
         const exportName = 'superblocks_project_' + item.getName() + '.zip';
