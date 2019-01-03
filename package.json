@@ -114,6 +114,7 @@
     "react-splitter-layout": "^3.0.1",
     "react-switch": "^3.0.4",
     "react-tippy": "^1.2.3",
+    "react-toastify": "^4.5.2",
     "redux": "^4.0.0",
     "redux-observable": "^1.0.0",
     "redux-persist": "^5.10.0",
