@@ -28,7 +28,8 @@ import {
  * be limited to this file instead
  */
 
-export const AMPLITUDE_KEY = process.env.NODE_ENV === 'development' ? '1889a5439f9ff971ee38b86964e337a5' : null;
+// Make sure we disable analytics in development
+export const AMPLITUDE_KEY = process.env.NODE_ENV === 'development' ? null : '1889a5439f9ff971ee38b86964e337a5';
 
 export function setEnable(enabled) {
     amplitude.getInstance().setOptOut(!enabled);
