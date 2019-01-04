@@ -27,9 +27,10 @@ import EVM from '../evm';
 import Networks from '../../networks';
 import AnalyticsDialog from '../analyticsDialog';
 import OnlyIf from '../onlyIf';
-import { ToastContainer } from 'react-toastify';
+import {toast, ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import {IconClose} from "../icons";
+import {ProjectLoadedSuccess} from "../toasts/Toasts";
 
 export default class App extends Component {
 
@@ -240,6 +241,9 @@ export default class App extends Component {
                     if (this.router.control) {
                         this.router.control.importProject(files, true);
                         resolve();
+                        toast(<ProjectLoadedSuccess />, {
+                            className: "toastBody"
+                        });
                     }
                     else {
                         setTimeout( fn, 100);

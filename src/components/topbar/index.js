@@ -38,6 +38,8 @@ import {
     IconFork
 } from '../icons';
 import Dappfile from '../projecteditor/control/item/dappfileItem';
+import {toast} from "react-toastify";
+import {ForkSuccessMessage} from "../toasts/Toasts";
 
 const PreferencesAction = () => (
     <div className={style.action}>
@@ -491,6 +493,9 @@ export default class TopBar extends Component {
                                     routerControl._projectsList.length - 1
                                         ]
                                 );
+                                toast(<ForkSuccessMessage />, {
+                                    className: "toastBody"
+                                });
                             }
                         });
                     });
@@ -502,7 +507,9 @@ export default class TopBar extends Component {
                     routerControl.backend.getProjectFiles(inode, (files) => {
                         routerControl.importProject(files, false);
                     });
-
+                    toast(<ForkSuccessMessage />, {
+                        className: "toastBody"
+                    });
                 }
 
             }

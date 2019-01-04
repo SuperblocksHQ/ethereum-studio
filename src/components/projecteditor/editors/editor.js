@@ -25,6 +25,8 @@ import {
     IconInteract,
 } from '../../icons';
 import Tooltip from '../../tooltip';
+import {toast} from "react-toastify";
+import {ForkSuccessMessage} from "../../toasts/Toasts";
 
 export default class Editor extends Component {
     constructor(props) {
@@ -107,6 +109,9 @@ export default class Editor extends Component {
                                         routerControl._projectsList.length - 1
                                             ]
                                     );
+                                    toast(<ForkSuccessMessage />, {
+                                        className: "toastBody"
+                                    });
                                 }
                             });
                         });
