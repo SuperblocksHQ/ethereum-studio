@@ -17,7 +17,6 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-
 import Backend from '../projecteditor/control/backend';
 import Modal from '../modal';
 import ProjectEditor from '../projecteditor';
@@ -28,9 +27,7 @@ import Networks from '../../networks';
 import AnalyticsDialog from '../analyticsDialog';
 import OnlyIf from '../onlyIf';
 import {toast, ToastContainer} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.min.css';
-import {IconClose} from "../icons";
-import {ProjectLoadedSuccess} from "../toasts/Toasts";
+import {CloseButton, ProjectLoadedSuccess} from "../toasts";
 
 export default class App extends Component {
 
@@ -400,21 +397,19 @@ export default class App extends Component {
                             <OnlyIf test={showTrackingAnalyticsDialog}>
                                 <AnalyticsDialog />
                             </OnlyIf>
-                            <div>
-                                <ToastContainer
-                                    position="bottom-right"
-                                    className={"toastContainer"}
-                                    autoClose={3000}
-                                    hideProgressBar
-                                    newestOnTop={false}
-                                    closeOnClick
-                                    rtl={false}
-                                    pauseOnVisibilityChange
-                                    draggable
-                                    pauseOnHover={false}
-                                    closeButton={<CloseButton />}
-                                />
-                            </div>
+                            <ToastContainer
+                                position="bottom-right"
+                                className={"toastContainer"}
+                                autoClose={6000}
+                                hideProgressBar
+                                newestOnTop={false}
+                                closeOnClick
+                                rtl={false}
+                                pauseOnVisibilityChange
+                                draggable
+                                pauseOnHover={false}
+                                closeButton={<CloseButton />}
+                            />
                         </OnlyIf>
                     </div>
                 </div>
@@ -425,12 +420,6 @@ export default class App extends Component {
         );
     }
 }
-
-const CloseButton = ({ closeToast }) => (
-        <button className={classNames(["closeIcon", "btnNoBg"])} onClick={closeToast}>
-            <IconClose className={"icon"}/>
-        </button>
-);
 
 App.propTypes = {
     router: PropTypes.object.isRequired,

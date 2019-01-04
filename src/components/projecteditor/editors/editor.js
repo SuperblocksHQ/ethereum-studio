@@ -26,7 +26,7 @@ import {
 } from '../../icons';
 import Tooltip from '../../tooltip';
 import {toast} from "react-toastify";
-import {ForkSuccessMessage} from "../../toasts/Toasts";
+import {ForkSuccessMessage} from "../../toasts";
 
 export default class Editor extends Component {
     constructor(props) {

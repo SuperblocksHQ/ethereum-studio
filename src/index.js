@@ -24,6 +24,7 @@ import { AnalyticsProvider, Analytics, LogOnMount } from './utils/analytics';
 
 // Load generic CSS
 import './style/index.less';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 // TODO - Components
 // import Loading from './components/Loading';
