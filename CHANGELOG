@@ -1,5 +1,19 @@
 # Superblocks Lab - Change log
 
+## [1.4.2]
+
+* Fix: Hostname for App view domain #319
+* Fix: Amplitude setup for production #317
+
+
+## [1.4.1]
+
+* Improvement: App view running on separate subdomain #303
+* Improvement: Reduce initial loading time #306
+* Fix: Incorrect tuple rendering output in the Interact window #308
+* Fix: Unable to close split window #291
+
+
 ## [1.4.0]
 
 + Addition: Anonymous amplitude tracking #305

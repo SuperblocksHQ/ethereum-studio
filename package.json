@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
+    "build:beta": "sh -ac '. .env.beta; node scripts/build.js'",
     "test": "mocha ./test/*.js && jest",
     "test:watch": "npm test -- --watch",
     "format": "prettier --trailing-comma es5 --single-quote --write 'src/*/*.js' 'src/*/!(node_modules)/**/*.js' '!src/components/solc/**/*.js' '!src/components/evm/**/*.js' webpack.config.js",
@@ -36,7 +37,7 @@
     "chalk": "2.4.1",
     "copy-webpack-plugin": "^4.5.4",
     "css-loader": "1.0.0",
-    "dotenv": "6.0.0",
+    "dotenv": "6.2.0",
     "dotenv-expand": "4.2.0",
     "eslint": "5.6.0",
     "eslint-config-react-app": "^3.0.4",
