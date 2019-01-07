@@ -397,7 +397,7 @@ export default class Backend {
 
         const projects = data.projects.map(project => {
             if (project.inode === inode) {
-                project.inode = this.generateRandomInode();
+                project.inode = this.generateRandomInode(projects);
                 return project;
             } else {
                 return project;
@@ -429,7 +429,6 @@ export default class Backend {
      *
      */
     newFile = (inode, path, file, cb) => {
-        console.log(file);
         const data =
             JSON.parse(localStorage.getItem(DAPP_FORMAT_VERSION)) || {};
 
@@ -757,8 +756,8 @@ export default class Backend {
         let inode = 1;
 
         if (!isTemporary) {
-            // smallest random number to be generated is 2, 1 is reserved
-            inode = this.generateRandomInode();
+            // smallest random number to be generated is 2, 1 is reserved for temporary projects
+            inode = this.generateRandomInode(data.projects);
         }
 
         let project = {
@@ -777,7 +776,7 @@ export default class Backend {
                  data.projects.push(project);
              } else {
                  // generate new inode
-                 project.inode = this.generateRandomInode();
+                 project.inode = this.generateRandomInode(data.projects);
              }
          } else {
              data.projects.push(project);
@@ -922,8 +921,14 @@ export default class Backend {
        return projects.find((project) => project.inode === inode);
     }
 
-    generateRandomInode() {
-        return Math.floor(Math.random() * 10000000 + 2);
+    generateRandomInode(projects) {
+        let inode = 0;
+        do {
+            inode = Math.floor(Math.random() * 10000000 + 2);
+        }
+        while (this.isDuplicateInode(projects, inode));
+
+        return inode;
     }
 
     downloadProject = (item, keepState) => {
