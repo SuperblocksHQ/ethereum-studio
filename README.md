@@ -36,17 +36,17 @@ yarn install
 
 ### Run in development mode
 ```sh
-make
+yarn start
 ```
 
-Browse to `http://localhost:8181`. Note that if you use any other hostname/IP than `localhost`, then instead run `ORIGIN_DEV=http://127.0.0.1 make`, this is important so that the iframes can communicate with the main window.
+Browse to `http://localhost:3000`. Note that if you use any other hostname/IP than `localhost`, then instead run update 'ORIGIN' value in 'env.development', this is important so that the iframes can communicate with the main window.
 
 ### Make a production build
 ```sh
-make dist
+yarn build
 ```
 
-The dist files will be inside `./dist`.
+The dist files will be inside `./dist`. Note that the this command uses production version of ".env" file, so in order to test it locally please create a ".env.local" with proper ORIGIN variable value prior to build.
 
 ### Bumping version
 Set the new version both in `app.js` and in `manifest.json`.
