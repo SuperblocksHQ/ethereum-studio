@@ -397,7 +397,7 @@ export default class Backend {
 
         const projects = data.projects.map(project => {
             if (project.inode === inode) {
-                project.inode = this.generateRandomInode(projects);
+                project.inode = this.generateRandomInode(data.projects);
                 return project;
             } else {
                 return project;
