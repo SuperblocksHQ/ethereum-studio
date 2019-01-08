@@ -181,7 +181,6 @@ export default class App extends Component {
                 // TODO: pop modal about importing being processed.
 
                 this._importFromIpfs(a[1]).then( () => {
-                    this._stripIpfsHash();
                     // TODO Close modal about processing import
                     resolve(1);  // 1 means do not show splash
                 });
@@ -190,13 +189,6 @@ export default class App extends Component {
                 resolve(0);
             }
         });
-    };
-
-    /**
-     * Strip the url from the dash and everything following it.
-     */
-    _stripIpfsHash = () => {
-        history.pushState({}, '', '/');
     };
 
     _importFromIpfs = (hash) => {
@@ -251,6 +243,7 @@ export default class App extends Component {
             })
             .catch( () => {
                 alert("Error: Could not import project.");
+                this.props.router.control.backend._stripIpfsHash();
                 resolve();
                 return;
             });
