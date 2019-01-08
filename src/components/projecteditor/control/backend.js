@@ -755,7 +755,15 @@ export default class Backend {
 
         let inode = 1;
 
-        if (!isTemporary) {
+        if (isTemporary) {
+            if (this.isDuplicateInode(data.projects, inode)) {
+                // if duplicate with inode == 1, overwrite
+                data.projects = data.projects.filter(function( project ) {
+                    return project.inode !== inode;
+                });
+            }
+        }
+        else {
             // smallest random number to be generated is 2, 1 is reserved for temporary projects
             inode = this.generateRandomInode(data.projects);
         }
@@ -765,22 +773,7 @@ export default class Backend {
             files: files,
         };
 
-        // check if project with given inode already exists.
-         if (this.isDuplicateInode(data.projects, inode)) {
-
-             if (isTemporary) {
-                 // if duplicate with inode == 1, overwrite
-                 data.projects = data.projects.filter(function( project ) {
-                     return project.inode !== inode;
-                 });
-                 data.projects.push(project);
-             } else {
-                 // generate new inode
-                 project.inode = this.generateRandomInode(data.projects);
-             }
-         } else {
-             data.projects.push(project);
-         }
+        data.projects.push(project);
 
         try {
             localStorage.setItem(DAPP_FORMAT_VERSION, JSON.stringify(data));
@@ -920,6 +913,13 @@ export default class Backend {
     isDuplicateInode (projects, inode) {
        return projects.find((project) => project.inode === inode);
     }
+
+    /**
+     * Strip the url from the dash and everything following it.
+     */
+    _stripIpfsHash = () => {
+        history.pushState({}, '', '/');
+    };
 
     generateRandomInode(projects) {
         let inode = 0;
