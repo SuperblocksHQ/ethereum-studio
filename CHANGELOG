@@ -1,5 +1,10 @@
 # Superblocks Lab - Change log
 
+## [1.4.3]
+
+* Change: ORIGIN variable in the make file #323
+
+
 ## [1.4.2]
 
 * Fix: Hostname for App view domain #319
