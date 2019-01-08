@@ -54,7 +54,7 @@ export default class Control extends Component {
         this.state = {
             activeProject: null,
             menu: menu
-        }
+        };
 
         props.router.register('control', this);
     }
@@ -62,7 +62,7 @@ export default class Control extends Component {
     componentDidMount() {
         this._loadProjects(status => {
             if (status == 0) {
-                if (!this._openLastProject()) {
+                if (!this._openLastProject() && this.props.isImportedProject === false) {
                     this._showWelcome();
                 }
             }

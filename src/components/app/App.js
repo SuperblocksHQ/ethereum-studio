@@ -39,6 +39,7 @@ export default class App extends Component {
     constructor(props) {
         super(props);
         this.idCounter = 0;
+        this.isImportedProject = false;
 
         this.session = {
             start_time: Date.now(),
@@ -179,7 +180,7 @@ export default class App extends Component {
             const a = document.location.href.match("^.*#/ipfs/(.+)$");
             if (a) {
                 // TODO: pop modal about importing being processed.
-
+                this.isImportedProject = true;
                 this._importFromIpfs(a[1]).then( () => {
                     // TODO Close modal about processing import
                     resolve(1);  // 1 means do not show splash
@@ -386,6 +387,7 @@ export default class App extends Component {
                                 router={this.router}
                                 functions={this.functions}
                                 knownWalletSeed={this.knownWalletSeed}
+                                isImportedProject={this.isImportedProject}
                             />
                             <OnlyIf test={showTrackingAnalyticsDialog}>
                                 <AnalyticsDialog />
