@@ -180,7 +180,11 @@ class AccountDropdown extends Component {
                             <button
                                 className="btnNoBg"
                                 onClick={e => {
-                                    this.props.onAccountEdit(e, index);
+                                    if (this.props.functions.EVM.isReady()) {
+                                        this.props.onAccountEdit(e, index);
+                                    } else {
+                                        console.log("EVM is not ready!");
+                                    }
                                 }}
                             >
                                 <Tooltip title="Edit Account">
@@ -471,6 +475,7 @@ class AccountSelector extends Component {
                         onAccountEdit={this.accountEdit}
                         onAccountDelete={this.accountDelete}
                         onNewAccountClicked={this.onNewAccountClickHandle}
+                        functions={this.props.functions}
                     />
                 }
             >
