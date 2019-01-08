@@ -109,6 +109,8 @@ export default class Editor extends Component {
                                         routerControl._projectsList.length - 1
                                             ]
                                     );
+                                    routerControl.backend._stripIpfsHash();
+                                    this.props.router.control.backenddeleteProject(1, () => {});
                                     toast(<ForkSuccessMessage />, {
                                         className: "toastBody"
                                     });

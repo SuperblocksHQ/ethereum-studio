@@ -101,7 +101,7 @@ export default class Control extends Component {
                 lightProjects.map(lightProject => {
                     const exists =
                         this._projectsList.filter(project => {
-                            if (project.getInode() === lightProject.inode ) {
+                            if (project.getInode() === lightProject.inode && lightProject.inode !== 1) {
                                 projectsList.push(project);
                                 return true;
                             }
@@ -135,7 +135,7 @@ export default class Control extends Component {
         let { selectedProjectId } = this.props;
         let found = false;
         this._projectsList.forEach(project => {
-            if (selectedProjectId && selectedProjectId === project.getInode()) {
+            if (selectedProjectId && selectedProjectId === project.getInode() && selectedProjectId !== 1) {
                 this.openProject(project);
                 found = true;
             }
@@ -270,6 +270,8 @@ export default class Control extends Component {
                                     this._projectsList.length - 1
                                 ]
                             );
+                            this.props.router.control.backend._stripIpfsHash();
+                            this.props.router.control.backend.deleteProject(1, () => {});
                         }
                     });
                 });

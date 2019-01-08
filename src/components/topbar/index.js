@@ -124,6 +124,8 @@ class ProjectDialog extends Component {
     openProject = (e, project, cb) => {
         this.props.router.control.openProject(project, cb);
         this.props.onProjectSelected();
+        this.props.router.control.backend._stripIpfsHash();
+        this.props.router.control.backend.deleteProject(1, () => {});
     };
 
     openProjectConfig = (e, project) => {
@@ -163,6 +165,8 @@ class ProjectDialog extends Component {
         document.body.appendChild(uploadAnchorNode); // required for firefox
         uploadAnchorNode.click();
         uploadAnchorNode.remove();
+        this.props.router.control.backend._stripIpfsHash();
+        this.props.router.control.backend.deleteProject(1, () => {});
     };
 
     importProject2 = e => {
@@ -493,6 +497,8 @@ export default class TopBar extends Component {
                                     routerControl._projectsList.length - 1
                                         ]
                                 );
+                                routerControl.backend._stripIpfsHash();
+                                routerControl.backend.deleteProject(1, () => {})
                                 toast(<ForkSuccessMessage />, {
                                     className: "toastBody"
                                 });
@@ -502,7 +508,7 @@ export default class TopBar extends Component {
                 });
             } else {
                 // own project
-                if (confirm('Are you sure that you want to fork your own project?')) {
+                if (confirm('Are you sure you want to fork your own project?')) {
                     // create copy of own project
                     routerControl.backend.getProjectFiles(inode, (files) => {
                         routerControl.importProject(files, false);
