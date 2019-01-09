@@ -17,7 +17,8 @@
 @import '../../style/index';
 
 .projecteditor {
-    display: block;
+    display: flex;
+    flex-direction: column;
     width: 100%;
     height: 100%;
     &:after {
@@ -25,7 +26,9 @@
         display: block;
         clear: both;
     }
+
     .control {
+        width: 100%;
         overflow: hidden;
         position: relative;
         float: left;
@@ -33,19 +36,25 @@
         height: 100%;
         flex: 0 0 auto;
         background-color: #252525;
-        padding-bottom: 105px;
+        padding-bottom: 50px;
         border-right: 1px solid #121516;
     }
-    .panescontainer {
-        position: absolute;
-        float: left;
-        display: block;
-        height: 100%;
-        width: 100%;
-        right: 0;
+    .mainWrapper {
+        position: relative;
+        flex: 1;
         padding-right: 45px;
+    }
+    .mainLayout {
+        position: relative;
+        widows: 100%;
+        height: 100%;
+    }
+    .panescontainer {
         background-color: #1E1E1E;
+        height: 100%;
         display: flex;
+        flex-direction: column;
+
         .header {
             -webkit-touch-callout: none;
             -webkit-user-select: none;
@@ -123,12 +132,9 @@
         }
         .panes {
             width: 100%;
-            height: 100%;
-            /*&:after {*/
-                /*content: " ";*/
-                /*display: block;*/
-                /*clear: both;*/
-            /*}*/
+            flex: 1;
+            overflow: hidden;
+
             .pane {
                 display: none;
                 &.visible {
@@ -161,40 +167,12 @@
             }
         }
     }
-    .actionContainer {
-        position: absolute;
-        top: 0;
-        right: 45px;
-        bottom: 0;
-        width: 450px;
-        background-color: #272727;
-        border-left: 1px solid #121516;
-        .header {
-            background-color: #141618;
-            display: flex;
-            align-content: center;
-            align-items: center;
-            height: 38px;
-            padding: 9px;
-            .panelIcon {
-                color: #fff;
-                margin-left: 7px;
-                margin-right: 10px;
-            }
-            .title {
-                color: #fff;
-                font-weight: 600;
-            }
-            .icon {
-                margin-left: auto;
-                color: #c7c7c7;
-                &:hover {
-                    color: white;
-                }
-            }
-        }
+
+    .sidePanelContainer {
+        position: relative;
     }
-    .actionPanel {
+    
+    .sideButtonsContainer {
         position: absolute;
         right: 0;
         top: 0;
@@ -202,25 +180,29 @@
         background-color: #1C2022;
         width: 45px;
         border-left: 1px solid #121516;
-        .actions {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            .action {
-                border-right: 2px solid;
-                border-color: transparent;
-                padding: 10px;
-                transition: all 0.3s ease;
-                &:hover {
-                    background-color:rgba(64, 169, 243, 0.1);
-                    cursor: pointer;
-                    border-color: @primary-color;
-                }
+    }
+    .sideButtonWrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .sideButton {
+            border-right: 2px solid;
+            border-color: transparent;
+            padding: 10px;
+            transition: all 0.3s ease;
+
+            &:hover {
+                background-color:rgba(64, 169, 243, 0.1);
+                cursor: pointer;
+                border-color: @primary-color;
             }
         }
     }
+
     .verticalText{
         writing-mode: vertical-rl;
         text-orientation: mixed;
+        margin-top: 2px;
     }
 }

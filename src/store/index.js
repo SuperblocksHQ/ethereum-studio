@@ -1,7 +1,6 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import { createMigrate, persistStore, persistCombineReducers } from 'redux-persist';
-import { createEpicMiddleware } from 'redux-observable';
-import { combineEpics } from 'redux-observable';
+import { createEpicMiddleware, combineEpics } from 'redux-observable';
 import storage from 'redux-persist/lib/storage'; // default: localStorage if web
 import thunk from 'redux-thunk';
 import migrations from './migrations';
@@ -14,7 +13,7 @@ const config = {
     key: 'root',
     storage,
     version: 4,
-    blacklist: ['app', 'view', 'panes'],
+    blacklist: ['app', 'sidePanels', 'panes'],
     migrate: createMigrate(migrations, { debug: true })
 };
 

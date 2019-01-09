@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import styleNormal from './style-normal.less';
 import styleSmall from './style-small.less';
 import Web3 from 'web3';
-import { IconRun } from '../icons';
+import { IconRun } from '../../../icons';
 
 export default class RenderTransactions {
     constructor(txlog, renderSmall, redrawFn) {

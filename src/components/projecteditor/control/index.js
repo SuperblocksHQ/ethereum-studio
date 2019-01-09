@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 import Control from './control';
 import { getAppVersion } from '../../../selectors/app';
 import { getSelectedProjectId } from '../../../selectors/projects';
-import { selectProject, explorerActions } from '../../../actions';
-import { closeAllPanels } from '../../../actions/view';
+import { selectProject, explorerActions, sidePanelsActions } from '../../../actions';
 
 const mapStateToProps = state => ({
     appVersion: getAppVersion(state),
@@ -17,7 +16,7 @@ const mapDispatchToProps = dispatch => {
             dispatch(selectProject(id, name));
         },
         closeAllPanels: () => {
-            dispatch(closeAllPanels())
+            dispatch(sidePanelsActions.closeAllPanels())
         },
         renameFile: (id, name) => {
             dispatch(explorerActions.renameFile(id, name));
