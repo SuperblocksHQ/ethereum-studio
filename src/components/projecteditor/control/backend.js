@@ -409,6 +409,23 @@ export default class Backend {
         cb();
     };
 
+    // Add additional text to dappfile when forking
+    modifyDappFile(files) {
+        let root = files['/'].children;
+
+        let dappfile = JSON.parse(root['dappfile.json'].contents);
+
+        let title =  dappfile.project.info.title;
+
+        dappfile.project.info.title = `${title} copy`;
+
+        let contents = JSON.stringify(dappfile);
+
+        root["dappfile.json"].contents = contents;
+
+        return files;
+    }
+
     /**
      * Like the newFile method but actually wrapped around a promise
      */

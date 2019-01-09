@@ -511,7 +511,8 @@ export default class TopBar extends Component {
                 if (confirm('Are you sure you want to fork your own project?')) {
                     // create copy of own project
                     routerControl.backend.getProjectFiles(inode, (files) => {
-                        routerControl.importProject(files, false);
+                        let modifiedFiles = routerControl.backend.modifyDappFile(files);
+                        routerControl.importProject(modifiedFiles, false);
                     });
                     toast(<ForkSuccessMessage />, {
                         className: "toastBody"
