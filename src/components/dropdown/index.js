@@ -29,39 +29,44 @@ export class DropdownContainer extends Component {
         super(props);
 
         this.state = {
-            showMenu: false,
+            menuVisible: false,
         };
     }
 
     showMenu = () => {
-        this.setState({ showMenu: true });
+        this.setState({ menuVisible: true });
+    };
+
+    toggleMenu = (e) => {
+        e.stopPropagation();
+        this.setState((state) => ({ menuVisible: !state.menuVisible }));
     };
 
     closeMenu = e => {
         e.stopPropagation();
-        this.setState({ showMenu: false });
+        this.setState({ menuVisible: false });
     };
 
     render() {
-        let { dropdownContent, useRightClick, ...props } = this.props;
+        const { dropdownContent, useRightClick, ...props } = this.props;
+        let main;
+
         if (useRightClick) {
-            var main = (
-                <div onContextMenu={this.showMenu}>{this.props.children}</div>
-            );
+            main = <div onContextMenu={this.showMenu}>{this.props.children}</div>;
         } else {
-            var main = <div onClick={this.showMenu}>{this.props.children}</div>;
+            main = <div className="ignore-react-onclickoutside" onClick={this.toggleMenu}>{this.props.children}</div>;
         }
+
         return (
             <div {...props}>
                 {main}
-                {this.state.showMenu ? (
-                    <Dropdown
-                        handleClickOutside={this.closeMenu}
-                        handleClickInside={this.closeMenu}
-                    >
-                        {dropdownContent}
-                    </Dropdown>
-                ) : null}
+                { this.state.menuVisible &&
+                <Dropdown
+                    handleClickOutside={this.closeMenu}
+                    handleClickInside={this.closeMenu}
+                >
+                    {dropdownContent}
+                </Dropdown> }
             </div>
         );
     }
