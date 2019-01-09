@@ -25,6 +25,7 @@ import { Wallet } from '../projecteditor/wallet';
 import Solc from '../solc';
 import EVM from '../evm';
 import Networks from '../../networks';
+import { previewService } from '../../services';
 import AnalyticsDialog from '../analyticsDialog';
 import OnlyIf from '../onlyIf';
 
@@ -159,6 +160,8 @@ export default class App extends Component {
         });
         this.functions.compiler = new Solc({ id: this.generateId() });
         this.functions.EVM = new EVM({ id: this.generateId() });
+
+        previewService.init(this.functions.wallet);
 
         const fn = () => {
             if (this.functions.compiler && this.functions.EVM) {

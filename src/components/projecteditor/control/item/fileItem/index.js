@@ -621,75 +621,9 @@ export default class FileItem extends Item {
                             { item.getTitle() }
                         </a>
                     </div>
-                    <div className={style.buttonsWrapper}>
-                        <div className={style.buttons}>
-                            <button className="btnNoBg" onClick={(e)=>{ item._openAppPreview(e, item)} } title="Show Preview">
-                                <Tooltip title="Show Preview">
-                                    <IconShowPreview />
-                                </Tooltip>
-                            </button>
-                            <button className="btnNoBg" onClick={(e)=>{ item._openAppComposite(e, item)} } title="Mosaic View">
-                                <Tooltip title="Show Mosaic">
-                                    <IconMosaic />
-                                </Tooltip>
-                            </button>
-                        </div>
-                    </div>
                 </div>
             </div>
         );
-    };
-
-    _openAppPreview = (e, item) => {
-        e.stopPropagation();
-        e.preventDefault();
-
-        const view = item.getProject().getHiddenItem('app_preview');
-
-        if(this.router.panes) this.router.panes.openItem(view);
-    };
-
-    _openAppComposite = (e, item) => {
-        e.stopPropagation();
-        e.preventDefault();
-
-        const html = item.getProject().getItemByPath(['app.html'], item);
-        const css = item.getProject().getItemByPath(['app.css'], item);
-        const js = item.getProject().getItemByPath(['app.js'], item);
-        const view = item.getProject().getHiddenItem('app_preview');
-        Promise.all([html, js, css, view])
-            .then(a => {
-                if (this.router.panes) {
-                    for (let index = 0; index < a.length; index++) {
-                        var item = a[index];
-                        var { pane, winId } = this.router.panes.getWindowByItem(
-                            a[0]
-                        );
-                    }
-                    if (!winId) {
-                        this.router.panes.openItem(a[0]);
-                        var { pane, winId } = this.router.panes.getWindowByItem(
-                            a[0]
-                        );
-                    }
-                    for (let index = 0; index < a.length; index++) {
-                        var item = a[index];
-                        var o = this.router.panes.getWindowByItem(item);
-                        if (o.winId && o.pane.id != pane.id) {
-                            this.router.panes.closeItem(item, null, true);
-                            o.winId = null;
-                        }
-                        if (!o.winId) {
-                            this.router.panes.openItem(item, pane.id);
-                        }
-                    }
-                }
-            })
-            .catch(e => {
-                console.log(e);
-                const path = item.getFullPath();
-                alert('Could not find ' + path + '/app.{html,css,js} files.');
-            });
     };
 
     _createChildren = (cb) => {

@@ -21,18 +21,19 @@ import Modal from '../modal/index.js';
 const TxEth = () => import(/* webpackChunkName: "ethereumjs-tx" */ '../../ethereumjs-tx-1.3.3.min.js');
 
 export default class SuperProvider {
-    constructor(props) {
-        // Handle to owner.. Not beautiful but it rocks.
-        this.that = props.that;
+    constructor(channelId, projectItem, notifyTx) {
+        this.channelId = channelId;
+        this.projectItem = projectItem;
+        this.notifyTx = notifyTx;
         this.iframe = null;
         this.iframeStatus = -1;
     }
 
     _initIframe = () => {
-        if (this.iframeStatus == 0) return;
+        if (this.iframeStatus === 0) { return; }
         if (this.iframe.contentWindow) {
             this.iframe.contentWindow.postMessage(
-                { type: 'init', channel: this.that.id },
+                { type: 'init', channel: this.channelId },
                 '*'
             );
         }
@@ -53,9 +54,9 @@ export default class SuperProvider {
         //return;
         //}
         const data = event.data;
-        if (typeof data != 'object') return;
-        if (data.channel != this.that.id) return;
-        if (data.type == 'ack') {
+        if (typeof data !== 'object') { return; }
+        if (data.channel !== this.channelId) { return; }
+        if (data.type === 'ack') {
             this.iframeStatus = 0;
             return;
         }
@@ -63,20 +64,20 @@ export default class SuperProvider {
         const callback = (err, res) => {
             //console.log(err,res);
             if (
-                (payload.method == 'eth_sendTransaction' ||
-                    payload.method == 'eth_sendRawTransaction') &&
+                (payload.method === 'eth_sendTransaction' ||
+                    payload.method === 'eth_sendRawTransaction') &&
                 !err &&
                 res &&
                 res.result &&
-                this.that.notifyTx
+                this.notifyTx
             ) {
-                this.that.notifyTx(res.result, data.endpoint);
+                this.notifyTx(res.result, data.endpoint);
             }
             try {
                 this.iframe.contentWindow.postMessage(
                     {
                         type: 'reply',
-                        channel: this.that.id,
+                        channel: this.channelId,
                         id: data.id,
                         payload: { err: err, res: res },
                     },
@@ -89,7 +90,7 @@ export default class SuperProvider {
             // Send request on given endpoint
             // TODO: possibly set from and gasLimit.
             if (endpoint.toLowerCase() == 'http://superblocks-browser') {
-                this.that.props.functions.EVM.getProvider().sendAsync(
+                this.projectItem.functions.EVM.getProvider().sendAsync(
                     payload,
                     callback
                 );
@@ -103,7 +104,7 @@ export default class SuperProvider {
                 })
                     .then(response => {
                         if (!response.ok) {
-                            if (response.status == 405) {
+                            if (response.status === 405) {
                                 callback(
                                     'Method not supported by remote endpoint.'
                                 );
@@ -120,39 +121,31 @@ export default class SuperProvider {
                         callback('Error running method remotely.');
                     })
                     .then(response => {
-                        if (response) callback(null, response);
+                        if (response) { callback(null, response); }
                     });
             }
         };
         const payload = data.payload;
-        if (payload.method == 'eth_sendTransaction') {
+        if (payload.method === 'eth_sendTransaction') {
             // Needs signing
-            const accountName = this.that._getAccount();
+            const accountName = this.projectItem.getAccount();
             if (
                 !accountName ||
-                accountName == '(absent)' ||
-                accountName == '(locked)'
+                accountName === '(absent)' ||
+                accountName === '(locked)'
             ) {
                 const err = 'No account provided.';
                 alert(err);
                 callback(err, null);
                 return;
             }
-            //const account = this.that.dappfile.getItem("accounts", [{name: accountName}]);
-            const accounts = this.that.props.item
-                .getProject()
-                .getHiddenItem('accounts');
+            const accounts = this.projectItem.getHiddenItem('accounts');
             const account = accounts.getByName(accountName);
 
-            //const env=this.that.props.project.props.state.data.env;
-            const env = this.that.props.item.getProject().getEnvironment();
-            //const walletName=account.get('wallet', env);
+            const env = this.projectItem.getEnvironment();
             const walletName = account.getWallet(env);
-            //const wallet = this.that.dappfile.getItem("wallets", [{name: walletName}]);
 
-            const wallets = this.that.props.item
-                .getProject()
-                .getHiddenItem('wallets');
+            const wallets = this.projectItem.getHiddenItem('wallets');
             const wallet = wallets.getByName(walletName);
 
             if (!wallet) {
@@ -163,9 +156,9 @@ export default class SuperProvider {
             }
             const walletType = wallet.getWalletType();
 
-            if (walletType == 'external') {
+            if (walletType === 'external') {
                 if (
-                    data.endpoint.toLowerCase() == 'http://superblocks-browser'
+                    data.endpoint.toLowerCase() === 'http://superblocks-browser'
                 ) {
                     const err =
                         'External/Metamask account cannot be used for the in-browser blockchain.';
@@ -177,7 +170,7 @@ export default class SuperProvider {
                 if (window.web3.currentProvider) {
                     // TODO is there any way to check what endpoint Metamask is configured for
                     // and verify that it matches out expected endpoint?
-                    if ((window.web3.eth.accounts || []).length == 0) {
+                    if ((window.web3.eth.accounts || []).length === 0) {
                         const err =
                             "External/Metamask provider is locked. Can't proceed.";
                         alert(err);
@@ -194,7 +187,7 @@ export default class SuperProvider {
                         },
                     };
                     const modal = <Modal data={modalData} />;
-                    this.that.props.functions.modal.show({
+                    this.projectItem.functions.modal.show({
                         cancel: () => {
                             return false;
                         },
@@ -205,7 +198,7 @@ export default class SuperProvider {
                     window.web3.currentProvider.sendAsync(
                         data.payload,
                         (err, res) => {
-                            this.that.props.functions.modal.close();
+                            this.projectItem.functions.modal.close();
                             callback(err, res);
                         }
                     );
@@ -217,14 +210,13 @@ export default class SuperProvider {
                     callback(err, null);
                     return;
                 }
-                return;
             } else {
                 var obj = payload.params[payload.params.length - 1];
                 var obj2 = {
                     env: env,
                     endpoint: data.endpoint,
                 };
-                this._openWallet(obj2, accountName, async status => {
+                this._openWallet(obj2, accountName, status => {
                     if (status != 0) {
                         const err = 'Could not open wallet.';
                         callback(err, null);
@@ -266,8 +258,8 @@ export default class SuperProvider {
 
     _getWeb3 = endpoint => {
         var provider;
-        if (endpoint.toLowerCase() == 'http://superblocks-browser') {
-            provider = this.that.props.functions.EVM.getProvider();
+        if (endpoint.toLowerCase() === 'http://superblocks-browser') {
+            provider = this.projectItem.functions.EVM.getProvider();
         } else {
             var provider = new Web3.providers.HttpProvider(endpoint);
         }
@@ -288,26 +280,19 @@ export default class SuperProvider {
     };
 
     _openWallet = (obj, accountName, cb) => {
-        //const account = this.that.dappfile.getItem("accounts", [{name: accountName}]);
-
-        const accounts = this.that.props.item
-            .getProject()
-            .getHiddenItem('accounts');
+        const accounts = this.projectItem.getHiddenItem('accounts');
         const account = accounts.getByName(accountName);
-
-        //const walletName=account.get('wallet', obj.env);
-        //const accountIndex=account.get('index', obj.env);
 
         const accountIndex = account.getAccountIndex(obj.env);
         const walletName = account.getWallet(obj.env);
 
         const getKey = () => {
-            this.that.props.functions.wallet.getKey(
+            this.projectItem.functions.wallet.getKey(
                 walletName,
                 accountIndex,
                 (status, key) => {
-                    if (status == 0) {
-                        const address = this.that.props.functions.wallet.getAddress(
+                    if (status === 0) {
+                        const address = this.projectItem.functions.wallet.getAddress(
                             walletName,
                             accountIndex
                         );
@@ -318,10 +303,7 @@ export default class SuperProvider {
                         cb(0);
                         return;
                     } else {
-                        const msg =
-                            'Could not get key from wallet for address ' +
-                            address +
-                            '.';
+                        const msg = 'Could not get key from wallet for address.';
                         alert(msg);
                         cb(1);
                         return;
@@ -330,16 +312,16 @@ export default class SuperProvider {
             );
         };
 
-        if (this.that.props.functions.wallet.isOpen(walletName)) {
+        if (this.projectItem.functions.wallet.isOpen(walletName)) {
             getKey();
         } else {
-            this.that.props.functions.wallet.openWallet(
+            this.projectItem.functions.wallet.openWallet(
                 walletName,
                 null,
                 status => {
-                    if (status == 0) {
+                    if (status === 0) {
                         getKey();
-                    } else if (status == 2) {
+                    } else if (status === 2) {
                         alert('Bad seed entered.');
                         cb(1);
                         return;

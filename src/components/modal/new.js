@@ -14,37 +14,18 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-.modalContainer {
-    position: fixed;
-    z-index: 20;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.75);
+import React from  'react';
+import PropTypes from 'prop-types';
+import style from './style.less';
+
+export function Modal(props) {
+    return (
+        <div className={style.modalContainer} onClick={props.onClose}>
+            <div className={style.modal}>{props.children}</div>
+        </div>
+    );
 }
 
-.modal {
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
-    -webkit-border-radius: 7;
-    -moz-border-radius: 7;
-    border-radius: 7px;
-    padding: 20px;
-    padding-top: 1px;
-    display: block;
-    width: 800px;
-    max-width: 90%;
-    margin: 160px auto;
-    color: #444;
-    background-color: #ffffff;
-    &>h2 {
-        display: block;
-        text-align: center;
-        font-size: 1.5em;
-        color: #8641f2;
-    }
-    &>div {
-        display: block;
-        margin: auto;
-    }
-}
+Modal.propTypes = {
+    onClose: PropTypes.func.isRequired
+};

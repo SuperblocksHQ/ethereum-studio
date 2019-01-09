@@ -1,0 +1,126 @@
+// Copyright 2018 Superblocks AB
+//
+// This file is part of Superblocks Lab.
+//
+// Superblocks Lab is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation version 3 of the License.
+//
+// Superblocks Lab is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
+
+.appview {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .toolbar {
+        background-color: #F0F0F0;
+        height: 37px;
+        border-bottom: 1px solid #C1C1C1;
+        display: flex;
+        align-items: center;
+
+        button {
+            color: #626262;
+            padding-right: 0;
+        }
+
+        button:last-child {
+            padding-right: 10px;
+        }
+
+        .urlBar {
+            margin-left: 6px;
+            flex: 1;
+            user-select: none;
+            border: 1px solid #CCCCCC;
+            border-radius: 3px;
+            background-color: white;
+            height: 25px;
+            line-height: 21px;
+            padding: 0 12px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            visibility: hidden;
+        }
+
+        .moreContainer {
+            position: absolute;
+            right: 10px;
+            background-color: white;
+            padding: 0 20px 20px;
+            box-shadow: 1px 2px 5px 2px rgba(0,0,0,0.5);
+            max-width: 300px;
+
+            .heading {
+                display: flex;
+                align-items: center;
+
+                *:first-child {
+                    flex: 1;
+                }
+
+                input {
+                    width: auto;
+                }
+
+                p {
+                    margin-bottom: 10px;
+                }
+            }
+
+            .description {
+                color: #868686;
+                font-size: 14px;
+            }
+        }
+    }
+
+    iframe {
+        width: 100%;
+        height: 100%;
+        border: 0;
+    }
+}
+
+.actionContainer {
+    height: 100%;
+    width: 100%;
+    background-color: #272727;
+    border-left: 1px solid #121516;
+    display: flex;
+    flex-direction: column;
+
+    .header {
+        background-color: #141618;
+        display: flex;
+        align-content: center;
+        align-items: center;
+        height: 38px;
+        padding: 9px;
+        .panelIcon {
+            color: #fff;
+            margin-left: 7px;
+            margin-right: 10px;
+        }
+        .title {
+            color: #fff;
+            font-weight: 600;
+        }
+        .icon {
+            margin-left: auto;
+            color: #c7c7c7;
+            &:hover {
+                color: white;
+            }
+        }
+    }
+}
