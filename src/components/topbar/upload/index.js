@@ -25,7 +25,8 @@ const mapStateToProps = state => ({
         shareURL: ipfsSelectors.getShareURL(state),
         lastUploadTimestamp: ipfsSelectors.getLastUploadTimestamp(state),
         error: ipfsSelectors.getUploadToIPFSError(state),
-        showUploadSettings: ipfsSelectors.getShowUploadSettings(state)
+        showUploadSettings: ipfsSelectors.getShowUploadSettings(state),
+        uploadSettings: ipfsSelectors.getUploadSettings(state)
     }
 });
 
@@ -39,7 +40,10 @@ function mapDispatchToProps(dispatch) {
         },
         hideUploadSettings: () => {
             dispatch(ipfsActions.hideUploadSettings())
-        }
+        },
+        uploadSettingsChanged: (uploadSettings) => {
+            dispatch(ipfsActions.uploadSettingsChanged(uploadSettings))
+        },
     };
 }
 

@@ -4,6 +4,7 @@ export const ipfsSelectors = {
     getLastUploadTimestamp: state => state.ipfs.timestamp,
     getUploadToIPFSError: state => state.ipfs.error,
     getShowUploadSettings: state => state.ipfs.showUploadSettings,
+    getUploadSettings: state => state.ipfs.uploadSettings,
 }
 
 

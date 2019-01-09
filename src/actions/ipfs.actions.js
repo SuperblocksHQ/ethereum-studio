@@ -44,5 +44,12 @@ export const ipfsActions = {
         return {
             type: ipfsActions.HIDE_UPLOAD_SETTINGS,
         }
+    },
+    UPLOAD_SETTINGS_CHANGED: 'UPLOAD_SETTINGS_CHANGED',
+    uploadSettingsChanged(uploadSettings) {
+        return {
+            type: ipfsActions.UPLOAD_SETTINGS_CHANGED,
+            data: uploadSettings
+        }
     }
 }

@@ -37,11 +37,8 @@ class UploadDialog extends Component {
             lastUploadTimestamp: this.props.ipfs.lastUploadTimestamp,
             error: this.props.ipfs.error,
             showUploadSettings: this.props.ipfs.showUploadSettings,
+            uploadSettings: this.props.ipfs.uploadSettings
         },
-        uploadSettings: {
-            includeBuildInfo: false,
-            includeProjectConfig: false
-        }
     }
 
     componentDidUpdate(prevProps) {
@@ -73,9 +70,7 @@ class UploadDialog extends Component {
     }
 
     onUploadSettingsChanged = (uploadSettings) => {
-        this.setState({
-            uploadSettings: uploadSettings
-        })
+        this.props.uploadSettingsChanged(uploadSettings);
     }
 
     renderDialog() {
@@ -151,7 +146,7 @@ class UploadDialog extends Component {
     }
 
     render() {
-        const { ipfs, uploadSettings } = this.state;
+        const { ipfs } = this.state;
         return (
             <div className={style.shareDialogContainer}>
                 { ipfs.uploading ?
@@ -159,7 +154,7 @@ class UploadDialog extends Component {
                 :
                     ipfs.showUploadSettings ?
                         <UploadSettings
-                            uploadSettings={uploadSettings}
+                            uploadSettings={ipfs.uploadSettings}
                             onBackClicked={this.onUploadSettingsBackClicked}
                             onChange={this.onUploadSettingsChanged}
                         />
@@ -181,4 +176,5 @@ UploadDialog.propTypes = {
     uploadToIPFS: PropTypes.func.isRequired,
     showUploadSettings: PropTypes.func.isRequired,
     hideUploadSettings: PropTypes.func.isRequired,
+    uploadSettingsChanged: PropTypes.func.isRequired,
 }
