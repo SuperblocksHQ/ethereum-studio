@@ -17,14 +17,15 @@
 import { connect } from 'react-redux';
 import { ipfsActions } from '../../../actions';
 import UploadDialog from './UploadDialog';
-import { getShareURL, getUploadToIPFSError, getUploadingToIPFS, getLastUploadTimestamp } from '../../../selectors/ipfs';
+import { ipfsSelectors } from '../../../selectors/ipfs.selectors';
 
 const mapStateToProps = state => ({
     ipfs: {
-        uploading: getUploadingToIPFS(state),
-        shareURL: getShareURL(state),
-        lastUploadTimestamp: getLastUploadTimestamp(state),
-        error: getUploadToIPFSError(state)
+        uploading: ipfsSelectors.getUploadingToIPFS(state),
+        shareURL: ipfsSelectors.getShareURL(state),
+        lastUploadTimestamp: ipfsSelectors.getLastUploadTimestamp(state),
+        error: ipfsSelectors.getUploadToIPFSError(state),
+        showUploadSettings: ipfsSelectors.getShowUploadSettings(state)
     }
 });
 
@@ -32,6 +33,12 @@ function mapDispatchToProps(dispatch) {
     return {
         uploadToIPFS: (uploadSettings) => {
             dispatch(ipfsActions.uploadToIPFS(uploadSettings))
+        },
+        showUploadSettings: () => {
+            dispatch(ipfsActions.showUploadSettings())
+        },
+        hideUploadSettings: () => {
+            dispatch(ipfsActions.hideUploadSettings())
         }
     };
 }

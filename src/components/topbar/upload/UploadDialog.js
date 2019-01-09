@@ -35,9 +35,9 @@ class UploadDialog extends Component {
             uploading: this.props.ipfs.uploading,
             shareURL: this.props.ipfs.shareURL,
             lastUploadTimestamp: this.props.ipfs.lastUploadTimestamp,
-            error: this.props.ipfs.error
+            error: this.props.ipfs.error,
+            showUploadSettings: this.props.ipfs.showUploadSettings,
         },
-        showUploadSettings: false,
         uploadSettings: {
             includeBuildInfo: false,
             includeProjectConfig: false
@@ -65,15 +65,11 @@ class UploadDialog extends Component {
     }
 
     uploadSettingsClick = () => {
-        this.setState({
-            showUploadSettings: true
-        })
+        this.props.showUploadSettings();
     }
 
     onUploadSettingsBackClicked = () => {
-        this.setState({
-            showUploadSettings: false
-        });
+        this.props.hideUploadSettings();
     }
 
     onUploadSettingsChanged = (uploadSettings) => {
@@ -155,13 +151,13 @@ class UploadDialog extends Component {
     }
 
     render() {
-        const { ipfs, showUploadSettings, uploadSettings } = this.state;
+        const { ipfs, uploadSettings } = this.state;
         return (
             <div className={style.shareDialogContainer}>
                 { ipfs.uploading ?
                     this.renderUploading()
                 :
-                    showUploadSettings ?
+                    ipfs.showUploadSettings ?
                         <UploadSettings
                             uploadSettings={uploadSettings}
                             onBackClicked={this.onUploadSettingsBackClicked}
@@ -182,5 +178,7 @@ export default UploadDialog;
 
 UploadDialog.propTypes = {
     ipfs: PropTypes.object.isRequired,
-    uploadToIPFS: PropTypes.func.isRequired
+    uploadToIPFS: PropTypes.func.isRequired,
+    showUploadSettings: PropTypes.func.isRequired,
+    hideUploadSettings: PropTypes.func.isRequired,
 }

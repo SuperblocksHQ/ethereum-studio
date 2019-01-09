@@ -4,7 +4,8 @@ export const initialState = {
     uploading: false,
     shareURL: null,
     timestamp: null,
-    error: null
+    error: null,
+    showUploadSettings: false
 };
 
 export default function panesReducer(state = initialState, action) {
@@ -40,6 +41,18 @@ export default function panesReducer(state = initialState, action) {
                 ...state,
                 shareURL: null,
                 timestamp: null
+            };
+        }
+        case ipfsActions.SHOW_UPLOAD_SETTINGS: {
+            return {
+                ...state,
+                showUploadSettings: true,
+            };
+        }
+        case ipfsActions.HIDE_UPLOAD_SETTINGS: {
+            return {
+                ...state,
+                showUploadSettings: false,
             };
         }
         default:

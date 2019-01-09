@@ -32,5 +32,17 @@ export const ipfsActions = {
         return {
             type: ipfsActions.RESTORE_IPFS_STATE_FAIL,
         }
+    },
+    SHOW_UPLOAD_SETTINGS: 'SHOW_UPLOAD_SETTINGS',
+    showUploadSettings() {
+        return {
+            type: ipfsActions.SHOW_UPLOAD_SETTINGS,
+        }
+    },
+    HIDE_UPLOAD_SETTINGS: 'HIDE_UPLOAD_SETTINGS',
+    hideUploadSettings() {
+        return {
+            type: ipfsActions.HIDE_UPLOAD_SETTINGS,
+        }
     }
 }
