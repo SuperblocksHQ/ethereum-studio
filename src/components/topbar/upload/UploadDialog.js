@@ -37,7 +37,7 @@ class UploadDialog extends Component {
             lastUploadTimestamp: this.props.ipfs.lastUploadTimestamp,
             error: this.props.ipfs.error,
             showUploadSettings: this.props.ipfs.showUploadSettings,
-            uploadSettings: this.props.ipfs.uploadSettings
+            uploadSettings: this.props.ipfs.uploadSettings,
         },
     }
 

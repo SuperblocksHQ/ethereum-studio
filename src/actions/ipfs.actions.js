@@ -51,5 +51,11 @@ export const ipfsActions = {
             type: ipfsActions.UPLOAD_SETTINGS_CHANGED,
             data: uploadSettings
         }
+    },
+    HIDE_UPLOAD_DIALOG: 'HIDE_UPLOAD_DIALOG',
+    hideUploadDialog() {
+        return {
+            type: ipfsActions.HIDE_UPLOAD_DIALOG,
+        }
     }
 }

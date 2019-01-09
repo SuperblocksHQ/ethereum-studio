@@ -5,6 +5,7 @@ export const ipfsSelectors = {
     getUploadToIPFSError: state => state.ipfs.error,
     getShowUploadSettings: state => state.ipfs.showUploadSettings,
     getUploadSettings: state => state.ipfs.uploadSettings,
+    getShowUploadDialog: state => state.ipfs.showUploadDialog,
 }
 
 

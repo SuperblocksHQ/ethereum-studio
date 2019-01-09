@@ -1,4 +1,4 @@
-import { ipfsActions, projectActions } from '../actions';
+import { ipfsActions, projectActions, viewActions } from '../actions';
 
 export const initialState = {
     uploading: false,
@@ -6,6 +6,7 @@ export const initialState = {
     timestamp: null,
     error: null,
     showUploadSettings: false,
+    showUploadDialog: false,
     uploadSettings: {
         includeBuildInfo: false,
         includeProjectConfig: false
@@ -25,6 +26,7 @@ export default function panesReducer(state = initialState, action) {
                 uploading: false,
                 timestamp: action.data.timestamp,
                 shareURL: action.data.shareURL,
+                showUploadDialog: true,
                 uploadSettings: initialState.uploadSettings // Make we reset the settigs on every upload
             };
         case ipfsActions.UPLOAD_TO_IPFS_FAIL: {
@@ -64,6 +66,12 @@ export default function panesReducer(state = initialState, action) {
             return {
                 ...state,
                 uploadSettings: action.data,
+            };
+        }
+        case ipfsActions.HIDE_UPLOAD_DIALOG: {
+            return {
+                ...state,
+                showUploadDialog: false,
             };
         }
         case projectActions.SELECT_PROJECT: {

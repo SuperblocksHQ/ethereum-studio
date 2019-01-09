@@ -25,12 +25,17 @@ DropdownBasic.proptypes = {
  * Helper component to handle the state of showing/hiding a dropdown
  */
 export class DropdownContainer extends Component {
-    constructor(props) {
-        super(props);
 
-        this.state = {
-            showMenu: false,
-        };
+    state = {
+        showMenu: this.props.showMenu ? this.props.showMenu : false,
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.showMenu !== this.props.showMenu) {
+            this.setState({
+                showMenu: {...this.props.showMenu}
+            });
+        }
     }
 
     showMenu = () => {
@@ -39,11 +44,16 @@ export class DropdownContainer extends Component {
 
     closeMenu = e => {
         e.stopPropagation();
+
+        if (this.props.onCloseMenu) {
+            this.props.onCloseMenu();
+        }
+
         this.setState({ showMenu: false });
     };
 
     render() {
-        let { dropdownContent, useRightClick, enableClickInside, ...props } = this.props;
+        let { dropdownContent, useRightClick, enableClickInside, className } = this.props;
         if (useRightClick) {
             var main = (
                 <div onContextMenu={this.showMenu}>{this.props.children}</div>
@@ -51,8 +61,9 @@ export class DropdownContainer extends Component {
         } else {
             var main = <div onClick={this.showMenu}>{this.props.children}</div>;
         }
+
         return (
-            <div {...props}>
+            <div className={className}>
                 {main}
                 {this.state.showMenu ? (
                     <Dropdown
@@ -70,5 +81,8 @@ export class DropdownContainer extends Component {
 DropdownBasic.proptypes = {
     enableClickInside: PropTypes.bool,
     dropdownContent: PropTypes.object,
+    className: PropTypes.string.object,
     useRightClick: PropTypes.bool,
+    showMenu: PropTypes.bool,
+    onCloseMenu: PropTypes.func,
 };
