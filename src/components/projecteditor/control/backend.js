@@ -415,9 +415,9 @@ export default class Backend {
 
         let dappfile = JSON.parse(root['dappfile.json'].contents);
 
-        let title =  dappfile.project.info.title;
+        let name =  dappfile.project.info.name;
 
-        dappfile.project.info.title = `${title} copy`;
+        dappfile.project.info.name = `${name}_copy`;
 
         let contents = JSON.stringify(dappfile);
 
