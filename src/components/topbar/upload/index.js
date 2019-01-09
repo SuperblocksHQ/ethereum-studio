@@ -17,7 +17,7 @@
 import { connect } from 'react-redux';
 import { ipfsActions } from '../../../actions';
 import UploadDialog from './UploadDialog';
-import { ipfsSelectors } from '../../../selectors/ipfs.selectors';
+import { ipfsSelectors } from '../../../selectors';
 
 const mapStateToProps = state => ({
     ipfs: {

@@ -16,11 +16,13 @@
 
 import { connect } from 'react-redux';
 import TopBar from './Topbar';
-import { ipfsSelectors } from '../../selectors/ipfs.selectors';
+import { ipfsSelectors } from '../../selectors';
+import { getSelectedProjectName } from '../../selectors/projects';
 import { ipfsActions } from '../../actions';
 
 const mapStateToProps = state => ({
-    showUploadDialog: ipfsSelectors.getShowUploadDialog(state)
+    showUploadDialog: ipfsSelectors.getShowUploadDialog(state),
+    selectedProjectName: getSelectedProjectName(state)
 });
 
 function mapDispatchToProps(dispatch) {

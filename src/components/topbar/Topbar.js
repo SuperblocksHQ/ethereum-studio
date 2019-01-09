@@ -536,20 +536,13 @@ export default class TopBar extends Component {
         }
     };
 
-    onCloseUploadDropdown = () => {
+    onCloseUploadDialog = () => {
         this.props.hideUploadDialog()
     }
 
     render() {
         const { showUploadDialog } = this.state;
-        var title = '';
-
-        if (this.props.router.control) {
-            const openProject = this.props.router.control.getActiveProject();
-            if (openProject) {
-                title = openProject.getName();
-            }
-        }
+        const { selectedProjectName } = this.props;
 
         return (
             <div className={style.topbar}>
@@ -563,7 +556,7 @@ export default class TopBar extends Component {
                     dropdownContent={<UploadDialog />}
                     enableClickInside={true}
                     showMenu={showUploadDialog}
-                    onCloseMenu={this.onCloseUploadDropdown}
+                    onCloseMenu={this.onCloseUploadDialog}
                 >
                     <UploadDrowdownAction />
                 </DropdownContainer>
@@ -580,7 +573,7 @@ export default class TopBar extends Component {
                         />
                     }
                 >
-                    <ProjectSelector title={title} />
+                    <ProjectSelector title={selectedProjectName} />
                 </DropdownContainer>
 
                 <div className={style.actionsRight}>
