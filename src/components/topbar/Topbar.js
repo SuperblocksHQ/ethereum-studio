@@ -38,8 +38,6 @@ import {
     IconFork
 } from '../icons';
 import Dappfile from '../projecteditor/control/item/dappfileItem';
-import {toast} from "react-toastify";
-import {ForkSuccessMessage} from "../toasts";
 
 const PreferencesAction = () => (
     <div className={style.action}>

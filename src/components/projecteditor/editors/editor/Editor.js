@@ -23,10 +23,8 @@ import {
     IconDeploy,
     IconConfigure,
     IconInteract,
-} from '../../icons';
-import Tooltip from '../../tooltip';
-import {toast} from "react-toastify";
-import {ForkSuccessMessage} from "../../toasts";
+} from '../../../icons';
+import Tooltip from '../../../tooltip';
 
 export default class Editor extends Component {
     constructor(props) {
@@ -99,25 +97,7 @@ export default class Editor extends Component {
             .then(() => {
                 // if save action is triggered, move temporary to normal projects
                 if (routerControl.getActiveProject().getInode() === 1) {
-                    routerControl.backend.assignNewInode(1, () => {
-                        routerControl._loadProjects(() => {
-                            routerControl._closeProject(status => {
-                                if (status == 0) {
-                                    // Open last project
-                                    routerControl.openProject(
-                                        routerControl._projectsList[
-                                        routerControl._projectsList.length - 1
-                                            ]
-                                    );
-                                    routerControl.backend._stripIpfsHash();
-                                    this.props.router.control.backend.deleteProject(1, () => {});
-                                    toast(<ForkSuccessMessage />, {
-                                        className: "toastBody"
-                                    });
-                                }
-                            });
-                        });
-                    });
+                    this.props.forkProject();
                 } else {
                     // Trigger other windows to refresh.
                     this.props.parent.props.parent.props.parent.redraw();
