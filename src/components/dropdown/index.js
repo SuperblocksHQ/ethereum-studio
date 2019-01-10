@@ -2,9 +2,6 @@ import onClickOutside from 'react-onclickoutside';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-/**
- * Simple wrapper component over the react-onclickoutside to make easier the usage of the component
- */
 class DropdownBasic extends Component {
     render() {
         return (
@@ -31,6 +28,10 @@ export class DropdownContainer extends Component {
         this.state = {
             menuVisible: false,
         };
+
+        // the ignore class name should be specific only this instance of the component
+        //  in order to close other dropdown in case a new one is opened
+        this.ignoreClassName = 'ignore-react-onclickoutside' + Date.now();
     }
 
     showMenu = () => {
@@ -54,7 +55,7 @@ export class DropdownContainer extends Component {
         if (useRightClick) {
             main = <div onContextMenu={this.showMenu}>{this.props.children}</div>;
         } else {
-            main = <div className="ignore-react-onclickoutside" onClick={this.toggleMenu}>{this.props.children}</div>;
+            main = <div className={this.ignoreClassName} onClick={this.toggleMenu}>{this.props.children}</div>;
         }
 
         return (
@@ -62,6 +63,7 @@ export class DropdownContainer extends Component {
                 {main}
                 { this.state.menuVisible &&
                 <Dropdown
+                    outsideClickIgnoreClass={this.ignoreClassName}
                     handleClickOutside={this.closeMenu}
                     handleClickInside={this.closeMenu}
                 >
