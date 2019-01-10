@@ -412,15 +412,10 @@ export default class Backend {
     // Add additional text to dappfile when forking
     modifyDappFile(files) {
         let root = files['/'].children;
-
         let dappfile = JSON.parse(root['dappfile.json'].contents);
-
         let name =  dappfile.project.info.name;
-
         dappfile.project.info.name = `${name}_copy`;
-
         let contents = JSON.stringify(dappfile);
-
         root["dappfile.json"].contents = contents;
 
         return files;
@@ -745,24 +740,27 @@ export default class Backend {
         setTimeout(() => cb(0, projects), 1);
     };
 
-    // get Files belonging to a given inode
-    getProjectFiles = (inode, cb) => {
-        const data =
-            JSON.parse(localStorage.getItem(DAPP_FORMAT_VERSION)) || {};
-        if (!data.projects) data.projects = [];
 
-        const project = data.projects.filter(item => {
-            return item.inode === inode;
-        });
+    /**
+     * Get Files belonging to a given inode
+     */
+    getProjectFiles = (inode) => {
+        return new Promise((resolve, reject) => {
+            const data =
+                JSON.parse(localStorage.getItem(DAPP_FORMAT_VERSION)) || {};
+            if (!data.projects) data.projects = [];
 
-        if(project.length){
-            // project is not empty
-            cb(project[0].files);
-        } else {
-            console.error("Project with given inode doesn't exist");
-        }
+            const project = data.projects.filter(item => {
+                return item.inode === inode;
+            });
 
-    };
+            if (project.length) {
+                resolve(project[0].files);
+            } else {
+                reject("Project with given inode doesn't exist");
+            }
+        })
+    }
 
     createProject = (files, cb, isTemporary) => {
         const data =

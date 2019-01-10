@@ -491,50 +491,8 @@ export default class TopBar extends Component {
     };
 
     onForkClicked = () => {
-        const routerControl = this.props.router.control;
-
-        if (routerControl.getActiveProject()) {
-            const inode = routerControl.getActiveProject().getInode();
-
-            if (inode === 1) {
-                // project from a shared link
-                // assign a new inode number to existing project
-                routerControl.backend.assignNewInode(1, () => {
-                    routerControl._loadProjects(() => {
-                        routerControl._closeProject(status => {
-                            if (status == 0) {
-                                // Open last project
-                                routerControl.openProject(
-                                    routerControl._projectsList[
-                                    routerControl._projectsList.length - 1
-                                        ]
-                                );
-                                routerControl.backend._stripIpfsHash();
-                                routerControl.backend.deleteProject(1, () => {})
-                                toast(<ForkSuccessMessage />, {
-                                    className: "toastBody"
-                                });
-                            }
-                        });
-                    });
-                });
-            } else {
-                // own project
-                if (confirm('Are you sure you want to fork your own project?')) {
-                    // create copy of own project
-                    routerControl.backend.getProjectFiles(inode, (files) => {
-                        let modifiedFiles = routerControl.backend.modifyDappFile(files);
-                        routerControl.importProject(modifiedFiles, false);
-                    });
-                    toast(<ForkSuccessMessage />, {
-                        className: "toastBody"
-                    });
-                }
-
-            }
-
-        }
-    };
+        this.props.forkProject();
+    }
 
     onCloseUploadDialog = () => {
         this.props.hideUploadDialog()
