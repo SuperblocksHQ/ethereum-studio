@@ -20,7 +20,7 @@ import {
     IconEdit
 } from '../../../../icons';
 import style from '../../style.less';
-import { DropdownContainer } from '../../../../dropdown';
+import { DropdownContainer } from '../../../../common';
 import Tooltip from '../../../../tooltip';
 import { FadeInComponent } from './fadeInComponent';
 import { ShowActions } from './showActions';

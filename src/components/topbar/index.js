@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import style from './style.less';
-import { DropdownContainer } from '../dropdown';
+import { DropdownContainer } from '../common';
 import Backend from '../projecteditor/control/backend';
 import Modal from '../modal';
 import Tooltip from '../tooltip';
