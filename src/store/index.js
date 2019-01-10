@@ -14,7 +14,7 @@ const config = {
     key: 'root',
     storage,
     version: 4,
-    blacklist: ['app', 'view', 'panes', 'ipfs', 'explorer'],
+    blacklist: ['app', 'view', 'panes', 'ipfs', 'explorer', 'toast'],
     migrate: createMigrate(migrations, { debug: true })
 };
 

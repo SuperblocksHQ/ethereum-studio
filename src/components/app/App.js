@@ -26,8 +26,9 @@ import EVM from '../evm';
 import Networks from '../../networks';
 import AnalyticsDialog from '../analyticsDialog';
 import OnlyIf from '../onlyIf';
-import {toast, ToastContainer} from 'react-toastify';
-import {CloseButton, ProjectLoadedSuccess} from "../toasts";
+import {toast} from 'react-toastify';
+import { ProjectLoadedSuccess } from "../toasts";
+import ToastContainer from "../toasts/toastcontainer";
 
 export default class App extends Component {
 
@@ -392,19 +393,7 @@ export default class App extends Component {
                             <OnlyIf test={showTrackingAnalyticsDialog}>
                                 <AnalyticsDialog />
                             </OnlyIf>
-                            <ToastContainer
-                                position="bottom-right"
-                                className={"toastContainer"}
-                                autoClose={6000}
-                                hideProgressBar
-                                newestOnTop={false}
-                                closeOnClick
-                                rtl={false}
-                                pauseOnVisibilityChange
-                                draggable
-                                pauseOnHover={false}
-                                closeButton={<CloseButton />}
-                            />
+                            <ToastContainer />
                         </OnlyIf>
                     </div>
                 </div>
