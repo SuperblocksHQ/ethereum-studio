@@ -46,6 +46,7 @@ import {faPencilAlt as iconPencil} from '@fortawesome/free-solid-svg-icons/faPen
 import {faArrowAltCircleDown as iconDownload} from '@fortawesome/free-regular-svg-icons/faArrowAltCircleDown';
 import {faThLarge as iconMosaic} from '@fortawesome/free-solid-svg-icons/faThLarge';
 import {faLink as iconChain} from '@fortawesome/free-solid-svg-icons/faLink';
+import {faCopy as iconCopy} from '@fortawesome/free-regular-svg-icons/faCopy';
 
 class IconImg extends Component {
     render() {
@@ -74,6 +75,7 @@ export const IconInteract = ({ ...props }) => (
     <IconImg src={'/static/img/icon-interact.svg'} {...props} />
 );
 export const IconTrash = () => <FaIcon icon={iconTrash} />;
+export const IconCopy = () => <FaIcon icon={iconCopy} />;
 export const IconGem = () => <FaIcon icon={iconGem} />;
 export const IconFile = () => <FaIcon icon={iconFile} />;
 export const IconFileAlt = () => <FaIcon icon={iconFileAlt} />;
