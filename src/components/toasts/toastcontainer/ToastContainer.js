@@ -12,9 +12,9 @@ export default class ToastContainer extends Component {
         this.props.toasts.map(toastItem => {
             // New toast
             if (!(prevProps.toasts.some(toast => toast.id === toastItem.id))) {
-                const ToastComponent = getToastComponent(toastItem.type);
+                const { ToastComponent, className } = getToastComponent(toastItem.type);
                 toast(<ToastComponent id={toastItem.id}/>, {
-                    className: "toastBody",
+                    className: className,
                     onClose: ({ id }) => this.props.toastDismissed(id)
                 });
             }

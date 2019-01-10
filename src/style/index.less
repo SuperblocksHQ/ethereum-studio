@@ -15,6 +15,7 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 @import './spacing';
+@import './toast';
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////// Variables //////////////////
@@ -260,39 +261,6 @@ a:active,a:focus {
     cursor: pointer;
     &:focus {
         outline: none;
-    }
-}
-
-.closeIcon {
-    align-self: flex-start;
-    margin-left: auto;
-    padding-right: 0;
-    color: #c7c7c7;
-    &:hover {
-        color: #fff;
-    }
-    .icon {
-        height: 20px;
-        width: 20px;
-    }
-}
-
-.toastContainer {
-    bottom: 2em;
-    right: 46px;
-}
-
-.toastBody {
-    background-color: #8641f2 !important;
-    color: #fff !important;
-    display: flex;
-    align-items: center;
-    .messageContainer {
-        img {
-            transform: scale(1.4);
-            margin-right: 20px;
-            margin-left: 15px;
-        }
     }
 }
 

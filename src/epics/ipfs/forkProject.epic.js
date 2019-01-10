@@ -5,10 +5,11 @@ import { getSelectedProjectId } from '../../selectors/projects';
 import { ipfsActions } from '../../actions';
 
 /**
- * Added the current temporary project to the user's list
+ * Add the current temporary project to the user's list. This way the project will be actually
+ * stored and displayed in the projects list.
  *
  * @param {*} backend - The Backend.js to perform file operations
- * @param {*} control -
+ * @param {*} control - the Control.js to perform project operations
  */
 const addProjectToUserList = (backend, control) => {
     return new Promise((resolve, reject) => {
@@ -34,15 +35,6 @@ const addProjectToUserList = (backend, control) => {
     })
 };
 
-/**
- * A temporary project is created when loading downloading a project from ipfs. This project is
- * not actually added to the user's project list until a fork occurrs, therefore we avoid
- * spamming the user's project list with projects they just openned to consult something and then
- * discarded.
- *
- * @param {Backend} backend - The Backen.js object
- * @param {*} router - The router containing
- */
 const forkTempProject$ = (backend, router) => from(addProjectToUserList(backend, router.control));
 
 const forkOwnProject$ = (projectId, backend, router) => of(projectId).pipe(
@@ -58,6 +50,19 @@ const forkOwnProject$ = (projectId, backend, router) => of(projectId).pipe(
     })
 );
 
+/**
+ * Epic in charge of forking the current project:
+ *
+ * There are 2 case scenarios:
+ *
+ * 1. A temporary project is created when downloading a project from ipfs. This project is
+ * not actually added to the user's project list until a fork occurrs, therefore we avoid
+ * spamming the user's project list with projects they just openned to consult something and then
+ * discarded.
+ *
+ * 2. A user is trying to fork it's own project. When done so, we will ammend a unique identifier, making
+ * sure the new project is easy to distinguish from the previous one.
+ */
 const forkProject = (action$, state$, { backend, router }) => action$.pipe(
     ofType(ipfsActions.FORK_PROJECT),
     withLatestFrom(state$),

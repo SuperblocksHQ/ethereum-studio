@@ -8,6 +8,7 @@ var counter = 0;
 export default function toatsReducer(state = initialState, action) {
     switch (action.type) {
         case ipfsActions.FORK_PROJECT_SUCCESS:
+        case ipfsActions.FORK_PROJECT_FAIL:
             counter += 1;
             const toast = {
                 id: counter,

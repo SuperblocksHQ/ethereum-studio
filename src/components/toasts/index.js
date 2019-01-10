@@ -1,8 +1,11 @@
 import React from 'react';
 import classNames from 'classnames';
 import { ipfsActions } from '../../actions';
-import {IconInformation, IconClose} from '../icons';
-import { throwError } from 'rxjs';
+import {
+    IconInformation,
+    IconWarning,
+    IconClose
+} from '../icons';
 
 export const CloseButton = ({ closeToast }) => (
     <button className={classNames(['closeIcon', 'btnNoBg'])} onClick={closeToast}>
@@ -24,9 +27,24 @@ const ForkSuccessMessage = () => (
     </div>
 );
 
+const ForkFailMessage = () => (
+    <div className={'messageContainer'}>
+        <IconWarning/>
+        Error Forking!
+    </div>
+);
+
 export const getToastComponent = (type) => {
     switch(type) {
         case ipfsActions.FORK_PROJECT_SUCCESS:
-            return ForkSuccessMessage;
+            return {
+                ToastComponent: ForkSuccessMessage,
+                className: classNames(['body', 'info'])
+            }
+        case ipfsActions.FORK_PROJECT_FAIL:
+            return {
+                ToastComponent: ForkFailMessage,
+                className: classNames(['body', 'error'])
+            }
     }
 }
