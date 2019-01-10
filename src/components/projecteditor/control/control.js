@@ -23,6 +23,8 @@ import Backend from './backend';
 import NewDapp from '../../newdapp';
 import NetworkAccountSelector from '../../networkAccountSelector';
 import LearnAndResources from '../../learnAndResources';
+import { previewService } from '../../../services';
+
 import {
     IconCube,
 } from '../../icons';
@@ -231,6 +233,7 @@ export default class Control extends Component {
      */
     _setProjectActive = project => {
         this.setState({ activeProject: project });
+        previewService.projectItem = project;
         const projectData = project
             ? { id: project.getInode(), name: project.getName() }
             : null;

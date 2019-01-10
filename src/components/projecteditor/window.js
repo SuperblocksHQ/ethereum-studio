@@ -22,7 +22,6 @@ import Compiler from './compiler';
 import Deployer from './deployer';
 import TutorialsManual from '../tutorials/manual';
 import TutorialsOnline from '../tutorials/online';
-import AppView from './appview.js';
 import ContractInteraction from './contractinteraction';
 import Welcome from './welcome';
 import { IconClose } from '../icons';
@@ -200,19 +199,6 @@ export class Window {
                 <TutorialsOnline
                     id={this.subId}
                     parent={this}
-                    router={this.props.router}
-                    functions={this.props.functions}
-                />
-            );
-        } else if (
-            this.props.item.getType() == 'app' &&
-            this.props.item.getType2() == 'view'
-        ) {
-            return (
-                <AppView
-                    id={this.subId}
-                    parent={this}
-                    item={this.props.item}
                     router={this.props.router}
                     functions={this.props.functions}
                 />

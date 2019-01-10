@@ -30,7 +30,7 @@ import { IconShowPreview } from '../../../icons';
 import Modal from '../../../modal';
 
 import Backend from '../backend';
-import TransactionLogData from '../../../blockexplorer/transactionlogdata';
+import TransactionLogData from '../../sidePanels/blockexplorer/transactionlogdata';
 
 export default class ProjectItem extends Item {
     constructor(props, router, functions) {
@@ -188,21 +188,6 @@ export default class ProjectItem extends Item {
 
             const contractsItem = this._getContractsItem();
             this.setHiddenItem('contracts', contractsItem);
-
-            const previewItem = new Item(
-                {
-                    type: 'app',
-                    type2: 'view',
-                    icon: <IconShowPreview />,
-                    state: {
-                        title: 'Preview',
-                        key: 'app_preview',
-                        project: this,
-                    },
-                },
-                this.router
-            );
-            this.setHiddenItem('app_preview', previewItem);
 
             // Traverse the file structure to get `/dappfile.json`, this will prepare the file tree
             // so that the file `/dappfile.json` will get represented by the DappfileItem item created prior.

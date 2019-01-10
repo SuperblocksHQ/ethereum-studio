@@ -1,7 +1,7 @@
 import app from './app.reducer';
 import projects from './projects.reducer';
 import settings from './settings.reducer';
-import view from './view.reducer';
+import sidePanels from './sidePanels.reducer';
 import panes from './panes.reducer';
 import ipfs from './ipfs.reducer';
 import toast from './toast.reducer';
@@ -24,4 +24,6 @@ export default {
     panes,
     ipfs,
     toast
+    sidePanels,
+    panes
 };

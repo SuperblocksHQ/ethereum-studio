@@ -17,6 +17,8 @@
 import React, { Component } from 'react';
 import style from './style.less';
 import RenderTransactions from './rendertransactions';
+import { BaseSidePanel } from '../baseSidePanel';
+import { IconTransactions } from '../../../icons';
 
 export default class TransactionLogPanel extends Component {
 
@@ -39,15 +41,15 @@ export default class TransactionLogPanel extends Component {
     };
 
     _getTxLog = () => {
-        if (!this.props.router.control) return;
+        if (!this.props.router.control) { return; }
         const project = this.props.router.control.getActiveProject();
-        if (!project) return;
+        if (!project) { return; }
         return project.getTxLog();
     };
 
     render() {
         const txlog = this._getTxLog();
-        if (!txlog) return null;
+        if (!txlog) { return null; }
         const env = this.props.router.control
             .getActiveProject()
             .getEnvironment();
@@ -59,6 +61,10 @@ export default class TransactionLogPanel extends Component {
             5,
             0
         );
-        return <div className={style.transactionlogPanel}>{transactions}</div>;
+        return (
+            <BaseSidePanel icon={ <IconTransactions /> } name="Transactions History" onClose={this.props.onClose}>
+                <div className={style.transactionlogPanel}>{transactions}</div>
+            </BaseSidePanel>
+        );
     }
 }

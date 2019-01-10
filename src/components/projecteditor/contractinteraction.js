@@ -27,7 +27,7 @@ export default class ContractInteraction extends Component {
         super(props);
         this.id = props.id + '_contractinteraction';
         this.props.parent.childComponent = this;
-        this.provider = new SuperProvider({ that: this });
+        this.provider = new SuperProvider(this.id, this.props.item.getProject(), this.notifyTx.bind(this));
         this.contract_address = '';
         this.contract_balance = '? eth';
         this.contract_balance_wei = '';
@@ -39,9 +39,8 @@ export default class ContractInteraction extends Component {
         var network;
         Object.keys(this.props.functions.networks.endpoints).map(key => {
             const obj = this.props.functions.networks.endpoints[key];
-            if (obj.endpoint == endpoint) network = key;
+            if (obj.endpoint === endpoint) { network = key; }
         });
-        //this.props.project.props.state.txlog.addTx({hash:hash,context:'Contract interaction',network:network});
         this.props.item
             .getProject()
             .getTxLog()
