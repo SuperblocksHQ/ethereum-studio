@@ -181,7 +181,7 @@ export default class App extends Component {
 
     _checkIpfsOnUrl = () => {
         return new Promise(resolve => {
-            const a = document.location.href.match("^.*#/ipfs/(.+)$");
+            const a = document.location.href.match("^.*/ipfs/(.+)$");
             if (a) {
                 // TODO: pop modal about importing being processed.
                 this.isImportedProject = true;

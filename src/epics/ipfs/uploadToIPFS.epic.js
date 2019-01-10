@@ -37,7 +37,7 @@ const uploadToIPFS = (action$, state$, { backend, router }) => action$.pipe(
         const { uploadSettings } = action.data;
         return from(backend.ipfsSyncUp(projectId, uploadSettings))
         .pipe(
-            map(hash => document.location.href + '#/ipfs/' + hash),
+            map(hash => document.location.href + 'ipfs/' + hash),
             map(addTimeStamp),
             switchMap(({shareURL, timestamp}) => from(backend.loadFilePromise(projectId, '/.super/ipfs.json'))
                 .pipe(
