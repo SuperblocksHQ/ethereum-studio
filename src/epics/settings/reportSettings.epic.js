@@ -22,4 +22,3 @@ const reportSettings = (action$, state$) => action$.pipe(
     }));
 
 export default reportSettings;
-

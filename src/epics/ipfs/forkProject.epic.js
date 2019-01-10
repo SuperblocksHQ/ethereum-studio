@@ -4,6 +4,12 @@ import { ofType } from 'redux-observable';
 import { getSelectedProjectId } from '../../selectors/projects';
 import { ipfsActions } from '../../actions';
 
+/**
+ * Added the current temporary project to the user's list
+ *
+ * @param {*} backend - The Backend.js to perform file operations
+ * @param {*} control -
+ */
 const addProjectToUserList = (backend, control) => {
     return new Promise((resolve, reject) => {
         backend.assignNewInode(1, () => {
@@ -28,10 +34,18 @@ const addProjectToUserList = (backend, control) => {
     })
 };
 
+/**
+ * A temporary project is created when loading downloading a project from ipfs. This project is
+ * not actually added to the user's project list until a fork occurrs, therefore we avoid
+ * spamming the user's project list with projects they just openned to consult something and then
+ * discarded.
+ *
+ * @param {Backend} backend - The Backen.js object
+ * @param {*} router - The router containing
+ */
 const forkTempProject$ = (backend, router) => from(addProjectToUserList(backend, router.control));
 
 const forkOwnProject$ = (projectId, backend, router) => of(projectId).pipe(
-    tap(console.log("Forking own project")),
     switchMap(() => {
         if(confirm('Are you sure you want to fork your own project?')) {
             return from(backend.getProjectFiles(projectId)).pipe(

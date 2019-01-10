@@ -1,20 +1,25 @@
 import React, { Component } from 'react';
-import {toast, ToastContainer as ReactToastContainer } from 'react-toastify';
-import { ForkSuccessMessage, CloseButton } from '../index';
+import { toast, ToastContainer as ReactToastContainer } from 'react-toastify';
+import { CloseButton, getToastComponent } from '../index';
 
 export default class ToastContainer extends Component {
 
     componentDidUpdate(prevProps) {
-        if (prevProps.toasts !== this.props.toasts) {
-            this.renderToast();
-        }
+        this.renderToast(prevProps);
     }
 
-    renderToast() {
-        toast(<ForkSuccessMessage index={1}/>, {
-            className: "toastBody",
-            onClose: ({ index }) => console.log("Dismissed " + index)
-        });
+    renderToast(prevProps) {
+        this.props.toasts.map(toastItem => {
+            // New toast
+            if (!(prevProps.toasts.some(toast => toast.id === toastItem.id))) {
+                const ToastComponent = getToastComponent(toastItem.type);
+                toast(<ToastComponent id={toastItem.id}/>, {
+                    className: "toastBody",
+                    onClose: ({ id }) => this.props.toastDismissed(id)
+                });
+            }
+        })
+
     }
 
     render() {

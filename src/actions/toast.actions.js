@@ -1,9 +1,9 @@
-export const toastsActions = {
+export const toastActions = {
     TOAST_DISMISSED: 'TOAST_DISMISSED',
-    toastDismissed(index) {
+    toastDismissed(id) {
         return {
-            type: ipfsActions.TOAST_DISMISSED,
-            data: index
+            type: toastActions.TOAST_DISMISSED,
+            data: id
         };
     }
 }
