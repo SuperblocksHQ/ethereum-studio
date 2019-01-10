@@ -5,6 +5,7 @@ import sidePanels from './sidePanels.reducer';
 import panes from './panes.reducer';
 import ipfs from './ipfs.reducer';
 import toast from './toast.reducer';
+import view from './view.reducer';
 
 const rehydrated = (state = false, action) => {
     switch (action.type) {
@@ -23,7 +24,6 @@ export default {
     view,
     panes,
     ipfs,
-    toast
-    sidePanels,
-    panes
+    toast,
+    sidePanels
 };

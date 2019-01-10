@@ -4,7 +4,6 @@ import { sidePanelsEpics } from './sidePanels';
 
 export const epics = [
     ...ipfsEpics,
-    ...settingsEpics
     ...settingsEpics,
     ...sidePanelsEpics
 ];

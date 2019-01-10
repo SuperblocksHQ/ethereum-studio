@@ -16,7 +16,7 @@ export const CloseButton = ({ closeToast }) => (
 export const ProjectLoadedSuccess = () => (
     <div className={'messageContainer'}>
         <IconInformation/>
-        Project downloaded!
+        Project Downloaded!
     </div>
 );
 
@@ -41,7 +41,7 @@ export const getToastComponent = (type) => {
                 ToastComponent: ForkSuccessMessage,
                 className: classNames(['body', 'info'])
             }
-        case ipfsActions.FORK_PROJECT_FAIL:
+        case ipfsAProjectLoadedSuccessctions.FORK_PROJECT_FAIL:
             return {
                 ToastComponent: ForkFailMessage,
                 className: classNames(['body', 'error'])
