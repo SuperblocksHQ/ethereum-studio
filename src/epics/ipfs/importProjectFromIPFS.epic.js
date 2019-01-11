@@ -73,7 +73,7 @@ const importProjectFromIPFS = (action$, state$, { router }) => action$.pipe(
             map(ipfsActions.importProjectFromIpfsSuccess),
             catchError((error) => {
                 console.log("There was an issue importing the project from IPFS: " + error);
-                ipfsService.stripIpfsHash();
+                ipfsService.clearTempProject();
                 return of(ipfsActions.importProjectFromIpfsFail())
             })
         )
