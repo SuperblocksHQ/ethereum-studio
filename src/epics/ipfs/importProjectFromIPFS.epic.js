@@ -1,13 +1,11 @@
 import { from, of, interval } from 'rxjs';
-import {
-    switchMap,
+import { switchMap,
     withLatestFrom,
     map,
     catchError,
     tap,
     delayWhen,
     mergeMap,
-    delay,
     retry,
     take
  } from 'rxjs/operators';
@@ -47,6 +45,18 @@ const convertFile = (file) => {
     }
 }
 
+/**
+ * Simple Observable which will only finish once the router.control is actually available
+ *
+ * @param {*} router - The router object containing the control.js reference
+ */
+const controlAvailable$ = (router) => interval(100)
+    .pipe(
+        map(() => router.control),
+        retry(),
+        take(1)
+    )
+
 const importProjectFromIPFS = (action$, state$, { backend, router }) => action$.pipe(
     ofType(ipfsActions.IMPORT_PROJECT_FROM_IPFS),
     withLatestFrom(state$),
@@ -54,7 +64,7 @@ const importProjectFromIPFS = (action$, state$, { backend, router }) => action$.
         const hash = action.data;
         return from(backend.ipfsFetchFiles(hash))
         .pipe(
-            delay(100),
+            delayWhen(() => controlAvailable$(router)),
             mergeMap(response => from(response)
                 .pipe(
                     map(file => convertFile(file)),
@@ -72,14 +82,6 @@ const importProjectFromIPFS = (action$, state$, { backend, router }) => action$.
     })
 );
 
-// const controlAvailable$ = (router) => interval(100)
-//     .pipe(
-//         map(() => {
-//             console.log("Mierda");
-//             router.control
-//         }),
-//         retry(),
-//         take(1)
-//     )
+
 
 export default importProjectFromIPFS;
