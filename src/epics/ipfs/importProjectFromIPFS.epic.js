@@ -5,7 +5,6 @@ import { switchMap,
     catchError,
     tap,
     delayWhen,
-    mergeMap,
     retry,
     take
  } from 'rxjs/operators';
@@ -57,6 +56,9 @@ const controlAvailable$ = (router) => interval(100)
         take(1)
     )
 
+/**
+ * Epic in charge of importing a project from IPFS.
+ */
 const importProjectFromIPFS = (action$, state$, { backend, router }) => action$.pipe(
     ofType(ipfsActions.IMPORT_PROJECT_FROM_IPFS),
     withLatestFrom(state$),
@@ -65,12 +67,7 @@ const importProjectFromIPFS = (action$, state$, { backend, router }) => action$.
         return from(backend.ipfsFetchFiles(hash))
         .pipe(
             delayWhen(() => controlAvailable$(router)),
-            mergeMap(response => from(response)
-                .pipe(
-                    map(file => convertFile(file)),
-                    take(1)
-                )
-            ),
+            map(response => response.map(f => convertFile(f))),
             tap(() => router.control.importProject(files, true)),
             map(ipfsActions.importProjectFromIpfsSuccess),
             catchError((error) => {
@@ -81,7 +78,5 @@ const importProjectFromIPFS = (action$, state$, { backend, router }) => action$.
         )
     })
 );
-
-
 
 export default importProjectFromIPFS;
