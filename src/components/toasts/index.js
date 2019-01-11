@@ -13,13 +13,6 @@ export const CloseButton = ({ closeToast }) => (
     </button>
 );
 
-export const ProjectLoadedSuccess = () => (
-    <div className={'messageContainer'}>
-        <IconInformation/>
-        Project Downloaded!
-    </div>
-);
-
 const info = (text) => ({
     ToastComponent: () =>
         <div className={'messageContainer'}>
