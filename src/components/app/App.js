@@ -164,14 +164,7 @@ export default class App extends Component {
 
                 this.functions.modal.close();
 
-                this._checkIpfsOnUrl().then(status => {
-                    if (status == 1) {
-                        return;
-                    }
-                    if (showSplash) {
-                        this._showSplash();
-                    }
-                });
+                this._checkIpfsOnUrl();
             } else {
                 setTimeout(fn, 500);
             }
@@ -180,80 +173,12 @@ export default class App extends Component {
     };
 
     _checkIpfsOnUrl = () => {
-        return new Promise(resolve => {
-            const a = document.location.href.match("^.*/ipfs/(.+)$");
+        const a = document.location.href.match("^.*/ipfs/(.+)$");
             if (a) {
                 // TODO: pop modal about importing being processed.
                 this.isImportedProject = true;
-                this._importFromIpfs(a[1]).then( () => {
-                    // TODO Close modal about processing import
-                    resolve(1);  // 1 means do not show splash
-                });
-            }
-            else {
-                resolve(0);
-            }
-        });
-    };
-
-    _importFromIpfs = (hash) => {
-        return new Promise( resolve => {
-            // Load files from IPFS.
-            const backend = new Backend();
-            const files = {
-                '/': {
-                    type: 'd',
-                    children: {}
-                }
-            };
-
-            backend.ipfsFetchFiles(hash).then( result => {
-                // Convert IPFS result into our internal files/dir format.
-                result.map( file => {
-                    if (file.content) {
-                        const a = file.path.match("[^/]+(.*/)([^/]+)$");
-                        const fragments = a[1].split('/');
-                        let node = files['/'].children;
-                        for(let i = 1; i < fragments.length - 1; i++) {
-                            if (!node[fragments[i]]) {
-                                node[fragments[i]] = {
-                                    type: 'd',
-                                    children: {},
-                                };
-                            }
-                            node = node[fragments[i]].children;
-                        }
-                        node[a[2]] = {
-                            type: 'f',
-                            contents: file.content.toString(),
-                        };
-                    }
-                });
-                // We need to wait for control to be loaded.
-                // NOTE:
-                const fn = () => {
-                    if (this.router.control) {
-                        this.router.control.importProject(files, true);
-                        resolve();
-                        toast(<ProjectLoadedSuccess />, {
-                            className: "toastBody"
-                        });
-                    }
-                    else {
-                        setTimeout( fn, 100);
-                    }
-                };
-
-                fn();
-            })
-            .catch( () => {
-                alert("Error: Could not import project.");
-                this.props.router.control.backend._stripIpfsHash();
-                resolve();
-                return;
-            });
-
-        });
+                this.props.importProjectFromIpfs(a[1]);
+        }
     };
 
     _showSplash = () => {

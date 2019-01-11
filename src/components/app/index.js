@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { settingsActions, appActions } from '../../actions';
+import { settingsActions, appActions, ipfsActions } from '../../actions';
 import { getShowSplashScreen, getShowAnalyticsTrackingDialog } from '../../selectors/settings';
 import { getAppVersion } from '../../selectors/app';
 import App from './App';
@@ -17,6 +17,9 @@ const mapDispatchToProps = dispatch => {
         },
         showSplashNoMore: () => {
             dispatch(settingsActions.showSplashNoMore());
+        },
+        importProjectFromIpfs: (hash) => {
+            dispatch(ipfsActions.importProjectFromIpfs(hash));
         },
     };
 };

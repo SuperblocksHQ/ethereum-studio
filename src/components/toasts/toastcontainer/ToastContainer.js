@@ -19,7 +19,6 @@ export default class ToastContainer extends Component {
                 });
             }
         })
-
     }
 
     render() {

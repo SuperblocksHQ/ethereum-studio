@@ -20,31 +20,35 @@ export const ProjectLoadedSuccess = () => (
     </div>
 );
 
-const ForkSuccessMessage = () => (
-    <div className={'messageContainer'}>
-        <IconInformation/>
-        Project Forked!
-    </div>
-);
+const info = (text) => ({
+    ToastComponent: () =>
+        <div className={'messageContainer'}>
+            <IconInformation/>
+            {text}
+        </div>
+    ,
+    className: classNames(['body', 'info'])
+});
 
-const ForkFailMessage = () => (
-    <div className={'messageContainer'}>
-        <IconWarning/>
-        Error Forking!
-    </div>
-);
+const error = (text) => ({
+    ToastComponent: () =>
+        <div className={'messageContainer'}>
+            <IconWarning/>
+            {text}
+        </div>
+    ,
+    className: classNames(['body', 'error'])
+});
 
 export const getToastComponent = (type) => {
     switch(type) {
         case ipfsActions.FORK_PROJECT_SUCCESS:
-            return {
-                ToastComponent: ForkSuccessMessage,
-                className: classNames(['body', 'info'])
-            }
-        case ipfsAProjectLoadedSuccessctions.FORK_PROJECT_FAIL:
-            return {
-                ToastComponent: ForkFailMessage,
-                className: classNames(['body', 'error'])
-            }
+            return info('Project Forked!');
+        case ipfsActions.FORK_PROJECT_FAIL:
+            return error('Error while forking!');
+        case ipfsActions.IMPORT_PROJECT_FROM_IPFS_SUCCESS:
+            return info('Project Downloaded!');
+        case ipfsActions.IMPORT_PROJECT_FROM_IPFS_FAIL:
+            return error('Error importing project!');
     }
 }

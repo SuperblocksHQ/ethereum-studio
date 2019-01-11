@@ -20,7 +20,10 @@ const IPFS = require('ipfs-api');
 
 const DAPP_FORMAT_VERSION = 'dapps1.1.0';
 export default class Backend {
-    constructor() {}
+
+    constructor() {
+        this.ipfs = new IPFS({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' })
+    }
 
     // Make sure projects created for an older version are converted to the current format.
     // dapps1.0 is the 1.0 BETA which is deprecated.
@@ -1090,17 +1093,7 @@ export default class Backend {
     };
 
     ipfsFetchFiles = (hash, options) => {
-        return new Promise( (resolve, reject) => {
-            const ipfs = new IPFS({ host: 'ipfs.infura.io', port: 5001,
-                protocol: 'https' });
-
-            ipfs.files.get(hash).then( (res) => {
-                resolve(res);
-            })
-            .catch( (e) => {
-                reject(e);
-            });
-        });
+        return this.ipfs.files.get(hash);
     };
 
     /**
@@ -1122,12 +1115,6 @@ export default class Backend {
                 reject();
                 return;
             }
-
-            const ipfs = new IPFS({
-                    host: 'ipfs.infura.io',
-                    port: 5001,
-                    protocol: 'https'
-                });
 
             const files = [];
 
@@ -1152,7 +1139,7 @@ export default class Backend {
                                 if (child.type == 'f') {
                                     files.push({
                                             path: path + childKey,
-                                            content: ipfs.types.Buffer.from(child.contents),
+                                            content: this.ipfs.types.Buffer.from(child.contents),
                                         });
 
                                     fn2();
@@ -1181,7 +1168,7 @@ export default class Backend {
             };
 
             fn(node, "").then( () => {
-                ipfs.files.add(files, {onlyHash: false, wrapWithDirectory: true}).then( (res) => {
+                this.ipfs.files.add(files, {onlyHash: false, wrapWithDirectory: true}).then( (res) => {
                     const hash = res.filter( (obj) => {
                         if (obj.path === "") return true;
                     })[0].hash;

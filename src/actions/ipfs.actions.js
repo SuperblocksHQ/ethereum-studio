@@ -76,5 +76,25 @@ export const ipfsActions = {
             type: ipfsActions.FORK_PROJECT_FAIL,
             data: error
         }
-    }
+    },
+    IMPORT_PROJECT_FROM_IPFS: 'IMPORT_PROJECT_FROM_IPFS',
+    importProjectFromIpfs(hash) {
+        return {
+            type: ipfsActions.IMPORT_PROJECT_FROM_IPFS,
+            data: hash
+        }
+    },
+    IMPORT_PROJECT_FROM_IPFS_SUCCESS: 'IMPORT_PROJECT_FROM_IPFS_SUCCESS',
+    importProjectFromIpfsSuccess() {
+        return {
+            type: ipfsActions.IMPORT_PROJECT_FROM_IPFS_SUCCESS,
+        }
+    },
+    IMPORT_PROJECT_FROM_IPFS_FAIL: 'IMPORT_PROJECT_FROM_IPFS_FAIL',
+    importProjectFromIpfsFail(error) {
+        return {
+            type: ipfsActions.IMPORT_PROJECT_FROM_IPFS_FAIL,
+            data: error
+        }
+    },
 }
