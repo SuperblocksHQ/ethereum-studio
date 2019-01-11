@@ -190,9 +190,10 @@ export default class Control extends Component {
             if (cb) cb(0);
             return;
         }
-
+        
         // if we switch from temporary project, discard it
         if (this.getActiveProject() && this.getActiveProject().getInode() === 1) {
+            this.props.router.control.backend._stripIpfsHash();
             this.props.router.control.backend.deleteProject(1, () => {});
         }
 
@@ -273,8 +274,6 @@ export default class Control extends Component {
                                     this._projectsList.length - 1
                                 ]
                             );
-                            this.props.router.control.backend._stripIpfsHash();
-                            this.props.router.control.backend.deleteProject(1, () => {});
                         }
                     });
                 });
