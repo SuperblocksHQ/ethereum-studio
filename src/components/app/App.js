@@ -24,11 +24,9 @@ import { Wallet } from '../projecteditor/wallet';
 import Solc from '../solc';
 import EVM from '../evm';
 import Networks from '../../networks';
-import { previewService } from '../../services';
+import { previewService, ipfsService } from '../../services';
 import AnalyticsDialog from '../analyticsDialog';
 import OnlyIf from '../onlyIf';
-import {toast} from 'react-toastify';
-import { ProjectLoadedSuccess } from "../toasts";
 import ToastContainer from "../toasts/toastcontainer";
 
 export default class App extends Component {
@@ -157,6 +155,7 @@ export default class App extends Component {
         this.functions.EVM = new EVM({ id: this.generateId() });
 
         previewService.init(this.functions.wallet);
+        ipfsService.init();
 
         const fn = () => {
             if (this.functions.compiler && this.functions.EVM) {

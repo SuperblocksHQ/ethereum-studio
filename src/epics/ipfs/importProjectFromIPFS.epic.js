@@ -10,6 +10,7 @@ import { switchMap,
  } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import { ipfsActions } from '../../actions';
+import { ipfsService } from '../../services';
 
 const files = {
     '/': {
@@ -59,12 +60,12 @@ const controlAvailable$ = (router) => interval(100)
 /**
  * Epic in charge of importing a project from IPFS.
  */
-const importProjectFromIPFS = (action$, state$, { backend, router }) => action$.pipe(
+const importProjectFromIPFS = (action$, state$, { router }) => action$.pipe(
     ofType(ipfsActions.IMPORT_PROJECT_FROM_IPFS),
     withLatestFrom(state$),
     switchMap(([action,]) => {
         const hash = action.data;
-        return from(backend.ipfsFetchFiles(hash))
+        return from(ipfsService.ipfsFetchFiles(hash))
         .pipe(
             delayWhen(() => controlAvailable$(router)),
             map(response => response.map(f => convertFile(f))),
@@ -72,7 +73,7 @@ const importProjectFromIPFS = (action$, state$, { backend, router }) => action$.
             map(ipfsActions.importProjectFromIpfsSuccess),
             catchError((error) => {
                 console.log("There was an issue importing the project from IPFS: " + error);
-                backend._stripIpfsHash();
+                ipfsService.stripIpfsHash();
                 return of(ipfsActions.importProjectFromIpfsFail())
             })
         )

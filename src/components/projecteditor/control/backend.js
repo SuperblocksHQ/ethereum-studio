@@ -14,22 +14,19 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-const JSZip = require("jszip");
-const FileSaver = require('file-saver');
-const IPFS = require('ipfs-api');
+import JSZip from 'jszip';
+import FileSaver from 'file-saver';
 
-const DAPP_FORMAT_VERSION = 'dapps1.1.0';
+
 export default class Backend {
 
-    constructor() {
-        this.ipfs = new IPFS({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' })
-    }
+    static DAPP_FORMAT_VERSION = 'dapps1.1.0';
 
     // Make sure projects created for an older version are converted to the current format.
     // dapps1.0 is the 1.0 BETA which is deprecated.
     // dapps1.0.0 is the released 1.0 format and will be converted into 1.1.0.
     convertProjects = cb => {
-        if (!localStorage.getItem(DAPP_FORMAT_VERSION)) {
+        if (!localStorage.getItem(Backend.DAPP_FORMAT_VERSION)) {
             if (localStorage.getItem('dapps1.0.0')) {
                 // Convert from 1.0 (beta) to 1.0.0.
                 const data = JSON.parse(localStorage.getItem('dapps1.0.0'));
@@ -53,7 +50,7 @@ export default class Backend {
                 // store projects.
                 const newData = { projects: newProjects };
                 localStorage.setItem(
-                    DAPP_FORMAT_VERSION,
+                    Backned.Backend.DAPP_FORMAT_VERSION,
                     JSON.stringify(newData)
                 );
                 cb(1); // Indicate that there are converted projects.
@@ -141,7 +138,7 @@ export default class Backend {
         });
 
         const dappfile2 = {
-            format: DAPP_FORMAT_VERSION.substr(5),  // IMPORTANT: if the format of this variable changes this must be updated. We only want the "x.y.z" part.
+            format: Backend.DAPP_FORMAT_VERSION.substr(5),  // IMPORTANT: if the format of this variable changes this must be updated. We only want the "x.y.z" part.
             project: dappfile.project,
             environments: dappfile.environments,
             wallets: wallets,
@@ -395,7 +392,7 @@ export default class Backend {
     // Add a new inode number to the project
     assignNewInode = (inode, cb) => {
         const data =
-            JSON.parse(localStorage.getItem(DAPP_FORMAT_VERSION)) || {};
+            JSON.parse(localStorage.getItem(Backend.DAPP_FORMAT_VERSION)) || {};
         if (!data.projects) data.projects = [];
 
         const projects = data.projects.map(project => {
@@ -408,7 +405,7 @@ export default class Backend {
         });
 
         data.projects = projects;
-        localStorage.setItem(DAPP_FORMAT_VERSION, JSON.stringify(data));
+        localStorage.setItem(Backend.DAPP_FORMAT_VERSION, JSON.stringify(data));
         cb();
     };
 
@@ -445,7 +442,7 @@ export default class Backend {
      */
     newFile = (inode, path, file, cb) => {
         const data =
-            JSON.parse(localStorage.getItem(DAPP_FORMAT_VERSION)) || {};
+            JSON.parse(localStorage.getItem(Backend.DAPP_FORMAT_VERSION)) || {};
 
         if (!data.projects) data.projects = [];
 
@@ -491,7 +488,7 @@ export default class Backend {
             type: type,
             children: type == 'd' ? {} : null,
         };
-        localStorage.setItem(DAPP_FORMAT_VERSION, JSON.stringify(data));
+        localStorage.setItem(Backend.DAPP_FORMAT_VERSION, JSON.stringify(data));
         setTimeout(() => cb(0), 1);
     };
 
@@ -536,7 +533,7 @@ export default class Backend {
         }
 
         const data =
-            JSON.parse(localStorage.getItem(DAPP_FORMAT_VERSION)) || {};
+            JSON.parse(localStorage.getItem(Backend.DAPP_FORMAT_VERSION)) || {};
 
         if (!data.projects) data.projects = [];
 
@@ -600,7 +597,7 @@ export default class Backend {
 
             targetFolder.children[b[2]] = o;
 
-            localStorage.setItem(DAPP_FORMAT_VERSION, JSON.stringify(data));
+            localStorage.setItem(Backend.DAPP_FORMAT_VERSION, JSON.stringify(data));
             setTimeout(() => cb(0), 1);
         } catch(e) {
             setTimeout(() => cb(6), 1);
@@ -614,7 +611,7 @@ export default class Backend {
      */
     deleteFile = (inode, path, cb) => {
         const data =
-            JSON.parse(localStorage.getItem(DAPP_FORMAT_VERSION)) || {};
+            JSON.parse(localStorage.getItem(Backend.DAPP_FORMAT_VERSION)) || {};
 
         if (!data.projects) data.projects = [];
 
@@ -645,7 +642,7 @@ export default class Backend {
             folder = folder2;
         }
         delete folder.children[parts[parts.length - 1]];
-        localStorage.setItem(DAPP_FORMAT_VERSION, JSON.stringify(data));
+        localStorage.setItem(Backend.DAPP_FORMAT_VERSION, JSON.stringify(data));
         if (cb) setTimeout(() => cb(0), 1);
     };
 
@@ -655,7 +652,7 @@ export default class Backend {
      */
     listFiles = (inode, path, cb) => {
         const data =
-            JSON.parse(localStorage.getItem(DAPP_FORMAT_VERSION)) || {};
+            JSON.parse(localStorage.getItem(Backend.DAPP_FORMAT_VERSION)) || {};
 
         if (!data.projects) data.projects = [];
 
@@ -704,7 +701,7 @@ export default class Backend {
      */
     deleteProject = (inode, cb) => {
         const data =
-            JSON.parse(localStorage.getItem(DAPP_FORMAT_VERSION)) || {};
+            JSON.parse(localStorage.getItem(Backend.DAPP_FORMAT_VERSION)) || {};
         if (!data.projects) data.projects = [];
 
         const projects = data.projects.filter(item => {
@@ -712,7 +709,7 @@ export default class Backend {
         });
 
         data.projects = projects;
-        localStorage.setItem(DAPP_FORMAT_VERSION, JSON.stringify(data));
+        localStorage.setItem(Backend.DAPP_FORMAT_VERSION, JSON.stringify(data));
         cb();
     };
 
@@ -722,7 +719,7 @@ export default class Backend {
      */
     loadProjects = cb => {
         const data =
-            JSON.parse(localStorage.getItem(DAPP_FORMAT_VERSION)) || {};
+            JSON.parse(localStorage.getItem(Backend.DAPP_FORMAT_VERSION)) || {};
         const projects = [];
         (data.projects || []).map(project => {
             // We need to parse the `/dappfile.json`
@@ -750,7 +747,7 @@ export default class Backend {
     getProjectFiles = (inode) => {
         return new Promise((resolve, reject) => {
             const data =
-                JSON.parse(localStorage.getItem(DAPP_FORMAT_VERSION)) || {};
+                JSON.parse(localStorage.getItem(Backend.DAPP_FORMAT_VERSION)) || {};
             if (!data.projects) data.projects = [];
 
             const project = data.projects.filter(item => {
@@ -767,7 +764,7 @@ export default class Backend {
 
     createProject = (files, cb, isTemporary) => {
         const data =
-            JSON.parse(localStorage.getItem(DAPP_FORMAT_VERSION)) || {};
+            JSON.parse(localStorage.getItem(Backend.DAPP_FORMAT_VERSION)) || {};
 
         if (!data.projects) data.projects = [];
 
@@ -794,7 +791,7 @@ export default class Backend {
         data.projects.push(project);
 
         try {
-            localStorage.setItem(DAPP_FORMAT_VERSION, JSON.stringify(data));
+            localStorage.setItem(Backend.DAPP_FORMAT_VERSION, JSON.stringify(data));
         }
         catch(e) {
             alert("Error: The browser local storage exceeded it's quota. Please delete some projects to make room for new ones.");
@@ -825,7 +822,7 @@ export default class Backend {
      */
     saveFile = (inode, payload, cb) => {
         const data =
-            JSON.parse(localStorage.getItem(DAPP_FORMAT_VERSION)) || {};
+            JSON.parse(localStorage.getItem(Backend.DAPP_FORMAT_VERSION)) || {};
 
         if (!data.projects) data.projects = [];
 
@@ -859,7 +856,7 @@ export default class Backend {
             contents: payload.contents,
         };
         try {
-            localStorage.setItem(DAPP_FORMAT_VERSION, JSON.stringify(data));
+            localStorage.setItem(Backend.DAPP_FORMAT_VERSION, JSON.stringify(data));
         } catch (e) {
             console.error(e);
             setTimeout(() => cb({ status: 1 }), 1);
@@ -890,7 +887,7 @@ export default class Backend {
      */
     loadFile = (inode, path, cb) => {
         const data =
-            JSON.parse(localStorage.getItem(DAPP_FORMAT_VERSION)) || {};
+            JSON.parse(localStorage.getItem(Backend.DAPP_FORMAT_VERSION)) || {};
 
         if (!data.projects) data.projects = [];
 
@@ -932,13 +929,6 @@ export default class Backend {
        return projects.find((project) => project.inode === inode);
     }
 
-    /**
-     * Strip the url from the dash and everything following it.
-     */
-    _stripIpfsHash = () => {
-        history.pushState({}, '', '/');
-    };
-
     generateRandomInode(projects) {
         let inode = 0;
         do {
@@ -955,7 +945,7 @@ export default class Backend {
         const zip = new JSZip();
 
         const data =
-            JSON.parse(localStorage.getItem(DAPP_FORMAT_VERSION)) || {};
+            JSON.parse(localStorage.getItem(Backend.DAPP_FORMAT_VERSION)) || {};
 
         if (!data.projects) data.projects = [];
 
@@ -1088,99 +1078,6 @@ export default class Backend {
             })
             .catch( (e) => {
                 reject();
-            });
-        });
-    };
-
-    ipfsFetchFiles = (hash, options) => {
-        return this.ipfs.files.get(hash);
-    };
-
-    /**
-     * Upload the given project to IPFS.
-     *
-     */
-    ipfsSyncUp = (inode, { includeBuildInfo, includeProjectConfig }) => {
-        return new Promise( (resolve, reject) => {
-            const data =
-                JSON.parse(localStorage.getItem(DAPP_FORMAT_VERSION)) || {};
-
-            if (!data.projects) data.projects = [];
-
-            var project = data.projects.filter(item2 => {
-                return inode == item2.inode;
-            })[0];
-
-            if (!project || !project.files) {
-                reject();
-                return;
-            }
-
-            const files = [];
-
-            var node = project.files['/'];
-
-            const fn = (node, path) => {
-                return new Promise( (resolve) => {
-                    if (path === 'build/' && !includeBuildInfo) {
-                        resolve();
-                        return;
-                    } else if (path === '.super/' && !includeProjectConfig) {
-                        resolve();
-                        return;
-                    }
-
-                    if (node.children) {
-                        const childrenKeys = Object.keys(node.children);
-                        const fn2 = () => {
-                            const childKey = childrenKeys.pop();
-                            if (childKey) {
-                                const child = node.children[childKey];
-                                if (child.type == 'f') {
-                                    files.push({
-                                            path: path + childKey,
-                                            content: this.ipfs.types.Buffer.from(child.contents),
-                                        });
-
-                                    fn2();
-                                    return
-                                }
-                                else {
-                                    // Directory
-                                    fn(child, path + childKey + '/').then( () => {
-                                        fn2();
-                                        return;
-                                    });
-                                }
-                            }
-                            else {
-                                resolve();
-                                return;
-                            }
-                        };
-
-                        fn2();
-                    }
-                    else {
-                        resolve();
-                    }
-                });
-            };
-
-            fn(node, "").then( () => {
-                this.ipfs.files.add(files, {onlyHash: false, wrapWithDirectory: true}).then( (res) => {
-                    const hash = res.filter( (obj) => {
-                        if (obj.path === "") return true;
-                    })[0].hash;
-
-                    resolve(hash);
-                })
-                .catch( (e) => {
-                    reject(e);
-                });
-            })
-            .catch( (e) => {
-                reject(e);
             });
         });
     };

@@ -3,6 +3,7 @@ import { switchMap, withLatestFrom, map, catchError, tap, delayWhen } from 'rxjs
 import { ofType } from 'redux-observable';
 import { getSelectedProjectId } from '../../selectors/projects';
 import { ipfsActions } from '../../actions';
+import { ipfsService } from '../../services';
 
 /**
  * Add a timestamp to the upload object we are about to save in order to have the possibility to build a timeline
@@ -35,11 +36,11 @@ const uploadToIPFS = (action$, state$, { backend, router }) => action$.pipe(
     switchMap(([action, state]) => {
         const projectId = getSelectedProjectId(state);
         const { uploadSettings } = action.data;
-        return from(backend.ipfsSyncUp(projectId, uploadSettings))
+        return from(ipfsService.ipfsSyncUp(projectId, uploadSettings))
         .pipe(
             map(hash => document.location.href + 'ipfs/' + hash),
             map(addTimeStamp),
-            switchMap(({shareURL, timestamp}) => from(backend.loadFilePromise(projectId, '/.super/ipfs.json'))
+            switchMap(({shareURL, timestamp}) => from( backend.loadFilePromise(projectId, '/.super/ipfs.json'))
                 .pipe(
                     map(JSON.parse),
                     catchError(() => {
