@@ -64,6 +64,7 @@ export default class Control extends Component {
         this._loadProjects(status => {
             if (status == 0) {
                 if (!this._openLastProject() && this.props.isImportedProject === false) {
+                    this._setProjectActive(null);
                     this._showWelcome();
                 }
             }
