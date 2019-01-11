@@ -192,7 +192,7 @@ export default class Control extends Component {
         }
 
         // if we switch from temporary project, discard it
-        if (this.getActiveProject() && this.getActiveProject().getInode() === 1) {
+        if (project.getInode() !== 1) {
             ipfsService.clearTempProject();
         }
 
