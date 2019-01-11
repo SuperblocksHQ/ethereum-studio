@@ -1079,5 +1079,5 @@ export default class Backend {
                 reject();
             });
         });
-    }
+    };
 }
