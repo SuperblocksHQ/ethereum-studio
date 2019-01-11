@@ -5,7 +5,7 @@ export const initialState = {
 };
 
 var counter = 0;
-export default function toatsReducer(state = initialState, action) {
+export default function toastsReducer(state = initialState, action) {
     switch (action.type) {
         case ipfsActions.IMPORT_PROJECT_FROM_IPFS_SUCCESS:
         case ipfsActions.IMPORT_PROJECT_FROM_IPFS_FAIL:
