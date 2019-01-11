@@ -83,6 +83,7 @@
     "amplitude-js": "^4.5.2",
     "bfj": "6.1.1",
     "classnames": "^2.2.5",
+    "copy-to-clipboard": "^3.0.8",
     "crypto-js": "^3.1.9-1",
     "eth-lightwallet": "^3.0.1",
     "ethereumjs-abi": "^0.6.5",

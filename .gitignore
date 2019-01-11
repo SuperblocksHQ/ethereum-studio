@@ -5,3 +5,4 @@ dist
 .idea
 *.iml
 */**/openzeppelin.json
+.env.local

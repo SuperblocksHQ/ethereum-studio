@@ -15,22 +15,27 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { Component } from 'react';
-import classNames from 'classnames';
 import style from './style.less';
 import Control from './control';
 import Panes from './panes';
 import TopBar from '../topbar';
 import BottomBar from '../bottomBar';
 import ContactContainer from '../contactContainer';
-import TransactionLogPanel from '../blockexplorer/transactionlogPanel';
-import { IconTransactions, IconClose } from '../icons';
+import SplitterLayoutBase from 'react-splitter-layout';
+import { PreviewSidePanel, TransactionLogPanel } from './sidePanels';
+import { IconTransactions, IconShowPreview } from '../icons';
+import { SideButton } from './sideButton';
+
+class SplitterLayout extends SplitterLayoutBase {
+    handleResize() {
+        // all this does is just disabling recalculation of sizes in non-persengate mode when window is resized
+    }
+}
 
 export default class ProjectEditor extends Component {
     state = {
-        controlPanelWidth: 280,
-        minSize: 280,
-        dragging: false,
-        EVMInit: false
+        EVMInit: false,
+        sidePanelDragging: false
     };
 
     constructor(props) {
@@ -43,7 +48,7 @@ export default class ProjectEditor extends Component {
             'keydown',
             function(e) {
                 if (
-                    e.keyCode == 83 &&
+                    e.keyCode === 83 &&
                     (navigator.platform.match('Mac') ? e.metaKey : e.ctrlKey)
                 ) {
                     e.preventDefault();
@@ -53,23 +58,19 @@ export default class ProjectEditor extends Component {
         );
     }
 
-    // we could get away with not having this (and just having the listeners on
-    // our div), but then the experience would be possibly be janky. If there's
-    // anything w/ a higher z-index that gets in the way, then you're toast,
-    // etc.
-    componentDidUpdate(props, state) {
-        if (this.state.dragging && !state.dragging) {
-            document.addEventListener('mousemove', this.onMouseMove);
-            document.addEventListener('mouseup', this.onMouseUp);
-        } else if (!this.state.dragging && state.dragging) {
-            document.removeEventListener('mousemove', this.onMouseMove);
-            document.removeEventListener('mouseup', this.onMouseUp);
-        }
+    componentDidUpdate(prevProps) {
         // if project is present, init EVM if not already initialized
         if(this.props.router.control.getActiveProject() && !this.state.EVMInit){
             this.initEVM()
         }
-    };
+
+        // update the code editor panes when side panel opens or closes
+        const wasSidePanelOpen = prevProps.displayTransactionsPanel || prevProps.previewSidePanel.open;
+        const isSidePanelOpen = this.props.displayTransactionsPanel || this.props.previewSidePanel.open;
+        if (wasSidePanelOpen !== isSidePanelOpen) {
+            this.onPanesSizeChange();
+        }
+    }
 
     initEVM = () => {
         this.setState({
@@ -99,62 +100,15 @@ export default class ProjectEditor extends Component {
         this.forceUpdate();
     };
 
-    onMouseMove = e => {
-        e.stopPropagation();
-        e.preventDefault();
-        const { dragging, minSize } = this.state;
-        const maxSize = screen.width * 0.35;
-        if (!dragging) return;
-        if (e.pageX < maxSize && e.pageX > minSize) {
-            this.setState({
-                controlPanelWidth: e.pageX
-            });
-        } else if (e.pageX <= minSize - 150) {
-            this.setState({
-                controlPanelWidth: 0
-            });
-        } else if (e.pageX >= maxSize || e.pageX <= minSize) {
-            return null;
-        } else {
-            this.onMouseUp(e);
+    toggleSidePanelDragging() {
+        this.setState({ sidePanelDragging: !this.state.sidePanelDragging });
+    }
+
+    onPanesSizeChange() {
+        if (this.props.router.panes) {
+            this.props.router.panes.redraw(true);
         }
-    };
-
-    onMouseUp = e => {
-        e.stopPropagation();
-        e.preventDefault();
-
-        this.setState({ dragging: false });
-    };
-
-    onMouseDown = e => {
-        e.stopPropagation();
-        e.preventDefault();
-
-        // only left mouse button
-        if (e.button !== 0) return;
-        this.setState({
-            dragging: true,
-        });
-    };
-
-    onDoubleClick = e => {
-        e.stopPropagation();
-        e.preventDefault();
-        const { minSize } = this.state;
-
-        // only left mouse button
-        if (e.button !== 0) return;
-
-        this.setState({
-            controlPanelWidth: minSize
-        });
-    };
-
-    onShowHideTransactionsClicked = () => {
-        const { toggleTransactionsHistoryPanel } = this.props;
-        toggleTransactionsHistoryPanel();
-    };
+    }
 
     onProjectSelectedHandle = () => {
         const { closeTransactionsHistoryPanel } = this.props;
@@ -162,8 +116,8 @@ export default class ProjectEditor extends Component {
     };
 
     render() {
-        var endpoint = '';
-        var project;
+        let endpoint = '';
+        let project;
         if (this.props.router && this.props.router.control) {
             project =
                 this.props.router.control &&
@@ -175,89 +129,72 @@ export default class ProjectEditor extends Component {
                 ).endpoint;
             }
         }
-        const { controlPanelWidth } = this.state;
-        const { displayTransactionsPanel } = this.props;
+
+        const { displayTransactionsPanel, previewSidePanel, toggleTransactionsHistoryPanel,
+                previewSidePanelActions } = this.props;
+
         return (
-            <div className={style.projecteditor} id="main_container">
+            <div className={style.projecteditor}>
                 <TopBar
                     router={this.props.router}
                     functions={this.props.functions}
                     onProjectSelected={this.onProjectSelectedHandle}
                 />
-                <div style={{display: "flex", height: "100%"}}>
-                    <div
-                        key="main_control"
-                        id="main_control"
-                        className={style.control}
-                        style={{ width: controlPanelWidth }}
-                    >
-                        <Control
-                            router={this.props.router}
-                            functions={this.props.functions}
-                        />
-                        <ContactContainer />
-                    </div>
-                    <span
-                        className="resizer vertical"
-                        onMouseDown={this.onMouseDown}
-                        onDoubleClick={this.onDoubleClick}
-                    />
-                    <div style={{ position: "relative", width: "100%" }}>
-                        <div
-                            key="main_panes"
-                            id="main_panes"
-                            className={style.panescontainer}
-                        >
-                            <Panes
-                                router={this.props.router}
-                                functions={this.props.functions}
-                                isActionPanelShowing={displayTransactionsPanel}
-                            />
-                            {displayTransactionsPanel ? (
-                                <div className={style.actionContainer}>
-                                    <div className={style.header}>
-                                        <div className={style.panelIcon}>
-                                            <IconTransactions/>
-                                        </div>
-                                        <span className={style.title}>
-                                            Transactions History
-                                        </span>
-                                        <button
-                                            className={classNames([
-                                                style.icon,
-                                                'btnNoBg',
-                                            ])}
-                                            onClick={this.onShowHideTransactionsClicked}
-                                        >
-                                            <IconClose />
-                                        </button>
-                                    </div>
-                                    <TransactionLogPanel
-                                        router={this.props.router}
-                                    />
-                                </div>
-                            ) : null}
-                        </div>
-                        <div className={style.actionPanel}>
-                            <div className={style.actions}>
-                                <button
-                                    className={classNames([
-                                        style.action,
-                                        'btnNoBg',
-                                    ])}
-                                    onClick={this.onShowHideTransactionsClicked}
-                                >
-                                    <IconTransactions />
-                                    <span className={style.verticalText}>
-                                        Transactions
-                                    </span>
-                                </button>
+                <div className={style.mainWrapper}>
+                    <div className={style.mainLayout}>
+                        <SplitterLayout 
+                            primaryIndex={1}
+                            secondaryMinSize={0}
+                            secondaryInitialSize={280}
+                            onSecondaryPaneSizeChange={() => this.onPanesSizeChange()}>
+                            <div className={style.control}>
+                                <Control
+                                    router={this.props.router}
+                                    functions={this.props.functions}
+                                />
+                                <ContactContainer />
                             </div>
-                        </div>
-                        <BottomBar
-                            endpoint={endpoint}
-                        />
-                </div>
+                            <div>
+                                <SplitterLayout
+                                    primaryIndex={0}
+                                    secondaryMinSize={232}
+                                    secondaryInitialSize={500}
+                                    onDragStart={() => this.toggleSidePanelDragging()}
+                                    onDragEnd={() => this.toggleSidePanelDragging()}
+                                    onSecondaryPaneSizeChange={() => this.onPanesSizeChange()}>
+
+                                    <Panes dragging={this.state.sidePanelDragging} router={this.props.router} functions={this.props.functions} />
+                    
+                                    { displayTransactionsPanel &&
+                                    <TransactionLogPanel
+                                        dragging={this.state.sidePanelDragging}
+                                        router={this.props.router}
+                                        onClose={toggleTransactionsHistoryPanel}
+                                    /> }
+
+                                    { previewSidePanel.open && 
+                                    <PreviewSidePanel
+                                        dragging={this.state.sidePanelDragging}
+                                        {...previewSidePanel}
+                                        {...previewSidePanelActions}
+                                    /> }
+                                    
+                                </SplitterLayout>
+                            
+                                <BottomBar endpoint={endpoint} />
+                            </div>
+                        </SplitterLayout>
+                    </div>
+
+                    <div className={style.sideButtonsContainer}>
+                        <SideButton name="Transactions"
+                            icon={<IconTransactions />}
+                            onClick={toggleTransactionsHistoryPanel}  />
+
+                        <SideButton name="Preview"
+                            icon={<IconShowPreview />}
+                            onClick={previewSidePanelActions.onOpen}  />
+                    </div>
                 </div>
             </div>
         );
