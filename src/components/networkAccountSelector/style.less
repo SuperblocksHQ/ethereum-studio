@@ -1,3 +1,19 @@
+// Copyright 2018 Superblocks AB
+//
+// This file is part of Superblocks Lab.
+//
+// Superblocks Lab is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation version 3 of the License.
+//
+// Superblocks Lab is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
+
 .container {
     display: flex;
     height: 38px;
@@ -82,7 +98,7 @@
         position: fixed;
         margin-top: -13px;
         background-color: #2a2a2a;
-        width: 320px;
+        width: 346px;
         box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .50);
         padding: 20px 0 20px 0;
         z-index: 2;
@@ -105,13 +121,28 @@
                 color: #fff;
                 border-color: #7237CF;
             }
-            button {
-                color: #c7c7c7;
-                font-size: 0.8em;
-                &:hover {
-                    color: #fff;
+            .actionsContainer {
+                display: flex;
+                margin-left: auto;
+                button {
+                    color: #c7c7c7;
+                    font-size: 0.8em;
+                    &:hover {
+                        color: #fff;
+                    }
                 }
             }
+            .nameContainer {
+                line-height: 1.8em;
+                margin: 2px 0;
+                .address {
+                    font-size: 0.75em;
+                    color: #929292;
+                    margin: 0;
+                    line-height: 1.8em;
+                }
+            }
+
         }
         .accountLinkChosen {
             background-color: rgba(128, 46, 255, 0.32);
