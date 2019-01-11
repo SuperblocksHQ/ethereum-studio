@@ -18,15 +18,18 @@ import IpfsAPI from 'ipfs-api';
 import Backend from '../components/projecteditor/control/backend';
 
 let ipfs = null;
+let backend = null;
 
 export const ipfsService = {
 
-    init() {
+    init(backendInstance) {
         ipfs = new IpfsAPI({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' })
+        backend = backendInstance;
     },
 
-    stripIpfsHash() {
-        history.pushState({}, '', '/');
+    clearTempProject() {
+        this._stripIpfsHash();
+        backend.deleteProject(1, () => {});
     },
 
     ipfsFetchFiles(hash, options) {
@@ -114,5 +117,9 @@ export const ipfsService = {
                 reject(e);
             });
         });
+    },
+
+    _stripIpfsHash() {
+        history.pushState({}, '', '/');
     },
 };

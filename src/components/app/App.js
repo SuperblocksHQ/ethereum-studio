@@ -40,6 +40,7 @@ export default class App extends Component {
         super(props);
         this.idCounter = 0;
         this.isImportedProject = false;
+        this.backend = new Backend();
 
         this.session = {
             start_time: Date.now(),
@@ -91,8 +92,7 @@ export default class App extends Component {
     }
 
     _convertProjects = cb => {
-        const backend = new Backend();
-        backend.convertProjects(status => {
+        this.backend.convertProjects(status => {
             if (status == 1) {
                 const modalData = {
                     title: 'Projects converted',
@@ -155,7 +155,7 @@ export default class App extends Component {
         this.functions.EVM = new EVM({ id: this.generateId() });
 
         previewService.init(this.functions.wallet);
-        ipfsService.init();
+        ipfsService.init(this.backend);
 
         const fn = () => {
             if (this.functions.compiler && this.functions.EVM) {

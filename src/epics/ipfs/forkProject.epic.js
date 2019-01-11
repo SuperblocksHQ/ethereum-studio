@@ -3,6 +3,7 @@ import { switchMap, withLatestFrom, map, catchError, mergeMap, tap, filter, dela
 import { ofType } from 'redux-observable';
 import { getSelectedProjectId } from '../../selectors/projects';
 import { ipfsActions } from '../../actions';
+import { ipfsService } from '../../services';
 
 /**
  * Add the current temporary project to the user's list. This way the project will be actually
@@ -23,8 +24,6 @@ const addProjectToUserList = (backend, control) => {
                                 control._projectsList.length - 1
                             ]
                         );
-                        backend._stripIpfsHash();
-                        backend.deleteProject(1, () => {})
                         resolve();
                     } else {
                         reject("Couldn't close the project")
@@ -35,7 +34,9 @@ const addProjectToUserList = (backend, control) => {
     })
 };
 
-const forkTempProject$ = (backend, router) => from(addProjectToUserList(backend, router.control));
+const forkTempProject$ = (backend, router) => from(addProjectToUserList(backend, router.control)).pipe(
+    tap(() => ipfsService.clearTempProject())
+);
 
 const forkOwnProject$ = (projectId, backend, router) => of(projectId).pipe(
     switchMap(() => {

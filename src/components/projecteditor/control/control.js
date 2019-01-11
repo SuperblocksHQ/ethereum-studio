@@ -23,8 +23,7 @@ import Backend from './backend';
 import NewDapp from '../../newdapp';
 import NetworkAccountSelector from '../../networkAccountSelector';
 import LearnAndResources from '../../learnAndResources';
-import { previewService } from '../../../services';
-
+import { ipfsService, previewService } from '../../../services';
 import {
     IconCube,
 } from '../../icons';
@@ -190,11 +189,10 @@ export default class Control extends Component {
             if (cb) cb(0);
             return;
         }
-        
+
         // if we switch from temporary project, discard it
         if (this.getActiveProject() && this.getActiveProject().getInode() === 1) {
-            this.props.router.control.backend._stripIpfsHash();
-            this.props.router.control.backend.deleteProject(1, () => {});
+            ipfsService.clearTempProject();
         }
 
         this._closeProject(status => {

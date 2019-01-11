@@ -17,7 +17,6 @@
 import JSZip from 'jszip';
 import FileSaver from 'file-saver';
 
-
 export default class Backend {
 
     static DAPP_FORMAT_VERSION = 'dapps1.1.0';
@@ -1080,5 +1079,5 @@ export default class Backend {
                 reject();
             });
         });
-    };
+    }
 }
