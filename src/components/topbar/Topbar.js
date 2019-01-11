@@ -122,8 +122,6 @@ class ProjectDialog extends Component {
     openProject = (e, project, cb) => {
         this.props.router.control.openProject(project, cb);
         this.props.onProjectSelected();
-        this.props.router.control.backend._stripIpfsHash();
-        this.props.router.control.backend.deleteProject(1, () => {});
     };
 
     openProjectConfig = (e, project) => {
@@ -163,8 +161,6 @@ class ProjectDialog extends Component {
         document.body.appendChild(uploadAnchorNode); // required for firefox
         uploadAnchorNode.click();
         uploadAnchorNode.remove();
-        this.props.router.control.backend._stripIpfsHash();
-        this.props.router.control.backend.deleteProject(1, () => {});
     };
 
     importProject2 = e => {
