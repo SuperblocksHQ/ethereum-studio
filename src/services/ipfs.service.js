@@ -20,11 +20,17 @@ import Backend from '../components/projecteditor/control/backend';
 let ipfs = null;
 let backend = null;
 
+const TEMPORARY_PROJECT_ID = 1;
+
 export const ipfsService = {
 
     init(backendInstance) {
         ipfs = new IpfsAPI({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' })
         backend = backendInstance;
+    },
+
+    isTemporaryProject(id) {
+        return id === TEMPORARY_PROJECT_ID;
     },
 
     clearTempProject() {

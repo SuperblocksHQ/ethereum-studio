@@ -38,6 +38,7 @@ import {
     IconFork
 } from '../icons';
 import Dappfile from '../projecteditor/control/item/dappfileItem';
+import OnlyIf from '../onlyIf';
 
 const PreferencesAction = () => (
     <div className={style.action}>
@@ -453,6 +454,7 @@ ProjectDialog.propTypes = {
 export default class TopBar extends Component {
 
     state = {
+        showUploadButton: this.props.showUploadButton,
         showUploadDialog: this.props.showUploadDialog
     }
 
@@ -460,6 +462,11 @@ export default class TopBar extends Component {
         if (prevProps.showUploadDialog !== this.props.showUploadDialog) {
             this.setState({
                 showUploadDialog: this.props.showUploadDialog
+            });
+        }
+        if (prevProps.showUploadButton !== this.props.showUploadButton) {
+            this.setState({
+                showUploadButton: this.props.showUploadButton
             });
         }
     }
@@ -493,8 +500,10 @@ export default class TopBar extends Component {
     }
 
     render() {
-        const { showUploadDialog } = this.state;
+        const { showUploadDialog, showUploadButton } = this.state;
         const { selectedProjectName } = this.props;
+
+        console.log(showUploadButton);
 
         return (
             <div className={style.topbar}>
@@ -503,15 +512,17 @@ export default class TopBar extends Component {
                     src="/static/img/img-lab-logo.svg"
                     alt="Superblocks Lab logo"
                 />
-                <DropdownContainer
-                    className={style.actionHelp}
-                    dropdownContent={<UploadDialog />}
-                    enableClickInside={true}
-                    showMenu={showUploadDialog}
-                    onCloseMenu={this.onCloseUploadDialog}
-                >
-                    <UploadDrowdownAction />
-                </DropdownContainer>
+                <OnlyIf test={showUploadButton}>
+                    <DropdownContainer
+                        className={style.actionHelp}
+                        dropdownContent={<UploadDialog />}
+                        enableClickInside={true}
+                        showMenu={showUploadDialog}
+                        onCloseMenu={this.onCloseUploadDialog}
+                    >
+                        <UploadDrowdownAction />
+                    </DropdownContainer>
+                </OnlyIf>
                 <ForkDropdownAction
                     onForkClicked={this.onForkClicked}
                 />

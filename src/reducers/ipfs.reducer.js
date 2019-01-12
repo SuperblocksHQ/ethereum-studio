@@ -5,12 +5,13 @@ export const initialState = {
     shareURL: null,
     timestamp: null,
     error: null,
+    showUploadButton: true,
     showUploadSettings: false,
     showUploadDialog: false,
     uploadSettings: {
         includeBuildInfo: false,
         includeProjectConfig: false
-    }
+    },
 };
 
 export default function panesReducer(state = initialState, action) {
@@ -74,9 +75,21 @@ export default function panesReducer(state = initialState, action) {
                 showUploadDialog: false,
             };
         }
+        case ipfsActions.SHOW_UPLOAD_BUTTON: {
+            return {
+                ...state,
+                showUploadButton: true
+            };
+        }
+        case ipfsActions.HIDE_UPLOAD_BUTTON: {
+            return {
+                ...state,
+                showUploadButton: false
+            };
+        }
         case projectActions.SELECT_PROJECT: {
             return {
-                ...initialState // Make we reset the state when changing projects
+                ...initialState, // Make we reset the state when changing projects
             };
         }
         default:

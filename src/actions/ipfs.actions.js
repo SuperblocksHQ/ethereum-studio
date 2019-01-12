@@ -97,4 +97,16 @@ export const ipfsActions = {
             data: error
         }
     },
+    SHOW_UPLOAD_BUTTON: 'SHOW_UPLOAD_BUTTON',
+    showUploadButton() {
+        return {
+            type: ipfsActions.SHOW_UPLOAD_BUTTON,
+        }
+    },
+    HIDE_UPLOAD_BUTTON: 'HIDE_UPLOAD_BUTTON',
+    hideUploadButton() {
+        return {
+            type: ipfsActions.HIDE_UPLOAD_BUTTON,
+        }
+    },
 }
