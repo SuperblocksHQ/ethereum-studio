@@ -1,17 +1,6 @@
 export const settingsActions = {
 
     /**
-    * Trigger the even to do not show the Splash screen anymore
-    */
-    SHOW_SPLASH: 'SHOW_SPLASH',
-    showSplashNoMore() {
-        return {
-            type: settingsActions.SHOW_SPLASH,
-            data: false,
-        }
-    },
-
-    /**
     * Save all the user preferences changed throug the PreferencesModal
     */
     SAVE_PREFERENCES: 'SAVE_PREFERENCES',

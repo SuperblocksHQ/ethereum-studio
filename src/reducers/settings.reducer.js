@@ -1,7 +1,6 @@
 import { settingsActions } from '../actions';
 
 export const initialState = {
-    showSplash: true,
     preferences: {
         network: {
             gasLimit: '7900000', //'0x288B60'
@@ -16,12 +15,6 @@ export const initialState = {
 
 export default function settingsReducer(state = initialState, action) {
     switch (action.type) {
-        case settingsActions.SHOW_SPLASH: {
-            return {
-                ...state,
-                showSplash: action.data,
-            };
-        }
         case settingsActions.SAVE_PREFERENCES: {
             return {
                 ...state,
