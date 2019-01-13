@@ -7,4 +7,5 @@ export const ipfsSelectors = {
     getUploadSettings: state => state.ipfs.uploadSettings,
     getShowUploadDialog: state => state.ipfs.showUploadDialog,
     getShowUploadButton: state => state.ipfs.showUploadButton,
+    getShowForkButton: state => state.ipfs.showForkButton,
 }

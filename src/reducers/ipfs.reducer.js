@@ -1,11 +1,12 @@
-import { ipfsActions, projectActions, viewActions } from '../actions';
+import { ipfsActions, projectActions } from '../actions';
 
 export const initialState = {
     uploading: false,
     shareURL: null,
     timestamp: null,
     error: null,
-    showUploadButton: true,
+    showUploadButton: false,
+    showForkButton: true,
     showUploadSettings: false,
     showUploadDialog: false,
     uploadSettings: {
@@ -75,16 +76,12 @@ export default function panesReducer(state = initialState, action) {
                 showUploadDialog: false,
             };
         }
-        case ipfsActions.SHOW_UPLOAD_BUTTON: {
+        case ipfsActions.UPDATE_IPFS_ACTION_BUTTONS: {
+            console.log(action.data);
             return {
                 ...state,
-                showUploadButton: true
-            };
-        }
-        case ipfsActions.HIDE_UPLOAD_BUTTON: {
-            return {
-                ...state,
-                showUploadButton: false
+                showUploadButton: action.data.showUploadButton,
+                showForkButton: action.data.showForkButton,
             };
         }
         case projectActions.SELECT_PROJECT: {

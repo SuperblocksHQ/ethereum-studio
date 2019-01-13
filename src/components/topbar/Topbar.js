@@ -454,19 +454,17 @@ ProjectDialog.propTypes = {
 export default class TopBar extends Component {
 
     state = {
-        showUploadButton: this.props.showUploadButton,
-        showUploadDialog: this.props.showUploadDialog
+        ipfsActions: {
+            showUploadDialog: this.props.ipfsActions.showUploadDialog,
+            showUploadButton: this.props.ipfsActions.showUploadButton,
+            showForkButton: this.props.ipfsActions.showForkButton
+        }
     }
 
     componentDidUpdate(prevProps) {
-        if (prevProps.showUploadDialog !== this.props.showUploadDialog) {
+        if (prevProps.ipfsActions !== this.props.ipfsActions) {
             this.setState({
-                showUploadDialog: this.props.showUploadDialog
-            });
-        }
-        if (prevProps.showUploadButton !== this.props.showUploadButton) {
-            this.setState({
-                showUploadButton: this.props.showUploadButton
+                ipfsActions: this.props.ipfsActions
             });
         }
     }
@@ -500,10 +498,8 @@ export default class TopBar extends Component {
     }
 
     render() {
-        const { showUploadDialog, showUploadButton } = this.state;
+        const { showUploadDialog, showUploadButton, showForkButton } = this.state.ipfsActions;
         const { selectedProjectName } = this.props;
-
-        console.log(showUploadButton);
 
         return (
             <div className={style.topbar}>
@@ -523,9 +519,11 @@ export default class TopBar extends Component {
                         <UploadDrowdownAction />
                     </DropdownContainer>
                 </OnlyIf>
-                <ForkDropdownAction
-                    onForkClicked={this.onForkClicked}
-                />
+                <OnlyIf test={showForkButton}>
+                    <ForkDropdownAction
+                        onForkClicked={this.onForkClicked}
+                    />
+                </OnlyIf>
                 <DropdownContainer
                     className={style.projectButton}
                     dropdownContent={
@@ -559,4 +557,9 @@ TopBar.propTypes = {
     onProjectSelected: PropTypes.func.isRequired,
     router: PropTypes.object.isRequired,
     functions: PropTypes.object.isRequired,
+    ipfsActions: PropTypes.shape({
+        showUploadDialog: PropTypes.bool.isRequired,
+        showUploadButton: PropTypes.bool.isRequired,
+        showForkButton: PropTypes.bool.isRequired,
+    }),
 };

@@ -21,9 +21,12 @@ import { getSelectedProjectName } from '../../selectors/projects';
 import { ipfsActions } from '../../actions';
 
 const mapStateToProps = state => ({
-    showUploadDialog: ipfsSelectors.getShowUploadDialog(state),
     selectedProjectName: getSelectedProjectName(state),
-    showUploadButton: ipfsSelectors.getShowUploadButton(state)
+    ipfsActions: {
+        showUploadDialog: ipfsSelectors.getShowUploadDialog(state),
+        showUploadButton: ipfsSelectors.getShowUploadButton(state),
+        showForkButton: ipfsSelectors.getShowForkButton(state),
+    }
 });
 
 function mapDispatchToProps(dispatch) {

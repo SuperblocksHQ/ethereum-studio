@@ -97,16 +97,11 @@ export const ipfsActions = {
             data: error
         }
     },
-    SHOW_UPLOAD_BUTTON: 'SHOW_UPLOAD_BUTTON',
-    showUploadButton() {
+    UPDATE_IPFS_ACTION_BUTTONS: 'UPDATE_IPFS_ACTION_BUTTONS',
+    updateIpfsActionButtons({ showUploadButton, showForkButton }) {
         return {
-            type: ipfsActions.SHOW_UPLOAD_BUTTON,
+            type: ipfsActions.UPDATE_IPFS_ACTION_BUTTONS,
+            data: { showUploadButton, showForkButton }
         }
-    },
-    HIDE_UPLOAD_BUTTON: 'HIDE_UPLOAD_BUTTON',
-    hideUploadButton() {
-        return {
-            type: ipfsActions.HIDE_UPLOAD_BUTTON,
-        }
-    },
+    }
 }

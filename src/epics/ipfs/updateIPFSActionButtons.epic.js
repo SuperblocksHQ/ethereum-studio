@@ -5,7 +5,7 @@ import { getSelectedProjectId } from '../../selectors/projects';
 import { ipfsActions, projectActions } from '../../actions';
 import { ipfsService } from '../../services';
 
-const showUploadButton = (action$, state$) => action$.pipe(
+const updateIPFSActionButtons = (action$, state$) => action$.pipe(
     ofType(projectActions.SELECT_PROJECT),
     withLatestFrom(state$),
     switchMap(([,state]) => {
@@ -13,12 +13,22 @@ const showUploadButton = (action$, state$) => action$.pipe(
         return of(projectId)
         .pipe(
             map(projectId => {
-                console.log(projectId);
                 if (ipfsService.isTemporaryProject(projectId)) {
-                    console.log("Temp project");
-                    return ipfsActions.hideUploadButton();
-                } else {
-                    return ipfsActions.showUploadButton();
+                    return ipfsActions.updateIpfsActionButtons({
+                        showUploadButton: false,
+                        showForkButton: true,
+                    });
+                } else if(projectId === 0) { // Welcome screen
+                    return ipfsActions.updateIpfsActionButtons({
+                        showUploadButton: false,
+                        showForkButton: false,
+                    });
+                }
+                else {
+                    return ipfsActions.updateIpfsActionButtons({
+                        showUploadButton: true,
+                        showForkButton: true,
+                    });
                 }
             }),
             catchError(() => {
@@ -29,4 +39,4 @@ const showUploadButton = (action$, state$) => action$.pipe(
     })
 );
 
-export default showUploadButton;
+export default updateIPFSActionButtons;
