@@ -59,6 +59,15 @@ const migrations = {
                 showTrackingAnalyticsDialog: settings.showTrackingAnalyticsDialog
             }
         }
+    },
+    5: (state) => {
+        return {
+            ...state,
+            settings: {
+                ...state.settings,
+                showSplash: undefined
+            }
+        }
     }
 }
 
