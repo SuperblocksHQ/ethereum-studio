@@ -55,7 +55,7 @@ const uploadToIPFS = (action$, state$, { backend, router }) => action$.pipe(
                     }),
                     switchMap(array => from(backend.saveFilePromise(projectId, {
                         path: '/.super/ipfs.json',
-                        contents: JSON.stringify(array)
+                        contents: JSON.stringify(array, null, 4)
                     }))),
                     delayWhen(() => from(updateFileSystemState(router.control.getActiveProject()))),
                     map(() => ({shareURL, timestamp})), // Finally simply return the original object we are interested on for the UI
