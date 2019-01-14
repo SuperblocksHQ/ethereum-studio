@@ -77,7 +77,6 @@ export default function panesReducer(state = initialState, action) {
             };
         }
         case ipfsActions.UPDATE_IPFS_ACTION_BUTTONS: {
-            console.log(action.data);
             return {
                 ...state,
                 showUploadButton: action.data.showUploadButton,

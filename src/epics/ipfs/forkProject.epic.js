@@ -1,5 +1,5 @@
 import { from, of, empty } from 'rxjs';
-import { switchMap, withLatestFrom, map, catchError, mergeMap, tap, filter, delayWhen } from 'rxjs/operators';
+import { switchMap, withLatestFrom, map, catchError, tap } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import { getSelectedProjectId } from '../../selectors/projects';
 import { ipfsActions } from '../../actions';
@@ -72,9 +72,7 @@ const forkProject = (action$, state$, { backend, router }) => action$.pipe(
         return of(projectId)
         .pipe(
             switchMap(projectId => {
-                // project from a shared link
-                // assign a new inode number to existing project
-                if (projectId === 1) {
+                if (ipfsService.isTemporaryProject(projectId)) {
                     return forkTempProject$(backend, router);
                 } else {
                     return forkOwnProject$(projectId, backend, router);
