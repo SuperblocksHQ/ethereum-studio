@@ -19,7 +19,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import style from './style.less';
 import { IconClose } from '../icons';
-import { DropdownContainer } from '../dropdown';
+import { DropdownContainer } from '../common';
 
 export default class PanesHeader extends Component {
     constructor(props) {

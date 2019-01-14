@@ -19,7 +19,7 @@ import PropTypes from 'prop-types';
 import * as accountUtils from '../../../utils/accounts';
 import Networks from '../../../networks';
 import classnames from 'classnames';
-import { DropdownContainer } from '../../dropdown';
+import { DropdownContainer } from '../../common';
 import style from '../style.less';
 import AccountDropdown from './acountDropdown';
 import {

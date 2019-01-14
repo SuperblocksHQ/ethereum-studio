@@ -12,8 +12,8 @@ import { epics } from '../epics';
 const config = {
     key: 'root',
     storage,
-    version: 4,
-    blacklist: ['app', 'sidePanels', 'panes'],
+    version: 5,
+    blacklist: ['app', 'sidePanels', 'view', 'panes'],
     migrate: createMigrate(migrations, { debug: true })
 };
 
