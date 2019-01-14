@@ -93,7 +93,7 @@ export default class ProjecSettings extends Component {
             <div id={this.id} className={style.main}>
                 <div className="scrollable-y" id={this.id + '_scrollable'}>
                     <div className={style.inner}>
-                        <h1 className={style.title}>Edit DApp Configuration</h1>
+                        <h1 className={style.title}>Project Settings</h1>
                         <div className={style.form}>
                             <form action="">
                                 <div className={classNames(['superInputDark', style.field])}>

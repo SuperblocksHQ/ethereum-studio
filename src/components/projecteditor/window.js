@@ -248,6 +248,8 @@ export class Window {
                 case 'deploy':
                     return this.props.item.props.state.__parent.props.state.title;
             }
+        } else if (this.props.item.getType() === 'project') {
+            return this.props.item.getHeaderTitle();
         }
 
         if (this.props.item.props.state.title)
