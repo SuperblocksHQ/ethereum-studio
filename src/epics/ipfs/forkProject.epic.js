@@ -1,7 +1,7 @@
 import { from, of, empty } from 'rxjs';
 import { switchMap, withLatestFrom, map, catchError, tap } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
-import { getSelectedProjectId } from '../../selectors/projects';
+import { projectSelectors } from '../../selectors';
 import { ipfsActions } from '../../actions';
 import { ipfsService } from '../../services';
 
@@ -68,7 +68,7 @@ const forkProject = (action$, state$, { backend, router }) => action$.pipe(
     ofType(ipfsActions.FORK_PROJECT),
     withLatestFrom(state$),
     switchMap(([,state]) => {
-        const projectId = getSelectedProjectId(state);
+        const projectId = projectSelectors.getSelectedProjectId(state);
         return of(projectId)
         .pipe(
             switchMap(projectId => {

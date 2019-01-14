@@ -17,11 +17,11 @@
 import { connect } from 'react-redux';
 import TopBar from './Topbar';
 import { ipfsSelectors } from '../../selectors';
-import { getSelectedProjectName } from '../../selectors/projects';
+import { projectSelectors } from '../../selectors';
 import { ipfsActions } from '../../actions';
 
 const mapStateToProps = state => ({
-    selectedProjectName: getSelectedProjectName(state),
+    selectedProjectName: projectSelectors.getSelectedProjectName(state),
     ipfsActions: {
         showUploadDialog: ipfsSelectors.getShowUploadDialog(state),
         showUploadButton: ipfsSelectors.getShowUploadButton(state),

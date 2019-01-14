@@ -454,6 +454,7 @@ ProjectDialog.propTypes = {
 export default class TopBar extends Component {
 
     state = {
+        selectedProjectName: this.props.selectedProjectName,
         ipfsActions: {
             showUploadDialog: this.props.ipfsActions.showUploadDialog,
             showUploadButton: this.props.ipfsActions.showUploadButton,
@@ -465,6 +466,12 @@ export default class TopBar extends Component {
         if (prevProps.ipfsActions !== this.props.ipfsActions) {
             this.setState({
                 ipfsActions: this.props.ipfsActions
+            });
+        }
+
+        if (prevProps.selectedProjectName !== this.props.selectedProjectName) {
+            this.setState({
+                selectedProjectName: this.props.selectedProjectName
             });
         }
     }
@@ -499,7 +506,9 @@ export default class TopBar extends Component {
 
     render() {
         const { showUploadDialog, showUploadButton, showForkButton } = this.state.ipfsActions;
-        const { selectedProjectName } = this.props;
+        const { selectedProjectName } = this.state;
+
+        console.log(selectedProjectName);
 
         return (
             <div className={style.topbar}>
@@ -557,6 +566,7 @@ TopBar.propTypes = {
     onProjectSelected: PropTypes.func.isRequired,
     router: PropTypes.object.isRequired,
     functions: PropTypes.object.isRequired,
+    selectedProjectName: PropTypes.string,
     ipfsActions: PropTypes.shape({
         showUploadDialog: PropTypes.bool.isRequired,
         showUploadButton: PropTypes.bool.isRequired,

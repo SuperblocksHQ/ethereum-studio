@@ -1,7 +1,7 @@
 import { from, of } from 'rxjs';
 import { switchMap, withLatestFrom, map, catchError, tap, delayWhen } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
-import { getSelectedProjectId } from '../../selectors/projects';
+import { projectSelectors } from '../../selectors';
 import { ipfsActions } from '../../actions';
 import { ipfsService } from '../../services';
 
@@ -34,7 +34,7 @@ const uploadToIPFS = (action$, state$, { backend, router }) => action$.pipe(
     ofType(ipfsActions.UPLOAD_TO_IPFS),
     withLatestFrom(state$),
     switchMap(([action, state]) => {
-        const projectId = getSelectedProjectId(state);
+        const projectId = projectSelectors.getSelectedProjectId(state);
         const { uploadSettings } = action.data;
         return from(ipfsService.ipfsSyncUp(projectId, uploadSettings))
         .pipe(

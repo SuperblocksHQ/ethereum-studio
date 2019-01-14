@@ -15,11 +15,11 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import style from './style-editor-contract.less';
-import Backend from '../control/backend';
+import style from '../style-editor-contract.less';
 
-export default class AppEditor extends Component {
+export default class ProjecSettings extends Component {
 
     state = {
         form: null,
@@ -28,7 +28,6 @@ export default class AppEditor extends Component {
 
     constructor(props) {
         super(props);
-        this.backend = new Backend();
         this.id = props.id + '_editor';
         this.props.parent.childComponent = this;
     }
@@ -73,15 +72,14 @@ export default class AppEditor extends Component {
             );
             return false;
         }
-        this.props.item.getProject().setName(this.state.form.name);
-        this.props.item.getProject().setTitle(this.state.form.title);
-        this.props.item
-            .getProject()
-            .saveDappfile()
-            .then(() => {
-                this.setState({ isDirty: false });
-                this.props.router.control.redrawMain(true);
-            });
+
+        console.log("Here");
+
+        this.props.updateProjectSettings({
+            name: this.state.form.name,
+            title: this.state.form.title
+        });
+        this.setState({ isDirty: false });
     };
 
     onChange = (e, key) => {
@@ -145,4 +143,8 @@ export default class AppEditor extends Component {
             </div>
         );
     }
+}
+
+ProjecSettings.propTypes = {
+    updateProjectSettings: PropTypes.func.isRequired
 }

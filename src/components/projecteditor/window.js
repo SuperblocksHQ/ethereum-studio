@@ -17,7 +17,7 @@
 import React, { Component } from 'react';
 import classnames from 'classnames';
 import style from './style.less';
-import { Editor, ContractEditor, AppEditor, AccountEditor } from './editors';
+import { Editor, ContractEditor, ProjectSettings, AccountEditor } from './editors';
 import Compiler from './compiler';
 import Deployer from './deployer';
 import TutorialsManual from '../tutorials/manual';
@@ -116,7 +116,7 @@ export class Window {
             );
         } else if (this.props.item.getType() == 'project') {
             return (
-                <AppEditor
+                <ProjectSettings
                     id={this.subId}
                     key={this.subId}
                     item={this.props.item}

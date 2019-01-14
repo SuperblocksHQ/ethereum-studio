@@ -1,5 +1,5 @@
 import app from './app.reducer';
-import projects from './projects.reducer';
+import project from './project.reducer';
 import settings from './settings.reducer';
 import sidePanels from './sidePanels.reducer';
 import panes from './panes.reducer';
@@ -20,7 +20,7 @@ export default {
     rehydrated,
     app,
     settings,
-    projects,
+    project,
     view,
     panes,
     ipfs,
