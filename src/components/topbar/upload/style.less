@@ -1,0 +1,110 @@
+// Copyright 2018 Superblocks AB
+//
+// This file is part of Superblocks Lab.
+//
+// Superblocks Lab is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation version 3 of the License.
+//
+// Superblocks Lab is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
+
+.shareDialogContainer {
+    display: block;
+    position: absolute;
+    left: 70px;
+    top: 45px;
+    border-radius: 4px;
+    background-color: #2B2B2B;
+    min-width: 436px;
+    max-width: 436px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 2;
+    color: #fff;
+    padding: 10px 0;
+    transition: visibility 0s, opacity 0.2s ease;
+    padding: 15px;
+
+    .content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        align-content: center;
+        line-height: 1.5em;
+
+        input {
+            width: 350px;
+        }
+        .logo {
+            height: 66px;
+            widows: 66px;
+        }
+        .description {
+            text-align: center;
+        }
+        .uploadSettings {
+            margin-left: 10px;
+        }
+        .note {
+            font-size: 12px;
+            color: #A5A5A5;
+        }
+        .uploadingContainer {
+            text-align: center;
+            .loadBar {
+                position: relative;
+                margin: 25px 80px;
+                width: 60%;
+                height: 4px;
+                background-color: #5BB8BA;
+              }
+            .bar {
+                content: "";
+                display: inline;
+                position: absolute;
+                width: 0;
+                height: 100%;
+                left: 50%;
+                text-align: center;
+            }
+            .bar:nth-child(1) {
+                background-color: #8641F2;
+                animation: loading 3s linear infinite;
+            }
+            .bar:nth-child(2) {
+                background-color: #3b78e7;
+                animation: loading 3s linear 1s infinite;
+            }
+            .bar:nth-child(3) {
+                background-color: #5BB8BA;
+                animation: loading 3s linear 2s infinite;
+            }
+            @keyframes loading {
+                from {left: 50%; width: 0;z-index:100;} 33.3333% {left: 0; width: 100%;z-index: 10;}
+                to {left: 0; width: 100%;}
+            }
+        }
+        .share {
+            display: flex;
+            align-items: flex-end;
+            margin-top: 10px;
+            button {
+                margin-bottom: 5px;
+                margin-left: 10px;
+            }
+        }
+        .lastUpdate {
+            color: #A5A5A5;
+            margin: 15px 0;
+        }
+        .newUploadContainer {
+            margin-top: 20px;
+            padding-bottom: 10px;
+        }
+    }
+}

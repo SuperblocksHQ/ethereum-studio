@@ -26,7 +26,7 @@ import WalletsItem from './walletsItem';
 import WalletItem from './walletItem';
 import EnvironmentsItem from './environmentsItem';
 import EnvironmentItem from './environmentItem';
-import { IconShowPreview } from '../../../icons';
+import { IconConfigure } from '../../../icons';
 
 import Backend from '../backend';
 import TransactionLogData from '../../sidePanels/blockexplorer/transactionlogdata';
@@ -61,6 +61,14 @@ export default class ProjectItem extends Item {
             return dappfile.getTitle();
         }
         return this.props.state.title || '';
+    };
+
+    getHeaderTitle = () => {
+        return 'Project Settings';
+    }
+
+    getIcon = () => {
+        return <IconConfigure />;
     };
 
     getName = () => {

@@ -22,34 +22,48 @@ Dropdown.proptypes = {
  * Helper component to handle the state of showing/hiding a dropdown
  */
 export class DropdownContainer extends Component {
+
+    state = {
+        showMenu: this.props.showMenu,
+    }
+
     constructor(props) {
         super(props);
-
-        this.state = {
-            menuVisible: false,
-        };
 
         // the ignore class name should be specific only this instance of the component
         //  in order to close other dropdown in case a new one is opened
         this.ignoreClassName = 'ignore-react-onclickoutside' + Date.now();
     }
 
+    componentDidUpdate(prevProps) {
+        if (prevProps.showMenu !== this.props.showMenu) {
+            this.setState({
+                showMenu: {...this.props.showMenu}
+            });
+        }
+    }
+
     showMenu = () => {
-        this.setState({ menuVisible: true });
+        this.setState({ showMenu: true });
     };
 
     toggleMenu = (e) => {
         e.stopPropagation();
-        this.setState((state) => ({ menuVisible: !state.menuVisible }));
+        this.setState((state) => ({ showMenu: !state.showMenu }));
     };
 
     closeMenu = e => {
         e.stopPropagation();
-        this.setState({ menuVisible: false });
+
+        if (this.props.onCloseMenu) {
+            this.props.onCloseMenu();
+        }
+
+        this.setState({ showMenu: false });
     };
 
     render() {
-        const { dropdownContent, useRightClick, ...props } = this.props;
+        const { dropdownContent, useRightClick, enableClickInside, className } = this.props;
         let main;
 
         if (useRightClick) {
@@ -59,13 +73,13 @@ export class DropdownContainer extends Component {
         }
 
         return (
-            <div {...props}>
+            <div className={className}>
                 {main}
-                { this.state.menuVisible &&
+                { this.state.showMenu &&
                 <Dropdown
                     outsideClickIgnoreClass={this.ignoreClassName}
                     handleClickOutside={this.closeMenu}
-                    handleClickInside={this.closeMenu}
+                    handleClickInside={!enableClickInside ? this.closeMenu : undefined}
                 >
                     {dropdownContent}
                 </Dropdown> }
@@ -73,3 +87,11 @@ export class DropdownContainer extends Component {
         );
     }
 }
+
+DropdownContainer.proptypes = {
+    enableClickInside: PropTypes.bool,
+    dropdownContent: PropTypes.object,
+    className: PropTypes.string.object,
+    showMenu: PropTypes.bool,
+    onCloseMenu: PropTypes.func,
+};

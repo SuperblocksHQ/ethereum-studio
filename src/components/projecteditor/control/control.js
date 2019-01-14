@@ -23,8 +23,7 @@ import Backend from './backend';
 import NewDapp from '../../newdapp';
 import NetworkAccountSelector from '../../networkAccountSelector';
 import LearnAndResources from '../../learnAndResources';
-import { previewService } from '../../../services';
-
+import { ipfsService, previewService } from '../../../services';
 import {
     IconCube,
 } from '../../icons';
@@ -56,7 +55,7 @@ export default class Control extends Component {
         this.state = {
             activeProject: null,
             menu: menu
-        }
+        };
 
         props.router.register('control', this);
     }
@@ -64,8 +63,12 @@ export default class Control extends Component {
     componentDidMount() {
         this._loadProjects(status => {
             if (status == 0) {
-                if (!this._openLastProject()) {
-                    this._showWelcome();
+                // Make sure no project gets loaded if we are importing one from IPFS
+                if (!this.props.isImportedProject) {
+                    if (!this._openLastProject()) {
+                        this._setProjectActive(null);
+                        this._showWelcome();
+                    }
                 }
             }
         });
@@ -103,7 +106,7 @@ export default class Control extends Component {
                 lightProjects.map(lightProject => {
                     const exists =
                         this._projectsList.filter(project => {
-                            if (project.getInode() == lightProject.inode) {
+                            if (project.getInode() === lightProject.inode && lightProject.inode !== 1) {
                                 projectsList.push(project);
                                 return true;
                             }
@@ -137,7 +140,7 @@ export default class Control extends Component {
         let { selectedProjectId } = this.props;
         let found = false;
         this._projectsList.forEach(project => {
-            if (selectedProjectId && selectedProjectId === project.getInode()) {
+            if (selectedProjectId && selectedProjectId === project.getInode() && selectedProjectId !== 1) {
                 this.openProject(project);
                 found = true;
             }
@@ -189,6 +192,11 @@ export default class Control extends Component {
         if (this.getActiveProject() === project) {
             if (cb) cb(0);
             return;
+        }
+
+        // if we switch from temporary project, discard it
+        if (project.getInode() !== 1) {
+            ipfsService.clearTempProject();
         }
 
         this._closeProject(status => {
@@ -386,7 +394,7 @@ export default class Control extends Component {
         if (cb) cb(1);
     };
 
-    importProject = files => {
+    importProject = (files, isTemporary) => {
         const cb = status => {
             if (status == 0) {
                 this._loadProjects(() => {
@@ -406,7 +414,7 @@ export default class Control extends Component {
             }
         };
 
-        this.props.router.control.backend.createProject(files, cb);
+        this.props.router.control.backend.createProject(files, cb, isTemporary);
     };
 
     deleteProject = (project, cb) => {
@@ -595,9 +603,7 @@ export default class Control extends Component {
     );
 
     render() {
-        //const item=this._renderItem(0, 0, this.state.menu);
         const item = this.state.menu.render();
-        //item.key="controltree";
         return (
             <div className="full">
                 <div className={style.treemenu}>

@@ -61,7 +61,7 @@ export default class TextInput extends PureComponent {
 
 TextInput.propTypes = {
     id: PropTypes.string.isRequired,
-    onChangeText: PropTypes.func.isRequired,
+    onChangeText: PropTypes.func,
     type: PropTypes.string,
     label: PropTypes.string,
     defaultValue: PropTypes.any,

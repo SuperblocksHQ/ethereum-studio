@@ -23,8 +23,8 @@ import {
     IconDeploy,
     IconConfigure,
     IconInteract,
-} from '../../icons';
-import Tooltip from '../../tooltip';
+} from '../../../icons';
+import Tooltip from '../../../tooltip';
 
 export default class Editor extends Component {
     constructor(props) {
@@ -91,11 +91,17 @@ export default class Editor extends Component {
 
     save = e => {
         if (e) e.preventDefault();
+        const routerControl = this.props.router.control;
         this.props.item
             .save()
             .then(() => {
-                // Trigger other windows to refresh.
-                this.props.parent.props.parent.props.parent.redraw();
+                // if save action is triggered, move temporary to normal projects
+                if (routerControl.getActiveProject().getInode() === 1) {
+                    this.props.forkProject();
+                } else {
+                    // Trigger other windows to refresh.
+                    this.props.parent.props.parent.props.parent.redraw();
+                }
             })
             .catch(() => {
                 alert('Error: Could not save file.');
@@ -285,6 +291,13 @@ export default class Editor extends Component {
             this.currentEditorWidth = width;
             setTimeout(this.updateLayout, 1);
         }
+
+        const requireConfig = {
+            paths: { vs: "vs" },
+            url: "/vs/loader.js",
+            baseUrl: "/"
+        };
+
         return (
             <div className="full" id={this.id}>
                 {toolbar}
@@ -299,6 +312,7 @@ export default class Editor extends Component {
                     editorDidMount={(obj, monaco) =>
                         this.editorDidMount(obj, monaco)
                     }
+                    requireConfig={requireConfig}
                 />
             </div>
         );

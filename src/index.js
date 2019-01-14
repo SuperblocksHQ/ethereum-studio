@@ -24,11 +24,16 @@ import { AnalyticsProvider, Analytics, LogOnMount } from './utils/analytics';
 
 // Load generic CSS
 import './style/index.less';
+import 'react-toastify/dist/ReactToastify.min.css';
 
-// TODO - Components
-// import Loading from './components/Loading';
+// Used to communicate between components, events is probably a better way of doing this.
+const router = {
+    register: (name, obj) => {
+        router[name] = obj;
+    }
+};
 
-const { persistor, store } = configureStore();
+const { persistor, store } = configureStore(router);
 // persistor.purge(); // Debug to clear persist
 
 ReactDOM.render((
@@ -36,7 +41,7 @@ ReactDOM.render((
         <PersistGate loading={null} persistor={persistor}>
             <AnalyticsProvider>
                 <LogOnMount eventType="APP_START" />
-                <App />
+                <App router={router}/>
             </AnalyticsProvider>
         </PersistGate>
     </Provider>

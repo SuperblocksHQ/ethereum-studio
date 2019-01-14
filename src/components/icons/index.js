@@ -46,6 +46,7 @@ import {faPencilAlt as iconPencil} from '@fortawesome/free-solid-svg-icons/faPen
 import {faArrowAltCircleDown as iconDownload} from '@fortawesome/free-regular-svg-icons/faArrowAltCircleDown';
 import {faThLarge as iconMosaic} from '@fortawesome/free-solid-svg-icons/faThLarge';
 import {faLink as iconChain} from '@fortawesome/free-solid-svg-icons/faLink';
+import {faShareAlt as iconShare} from '@fortawesome/free-solid-svg-icons/faShareAlt';
 import {faCopy as iconCopy} from '@fortawesome/free-regular-svg-icons/faCopy';
 
 class IconImg extends Component {
@@ -64,6 +65,7 @@ class IconImg extends Component {
 export const IconDeployGreen = ({...props}) => <IconImg src={'/static/img/icon-deploy-green.svg'} {...props} />;
 export const IconAddFile = ({...props}) => <svg preserveAspectRatio="xMidYMid meet" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="16" height="16" style={{ verticalAlign: "middle" }}><polygon points="12,3 8,3 8,4 11,4 11,7 14,7 14,14 6,14 6,8 5,8 5,15 15,15 15,6"/><path d="M7 3.018h-2v-2.018h-1.981v2.018h-2.019v1.982h2.019v2h1.981v-2h2v-1.982z" {...props}/></svg>;
 export const IconAddFolder = ({...props}) => <svg preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="16" height="16" style={{ verticalAlign: "middle" }}><polygon points="9,3 8,5 8,2 6,2 6,0 2,0 2,2 0,2 0,6 2,6 2,8 2,15 16,15 16,3"/><path d="M14 4h-4.382l-1 2h-2.618v2h-3v6h12v-10h-1zm0 2h-3.882l.5-1h3.382v1z" fill="#fff"/><polygon points="7,3.018 5,3.018 5,1 3.019,1 3.019,3.018 1,3.018 1,5 3.019,5 3.019,7 5,7 5,5 7,5" fill="#fff"/><polygon points="14,5 14,6 10.118,6 10.618,5" {...props}/></svg>;
+export const IconInformation = ({...props}) => <IconImg src={'/static/img/icon-information.svg'} {...props} />;
 export const IconRun = () => <FaIcon icon={iconRun} />;
 export const IconSave = () => <FaIcon icon={iconSave} />;
 export const IconCompile = () => <FaIcon icon={iconCompile} />;
@@ -75,7 +77,6 @@ export const IconInteract = ({ ...props }) => (
     <IconImg src={'/static/img/icon-interact.svg'} {...props} />
 );
 export const IconTrash = () => <FaIcon icon={iconTrash} />;
-export const IconCopy = () => <FaIcon icon={iconCopy} />;
 export const IconGem = () => <FaIcon icon={iconGem} />;
 export const IconFile = () => <FaIcon icon={iconFile} />;
 export const IconFileAlt = () => <FaIcon icon={iconFileAlt} />;
@@ -99,7 +100,6 @@ export const IconClone = () => <FaIcon icon={iconClone} />;
 export const IconDownload = ({ ...props }) => (
     <FaIcon icon={iconDownload} {...props} />
 );
-export const IconUpload = () => <FaIcon icon={iconUpload} />;
 export const IconDropdown = ({ ...props }) => (
     <span className="dropDown" {...props} />
 );
@@ -126,6 +126,11 @@ export const IconPublicAddress = ({ ...props }) => (
 export const IconMosaic = ({ ...props }) => (
     <FaIcon icon={iconMosaic} {...props} />
 );
+export const IconCopy = ({ ...props }) => (
+    <FaIcon icon={iconCopy} {...props} />
+);
+export const IconBack= ({...props}) => <svg fill="currentColor" preserveAspectRatio="xMidYMid meet" height="16px" width="16px" viewBox="0 0 512 512" style={{ verticalAlign: "center" }} {...props}><path d="M427 234.625H167.296l119.702-119.702L256 85 85 256l171 171 29.922-29.924-118.626-119.701H427v-42.75z"/></svg>
+export const IconWarning = ({...props}) => <svg fill="currentColor" preserveAspectRatio="xMidYMid meet" height="16px" width="16px" viewBox="0 0 512 512" style={{ verticalAlign: "center" }} {...props}><path d="M32 464h448L256 48 32 464zm248-64h-48v-48h48v48zm0-80h-48v-96h48v96z"/></svg>
 
 // Top Bar
 export const IconTransactions = ({ ...props }) => <svg fill="currentColor" preserveAspectRatio="xMidYMid meet" height="16px" width="16px" viewBox="0 0 512 512" style={{ verticalAlign: "middle" }} {...props}><path d="M388.9 266.3c-5.1-5-5.2-13.3-.1-18.4L436 200H211c-7.2 0-13-5.8-13-13s5.8-13 13-13h224.9l-47.2-47.9c-5-5.1-5-13.3.1-18.4 5.1-5 13.3-5 18.4.1l69 70c1.1 1.2 2.1 2.5 2.7 4.1.7 1.6 1 3.3 1 5 0 3.4-1.3 6.6-3.7 9.1l-69 70c-5 5.2-13.2 5.3-18.3.3zM123.1 404.3c5.1-5 5.2-13.3.1-18.4L76.1 338H301c7.2 0 13-5.8 13-13s-5.8-13-13-13H76.1l47.2-47.9c5-5.1 5-13.3-.1-18.4-5.1-5-13.3-5-18.4.1l-69 70c-1.1 1.2-2.1 2.5-2.7 4.1-.7 1.6-1 3.3-1 5 0 3.4 1.3 6.6 3.7 9.1l69 70c5 5.2 13.2 5.3 18.3.3z"/></svg>
@@ -137,6 +142,9 @@ export const IconProjectSelector = ({ ...props }) => (
 );
 export const IconHelp = () => <FaIcon icon={iconQuestionCircle} />;
 export const IconCheck = () => <FaIcon icon={iconCheck} />;
+export const IconShare = () => <FaIcon icon={iconShare} />;
+export const IconUpload = ({...props}) => <svg fill="currentColor" preserveAspectRatio="xMidYMid meet" height="16px" width="16px" viewBox="0 0 512 512" style={{ verticalAlign: "center" }} {...props}><path d="M403.002 217.001C388.998 148.002 328.998 96 256 96c-57.998 0-107.998 32.998-132.998 81.001C63.002 183.002 16 233.998 16 296c0 65.996 53.999 120 120 120h260c55 0 100-45 100-100 0-52.998-40.996-96.001-92.998-98.999zM288 276v76h-64v-76h-68l100-100 100 100h-68z"/></svg>;
+export const IconFork = ({...props}) => <svg fill="currentColor" preserveAspectRatio="xMidYMid meet" height="16px" width="16px" viewBox="0 0 512 512" style={{ verticalAlign: "center" }} {...props}><path d="M352 96c-38.6 0-70 31.4-70 70 0 33.4 23.7 61.9 55.9 68.5-1.2 19.1-10.3 29.3-27 42.2-20.4 15.7-46.7 20-65.3 23.4-40.7 7.4-62.9 27-72.5 40V170.8c15-2.8 28.7-10.5 39-21.9 11.6-12.9 18-29.5 18-46.9 0-38.6-31.4-70-70-70s-70 31.4-70 70c0 17 6.2 33.3 17.3 46.1 9.9 11.3 23.1 19.1 37.7 22.3v171.3c-14.5 3.2-27.8 11-37.7 22.3C96.2 376.7 90 393 90 410c0 38.6 31.4 70 70 70s70-31.4 70-70c0-23.4-11.6-44.9-30.7-57.9 8.6-9.7 24.5-19.6 51.1-24.4 21.6-3.9 52.6-9.6 77.4-28.8 23.6-18.2 36.7-36.5 38-64.3 32.3-6.5 56.1-35.1 56.1-68.6.1-38.6-31.3-70-69.9-70zm-234 6c0-23.2 18.8-42 42-42s42 18.8 42 42-18.8 42-42 42-42-18.8-42-42zm84 308c0 23.2-18.8 42-42 42s-42-18.8-42-42 18.8-42 42-42 42 18.8 42 42zm150-202c-23.2 0-42-18.8-42-42s18.8-42 42-42 42 18.8 42 42-18.8 42-42 42z"/></svg>
 
 // File types
 export const IconContract = ({...props}) => <IconImg src={'/static/img/icon-solidity.svg'} {...props} />;

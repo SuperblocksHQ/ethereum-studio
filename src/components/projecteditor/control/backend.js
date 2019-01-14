@@ -14,18 +14,18 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-const JSZip = require("jszip");
-const FileSaver = require('file-saver');
+import JSZip from 'jszip';
+import FileSaver from 'file-saver';
 
-const DAPP_FORMAT_VERSION = 'dapps1.1.0';
 export default class Backend {
-    constructor() {}
+
+    static DAPP_FORMAT_VERSION = 'dapps1.1.0';
 
     // Make sure projects created for an older version are converted to the current format.
     // dapps1.0 is the 1.0 BETA which is deprecated.
     // dapps1.0.0 is the released 1.0 format and will be converted into 1.1.0.
     convertProjects = cb => {
-        if (!localStorage.getItem(DAPP_FORMAT_VERSION)) {
+        if (!localStorage.getItem(Backend.DAPP_FORMAT_VERSION)) {
             if (localStorage.getItem('dapps1.0.0')) {
                 // Convert from 1.0 (beta) to 1.0.0.
                 const data = JSON.parse(localStorage.getItem('dapps1.0.0'));
@@ -49,7 +49,7 @@ export default class Backend {
                 // store projects.
                 const newData = { projects: newProjects };
                 localStorage.setItem(
-                    DAPP_FORMAT_VERSION,
+                    Backend.DAPP_FORMAT_VERSION,
                     JSON.stringify(newData)
                 );
                 cb(1); // Indicate that there are converted projects.
@@ -137,7 +137,7 @@ export default class Backend {
         });
 
         const dappfile2 = {
-            format: DAPP_FORMAT_VERSION.substr(5),  // IMPORTANT: if the format of this variable changes this must be updated. We only want the "x.y.z" part.
+            format: Backend.DAPP_FORMAT_VERSION.substr(5),  // IMPORTANT: if the format of this variable changes this must be updated. We only want the "x.y.z" part.
             project: dappfile.project,
             environments: dappfile.environments,
             wallets: wallets,
@@ -388,13 +388,60 @@ export default class Backend {
         return newProject;
     };
 
+    // Add a new inode number to the project
+    assignNewInode = (inode, cb) => {
+        const data =
+            JSON.parse(localStorage.getItem(Backend.DAPP_FORMAT_VERSION)) || {};
+        if (!data.projects) data.projects = [];
+
+        const projects = data.projects.map(project => {
+            if (project.inode === inode) {
+                project.inode = this.generateRandomInode(data.projects);
+                return project;
+            } else {
+                return project;
+            }
+        });
+
+        data.projects = projects;
+        localStorage.setItem(Backend.DAPP_FORMAT_VERSION, JSON.stringify(data));
+        cb();
+    };
+
+    // Add additional text to dappfile when forking
+    modifyDappFile(files) {
+        let root = files['/'].children;
+        let dappfile = JSON.parse(root['dappfile.json'].contents);
+        let name =  dappfile.project.info.name;
+        dappfile.project.info.name = `${name}_copy`;
+        let contents = JSON.stringify(dappfile);
+        root["dappfile.json"].contents = contents;
+
+        return files;
+    }
+
+    /**
+     * Like the newFile method but actually wrapped around a promise
+     */
+    newFilePromise = (inode, patch, file) => {
+        return new Promise((resolve, reject) => {
+            this.newFile(inode, patch, file, status => {
+                if (status !== 0) {
+                    reject(status);
+                } else {
+                    resolve();
+                }
+            });
+        })
+    }
+
     /**
      * Create a new file for a project.
      *
      */
     newFile = (inode, path, file, cb) => {
         const data =
-            JSON.parse(localStorage.getItem(DAPP_FORMAT_VERSION)) || {};
+            JSON.parse(localStorage.getItem(Backend.DAPP_FORMAT_VERSION)) || {};
 
         if (!data.projects) data.projects = [];
 
@@ -403,7 +450,7 @@ export default class Backend {
         })[0];
 
         if (!project) {
-            setTimeout(() => cb(3), 1);
+            setTimeout(() => cb(2), 1);
             return;
         }
 
@@ -412,7 +459,7 @@ export default class Backend {
         }
 
         if (path[0] != '/') {
-            setTimeout(() => cb(3), 1);
+            setTimeout(() => cb(2), 1);
             return;
         }
         if (!project.files)
@@ -433,14 +480,14 @@ export default class Backend {
             file = file.substring(0, file.length - 1);
         }
         if (folder.children[file]) {
-            setTimeout(() => cb(3), 1);
+            setTimeout(() => cb(1), 1);
             return;
         }
         folder.children[file] = {
             type: type,
             children: type == 'd' ? {} : null,
         };
-        localStorage.setItem(DAPP_FORMAT_VERSION, JSON.stringify(data));
+        localStorage.setItem(Backend.DAPP_FORMAT_VERSION, JSON.stringify(data));
         setTimeout(() => cb(0), 1);
     };
 
@@ -485,7 +532,7 @@ export default class Backend {
         }
 
         const data =
-            JSON.parse(localStorage.getItem(DAPP_FORMAT_VERSION)) || {};
+            JSON.parse(localStorage.getItem(Backend.DAPP_FORMAT_VERSION)) || {};
 
         if (!data.projects) data.projects = [];
 
@@ -549,7 +596,7 @@ export default class Backend {
 
             targetFolder.children[b[2]] = o;
 
-            localStorage.setItem(DAPP_FORMAT_VERSION, JSON.stringify(data));
+            localStorage.setItem(Backend.DAPP_FORMAT_VERSION, JSON.stringify(data));
             setTimeout(() => cb(0), 1);
         } catch(e) {
             setTimeout(() => cb(6), 1);
@@ -563,7 +610,7 @@ export default class Backend {
      */
     deleteFile = (inode, path, cb) => {
         const data =
-            JSON.parse(localStorage.getItem(DAPP_FORMAT_VERSION)) || {};
+            JSON.parse(localStorage.getItem(Backend.DAPP_FORMAT_VERSION)) || {};
 
         if (!data.projects) data.projects = [];
 
@@ -594,7 +641,7 @@ export default class Backend {
             folder = folder2;
         }
         delete folder.children[parts[parts.length - 1]];
-        localStorage.setItem(DAPP_FORMAT_VERSION, JSON.stringify(data));
+        localStorage.setItem(Backend.DAPP_FORMAT_VERSION, JSON.stringify(data));
         if (cb) setTimeout(() => cb(0), 1);
     };
 
@@ -604,7 +651,7 @@ export default class Backend {
      */
     listFiles = (inode, path, cb) => {
         const data =
-            JSON.parse(localStorage.getItem(DAPP_FORMAT_VERSION)) || {};
+            JSON.parse(localStorage.getItem(Backend.DAPP_FORMAT_VERSION)) || {};
 
         if (!data.projects) data.projects = [];
 
@@ -653,7 +700,7 @@ export default class Backend {
      */
     deleteProject = (inode, cb) => {
         const data =
-            JSON.parse(localStorage.getItem(DAPP_FORMAT_VERSION)) || {};
+            JSON.parse(localStorage.getItem(Backend.DAPP_FORMAT_VERSION)) || {};
         if (!data.projects) data.projects = [];
 
         const projects = data.projects.filter(item => {
@@ -661,7 +708,7 @@ export default class Backend {
         });
 
         data.projects = projects;
-        localStorage.setItem(DAPP_FORMAT_VERSION, JSON.stringify(data));
+        localStorage.setItem(Backend.DAPP_FORMAT_VERSION, JSON.stringify(data));
         cb();
     };
 
@@ -671,7 +718,7 @@ export default class Backend {
      */
     loadProjects = cb => {
         const data =
-            JSON.parse(localStorage.getItem(DAPP_FORMAT_VERSION)) || {};
+            JSON.parse(localStorage.getItem(Backend.DAPP_FORMAT_VERSION)) || {};
         const projects = [];
         (data.projects || []).map(project => {
             // We need to parse the `/dappfile.json`
@@ -692,21 +739,58 @@ export default class Backend {
         setTimeout(() => cb(0, projects), 1);
     };
 
-    createProject = (files, cb) => {
+
+    /**
+     * Get Files belonging to a given inode
+     */
+    getProjectFiles = (inode) => {
+        return new Promise((resolve, reject) => {
+            const data =
+                JSON.parse(localStorage.getItem(Backend.DAPP_FORMAT_VERSION)) || {};
+            if (!data.projects) data.projects = [];
+
+            const project = data.projects.filter(item => {
+                return item.inode === inode;
+            });
+
+            if (project.length) {
+                resolve(project[0].files);
+            } else {
+                reject("Project with given inode doesn't exist");
+            }
+        })
+    }
+
+    createProject = (files, cb, isTemporary) => {
         const data =
-            JSON.parse(localStorage.getItem(DAPP_FORMAT_VERSION)) || {};
+            JSON.parse(localStorage.getItem(Backend.DAPP_FORMAT_VERSION)) || {};
 
         if (!data.projects) data.projects = [];
 
-        const inode = Math.floor(Math.random() * 10000000);
-        // TODO: check if project with this inode already exists.
-        const project = {
+        let inode = 1;
+
+        if (isTemporary) {
+            if (this.isDuplicateInode(data.projects, inode)) {
+                // if duplicate with inode == 1, overwrite
+                data.projects = data.projects.filter(function( project ) {
+                    return project.inode !== inode;
+                });
+            }
+        }
+        else {
+            // smallest random number to be generated is 2, 1 is reserved for temporary projects
+            inode = this.generateRandomInode(data.projects);
+        }
+
+        let project = {
             inode: inode,
             files: files,
         };
+
         data.projects.push(project);
+
         try {
-            localStorage.setItem(DAPP_FORMAT_VERSION, JSON.stringify(data));
+            localStorage.setItem(Backend.DAPP_FORMAT_VERSION, JSON.stringify(data));
         }
         catch(e) {
             alert("Error: The browser local storage exceeded it's quota. Please delete some projects to make room for new ones.");
@@ -717,12 +801,27 @@ export default class Backend {
     };
 
     /**
+     * Like the newFile method but actually wrapped around a promise
+     */
+    saveFilePromise = (inode, payload) => {
+        return new Promise((resolve, reject) => {
+            this.saveFile(inode, payload, ({ status }) => {
+                if (status !== 0) {
+                    reject(status);
+                } else {
+                    resolve();
+                }
+            });
+        })
+    }
+
+    /**
      * Save the contents of a file within a project.
      *
      */
     saveFile = (inode, payload, cb) => {
         const data =
-            JSON.parse(localStorage.getItem(DAPP_FORMAT_VERSION)) || {};
+            JSON.parse(localStorage.getItem(Backend.DAPP_FORMAT_VERSION)) || {};
 
         if (!data.projects) data.projects = [];
 
@@ -756,7 +855,7 @@ export default class Backend {
             contents: payload.contents,
         };
         try {
-            localStorage.setItem(DAPP_FORMAT_VERSION, JSON.stringify(data));
+            localStorage.setItem(Backend.DAPP_FORMAT_VERSION, JSON.stringify(data));
         } catch (e) {
             console.error(e);
             setTimeout(() => cb({ status: 1 }), 1);
@@ -765,13 +864,29 @@ export default class Backend {
         setTimeout(() => cb({ status: 0 }), 1);
     };
 
+
+    /**
+     * Like the loadFile method but actually wrapped around a promise
+     */
+    loadFilePromise = (inode, patch) => {
+        return new Promise((resolve, reject) => {
+            this.loadFile(inode, patch, ({ status, contents }) => {
+                if (status !== 0) {
+                    reject(status);
+                } else {
+                    resolve(contents);
+                }
+            });
+        })
+    }
+
     /**
      * Load the contents of a file within a project.
      *
      */
     loadFile = (inode, path, cb) => {
         const data =
-            JSON.parse(localStorage.getItem(DAPP_FORMAT_VERSION)) || {};
+            JSON.parse(localStorage.getItem(Backend.DAPP_FORMAT_VERSION)) || {};
 
         if (!data.projects) data.projects = [];
 
@@ -809,13 +924,27 @@ export default class Backend {
         else setTimeout(() => cb({ status: 1 }), 1);
     };
 
+    isDuplicateInode (projects, inode) {
+       return projects.find((project) => project.inode === inode);
+    }
+
+    generateRandomInode(projects) {
+        let inode = 0;
+        do {
+            inode = Math.floor(Math.random() * 10000000 + 2);
+        }
+        while (this.isDuplicateInode(projects, inode));
+
+        return inode;
+    }
+
     downloadProject = (item, keepState) => {
         const exportName = 'superblocks_project_' + item.getName() + '.zip';
 
         const zip = new JSZip();
 
         const data =
-            JSON.parse(localStorage.getItem(DAPP_FORMAT_VERSION)) || {};
+            JSON.parse(localStorage.getItem(Backend.DAPP_FORMAT_VERSION)) || {};
 
         if (!data.projects) data.projects = [];
 
@@ -950,5 +1079,5 @@ export default class Backend {
                 reject();
             });
         });
-    }
+    };
 }

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { appActions } from '../../actions';
+import { appActions, ipfsActions } from '../../actions';
 import { getShowAnalyticsTrackingDialog } from '../../selectors/settings';
 import { getAppVersion } from '../../selectors/app';
 import App from './App';
@@ -13,7 +13,10 @@ const mapDispatchToProps = dispatch => {
     return {
         notifyAppStart: () => {
             dispatch(appActions.notifyAppStart());
-        }
+        },
+        importProjectFromIpfs: (hash) => {
+            dispatch(ipfsActions.importProjectFromIpfs(hash));
+        },
     };
 };
 

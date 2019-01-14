@@ -151,6 +151,7 @@ export default class ProjectEditor extends Component {
                                 <Control
                                     router={this.props.router}
                                     functions={this.props.functions}
+                                    isImportedProject={this.props.isImportedProject}
                                 />
                                 <ContactContainer />
                             </div>

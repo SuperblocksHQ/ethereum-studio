@@ -34,6 +34,9 @@ export default class DappfileItem extends FileItem {
         this._save = this.save;
         this.save = this.__save;
         delete this.__save;
+        this._setContents = this.setContents;
+        this.setContents = this.__setContents;
+        delete this.__setContents;
     }
 
     /**
@@ -60,7 +63,7 @@ export default class DappfileItem extends FileItem {
                 })
                 .catch(() => {
                     this.props.state.dappfile = new Dappfile(
-                        this.getDefaultDappfile()
+                        DappfileItem.getDefaultDappfile()
                     );
                     this.save()
                         .then(() => {
@@ -79,8 +82,25 @@ export default class DappfileItem extends FileItem {
      *
      */
     __save = () => {
-        this.setContents(this.getDappfile().dump());
+        this._setContents(this.getDappfile().dump());
         return this._save();
+    };
+
+    /**
+     * Note: This actually shadows super.setContents.
+     */
+    __setContents = (contents) => {
+        try {
+            const obj = JSON.parse(contents);
+            if (DappfileItem.validateDappfile(obj)) {
+                this.props.state.dappfile = new Dappfile(obj);
+                this._setContents(JSON.stringify(obj, null, 4));
+                return;
+            }
+        }
+        catch(e) {
+        }
+        console.error('Dappfile data invalid.');
     };
 
     getDappfile = () => {
@@ -105,6 +125,8 @@ export default class DappfileItem extends FileItem {
         if (!dappfile.accounts) {
             dappfile.accounts = defDappfile.accounts;
         }
+
+        return true;
     };
 
     static getDefaultDappfile = () => {
