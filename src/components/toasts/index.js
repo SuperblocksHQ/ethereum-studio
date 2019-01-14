@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import { ipfsActions } from '../../actions';
+import { ipfsActions, projectActions } from '../../actions';
 import {
     IconInformation,
     IconWarning,
@@ -43,5 +43,7 @@ export const getToastComponent = (type) => {
             return info('Project Downloaded!');
         case ipfsActions.IMPORT_PROJECT_FROM_IPFS_FAIL:
             return error('Error importing project!');
+        case projectActions.UPDATE_PROJECT_SETTINGS_FAIL:
+            return error('Error updating project settings');
     }
 }

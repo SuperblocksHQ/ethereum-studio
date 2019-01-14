@@ -1,4 +1,4 @@
-import { ipfsActions, toastActions } from '../actions';
+import { ipfsActions, projectActions, toastActions } from '../actions';
 
 export const initialState = {
     toasts: [],
@@ -7,6 +7,7 @@ export const initialState = {
 var counter = 0;
 export default function toastsReducer(state = initialState, action) {
     switch (action.type) {
+        case projectActions.UPDATE_PROJECT_SETTINGS_FAIL:
         case ipfsActions.IMPORT_PROJECT_FROM_IPFS_SUCCESS:
         case ipfsActions.IMPORT_PROJECT_FROM_IPFS_FAIL:
         case ipfsActions.FORK_PROJECT_SUCCESS:
