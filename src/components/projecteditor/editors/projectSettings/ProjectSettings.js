@@ -73,8 +73,6 @@ export default class ProjecSettings extends Component {
             return false;
         }
 
-        console.log("Here");
-
         this.props.updateProjectSettings({
             name: this.state.form.name,
             title: this.state.form.title

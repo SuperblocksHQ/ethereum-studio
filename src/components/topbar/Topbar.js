@@ -508,8 +508,6 @@ export default class TopBar extends Component {
         const { showUploadDialog, showUploadButton, showForkButton } = this.state.ipfsActions;
         const { selectedProjectName } = this.state;
 
-        console.log(selectedProjectName);
-
         return (
             <div className={style.topbar}>
                 <img
