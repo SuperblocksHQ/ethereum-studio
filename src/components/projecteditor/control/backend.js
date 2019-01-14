@@ -49,7 +49,7 @@ export default class Backend {
                 // store projects.
                 const newData = { projects: newProjects };
                 localStorage.setItem(
-                    Backned.Backend.DAPP_FORMAT_VERSION,
+                    Backend.DAPP_FORMAT_VERSION,
                     JSON.stringify(newData)
                 );
                 cb(1); // Indicate that there are converted projects.
