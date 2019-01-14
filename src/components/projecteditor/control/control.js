@@ -63,9 +63,12 @@ export default class Control extends Component {
     componentDidMount() {
         this._loadProjects(status => {
             if (status == 0) {
-                if (!this._openLastProject() && this.props.isImportedProject === false) {
-                    this._setProjectActive(null);
-                    this._showWelcome();
+                // Make sure no project gets loaded if we are importing one from IPFS
+                if (!this.props.isImportedProject) {
+                    if (!this._openLastProject()) {
+                        this._setProjectActive(null);
+                        this._showWelcome();
+                    }
                 }
             }
         });
