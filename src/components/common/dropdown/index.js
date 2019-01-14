@@ -63,7 +63,7 @@ export class DropdownContainer extends Component {
     };
 
     render() {
-        const { dropdownContent, useRightClick, ...props } = this.props;
+        const { dropdownContent, useRightClick, enableClickInside, className } = this.props;
         let main;
 
         if (useRightClick) {
@@ -73,7 +73,7 @@ export class DropdownContainer extends Component {
         }
 
         return (
-            <div {...props}>
+            <div className={className}>
                 {main}
                 { this.state.showMenu &&
                 <Dropdown
