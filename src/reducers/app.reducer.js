@@ -15,7 +15,7 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 export const initialState = {
-    version: '1.4.3',
+    version: '1.5.0',
 };
 
 export default function appReducer(state = initialState, action) {

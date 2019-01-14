@@ -1,5 +1,22 @@
 # Superblocks Lab - Change log
 
+## [1.5.0]
+
++ Addition: New copy to clipboard button in account selector #314
++ Addition: New project sharing through unique URL using IPFS #252
+* Improvement: New Preview panel replacing Show Preview app window #311
+* Change: Use yarn instead of make for building #330
+* Fix: Unable to run yarn start #292
+* Fix: Account Edit failure due to EVM not being ready #325
+* Fix: Missing Origin Validation vulnerability in webpack-dev-server #329
+* Fix: Left panel editor window not resizing #333
+* Fix: Dropdown buttons won't toggle on click #61
+* Fix: Unable to run newly rebuilt EVM due to uncaught type error #343
+* Fix: getTransactionCount return value to comply with the specification #341
+* Removal: Unused sass package #222
+* Removal: Initial splash screen is no more #332
+
+
 ## [1.4.3]
 
 * Change: ORIGIN variable in the make file #323
