@@ -291,6 +291,13 @@ export default class Editor extends Component {
             this.currentEditorWidth = width;
             setTimeout(this.updateLayout, 1);
         }
+
+        const requireConfig = {
+            paths: { vs: "vs" },
+            url: "/vs/loader.js",
+            baseUrl: "/"
+        };
+
         return (
             <div className="full" id={this.id}>
                 {toolbar}
@@ -305,6 +312,7 @@ export default class Editor extends Component {
                     editorDidMount={(obj, monaco) =>
                         this.editorDidMount(obj, monaco)
                     }
+                    requireConfig={requireConfig}
                 />
             </div>
         );
