@@ -1721,6 +1721,7 @@ function getTransactionCount(address, callback) {
             } else {
                 var account = new Account(raw);
                 var nonce = decode('uint', account.nonce);
+                nonce = nonce.toString();
                 callback(null, nonce);
             }
         });
