@@ -135,7 +135,7 @@ export default class App extends Component {
     };
 
     _init = () => {
-        let { showSplash, appVersion } = this.props;
+        let { appVersion } = this.props;
         const modalData = {
             title: 'Loading Superblocks Lab',
             body:
@@ -178,55 +178,6 @@ export default class App extends Component {
                 this.isImportedProject = true;
                 this.props.importProjectFromIpfs(a[1]);
         }
-    };
-
-    _showSplash = () => {
-        let { showSplashNoMore } = this.props;
-
-        const body = (
-            <div className="splash">
-                <p className="splash_text">
-                    Let's watch a short video to help you get started.
-                </p>
-                <p className="splash_video">
-                    <iframe
-                        width="560"
-                        height="315"
-                        src="https://www.youtube-nocookie.com/embed/KSF24hkf0-o?rel=0"
-                        frameBorder="0"
-                        allow="autoplay; encrypted-media"
-                        allowFullScreen
-                    />
-                </p>
-                <p className="splash_cancel">
-                    <a
-                        href="#"
-                        onClick={() => {
-                            // Idealy this should be inside the action and not here.
-                            this.functions.modal.cancel();
-                            showSplashNoMore();
-                        }}
-                    >
-                        No thanks
-                    </a>
-                </p>
-            </div>
-        );
-        const modalData = {
-            title: 'Welcome to Superblocks Lab!',
-            body: body,
-            style: {
-                width: '680px',
-                xbackgroundColor: '#73618b',
-                xcolor: '#fef7ff',
-            },
-        };
-        const modal = <Modal data={modalData} />;
-        this.functions.modal.show({
-            render: () => {
-                return modal;
-            },
-        });
     };
 
     session_start_time = () => {
@@ -334,8 +285,6 @@ export default class App extends Component {
 
 App.propTypes = {
     router: PropTypes.object.isRequired,
-    showSplash: PropTypes.bool.isRequired,
     appVersion: PropTypes.string.isRequired,
-    notifyAppStart: PropTypes.func.isRequired,
-    showSplashNoMore: PropTypes.func.isRequired
+    notifyAppStart: PropTypes.func.isRequired
 }

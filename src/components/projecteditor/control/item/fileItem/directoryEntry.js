@@ -22,7 +22,7 @@ import {
     IconAddFolder,
 } from '../../../../icons';
 import style from '../../style.less';
-import { DropdownContainer } from '../../../../dropdown';
+import { DropdownContainer } from '../../../../common';
 import { FadeInComponent } from './fadeInComponent';
 import { ShowActions } from './showActions';
 import Tooltip from '../../../../tooltip';

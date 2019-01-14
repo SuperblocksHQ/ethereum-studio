@@ -12,10 +12,8 @@ import Backend from '../components/projecteditor/control/backend';
 const config = {
     key: 'root',
     storage,
-    version: 4,
-
+    version: 5,
     blacklist: ['app', 'sidePanels', 'panes', 'view', 'ipfs', 'explorer', 'toast'],
-
     migrate: createMigrate(migrations, { debug: true })
 };
 

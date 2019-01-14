@@ -17,7 +17,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { DropdownContainer } from '../../dropdown';
+import { DropdownContainer } from '../../common';
 import style from '../style.less';
 import NetworkDropdown from './networkDropdown';
 import {

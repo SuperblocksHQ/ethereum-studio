@@ -2,7 +2,7 @@ import React from 'react';
 import style from '../style.less';
 import { IconShowPreview, IconRefresh, IconDownloadDApp, IconMore } from '../../../icons';
 import Tooltip from '../../../tooltip';
-import { DropdownContainer } from '../../../dropdown';
+import { DropdownContainer } from '../../../common';
 import OnlyIf from '../../../onlyIf';
 import { BaseSidePanel } from '../baseSidePanel';
 import { previewService } from '../../../../services';
