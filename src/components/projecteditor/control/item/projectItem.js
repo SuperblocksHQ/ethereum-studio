@@ -79,14 +79,6 @@ export default class ProjectItem extends Item {
         return this.props.state.name || '';
     };
 
-    getEnvironment = () => {
-        const environmentsItem = this.getHiddenItem('environments');
-        const firstEnv = environmentsItem.getChildren()[0];
-        const defaultEnv = firstEnv ? firstEnv.getName() : 'browser';
-        const chosen = environmentsItem.getChosen() || defaultEnv;
-        return chosen;
-    };
-
     getAccount = () => {
         const accountsItem = this.getHiddenItem('accounts');
         const firstAccount = accountsItem.getChildren()[0];

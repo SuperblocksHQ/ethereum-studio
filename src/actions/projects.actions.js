@@ -14,35 +14,42 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export const projectActions = {
+export const projectsActions = {
     SELECT_PROJECT: 'SELECT_PROJECT',
     selectProject(project) {
         return {
-            type: projectActions.SELECT_PROJECT,
+            type: projectsActions.SELECT_PROJECT,
             data: project
         };
     },
+
+    SET_ENVIRONMENT: 'SET_ENVIRONMENT',
+    setEnvironment(environmentName) {
+       return {
+            type: projectsActions.SET_ENVIRONMENT,
+            data: environmentName
+       };
+    },
+
     UPDATE_PROJECT_SETTINGS: 'UPDATE_PROJECT_SETTINGS',
     updateProjectSettings(projectSettings) {
         return {
-            type: projectActions.UPDATE_PROJECT_SETTINGS,
+            type: projectsActions.UPDATE_PROJECT_SETTINGS,
             data: projectSettings
         };
     },
     UPDATE_PROJECT_SETTINGS_SUCCESS: 'UPDATE_PROJECT_SETTINGS_SUCCESS',
     updateProjectSettingsSuccess(newProjectSettings) {
         return {
-            type: projectActions.UPDATE_PROJECT_SETTINGS_SUCCESS,
+            type: projectsActions.UPDATE_PROJECT_SETTINGS_SUCCESS,
             data: newProjectSettings,
         };
     },
     UPDATE_PROJECT_SETTINGS_FAIL: 'UPDATE_PROJECT_SETTINGS_FAIL',
     updateProjectSettingsFail(error) {
         return {
-            type: projectActions.UPDATE_PROJECT_SETTINGS_FAIL,
+            type: projectsActions.UPDATE_PROJECT_SETTINGS_FAIL,
             error: error
         };
     }
-}
-
-
+};

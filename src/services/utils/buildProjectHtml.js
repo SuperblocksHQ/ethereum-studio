@@ -14,8 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import Networks from '../../networks';
-
 function getProviderHTML(endpoint, accounts) {
     const js =
         `<script type="text/javascript" src="${window.location.origin}/static/js/web3provider.js?ts=${Date.now()}"></script>
@@ -90,7 +88,7 @@ function makeFileName(path, network, suffix) {
     return `/build${dir}${contractName}/${contractName}.${network}.${suffix}`;
 }
 
-function getAccountAddress(project, wallet, disableAccounts) {
+function getAccountAddress(project, wallet, disableAccounts, env) {
     if (disableAccounts) { return null; }
 
     // Check given account, try to open and get address, else return [].
@@ -98,7 +96,6 @@ function getAccountAddress(project, wallet, disableAccounts) {
     if (accountName === '(locked)') { return []; }
     if (!accountName) { return []; }
 
-    const env = project.getEnvironment();
     const accounts = project.getHiddenItem('accounts');
     const account = accounts.getByName(accountName);
     const accountIndex = account.getAccountIndex(env);
@@ -136,7 +133,7 @@ function getAccountAddress(project, wallet, disableAccounts) {
  * @param {*} wallet
  * @param {*} disableAccounts
  */
-export function buildProjectHtml(project, wallet, disableAccounts) {
+export function buildProjectHtml(project, wallet, disableAccounts, environment) {
     return new Promise((resolve, reject) => {
 
         let js, css, html, contractjs;
@@ -169,8 +166,6 @@ export function buildProjectHtml(project, wallet, disableAccounts) {
                                     .map(contract => contract.getName());
 
                                 const jsfiles = [];
-                                const network = project.getEnvironment();
-                                const endpoint = (Networks[network] || {}).endpoint;
 
                                 for (const contractName of contracts) {
                                     const contract = project
@@ -178,7 +173,7 @@ export function buildProjectHtml(project, wallet, disableAccounts) {
                                         .getByName(contractName);
 
                                     const src = contract.getSource();
-                                    const jssrc = makeFileName(src, network, "js");
+                                    const jssrc = makeFileName(src, environment.name, "js");
                                     jsfiles.push(jssrc);
                                 }
 
@@ -194,8 +189,8 @@ export function buildProjectHtml(project, wallet, disableAccounts) {
                                         css,
                                         contractjs + '\n' + js,
                                         project.getTitle(),
-                                        endpoint,
-                                        getAccountAddress(project, wallet, disableAccounts)
+                                        environment.endpoint,
+                                        getAccountAddress(project, wallet, disableAccounts, environment.name)
                                     );
 
                                     // exportable version.

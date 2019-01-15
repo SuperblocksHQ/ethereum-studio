@@ -21,12 +21,13 @@ import Modal from '../modal/index.js';
 const TxEth = () => import(/* webpackChunkName: "ethereumjs-tx" */ '../../ethereumjs-tx-1.3.3.min.js');
 
 export default class SuperProvider {
-    constructor(channelId, projectItem, notifyTx) {
+    constructor(channelId, projectItem, notifyTx, getCurrentEnv) {
         this.channelId = channelId;
         this.projectItem = projectItem;
         this.notifyTx = notifyTx;
         this.iframe = null;
         this.iframeStatus = -1;
+        this.getCurrentEnv = getCurrentEnv;
     }
 
     _initIframe = () => {
@@ -142,7 +143,7 @@ export default class SuperProvider {
             const accounts = this.projectItem.getHiddenItem('accounts');
             const account = accounts.getByName(accountName);
 
-            const env = this.projectItem.getEnvironment();
+            const env = this.getCurrentEnv();
             const walletName = account.getWallet(env);
 
             const wallets = this.projectItem.getHiddenItem('wallets');

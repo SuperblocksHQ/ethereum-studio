@@ -16,11 +16,13 @@
 
 import { connect } from 'react-redux';
 import ProjectEditor from './ProjectEditor';
+import { projectSelectors } from '../../selectors';
 import { sidePanelsActions } from '../../actions';
 
 const mapStateToProps = state => ({
     displayTransactionsPanel: state.sidePanels.showTransactionsHistory,
-    previewSidePanel: state.sidePanels.preview
+    previewSidePanel: state.sidePanels.preview,
+    selectedEnvironment: projectSelectors.getSelectedEnvironment(state)
 });
 
 const mapDispatchToProps = (dispatch) => {

@@ -15,23 +15,47 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { Component } from 'react';
-import style from './style.less';
-import AccountSelector from './account/accountSelector';
-import NetworkSelector from './network/networkSelector';
-import {
-    IconDeployGreen,
-} from '../icons';
+import { connect } from 'react-redux';
 
-export default class NetworkAcccountSelector extends Component {
+import style from './style.less';
+import { IconDeployGreen } from '../icons';
+import OnlyIf from '../onlyIf';
+import { NetworkSelector } from './networkSelector';
+import { AccountSelector } from './accountSelector';
+import { projectsActions } from '../../actions';
+
+class NetworkAccountSelector extends Component {
     render() {
-        let { ...props } = this.props;
+        const { selectedProject, onNetworkSelected } = this.props;
         return (
-            <div className={style.container}>
-                <IconDeployGreen />
-                <NetworkSelector {...props} />
-                <div className={style.separator} />
-                <AccountSelector {...props} />
-            </div>
+            <OnlyIf test={Boolean(selectedProject.id)}>
+                <div className={style.container}>
+                    <IconDeployGreen />
+
+                    <NetworkSelector 
+                        selectedNetwork={selectedProject.selectedEnvironment}
+                        networks={selectedProject.environments}
+                        onNetworkSelected={onNetworkSelected} />
+
+                    <div className={style.separator} />
+
+                    <AccountSelector {...this.props} selectedEnvironment={selectedProject.selectedEnvironment.name} />
+                </div>
+            </OnlyIf>
         );
     }
 }
+
+const mapStateToProps = state => ({
+    selectedProject: state.projects.selectedProject,
+});
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onNetworkSelected(environment) {
+            dispatch(projectsActions.setEnvironment(environment));
+        }
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(NetworkAccountSelector);

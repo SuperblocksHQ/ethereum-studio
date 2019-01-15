@@ -16,7 +16,7 @@
 
 import React from 'react';
 import classNames from 'classnames';
-import { ipfsActions, projectActions } from '../../actions';
+import { ipfsActions, projectsActions } from '../../actions';
 import {
     IconInformation,
     IconWarning,
@@ -31,21 +31,23 @@ export const CloseButton = ({ closeToast }) => (
 
 const info = (text) => ({
     ToastComponent: () =>
+    (
         <div className={'messageContainer'}>
             <IconInformation/>
             {text}
         </div>
-    ,
+    ),
     className: classNames(['body', 'info'])
 });
 
 const error = (text) => ({
     ToastComponent: () =>
+    (
         <div className={'messageContainer'}>
             <IconWarning/>
             {text}
         </div>
-    ,
+    ),
     className: classNames(['body', 'error'])
 });
 
@@ -59,7 +61,9 @@ export const getToastComponent = (type) => {
             return info('Project Downloaded!');
         case ipfsActions.IMPORT_PROJECT_FROM_IPFS_FAIL:
             return error('Error importing project!');
-        case projectActions.UPDATE_PROJECT_SETTINGS_FAIL:
+        case projectsActions.UPDATE_PROJECT_SETTINGS_FAIL:
             return error('Error updating project settings');
+        default:
+            return null;
     }
 }

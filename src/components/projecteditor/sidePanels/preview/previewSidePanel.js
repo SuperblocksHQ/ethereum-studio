@@ -41,7 +41,7 @@ export class PreviewSidePanel extends React.Component {
 
     tryDownload() {
         // TODO: parameters should not be passed here, but obtained from redux app state
-        this.props.onTryDownload(previewService.hasExportableContent, previewService.projectItem.getEnvironment());
+        this.props.onTryDownload(previewService.hasExportableContent, this.props.selectedEnvironment);
     }
 
     toggleWeb3Accounts() {
@@ -100,7 +100,7 @@ export class PreviewSidePanel extends React.Component {
                     }
                     {this.props.showDownloadModal &&
                     <DownloadModal 
-                        environment={previewService.projectItem.getEnvironment()}
+                        environment={this.props.selectedEnvironment}
                         onClose={this.props.onHideModals}
                         onDownload={this.props.onDownload} />
                     }

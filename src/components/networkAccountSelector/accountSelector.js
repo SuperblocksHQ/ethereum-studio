@@ -15,23 +15,16 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import * as accountUtils from '../../../utils/accounts';
-import Networks from '../../../networks';
 import classnames from 'classnames';
-import { DropdownContainer } from '../../common';
-import style from '../style.less';
-import AccountDropdown from './acountDropdown';
-import {
-    IconDropdown,
-    IconLock,
-    IconLockOpen,
-    IconMetamask,
-    IconMetamaskLocked,
-    IconPublicAddress,
-} from '../../icons';
+import PropTypes from 'prop-types';
+import { DropdownContainer } from '../common/dropdown';
+import Networks from '../../networks';
+import * as accountUtils from '../../utils/accounts';
+import style from './style.less';
+import { IconDropdown, IconLock, IconLockOpen, IconMetamask, IconMetamaskLocked, IconPublicAddress } from '../icons';
+import { AccountsList } from './accountsList';
 
-export default class AccountSelector extends Component {
+export class AccountSelector extends Component {
     state = {
         balances: {}
     }
@@ -46,7 +39,7 @@ export default class AccountSelector extends Component {
 
     accountChosen = account => {
         const project = this.props.router.control.getActiveProject();
-        if (!project) return;
+        if (!project) { return; }
         const accountsItem = project.getHiddenItem('accounts');
         accountsItem.setChosen(account);
         this.props.router.main.redraw(true);
@@ -57,7 +50,7 @@ export default class AccountSelector extends Component {
         e.stopPropagation();
 
         const project = this.props.router.control.getActiveProject();
-        if (!project) return;
+        if (!project) { return; }
 
         const accountsItem = project.getHiddenItem('accounts');
 
@@ -71,19 +64,19 @@ export default class AccountSelector extends Component {
         e.stopPropagation();
 
         const project = this.props.router.control.getActiveProject();
-        if (!project) return;
+        if (!project) { return; }
 
-        if (index == 0) {
+        if (index === 0) {
             alert('You cannot delete the default account.');
             return;
         }
 
-        if (!confirm('Are you sure to delete account?')) return;
+        if (!confirm('Are you sure to delete account?')) { return; }
 
         const accountsItem = project.getHiddenItem('accounts');
 
         const account = accountsItem.getChildren()[index];
-        const isCurrent = account.getName() == project.getAccount();
+        const isCurrent = account.getName() === project.getAccount();
 
         if (isCurrent) {
             accountsItem.setChosen(null);
@@ -99,7 +92,7 @@ export default class AccountSelector extends Component {
         e.preventDefault();
         e.stopPropagation();
         const project = this.props.router.control.getActiveProject();
-        if (!project) return;
+        if (!project) { return; }
         project.addAccount(() => {
             // TODO: how to open new item?
             this.props.router.main.redraw(true);
@@ -120,9 +113,7 @@ export default class AccountSelector extends Component {
         const accountName = project.getAccount();
         const accountsItem = project.getHiddenItem('accounts');
         const accountItem = accountsItem.getByName(accountName);
-        const wallet = this.props.functions.wallet;
-
-        return accountUtils.getAccountInfo(project, accountItem, wallet);
+        return accountUtils.getAccountInfo(project, accountItem, this.props.functions.wallet, this.props.selectedEnvironment);
     };
 
     accountBalance = () => {
@@ -149,9 +140,9 @@ export default class AccountSelector extends Component {
 
     updateBalances = () => {
         const project = this.props.router.control.getActiveProject();
-        if (!project) return {};
+        if (!project) { return {}; }
 
-        if (this.updateBalanceBusy) return;
+        if (this.updateBalanceBusy) { return; }
         this.updateBalanceBusy = true;
 
         const { network, address } = this.accountType();
@@ -187,11 +178,10 @@ export default class AccountSelector extends Component {
         e.preventDefault();
 
         const project = this.props.router.control.getActiveProject();
-        const chosenEnv = project.getEnvironment();
         const accountName = project.getAccount();
         const accountsItem = project.getHiddenItem('accounts');
         const accountItem = accountsItem.getByName(accountName);
-        const walletName = accountItem.getWallet(chosenEnv);
+        const walletName = accountItem.getWallet(this.props.selectedEnvironment);
 
         this.props.functions.wallet.openWallet(walletName, null, status => {
             if (status === 0) {
@@ -202,14 +192,14 @@ export default class AccountSelector extends Component {
 
     render() {
         const project = this.props.router.control.getActiveProject();
-        if (!project) return (<div/>);
+        if (!project) { return (<div/>); }
         const account = project.getAccount();
         const { accountType, isLocked, network, address } = this.accountType();
-        if (!network) return (<div/>);
+        if (!network) { return (<div/>); }
         const accountBalance = this.accountBalance();
         var accountIcon;
 
-        if (accountType == 'metamask') {
+        if (accountType === 'metamask') {
             if (isLocked) {
                 accountIcon = (
                     <IconMetamaskLocked alt="locked metamask account" />
@@ -217,7 +207,7 @@ export default class AccountSelector extends Component {
             } else {
                 accountIcon = <IconMetamask alt="available metamask account" />;
             }
-        } else if (accountType == 'wallet') {
+        } else if (accountType === 'wallet') {
             if (isLocked) {
                 accountIcon = (
                     <IconLock alt="locked wallet account" size="xs" />
@@ -227,7 +217,7 @@ export default class AccountSelector extends Component {
                     <IconLockOpen alt="open wallet account" size="xs" />
                 );
             }
-        } else if (accountType == 'pseudo') {
+        } else if (accountType === 'pseudo') {
             accountIcon = (
                 <IconPublicAddress alt="pseudo account with only a public address" />
             );
@@ -235,7 +225,8 @@ export default class AccountSelector extends Component {
         return (
             <DropdownContainer
                 dropdownContent={
-                    <AccountDropdown
+                    <AccountsList
+                        environment={this.props.selectedEnvironment}
                         router={this.props.router}
                         onAccountChosen={this.accountChosen}
                         onAccountEdit={this.accountEdit}

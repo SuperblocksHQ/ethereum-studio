@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { ipfsActions, projectActions, toastActions } from '../actions';
+import { ipfsActions, projectsActions, toastActions } from '../actions';
 
 export const initialState = {
     toasts: [],
@@ -23,11 +23,11 @@ export const initialState = {
 var counter = 0;
 export default function toastsReducer(state = initialState, action) {
     switch (action.type) {
-        case projectActions.UPDATE_PROJECT_SETTINGS_FAIL:
+        case projectsActions.UPDATE_PROJECT_SETTINGS_FAIL:
         case ipfsActions.IMPORT_PROJECT_FROM_IPFS_SUCCESS:
         case ipfsActions.IMPORT_PROJECT_FROM_IPFS_FAIL:
         case ipfsActions.FORK_PROJECT_SUCCESS:
-        case ipfsActions.FORK_PROJECT_FAIL:
+        case ipfsActions.FORK_PROJECT_FAIL: {
             counter += 1;
             const toast = {
                 id: counter,
@@ -37,6 +37,7 @@ export default function toastsReducer(state = initialState, action) {
                 ...state,
                 toasts: state.toasts.concat(toast)
             }
+        }
         case toastActions.TOAST_DISMISSED:
             return {
                 ...state,

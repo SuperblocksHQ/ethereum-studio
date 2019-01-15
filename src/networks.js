@@ -4,11 +4,13 @@ const Networks = {
         endpoint: "http://superblocks-browser",
         chainId: undefined,
         interval: 1000,
+        name: 'browser'
     },
     custom: {
         endpoint: "http://localhost:8545/",
         chainId: undefined,
         interval: 2000,
+        name: 'custom'
     },
     infuranet: {
         endpoint: "https://infuranet.infura.io/",

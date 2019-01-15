@@ -45,7 +45,7 @@ export default class Deployer extends Component {
 
     componentDidMount() {
         this.deploy();
-    };
+    }
 
     canClose = (cb) => {
         cb(0);
@@ -152,7 +152,7 @@ export default class Deployer extends Component {
             consoleRows: [],
             status: ''
         },
-        () => this.deployer.run());
+        () => this.deployer.run(null, this.props.selectedEnvironment));
     };
 
     renderContents = () => {

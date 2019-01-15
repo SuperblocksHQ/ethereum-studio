@@ -49,7 +49,7 @@ export default class DeployerRunner {
         this.isRunning = false;
     }
 
-    run(e) {
+    run(e, selectedEnvironment) {
         const { networkPreferences, functions: {EVM} } = this.props;
 
         var redeploy = this.redeploy;
@@ -58,13 +58,13 @@ export default class DeployerRunner {
             e.stopPropagation(); // Don't auto focus on the window.
             redeploy = true;
         }
-        if (this.isRunning) return;
+        if (this.isRunning) { return; }
 
         // Make sure we reset everything first
         this.isRunning = true;
 
         const project = this.item.getProject();
-        const env = project.getEnvironment();
+        const env = selectedEnvironment.name;
         const contract = this.item.getParent();
         const src = contract.getSource();
         const tag = env;

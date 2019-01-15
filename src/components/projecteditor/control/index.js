@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import Control from './control';
 import { getAppVersion } from '../../../selectors/app';
 import { projectSelectors } from '../../../selectors';
-import { projectActions, explorerActions, sidePanelsActions } from '../../../actions';
+import { projectsActions, explorerActions, sidePanelsActions } from '../../../actions';
 
 const mapStateToProps = state => ({
     appVersion: getAppVersion(state),
@@ -11,8 +11,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => {
     return {
-        selectProject: (id, name) => {
-            dispatch(projectActions.selectProject(id, name));
+        selectProject: (project) => {
+            dispatch(projectsActions.selectProject(project));
         },
         closeAllPanels: () => {
             dispatch(sidePanelsActions.closeAllPanels())

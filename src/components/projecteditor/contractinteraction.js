@@ -15,19 +15,21 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import style from './style-appview.less';
 import { IconRun } from '../icons';
+import { projectSelectors } from '../../selectors';
 
 var Generator = require('../contractinteraction');
 import SuperProvider from '../superprovider';
 import Web3 from 'web3';
 
-export default class ContractInteraction extends Component {
+class ContractInteraction extends Component {
     constructor(props) {
         super(props);
         this.id = props.id + '_contractinteraction';
         this.props.parent.childComponent = this;
-        this.provider = new SuperProvider(this.id, this.props.item.getProject(), this.notifyTx.bind(this));
+        this.provider = new SuperProvider(this.id, this.props.item.getProject(), this.notifyTx.bind(this), () => this.props.selectedEnvironment.name);
         this.contract_address = '';
         this.contract_balance = '? eth';
         this.contract_balance_wei = '';
@@ -109,7 +111,7 @@ export default class ContractInteraction extends Component {
 
     render2 = () => {
         const project = this.props.item.getProject();
-        const env = project.getEnvironment();
+        const env = this.props.selectedEnvironment.name;
         const contract = this.props.item.getParent();
 
         if (!contract) return; // This gets called twice, with the previous contract name, after renaming a contract.
@@ -199,10 +201,10 @@ export default class ContractInteraction extends Component {
     _getAccountAddress = () => {
         // Check given account, try to open and get address, else return [].
         const accountName = this._getAccount();
-        if (!accountName) return [];
+        if (!accountName) { return []; }
 
         //const env=this.state.network;
-        const env = this.props.item.getProject().getEnvironment();
+        const env = this.props.selectedEnvironment.name;
         //const account = this.dappfile.getItem("accounts", [{name: accountName}]);
         //const accountIndex=account.get('index', env);
         //const walletName=account.get('wallet', env);
@@ -574,7 +576,7 @@ export default class ContractInteraction extends Component {
     updateBalance = () => {
         if (this.updateBalanceBusy) return;
         this.updateBalanceBusy = true;
-        const env = this.props.item.getProject().getEnvironment();
+        const env = this.props.selectedEnvironment.name;
         const network = env;
         const endpoint = (
             this.props.functions.networks.endpoints[network] || {}
@@ -660,3 +662,13 @@ export default class ContractInteraction extends Component {
         );
     }
 }
+
+const mapStateToProps = state => ({
+    selectedEnvironment: projectSelectors.getSelectedEnvironment(state),
+});
+
+const mapDispatchToProps = dispatch => {
+    return { };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ContractInteraction);

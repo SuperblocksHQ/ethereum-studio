@@ -18,15 +18,14 @@ import { of, empty } from 'rxjs';
 import { switchMap, withLatestFrom, map, catchError } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import { projectSelectors } from '../../selectors';
-import { ipfsActions, projectActions } from '../../actions';
+import { ipfsActions, projectsActions } from '../../actions';
 import { ipfsService } from '../../services';
 
 const updateIPFSActionButtons = (action$, state$) => action$.pipe(
-    ofType(projectActions.SELECT_PROJECT),
+    ofType(projectsActions.SELECT_PROJECT),
     withLatestFrom(state$),
     switchMap(([,state]) => {
-        const projectId = projectSelectors.getSelectedProjectId(state);
-        return of(projectId)
+        return of(projectSelectors.getSelectedProjectId(state))
         .pipe(
             map(projectId => {
                 if (ipfsService.isTemporaryProject(projectId)) {

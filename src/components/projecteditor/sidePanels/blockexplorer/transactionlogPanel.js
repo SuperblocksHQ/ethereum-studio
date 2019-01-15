@@ -50,14 +50,9 @@ export default class TransactionLogPanel extends Component {
     render() {
         const txlog = this._getTxLog();
         if (!txlog) { return null; }
-        const env = this.props.router.control
-            .getActiveProject()
-            .getEnvironment();
-        const network = env;
-
         const renderTransactions = this._getRender(txlog);
         const transactions = renderTransactions.renderTransactionsFloat(
-            network,
+            this.props.selectedEnvironment,
             5,
             0
         );
