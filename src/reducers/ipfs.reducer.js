@@ -1,4 +1,4 @@
-import { ipfsActions, projectActions } from '../actions';
+import { ipfsActions, projectsActions } from '../actions';
 
 export const initialState = {
     uploading: false,
@@ -83,7 +83,7 @@ export default function panesReducer(state = initialState, action) {
                 showForkButton: action.data.showForkButton,
             };
         }
-        case projectActions.SELECT_PROJECT: {
+        case projectsActions.SELECT_PROJECT: {
             return {
                 ...initialState, // Make we reset the state when changing projects
             };

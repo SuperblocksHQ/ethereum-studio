@@ -15,10 +15,8 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 export const projectSelectors = {
-    getSelectedProject: state => state.project.selectedProject,
-    getSelectedProjectId: state => state.project.selectedProject.id,
-    getSelectedProjectName: state => state.project.selectedProject.name,
+    getSelectedProject: state => state.projects.selectedProject,
+    getSelectedProjectId: state => state.projects.selectedProject.id,
+    getSelectedProjectName: state => state.projects.selectedProject.name,
+    getSelectedEnvironment: state => state.projects.selectedProject.selectedEnvironment
 }
-
-
-

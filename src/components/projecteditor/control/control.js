@@ -27,6 +27,7 @@ import { ipfsService, previewService } from '../../../services';
 import {
     IconCube,
 } from '../../icons';
+import Networks from '../../../networks';
 
 export default class Control extends Component {
 
@@ -237,9 +238,22 @@ export default class Control extends Component {
     _setProjectActive = project => {
         this.setState({ activeProject: project });
         previewService.projectItem = project;
-        const projectData = project
-            ? { id: project.getInode(), name: project.getName() }
-            : null;
+
+        let projectData = null;
+        if (project) {
+            projectData = {
+                id: project.getInode(),
+                name: project.getName(),
+                // TODO: this should be read from epic in local storage
+                environments: project.getHiddenItem('environments').getChildren().map(e => {
+                    const name = e.getName();
+                    return { 
+                        name,
+                        endpoint: Networks[name] && Networks[name].endpoint
+                    };
+                })
+            };
+        }
         this.props.selectProject(projectData);
     };
 

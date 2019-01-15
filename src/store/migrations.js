@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 import { initialState as settings } from '../reducers/settings.reducer';
+import { initialState as projects } from '../reducers/projects.reducer';
 
 const migrations = {
     1: (state) => {
@@ -63,11 +64,18 @@ const migrations = {
     5: (state) => {
         return {
             ...state,
+            projects: {
+                ...state.projects,
+                selectedProject: {
+                    ...projects.selectedProject,
+                    ...state.selectedProject
+                },
+            },
             settings: {
                 ...state.settings,
                 showSplash: undefined
             }
-        }
+        };
     }
 }
 

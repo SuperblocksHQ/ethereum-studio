@@ -29,12 +29,11 @@ const config = {
     key: 'root',
     storage,
     version: 5,
-    blacklist: ['app', 'sidePanels', 'panes', 'view', 'ipfs', 'explorer', 'toast'],
+    blacklist: ['app', 'sidePanels', 'panes', 'ipfs', 'explorer', 'toast'],
     migrate: createMigrate(migrations, { debug: true })
 };
 
 const reducer = persistCombineReducers(config, reducers);
-
 
 const configureMiddleware = (router) => {
     const rootEpic = combineEpics(...epics);

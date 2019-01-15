@@ -132,8 +132,6 @@
         "yield-star-spacing": "error",
         "yoda": "error",
 
-        //
-        // Disable options that have to do with style
         "arrow-body-style": "off",
         "capitalized-comments": "off",
         "class-methods-use-this": "off",

@@ -12,10 +12,8 @@
 *      network is the current network
 *      address is the account public address (for the current network)
 */
-export const getAccountInfo = (project, account, wallet) => {
-    if (!project || !account) return {};
-    const chosenEnv = project.getEnvironment();
-    const network = chosenEnv;
+export const getAccountInfo = (project, account, wallet, chosenEnv) => {
+    if (!project || !account) { return {}; }
     var isLocked = false;
     var walletType = null;
     var address = '';
@@ -32,7 +30,7 @@ export const getAccountInfo = (project, account, wallet) => {
 
     if (walletItem) {
         walletType = walletItem.getWalletType();
-        if (walletType == 'external') {
+        if (walletType === 'external') {
             accountType = 'metamask';
             if (!window.web3) {
                 isLocked = true;
@@ -61,7 +59,7 @@ export const getAccountInfo = (project, account, wallet) => {
         accountType = 'pseudo';
     }
 
-    return { accountType, isLocked, network, address };
+    return { accountType, isLocked, network: chosenEnv, address };
 };
 
 /**

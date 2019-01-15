@@ -17,21 +17,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import Tooltip from '../tooltip';
+import style from './style.less';
 import copy from 'copy-to-clipboard';
-import * as accountUtils from '../../../utils/accounts';
-import Tooltip from '../../tooltip';
-import style from '../style.less';
-import {
-    IconTrash,
-    IconEdit,
-    IconCopy,
-} from '../../icons';
+import * as accountUtils from '../../utils/accounts';
+import { IconTrash, IconEdit, IconCopy } from '../icons';
 
-export default class AccountDropdown extends Component {
+export class AccountsList extends Component {
     copyAddress = str => {
         copy(str);
     }
-
+    
     render() {
         var accounts, chosenAccount;
         const project = this.props.router.control.getActiveProject();
@@ -54,15 +50,21 @@ export default class AccountDropdown extends Component {
         const renderedAccounts = accounts.map((account, index) => {
             const cls = {};
             cls[style.accountLink] = true;
-            if (account.getName() == chosenAccount)
+            if (account.getName() === chosenAccount) {
                 cls[style.accountLinkChosen] = true;
+            }
 
-            var address = '';
+            let address = '';
             if (this.props.functions.EVM.isReady()) {
-                const accountInfo = accountUtils.getAccountInfo(this.props.router.control.getActiveProject(), account, this.props.functions.wallet);
+                const accountInfo = accountUtils.getAccountInfo(
+                    this.props.router.control.getActiveProject(),
+                    account,
+                    this.props.functions.wallet,
+                    this.props.environment);
                 address = accountInfo.address;
             }
-            var deleteButton;
+
+            let deleteButton;
             if (index !== 0) {
                 deleteButton = (
                     <button
@@ -97,7 +99,7 @@ export default class AccountDropdown extends Component {
                     >
                         <div className={style.nameContainer}>
                             <div>{account.getName()}</div>
-                                <div className={style.address}>{formattedAddress}</div>
+                            <div className={style.address}>{formattedAddress}</div>
                         </div>
                         <div className={style.actionsContainer}>
                             <button
@@ -146,7 +148,8 @@ export default class AccountDropdown extends Component {
     }
 }
 
-AccountDropdown.propTypes = {
+AccountsList.propTypes = {
+    environment: PropTypes.string, 
     functions: PropTypes.object.isRequired,
     onAccountChosen: PropTypes.func.isRequired,
     onAccountEdit: PropTypes.func.isRequired,
