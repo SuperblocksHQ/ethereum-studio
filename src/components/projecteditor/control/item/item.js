@@ -364,6 +364,7 @@ export default class Item {
                 onClick={
                     this.props.onClick ? e => this.props.onClick(e, this) : null
                 }
+                onContextMenu={(e)=>{e.preventDefault()}}
             >
                 <div className={style.header}>
                     {icons}

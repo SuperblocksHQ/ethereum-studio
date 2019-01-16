@@ -613,7 +613,7 @@ export default class FileItem extends Item {
         const icons = item._renderIcons(level, index);
 
         return (
-            <div className={style.projectContractsTitleContainer} onClick={item._angleClicked}>
+            <div className={style.projectContractsTitleContainer} onClick={item._angleClicked} onContextMenu={(e)=>{e.preventDefault()}}>
                 <div className={style.header}>
                     { icons }
                     <div className={style.title}>
