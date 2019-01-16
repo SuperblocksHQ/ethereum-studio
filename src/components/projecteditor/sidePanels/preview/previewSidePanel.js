@@ -36,7 +36,7 @@ export class PreviewSidePanel extends React.Component {
 
     refresh() {
         const iframe = document.getElementById(IFRAME_ID);
-        iframe.contentWindow.location.replace(`${getIframeSrc()}`);
+        iframe.contentWindow.location.replace(getIframeSrc());
     }
 
     tryDownload() {
