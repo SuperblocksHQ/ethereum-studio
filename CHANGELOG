@@ -1,5 +1,12 @@
 # Superblocks Lab - Change log
 
+## [1.6.0]
+
++ Addition: Support for Metamask provider.enable() security functionality #304
+* Fix: Smart contract import missing from file browser #347
+* Fix: Reload iframe is blocked on cross origin domains #349
+
+
 ## [1.5.0]
 
 + Addition: New copy to clipboard button in account selector #314
