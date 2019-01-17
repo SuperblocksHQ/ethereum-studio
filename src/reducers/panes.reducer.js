@@ -26,7 +26,7 @@ export default function panesReducer(state = initialState, action) {
         case panesActions.ADD_PANE:
             return {
                 ...state,
-                panes: [ { ... action.data } ].concat(state.panes)
+                panes: [ { ...action.data } ].concat(state.panes)
             };
         case panesActions.REMOVE_PANE:
             return {

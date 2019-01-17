@@ -6,3 +6,4 @@ dist
 *.iml
 */**/openzeppelin.json
 .env.local
+.vscode
