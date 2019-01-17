@@ -2,6 +2,7 @@
 
 const path = require('path');
 const webpack = require('webpack');
+const resolve = require('resolve');
 const PnpWebpackPlugin = require('pnp-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
@@ -13,7 +14,9 @@ const getClientEnvironment = require('./env');
 const paths = require('./paths');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
+const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin-alt');
 
 
 // Webpack uses `publicPath` to determine where the app is being served from.
@@ -137,7 +140,7 @@ module.exports = {
     // https://github.com/facebook/create-react-app/issues/290
     // `web` extension prefixes have been added for better support
     // for React Native Web.
-    extensions: ['.mjs', '.web.js', '.js', '.json', '.web.jsx', '.jsx'],
+    extensions: ['.mjs', '.web.js', '.js', '.json', '.web.jsx', '.jsx', '.ts', '.tsx'],
     alias: {
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
@@ -167,25 +170,18 @@ module.exports = {
     rules: [
       // Disable require.ensure as it's not a standard language feature.
       { parser: { requireEnsure: false } },
-
-      // TODO - Enable this when ever we are prepared
-    //   // First, run the linter.
-    //   // It's important to do this before Babel processes the JS.
-    //   {
-    //     test: /\.(js|mjs|jsx)$/,
-    //     enforce: 'pre',
-    //     use: [
-    //       {
-    //         options: {
-    //           formatter: require.resolve('react-dev-utils/eslintFormatter'),
-    //           eslintPath: require.resolve('eslint'),
-
-    //         },
-    //         loader: require.resolve('eslint-loader'),
-    //       },
-    //     ],
-    //     include: paths.appSrc,
-    //   },
+      // It's important to do this before Babel processes files
+      {
+        test: /\.(ts|tsx)$/,
+        enforce: 'pre',
+        use: [
+            {
+                loader: 'tslint-loader',
+                options: { emitErrors: true, failOnHint: true, typeCheck: true, configFile: paths.appTsLint, tsConfigFile: paths.appTsConfig }
+            }
+        ],
+        include: paths.appSrc,
+      },
       {
         // "oneOf" will traverse all following loaders until one will
         // match the requirements. When no loader matches it will fall
@@ -205,7 +201,7 @@ module.exports = {
           // Process application JS with Babel.
           // The preset includes JSX, Flow, and some ESnext features.
           {
-            test: /\.(js|mjs|jsx)$/,
+            test: /\.(js|mjs|jsx|ts|tsx)$/,
             include: paths.appSrc,
             loader: require.resolve('babel-loader'),
             options: {
@@ -370,6 +366,33 @@ module.exports = {
     new ManifestPlugin({
       fileName: 'asset-manifest.json',
       publicPath: publicPath,
+    }),
+    new ForkTsCheckerWebpackPlugin({
+      typescript: resolve.sync('typescript', {
+        basedir: paths.appNodeModules,
+      }),
+      async: false,
+      checkSyntacticErrors: true,
+      tsconfig: paths.appTsConfig,
+      compilerOptions: {
+        module: 'esnext',
+        moduleResolution: 'node',
+        resolveJsonModule: true,
+        isolatedModules: true,
+        noEmit: true,
+        jsx: 'preserve',
+      },
+      reportFiles: [
+        '**',
+        '!**/*.json',
+        '!**/__tests__/**',
+        '!**/?(*.)(spec|test).*',
+        '!**/src/setupProxy.*',
+        '!**/src/setupTests.*',
+      ],
+      watch: paths.appSrc,
+      silent: true,
+      formatter: typescriptFormatter,
     }),
     new CopyWebpackPlugin([{ context: `src/assets`, from: `**/*` }]),
     new CopyWebpackPlugin([ { from: 'node_modules/monaco-editor/min/vs', to: 'vs', } ]),
