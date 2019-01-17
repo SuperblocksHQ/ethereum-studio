@@ -44,7 +44,6 @@ const PreferencesAction = () => (
     <div className={style.action}>
         <button className={classNames([style.container, "btnNoBg"])}>
             <IconConfigure />
-            <span>Preferences</span>
         </button>
     </div>
 );
@@ -53,7 +52,6 @@ const HelpDropdownAction = () => (
     <div className={style.action}>
         <button className={classNames([style.container, 'btnNoBg'])}>
             <IconHelp />
-            <span>Help</span>
         </button>
     </div>
 );
