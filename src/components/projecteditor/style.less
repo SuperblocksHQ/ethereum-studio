@@ -63,12 +63,12 @@
             -ms-user-select: none;
             user-select: none;
             background-color: #252525;
-            min-height: 38px;
+            min-height: 35px;
             width: 100%;
             overflow-y: hidden;
             overflow-x: auto;
             .tab {
-                padding: 10px 12px 10px 12px;
+                padding: 7px 12px 7px 12px;
                 display: flex;
                 align-items: center;
                 align-content: center;
@@ -88,16 +88,18 @@
                         }
                     }
                     .close {
-                        margin-left: 10px;
-                        display: none;
+                        display: block;
                         font-size: 0.85em;
+                        opacity: 0.6;
                     }
                 }
                 &.selected {
                     background-color: #1e1e1e;
                     color: #FFFFFF;
+                    border-bottom: 2px solid fade(@primary-color, 90%);
                     .close {
                         display: block;
+                        opacity: 1;
                     }
                 }
             }
@@ -171,7 +173,7 @@
     .sidePanelContainer {
         position: relative;
     }
-    
+
     .sideButtonsContainer {
         position: absolute;
         right: 0;

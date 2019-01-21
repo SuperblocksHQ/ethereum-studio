@@ -317,7 +317,6 @@ class Panes extends Component {
                     <PanesHeader
                         panes={this.props.panes}
                         paneComponents={this.panes}
-
                         closeAllPanes={this.closeAllPanes}
                         closeAllOtherPanes={this.closeAllOtherPanes}
                         tabClicked={this.tabClicked}
