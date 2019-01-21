@@ -68,7 +68,7 @@
             overflow-y: hidden;
             overflow-x: auto;
             .tab {
-                padding: 7px 12px 7px 12px;
+                padding: 7px 12px 8px 12px;
                 display: flex;
                 align-items: center;
                 align-content: center;
@@ -77,6 +77,7 @@
                 background-color: #2D2D2D;
                 cursor: pointer;
                 color: #969696;
+                border-right: 1px solid #121516;
                 .tabContainer {
                     div {
                         float: left;
@@ -88,18 +89,25 @@
                         }
                     }
                     .close {
-                        display: block;
+                        display: none;
                         font-size: 0.85em;
-                        opacity: 0.6;
                     }
                 }
                 &.selected {
                     background-color: #1e1e1e;
                     color: #FFFFFF;
-                    border-bottom: 2px solid fade(@primary-color, 90%);
+                    box-shadow: inset 0 -2px 0 fade(@primary-color, 90%);
                     .close {
                         display: block;
                         opacity: 1;
+                        color: #fff;
+                        opacity: 0.8;
+                        &:hover {
+                            opacity: 1;
+                        }
+                        button {
+                            padding: 0 0;
+                        }
                     }
                 }
             }
