@@ -106,7 +106,7 @@ export default class ProjectEditor extends Component {
 
     onPanesSizeChange() {
         if (this.props.router.panes) {
-            this.props.router.panes.redraw(true);
+            this.props.router.panes.redraw(false);
         }
     }
 

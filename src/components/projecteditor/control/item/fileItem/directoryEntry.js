@@ -26,7 +26,7 @@ import style from '../../style.less';
 import { DropdownContainer } from '../../../../common';
 import { FadeInComponent } from './fadeInComponent';
 import { ShowActions } from './showActions';
-import Tooltip from '../../../../tooltip';
+import { Tooltip } from '../../../../common';
 import classnames from 'classnames';
 
 export class DirectoryEntry extends Component {

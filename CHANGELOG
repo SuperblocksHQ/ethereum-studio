@@ -1,5 +1,12 @@
 # Superblocks Lab - Change log
 
+## [1.6.1]
+
+* Fix: Suppress right click on some filesystem items #353
+* Fix: yarn start not working when starting clean  #354
+* Fix: Pane resizing after moving between tabs and switching side panels #355
+
+
 ## [1.6.0]
 
 + Addition: Support for Metamask provider.enable() security functionality #304

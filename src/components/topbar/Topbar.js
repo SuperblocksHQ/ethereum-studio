@@ -21,7 +21,7 @@ import style from './style.less';
 import { DropdownContainer } from '../common/dropdown';
 import Backend from '../projecteditor/control/backend';
 import Modal from '../modal';
-import Tooltip from '../tooltip';
+import { Tooltip } from '../common';
 import PreferencessModal from '../preferences';
 import UploadDialog from './upload';
 import Note from '../note';
