@@ -25,7 +25,7 @@ import {
 } from '../../icons';
 import Note from '../../note';
 import TextInput from '../../textInput';
-import Tooltip from '../../tooltip';
+import { Tooltip } from '../../common';
 import UploadSettings from './settings';
 
 class UploadDialog extends Component {

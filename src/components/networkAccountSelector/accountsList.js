@@ -17,7 +17,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import Tooltip from '../tooltip';
+import { Tooltip } from '../common';
 import style from './style.less';
 import copy from 'copy-to-clipboard';
 import * as accountUtils from '../../utils/accounts';

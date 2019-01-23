@@ -14,6 +14,24 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export * from './dropdown';
-export * from './select';
-export * from './tooltip';
+import React from 'react';
+
+interface IProps {
+    value: string;
+    options: string[];
+    onChange: (value: string) => void;
+}
+
+export function Select(props: IProps) {
+    return (
+        <select value={props.value} onChange={e => props.onChange(e.target.value)}>
+            {props.options.map((option: any) => {
+                return (
+                    <option key={option} value={option}>
+                        {option}
+                    </option>
+                );
+            })}
+        </select>
+    );
+}

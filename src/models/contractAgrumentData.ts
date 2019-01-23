@@ -14,6 +14,14 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export * from './dropdown';
-export * from './select';
-export * from './tooltip';
+export enum ContractArgTypes {
+    account = 'account',
+    contract = 'contract',
+    value = 'value',
+    array = 'array'
+}
+
+export interface IContractArgData {
+    type: ContractArgTypes;
+    value: string;
+}
