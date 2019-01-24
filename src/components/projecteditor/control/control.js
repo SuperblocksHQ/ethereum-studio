@@ -26,8 +26,12 @@ import LearnAndResources from '../../learnAndResources';
 import { ipfsService, previewService } from '../../../services';
 import {
     IconCube,
+    IconFileAlt,
+    IconClose
 } from '../../icons';
 import Networks from '../../../networks';
+import classNames from 'classnames';
+import { BaseSidePanel } from '../sidePanels/baseSidePanel';
 
 export default class Control extends Component {
 
@@ -38,10 +42,8 @@ export default class Control extends Component {
         const menu = new Item({
             type: 'top',
             classes: ['menutop'],
-            render: this._menuTop,
             icon: null,
             state: {
-                title: 'Top menu',
                 toggable: false,
                 children: () => {
                     var children = [];
@@ -608,22 +610,18 @@ export default class Control extends Component {
         this._openItem(e, account);
     };
 
-    _menuTop = (level, index, item) => (
-        <NetworkAccountSelector
-            router={this.props.router}
-            item={item}
-            functions={this.props.functions}
-        />
-    );
-
     render() {
         const item = this.state.menu.render();
+        const { toggleFileSystemPanel } = this.props;
+
         return (
             <div className="full">
-                <div className={style.treemenu}>
-                    {item}
-                    <LearnAndResources className="mt-3" />
-                </div>
+                <BaseSidePanel icon={ <IconFileAlt /> } name="Explorer" onClose={toggleFileSystemPanel}>
+                    <div className={style.treemenu}>
+                        {item}
+                        <LearnAndResources className="mt-3" />
+                    </div>
+                </BaseSidePanel>
             </div>
         );
     }
@@ -634,4 +632,5 @@ Control.propTypes = {
     selectProject: PropTypes.func.isRequired,
     renameFile: PropTypes.func.isRequired,
     selectedProjectId: PropTypes.number,
+    toggleFileSystemPanel: PropTypes.func.isRequired,
 };

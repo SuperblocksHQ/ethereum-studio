@@ -18,6 +18,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import style from './style.less';
 import Note from '../note';
+import { shortenBalance } from '../../utils/accounts';
 
 export default class BottomBar extends Component {
 
@@ -27,8 +28,12 @@ export default class BottomBar extends Component {
     }
 
     render() {
-        const { networkPreferences, endpoint } = this.props;
+        const { networkPreferences, endpoint, selectedAccount } = this.props;
         const gasPrice = this.web3.fromWei(networkPreferences.gasPrice, 'Gwei');
+        let accountBalance = 0;
+        if(selectedAccount)
+            accountBalance = shortenBalance(selectedAccount.balance);
+
         return (
             <div className={style.bottomStatusBar}>
                 <span className={style.left}>
@@ -38,9 +43,10 @@ export default class BottomBar extends Component {
                     />
                 </span>
                 <div className={style.right}>
-                <span>Gas Limit: {networkPreferences.gasLimit}</span>
-                <span>Gas Price: {gasPrice} Gwei</span>
-                <span>{endpoint}</span>
+                    <span>Account balance: {accountBalance}</span>
+                    <span>Gas Limit: {networkPreferences.gasLimit}</span>
+                    <span>Gas Price: {gasPrice} Gwei</span>
+                    <span>{endpoint}</span>
                 </div>
             </div>
         )
@@ -51,5 +57,6 @@ BottomBar.propType = {
     gasLimit: PropTypes.number.isRequired,
     gasLimit: PropTypes.number.isRequired,
     endpoint:  PropTypes.string.isRequired,
+    selectedAccount: PropTypes.object
 }
 

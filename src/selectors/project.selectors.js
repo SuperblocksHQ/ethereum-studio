@@ -18,5 +18,6 @@ export const projectSelectors = {
     getSelectedProject: state => state.projects.selectedProject,
     getSelectedProjectId: state => state.projects.selectedProject.id,
     getSelectedProjectName: state => state.projects.selectedProject.name,
-    getSelectedEnvironment: state => state.projects.selectedProject.selectedEnvironment
+    getSelectedEnvironment: state => state.projects.selectedProject.selectedEnvironment,
+    getSelectedAccount: state => state.projects.selectedAccount
 }

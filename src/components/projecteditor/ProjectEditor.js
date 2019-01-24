@@ -23,8 +23,9 @@ import BottomBar from '../bottomBar';
 import ContactContainer from '../contactContainer';
 import SplitterLayoutBase from 'react-splitter-layout';
 import { PreviewSidePanel, TransactionLogPanel } from './sidePanels';
-import { IconTransactions, IconShowPreview } from '../icons';
+import { IconTransactions, IconShowPreview, IconFileAlt } from '../icons';
 import { SideButton } from './sideButton';
+import classnames from 'classnames';
 
 class SplitterLayout extends SplitterLayoutBase {
     handleResize() {
@@ -116,7 +117,7 @@ export default class ProjectEditor extends Component {
     };
 
     render() {
-        const { displayTransactionsPanel, previewSidePanel, toggleTransactionsHistoryPanel,
+        const { displayTransactionsPanel, displayFileSystemPanel, previewSidePanel, toggleTransactionsHistoryPanel, toggleFileSystemPanel,
                 previewSidePanelActions, selectedEnvironment } = this.props;
 
         return (
@@ -127,17 +128,30 @@ export default class ProjectEditor extends Component {
                     onProjectSelected={this.onProjectSelectedHandle}
                 />
                 <div className={style.mainWrapper}>
+                    <div className={classnames([style.sideButtonsContainer, style.sideButtonsContainerLeft])}>
+                        <SideButton name="Explorer"
+                            icon={<IconFileAlt style={{width: 12}} />}
+                            onClick={() => { 
+                                    toggleFileSystemPanel(); 
+                                    this.onPanesSizeChange();
+                                }
+                            }  
+                        />
+                    </div>
+
                     <div className={style.mainLayout}>
                         <SplitterLayout 
                             primaryIndex={1}
                             secondaryMinSize={0}
                             secondaryInitialSize={280}
-                            onSecondaryPaneSizeChange={() => this.onPanesSizeChange()}>
+                            onSecondaryPaneSizeChange={() => this.onPanesSizeChange()}
+                            customClassName={!displayFileSystemPanel ? "hideFileSystemPanel" : null}>
                             <div className={style.control}>
                                 <Control
                                     router={this.props.router}
                                     functions={this.props.functions}
                                     isImportedProject={this.props.isImportedProject}
+                                    toggleFileSystemPanel={toggleFileSystemPanel}
                                 />
                                 <ContactContainer />
                             </div>
@@ -175,7 +189,7 @@ export default class ProjectEditor extends Component {
                         </SplitterLayout>
                     </div>
 
-                    <div className={style.sideButtonsContainer}>
+                    <div className={classnames([style.sideButtonsContainer, style.sideButtonsContainerRight])}>
                         <SideButton name="Transactions"
                             icon={<IconTransactions />}
                             onClick={toggleTransactionsHistoryPanel}  />
