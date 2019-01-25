@@ -131,6 +131,9 @@ export const IconCopy = ({ ...props }) => (
 );
 export const IconBack= ({...props}) => <svg fill="currentColor" preserveAspectRatio="xMidYMid meet" height="16px" width="16px" viewBox="0 0 512 512" style={{ verticalAlign: "center" }} {...props}><path d="M427 234.625H167.296l119.702-119.702L256 85 85 256l171 171 29.922-29.924-118.626-119.701H427v-42.75z"/></svg>
 export const IconWarning = ({...props}) => <svg fill="currentColor" preserveAspectRatio="xMidYMid meet" height="16px" width="16px" viewBox="0 0 512 512" style={{ verticalAlign: "center" }} {...props}><path d="M32 464h448L256 48 32 464zm248-64h-48v-48h48v48zm0-80h-48v-96h48v96z"/></svg>
+export const IconCubeTransparent = ({...props}) => <svg width="14px" height="15px" viewBox="0 0 14 15" version="1.1" xmlns="http://www.w3.org/2000/svg" fill="white" {...props}>
+    <path d="M7,5.55111512e-16 L0,3.75 L0,11.331875 L7,15 L14,11.331875 L14,3.790625 L7,5.55111512e-16 Z M12.0336364,4.15375 L7.00318182,6.79 L1.9972727,4.10625 L6.99681818,1.425625 L12.0336364,4.15375 Z M1.27272727,5.14375 L6.36363636,7.870625 L6.36363636,13.25 L1.27272727,10.5825 L1.27272727,5.14375 Z M7.63636364,13.25 L7.63636364,7.875 L12.7272727,5.206875 L12.7272727,10.581875 L7.63636364,13.25 Z" id="Shape"></path>
+</svg>
 
 // Top Bar
 export const IconTransactions = ({ ...props }) => <svg fill="currentColor" preserveAspectRatio="xMidYMid meet" height="16px" width="16px" viewBox="0 0 512 512" style={{ verticalAlign: "middle" }} {...props}><path d="M388.9 266.3c-5.1-5-5.2-13.3-.1-18.4L436 200H211c-7.2 0-13-5.8-13-13s5.8-13 13-13h224.9l-47.2-47.9c-5-5.1-5-13.3.1-18.4 5.1-5 13.3-5 18.4.1l69 70c1.1 1.2 2.1 2.5 2.7 4.1.7 1.6 1 3.3 1 5 0 3.4-1.3 6.6-3.7 9.1l-69 70c-5 5.2-13.2 5.3-18.3.3zM123.1 404.3c5.1-5 5.2-13.3.1-18.4L76.1 338H301c7.2 0 13-5.8 13-13s-5.8-13-13-13H76.1l47.2-47.9c5-5.1 5-13.3-.1-18.4-5.1-5-13.3-5-18.4.1l-69 70c-1.1 1.2-2.1 2.5-2.7 4.1-.7 1.6-1 3.3-1 5 0 3.4 1.3 6.6 3.7 9.1l69 70c5 5.2 13.2 5.3 18.3.3z"/></svg>

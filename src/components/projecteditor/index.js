@@ -21,6 +21,7 @@ import { sidePanelsActions } from '../../actions';
 
 const mapStateToProps = state => ({
     displayTransactionsPanel: state.sidePanels.showTransactionsHistory,
+    displayFileSystemPanel: state.sidePanels.showFileSystem,
     previewSidePanel: state.sidePanels.preview,
     selectedEnvironment: projectSelectors.getSelectedEnvironment(state)
 });
@@ -35,6 +36,15 @@ const mapDispatchToProps = (dispatch) => {
         },
         closeTransactionsHistoryPanel() {
             dispatch(sidePanelsActions.closeTransactionsHistoryPanel())
+        },
+        toggleFileSystemPanel() {
+            dispatch(sidePanelsActions.toggleFileSystemPanel())
+        },
+        openFileSystemPanel() {
+            dispatch(sidePanelsActions.openFileSystemPanel())
+        },
+        closeFileSystemPanel() {
+            dispatch(sidePanelsActions.closeFileSystemPanel())
         },
         
         previewSidePanelActions: {

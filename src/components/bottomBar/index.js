@@ -16,10 +16,12 @@
 
 import { connect } from 'react-redux';
 import { getNetworkPreferences } from '../../selectors/settings';
+import { projectSelectors } from '../../selectors/project.selectors';
 import BottomBar from './BottomBar';
 
 const mapStateToProps = state => ({
     networkPreferences: getNetworkPreferences(state),
+    selectedAccount: projectSelectors.getSelectedAccount(state)
 });
 
 export default connect(mapStateToProps, null)(BottomBar);

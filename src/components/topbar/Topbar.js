@@ -24,7 +24,6 @@ import Modal from '../modal';
 import { Tooltip } from '../common';
 import PreferencessModal from '../preferences';
 import UploadDialog from './upload';
-import Note from '../note';
 import {
     IconDownload,
     IconTrash,
@@ -39,6 +38,7 @@ import {
 } from '../icons';
 import Dappfile from '../projecteditor/control/item/dappfileItem';
 import OnlyIf from '../onlyIf';
+import NetworkAccountSelector from '../networkAccountSelector';
 
 const PreferencesAction = () => (
     <div className={style.action}>
@@ -64,11 +64,6 @@ const UploadDrowdownAction = () => (
             <IconUpload />
             <span>Upload</span>
         </button>
-        <Note
-            title="Beta"
-            backgroundColor="#417505"
-            color="#fff"
-        />
     </div>
 );
 
@@ -510,11 +505,12 @@ export default class TopBar extends Component {
 
         return (
             <div className={style.topbar}>
-                <img
-                    className={style.logo}
-                    src="/static/img/img-lab-logo.svg"
-                    alt="Superblocks Lab logo"
-                />
+                <OnlyIf test={this.props.router.control}>
+                    <NetworkAccountSelector
+                        router={this.props.router}
+                        functions={this.props.functions}
+                   />
+                </OnlyIf>
                 <OnlyIf test={showUploadButton}>
                     <DropdownContainer
                         className={style.actionHelp}

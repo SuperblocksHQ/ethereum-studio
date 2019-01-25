@@ -20,6 +20,7 @@ import { DropdownContainer } from '../common/dropdown';
 import style from './style.less';
 import { IconDropdown } from '../icons';
 import { NetworksList } from './networksList';
+import { IconCubeTransparent } from '../icons';
 
 // Note: We display networks, which really are environments, which map to networks.
 // This is due to a simplification where we do not show environments, only networks, but technically it's environments which we work with.
@@ -35,7 +36,8 @@ export function NetworkSelector(props) {
             }
         >
             <div className={classnames([style.selector])}>
-                <div className={style.capitalize} title={props.selectedNetwork.endpoint}>
+                <IconCubeTransparent />
+                <div className={classnames([style.capitalize, style.nameContainer])} title={props.selectedNetwork.endpoint}>
                     {props.selectedNetwork.name}
                 </div>
                 <div className={style.dropdownIcon}>

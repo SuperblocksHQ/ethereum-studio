@@ -16,25 +16,32 @@
 
 .container {
     display: flex;
-    height: 38px;
-    align-content: center;
     align-items: center;
     color: white;
-    margin-left: 14px;
-    margin-bottom: 6px;
+    margin-left: 35px;
+    border: 1px solid #595959;
+    border-radius: 4px;
     .selector {
         display: flex;
-        margin-left: 14px;
+        align-items: center;
         cursor: pointer;
+        padding: 0px 10px;
         .dropdownIcon {
             margin-left: 14px;
         }
     }
-    .account {
-        margin-top: 24px;
-        .dropdownIcon {
-            margin-top: -5px;
+    .actionWrapper {
+        transition: background .2s;
+        height: 100%;
+        &:hover {
+            background: #8641F2;
+            cursor: pointer;
         }
+        &:first-of-type {
+            border-right: 1px solid #595959;
+        }
+    }
+    .account {
         .accountContainer {
             display: flex;
         }
@@ -46,13 +53,10 @@
         margin-left: 38px;
     }
     .nameContainer {
-        margin: -4px 0px -4px 10px;
-    }
-    .separator {
-        border-left: 1px solid #979797;
-        height: 12px;
-        margin-left: 14px;
-        margin-top: 2px;
+        padding-left: 10px;
+        max-width: 400px;
+        text-overflow: ellipsis;
+        overflow: hidden;
     }
     .capitalize {
         &:first-letter{
@@ -60,9 +64,8 @@
         }
     }
     .networks {
-        position: absolute;
+        position: fixed;
         margin-top: 6px;
-        left: 0;
         background-color: #2a2a2a;
         width: 320px;
         box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .50);
@@ -96,7 +99,7 @@
     }
     .accounts {
         position: fixed;
-        margin-top: -13px;
+        margin-top: 6px;
         background-color: #2a2a2a;
         width: 346px;
         box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .50);

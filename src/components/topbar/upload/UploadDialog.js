@@ -76,12 +76,18 @@ class UploadDialog extends Component {
     renderDialog() {
         return (
             <div className={style.content}>
+                <Note
+                    noteClassName={style.noteBeta}
+                    title="Beta"
+                    backgroundColor="#417505"
+                    color="#fff"
+                />
                 <img src={'/static/img/img-ipfs-logo.svg'} className={style.logo}/>
                 <h3>Upload project to IPFS</h3>
                 <div className={style.description}>Backup and share your project by uploading it to IPFS. Remember to not include any personal data, and enjoy decentralization!</div>
                 <br/>
                 <div>
-                    <button className="btn2" onClick={this.ipfsSyncUp}>Upload Project</button>
+                    <button className={classNames([style.uploadBtn, "btn2"])} onClick={this.ipfsSyncUp}>Upload Project</button>
                     <button className={classNames([style.uploadSettings, "btnNoBg"])} onClick={this.uploadSettingsClick}>
                         <Tooltip title="Upload Settings">
                             <IconConfigure />
