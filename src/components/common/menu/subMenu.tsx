@@ -14,7 +14,18 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export * from './dropdown';
-export * from './select';
-export * from './tooltip';
-export * from './menu';
+import React from 'react';
+
+interface IProps {
+    children: any;
+    title: string;
+}
+
+export const SubMenu = ({ children, title }: IProps) => {
+    return (
+        <div>
+            <div>{title}</div>
+            { children }
+        </div>
+    );
+};

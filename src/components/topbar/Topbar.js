@@ -34,11 +34,21 @@ import {
     IconDiscord,
     IconCheck,
     IconUpload,
-    IconFork
+    IconFork,
+    IconMenu
 } from '../icons';
 import Dappfile from '../projecteditor/control/item/dappfileItem';
 import OnlyIf from '../onlyIf';
 import NetworkAccountSelector from '../networkAccountSelector';
+import MenuDropdownDialog from './menu';
+
+const MenuAction = () => (
+    <div className={style.action}>
+        <button className={classNames([style.container, "btnNoBg"])}>
+            <IconMenu />
+        </button>
+    </div>
+);
 
 const PreferencesAction = () => (
     <div className={style.action}>
@@ -505,6 +515,11 @@ export default class TopBar extends Component {
 
         return (
             <div className={style.topbar}>
+                <DropdownContainer
+                    className={style.actionMenu}
+                    dropdownContent={<MenuDropdownDialog />} >
+                    <MenuAction />
+                </DropdownContainer>
                 <OnlyIf test={this.props.router.control}>
                     <NetworkAccountSelector
                         router={this.props.router}

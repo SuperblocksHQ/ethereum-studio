@@ -25,19 +25,18 @@ import { projectsActions } from '../../actions';
 
 class NetworkAccountSelector extends Component {
     render() {
-        const { selectedProject, selectedAccount, onNetworkSelected, onAccountSelected } = this.props;
+        const { selectedProject, onNetworkSelected, onAccountSelected } = this.props;
         return (
             <OnlyIf test={Boolean(selectedProject.id)}>
                 <div className={style.container}>
                     <div className={style.actionWrapper}>
-                        <NetworkSelector 
+                        <AccountSelector {...this.props} onAccountSelected={onAccountSelected} selectedEnvironment={selectedProject.selectedEnvironment.name} />
+                    </div>
+                    <div className={style.actionWrapper}>
+                        <NetworkSelector
                             selectedNetwork={selectedProject.selectedEnvironment}
                             networks={selectedProject.environments}
                             onNetworkSelected={onNetworkSelected} />
-                    </div>
-
-                    <div className={style.actionWrapper}>
-                        <AccountSelector {...this.props} onAccountSelected={onAccountSelected} selectedEnvironment={selectedProject.selectedEnvironment.name} />
                     </div>
                 </div>
             </OnlyIf>
@@ -47,7 +46,6 @@ class NetworkAccountSelector extends Component {
 
 const mapStateToProps = state => ({
     selectedProject: state.projects.selectedProject,
-    selectedAccount: state.projects.selectedAccount
 });
 
 const mapDispatchToProps = dispatch => {
