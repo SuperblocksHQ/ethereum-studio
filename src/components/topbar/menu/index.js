@@ -15,7 +15,7 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { Component } from 'react';
-// import Menu, {SubMenu, MenuItem, Divider} from 'rc-menu';
+import { SubMenu, MenuItem, Divider } from '../../common/menu';
 import style from './style.less';
 
 export default class MenuDropdownDialog extends Component {
