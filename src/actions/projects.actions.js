@@ -51,5 +51,12 @@ export const projectsActions = {
             type: projectsActions.UPDATE_PROJECT_SETTINGS_FAIL,
             error: error
         };
-    }
+    },
+    UPDATE_SELECTED_ACCOUNT: 'UPDATE_SELECTED_ACCOUNT',
+    updateSelectAccount(name, balance, address) {
+        return {
+            type: projectsActions.UPDATE_SELECTED_ACCOUNT,
+            data: {name: name, balance: balance, address: address}
+        };
+    },
 };

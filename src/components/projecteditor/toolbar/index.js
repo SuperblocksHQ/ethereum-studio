@@ -19,7 +19,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import style from './style.less';
 import { IconRun } from '../../icons';
-import Tooltip from '../../tooltip';
+import { Tooltip } from '../../common';
 
 const Toolbar = ({
         id,

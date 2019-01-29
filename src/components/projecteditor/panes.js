@@ -284,6 +284,9 @@ class Panes extends Component {
                 if (paneObj) {
                     paneObj.style.display = 'block';
                 }
+                // visible pane should be drawn because of side panels
+                // which state is unknown to the pane
+                setTimeout(() => { pane.redraw(); }, 5);
             } else {
                 var paneObj = document.getElementById(key);
                 if (paneObj) paneObj.style.display = 'none';
@@ -317,7 +320,6 @@ class Panes extends Component {
                     <PanesHeader
                         panes={this.props.panes}
                         paneComponents={this.panes}
-
                         closeAllPanes={this.closeAllPanes}
                         closeAllOtherPanes={this.closeAllOtherPanes}
                         tabClicked={this.tabClicked}

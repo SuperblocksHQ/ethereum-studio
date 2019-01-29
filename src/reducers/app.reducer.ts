@@ -14,14 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { connect } from 'react-redux';
-import { getNetworkPreferences } from '../../selectors/settings';
-import { projectSelectors } from '../../selectors/project.selectors';
-import BottomBar from './BottomBar';
+import { AnyAction } from 'redux';
 
-const mapStateToProps = state => ({
-    networkPreferences: getNetworkPreferences(state),
-    selectedAccount: projectSelectors.getSelectedAccount(state)
-});
+export const initialState = {
+    version: '1.6.1',
+};
 
-export default connect(mapStateToProps, null)(BottomBar);
+export default function appReducer(state = initialState, action: AnyAction) {
+    return state;
+}

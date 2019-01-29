@@ -1,0 +1,28 @@
+{
+    "compilerOptions": {
+        "outDir": "./dist",
+        "allowJs": true,
+        "checkJs": false,
+        "skipLibCheck": true,
+        "module": "commonjs",
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "target": "es6",
+        "strict": true,
+        "jsx": "react",
+        "noImplicitAny": true,
+        "noEmit": true,
+        "noEmitOnError": true,
+        "allowSyntheticDefaultImports": true,
+        "lib": ["es2015", "dom", "esnext"]
+    },
+    "include": [
+        "./src/**/*.ts",
+        "./src/**/*.tsx"
+    ],
+    "exclude": [
+        "node_modules",
+        "**/*.test.js",
+        "**/*.test.ts"
+    ]
+}

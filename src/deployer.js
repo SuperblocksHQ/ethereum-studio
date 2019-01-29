@@ -400,6 +400,10 @@ export default class DeployerRunner {
             args2.push(arg.value);
             cb(0);
             return;
+        } else if(arg.array !== undefined) {
+            args2.push(arg.array.split(','));
+            cb(0);
+            return;
         } else if (arg.account) {
             const accountName = arg.account;
             const accounts = this.item

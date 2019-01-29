@@ -21,7 +21,8 @@ export const initialState = {
         id: 0,
         name: '',
         environments: [],
-        selectedEnvironment: { name: null, endpoint: null }
+        selectedEnvironment: { name: null, endpoint: null },
+        selectedAccount: {name: null, balance: null, address: null}
     }
 };
 
@@ -62,6 +63,13 @@ export default function projectsReducer(state = initialState, action) {
                     ...state.selectedProject,
                     name: action.data.name
                 },
+            };
+        }
+
+        case projectsActions.UPDATE_SELECTED_ACCOUNT: {
+            return {
+                ...state,
+                selectedAccount: action.data
             };
         }
         default:
