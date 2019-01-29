@@ -1,4 +1,4 @@
-// Copyright 2018 Superblocks AB
+// Copyright 2019 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -43,7 +43,7 @@ import NetworkAccountSelector from '../networkAccountSelector';
 import MenuDropdownDialog from './menu';
 
 const MenuAction = () => (
-    <div className={style.action}>
+    <div className={classNames([style.action, style.noBorder])}>
         <button className={classNames([style.container, "btnNoBg"])}>
             <IconMenu />
         </button>

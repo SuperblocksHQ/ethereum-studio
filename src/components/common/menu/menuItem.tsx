@@ -1,4 +1,4 @@
-// Copyright 2018 Superblocks AB
+// Copyright 2019 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -15,15 +15,46 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from 'react';
+import style from './style.less';
+import classNames from 'classnames';
+import { IconCheckThin } from '../../icons';
 
 interface IProps {
-    children: any;
+    title: string;
+    description: string;
+    onClick: () => void;
 }
 
-export const MenuItem = ({ children }: IProps) => {
-    return (
-        <div>
-            {children}
-        </div>
-    );
-};
+interface IState {
+    active: boolean;
+    disabled: boolean;
+}
+
+export class MenuItem extends React.Component<IProps, IState> {
+    constructor(props: IProps) {
+        super(props);
+
+        this.state = {
+            active: false,
+            disabled: false
+        };
+    }
+
+    render() {
+        const { title, description } = this.props;
+        const { active, disabled } = this.state;
+
+
+        return (
+            <div className={classNames([style.title, disabled ? style.disabled : null])}>
+                <div className={style.activeContainer}>
+                    {active &&
+                        <IconCheckThin />
+                    }
+                </div>
+                <div>{title}</div>
+                <div className={style.description}>{description}</div>
+            </div>
+        );
+    }
+}

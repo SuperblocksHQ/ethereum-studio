@@ -1,4 +1,4 @@
-// Copyright 2018 Superblocks AB
+// Copyright 2019 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -15,17 +15,55 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from 'react';
+import style from './style.less';
+import classNames from 'classnames';
+import { IconDropdown } from '../../icons';
 
 interface IProps {
     children: any;
     title: string;
 }
+interface IState { menuVisible: boolean; }
 
-export const SubMenu = ({ children, title }: IProps) => {
-    return (
-        <div>
-            <div>{title}</div>
-            { children }
-        </div>
-    );
-};
+export class SubMenu extends React.Component<IProps, IState> {
+    constructor(props: IProps) {
+        super(props);
+
+        this.state = {
+            menuVisible: false
+        };
+    }
+
+    openMenu: React.MouseEventHandler = (e) => {
+        e.stopPropagation();
+        this.setState((state) => ({ menuVisible: true }));
+    }
+
+    closeMenu: React.MouseEventHandler = (e) => {
+        e.stopPropagation();
+        this.setState((state) => ({ menuVisible: false }));
+    }
+
+    render() {
+        const { children, title } = this.props;
+        const { menuVisible } = this.state;
+        const active = style.active;
+
+        return (
+            <div>
+                <div className={classNames([style.parentMenu, menuVisible ? active : null])} onMouseEnter={this.openMenu} onMouseLeave={this.closeMenu}>
+                    <div className={style.title}>
+                        <div>{ title }</div>
+                        <div className={style.description}>
+                            <IconDropdown style={{transform: 'rotate(-45deg)'}}/>
+                        </div>
+                    </div>
+                    { menuVisible &&
+                    <div className={style.childrenMenu}>
+                        { children }
+                    </div> }
+                </div>
+            </div>
+        );
+    }
+}

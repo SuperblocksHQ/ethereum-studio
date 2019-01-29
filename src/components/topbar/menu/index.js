@@ -1,4 +1,4 @@
-// Copyright 2018 Superblocks AB
+// Copyright 2019 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -23,21 +23,28 @@ export default class MenuDropdownDialog extends Component {
         return (
             <div className={style.menuDialog}>
                 <SubMenu title="File">
-                    <MenuItem>New Project</MenuItem>
-                    <MenuItem>New File</MenuItem>
-                    <MenuItem>New Folder</MenuItem>
+                    <MenuItem title="New Project" />
+                    <MenuItem title="New File" />
+                    <MenuItem title="New Folder" />
                     <Divider/>
-                    <MenuItem>Open Project</MenuItem>
-                    <Divider/>
-                    <MenuItem>Save</MenuItem>
-                    <MenuItem>Save All</MenuItem>
+                    <MenuItem title="Open Project" description="Ctrl+O" />
+                    <MenuItem title="Save" />
+                    <MenuItem title="Save All" />
+                    <SubMenu title="Another Submenu">
+                        <MenuItem title="New Project" />
+                        <MenuItem title="New File" />
+                        <MenuItem title="New Folder" />
+                        <Divider/>
+                        <MenuItem title="Open Project" />
+                        <MenuItem title="Save" />
+                        <MenuItem title="Save All" />
+                    </SubMenu>
                 </SubMenu>
                 <SubMenu title="View">
-                    <MenuItem>Explorer</MenuItem>
-                    <MenuItem>Transaction</MenuItem>
-                    <MenuItem>Preview</MenuItem>
+                    <MenuItem title="Explorer" description="Ctrl+E"/>
+                    <MenuItem title="Transactions" />
+                    <MenuItem title="Preview" />
                 </SubMenu>
-                <Divider/>
             </div>
         )
     }

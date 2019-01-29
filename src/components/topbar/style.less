@@ -62,8 +62,11 @@
     }
     .actionMenu {
         display: flex;
-        padding: 0 5px;
         height: 100%;
+        .action {
+            border-color: none;
+            padding: 0px 5px;
+        }
         &:hover {
             background-color: @action-color-hover;
         }
@@ -84,6 +87,9 @@
         &:hover {
             color: #E0E0E0;
             border-color: @primary-color;
+        }
+        &.noBorder:hover {
+            border-color: transparent;
         }
     }
     .icon {
