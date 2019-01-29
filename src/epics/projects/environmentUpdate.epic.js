@@ -38,7 +38,8 @@ export const environmentUpdateEpic = (action$, state$) => action$.pipe(
         previewService.setEnvironment(selectedEnvironment);
 
         // enable metamask
-        if (selectedEnvironment.name !== Networks.browser.name &&
+        if (typeof web3 !== 'undefined' &&
+            selectedEnvironment.name !== Networks.browser.name &&
             selectedEnvironment.name !== Networks.custom.name) {
             return from(web3.currentProvider.enable()).pipe(
                 // do nothing if user gives access to metamask
