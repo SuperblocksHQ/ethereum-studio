@@ -50,19 +50,17 @@ export class SubMenu extends React.Component<IProps, IState> {
         const active = style.active;
 
         return (
-            <div>
-                <div className={classNames([style.parentMenu, menuVisible ? active : null])} onMouseEnter={this.openMenu} onMouseLeave={this.closeMenu}>
-                    <div className={style.title}>
-                        <div>{ title }</div>
-                        <div className={style.description}>
-                            <IconDropdown style={{transform: 'rotate(-45deg)'}}/>
-                        </div>
+            <div className={classNames([style.parentMenu, menuVisible ? active : null])} onMouseEnter={this.openMenu} onMouseLeave={this.closeMenu}>
+                <div className={style.title}>
+                    <div>{ title }</div>
+                    <div className={style.description}>
+                        <IconDropdown style={{transform: 'rotate(-45deg)'}}/>
                     </div>
-                    { menuVisible &&
-                    <div className={style.childrenMenu}>
-                        { children }
-                    </div> }
                 </div>
+                { menuVisible &&
+                <div className={style.childrenMenu}>
+                    { children }
+                </div> }
             </div>
         );
     }

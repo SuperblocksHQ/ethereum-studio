@@ -1,4 +1,4 @@
-// Copyright 2019 Superblocks AB
+// Copyright 2018 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -14,25 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-@import '../../../style/index';
-
-.menuDialog {
-    display: block;
-    position: absolute;
-    left: 0px;
-    top: 45px;
-    background-color: #141414;
-    min-width: 200px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 2;
-    color: #c7c7c7;
-    transition: visibility 0s, opacity 0.2s ease;
-
-    &>div:first-of-type {
-        margin-top: 4px;
-    }
-
-    &>div:last-of-type {
-        margin-bottom: 4px;
-    }
+export const sidePanelsSelectors = {
+    getShowTransactionsHistory: state => state.sidePanels.showTransactionsHistory,
+    getShowFileSystem:  state => state.sidePanels.showFileSystem,
+    getShowPreview: state => state.sidePanels.preview.open,
 }

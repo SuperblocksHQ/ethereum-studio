@@ -14,38 +14,33 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { Component } from 'react';
-import { SubMenu, MenuItem, Divider } from '../../common/menu';
-import style from './style.less';
+import { connect } from 'react-redux';
+import MenuDropdownDialog from './MenuDropdownDialog';
+import { sidePanelsSelectors } from '../../../selectors';
+import { sidePanelsActions } from '../../../actions';
 
-export default class MenuDropdownDialog extends Component {
-    render() {
-        return (
-            <div className={style.menuDialog}>
-                <SubMenu title="File">
-                    <MenuItem title="New Project" />
-                    <MenuItem title="New File" />
-                    <MenuItem title="New Folder" />
-                    <Divider/>
-                    <MenuItem title="Open Project" description="Ctrl+O" />
-                    <MenuItem title="Save" />
-                    <MenuItem title="Save All" />
-                    <SubMenu title="Another Submenu">
-                        <MenuItem title="New Project" />
-                        <MenuItem title="New File" />
-                        <MenuItem title="New Folder" />
-                        <Divider/>
-                        <MenuItem title="Open Project" />
-                        <MenuItem title="Save" />
-                        <MenuItem title="Save All" />
-                    </SubMenu>
-                </SubMenu>
-                <SubMenu title="View">
-                    <MenuItem title="Explorer" description="Ctrl+E"/>
-                    <MenuItem title="Transactions" />
-                    <MenuItem title="Preview" />
-                </SubMenu>
-            </div>
-        )
-    }
+const mapStateToProps = state => ({
+    showTransactionsHistory: sidePanelsSelectors.getShowTransactionsHistory(state),
+    showFileSystem: sidePanelsSelectors.getShowFileSystem(state),
+    showPreview: sidePanelsSelectors.getShowPreview(state),
+});
+
+function mapDispatchToProps(dispatch) {
+    return {
+        toggleFileSystemPanel: () => {
+            dispatch(sidePanelsActions.toggleFileSystemPanel())
+        },
+        toggleTransactionsHistoryPanel: () => {
+            dispatch(sidePanelsActions.toggleTransactionsHistoryPanel())
+        },
+        togglePreviewPanel: () => {
+            dispatch(sidePanelsActions.preview.togglePanel())
+        },
+        closeAllPanels: () => {
+            dispatch(sidePanelsActions.closeAllPanels());
+            dispatch(sidePanelsActions.closeFileSystemPanel());
+        }
+    };
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(MenuDropdownDialog);
