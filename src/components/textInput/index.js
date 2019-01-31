@@ -32,6 +32,7 @@ export default class TextInput extends PureComponent {
             defaultValue,
             disabled,
             error,
+            readOnly,
             ...props
         } = this.props;
 
@@ -46,6 +47,7 @@ export default class TextInput extends PureComponent {
                             onKeyUp={onChangeText}
                             defaultValue={defaultValue}
                             disabled={disabled}
+                            readOnly={readOnly}
                             className={classNames({[style.error]: error != null})}
                             {...props}
                         />
@@ -66,5 +68,6 @@ TextInput.propTypes = {
     label: PropTypes.string,
     defaultValue: PropTypes.any,
     disabled: PropTypes.bool,
-    error: PropTypes.string
+    error: PropTypes.string,
+    readOnly: PropTypes.bool
 }

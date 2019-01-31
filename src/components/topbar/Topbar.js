@@ -34,11 +34,13 @@ import {
     IconDiscord,
     IconCheck,
     IconUpload,
-    IconFork
+    IconFork,
+    IconShare
 } from '../icons';
 import Dappfile from '../projecteditor/control/item/dappfileItem';
 import OnlyIf from '../onlyIf';
 import NetworkAccountSelector from '../networkAccountSelector';
+import ShareDialog from './share';
 
 const PreferencesAction = () => (
     <div className={style.action}>
@@ -80,6 +82,15 @@ const ForkDropdownAction = (props) => {
         </div>
     )
 };
+
+const ShareDropdownAction = () => (
+    <div className={style.action}>
+        <button className={classNames([style.container, 'btnNoBg'])}>
+            <IconShare />
+            <span>Share</span>
+        </button>
+    </div>
+);
 
 const HelpDropdownDialog = () => (
     <div className={style.helpMenu}>
@@ -515,7 +526,7 @@ export default class TopBar extends Component {
                 </OnlyIf>
                 <OnlyIf test={showUploadButton}>
                     <DropdownContainer
-                        className={style.actionHelp}
+                        className={style.actionUpload}
                         dropdownContent={<UploadDialog />}
                         enableClickInside={true}
                         showMenu={showUploadDialog}
@@ -529,6 +540,13 @@ export default class TopBar extends Component {
                         onForkClicked={this.onForkClicked}
                     />
                 </OnlyIf>
+                <DropdownContainer
+                    className={style.actionShare}
+                    dropdownContent={<ShareDialog />}
+                    enableClickInside={true}
+                >
+                    <ShareDropdownAction />
+                </DropdownContainer>
                 <DropdownContainer
                     className={style.projectButton}
                     dropdownContent={
