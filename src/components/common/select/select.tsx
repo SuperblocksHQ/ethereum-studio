@@ -1,27 +1,37 @@
 // Copyright 2018 Superblocks AB
-//
+// 
 // This file is part of Superblocks Lab.
-//
+// 
 // Superblocks Lab is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation version 3 of the License.
-//
+// 
 // Superblocks Lab is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-//
+// 
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { connect } from 'react-redux';
-import { getNetworkPreferences } from '../../selectors/settings';
-import { projectSelectors } from '../../selectors/project.selectors';
-import BottomBar from './BottomBar';
+import React from 'react';
 
-const mapStateToProps = state => ({
-    networkPreferences: getNetworkPreferences(state),
-    selectedAccount: projectSelectors.getSelectedAccount(state)
-});
+interface IProps {
+    value: string;
+    options: string[];
+    onChange: (value: string) => void;
+}
 
-export default connect(mapStateToProps, null)(BottomBar);
+export function Select(props: IProps) {
+    return (
+        <select value={props.value} onChange={e => props.onChange(e.target.value)}>
+            {props.options.map((option: any) => {
+                return (
+                    <option key={option} value={option}>
+                        {option}
+                    </option>
+                );
+            })}
+        </select>
+    );
+}

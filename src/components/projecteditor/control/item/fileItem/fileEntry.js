@@ -21,7 +21,7 @@ import {
 } from '../../../../icons';
 import style from '../../style.less';
 import { DropdownContainer } from '../../../../common';
-import Tooltip from '../../../../tooltip';
+import { Tooltip } from '../../../../common';
 import { FadeInComponent } from './fadeInComponent';
 import { ShowActions } from './showActions';
 import classnames from 'classnames';

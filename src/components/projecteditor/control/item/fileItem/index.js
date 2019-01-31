@@ -30,13 +30,10 @@ import {
     IconMd,
     IconJSON,
     IconBinary,
-    IconShowPreview,
-    IconMosaic,
 } from '../../../../icons';
 import style from '../../style.less';
 import { DirectoryEntry } from './directoryEntry';
 import { FileEntry } from './fileEntry';
-import Tooltip from '../../../../tooltip';
 import ImportFileModal from "../../../../importFile";
 
 export default class FileItem extends Item {

@@ -941,7 +941,7 @@ function sendRawTransaction(data, callback) {
                 ) {
                     if (err) {
                         console.error(err);
-                        callback(err, null);
+                        callback(err.toString(), null);
                     } else {
                         var errorMessage = null;
 

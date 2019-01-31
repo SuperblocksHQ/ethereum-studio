@@ -24,7 +24,7 @@ import {
     IconConfigure,
     IconInteract,
 } from '../../../icons';
-import Tooltip from '../../../tooltip';
+import { Tooltip } from '../../../common';
 
 export default class Editor extends Component {
     constructor(props) {

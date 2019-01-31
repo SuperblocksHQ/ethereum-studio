@@ -19,6 +19,7 @@ import Networks from '../networks';
 
 export const initialState = {
     showTransactionsHistory: false,
+    showFileSystem: true,
     preview: {
         showNoExportableContentModal: false,
         showCannotExportModal: false,
@@ -55,6 +56,12 @@ export default function sidePanelsReducer(state = initialState, action) {
             return {
                 ...state,
                 showTransactionsHistory: false
+            };
+        }
+        case sidePanelsActions.TOGGLE_FILESYSTEM_PANEL: {
+            return {
+                ...state,
+                showFileSystem: !state.showFileSystem
             };
         }
         case sidePanelsActions.preview.TOGGLE_PANEL:

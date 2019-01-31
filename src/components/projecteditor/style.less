@@ -42,11 +42,12 @@
     .mainWrapper {
         position: relative;
         flex: 1;
-        padding-right: 45px;
+        padding-right: 70px;
     }
     .mainLayout {
         position: relative;
-        widows: 100%;
+        left: 35px;
+        width: 100%;
         height: 100%;
     }
     .panescontainer {
@@ -63,12 +64,12 @@
             -ms-user-select: none;
             user-select: none;
             background-color: #252525;
-            min-height: 38px;
+            min-height: 35px;
             width: 100%;
             overflow-y: hidden;
             overflow-x: auto;
             .tab {
-                padding: 10px 12px 10px 12px;
+                padding: 7px 12px 8px 12px;
                 display: flex;
                 align-items: center;
                 align-content: center;
@@ -77,6 +78,8 @@
                 background-color: #2D2D2D;
                 cursor: pointer;
                 color: #969696;
+                border-right: 1px solid #121516;
+                padding-right: 24px;
                 .tabContainer {
                     div {
                         float: left;
@@ -88,7 +91,6 @@
                         }
                     }
                     .close {
-                        margin-left: 10px;
                         display: none;
                         font-size: 0.85em;
                     }
@@ -96,8 +98,33 @@
                 &.selected {
                     background-color: #1e1e1e;
                     color: #FFFFFF;
+                    padding-right: 10px;
                     .close {
                         display: block;
+                        opacity: 1;
+                        color: #fff;
+                        opacity: 0.8;
+                        &:hover {
+                            opacity: 1;
+                        }
+                        button {
+                            padding: 0 0;
+                        }
+                    }
+                }
+                &:hover{
+                    padding-right: 10px;
+                    .close {
+                        display: block;
+                        opacity: 1;
+                        color: #fff;
+                        opacity: 0.8;
+                        &:hover {
+                            opacity: 1;
+                        }
+                        button {
+                            padding: 0 0;
+                        }
                     }
                 }
             }
@@ -171,15 +198,43 @@
     .sidePanelContainer {
         position: relative;
     }
-    
+
     .sideButtonsContainer {
         position: absolute;
-        right: 0;
         top: 0;
         bottom: 0;
         background-color: #1C2022;
-        width: 45px;
-        border-left: 1px solid #121516;
+        width: 35px;
+        .verticalText {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            margin-top: 7px;
+        }
+        &.sideButtonsContainerRight {
+            right: 0;
+            border-left: 1px solid #121516;
+            .sideButtonWrapper .sideButton {
+                border-left: 2px solid;
+                border-color: transparent;
+                &:hover {
+                    border-color: @primary-color;
+                }
+            }
+        }
+        &.sideButtonsContainerLeft {
+            left: 0;
+            border-right: 1px solid #121516;
+            .verticalText {
+                transform: rotate(180deg);
+            }
+            .sideButtonWrapper .sideButton {
+                border-right: 2px solid;
+                border-color: transparent;
+                &:hover {
+                    border-color: @primary-color;
+                }
+            }
+        }
     }
     .sideButtonWrapper {
         display: flex;
@@ -187,22 +242,16 @@
         align-items: center;
 
         .sideButton {
-            border-right: 2px solid;
             border-color: transparent;
-            padding: 10px;
+            padding: 5px;
             transition: all 0.3s ease;
+            width: 100%;
 
             &:hover {
-                background-color:rgba(64, 169, 243, 0.1);
+                background-color: rgba(64, 169, 243, 0.1);
                 cursor: pointer;
                 border-color: @primary-color;
             }
         }
-    }
-
-    .verticalText{
-        writing-mode: vertical-rl;
-        text-orientation: mixed;
-        margin-top: 2px;
     }
 }

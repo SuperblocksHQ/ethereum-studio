@@ -21,3 +21,13 @@
     border-right: 5px solid rgba(35, 35, 35, 0.7);
     background-color: #2d2d2d;
 }
+
+.hideFileSystemPanel > div:nth-child(1) {
+    display: none;
+}
+
+.hideFileSystemPanel >.layout-splitter {
+    display: none;
+}
+
+

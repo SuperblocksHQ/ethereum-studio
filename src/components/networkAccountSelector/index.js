@@ -18,7 +18,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import style from './style.less';
-import { IconDeployGreen } from '../icons';
 import OnlyIf from '../onlyIf';
 import { NetworkSelector } from './networkSelector';
 import { AccountSelector } from './accountSelector';
@@ -26,20 +25,20 @@ import { projectsActions } from '../../actions';
 
 class NetworkAccountSelector extends Component {
     render() {
-        const { selectedProject, onNetworkSelected } = this.props;
+        const { selectedProject, selectedAccount, onNetworkSelected, onAccountSelected } = this.props;
         return (
             <OnlyIf test={Boolean(selectedProject.id)}>
                 <div className={style.container}>
-                    <IconDeployGreen />
+                    <div className={style.actionWrapper}>
+                        <NetworkSelector 
+                            selectedNetwork={selectedProject.selectedEnvironment}
+                            networks={selectedProject.environments}
+                            onNetworkSelected={onNetworkSelected} />
+                    </div>
 
-                    <NetworkSelector 
-                        selectedNetwork={selectedProject.selectedEnvironment}
-                        networks={selectedProject.environments}
-                        onNetworkSelected={onNetworkSelected} />
-
-                    <div className={style.separator} />
-
-                    <AccountSelector {...this.props} selectedEnvironment={selectedProject.selectedEnvironment.name} />
+                    <div className={style.actionWrapper}>
+                        <AccountSelector {...this.props} onAccountSelected={onAccountSelected} selectedEnvironment={selectedProject.selectedEnvironment.name} />
+                    </div>
                 </div>
             </OnlyIf>
         );
@@ -48,13 +47,17 @@ class NetworkAccountSelector extends Component {
 
 const mapStateToProps = state => ({
     selectedProject: state.projects.selectedProject,
+    selectedAccount: state.projects.selectedAccount
 });
 
 const mapDispatchToProps = dispatch => {
     return {
         onNetworkSelected(environment) {
             dispatch(projectsActions.setEnvironment(environment));
-        }
+        },
+        onAccountSelected: (name, balance, address) => {
+            dispatch(projectsActions.updateSelectAccount(name, balance, address))
+        },
     };
 };
 

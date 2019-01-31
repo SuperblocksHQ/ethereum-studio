@@ -19,14 +19,18 @@
     width: 100%;
     height: 100%;
     color: #eee;
+
     .inner {
         padding: 16px 10px 80px 50px;
     }
+
     .title {
         text-align: left;
     }
+
     .form {
         margin: 10px auto;
+    
         .field {
             display: block;
             margin-bottom: 20px;
@@ -42,55 +46,61 @@
                 width: 300px;
             }
         }
+    
         .constructorContainer {
             margin-top: 50px;
             margin-bottom: 20px;
             a {
                 color: #8641F2;
             }
-            .argumentsContainer {
-                margin-top: 40px;
-                .arguments {
-                    select, input {
-                        display: inline-block;
-                        width: auto;
-                        min-width: 130px;
-                        margin-right: 5px;
-                    }
-                    select {
-                        margin: 0 12px;
-                    }
-                    .iconTrash {
-                        margin-left: 12px;
-                    }
-                    .iconAdd {
-                        margin: 0 12px;
-                    }
-                }
-                .argumentContainer {
-                    display: flex;
-                    align-items: baseline;
-                    margin: 12px 0;
-                    select {
-                        min-width: 130px;
-                        padding: 8px 16px !important;
-                        -webkit-appearance: none;
-                        -moz-appearance: none;
-                        appearance: none;
-                        background: url('/static/img/icon-dropdown.svg') 96% no-repeat transparent;
-                        outline: none;
-                        cursor: pointer;
-                        option {
-                            color: #000;
-                        }
-                    }
-                }
-                .valueContainer {
+
+            .infoText {
+                margin-bottom: 40px;
+            }
+
+            .arguments {
+                select, input {
                     display: inline-block;
+                    width: auto;
+                    min-width: 130px;
+                    margin-right: 5px;
                 }
+                select {
+                    margin: 0 12px;
+                }
+                .iconTrash {
+                    margin-left: 12px;
+                }
+                .iconAdd {
+                    margin: 0 12px;
+                }
+            }
+
+            .argumentContainer {
+                display: flex;
+                align-items: baseline;
+                margin: 12px 0;
+                select {
+                    min-width: 130px;
+                    padding: 8px 16px !important;
+                    -webkit-appearance: none;
+                    -moz-appearance: none;
+                    appearance: none;
+                    background: url('/static/img/icon-dropdown.svg') 96% no-repeat transparent;
+                    outline: none;
+                    cursor: pointer;
+                    option {
+                        color: #000;
+                    }
+                }
+            }
+
+            .valueContainer {
+                display: inline-block;
             }
         }
     }
+
     .deleteBtn {
         color: #dd3030;
         text-decoration: underline;

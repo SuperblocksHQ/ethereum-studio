@@ -74,3 +74,16 @@ export const shortenAddres = (address) => {
         :
             '...';
 }
+
+/**
+ * Shorten the the display of an balance extracting only the first 8 characters and
+ * append 'eth' at the end of string
+ *
+ * @param {string} balance The account balance to be formated
+ */
+export const shortenBalance = (balance) => {
+    return balance ?
+            balance.substring(0, balance.toString().indexOf(".") + 8) + ' eth'
+        :
+            balance;
+}

@@ -263,6 +263,7 @@ a:active,a:focus {
     border: none;
     color: #fff;
     cursor: pointer;
+    transition: color .15s;
     &:focus {
         outline: none;
     }
@@ -295,6 +296,7 @@ a:active,a:focus {
     user-select: none;
     outline: none;
     cursor: pointer;
+    transition: background-color .15s, color .15s;
     &:hover {
         background-color: #7237CF;
     }
@@ -378,23 +380,39 @@ a:active,a:focus {
 
 .tippy-popper {
     position: absolute;
-  }
+}
 
-  .tippy-popper,
-  .tippy-popper * {
+.tippy-popper,
+.tippy-popper * {
     pointer-events: none;
-  }
+}
 
-  .tippy-tooltip [x-circle] {
+.tippy-tooltip [x-circle] {
     background-color: rgb(21, 24, 25) !important;
-  }
+}
 
-  .tippy-tooltip.update-theme {
+.tippy-tooltip.update-theme {
     .arrow-regular {
-      border-bottom: 7px solid #fff !important;
+        border-bottom: 7px solid #fff !important;
     }
 
     background-color: #fff;
     border-radius: 2px;
     padding: 0 !important;
-  }
+}
+
+
+.tippy-tooltip-content {
+    .arrayInfoTooltip {
+        text-align: left;
+        padding-bottom: 10px;
+
+        &>div {
+            margin-top: 10px;
+        }
+
+        .example {
+            font-style: italic;
+        }
+    }
+}

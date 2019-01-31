@@ -25,9 +25,10 @@ const Note = ({
     backgroundColor = "#F8E71C",
     color = "#262E33",
     textClassName = {},
+    noteClassName = {}
 } = props) => (
     <div>
-        <span className={style.note} style={{backgroundColor: backgroundColor, color: color }}>{title}</span>
+        <span className={classNames([style.note, noteClassName])} style={{backgroundColor: backgroundColor, color: color }}>{title}</span>
         { text && <span className={classNames([style.noteText, textClassName])}>{text}</span> }
     </div>
 );
@@ -38,5 +39,7 @@ Note.propTypes = {
     title: Proptypes.string.isRequired,
     text: Proptypes.string,
     backgroundColor: Proptypes.string,
-    color: Proptypes.string
+    color: Proptypes.string,
+    textClassName: Proptypes.object,
+    noteClassName: Proptypes.object
 }
