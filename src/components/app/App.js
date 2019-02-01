@@ -20,6 +20,7 @@ import PropTypes from 'prop-types';
 import Backend from '../projecteditor/control/backend';
 import Modal from '../modal';
 import ProjectEditor from '../projecteditor';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Wallet } from '../projecteditor/wallet';
 import Solc from '../solc';
 import EVM from '../evm';
@@ -28,6 +29,7 @@ import { previewService, ipfsService } from '../../services';
 import AnalyticsDialog from '../analyticsDialog';
 import OnlyIf from '../onlyIf';
 import ToastContainer from "../toasts/toastcontainer";
+import Dashboard from '../dashboard';
 
 export default class App extends Component {
 
@@ -251,34 +253,44 @@ export default class App extends Component {
         }
     };
 
-    render() {
+    getProjectEditor = () => {
         const { isReady } = this.state;
         const { showTrackingAnalyticsDialog } = this.props;
+
+        return (
+            <OnlyIf test={isReady}>
+                <ProjectEditor
+                    key="projedit"
+                    router={this.router}
+                    functions={this.functions}
+                    knownWalletSeed={this.knownWalletSeed}
+                    isImportedProject={this.isImportedProject}
+                />
+                <OnlyIf test={showTrackingAnalyticsDialog}>
+                    <AnalyticsDialog />
+                </OnlyIf>
+                    <ToastContainer />
+            </OnlyIf>
+        )
+    }
+
+    render() {
         const modalContent = this.getModal();
 
         return (
-            <div id="app" className={this.getClassNames()}>
-                <div id="app_content">
-                    <div className="maincontent">
-                        <OnlyIf test={isReady}>
-                            <ProjectEditor
-                                key="projedit"
-                                router={this.router}
-                                functions={this.functions}
-                                knownWalletSeed={this.knownWalletSeed}
-                                isImportedProject={this.isImportedProject}
-                            />
-                            <OnlyIf test={showTrackingAnalyticsDialog}>
-                                <AnalyticsDialog />
-                            </OnlyIf>
-                            <ToastContainer />
-                        </OnlyIf>
+            <Router>
+                <div id="app" className={this.getClassNames()}>
+                    <div id="app_content">
+                        <div className="maincontent">
+                            <Route path="/" exact component={this.getProjectEditor} />
+                            <Route path="/dashboard/" component={Dashboard} />
+                        </div>
+                    </div>
+                    <div id="app_modal" onClick={this.modalOutside}>
+                        {modalContent}
                     </div>
                 </div>
-                <div id="app_modal" onClick={this.modalOutside}>
-                    {modalContent}
-                </div>
-            </div>
+            </Router>
         );
     }
 }

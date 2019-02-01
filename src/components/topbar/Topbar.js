@@ -22,12 +22,12 @@ import { DropdownContainer } from '../common/dropdown';
 import Backend from '../projecteditor/control/backend';
 import Modal from '../modal';
 import { Tooltip } from '../common';
-import PreferencessModal from '../preferences';
+import PreferencesModal from '../preferences';
 import UploadDialog from './upload';
 import {
     IconDownload,
     IconTrash,
-    IconConfigure,
+    IconPreferences,
     IconHelp,
     IconProjectSelector,
     IconDropdown,
@@ -40,18 +40,28 @@ import Dappfile from '../projecteditor/control/item/dappfileItem';
 import OnlyIf from '../onlyIf';
 import NetworkAccountSelector from '../networkAccountSelector';
 
+const DashboardAction = () => (
+    <div className={classNames([style.action, style.actionRight])}>
+        <Tooltip title="Dashboard">
+            <a href="/dashboard" className={classNames([style.container, "btnNoBg"])}>
+                <IconProjectSelector />
+            </a>
+        </Tooltip>
+    </div>
+);
+
 const PreferencesAction = () => (
-    <div className={style.action}>
+    <div className={classNames([style.action, style.actionRight])}>
         <Tooltip title="Preferences">
             <button className={classNames([style.container, "btnNoBg"])}>
-                <IconConfigure />
+                <IconPreferences />
             </button>
         </Tooltip>
     </div>
 );
 
 const HelpDropdownAction = () => (
-    <div className={style.action}>
+    <div className={classNames([style.action, style.actionRight])}>
         <Tooltip title="Help">
             <button className={classNames([style.container, 'btnNoBg'])}>
                 <IconHelp />
@@ -109,7 +119,6 @@ const HelpDropdownDialog = () => (
 const ProjectSelector = ({ title } = props) => (
     <div className={style.action}>
         <button className="btnNoBg">
-            <IconProjectSelector className={style.icon} />
             <span className={style.projectText}>{title}</span>
             <IconDropdown className={classNames([style.dropDown, 'dropDown'])} />
         </button>
@@ -376,7 +385,7 @@ class ProjectDialog extends Component {
                                         }}
                                     >
                                         <Tooltip title="Configure Project">
-                                            <IconConfigure />
+                                            <IconPreferences />
                                         </Tooltip>
                                     </button>
                                     <button
@@ -479,7 +488,7 @@ export default class TopBar extends Component {
 
     showPreferencesModal = () => {
         const modal = (
-            <PreferencessModal
+            <PreferencesModal
                 onCloseClick={this.onSettingsModalClose}
             />
         );
@@ -515,7 +524,7 @@ export default class TopBar extends Component {
                 </OnlyIf>
                 <OnlyIf test={showUploadButton}>
                     <DropdownContainer
-                        className={style.actionHelp}
+                        className={style.actionUpload}
                         dropdownContent={<UploadDialog />}
                         enableClickInside={true}
                         showMenu={showUploadDialog}
@@ -543,6 +552,8 @@ export default class TopBar extends Component {
                 </DropdownContainer>
 
                 <div className={style.actionsRight}>
+                    <DashboardAction/>
+
                     <div onClick={this.showPreferencesModal}>
                         <PreferencesAction />
                     </div>

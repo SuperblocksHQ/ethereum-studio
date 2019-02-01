@@ -62,6 +62,10 @@
     }
     .actionHelp {
         display: flex;
+        height: 100%;
+    }
+    .actionUpload {
+        display: flex;
         margin-left: 10px;
         height: 100%;
     }
@@ -77,6 +81,12 @@
             color: #E0E0E0;
             border-color: @primary-color;
         }
+        a {
+            padding: 0 5px;
+        }
+    }
+    .actionRight {
+        padding: 0 5px;
     }
     .icon {
         position: relative;
@@ -98,11 +108,9 @@
         z-index: 2;
         .projectText {
             margin-left: 3px;
-            font-size: 1.2em;
             font-weight: 700;
         }
         .dropDown {
-            padding: 4px;
             margin-left: 12px;
         }
     }
