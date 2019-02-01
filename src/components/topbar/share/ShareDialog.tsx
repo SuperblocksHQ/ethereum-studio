@@ -26,13 +26,26 @@ import { Tooltip } from '../../common';
 import Switch from 'react-switch';
 
 
-export default class ShareDialog extends React.Component<IProps, IState> {
 
-    constructor(props: IProps, state: IState) {
-        super(props);
+interface IState {
+    defaultUrl: string;
+    shareUrl: string;
+    options: {
+        hideExplorer: boolean;
+        showTransactions: boolean;
+        showAppview: boolean;
+        [key: string]: boolean;
+    };
+}
+
+export default class ShareDialog extends React.Component<{}, IState> {
+
+    constructor(state: IState) {
+        super(state);
 
         this.state = {
-            shareUrl: window.location,
+            defaultUrl: String(window.location),
+            shareUrl: String(window.location),
             options: {
                 hideExplorer: false,
                 showTransactions: false,
@@ -42,30 +55,23 @@ export default class ShareDialog extends React.Component<IProps, IState> {
     }
 
 
-    copyShareUrl = (url: string) => {
-        copy(url);
-    }
-
-    updateOption = (optionName, value) => {
-        this.setState({
-            options: {
-                optionName: value
-            }
-        });
-    }
-
 
     RenderOptions = () => {
         const { hideExplorer, showTransactions, showAppview } = this.state.options;
 
         return(
             <React.Fragment>
-                <p className={style.title}>Options</p>
                 <div className={classNames([style.inputContainer, style.optionInput])}>
                     <p>Hide Explorer</p>
                     <Switch
                         checked={hideExplorer}
-                        onChange={() => this.setState({options: { ...this.state.options, hideExplorer: !hideExplorer }})}
+                        onChange={() => {
+                                this.setState({options: { ...this.state.options, hideExplorer: !hideExplorer }}, () => {
+                                        this.updateUrl();
+                                    }
+                                );
+                            }
+                        }
                         onColor='#8641F2'
                         className={style.switch}
                         checkedIcon={false}
@@ -78,7 +84,14 @@ export default class ShareDialog extends React.Component<IProps, IState> {
                     <p>Show Transactions</p>
                     <Switch
                         checked={showTransactions}
-                        onChange={() => this.setState({options: { ...this.state.options, showTransactions: !showTransactions, showAppview: false }})}
+                        onChange={() => {
+                               this.setState({options: { ...this.state.options, showTransactions: !showTransactions, showAppview: false }}, () => {
+                                        this.updateUrl();
+                                    }
+                               );
+                               this.updateUrl();
+                           }
+                        }
                         onColor='#8641F2'
                         className={style.switch}
                         checkedIcon={false}
@@ -91,7 +104,13 @@ export default class ShareDialog extends React.Component<IProps, IState> {
                     <p>Show Appview</p>
                     <Switch
                         checked={showAppview}
-                        onChange={() => this.setState({options: { ...this.state.options, showAppview: !showAppview, showTransactions: false }})}
+                        onChange={() => {
+                                this.setState({options: { ...this.state.options, showAppview: !showAppview, showTransactions: false }}, () => {
+                                        this.updateUrl();
+                                    }
+                                );
+                            }
+                        }
                         onColor='#8641F2'
                         className={style.switch}
                         checkedIcon={false}
@@ -104,6 +123,72 @@ export default class ShareDialog extends React.Component<IProps, IState> {
         );
     }
 
+    updateUrl = () => {
+        const { defaultUrl, options } = this.state;
+
+        const params = Object.keys(options).map( async (key) => key + '=' + Number(options[key]));
+        console.log(params);
+        Promise.all(params).then((result) => {
+            console.log(result);
+            this.setState({
+                shareUrl: defaultUrl + '?' + result.join('&')
+            });
+        });
+
+
+    }
+    getParameters = () => {
+        const { options } = this.state;
+        let result = '?';
+        Object.keys(options).map( (k, v) => {
+            console.log(k);
+            console.log(options[k]);
+            result += '&' + k + '=' + Number(options[k]);
+        });
+        return result;
+    }
+
+    copyShareUrl = (type: string) => {
+        const { shareUrl, options } = this.state;
+
+        console.log(options);
+        // Object.keys(options).entries( (k, v) => {
+        //     console.log(k);
+        // });
+
+
+
+        // for(let key in options) {
+        //     console.log(options[key]);
+        // }
+
+        switch (type) {
+            case 'editor':
+                break;
+            case 'embed':
+                break;
+            case 'button-md':
+                break;
+            case 'button-html':
+                break;
+            default:
+                copy(shareUrl);
+        }
+    }
+
+    getEmbedUrl = () => {
+        return `<iframe src="${this.state.shareUrl}" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;"></iframe>`;
+    }
+
+    getBtnMdUrl = () => {
+        return `<iframe src="${this.state.shareUrl}" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;"></iframe>`;
+    }
+
+    getBtnHtmlUrl = () => {
+        return `<iframe src="${this.state.shareUrl}" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;"></iframe>`;
+    }
+
+
 
     RenderInputs = () => {
         const { hideExplorer, showTransactions, showAppview } = this.state.options;
@@ -113,13 +198,13 @@ export default class ShareDialog extends React.Component<IProps, IState> {
             <React.Fragment>
                 <div className={style.inputContainer}>
                     <TextInput
-                        id='share-project'
+                        id='editor'
                         label='Editor'
-                        defaultValue={shareUrl}
+                        value={shareUrl}
                         disabled={false}
                         readOnly={true}
                     />
-                    <button className='btnNoBg' onClick={this.copyShareUrl('1')}>
+                    <button className='btnNoBg' onClick={() => this.copyShareUrl('editor')}>
                         <Tooltip title='Copy URL'>
                             <IconCopy />
                         </Tooltip>
@@ -127,13 +212,13 @@ export default class ShareDialog extends React.Component<IProps, IState> {
                 </div>
                 <div className={style.inputContainer}>
                     <TextInput
-                        id='share-project'
+                        id='embed'
                         label='Embed'
-                        defaultValue={shareUrl}
+                        value={this.getEmbedUrl()}
                         disabled={false}
                         readOnly={true}
                     />
-                    <button className='btnNoBg' onClick={this.copyShareUrl('2')}>
+                    <button className='btnNoBg' onClick={() => this.copyShareUrl('embed')}>
                         <Tooltip title='Copy URL'>
                             <IconCopy />
                         </Tooltip>
@@ -141,13 +226,13 @@ export default class ShareDialog extends React.Component<IProps, IState> {
                 </div>
                 <div className={style.inputContainer}>
                     <TextInput
-                        id='share-project'
+                        id='button-md'
                         label='Button Markdown'
-                        defaultValue={shareUrl}
+                        value={this.getBtnMdUrl()}
                         disabled={false}
                         readOnly={true}
                     />
-                    <button className='btnNoBg' onClick={this.copyShareUrl}>
+                    <button className='btnNoBg' onClick={() => this.copyShareUrl('button-md')}>
                         <Tooltip title='Copy URL'>
                             <IconCopy />
                         </Tooltip>
@@ -155,13 +240,13 @@ export default class ShareDialog extends React.Component<IProps, IState> {
                 </div>
                 <div className={style.inputContainer}>
                     <TextInput
-                        id='share-project'
+                        id='button-html'
                         label='Button HTML'
-                        defaultValue={shareUrl}
+                        value={this.getBtnHtmlUrl()}
                         disabled={false}
                         readOnly={true}
                     />
-                    <button className='btnNoBg' onClick={this.copyShareUrl}>
+                    <button className='btnNoBg' onClick={() => this.copyShareUrl('button-html')}>
                         <Tooltip title='Copy URL'>
                             <IconCopy />
                         </Tooltip>
