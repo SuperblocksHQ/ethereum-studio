@@ -14,5 +14,19 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export * from './contractAgrumentData';
-export * from './project.model';
+import { empty } from 'rxjs';
+import { switchMap, withLatestFrom } from 'rxjs/operators';
+import { ofType, Epic } from 'redux-observable';
+import { appActions } from '../../actions';
+import * as analitics from '../../utils/analytics';
+
+const initTrackingAnalytics: Epic = (action$: any, state$: any) => action$.pipe(
+    ofType(appActions.APP_START),
+    withLatestFrom(state$),
+    switchMap(([, state]) => {
+        const { trackAnalytics } = state.settings.preferences.advanced;
+        analitics.setEnable(trackAnalytics)
+        return empty();
+    }))
+
+export default initTrackingAnalytics;

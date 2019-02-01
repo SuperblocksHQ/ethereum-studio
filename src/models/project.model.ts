@@ -14,5 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export * from './contractAgrumentData';
-export * from './project.model';
+export interface IProject {
+    name: string;
+    description: string;
+    lastModifiedAt: string;
+}
+

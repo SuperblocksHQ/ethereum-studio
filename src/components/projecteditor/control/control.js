@@ -249,7 +249,7 @@ export default class Control extends Component {
                 // TODO: this should be read from epic in local storage
                 environments: project.getHiddenItem('environments').getChildren().map(e => {
                     const name = e.getName();
-                    return { 
+                    return {
                         name,
                         endpoint: Networks[name] && Networks[name].endpoint
                     };

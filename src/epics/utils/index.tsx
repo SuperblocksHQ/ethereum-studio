@@ -14,5 +14,22 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export * from './contractAgrumentData';
-export * from './project.model';
+import { interval } from 'rxjs';
+import { map,
+    retry,
+    take
+ } from 'rxjs/operators';
+
+export const epicUtils = {
+    /**
+     * Simple Observable which will only finish once the router.control is actually available
+     *
+     * @param {*} router - The router object containing the control.js reference
+     */
+    controlAvailable$: (router: any) => interval(100)
+        .pipe(
+            map(() => router.control),
+            retry(),
+            take(1)
+        )
+};

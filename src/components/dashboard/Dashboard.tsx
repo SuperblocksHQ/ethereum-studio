@@ -14,5 +14,31 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export * from './contractAgrumentData';
-export * from './project.model';
+import React, { Component } from 'react';
+import ProjectList from './projectList';
+import { IProject } from '../../models';
+
+interface IProps {
+    getProjectList: () => void;
+
+    projectList: IProject[];
+}
+
+export default class Dashboard extends Component<IProps> {
+
+    componentDidMount() {
+        this.props.getProjectList();
+    }
+
+    render() {
+        const { projectList } = this.props;
+        return(
+            <div>
+                Dashboard
+                <ProjectList
+                    list={projectList}
+                />
+            </div>
+        );
+    }
+}

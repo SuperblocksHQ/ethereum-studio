@@ -59,4 +59,11 @@ export const projectsActions = {
             data: {name: name, balance: balance, address: address}
         };
     },
+    DELETE_PROJECT: 'DELETE_PROJECT',
+    deleteProject(projectId) {
+       return {
+            type: projectsActions.DELETE_PROJECT,
+            data: { projectId }
+       };
+    },
 };

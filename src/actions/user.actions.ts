@@ -14,5 +14,28 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export * from './contractAgrumentData';
-export * from './project.model';
+import { IProject } from '../models';
+
+export const userActions = {
+
+    GET_PROJECT_LIST: 'GET_PROJECT_LIST',
+    getProjectList() {
+        return {
+            type: userActions.GET_PROJECT_LIST,
+        };
+    },
+    GET_PROJECT_LIST_SUCCESS: 'GET_PROJECT_LIST_SUCCESS',
+    getProjectListSuccess(projectList: IProject[]) {
+        return {
+            type: userActions.GET_PROJECT_LIST_SUCCESS,
+            data: { projectList }
+        };
+    },
+    GET_PROJECT_LIST_FAIL: 'GET_PROJECT_LIST_FAIL',
+    getProjectListFail(error: any) {
+        return {
+            type: userActions.GET_PROJECT_LIST_FAIL,
+            data: error
+        };
+    }
+};

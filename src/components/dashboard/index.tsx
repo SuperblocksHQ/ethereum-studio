@@ -14,12 +14,23 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { userActions } from '../../actions';
+import { userSelectors } from '../../selectors';
+import Dashboard from './Dashboard';
+import { Dispatch } from 'react';
+import { AnyAction } from 'redux';
 
-export default class Dashboard extends Component {
-    render() {
-        return(
-            <div>Dashboard</div>
-        );
-    }
-}
+const mapStateToProps = (state: any) => ({
+    projectList: userSelectors.getProjectList(state),
+});
+
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
+    return {
+        getProjectList: () => {
+            dispatch(userActions.getProjectList());
+        },
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

@@ -89,6 +89,7 @@
     "@fortawesome/free-regular-svg-icons": "^5.5.0",
     "@fortawesome/free-solid-svg-icons": "^5.5.0",
     "@fortawesome/react-fontawesome": "^0.1.3",
+    "@types/react-redux": "^7.0.1",
     "amplitude-js": "^4.5.2",
     "bfj": "6.1.1",
     "classnames": "^2.2.5",

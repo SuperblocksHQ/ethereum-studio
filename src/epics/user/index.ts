@@ -14,5 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export * from './contractAgrumentData';
-export * from './project.model';
+import getProjectList from './getProjectList.epic';
+
+export const userEpics = [
+    getProjectList
+];

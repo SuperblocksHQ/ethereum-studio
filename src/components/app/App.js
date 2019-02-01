@@ -274,6 +274,12 @@ export default class App extends Component {
         )
     }
 
+    getDashboard = () => (
+        <Dashboard
+            router={this.router}
+        />
+    )
+
     render() {
         const modalContent = this.getModal();
 
@@ -283,7 +289,7 @@ export default class App extends Component {
                     <div id="app_content">
                         <div className="maincontent">
                             <Route path="/" exact component={this.getProjectEditor} />
-                            <Route path="/dashboard/" component={Dashboard} />
+                            <Route path="/dashboard/" component={this.getDashboard} />
                         </div>
                     </div>
                     <div id="app_modal" onClick={this.modalOutside}>
