@@ -16,26 +16,40 @@
 
 import React, { Component } from 'react';
 import style from './style.less';
-import { IProject } from '../../../../models';
+import {
+    IconTrash,
+    IconRecent
+} from '../../icons';
 
-interface IProps {
-    project: IProject;
+export enum ItemType {
+    Recent,
+    All,
+    Deleted
 }
 
-export default class Project extends Component<IProps> {
+interface IProps {
+    onItemSelected: (itemType: ItemType) => void;
+}
+
+export default class SideMenu extends Component<IProps> {
+
+    onItemSelected = (item: ItemType) => {
+        this.props.onItemSelected(item);
+    }
 
     render() {
-        const { project }  = this.props;
         return (
-            <div className={style.container}>
-                <div className={style.name}>
-                    {project.name}
+            <div className={style.sideMenuContainer}>
+                <div className={style.item} onClick={() => this.onItemSelected(ItemType.Recent)}>
+                    <IconRecent/>
+                    <span>Recent</span>
                 </div>
-                <div className={style.description}>
-                    {project.description}
+                <div className={style.item} onClick={() => this.onItemSelected(ItemType.All)}>
+                    <span>Your Projects</span>
                 </div>
-                <div className={style.infoContainer}>
-                    {project.lastModifiedAt}
+                <div className={style.item} onClick={() => this.onItemSelected(ItemType.Deleted)}>
+                    <IconTrash/>
+                    <span>Deleted Projects</span>
                 </div>
             </div>
         );

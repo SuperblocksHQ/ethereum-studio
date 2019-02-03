@@ -16,7 +16,10 @@
 
 import React, { Component } from 'react';
 import ProjectList from './projectList';
+import SideMenu, { ItemType } from './sideMenu';
+import Topbar from './topbar';
 import { IProject } from '../../models';
+import style from './style.less';
 
 interface IProps {
     getProjectList: () => void;
@@ -30,14 +33,24 @@ export default class Dashboard extends Component<IProps> {
         this.props.getProjectList();
     }
 
+    onSideMenuItemSelected = (item: ItemType) => {
+        console.log(item);
+    }
+
     render() {
         const { projectList } = this.props;
         return(
-            <div>
-                Dashboard
-                <ProjectList
-                    list={projectList}
+            <div className={style.dashboard}>
+                <Topbar />
+                <SideMenu
+                    onItemSelected={this.onSideMenuItemSelected}
                 />
+                <div className={style.content}>
+                    <ProjectList
+                        listName={'All Your Projects'}
+                        list={projectList}
+                    />
+                </div>
             </div>
         );
     }

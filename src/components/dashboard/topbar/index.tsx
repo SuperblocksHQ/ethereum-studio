@@ -14,12 +14,20 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-.container {
-    .header {
-        margin: 18px 6px;
-        padding: 6px 4px;
-    }
-    .content {
-        padding: 0 50px;
+import React, { Component } from 'react';
+import style from './style.less';
+
+export default class Topbar extends Component {
+
+    render() {
+        return(
+            <div className={style.topbar}>
+                <img
+                    className={style.logo}
+                    src='/static/img/img-lab-logo.svg'
+                    alt='Superblocks logo'
+                />
+            </div>
+        );
     }
 }

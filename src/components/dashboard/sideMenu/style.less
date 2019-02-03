@@ -14,12 +14,29 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-.container {
-    .header {
-        margin: 18px 6px;
-        padding: 6px 4px;
-    }
-    .content {
-        padding: 0 50px;
+.sideMenuContainer {
+    position: absolute;
+    top: 45px;
+    left: 0;
+    bottom: 0;
+    width: 200px;
+    box-sizing: border-box;
+    transition: left .2s ease-out;
+    z-index: 1;
+    background-color: #fff;
+    border-right: 1px solid #E1E4E8;
+
+    .item {
+        display: flex;
+        align-items: center;
+        position: relative;
+        height: 30px;
+        cursor: default;
+        user-select: none;
+        margin: 5px 10px;
+
+        span {
+            margin-left: 10px;
+        }
     }
 }

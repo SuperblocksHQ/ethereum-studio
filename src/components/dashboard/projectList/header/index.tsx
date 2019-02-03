@@ -14,12 +14,29 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-.container {
-    .header {
-        margin: 18px 6px;
-        padding: 6px 4px;
-    }
-    .content {
-        padding: 0 50px;
+import React, { Component } from 'react';
+import style from './style.less';
+
+interface IProps {
+    title: string;
+    numOfProjects: number;
+}
+
+export default class Header extends Component<IProps> {
+
+    render() {
+        const { title, numOfProjects } = this.props;
+
+        return (
+            <div className={style.container}>
+                <div className={style.titleContainer}>
+                    <span>{title}</span>
+                    <span className={style.numOfProjects}>{numOfProjects}</span>
+                </div>
+                <div className={style.sortContainer}>
+                    Sorted by Last Viewed
+                </div>
+            </div>
+        );
     }
 }

@@ -15,11 +15,10 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import style from './style.less';
 import { IProject } from '../../../models';
 import Project from './project';
+import Header from './header';
 // import Backend from '../../projecteditor/control/backend';
 // import Modal from '../../modal';
 // import { Tooltip } from '../../common';
@@ -32,6 +31,7 @@ import Project from './project';
 
 interface IProps {
     list: IProject[];
+    listName: string;
 }
 
 export default class ProjectList extends Component<IProps> {
@@ -133,9 +133,14 @@ export default class ProjectList extends Component<IProps> {
     // };
 
     render() {
-        const { list }  = this.props;
+        const { list, listName }  = this.props;
         return (
-            <div>
+            <div className={style.container}>
+                <Header
+                    title={listName}
+                    numOfProjects={list.length}
+                />
+                <div className={style.content}>
                 {
                     list.map((project: IProject) => {
                         return (
@@ -145,6 +150,7 @@ export default class ProjectList extends Component<IProps> {
                         );
                     })
                 }
+                </div>
             </div>
         );
     }
