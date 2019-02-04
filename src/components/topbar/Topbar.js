@@ -74,7 +74,7 @@ const UploadDrowdownAction = () => (
 const ForkDropdownAction = (props) => {
     const { onForkClicked } = props;
     return(
-        <div className={style.action}>
+        <div className={classNames([style.action, style.actionFork])}>
             <button className={classNames([style.container, 'btnNoBg'])} onClick={onForkClicked}>
                 <IconFork />
                 <span>Fork</span>
@@ -466,7 +466,8 @@ export default class TopBar extends Component {
         ipfsActions: {
             showUploadDialog: this.props.ipfsActions.showUploadDialog,
             showUploadButton: this.props.ipfsActions.showUploadButton,
-            showForkButton: this.props.ipfsActions.showForkButton
+            showForkButton: this.props.ipfsActions.showForkButton,
+            showShareButton: this.props.ipfsActions.showShareButton,
         }
     }
 
@@ -513,8 +514,10 @@ export default class TopBar extends Component {
     }
 
     render() {
-        const { showUploadDialog, showUploadButton, showForkButton } = this.state.ipfsActions;
+        const { showUploadDialog, showUploadButton, showForkButton, showShareButton } = this.state.ipfsActions;
         const { selectedProjectName } = this.state;
+
+        console.log(showShareButton);
 
         return (
             <div className={style.topbar}>
@@ -540,13 +543,15 @@ export default class TopBar extends Component {
                         onForkClicked={this.onForkClicked}
                     />
                 </OnlyIf>
-                <DropdownContainer
-                    className={style.actionShare}
-                    dropdownContent={<ShareDialog />}
-                    enableClickInside={true}
-                >
-                    <ShareDropdownAction />
-                </DropdownContainer>
+                <OnlyIf test={showShareButton}>
+                    <DropdownContainer
+                        className={style.actionShare}
+                        dropdownContent={<ShareDialog />}
+                        enableClickInside={true}
+                    >
+                        <ShareDropdownAction />
+                    </DropdownContainer>
+                </OnlyIf>
                 <DropdownContainer
                     className={style.projectButton}
                     dropdownContent={
@@ -585,5 +590,6 @@ TopBar.propTypes = {
         showUploadDialog: PropTypes.bool.isRequired,
         showUploadButton: PropTypes.bool.isRequired,
         showForkButton: PropTypes.bool.isRequired,
+        showShareButton: PropTypes.bool.isRequired,
     }),
 };

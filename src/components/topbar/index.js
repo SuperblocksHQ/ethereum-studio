@@ -26,6 +26,7 @@ const mapStateToProps = state => ({
         showUploadDialog: ipfsSelectors.getShowUploadDialog(state),
         showUploadButton: ipfsSelectors.getShowUploadButton(state),
         showForkButton: ipfsSelectors.getShowForkButton(state),
+        showShareButton: ipfsSelectors.getShowShareButton(state),
     }
 });
 

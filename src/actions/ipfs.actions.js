@@ -114,10 +114,10 @@ export const ipfsActions = {
         }
     },
     UPDATE_IPFS_ACTION_BUTTONS: 'UPDATE_IPFS_ACTION_BUTTONS',
-    updateIpfsActionButtons({ showUploadButton, showForkButton }) {
+    updateIpfsActionButtons({ showUploadButton, showForkButton, showShareButton }) {
         return {
             type: ipfsActions.UPDATE_IPFS_ACTION_BUTTONS,
-            data: { showUploadButton, showForkButton }
+            data: { showUploadButton, showForkButton, showShareButton }
         }
     }
 }
