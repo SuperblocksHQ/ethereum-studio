@@ -13,8 +13,24 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
+import { superFetch } from './utils/superFetch';
 
-export * from './preview.service';
-export * from './ipfs.service';
-export * from './user.service';
-export * from './auth.service';
+export const authService = {
+
+    async githubAuth(data) {
+        return superFetch(process.env.REACT_APP_API_BASE_URL + '/auth/github', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        })
+        .then((response) => response.json())
+        .then((jsonData) => {
+            console.log(jsonData);
+            superFetch.setAuthToken(jsonData.token);
+        });
+    }
+}
+
+

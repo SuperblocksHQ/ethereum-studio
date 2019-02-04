@@ -21,40 +21,25 @@ import style from "./style.less";
 import ModalHeader from "../modal/modalHeader";
 import GitHubLogin from "./github";
 
+import { authService, userService } from '../../services';
+
 export const LoginModal = (props) => {
 
     function onCloseClickHandle () {
         props.onCloseClick();
     }
 
-    function onSuccess (o) {
+    function onSuccess(response) {
         console.log("Success")
-        console.log(o);
+        console.log(response);
         onCloseClickHandle();
-        fetch('https://patatauser.superblocks.com/v1/auth/github', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(o)
-        }) .then((response) => response.json())
-           .then((jsondata) => {
-                localStorage.setItem('jwtToken', jsondata.token)
-           })
+
+        authService.githubAuth(response);
     }
 
-    function queryUserEndpoint() {
-        const jwt = localStorage.getItem('jwtToken');
-        fetch('https://patatauser.superblocks.com/v1/user', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${jwt}`
-            },
-        }) .then((response) => response.json())
-            .then((jsondata) => {
-                console.log("User data: ", jsondata)
-            })
+    async function queryUserEndpoint() {
+        const user = await userService.getUser();
+        console.log(user);
     }
 
     function onFailure (e) {

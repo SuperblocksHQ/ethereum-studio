@@ -13,8 +13,17 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
+import { superFetch } from './utils/superFetch';
 
-export * from './preview.service';
-export * from './ipfs.service';
-export * from './user.service';
-export * from './auth.service';
+export const userService = {
+
+    async getUser() {
+        return superFetch(process.env.REACT_APP_API_BASE_URL + '/user', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        .then((response) => response.json());
+    }
+}
