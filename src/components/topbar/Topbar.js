@@ -39,6 +39,7 @@ import {
 import Dappfile from '../projecteditor/control/item/dappfileItem';
 import OnlyIf from '../onlyIf';
 import NetworkAccountSelector from '../networkAccountSelector';
+import {LoginModal} from "../login/LoginModal";
 
 const PreferencesAction = () => (
     <div className={style.action}>
@@ -47,6 +48,14 @@ const PreferencesAction = () => (
                 <IconConfigure />
             </button>
         </Tooltip>
+    </div>
+);
+
+const LoginAction = () => (
+    <div className={style.action}>
+        <button className={classNames([style.container, "btnNoBg"])}>
+            <span>Login</span>
+        </button>
     </div>
 );
 
@@ -493,6 +502,22 @@ export default class TopBar extends Component {
         });
     };
 
+    showLoginModal = () => {
+        const modal = (
+            <LoginModal
+                onCloseClick={this.onSettingsModalClose}
+            />
+        );
+        this.props.functions.modal.show({
+            cancel: () => {
+                return false;
+            },
+            render: () => {
+                return modal;
+            }
+        });
+    };
+
     onForkClicked = () => {
         this.props.forkProject();
     }
@@ -546,12 +571,14 @@ export default class TopBar extends Component {
                     <div onClick={this.showPreferencesModal}>
                         <PreferencesAction />
                     </div>
-
                     <DropdownContainer
                         className={style.actionHelp}
                         dropdownContent={<HelpDropdownDialog />} >
                         <HelpDropdownAction />
                     </DropdownContainer>
+                    <div onClick={this.showLoginModal}>
+                        <LoginAction />
+                    </div>
                 </div>
             </div>
         );
