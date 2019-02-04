@@ -40,7 +40,7 @@ interface IState {
 }
 
 export default class ShareDialog extends React.Component<IProps, IState> {
-    
+
     state: IState = {
         shareUrl: this.props.ipfsUrl,
         options: {
