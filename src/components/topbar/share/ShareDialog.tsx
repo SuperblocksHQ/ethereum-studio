@@ -25,8 +25,6 @@ import TextInput from '../../textInput';
 import { Tooltip } from '../../common';
 import Switch from 'react-switch';
 
-
-
 interface IState {
     defaultUrl: string;
     shareUrl: string;
@@ -53,8 +51,6 @@ export default class ShareDialog extends React.Component<{}, IState> {
             }
         };
     }
-
-
 
     RenderOptions = () => {
         const { hideExplorer, showTransactions, showAppview } = this.state.options;
@@ -125,11 +121,9 @@ export default class ShareDialog extends React.Component<{}, IState> {
 
     updateUrl = () => {
         const { defaultUrl, options } = this.state;
-
         const params = Object.keys(options).map( async (key) => key + '=' + Number(options[key]));
-        console.log(params);
+
         Promise.all(params).then((result) => {
-            console.log(result);
             this.setState({
                 shareUrl: defaultUrl + '?' + result.join('&')
             });
@@ -141,39 +135,13 @@ export default class ShareDialog extends React.Component<{}, IState> {
         const { options } = this.state;
         let result = '?';
         Object.keys(options).map( (k, v) => {
-            console.log(k);
-            console.log(options[k]);
             result += '&' + k + '=' + Number(options[k]);
         });
         return result;
     }
 
-    copyShareUrl = (type: string) => {
-        const { shareUrl, options } = this.state;
-
-        console.log(options);
-        // Object.keys(options).entries( (k, v) => {
-        //     console.log(k);
-        // });
-
-
-
-        // for(let key in options) {
-        //     console.log(options[key]);
-        // }
-
-        switch (type) {
-            case 'editor':
-                break;
-            case 'embed':
-                break;
-            case 'button-md':
-                break;
-            case 'button-html':
-                break;
-            default:
-                copy(shareUrl);
-        }
+    copyShareUrl = (shareUrl: string) => {
+        copy(shareUrl);
     }
 
     getEmbedUrl = () => {
@@ -181,11 +149,11 @@ export default class ShareDialog extends React.Component<{}, IState> {
     }
 
     getBtnMdUrl = () => {
-        return `<iframe src="${this.state.shareUrl}" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;"></iframe>`;
+        return `[![Edit Project](https://codesandbox.io/static/img/play-codesandbox.svg)]((${this.state.shareUrl}))`;
     }
 
     getBtnHtmlUrl = () => {
-        return `<iframe src="${this.state.shareUrl}" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;"></iframe>`;
+        return `<a href="${this.state.shareUrl}"><img alt="Edit Project" src="https://codesandbox.io/static/img/play-codesandbox.svg"></a>`;
     }
 
 
@@ -193,6 +161,9 @@ export default class ShareDialog extends React.Component<{}, IState> {
     RenderInputs = () => {
         const { hideExplorer, showTransactions, showAppview } = this.state.options;
         const { shareUrl } = this.state;
+        const embedUrl = this.getEmbedUrl();
+        const btnMdUrl = this.getBtnMdUrl();
+        const btnHtmlUrl = this.getBtnHtmlUrl();
 
         return(
             <React.Fragment>
@@ -204,7 +175,7 @@ export default class ShareDialog extends React.Component<{}, IState> {
                         disabled={false}
                         readOnly={true}
                     />
-                    <button className='btnNoBg' onClick={() => this.copyShareUrl('editor')}>
+                    <button className='btnNoBg' onClick={() => copy(shareUrl)}>
                         <Tooltip title='Copy URL'>
                             <IconCopy />
                         </Tooltip>
@@ -214,11 +185,11 @@ export default class ShareDialog extends React.Component<{}, IState> {
                     <TextInput
                         id='embed'
                         label='Embed'
-                        value={this.getEmbedUrl()}
+                        value={embedUrl}
                         disabled={false}
                         readOnly={true}
                     />
-                    <button className='btnNoBg' onClick={() => this.copyShareUrl('embed')}>
+                    <button className='btnNoBg' onClick={() => copy(embedUrl)}>
                         <Tooltip title='Copy URL'>
                             <IconCopy />
                         </Tooltip>
@@ -228,11 +199,11 @@ export default class ShareDialog extends React.Component<{}, IState> {
                     <TextInput
                         id='button-md'
                         label='Button Markdown'
-                        value={this.getBtnMdUrl()}
+                        value={btnMdUrl}
                         disabled={false}
                         readOnly={true}
                     />
-                    <button className='btnNoBg' onClick={() => this.copyShareUrl('button-md')}>
+                    <button className='btnNoBg' onClick={() => copy(btnMdUrl)}>
                         <Tooltip title='Copy URL'>
                             <IconCopy />
                         </Tooltip>
@@ -242,11 +213,11 @@ export default class ShareDialog extends React.Component<{}, IState> {
                     <TextInput
                         id='button-html'
                         label='Button HTML'
-                        value={this.getBtnHtmlUrl()}
+                        value={btnHtmlUrl}
                         disabled={false}
                         readOnly={true}
                     />
-                    <button className='btnNoBg' onClick={() => this.copyShareUrl('button-html')}>
+                    <button className='btnNoBg' onClick={() => copy(btnHtmlUrl)}>
                         <Tooltip title='Copy URL'>
                             <IconCopy />
                         </Tooltip>
