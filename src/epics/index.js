@@ -18,10 +18,12 @@ import { ipfsEpics } from './ipfs';
 import { settingsEpics } from './settings';
 import { sidePanelsEpics } from './sidePanels';
 import { projectsEpics } from './projects';
+import { appEpics } from './app';
 
 export const epics = [
     ...ipfsEpics,
     ...settingsEpics,
     ...sidePanelsEpics,
-    ...projectsEpics
+    ...projectsEpics,
+    ...appEpics
 ];

@@ -183,11 +183,10 @@ export default class ProjectEditor extends Component {
                                     /> }
                                     
                                 </SplitterLayout>
-                            
-                                <BottomBar endpoint={selectedEnvironment.endpoint} />
                             </div>
                         </SplitterLayout>
                     </div>
+                    <BottomBar endpoint={selectedEnvironment.endpoint} />
 
                     <div className={classnames([style.sideButtonsContainer, style.sideButtonsContainerRight])}>
                         <SideButton name="Transactions"

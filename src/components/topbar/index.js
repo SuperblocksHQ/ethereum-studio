@@ -16,9 +16,10 @@
 
 import { connect } from 'react-redux';
 import TopBar from './Topbar';
-import { ipfsSelectors } from '../../selectors';
+import { ipfsSelectors, viewSelectors } from '../../selectors';
 import { projectSelectors } from '../../selectors';
 import { ipfsActions } from '../../actions';
+import * as embedUtils from '../../utils/embed';
 
 const mapStateToProps = state => ({
     selectedProjectName: projectSelectors.getSelectedProjectName(state),
@@ -26,6 +27,10 @@ const mapStateToProps = state => ({
         showUploadDialog: ipfsSelectors.getShowUploadDialog(state),
         showUploadButton: ipfsSelectors.getShowUploadButton(state),
         showForkButton: ipfsSelectors.getShowForkButton(state),
+    },
+    view: {
+        showSelectedProjectName: viewSelectors.getShowTopBarSelectedProjectName(state),
+        showOpenInLab: viewSelectors.getShowTopBarOpenInLab(state),
     }
 });
 

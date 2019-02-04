@@ -21,28 +21,37 @@ export const initialState = {
 };
 
 var counter = 0;
-export default function toastsReducer(state = initialState, action) {
+export default function toastsReducer(state = initialState, action, rootState) {
+    function pushToastToState() {
+        counter += 1;
+        const toast = {
+            id: counter,
+            type: action.type
+        }
+        return {
+            ...state,
+            toasts: state.toasts.concat(toast)
+        }
+    }
+
     switch (action.type) {
         case projectsActions.UPDATE_PROJECT_SETTINGS_FAIL:
-        case ipfsActions.IMPORT_PROJECT_FROM_IPFS_SUCCESS:
         case ipfsActions.IMPORT_PROJECT_FROM_IPFS_FAIL:
         case ipfsActions.FORK_PROJECT_SUCCESS:
         case ipfsActions.FORK_PROJECT_FAIL: {
-            counter += 1;
-            const toast = {
-                id: counter,
-                type: action.type
-            }
-            return {
-                ...state,
-                toasts: state.toasts.concat(toast)
+            return pushToastToState();
+        }
+        case ipfsActions.IMPORT_PROJECT_FROM_IPFS_SUCCESS: {
+            if (rootState.app.isEmbeddedMode) { 
+                return state; 
+            } else {
+                return pushToastToState();
             }
         }
         case toastActions.TOAST_DISMISSED:
             return {
                 ...state,
                 toasts: state.toasts.filter(toast => action.data !== toast.id),
-
             }
         default:
             return state;

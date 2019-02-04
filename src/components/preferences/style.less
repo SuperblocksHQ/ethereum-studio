@@ -24,13 +24,20 @@
     background-color: @modal-background-color;
     color: #fff;
 
+    @media only screen and(max-width: 1000px) {
+        &.modal {
+            top: 50%;
+            -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+        }
+    }
+
     h2 {
         margin-top: 0;
     }
 
     .area {
         display: flex;
-        //padding: 80px 15px 125px 32px;
     }
     .container {
         width: 900px;

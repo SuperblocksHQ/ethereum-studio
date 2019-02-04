@@ -30,6 +30,7 @@ import {
     IconClose
 } from '../../icons';
 import Networks from '../../../networks';
+import OnlyIf from '../../onlyIf';
 import classNames from 'classnames';
 import { BaseSidePanel } from '../sidePanels/baseSidePanel';
 
@@ -612,6 +613,7 @@ export default class Control extends Component {
 
     render() {
         const item = this.state.menu.render();
+        const isProjectActive = this.state.activeProject;
         const { toggleFileSystemPanel } = this.props;
 
         return (
@@ -619,7 +621,9 @@ export default class Control extends Component {
                 <BaseSidePanel icon={ <IconFileAlt /> } name="Explorer" onClose={toggleFileSystemPanel}>
                     <div className={style.treemenu}>
                         {item}
-                        <LearnAndResources className="mt-3" />
+                        <OnlyIf test={!isProjectActive}>
+                            <LearnAndResources className="mt-3" />
+                        </OnlyIf>
                     </div>
                 </BaseSidePanel>
             </div>

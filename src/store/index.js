@@ -15,7 +15,7 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { createStore, applyMiddleware, compose } from 'redux';
-import { createMigrate, persistStore, persistCombineReducers } from 'redux-persist';
+import { createMigrate, persistStore, persistReducer } from 'redux-persist';
 import { createEpicMiddleware, combineEpics } from 'redux-observable';
 import storage from 'redux-persist/lib/storage'; // default: localStorage if web
 import thunk from 'redux-thunk';
@@ -29,11 +29,31 @@ const config = {
     key: 'root',
     storage,
     version: 5,
-    blacklist: ['app', 'sidePanels', 'panes', 'ipfs', 'explorer', 'toast'],
+    whitelist: ['projects', 'settings'],
     migrate: createMigrate(migrations, { debug: true })
 };
 
-const reducer = persistCombineReducers(config, reducers);
+const combineReducers = reducers => {
+    return (state = {}, action) => {
+
+      // Reduce all the keys for reducers from `todos` and `visibilityFilter`
+      return Object.keys(reducers).reduce(
+        (nextState, key) => {
+          // Call the corresponding reducer function for a given key
+          nextState[key] = reducers[key] (
+            state[key],
+            action,
+            // Let's make the entire state available to all reducers
+            state
+          );
+          return nextState;
+        },
+        {} // The `reduce` on our keys gradually fills this empty object until it is returned.
+      );
+    };
+  };
+
+const reducer = persistReducer(config, combineReducers(reducers));
 
 const configureMiddleware = (router) => {
     const rootEpic = combineEpics(...epics);

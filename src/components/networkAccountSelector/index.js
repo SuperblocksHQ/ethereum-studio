@@ -35,7 +35,6 @@ class NetworkAccountSelector extends Component {
                             networks={selectedProject.environments}
                             onNetworkSelected={onNetworkSelected} />
                     </div>
-
                     <div className={style.actionWrapper}>
                         <AccountSelector {...this.props} onAccountSelected={onAccountSelected} selectedEnvironment={selectedProject.selectedEnvironment.name} />
                     </div>
