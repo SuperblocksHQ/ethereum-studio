@@ -14,4 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export const getAppVersion = state => state.app.version || '';
+/**
+* Check if current context is iframe or not
+* ex. usage: check if Lab is embedded in another website
+*
+* @return {true, false}:
+*/
+export const isIframe = () => {
+    return window.self !== window.top;
+}

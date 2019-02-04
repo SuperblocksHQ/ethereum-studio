@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { settingsActions } from '../actions';
+import { settingsActions, appActions } from '../actions';
 
 export const initialState = {
     preferences: {
@@ -29,8 +29,14 @@ export const initialState = {
     showTrackingAnalyticsDialog: true
 };
 
-export default function settingsReducer(state = initialState, action) {
+export default function settingsReducer(state = initialState, action, rootState) {
     switch (action.type) {
+        case appActions.APP_STARTED: {
+            return {
+                ...state,
+                showTrackingAnalyticsDialog: state.showTrackingAnalyticsDialog && !rootState.app.isEmbeddedMode,
+            };
+        }
         case settingsActions.SAVE_PREFERENCES: {
             return {
                 ...state,

@@ -16,7 +16,7 @@ export const initialState = {
     },
 };
 
-export default function panesReducer(state = initialState, action) {
+export default function panesReducer(state = initialState, action, rootState) {
     switch (action.type) {
         case ipfsActions.UPLOAD_TO_IPFS:
             return {
@@ -31,7 +31,7 @@ export default function panesReducer(state = initialState, action) {
                 shareURL: action.data.shareURL,
                 showUploadDialog: true,
                 showShareButton: true,
-                uploadSettings: initialState.uploadSettings // Make we reset the settigs on every upload
+                uploadSettings: initialState.uploadSettings, // Make we reset the settigs on every upload
             };
         case ipfsActions.UPLOAD_TO_IPFS_FAIL: {
             return {
@@ -82,9 +82,9 @@ export default function panesReducer(state = initialState, action) {
         case ipfsActions.UPDATE_IPFS_ACTION_BUTTONS: {
             return {
                 ...state,
-                showUploadButton: action.data.showUploadButton,
-                showForkButton: action.data.showForkButton,
-                showShareButton: action.data.showShareButton,
+                showUploadButton: action.data.showUploadButton && !rootState.app.isEmbeddedMode,
+                showForkButton: action.data.showForkButton && !rootState.app.isEmbeddedMode,
+                showShareButton: action.data.showShareButton && !rootState.app.isEmbeddedMode,
             };
         }
         case projectsActions.SELECT_PROJECT: {

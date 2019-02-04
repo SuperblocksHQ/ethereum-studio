@@ -58,7 +58,7 @@ export const getToastComponent = (type) => {
         case ipfsActions.FORK_PROJECT_FAIL:
             return error('Error while forking!');
         case ipfsActions.IMPORT_PROJECT_FROM_IPFS_SUCCESS:
-            return info('Project Downloaded!');
+            return info('Project Loaded!');
         case ipfsActions.IMPORT_PROJECT_FROM_IPFS_FAIL:
             return error('Error importing project!');
         case projectsActions.UPDATE_PROJECT_SETTINGS_FAIL:

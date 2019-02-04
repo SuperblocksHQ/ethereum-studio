@@ -14,32 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import app from './app.reducer';
-import projects from './projects.reducer';
-import settings from './settings.reducer';
-import sidePanels from './sidePanels.reducer';
-import panes from './panes.reducer';
-import ipfs from './ipfs.reducer';
-import toast from './toast.reducer';
-import view from './view.reducer';
-
-const rehydrated = (state = false, action) => {
-    switch (action.type) {
-        case 'persist/REHYDRATE':
-            return true;
-        default:
-            return state;
-    }
-};
-
-export default {
-    rehydrated,
-    app,
-    settings,
-    projects,
-    panes,
-    ipfs,
-    toast,
-    sidePanels,
-    view
-};
+import { map } from 'rxjs/operators';
+import { ofType, Epic } from 'redux-observable';
+import { appActions } from '../../actions';
+export const notifyAppStart: Epic = (action$: any, state$: any) => action$.pipe(
+    ofType(appActions.APP_START),
+    map(() => appActions.notifyAppStarted()));
