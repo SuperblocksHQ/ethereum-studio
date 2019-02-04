@@ -15,36 +15,11 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { connect } from 'react-redux';
-import { shareActions } from '../../../actions';
 import ShareDialog from './ShareDialog';
-import { shareSelectors } from '../../../selectors';
+import { ipfsSelectors } from '../../../selectors';
 
 const mapStateToProps = state => ({
-    // ipfs: {
-    //     uploading: ipfsSelectors.getUploadingToIPFS(state),
-    //     shareURL: ipfsSelectors.getShareURL(state),
-    //     lastUploadTimestamp: ipfsSelectors.getLastUploadTimestamp(state),
-    //     error: ipfsSelectors.getUploadToIPFSError(state),
-    //     showUploadSettings: ipfsSelectors.getShowUploadSettings(state),
-    //     uploadSettings: ipfsSelectors.getUploadSettings(state)
-    // }
+    ipfsUrl: ipfsSelectors.getShareURL(state),
 });
 
-function mapDispatchToProps(dispatch) {
-    return {
-        // uploadToIPFS: (uploadSettings) => {
-        //     dispatch(ipfsActions.uploadToIPFS(uploadSettings))
-        // },
-        // showUploadSettings: () => {
-        //     dispatch(ipfsActions.showUploadSettings())
-        // },
-        // hideUploadSettings: () => {
-        //     dispatch(ipfsActions.hideUploadSettings())
-        // },
-        // uploadSettingsChanged: (uploadSettings) => {
-        //     dispatch(ipfsActions.uploadSettingsChanged(uploadSettings))
-        // },
-    };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ShareDialog);
+export default connect(mapStateToProps)(ShareDialog);

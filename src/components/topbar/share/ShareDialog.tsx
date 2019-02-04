@@ -25,8 +25,11 @@ import TextInput from '../../textInput';
 import { Tooltip } from '../../common';
 import Switch from 'react-switch';
 
+interface IProps {
+    ipfsUrl: string;
+}
+
 interface IState {
-    defaultUrl: string;
     shareUrl: string;
     options: {
         hideExplorer: boolean;
@@ -36,21 +39,16 @@ interface IState {
     };
 }
 
-export default class ShareDialog extends React.Component<{}, IState> {
-
-    constructor(state: IState) {
-        super(state);
-
-        this.state = {
-            defaultUrl: String(window.location),
-            shareUrl: String(window.location),
-            options: {
-                hideExplorer: false,
-                showTransactions: false,
-                showAppview: false
-            }
-        };
-    }
+export default class ShareDialog extends React.Component<IProps, IState> {
+    
+    state: IState = {
+        shareUrl: this.props.ipfsUrl,
+        options: {
+            hideExplorer: false,
+            showTransactions: false,
+            showAppview: false,
+        }
+    };
 
     RenderOptions = () => {
         const { hideExplorer, showTransactions, showAppview } = this.state.options;
@@ -120,24 +118,16 @@ export default class ShareDialog extends React.Component<{}, IState> {
     }
 
     updateUrl = () => {
-        const { defaultUrl, options } = this.state;
-        const params = Object.keys(options).map( async (key) => key + '=' + Number(options[key]));
+        const { options } = this.state;
+        const params = Object.keys(options).map( async (key) => {
+            return key + '=' + Number(options[key]);
+        });
 
         Promise.all(params).then((result) => {
             this.setState({
-                shareUrl: defaultUrl + '?' + result.join('&')
+                shareUrl: this.props.ipfsUrl + '?' + result.join('&')
             });
         });
-
-
-    }
-    getParameters = () => {
-        const { options } = this.state;
-        let result = '?';
-        Object.keys(options).map( (k, v) => {
-            result += '&' + k + '=' + Number(options[k]);
-        });
-        return result;
     }
 
     copyShareUrl = (shareUrl: string) => {
@@ -149,14 +139,12 @@ export default class ShareDialog extends React.Component<{}, IState> {
     }
 
     getBtnMdUrl = () => {
-        return `[![Edit Project](https://codesandbox.io/static/img/play-codesandbox.svg)]((${this.state.shareUrl}))`;
+        return `[![Edit Project](https://superblocks.com/static/img/open-superblocks.svg)](${this.state.shareUrl})`;
     }
 
     getBtnHtmlUrl = () => {
-        return `<a href="${this.state.shareUrl}"><img alt="Edit Project" src="https://codesandbox.io/static/img/play-codesandbox.svg"></a>`;
+        return `<a href="${this.state.shareUrl}"><img alt="Edit Project" src="https://superblocks.com/static/img/open-superblocks.svg"></a>`;
     }
-
-
 
     RenderInputs = () => {
         const { hideExplorer, showTransactions, showAppview } = this.state.options;
