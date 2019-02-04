@@ -31,7 +31,7 @@ export const LoginModal = (props) => {
         console.log("Success")
         console.log(o);
         onCloseClickHandle();
-        fetch('http://localhost:3002/v1/auth/github', {
+        fetch('https://patatauser.superblocks.com/v1/auth/github', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -45,7 +45,7 @@ export const LoginModal = (props) => {
 
     function queryUserEndpoint() {
         const jwt = localStorage.getItem('jwtToken');
-        fetch('http://localhost:3002/v1/user', {
+        fetch('https://patatauser.superblocks.com/v1/user', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -71,9 +71,9 @@ export const LoginModal = (props) => {
                     onCloseClick={onCloseClickHandle}
                 />
                 <div className={style.area}>
-                    <GitHubLogin clientId="5cf95b398f5d9ae899fe"
+                    <GitHubLogin clientId="b6117ba12bf5f306cdad"
                                  redirectUri="http://localhost:3000/github/callback"
-                                 scope="user:email"
+                                 scope=""
                                  onSuccess={onSuccess}
                                  onFailure={onFailure}
                     />
