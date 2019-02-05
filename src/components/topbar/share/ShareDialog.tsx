@@ -50,6 +50,31 @@ export default class ShareDialog extends React.Component<IProps, IState> {
         }
     };
 
+    updateUrl = () => {
+        const { options } = this.state;
+        const params = Object.keys(options).map( async (key) => {
+            return key + '=' + Number(options[key]);
+        });
+
+        Promise.all(params).then((result) => {
+            this.setState({
+                shareUrl: this.props.ipfsUrl + '?' + result.join('&')
+            });
+        });
+    }
+
+    getEmbedUrl = () => {
+        return `<iframe src="${this.state.shareUrl}" style="width:960px;height:500px;border:0;border-radius:4px;overflow:hidden;"></iframe>`;
+    }
+
+    getBtnMdUrl = () => {
+        return `[![Edit Project](https://superblocks.com/static/img/open-superblocks.svg)](${this.state.shareUrl})`;
+    }
+
+    getBtnHtmlUrl = () => {
+        return `<a href="${this.state.shareUrl}"><img alt="Edit Project" src="https://superblocks.com/static/img/open-superblocks.svg"></a>`;
+    }
+
     RenderOptions = () => {
         const { hideExplorer, showTransactions, showAppview } = this.state.options;
 
@@ -115,35 +140,6 @@ export default class ShareDialog extends React.Component<IProps, IState> {
                 </div>
             </React.Fragment>
         );
-    }
-
-    updateUrl = () => {
-        const { options } = this.state;
-        const params = Object.keys(options).map( async (key) => {
-            return key + '=' + Number(options[key]);
-        });
-
-        Promise.all(params).then((result) => {
-            this.setState({
-                shareUrl: this.props.ipfsUrl + '?' + result.join('&')
-            });
-        });
-    }
-
-    copyShareUrl = (shareUrl: string) => {
-        copy(shareUrl);
-    }
-
-    getEmbedUrl = () => {
-        return `<iframe src="${this.state.shareUrl}" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;"></iframe>`;
-    }
-
-    getBtnMdUrl = () => {
-        return `[![Edit Project](https://superblocks.com/static/img/open-superblocks.svg)](${this.state.shareUrl})`;
-    }
-
-    getBtnHtmlUrl = () => {
-        return `<a href="${this.state.shareUrl}"><img alt="Edit Project" src="https://superblocks.com/static/img/open-superblocks.svg"></a>`;
     }
 
     RenderInputs = () => {
