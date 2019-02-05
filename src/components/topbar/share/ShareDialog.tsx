@@ -42,7 +42,7 @@ interface IState {
 export default class ShareDialog extends React.Component<IProps, IState> {
 
     state: IState = {
-        shareUrl: this.props.ipfsUrl,
+        shareUrl: this.props.ipfsUrl || String(window.location),
         options: {
             hideExplorer: false,
             showTransactions: false,
