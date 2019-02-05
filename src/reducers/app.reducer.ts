@@ -15,11 +15,21 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { AnyAction } from 'redux';
+import { appActions } from '../actions';
 
 export const initialState = {
     version: '1.6.1',
+    isEmbeddedMode: false
 };
 
 export default function appReducer(state = initialState, action: AnyAction) {
-    return state;
+    switch (action.type) {
+        case appActions.APP_START:
+            return {
+                ...state,
+                isEmbeddedMode: action.data.isEmbeddedMode
+            };
+        default:
+            return state;
+    }
 }

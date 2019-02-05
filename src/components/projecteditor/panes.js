@@ -177,7 +177,7 @@ class Panes extends Component {
     tabRightClicked = (e, id) => {
         // We save the pane id for when closing all other panes.
         e.preventDefault();
-        this.setState({ showContextMenuPaneId: id });
+        this.setState({ showContextMenuPaneId: id, mousePosition: e.pageX });
     };
 
     tabClicked = (e, id) => {
@@ -257,8 +257,6 @@ class Panes extends Component {
         e.preventDefault();
         this.closeAll(null, this.state.showContextMenuPaneId);
     };
-
-    
 
     getPaneHeight = () => {
         const a = document.getElementById('panes');

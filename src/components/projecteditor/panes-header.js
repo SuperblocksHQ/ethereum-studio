@@ -24,11 +24,14 @@ import { DropdownContainer } from '../common';
 export default class PanesHeader extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            mousePosition: 0
+        }
     }
 
     getContextMenuElement() {
         return (
-            <div className={style.contextMenu}>
+            <div className={style.contextMenu} style={{left: this.state.mousePosition}}>
                 <div className={style.item} onClick={this.props.closeAllPanes}>
                     Close all
                 </div>
@@ -55,7 +58,11 @@ export default class PanesHeader extends Component {
                     <div key={index}
                         className={ this.getClassnames(paneData) }
                         onMouseDown={e => this.props.tabClicked(e, paneData.id)}
-                        onContextMenu={e => this.props.tabRightClicked(e, paneData.id)}
+                        onContextMenu={e => {
+                                this.props.tabRightClicked(e, paneData.id)
+                                this.setState({mousePosition: e.pageX})
+                            }
+                        }
                     >
                         <DropdownContainer
                             dropdownContent={contextMenu}

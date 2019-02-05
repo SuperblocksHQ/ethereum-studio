@@ -50,6 +50,28 @@
     .logo {
         margin-left: 30px;
     }
+    .openLab {
+        display: flex;
+        align-items: center;
+        background-color: #8641f2;
+        border-radius: 4px;
+        padding: 0px 10px;
+        transition: .2s background;
+        margin-right: 15px;
+        border: 1px solid #8641f2;
+        margin-left: 4px;
+        span {
+            margin-left: 10px;
+        }
+        &:hover {
+            background-color: #7237CF;
+        }
+    }
+    .projectName {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
     .tools {
         margin-left: 45px;
         height: 100%;
@@ -99,17 +121,20 @@
         right: 7px;
     }
     .projectButton {
-        position: absolute;
         display: flex;
         height: 50px;
-        left: 50%;
-        transform: translate(-50%);
         padding: 0;
         border-radius: 3px;
         max-width: none;
         border: none;
         color: #fff;
         z-index: 2;
+        margin-left: auto;
+        margin-right: auto;
+        &.projectButtonCenter {
+            flex-grow: 2;
+            justify-content: center;
+        }
         .projectText {
             margin-left: 3px;
             font-size: 1.2em;
@@ -276,7 +301,7 @@
         opacity: 1;
     }
     .overflowText {
-        max-width: 263px;
+        max-width: 250px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;

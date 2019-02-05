@@ -30,13 +30,13 @@ class NetworkAccountSelector extends Component {
             <OnlyIf test={Boolean(selectedProject.id)}>
                 <div className={style.container}>
                     <div className={style.actionWrapper}>
-                        <AccountSelector {...this.props} onAccountSelected={onAccountSelected} selectedEnvironment={selectedProject.selectedEnvironment.name} />
-                    </div>
-                    <div className={style.actionWrapper}>
                         <NetworkSelector
                             selectedNetwork={selectedProject.selectedEnvironment}
                             networks={selectedProject.environments}
                             onNetworkSelected={onNetworkSelected} />
+                    </div>
+                    <div className={style.actionWrapper}>
+                        <AccountSelector {...this.props} onAccountSelected={onAccountSelected} selectedEnvironment={selectedProject.selectedEnvironment.name} />
                     </div>
                 </div>
             </OnlyIf>

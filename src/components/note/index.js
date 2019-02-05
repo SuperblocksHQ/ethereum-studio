@@ -24,8 +24,8 @@ const Note = ({
     text,
     backgroundColor = "#F8E71C",
     color = "#262E33",
-    textClassName = {},
-    noteClassName = {}
+    textClassName,
+    noteClassName
 } = props) => (
     <div>
         <span className={classNames([style.note, noteClassName])} style={{backgroundColor: backgroundColor, color: color }}>{title}</span>
@@ -40,6 +40,6 @@ Note.propTypes = {
     text: Proptypes.string,
     backgroundColor: Proptypes.string,
     color: Proptypes.string,
-    textClassName: Proptypes.object,
-    noteClassName: Proptypes.object
+    textClassName: Proptypes.string,
+    noteClassName: Proptypes.string
 }

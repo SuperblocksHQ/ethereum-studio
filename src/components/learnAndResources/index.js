@@ -40,6 +40,7 @@ export default class LearnAndResources extends Component {
                 <div
                     onClick={this.toogle}
                     className={classNames([style.header, style.item])}
+                    onContextMenu={(e)=>{e.preventDefault()}}
                 >
                     <Caret expanded={expanded} />
                     <span>Learning And Resources</span>

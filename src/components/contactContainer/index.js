@@ -15,11 +15,11 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { connect } from 'react-redux';
-import { getAppVersion } from '../../selectors/app';
+import { appSelectors } from '../../selectors';
 import ContactContainer from './ContactContainer';
 
 const mapStateToProps = state => ({
-    appVersion: getAppVersion(state),
+    appVersion: appSelectors.getAppVersion(state),
 });
 
 export default connect(

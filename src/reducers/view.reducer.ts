@@ -14,32 +14,25 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import app from './app.reducer';
-import projects from './projects.reducer';
-import settings from './settings.reducer';
-import sidePanels from './sidePanels.reducer';
-import panes from './panes.reducer';
-import ipfs from './ipfs.reducer';
-import toast from './toast.reducer';
-import view from './view.reducer';
+import { AnyAction } from 'redux';
+import { appActions } from '../actions';
 
-const rehydrated = (state = false, action) => {
+export const initialState = {
+    showTopBarSelectedProjectName: true,
+    showTopBarOpenInLab: false,
+    showBottomBarNote: true,
+};
+
+export default function viewReducer(state = initialState, action: AnyAction, root: any) {
     switch (action.type) {
-        case 'persist/REHYDRATE':
-            return true;
+        case appActions.APP_STARTED:
+            return {
+                ...state,
+                showTopBarSelectedProjectName: !root.app.isEmbeddedMode,
+                showTopBarOpenInLab: root.app.isEmbeddedMode,
+                showBottomBarNote: !root.app.isEmbeddedMode
+            };
         default:
             return state;
     }
-};
-
-export default {
-    rehydrated,
-    app,
-    settings,
-    projects,
-    panes,
-    ipfs,
-    toast,
-    sidePanels,
-    view
-};
+}
