@@ -36,7 +36,7 @@
         height: 100%;
         flex: 0 0 auto;
         background-color: #252525;
-        padding-bottom: 50px;
+        padding-bottom: 44px;
         border-right: 1px solid #121516;
     }
     .mainWrapper {
@@ -48,7 +48,7 @@
         position: relative;
         left: 35px;
         width: 100%;
-        height: 100%;
+        height: calc(100% - 22px);
     }
     .panescontainer {
         background-color: #1E1E1E;
@@ -68,24 +68,23 @@
             width: 100%;
             overflow-y: hidden;
             overflow-x: auto;
+            display: flex;
             .tab {
-                padding: 7px 12px 8px 12px;
-                display: flex;
-                align-items: center;
-                align-content: center;
-                float: left;
-                min-width: 60px;
                 background-color: #2D2D2D;
                 cursor: pointer;
                 color: #969696;
                 border-right: 1px solid #121516;
                 padding-right: 24px;
                 .tabContainer {
-                    div {
-                        float: left;
-                    }
+                    padding: 10px 12px 10px 12px;
+                    display: flex;
+                    white-space: nowrap;
                     .title {
-                        padding-right: 10px;
+                        padding-right: 10px; 
+                        display: flex;
+                        div {
+                            display: flex;
+                        }
                         .icon {
                             margin-right: 10px;
                         }
@@ -131,8 +130,8 @@
             .contextMenu {
                 display: block;
                 position: fixed;
-                margin-left: 40px;
-                margin-top: 15px;
+                margin-left: -40px;
+                margin-top: 0px;
                 background-color: #141414;
                 z-index: 1;
                 min-width: 180px;
@@ -161,7 +160,6 @@
             width: 100%;
             flex: 1;
             overflow: hidden;
-
             .pane {
                 display: none;
                 &.visible {

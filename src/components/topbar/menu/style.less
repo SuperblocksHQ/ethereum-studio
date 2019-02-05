@@ -1,4 +1,4 @@
-// Copyright 2018 Superblocks AB
+// Copyright 2019 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -14,32 +14,25 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import app from './app.reducer';
-import projects from './projects.reducer';
-import settings from './settings.reducer';
-import sidePanels from './sidePanels.reducer';
-import panes from './panes.reducer';
-import ipfs from './ipfs.reducer';
-import toast from './toast.reducer';
-import view from './view.reducer';
+@import '../../../style/index';
 
-const rehydrated = (state = false, action) => {
-    switch (action.type) {
-        case 'persist/REHYDRATE':
-            return true;
-        default:
-            return state;
+.menuDialog {
+    display: block;
+    position: absolute;
+    left: 0px;
+    top: 45px;
+    background-color: #141414;
+    min-width: 200px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 2;
+    color: #c7c7c7;
+    transition: visibility 0s, opacity 0.2s ease;
+
+    &>div:first-of-type {
+        margin-top: 4px;
     }
-};
 
-export default {
-    rehydrated,
-    app,
-    settings,
-    projects,
-    panes,
-    ipfs,
-    toast,
-    sidePanels,
-    view
-};
+    &>div:last-of-type {
+        margin-bottom: 4px;
+    }
+}

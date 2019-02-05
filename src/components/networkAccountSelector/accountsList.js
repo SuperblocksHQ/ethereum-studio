@@ -98,7 +98,7 @@ export class AccountsList extends Component {
                         }}
                     >
                         <div className={style.nameContainer}>
-                            <div>{account.getName()}</div>
+                            <div className={style.accountName}>{account.getName()}</div>
                             <div className={style.address}>{formattedAddress}</div>
                         </div>
                         <div className={style.actionsContainer}>
