@@ -171,11 +171,11 @@ export default class App extends Component {
     };
 
     _checkIpfsOnUrl = () => {
-        const a = document.location.href.match("^.*/ipfs/(.+)$");
-            if (a) {
-                // TODO: pop modal about importing being processed.
-                this.isImportedProject = true;
-                this.props.importProjectFromIpfs(a[1]);
+        const a = document.location.href.match("^.*/ipfs/([a-zA-Z0-9]+)");
+        if (a) {
+            // TODO: pop modal about importing being processed.
+            this.isImportedProject = true;
+            this.props.importProjectFromIpfs(a[1]);
         }
     };
 
