@@ -19,7 +19,6 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import Backend from '../projecteditor/control/backend';
 import Modal from '../modal';
-import ProjectEditor from '../projecteditor';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Wallet } from '../projecteditor/wallet';
 import Solc from '../solc';
@@ -30,6 +29,7 @@ import AnalyticsDialog from '../analyticsDialog';
 import OnlyIf from '../onlyIf';
 import ToastContainer from "../toasts/toastcontainer";
 import Dashboard from '../dashboard';
+import LoadProject from '../loadProject';
 
 export default class App extends Component {
 
@@ -87,50 +87,50 @@ export default class App extends Component {
         // on the initial state (per example turning on/off analytics)
         notifyAppStart();
 
-        this._convertProjects(status => {
-            this.setState({ isReady: true })
-            this._init();
-        });
+        // this._convertProjects(status => {
+        //     this.setState({ isReady: true })
+        //     this._init();
+        // });
     }
 
-    _convertProjects = cb => {
-        this.backend.convertProjects(status => {
-            if (status == 1) {
-                const modalData = {
-                    title: 'Projects converted',
-                    body: (
-                        <div>
-                            <div>
-                                Your projects have been converted to the new
-                                Superblocks Lab format.
-                                <br />
-                                You might need to reconfigure your accounts and
-                                contract arguments due to these changes. We are
-                                sorry for any inconvenience.
-                            </div>
-                            <div>
-                                Please see the Superblocks Lab help center for
-                                more information on this topic.
-                            </div>
-                        </div>
-                    ),
-                    style: { width: '680px' },
-                };
-                const modal = <Modal data={modalData} />;
-                this.functions.modal.show({
-                    cancel: () => {
-                        cb(0);
-                        return true;
-                    },
-                    render: () => {
-                        return modal;
-                    },
-                });
-            } else {
-                cb(0);
-            }
-        });
-    };
+    // _convertProjects = cb => {
+    //     this.backend.convertProjects(status => {
+    //         if (status == 1) {
+    //             const modalData = {
+    //                 title: 'Projects converted',
+    //                 body: (
+    //                     <div>
+    //                         <div>
+    //                             Your projects have been converted to the new
+    //                             Superblocks Lab format.
+    //                             <br />
+    //                             You might need to reconfigure your accounts and
+    //                             contract arguments due to these changes. We are
+    //                             sorry for any inconvenience.
+    //                         </div>
+    //                         <div>
+    //                             Please see the Superblocks Lab help center for
+    //                             more information on this topic.
+    //                         </div>
+    //                     </div>
+    //                 ),
+    //                 style: { width: '680px' },
+    //             };
+    //             const modal = <Modal data={modalData} />;
+    //             this.functions.modal.show({
+    //                 cancel: () => {
+    //                     cb(0);
+    //                     return true;
+    //                 },
+    //                 render: () => {
+    //                     return modal;
+    //                 },
+    //             });
+    //         } else {
+    //             cb(0);
+    //         }
+    //     });
+    // };
 
     redraw = all => {
         this.forceUpdate();
@@ -253,34 +253,22 @@ export default class App extends Component {
         }
     };
 
-    getProjectEditor = () => {
-        const { isReady } = this.state;
-        const { showTrackingAnalyticsDialog } = this.props;
-
-        return (
-            <OnlyIf test={isReady}>
-                <ProjectEditor
-                    key="projedit"
-                    router={this.router}
-                    functions={this.functions}
-                    knownWalletSeed={this.knownWalletSeed}
-                    isImportedProject={this.isImportedProject}
-                />
-                <OnlyIf test={showTrackingAnalyticsDialog}>
-                    <AnalyticsDialog />
-                </OnlyIf>
-                    <ToastContainer />
-            </OnlyIf>
-        )
-    }
-
-    getDashboard = () => (
-        <Dashboard
+    renderProject = ({match}) => (
+        <LoadProject
+            match={match}
             router={this.router}
+            functions={this.functions}
+            knownWalletSeed={this.knownWalletSeed}
+            isImportedProject={this.isImportedProject}
         />
     )
 
+    mierda = () => (
+        <div>Mierda</div>
+    )
+
     render() {
+        const { showTrackingAnalyticsDialog } = this.props;
         const modalContent = this.getModal();
 
         return (
@@ -288,10 +276,16 @@ export default class App extends Component {
                 <div id="app" className={this.getClassNames()}>
                     <div id="app_content">
                         <div className="maincontent">
-                            <Route path="/" exact component={this.getProjectEditor} />
-                            <Route path="/dashboard/" component={this.getDashboard} />
+                            <Route path="/" exact component={Dashboard} />
+                            <Route path="/dashboard" component={Dashboard} />
+                            <Route path="/:projectId" component={this.renderProject} />
+                            {/* <Route path="/ipfs/:hash" component={this.mierda()} /> */}
                         </div>
                     </div>
+                    <OnlyIf test={showTrackingAnalyticsDialog}>
+                        <AnalyticsDialog />
+                    </OnlyIf>
+                    <ToastContainer />
                     <div id="app_modal" onClick={this.modalOutside}>
                         {modalContent}
                     </div>

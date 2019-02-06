@@ -23,7 +23,8 @@ export const initialState = {
         environments: [],
         selectedEnvironment: { name: null, endpoint: null },
         selectedAccount: {name: null, balance: null, address: null}
-    }
+    },
+    project: undefined
 };
 
 function getEnvOrNull(environment) {
@@ -37,8 +38,8 @@ export default function projectsReducer(state = initialState, action) {
         case projectsActions.SELECT_PROJECT: {
             return {
                 ...state,
-                selectedProject: action.data 
-                    ? { 
+                selectedProject: action.data
+                    ? {
                         ...action.data,
                         selectedEnvironment: getEnvOrNull(state.selectedProject.selectedEnvironment)
                             || action.data.environments[0]
@@ -51,11 +52,10 @@ export default function projectsReducer(state = initialState, action) {
                 ...state,
                 selectedProject: {
                     ...state.selectedProject,
-                    selectedEnvironment: state.selectedProject.environments.find(e => e.name === action.data) 
+                    selectedEnvironment: state.selectedProject.environments.find(e => e.name === action.data)
                                         || initialState.selectedProject.selectedEnvironment
                 }
             };
-
         case projectsActions.UPDATE_PROJECT_SETTINGS_SUCCESS: {
             return {
                 ...state,
@@ -65,11 +65,16 @@ export default function projectsReducer(state = initialState, action) {
                 },
             };
         }
-
         case projectsActions.UPDATE_SELECTED_ACCOUNT: {
             return {
                 ...state,
                 selectedAccount: action.data
+            };
+        }
+        case projectsActions.LOAD_PROJECT_SUCCESS: {
+            return {
+                ...state,
+                project: action.data.project
             };
         }
         default:

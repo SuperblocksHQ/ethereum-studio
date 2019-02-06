@@ -66,4 +66,38 @@ export const projectsActions = {
             data: { projectId }
        };
     },
+    DELETE_PROJECT_SUCCESS: 'DELETE_PROJECT_SUCCESS',
+    deleteProjectSuccess() {
+       return {
+            type: projectsActions.DELETE_PROJECT_SUCCESS
+       };
+    },
+    DELETE_PROJECT_FAIL: 'DELETE_PROJECT_FAIL',
+    deleteProjectFail(error) {
+       return {
+            type: projectsActions.DELETE_PROJECT_FAIL,
+            data: error
+       };
+    },
+    LOAD_PROJECT: 'LOAD_PROJECT',
+    loadProject(projectId) {
+       return {
+            type: projectsActions.LOAD_PROJECT,
+            data: { projectId }
+       };
+    },
+    LOAD_PROJECT_SUCCESS: 'LOAD_PROJECT_SUCCESS',
+    loadProjectSuccess(project) {
+       return {
+            type: projectsActions.LOAD_PROJECT_SUCCESS,
+            data: { project }
+       };
+    },
+    LOAD_PROJECT_FAIL: 'LOAD_PROJECT_FAIL',
+    loadProjectFail(error) {
+       return {
+            type: projectsActions.LOAD_PROJECT_FAIL,
+            data: error
+       };
+    },
 };

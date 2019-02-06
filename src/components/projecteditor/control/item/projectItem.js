@@ -30,6 +30,7 @@ import { IconConfigure } from '../../../icons';
 
 import Backend from '../backend';
 import TransactionLogData from '../../sidePanels/blockexplorer/transactionlogdata';
+import { projectUtils } from '../../../../utils/project';
 
 export default class ProjectItem extends Item {
     constructor(props, router, functions) {
@@ -45,6 +46,7 @@ export default class ProjectItem extends Item {
             functions: functions,
             project: this,
         });
+        this.files = props.files;
     }
 
     getTxLog = () => {
@@ -248,10 +250,10 @@ export default class ProjectItem extends Item {
 
     /**
      * List files below path.
-     *
      */
-    listFiles = (path, cb) => {
-        this.backend.listFiles(this.getInode(), path, cb);
+    async listFiles(path) {
+        // Make sure to convert them also to something iterable
+        return projectUtils.convertFiles(this.files, path);
     };
 
     /**

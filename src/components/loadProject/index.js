@@ -14,19 +14,24 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { empty } from 'rxjs';
-import { switchMap, withLatestFrom } from 'rxjs/operators';
-import { ofType, Epic } from 'redux-observable';
-import { appActions } from '../../actions';
-import * as analitics from '../../utils/analytics';
+import { connect } from 'react-redux';
+import { projectsActions } from '../../actions';
+import { projectSelectors } from '../../selectors';
+import LoadProject from './LoadProject';
+import { Dispatch } from 'react';
+import { AnyAction } from 'redux';
 
-const initTrackingAnalytics: Epic = (action$: any, state$: any) => action$.pipe(
-    ofType(appActions.APP_START),
-    withLatestFrom(state$),
-    switchMap(([, state]) => {
-        const { trackAnalytics } = state.settings.preferences.advanced;
-        analitics.setEnable(trackAnalytics)
-        return empty();
-    }))
+const mapStateToProps = (state) => ({
+    loadingProject: projectSelectors.getLoadingProject(state),
+    project: projectSelectors.getProject(state)
+});
 
-export default initTrackingAnalytics;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        loadProject: (projectId) => {
+            dispatch(projectsActions.loadProject(projectId));
+        },
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoadProject);

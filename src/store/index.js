@@ -29,7 +29,7 @@ const config = {
     key: 'root',
     storage,
     version: 5,
-    blacklist: ['app', 'sidePanels', 'panes', 'ipfs', 'explorer', 'toast', 'user'],
+    blacklist: ['app', 'sidePanels', 'panes', 'ipfs', 'explorer', 'toast', 'user', 'projects'],
     migrate: createMigrate(migrations, { debug: true })
 };
 
