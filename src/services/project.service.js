@@ -1,4 +1,4 @@
-// Copyright 2018 Superblocks AB
+// Copyright 2019 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -13,9 +13,17 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
+import { superFetch } from './utils/superFetch';
 
-export * from './preview.service';
-export * from './ipfs.service';
-export * from './user.service';
-export * from './project.service';
-export * from './auth.service';
+export const projectService = {
+
+    async getProjectsInfo() {
+        return superFetch(process.env.REACT_APP_PROJECT_API_BASE_URL + '/projectsInfo', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        .then((response) => response.json());
+    },
+}
