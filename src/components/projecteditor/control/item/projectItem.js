@@ -30,7 +30,7 @@ import { IconConfigure } from '../../../icons';
 
 import Backend from '../backend';
 import TransactionLogData from '../../sidePanels/blockexplorer/transactionlogdata';
-import { projectUtils } from '../../../../utils/project';
+import { projectUtils } from '../../../../utils/project.utils';
 
 export default class ProjectItem extends Item {
     constructor(props, router, functions) {
@@ -490,8 +490,11 @@ export default class ProjectItem extends Item {
         this.backend.deleteFile(this.getInode(), fullpath, cb);
     };
 
-    loadFile = (file, cb) => {
-        this.backend.loadFile(this.getInode(), file, cb);
+    loadFile = (path, cb) => {
+        // this.backend.loadFile(this.getInode(), path, cb);
+        console.log(this.files);
+        console.log(path);
+        projectUtils.loadFileContent(this.files, path, cb);
     };
 
     saveFile = (path, contents, cb) => {

@@ -30,5 +30,32 @@ export const projectUtils = {
 
             resolve(dirArray.concat(files));
         });
+    },
+
+    loadFileContent: (projectFiles: any, path: string, cb: any) => {
+        if (path[0] !== '/') {
+            // reject('Make sure the path is absolute');
+            cb({ status: 3 });
+            return;
+        }
+
+        const parts = path.split('/');
+        let folder = projectFiles['/'];
+        for (let index = 1; index < parts.length - 1; index++) {
+            let folder2 = folder.children[parts[index]];
+            if (!folder2) {
+                folder2 = { type: 'd', name: parts[index], children: {} };
+                folder[parts[index]] = folder2;
+            }
+            folder = folder2;
+        }
+        const file = folder.children[parts[parts.length - 1]];
+        console.log(file.contents);
+        if (file) {
+            cb({ status: 0, contents: file.contents });
+        } else {
+            // reject('File in path ' + path + ' not found');
+            cb({ status: 3 });
+        }
     }
 };
