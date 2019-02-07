@@ -6,7 +6,7 @@ export const projectUtils = {
         }
 
         console.log(files);
-        const parts = path.split('/');
+        const parts = path.split('/').splice(1);
         let folder = files['/'];
         console.log(folder);
         console.log(path);
@@ -34,7 +34,7 @@ export const projectUtils = {
 
         console.log(dirArray.concat(files));
 
-        return dirArray.concat(files);
+        return dirArray.concat(fileArray);
     },
 
     loadFileContent: (projectFiles: any, path: string, cb: any) => {
