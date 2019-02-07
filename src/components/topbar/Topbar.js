@@ -29,10 +29,19 @@ import {
     IconDropdown,
     IconDiscord,
     IconUpload,
-    IconFork
+    IconFork,
+    IconNew
 } from '../icons';
 import OnlyIf from '../onlyIf';
 import NetworkAccountSelector from '../networkAccountSelector';
+
+const NewAction = () => (
+    <div className={classNames([style.action, style.actionRight])}>
+        <button className={classNames([style.container, 'btnNoBg'])}>
+            <IconNew />
+        </button>
+    </div>
+);
 
 const DashboardAction = () => (
     <div className={classNames([style.action, style.actionRight])}>
@@ -104,6 +113,41 @@ const HelpDropdownDialog = () => (
                     <span className={style.communityIcon}>
                         <IconDiscord color="#7289DA"/>
                     </span>
+                </a>
+            </li>
+        </ul>
+    </div>
+);
+
+// TODO - Finalise all this
+const NewDropdownDialog = () => (
+    <div className={style.helpMenu}>
+        <ul>
+            <li>
+                <a
+                    href="https://help.superblocks.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Start from scratch
+                </a>
+            </li>
+            <li>
+                <a
+                    href="https://help.superblocks.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Start with a template
+                </a>
+            </li>
+            <li>
+                <a
+                    href="https://help.superblocks.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Import a project
                 </a>
             </li>
         </ul>
@@ -205,6 +249,12 @@ export default class TopBar extends Component {
                 </div>
 
                 <div className={style.actionsRight}>
+                    <DropdownContainer
+                        className={style.actionHelp}
+                        dropdownContent={<NewDropdownDialog />} >
+                        <NewAction />
+                    </DropdownContainer>
+
                     <DashboardAction/>
 
                     <div onClick={this.showPreferencesModal}>

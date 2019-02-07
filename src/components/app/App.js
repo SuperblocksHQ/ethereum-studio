@@ -19,7 +19,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import Backend from '../projecteditor/control/backend';
 import Modal from '../modal';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Wallet } from '../projecteditor/wallet';
 import Solc from '../solc';
 import EVM from '../evm';
@@ -277,8 +277,11 @@ export default class App extends Component {
                     <div id="app_content">
                         <div className="maincontent">
                             <Route path="/" exact component={Dashboard} />
-                            <Route path="/dashboard" component={Dashboard} />
-                            <Route path="/:projectId" component={this.renderProject} />
+                            <Switch>
+                                <Route path="/dashboard" exact component={Dashboard} />
+                                <Route path="/:projectId" exact component={this.renderProject} />
+                            </Switch>
+
                             {/* <Route path="/ipfs/:hash" component={this.mierda()} /> */}
                         </div>
                     </div>
