@@ -47,7 +47,7 @@ export default class Login extends Component {
     };
 
     render() {
-        const isAuthenticated = this.props.loginActions.getIsAuthenticated;
+        const isAuthenticated = this.props.authActions.getIsAuthenticated;
 
         return(
             <div className={style.action}>

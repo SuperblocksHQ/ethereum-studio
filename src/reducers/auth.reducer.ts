@@ -1,4 +1,4 @@
-// Copyright 2019 Superblocks AB
+// Copyright 2018 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -14,6 +14,26 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export const loginSelectors = {
-    getIsAuthenticated: state => state.login.isAuthenticated,
+import { authActions } from '../actions/auth.actions';
+import { AnyAction } from 'redux';
+
+export const initialState = {
+    isAuthenticated : false
+};
+
+export default function loginReducer(state = initialState, action: AnyAction) {
+    switch (action.type) {
+        case authActions.LOGIN_SUCCESS:
+            return {
+                ...state,
+                isAuthenticated: true,
+            };
+        case authActions.LOGOUT_SUCCESS:
+            return {
+                ...state,
+                isAuthenticated: false,
+            };
+        default:
+            return state;
+    }
 }

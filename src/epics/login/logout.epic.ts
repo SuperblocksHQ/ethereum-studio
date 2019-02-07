@@ -14,26 +14,18 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export const loginActions = {
-    GITHUB_LOGIN: 'GITHUB_LOGIN',
-    githubLogin(anything) {
-        return {
-            type: loginActions.GITHUB_LOGIN,
-            data: { anything }
-        };
-    },
+import { empty } from 'rxjs';
+import { ofType, Epic } from 'redux-observable';
+import { authActions } from '../../actions';
+import { tap, catchError, map } from 'rxjs/operators';
+import { superFetch } from '../../services/utils/superFetch';
 
-    LOGOUT: 'LOGOUT',
-    logout() {
-        return {
-            type: loginActions.LOGOUT,
-        };
-    },
-
-    LOGIN_SUCCESS: 'LOGIN_SUCCESS',
-    loginSuccess() {
-        return {
-            type: loginActions.LOGIN_SUCCESS,
-        };
-    },
-};
+// destroy JWT token locally
+export const logout: Epic = (action$: any, state$: any) => action$.pipe(
+    ofType(authActions.LOGOUT),
+    tap(() => superFetch.clearAuthToken()),
+    map(() => authActions.logoutSuccess()),
+    catchError((err: any) => {
+        console.log('There was an error login you out', err);
+        return empty();
+    }));

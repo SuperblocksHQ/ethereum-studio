@@ -20,4 +20,4 @@ export * from './toast.selectors';
 export * from './project.selectors';
 export * from './sidePanels.selectors';
 export * from './view.selectors';
-export * from './login.selectors'
+export * from './auth.selectors'

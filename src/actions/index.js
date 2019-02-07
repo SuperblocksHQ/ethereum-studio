@@ -6,4 +6,4 @@ export * from './sidePanels.actions';
 export * from './settings.actions';
 export * from './ipfs.actions';
 export * from './toast.actions';
-export * from './login.actions';
+export * from './auth.actions';
