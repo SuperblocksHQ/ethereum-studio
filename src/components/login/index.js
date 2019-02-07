@@ -27,8 +27,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        githubLogin: (anything) => {
-            dispatch(authActions.githubLogin(anything))
+        githubLogin: () => {
+            dispatch(authActions.githubLogin())
         },
         loginSuccess: () => {
             dispatch(authActions.loginSuccess())

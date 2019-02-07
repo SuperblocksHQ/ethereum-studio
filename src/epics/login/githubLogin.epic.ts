@@ -17,7 +17,7 @@
 import { empty, of } from 'rxjs';
 import { ofType } from 'redux-observable';
 import { authActions } from '../../actions';
-import { withLatestFrom, tap, switchMap, catchError } from 'rxjs/operators';
+import { withLatestFrom, tap, switchMap, catchError, map } from 'rxjs/operators';
 import PopupWindow from '../../components/login/github/PopupWindow';
 import { AnyAction } from 'redux';
 
@@ -60,7 +60,8 @@ export const githubLogin = (action$: AnyAction, state$: any) => action$.pipe(
                     'github-oauth-authorize',
                     `https://github.com/login/oauth/authorize?${query}`,
                     { height: 1000, width: 600 }
-                ))
+                )),
+                map(authActions.loginSuccess)
             );
     }),
     catchError((err: any) => {

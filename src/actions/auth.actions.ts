@@ -16,10 +16,9 @@
 
 export const authActions = {
     GITHUB_LOGIN: 'GITHUB_LOGIN',
-    githubLogin(anything: any) {
+    githubLogin() {
         return {
             type: authActions.GITHUB_LOGIN,
-            data: { anything }
         };
     },
 
