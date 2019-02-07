@@ -251,7 +251,7 @@ export default class ProjectItem extends Item {
     /**
      * List files below path.
      */
-    async listFiles(path) {
+    listFiles(path) {
         // Make sure to convert them also to something iterable
         return projectUtils.convertFiles(this.files, path);
     };

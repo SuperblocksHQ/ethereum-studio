@@ -623,10 +623,10 @@ export default class FileItem extends Item {
         );
     };
 
-    _createChildren = async (cb) => {
+    _createChildren = (cb) => {
         if (this.getType() == 'folder') {
             const project = this.getProject();
-            const list = await project.listFiles(this.getFullPath());
+            const list = project.listFiles(this.getFullPath());
             const children = [];
                 list.map(file => {
                     if (file.type == 'd') {
