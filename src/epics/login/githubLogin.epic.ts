@@ -47,7 +47,6 @@ export const githubLogin = (action$: AnyAction, state$: any) => action$.pipe(
     ofType(authActions.GITHUB_LOGIN),
     withLatestFrom(state$),
     switchMap(() => {
-        // @TODO env variables
         const scope = 'user:email';
         const clientId = process.env.REACT_APP_GITHUB_CLIENT_ID || '';
         const redirectUri = process.env.REACT_APP_GITHUB_REDIRECT_URI || '';
