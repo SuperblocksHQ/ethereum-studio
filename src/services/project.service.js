@@ -28,7 +28,10 @@ export const projectService = {
         })
         .then((response) => {
             // TODO: FIXME: manually check status 201, response.ok or throwErrors
-            response.json();
+            return response.json();
+        })
+        .then((data) => {
+            return data;
         });
     },
 
@@ -84,6 +87,7 @@ export const projectService = {
         })
         .then((response) => {
             // TODO: FIXME: manually check status 204, response.ok or throwErrors
+            // TODO: FIXME: return anything ?
         });
     },
 
@@ -98,6 +102,7 @@ export const projectService = {
         })
         .then((response) => {
             // TODO: FIXME: manually check status 204, response.ok or throwErrors
+            // TODO: FIXME: return anything ?
         });
     },
 }
