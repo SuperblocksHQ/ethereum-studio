@@ -19,6 +19,7 @@ import PropTypes from 'prop-types';
 
 import PopupWindow from './PopupWindow';
 import { toQuery } from './utils';
+import githubLogin from "../../../epics/login/githubLogin.epic";
 
 class GitHubLogin extends Component {
   static propTypes = {
@@ -48,6 +49,7 @@ class GitHubLogin extends Component {
       scope,
       redirect_uri: redirectUri,
     });
+    console.log(scope)
     console.log(search)
     const popup = this.popup = PopupWindow.open(
       'github-oauth-authorize',

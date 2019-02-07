@@ -42,8 +42,8 @@ import {
 import Dappfile from '../projecteditor/control/item/dappfileItem';
 import OnlyIf from '../onlyIf';
 import NetworkAccountSelector from '../networkAccountSelector';
-import {LoginModal} from "../login/LoginModal";
 import MenuDropdownDialog from './menu';
+import Login from "../login";
 
 const MenuAction = () => (
     <div className={classNames([style.action, style.noBorder])}>
@@ -60,14 +60,6 @@ const PreferencesAction = () => (
                 <IconConfigure />
             </button>
         </Tooltip>
-    </div>
-);
-
-const LoginAction = () => (
-    <div className={style.action}>
-        <button className={classNames([style.container, "btnNoBg"])}>
-            <span>Login</span>
-        </button>
     </div>
 );
 
@@ -541,22 +533,6 @@ export default class TopBar extends Component {
         });
     };
 
-    showLoginModal = () => {
-        const modal = (
-            <LoginModal
-                onCloseClick={this.onSettingsModalClose}
-            />
-        );
-        this.props.functions.modal.show({
-            cancel: () => {
-                return false;
-            },
-            render: () => {
-                return modal;
-            }
-        });
-    };
-
     onForkClicked = () => {
         this.props.forkProject();
     }
@@ -635,8 +611,11 @@ export default class TopBar extends Component {
                         dropdownContent={<HelpDropdownDialog />} >
                         <HelpDropdownAction />
                     </DropdownContainer>
-                    <div onClick={this.showLoginModal}>
-                        <LoginAction />
+                    <div>
+                        <Login
+                            functions={this.props.functions}
+                            onSettingsModalClose={this.onSettingsModalClose}
+                        />
                     </div>
                 </div>
             </div>

@@ -72,7 +72,6 @@ superFetch.setAuthToken = function (token) {
 }
 
 superFetch.clearAuthToken = function () {
-    jwtToken = null;
     localStorage.removeItem('authToken');
 }
 

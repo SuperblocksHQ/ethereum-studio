@@ -19,11 +19,14 @@ import { settingsEpics } from './settings';
 import { sidePanelsEpics } from './sidePanels';
 import { projectsEpics } from './projects';
 import { appEpics } from './app';
+import { loginEpics } from "./login";
 
 export const epics = [
     ...ipfsEpics,
     ...settingsEpics,
     ...sidePanelsEpics,
     ...projectsEpics,
-    ...appEpics
+    ...appEpics,
+    ...projectsEpics,
+    ...loginEpics
 ];

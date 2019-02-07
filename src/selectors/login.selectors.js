@@ -1,4 +1,4 @@
-// Copyright 2018 Superblocks AB
+// Copyright 2019 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -14,10 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export * from './app.selectors';
-export * from './ipfs.selectors';
-export * from './toast.selectors';
-export * from './project.selectors';
-export * from './sidePanels.selectors';
-export * from './view.selectors';
-export * from './login.selectors'
+export const loginSelectors = {
+    getIsAuthenticated: state => state.login.isAuthenticated,
+}

@@ -15,7 +15,7 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from 'react';
-import Proptypes from 'prop-types';
+import PropTypes from 'prop-types';
 import classNames from "classnames";
 import style from "./style.less";
 import ModalHeader from "../modal/modalHeader";
@@ -32,6 +32,8 @@ export const LoginModal = (props) => {
     function onSuccess(response) {
         console.log("Success")
         console.log(response);
+
+        props.loginSuccess();
         onCloseClickHandle();
 
         authService.githubAuth(response);
@@ -42,13 +44,22 @@ export const LoginModal = (props) => {
         console.log(user);
     }
 
+    function random() {
+        props.loginSuccess();
+        onCloseClickHandle();
+    }
+
     function onFailure (e) {
         console.log("Failure")
         console.log(e);
     }
 
+    function githubLogin() {
+        props.githubLogin();
+    }
+
     return (
-        <div className={classNames([style.importModal, "modal"])}>
+        <div className={classNames([style.loginModal, "modal"])}>
             <div className={style.container}>
                 <ModalHeader
                     classname={style.header}
@@ -56,16 +67,25 @@ export const LoginModal = (props) => {
                     onCloseClick={onCloseClickHandle}
                 />
                 <div className={style.area}>
-                    <GitHubLogin clientId="b6117ba12bf5f306cdad"
-                                 redirectUri="http://localhost:3000/github/callback"
+                    <GitHubLogin clientId={process.env.REACT_APP_GITHUB_CLIENT_ID}
+                                 redirectUri={process.env.REACT_APP_GITHUB_REDIRECT_URI}
                                  scope=""
                                  onSuccess={onSuccess}
                                  onFailure={onFailure}
                     />
                     <br />
+                    <button onClick={githubLogin}>
+                        Epic Github Login
+                    </button>
+                    <br/>
                     <button onClick={queryUserEndpoint}>
                         QueryUserEndpoint
                     </button>
+                    <br />
+                    <button onClick={random}>
+                        LoginSuccess
+                    </button>
+                    <br />
                 </div>
                 <div className={style.footer}>
                     <div className={style.buttonsContainer}>
@@ -78,6 +98,9 @@ export const LoginModal = (props) => {
 
 };
 
-LoginModal.proptypes = {
-    onCloseClick: Proptypes.func.isRequired,
+export default LoginModal;
+
+LoginModal.propTypes = {
+    onCloseClick: PropTypes.func.isRequired,
+    githubLogin: PropTypes.func.isRequired
 };

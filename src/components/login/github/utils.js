@@ -35,7 +35,6 @@ export function toQuery(params, delimiter = '&') {
     if (index < (keys.length - 1)) {
       query += delimiter;
     }
-
     return query;
   }, '');
 }
