@@ -124,7 +124,7 @@ export async function demoProjectService() {
     };
     var projectId;
     projectService.postProject(data).then(function (response) {
-        console.log("postProject [" + data.name + ": ", response);
+        console.log("postProject [" + data.name + "]: ", response);
 
         projectId = response.id;
         // Load by id
@@ -147,7 +147,7 @@ export async function demoProjectService() {
 
                 // Read
                 projectService.getProjectById(projectId).then(function (response) {
-                    console.log("getProjectById [" + projectId + ": ", response);
+                    console.log("getProjectById [" + projectId + "]: ", response);
 
                     // Delete
                     projectService.deleteProjectById(projectId).then(function (response) {
