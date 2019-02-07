@@ -18,7 +18,7 @@ import { superFetch } from './utils/superFetch';
 export const authService = {
 
     async githubAuth(data) {
-        return superFetch(process.env.REACT_APP_API_BASE_URL + '/auth/github', {
+        return superFetch(process.env.REACT_APP_API_BASE_URL + 'auth/github', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -31,6 +31,14 @@ export const authActions = {
         };
     },
 
+    LOGIN: 'LOGIN',
+    login(githubData: any) {
+        return {
+            type: authActions.LOGIN,
+            data: { githubData }
+        };
+    },
+
     LOGIN_SUCCESS: 'LOGIN_SUCCESS',
     loginSuccess(user: IUser) {
         return {
