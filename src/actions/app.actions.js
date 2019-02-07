@@ -12,4 +12,11 @@ export const appActions = {
             type: appActions.APP_STARTED,
         }
     },
+    UPDATE_VIEW_PARAMETERS: 'UPDATE_VIEW_PARAMETERS',
+    updateViewParameters(parameters) {
+        return {
+            type: appActions.UPDATE_VIEW_PARAMETERS,
+            data: { parameters }
+        }
+    },
 };

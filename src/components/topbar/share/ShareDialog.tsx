@@ -22,6 +22,7 @@ import {
     IconCopy
 } from '../../icons';
 import TextInput from '../../textInput';
+import TextAreaInput from '../../textAreaInput';
 import { Tooltip } from '../../common';
 import Switch from 'react-switch';
 
@@ -53,12 +54,14 @@ export default class ShareDialog extends React.Component<IProps, IState> {
     updateUrl = () => {
         const { options } = this.state;
         const params = Object.keys(options).map( async (key) => {
-            return key + '=' + Number(options[key]);
+            if (options[key]) {
+                return key + '=' + Number(options[key]);
+            }
         });
 
         Promise.all(params).then((result) => {
             this.setState({
-                shareUrl: this.props.ipfsUrl + '?' + result.join('&')
+                shareUrl: this.props.ipfsUrl + '?' + result.filter(Boolean).join('&')
             });
         });
     }
@@ -79,7 +82,7 @@ export default class ShareDialog extends React.Component<IProps, IState> {
         const { hideExplorer, showTransactions, showAppview } = this.state.options;
 
         return(
-            <React.Fragment>
+            <div className={style.innerContent}>
                 <div className={classNames([style.inputContainer, style.optionInput])}>
                     <p>Hide Explorer</p>
                     <Switch
@@ -138,7 +141,7 @@ export default class ShareDialog extends React.Component<IProps, IState> {
                         width={40}
                     />
                 </div>
-            </React.Fragment>
+            </div>
         );
     }
 
@@ -150,7 +153,7 @@ export default class ShareDialog extends React.Component<IProps, IState> {
         const btnHtmlUrl = this.getBtnHtmlUrl();
 
         return(
-            <React.Fragment>
+            <div className={style.innerContent}>
                 <div className={style.inputContainer}>
                     <TextInput
                         id='editor'
@@ -166,7 +169,7 @@ export default class ShareDialog extends React.Component<IProps, IState> {
                     </button>
                 </div>
                 <div className={style.inputContainer}>
-                    <TextInput
+                    <TextAreaInput
                         id='embed'
                         label='Embed'
                         value={embedUrl}
@@ -179,6 +182,7 @@ export default class ShareDialog extends React.Component<IProps, IState> {
                         </Tooltip>
                     </button>
                 </div>
+                <img alt='Superblocks button' src={'/static/img/open-superblocks.svg'}/>
                 <div className={style.inputContainer}>
                     <TextInput
                         id='button-md'
@@ -207,7 +211,7 @@ export default class ShareDialog extends React.Component<IProps, IState> {
                         </Tooltip>
                     </button>
                 </div>
-            </React.Fragment>
+            </div>
         );
     }
 

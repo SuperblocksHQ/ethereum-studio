@@ -1,4 +1,4 @@
-// Copyright 2018 Superblocks AB
+// Copyright 2019 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -14,18 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { ipfsEpics } from './ipfs';
-import { settingsEpics } from './settings';
-import { sidePanelsEpics } from './sidePanels';
-import { projectsEpics } from './projects';
-import { appEpics } from './app';
-import { urlParametersEpics } from './urlParameters';
+import { updateViewOnParameters } from './updateViewOnParameters.epic';
 
-export const epics = [
-    ...ipfsEpics,
-    ...settingsEpics,
-    ...sidePanelsEpics,
-    ...projectsEpics,
-    ...appEpics,
-    ...urlParametersEpics
+export const urlParametersEpics = [
+    updateViewOnParameters,
 ];
