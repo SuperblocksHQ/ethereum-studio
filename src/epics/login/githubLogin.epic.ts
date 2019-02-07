@@ -61,7 +61,7 @@ export const githubLogin = (action$: AnyAction, state$: any) => action$.pipe(
                     `https://github.com/login/oauth/authorize?${query}`,
                     { height: 1000, width: 600 }
                 )),
-                map(authActions.loginSuccess)
+                map(authActions.githubLoginSuccess)
             );
     }),
     catchError((err: any) => {

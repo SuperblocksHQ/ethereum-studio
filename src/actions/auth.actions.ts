@@ -14,6 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
+import { IUser } from '../models/user.model';
+
 export const authActions = {
     GITHUB_LOGIN: 'GITHUB_LOGIN',
     githubLogin() {
@@ -22,10 +24,26 @@ export const authActions = {
         };
     },
 
+    GITHUB_LOGIN_SUCCESS: 'GITHUB_LOGIN_SUCCESS',
+    githubLoginSuccess() {
+        return {
+            type: authActions.GITHUB_LOGIN_SUCCESS,
+        };
+    },
+
     LOGIN_SUCCESS: 'LOGIN_SUCCESS',
-    loginSuccess() {
+    loginSuccess(user: IUser) {
         return {
             type: authActions.LOGIN_SUCCESS,
+            data: { user }
+        };
+    },
+
+    LOGIN_FAIL: 'LOGIN_FAIL',
+    loginFail(error: any) {
+        return {
+            type: authActions.LOGIN_FAIL,
+            data: error
         };
     },
 
