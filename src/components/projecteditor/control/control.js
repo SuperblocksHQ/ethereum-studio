@@ -407,9 +407,11 @@ export default class Control extends Component {
     // };
 
     renderProject() {
-        const { projectLoaded } = this.state;
+        const { isProjectLoaded } = this.state;
 
-        if (!projectLoaded) {
+        console.log(isProjectLoaded);
+
+        if (!isProjectLoaded) {
             // TODO - Simply put a loader here
             return <div>Loading Project</div>
         } else {
