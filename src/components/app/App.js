@@ -263,10 +263,6 @@ export default class App extends Component {
         />
     )
 
-    mierda = () => (
-        <div>Mierda</div>
-    )
-
     render() {
         const { showTrackingAnalyticsDialog } = this.props;
         const modalContent = this.getModal();
@@ -281,8 +277,6 @@ export default class App extends Component {
                                 <Route path="/dashboard" exact component={Dashboard} />
                                 <Route path="/:projectId" exact component={this.renderProject} />
                             </Switch>
-
-                            {/* <Route path="/ipfs/:hash" component={this.mierda()} /> */}
                         </div>
                     </div>
                     <OnlyIf test={showTrackingAnalyticsDialog}>
