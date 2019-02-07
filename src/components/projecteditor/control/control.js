@@ -30,6 +30,7 @@ import {
     IconClose
 } from '../../icons';
 import Networks from '../../../networks';
+import OnlyIf from '../../onlyIf';
 import classNames from 'classnames';
 import { BaseSidePanel } from '../sidePanels/baseSidePanel';
 
@@ -432,7 +433,6 @@ export default class Control extends Component {
                     onClose={toggleFileSystemPanel}>
                     <div className={style.treemenu}>
                         {projectFiles}
-                        <LearnAndResources className="mt-3" />
                     </div>
                 </BaseSidePanel>
             </div>

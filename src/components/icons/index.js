@@ -150,6 +150,11 @@ export const IconPreferences = ({...props}) => <svg fill="currentColor" preserve
 
 // Panels
 export const IconTransactions = ({ ...props }) => <svg fill="currentColor" preserveAspectRatio="xMidYMid meet" height="16px" width="16px" viewBox="0 0 512 512" style={{ verticalAlign: "middle" }} {...props}><path d="M388.9 266.3c-5.1-5-5.2-13.3-.1-18.4L436 200H211c-7.2 0-13-5.8-13-13s5.8-13 13-13h224.9l-47.2-47.9c-5-5.1-5-13.3.1-18.4 5.1-5 13.3-5 18.4.1l69 70c1.1 1.2 2.1 2.5 2.7 4.1.7 1.6 1 3.3 1 5 0 3.4-1.3 6.6-3.7 9.1l-69 70c-5 5.2-13.2 5.3-18.3.3zM123.1 404.3c5.1-5 5.2-13.3.1-18.4L76.1 338H301c7.2 0 13-5.8 13-13s-5.8-13-13-13H76.1l47.2-47.9c5-5.1 5-13.3-.1-18.4-5.1-5-13.3-5-18.4.1l-69 70c-1.1 1.2-2.1 2.5-2.7 4.1-.7 1.6-1 3.3-1 5 0 3.4 1.3 6.6 3.7 9.1l69 70c5 5.2 13.2 5.3 18.3.3z"/></svg>
+export const IconMenu = ({...props}) => <svg fill="currentColor" preserveAspectRatio="xMidYMid meet" height="32px" width="20px" viewBox="0 0 512 512" style={{ verticalAlign: "center" }} {...props}><path d="M432 176H80c-8.8 0-16-7.2-16-16s7.2-16 16-16h352c8.8 0 16 7.2 16 16s-7.2 16-16 16zM432 272H80c-8.8 0-16-7.2-16-16s7.2-16 16-16h352c8.8 0 16 7.2 16 16s-7.2 16-16 16zM432 368H80c-8.8 0-16-7.2-16-16s7.2-16 16-16h352c8.8 0 16 7.2 16 16s-7.2 16-16 16z"/></svg>
+export const IconCheckThin = ({...props}) => <svg fill="currentColor" preserveAspectRatio="xMidYMid meet" height="14px" width="14px" viewBox="0 0 512 512" style={{ verticalAlign: "center" }} {...props}><path d="M186.301 339.893L96 249.461l-32 30.507L186.301 402 448 140.506 416 110z"/></svg>
+export const IconAlphabetA = ({ ...props }) => (
+    <IconImg src={'/static/img/icon-alphabet-a.svg'} {...props} />
+);
 
 // File types
 export const IconContract = ({...props}) => <IconImg src={'/static/img/icon-solidity.svg'} {...props} />;

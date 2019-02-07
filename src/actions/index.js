@@ -7,3 +7,4 @@ export * from './settings.actions';
 export * from './ipfs.actions';
 export * from './toast.actions';
 export * from './user.actions';
+export * from './auth.actions';

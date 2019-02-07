@@ -30,6 +30,7 @@ import OnlyIf from '../onlyIf';
 import ToastContainer from "../toasts/toastcontainer";
 import Dashboard from '../dashboard';
 import LoadProject from '../loadProject';
+import * as embedUtils from '../../utils/embed';
 
 export default class App extends Component {
 
@@ -85,7 +86,7 @@ export default class App extends Component {
 
         // Make sure we fire this event in order to let other parst of the app configure depending
         // on the initial state (per example turning on/off analytics)
-        notifyAppStart();
+        notifyAppStart(embedUtils.isIframe());
 
         // this._convertProjects(status => {
         //     this.setState({ isReady: true })
@@ -162,9 +163,7 @@ export default class App extends Component {
         const fn = () => {
             if (this.functions.compiler && this.functions.EVM) {
                 console.log('Superblocks Lab ' + appVersion + ' Ready.');
-
                 this.functions.modal.close();
-
                 this._checkIpfsOnUrl();
             } else {
                 setTimeout(fn, 500);

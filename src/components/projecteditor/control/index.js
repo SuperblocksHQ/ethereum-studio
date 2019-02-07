@@ -1,11 +1,10 @@
 import { connect } from 'react-redux';
 import Control from './control';
-import { getAppVersion } from '../../../selectors/app';
-import { projectSelectors } from '../../../selectors';
+import { projectSelectors, appSelectors } from '../../../selectors';
 import { projectsActions, explorerActions, sidePanelsActions } from '../../../actions';
 
 const mapStateToProps = state => ({
-    appVersion: getAppVersion(state),
+    appVersion: appSelectors.getAppVersion(state),
     selectedProjectId: projectSelectors.getSelectedProjectId(state)
 });
 

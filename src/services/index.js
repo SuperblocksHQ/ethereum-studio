@@ -16,3 +16,6 @@
 
 export * from './preview.service';
 export * from './ipfs.service';
+export * from './user.service';
+export * from './project.service';
+export * from './auth.service';

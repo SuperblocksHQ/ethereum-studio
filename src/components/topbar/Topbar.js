@@ -1,4 +1,4 @@
-// Copyright 2018 Superblocks AB
+// Copyright 2019 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -22,6 +22,7 @@ import { DropdownContainer } from '../common/dropdown';
 import { Tooltip } from '../common';
 import PreferencesModal from '../preferences';
 import UploadDialog from './upload';
+import * as embedUtils from '../../utils/embed';
 import {
     IconPreferences,
     IconHelp,
@@ -30,10 +31,22 @@ import {
     IconDiscord,
     IconUpload,
     IconFork,
-    IconNew
+    IconNew,
+    IconMenu,
+    IconAlphabetA
 } from '../icons';
 import OnlyIf from '../onlyIf';
 import NetworkAccountSelector from '../networkAccountSelector';
+import MenuDropdownDialog from './menu';
+import Login from "../login";
+
+const MenuAction = () => (
+    <div className={classNames([style.action, style.noBorder])}>
+        <button className={classNames([style.container, "btnNoBg"])}>
+            <IconMenu />
+        </button>
+    </div>
+);
 
 const NewAction = () => (
     <div className={classNames([style.action, style.actionRight])}>
@@ -100,11 +113,38 @@ const HelpDropdownDialog = () => (
         <ul>
             <li>
                 <a
+                    href="https://help.superblocks.com/hc/en-us/categories/360000486714-Using-Superblocks-Lab"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Guide to Superblocks Lab
+                </a>
+            </li>
+            <li>
+                <a
+                    href="https://www.youtube.com/playlist?list=PLjnjthhtIABuzW2MTsPGkihZtvvepy-n4"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Video tutorials
+                </a>
+            </li>
+            <li>
+                <a
                     href="https://help.superblocks.com"
                     target="_blank"
                     rel="noopener noreferrer"
                 >
                     Help Center
+                </a>
+            </li>
+            <li>
+                <a
+                    href="https://help.superblocks.com/hc/en-us/requests/new"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Ask a question
                 </a>
             </li>
             <li>
@@ -218,10 +258,28 @@ export default class TopBar extends Component {
 
     render() {
         const { showUploadDialog, showUploadButton, showForkButton } = this.state.ipfsActions;
+        const { showSelectedProjectName, showOpenInLab } = this.props.view;
         const { selectedProjectName } = this.state;
 
         return (
             <div className={style.topbar}>
+                <DropdownContainer
+                    className={style.actionMenu}
+                    dropdownContent={<MenuDropdownDialog />} >
+                    <MenuAction />
+                </DropdownContainer>
+                <OnlyIf test={showOpenInLab}>
+                    <a
+                        className={style.openLab}
+                        href={window.location}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        title="Open in Lab"
+                    >
+                        <IconAlphabetA style={{width: 17, height: 17}} />
+                        <span>Open in Lab</span>
+                    </a>
+                </OnlyIf>
                 <OnlyIf test={this.props.router.control}>
                     <NetworkAccountSelector
                         router={this.props.router}
@@ -260,12 +318,17 @@ export default class TopBar extends Component {
                     <div onClick={this.showPreferencesModal}>
                         <PreferencesAction />
                     </div>
-
                     <DropdownContainer
                         className={style.actionHelp}
                         dropdownContent={<HelpDropdownDialog />} >
                         <HelpDropdownAction />
                     </DropdownContainer>
+                    <div>
+                        <Login
+                            functions={this.props.functions}
+                            onSettingsModalClose={this.onSettingsModalClose}
+                        />
+                    </div>
                 </div>
             </div>
         );
@@ -281,5 +344,9 @@ TopBar.propTypes = {
         showUploadDialog: PropTypes.bool.isRequired,
         showUploadButton: PropTypes.bool.isRequired,
         showForkButton: PropTypes.bool.isRequired,
+    }),
+    view: PropTypes.shape({
+        showSelectedProjectName: PropTypes.bool,
+        showOpenInLab: PropTypes.bool,
     }),
 };
