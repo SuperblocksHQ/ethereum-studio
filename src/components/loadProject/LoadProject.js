@@ -33,7 +33,6 @@ export default class LoadProject extends Component {
 
     componentDidMount() {
         const { loadProject, match } = this.props;
-        console.log(match.params);
         loadProject(match.params.projectId);
     }
 

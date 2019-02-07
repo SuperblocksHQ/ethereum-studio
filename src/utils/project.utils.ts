@@ -5,10 +5,14 @@ export const projectUtils = {
             throw Error("Can't pass an empty list of files");
         }
 
+        console.log(files);
         const parts = path.split('/');
         let folder = files['/'];
+        console.log(folder);
+        console.log(path);
         for (let index = 0; index < parts.length - 1; index++) {
             const folder2 = folder.children[parts[index]];
+            console.log(folder2);
             if (!folder2) {
                 // TODO - What is this magic number?
                 console.log("Couldn't find the folder?");
@@ -27,6 +31,8 @@ export const projectUtils = {
             if (file.type === 'f') { fileArray.push({ name: key, type: file.type }); }
             if (file.type === 'd') { dirArray.push({ name: key, type: file.type }); }
         }
+
+        console.log(dirArray.concat(files));
 
         return dirArray.concat(files);
     },
@@ -49,7 +55,6 @@ export const projectUtils = {
             folder = folder2;
         }
         const file = folder.children[parts[parts.length - 1]];
-        console.log(file.contents);
         if (file) {
             cb({ status: 0, contents: file.contents });
         } else {
