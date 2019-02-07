@@ -17,6 +17,49 @@ import { superFetch } from './utils/superFetch';
 
 export const projectService = {
 
+    async postProject(data) {
+        // TODO: FIXME: validate data input
+        return superFetch(process.env.REACT_APP_PROJECT_API_BASE_URL + '/projects', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        })
+        .then((response) => {
+            // TODO: FIXME: manually check status 201, response.ok or throwErrors
+            response.json();
+        });
+    },
+
+    async postProjectClaim(id) {
+        // TODO: FIXME: validate id input
+        //              Expects a string (12-byte ObjectId)
+        return superFetch(process.env.REACT_APP_PROJECT_API_BASE_URL + '/projects/' + id + '/_claim' , {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        .then((response) => {
+            // TODO: FIXME: manually check status 201, response.ok or throwErrors
+            response.json();
+        });
+    },
+
+    async getProjectById(id) {
+        // TODO: FIXME: validate id input
+        //              Expects a string (12-byte ObjectId)
+        return superFetch(process.env.REACT_APP_PROJECT_API_BASE_URL + '/projects/' + id, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        // TODO: FIXME: manually check status 200, response.ok or throwErrors
+        .then((response) => response.json());
+    },
+
     async getProjectsInfo() {
         return superFetch(process.env.REACT_APP_PROJECT_API_BASE_URL + '/projectsInfo', {
             method: 'GET',
@@ -24,6 +67,37 @@ export const projectService = {
                 'Content-Type': 'application/json',
             },
         })
+        // TODO: FIXME: manually check status 200, response.ok or throwErrors
         .then((response) => response.json());
+    },
+
+    async putProjectById(id, data) {
+        // TODO: FIXME: validate id input
+        //              Expects a string (12-byte ObjectId)
+        // TODO: FIXME: validate data input
+        return superFetch(process.env.REACT_APP_PROJECT_API_BASE_URL + '/projects/' + id, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        })
+        .then((response) => {
+            // TODO: FIXME: manually check status 204, response.ok or throwErrors
+        });
+    },
+
+    async deleteProjectById(id) {
+        // TODO: FIXME: validate id input
+        //              Expects a string (12-byte ObjectId)
+        return superFetch(process.env.REACT_APP_PROJECT_API_BASE_URL + '/projects/' + id, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        .then((response) => {
+            // TODO: FIXME: manually check status 204, response.ok or throwErrors
+        });
     },
 }
