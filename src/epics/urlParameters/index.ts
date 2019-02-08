@@ -1,4 +1,4 @@
-// Copyright 2018 Superblocks AB
+// Copyright 2019 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -14,20 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { environmentUpdateEpic } from './environmentUpdate.epic';
-import { updateProjectSettings } from './updateProjectSettings.epic';
-import { deleteProject } from './deleteProject.epic';
+import { updateViewOnParameters } from './updateViewOnParameters.epic';
 
-// TODO - Add missing epics
-
-// import { downloadProject } from './downloadProject.epic';
-// import { importProject } from './importProject.epic';
-
-import { loadProject } from './loadProject.epic';
-
-export const projectsEpics = [
-    environmentUpdateEpic,
-    updateProjectSettings,
-    loadProject,
-    deleteProject
+export const urlParametersEpics = [
+    updateViewOnParameters,
 ];

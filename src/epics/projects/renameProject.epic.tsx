@@ -14,25 +14,25 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { empty, from } from 'rxjs';
+import { from } from 'rxjs';
 import { switchMap, withLatestFrom, map, tap } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
 import { projectsActions } from '../../actions';
 import { projectService } from '../../services/project.service';
 
 // TODO - Make sure to handle errors correctly
-export const deleteProject: Epic = (action$: any, state$: any) => action$.pipe(
-    ofType(projectsActions.DELETE_PROJECT),
+const renameProject: Epic = (action$: any, state$: any) => action$.pipe(
+    ofType(projectsActions.RENAME_PROJECT),
     withLatestFrom(state$),
-    switchMap(([, state]) => {
-        if (confirm('Are you sure you want to fork your own project?'))  {
-            return from(projectService.deleteProjectById(state.projects.project.id))
-                .pipe(
-                    map(projectsActions.deleteProjectSuccess),
-                    tap(() => document.location.href = '/')
-                );
-        } else {
-            return empty();
-        }
+    switchMap(([action, state]) => {
+        const project = state.projects.project;
+        project.name = action.data.newName;
+        return from(projectService.postProject(project))
+            .pipe(
+                map(() => projectsActions.updateProjectSuccess(project)),
+                tap(() => document.location.href = '/')
+            );
     })
 );
+
+export default renameProject;

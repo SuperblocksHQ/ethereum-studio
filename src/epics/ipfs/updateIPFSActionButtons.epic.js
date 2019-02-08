@@ -32,17 +32,20 @@ const updateIPFSActionButtons = (action$, state$) => action$.pipe(
                     return ipfsActions.updateIpfsActionButtons({
                         showUploadButton: false,
                         showForkButton: true,
+                        showShareButton: true,
                     });
                 } else if(projectId === 0) { // Welcome screen
                     return ipfsActions.updateIpfsActionButtons({
                         showUploadButton: false,
                         showForkButton: false,
+                        showShareButton: false,
                     });
                 }
                 else {
                     return ipfsActions.updateIpfsActionButtons({
                         showUploadButton: true,
                         showForkButton: true,
+                        showShareButton: false,
                     });
                 }
             }),

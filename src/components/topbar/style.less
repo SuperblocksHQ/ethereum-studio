@@ -79,7 +79,14 @@
     .actionsRight {
         display: flex;
         margin-right: 14px;
-        margin-left: auto;
+        height: 100%;
+    }
+    .actionHelp,
+    .actionUpload,
+    .actionFork,
+    .actionShare {
+        position: relative;
+        display: flex;
         height: 100%;
     }
     .actionMenu {
@@ -93,14 +100,8 @@
             background-color: @action-color-hover;
         }
     }
-    .actionHelp {
-        display: flex;
-        height: 100%;
-    }
     .actionUpload {
-        display: flex;
         margin-left: 10px;
-        height: 100%;
     }
     .action {
         display: flex;
@@ -131,6 +132,7 @@
         right: 7px;
     }
     .projectButton {
+        position: relative;
         display: flex;
         height: 50px;
         padding: 0;
@@ -149,8 +151,29 @@
             margin-left: 3px;
             font-weight: 700;
         }
+        .projectMenuDropdown {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            position: relative;
+            &>div:first-of-type {
+                height: 100%;
+                position: relative;
+                align-items: center;
+                display: flex;
+            }
+            &:hover {
+                cursor: pointer;
+                .dropDown {
+                    opacity: .6;
+                    transform: rotate(45deg) translate(2px, 2px);
+                }
+            }
+        }
         .dropDown {
-            margin-left: 12px;
+            position: relative;
+            margin: 0px 4px;
+            transition: opacity .15s, transform .15s;
         }
     }
 
@@ -266,44 +289,6 @@
         }
     }
 
-    .helpMenu {
-        display: block;
-        position: absolute;
-        right: 40px;
-        top: 45px;
-        border-radius: 4px;
-        background-color: #fff;
-        min-width: 200px;
-        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-        z-index: 2;
-        color: #262E33;
-        padding: 10px 0;
-        transition: visibility 0s, opacity 0.2s ease;
-        .title {
-            font-weight: 600;
-            margin-bottom: 5px;
-            padding-left: 24px;
-        }
-        ul {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-            >li {
-
-                &:hover {
-                    background: @white-color-hover;
-                }
-            }
-        }
-        a {
-            display: flex;
-            padding: 2px 24px;
-            color: #262E33;
-        }
-        .communityIcon {
-            margin-left: 10px;
-        }
-    }
     .show {
         visibility: visible;
         opacity: 1;

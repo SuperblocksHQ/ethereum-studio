@@ -126,7 +126,7 @@ class UploadDialog extends Component {
         return (
             <div className={style.content}>
                 <img src={'/static/img/img-ipfs-logo.svg'} className={style.logo}/>
-                <div className={style.share}>
+                <div className={style.ipfsURL}>
                     <TextInput
                         id="share-project"
                         label="Share your project"
@@ -155,7 +155,7 @@ class UploadDialog extends Component {
     render() {
         const { ipfs } = this.state;
         return (
-            <div className={style.shareDialogContainer}>
+            <div className={style.ipfsDialogContainer}>
                 { ipfs.uploading ?
                     this.renderUploading()
                 :

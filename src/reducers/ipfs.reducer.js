@@ -7,6 +7,7 @@ export const initialState = {
     error: null,
     showUploadButton: false,
     showForkButton: true,
+    showShareButton: false,
     showUploadSettings: false,
     showUploadDialog: false,
     uploadSettings: {
@@ -29,7 +30,8 @@ export default function panesReducer(state = initialState, action, rootState) {
                 timestamp: action.data.timestamp,
                 shareURL: action.data.shareURL,
                 showUploadDialog: true,
-                uploadSettings: initialState.uploadSettings // Make we reset the settings on every upload
+                showShareButton: true,
+                uploadSettings: initialState.uploadSettings, // Make we reset the settigs on every upload
             };
         case ipfsActions.UPLOAD_TO_IPFS_FAIL: {
             return {
@@ -42,7 +44,8 @@ export default function panesReducer(state = initialState, action, rootState) {
             return {
                 ...state,
                 timestamp: action.data.timestamp,
-                shareURL: action.data.shareURL
+                shareURL: action.data.shareURL,
+                showShareButton: true,
             };
         }
         case ipfsActions.RESTORE_IPFS_STATE_FAIL: {
@@ -81,6 +84,7 @@ export default function panesReducer(state = initialState, action, rootState) {
                 ...state,
                 showUploadButton: action.data.showUploadButton && !rootState.app.isEmbeddedMode,
                 showForkButton: action.data.showForkButton && !rootState.app.isEmbeddedMode,
+                showShareButton: action.data.showShareButton && !rootState.app.isEmbeddedMode,
             };
         }
         case projectsActions.SELECT_PROJECT: {

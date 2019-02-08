@@ -18,3 +18,4 @@ export * from './dropdown';
 export * from './select';
 export * from './tooltip';
 export * from './menu';
+export * from './topbar';

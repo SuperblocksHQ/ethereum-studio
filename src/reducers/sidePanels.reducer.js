@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { sidePanelsActions } from '../actions';
+import { sidePanelsActions, appActions } from '../actions';
 import Networks from '../networks';
 
 export const initialState = {
@@ -105,6 +105,16 @@ export default function sidePanelsReducer(state = initialState, action) {
                 preview: { ...state.preview, showNoExportableContentModal, showCannotExportModal, showDownloadModal }
             };
         }
+        case appActions.UPDATE_VIEW_PARAMETERS:
+            return {
+                ...state,
+                showFileSystem: !action.data.parameters.hideExplorer,
+                showTransactionsHistory: action.data.parameters.showTransactions,
+                preview : {
+                    ...state.preview,
+                    open: action.data.parameters.showAppview
+                }
+            };
         case sidePanelsActions.preview.TOGGLE_WEB3_ACCOUNTS:
             return {
                 ...state,

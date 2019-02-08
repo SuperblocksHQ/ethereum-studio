@@ -1,4 +1,4 @@
-// Copyright 2018 Superblocks AB
+// Copyright 2019 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -20,19 +20,22 @@ import classNames from 'classnames';
 import style from './style.less';
 import ErrorMessage from '../errorMessage';
 
-export default class TextInput extends PureComponent {
+export default class TextAreaInput extends PureComponent {
 
     render() {
         const {
             id,
             onChangeText,
-            type,
             label,
             tip,
             defaultValue,
+            value,
             disabled,
             error,
             readOnly,
+            rows,
+            cols,
+            maxLength,
             ...props
         } = this.props;
 
@@ -41,16 +44,19 @@ export default class TextInput extends PureComponent {
                 <div className={classNames("superInputDark", style.container)}>
                     { label != null && <label htmlFor="name">{label}</label> }
                     <div className={style.inputContainer}>
-                        <input
+                        <textarea
                             id={id}
-                            type={type}
                             onKeyUp={onChangeText}
-                            defaultValue={defaultValue}
                             disabled={disabled}
                             readOnly={readOnly}
                             className={classNames({[style.error]: error != null})}
+                            rows={rows}
+                            cols={cols}
+                            maxLength={maxLength}
+                            value={value}
                             {...props}
-                        />
+                        >
+                        </textarea>
                         {tip != null && <div className={style.tip}>{tip}</div>}
                     </div>
 
@@ -61,13 +67,16 @@ export default class TextInput extends PureComponent {
     }
 }
 
-TextInput.propTypes = {
+TextAreaInput.propTypes = {
     id: PropTypes.string.isRequired,
     onChangeText: PropTypes.func,
-    type: PropTypes.string,
     label: PropTypes.string,
     defaultValue: PropTypes.any,
+    value: PropTypes.any,
     disabled: PropTypes.bool,
     error: PropTypes.string,
-    readOnly: PropTypes.bool
+    readOnly: PropTypes.bool,
+    rows: PropTypes.number,
+    cols: PropTypes.number,
+    maxlength: PropTypes.number
 }

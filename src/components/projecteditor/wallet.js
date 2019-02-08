@@ -114,7 +114,7 @@ export class Wallet {
 
     getAddress = (walletName, index) => {
         const wallet = this.wallets[walletName];
-        if (!wallet) return;
+        if (!wallet || !wallet.addresses) return;
         return wallet.addresses[index];
     };
 

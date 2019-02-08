@@ -100,4 +100,25 @@ export const projectsActions = {
             data: error
        };
     },
+    RENAME_PROJECT: 'RENAME_PROJECT',
+    renameProject(newName) {
+       return {
+            type: projectsActions.RENAME_PROJECT,
+            data: { newName }
+       };
+    },
+    UPDATE_PROJECT_SUCCESS: 'UPDATE_PROJECT_SUCCESS',
+    updateProjectSuccess(project) {
+       return {
+            type: projectsActions.UPDATE_PROJECT_SUCCESS,
+            data: { project}
+       };
+    },
+    UPDATE_PROJECT_FAIL: 'UPDATE_PROJECT_FAIL',
+    updateProjectFail(error) {
+       return {
+            type: projectsActions.UPDATE_PROJECT_FAIL,
+            data: error
+       };
+    },
 };
