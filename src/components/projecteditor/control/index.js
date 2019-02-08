@@ -5,7 +5,7 @@ import { projectsActions, explorerActions, sidePanelsActions } from '../../../ac
 
 const mapStateToProps = state => ({
     appVersion: appSelectors.getAppVersion(state),
-    selectedProjectId: projectSelectors.getSelectedProjectId(state)
+    selectedProjectId: projectSelectors.getProjectId(state)
 });
 
 const mapDispatchToProps = dispatch => {

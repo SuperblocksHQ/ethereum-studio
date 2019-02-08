@@ -37,7 +37,7 @@ export default class ProjectEditor extends Component {
     state = {
         EVMInit: false,
         sidePanelDragging: false,
-        project: null
+        project: this.props.project
     };
 
     constructor(props) {
@@ -61,16 +61,8 @@ export default class ProjectEditor extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        const { project } = this.props;
-
-        if (prevProps.project !== project) {
-            this.setState({
-                project: project
-            })
-        }
-
         // if project is present, init EVM if not already initialized
-        if (project && !this.state.EVMInit){
+        if (!this.state.EVMInit) {
             this.initEVM()
         }
 

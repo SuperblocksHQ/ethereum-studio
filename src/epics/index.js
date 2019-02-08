@@ -27,7 +27,6 @@ export const epics = [
     ...ipfsEpics,
     ...settingsEpics,
     ...sidePanelsEpics,
-    ...projectsEpics,
     ...urlParametersEpics,
     ...userEpics,
     ...appEpics,

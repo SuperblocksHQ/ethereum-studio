@@ -30,7 +30,7 @@ const reportIPFSEvents = (action$, state$) => action$.pipe(
     withLatestFrom(state$),
     switchMap(([action, state]) => {
         if (action.type === ipfsActions.FORK_PROJECT) {
-            const projectId = projectSelectors.getSelectedProjectId(state);
+            const projectId = projectSelectors.getProjectId(state);
             logEvent(action.type, { ownProject: !ipfsService.isTemporaryProject(projectId)});
         } else {
             logEvent(action.type);

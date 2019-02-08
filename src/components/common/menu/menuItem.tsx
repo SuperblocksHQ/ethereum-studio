@@ -21,10 +21,10 @@ import { IconCheckThin } from '../../icons';
 
 interface IProps {
     title: string;
-    description: string;
+    description?: string;
     onClick: (action: string) => void;
-    isActive: boolean;
-    disabled: boolean;
+    isActive?: boolean;
+    disabled?: boolean;
     action: string;
 }
 

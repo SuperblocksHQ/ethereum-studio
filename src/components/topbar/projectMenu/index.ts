@@ -16,29 +16,19 @@
 
 import { connect } from 'react-redux';
 import ProjectMenuDropdownDialog from './ProjectMenuDropdownDialog';
-import { sidePanelsSelectors } from '../../../selectors';
-import { sidePanelsActions } from '../../../actions';
+import { projectSelectors } from '../../../selectors';
+import { projectsActions } from '../../../actions';
+import { Dispatch } from 'react';
+import { AnyAction } from 'redux';
 
-const mapStateToProps = state => ({
-    showTransactionsHistory: sidePanelsSelectors.getShowTransactionsHistory(state),
-    showFileSystem: sidePanelsSelectors.getShowFileSystem(state),
-    showPreview: sidePanelsSelectors.getShowPreview(state),
+const mapStateToProps = (state: any) => ({
+    projectId: projectSelectors.getProjectId(state),
 });
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch: Dispatch<AnyAction>) {
     return {
-        toggleFileSystemPanel: () => {
-            dispatch(sidePanelsActions.toggleFileSystemPanel())
-        },
-        toggleTransactionsHistoryPanel: () => {
-            dispatch(sidePanelsActions.toggleTransactionsHistoryPanel())
-        },
-        togglePreviewPanel: () => {
-            dispatch(sidePanelsActions.preview.togglePanel())
-        },
-        closeAllPanels: () => {
-            dispatch(sidePanelsActions.closeAllPanels());
-            dispatch(sidePanelsActions.closeFileSystemPanel());
+        deleteProject: (projectId: string) => {
+            dispatch(projectsActions.deleteProject(projectId));
         }
     };
 }

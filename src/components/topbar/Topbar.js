@@ -146,7 +146,7 @@ const ProjectSelector = ({ title } = props) => (
     <div className={style.action}>
         <button className="btnNoBg">
             <span className={style.projectText}>{title}</span>
-        </button> 
+        </button>
     </div>
 );
 

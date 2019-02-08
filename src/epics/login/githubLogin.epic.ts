@@ -62,14 +62,11 @@ export const githubLogin = (action$: AnyAction, state$: any) => action$.pipe(
                     'github-oauth-authorize',
                     `https://github.com/login/oauth/authorize?${query}`,
                     { height: 1000, width: 600 })
-                ).pipe(
-                    tap((data: any) => console.log(data)),
-                    concat((data: any) => from(authService.githubAuth(data))
-                    .pipe(
-                        concat(from(userService.getUser())),
-                        map(authActions.loginSuccess)
-                    )
-                )))
+                )),
+                tap((data: any) => console.log(data)),
+                switchMap((data: any) => from(authService.githubAuth(data))),
+                switchMap(() => from(userService.getUser())),
+                map(authActions.loginSuccess)
             );
     }),
     catchError((err: any) => {

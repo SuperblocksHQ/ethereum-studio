@@ -15,7 +15,7 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { of, from } from 'rxjs';
-import { switchMap, withLatestFrom, map, catchError, tap } from 'rxjs/operators';
+import { switchMap, first, withLatestFrom, map, catchError, tap } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
 import { projectsActions } from '../../actions';
 import { projectService} from '../../services/project.service';
@@ -25,13 +25,14 @@ export const loadProject: Epic = (action$: any, state$: any) => action$.pipe(
     withLatestFrom(state$),
     switchMap(([action, state]) => {
         const projectId = action.projectId;
-        return from(projectService.getProjectById('5c5c575fba2a540017692441'))
+        return from(projectService.getProjectById('5c5d991e1c9d4400009d2173'))
             .pipe(
-                tap((project: any) => console.log(project.files)),
                 map(projectsActions.loadProjectSuccess),
                 catchError((error) => {
                     console.log('There was an issue loading the project: ' + error);
                     return of(projectsActions.loadProjectFail(error));
                 })
         );
-    }));
+    })
+);
+

@@ -50,7 +50,7 @@ const uploadToIPFS = (action$, state$, { backend, router }) => action$.pipe(
     ofType(ipfsActions.UPLOAD_TO_IPFS),
     withLatestFrom(state$),
     switchMap(([action, state]) => {
-        const projectId = projectSelectors.getSelectedProjectId(state);
+        const projectId = projectSelectors.getProjectId(state);
         const { uploadSettings } = action.data;
         return from(ipfsService.ipfsSyncUp(projectId, uploadSettings))
         .pipe(

@@ -84,7 +84,7 @@ const forkProject = (action$, state$, { backend, router }) => action$.pipe(
     ofType(ipfsActions.FORK_PROJECT),
     withLatestFrom(state$),
     switchMap(([,state]) => {
-        const projectId = projectSelectors.getSelectedProjectId(state);
+        const projectId = projectSelectors.getProjectId(state);
         return of(projectId)
         .pipe(
             switchMap(projectId => {
