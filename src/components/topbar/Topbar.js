@@ -258,7 +258,7 @@ export default class TopBar extends Component {
 
     render() {
         const { showUploadDialog, showUploadButton, showForkButton } = this.state.ipfsActions;
-        const { showSelectedProjectName, showOpenInLab } = this.props.view;
+        const { project, showOpenInLab } = this.props.view;
         const { selectedProjectName } = this.state;
 
         return (
@@ -303,7 +303,7 @@ export default class TopBar extends Component {
                     />
                 </OnlyIf>
                 <div className={style.projectButton}>
-                    <ProjectSelector title={selectedProjectName} />
+                    <ProjectSelector title={project.name} />
                 </div>
 
                 <div className={style.actionsRight}>
