@@ -31,7 +31,7 @@ export const deleteProject: Epic = (action$: any, state$: any) => action$.pipe(
             return from(projectService.deleteProjectById(state.projects.project.id))
                 .pipe(
                     map(projectsActions.deleteProjectSuccess),
-                    // tap(() => document.location.href = '/')
+                    tap(() => document.location.href = '/')
                 );
         } else {
             return empty();

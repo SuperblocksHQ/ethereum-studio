@@ -66,6 +66,7 @@ export const githubLogin = (action$: AnyAction, state$: any) => action$.pipe(
                 tap((data: any) => console.log(data)),
                 switchMap((data: any) => from(authService.githubAuth(data))),
                 switchMap(() => from(userService.getUser())),
+                tap((user: any) => console.log(user)),
                 map(authActions.loginSuccess)
             );
     }),
