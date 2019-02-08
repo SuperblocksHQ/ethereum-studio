@@ -36,7 +36,8 @@ class SplitterLayout extends SplitterLayoutBase {
 export default class ProjectEditor extends Component {
     state = {
         EVMInit: false,
-        sidePanelDragging: false
+        sidePanelDragging: false,
+        project: null
     };
 
     constructor(props) {
@@ -60,8 +61,16 @@ export default class ProjectEditor extends Component {
     }
 
     componentDidUpdate(prevProps) {
+        const { project } = this.props;
+
+        if (prevProps.project !== project) {
+            this.setState({
+                project: project
+            })
+        }
+
         // if project is present, init EVM if not already initialized
-        if(this.props.router.control.getActiveProject() && !this.state.EVMInit){
+        if (project && !this.state.EVMInit){
             this.initEVM()
         }
 
@@ -82,6 +91,7 @@ export default class ProjectEditor extends Component {
                 'development',
                 this.props.knownWalletSeed,
                 () => {
+                    console.log(this.props.functions.EVM);
                     this.props.functions.EVM.init();
                 }
             );
@@ -117,30 +127,41 @@ export default class ProjectEditor extends Component {
     };
 
     render() {
-        const { displayTransactionsPanel, displayFileSystemPanel, previewSidePanel, toggleTransactionsHistoryPanel, toggleFileSystemPanel,
-                previewSidePanelActions, selectedEnvironment } = this.props;
+        const {
+            router,
+            functions,
+            isImportedProject,
+            displayTransactionsPanel,
+            displayFileSystemPanel,
+            previewSidePanel,
+            toggleTransactionsHistoryPanel,
+            toggleFileSystemPanel,
+            previewSidePanelActions,
+            selectedEnvironment } = this.props;
+
+        const { sidePanelDragging, project } = this.state;
 
         return (
             <div className={style.projecteditor}>
                 <TopBar
-                    router={this.props.router}
-                    functions={this.props.functions}
+                    router={router}
+                    functions={functions}
                     onProjectSelected={this.onProjectSelectedHandle}
                 />
                 <div className={style.mainWrapper}>
                     <div className={classnames([style.sideButtonsContainer, style.sideButtonsContainerLeft])}>
                         <SideButton name="Explorer"
                             icon={<IconFileAlt style={{width: 12}} />}
-                            onClick={() => { 
-                                    toggleFileSystemPanel(); 
+                            onClick={() => {
+                                    toggleFileSystemPanel();
                                     this.onPanesSizeChange();
                                 }
-                            }  
+                            }
                         />
                     </div>
 
                     <div className={style.mainLayout}>
-                        <SplitterLayout 
+                        <SplitterLayout
                             primaryIndex={1}
                             secondaryMinSize={0}
                             secondaryInitialSize={280}
@@ -148,9 +169,10 @@ export default class ProjectEditor extends Component {
                             customClassName={!displayFileSystemPanel ? "hideFileSystemPanel" : null}>
                             <div className={style.control}>
                                 <Control
-                                    router={this.props.router}
-                                    functions={this.props.functions}
-                                    isImportedProject={this.props.isImportedProject}
+                                    project={project}
+                                    router={router}
+                                    functions={functions}
+                                    isImportedProject={isImportedProject}
                                     toggleFileSystemPanel={toggleFileSystemPanel}
                                 />
                                 <ContactContainer />
@@ -164,24 +186,28 @@ export default class ProjectEditor extends Component {
                                     onDragEnd={() => this.toggleSidePanelDragging()}
                                     onSecondaryPaneSizeChange={() => this.onPanesSizeChange()}>
 
-                                    <Panes dragging={this.state.sidePanelDragging} router={this.props.router} functions={this.props.functions} />
-                    
+                                    <Panes
+                                        dragging={sidePanelDragging}
+                                        router={router}
+                                        functions={functions}
+                                    />
+
                                     { displayTransactionsPanel &&
                                     <TransactionLogPanel
-                                        dragging={this.state.sidePanelDragging}
-                                        router={this.props.router}
+                                        dragging={sidePanelDragging}
+                                        router={router}
                                         onClose={toggleTransactionsHistoryPanel}
                                         selectedEnvironment={selectedEnvironment.name}
                                     /> }
 
-                                    { previewSidePanel.open && 
+                                    { previewSidePanel.open &&
                                     <PreviewSidePanel
-                                        dragging={this.state.sidePanelDragging}
+                                        dragging={sidePanelDragging}
                                         {...previewSidePanel}
                                         {...previewSidePanelActions}
                                         selectedEnvironment={selectedEnvironment.name}
                                     /> }
-                                    
+
                                 </SplitterLayout>
                             </div>
                         </SplitterLayout>

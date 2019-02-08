@@ -626,176 +626,173 @@ export default class FileItem extends Item {
     _createChildren = (cb) => {
         if (this.getType() == 'folder') {
             const project = this.getProject();
-            project.listFiles(this.getFullPath(), (status, list) => {
-                if (status == 0) {
-                    const children = [];
-                    list.map(file => {
-                        if (file.type == 'd') {
-                            var render;
-                            if (this.getFullPath() == "/" && file.name == "app") {
-                                render = this._renderApplicationSectionTitle;
-                            }
-                            children.push(
-                                new FileItem(
-                                    {
-                                        type: 'folder',
-                                        render: render,
-                                        state: {
-                                            key: file.name,
-                                            open: false,
-                                            title: file.name,
-                                            file: file.name,
-                                            __parent: this,
-                                            project: this.getProject(),
-                                        },
-                                        renameFile: this.props.renameFile
+            const list = project.listFiles(this.getFullPath());
+            const children = [];
+                list.map(file => {
+                    if (file.type == 'd') {
+                        var render;
+                        if (this.getFullPath() == "/" && file.name == "app") {
+                            render = this._renderApplicationSectionTitle;
+                        }
+                        children.push(
+                            new FileItem(
+                                {
+                                    type: 'folder',
+                                    render: render,
+                                    state: {
+                                        key: file.name,
+                                        open: false,
+                                        title: file.name,
+                                        file: file.name,
+                                        __parent: this,
+                                        project: this.getProject(),
                                     },
-                                    this.router,
-                                    this.functions
-                                )
+                                    renameFile: this.props.renameFile
+                                },
+                                this.router,
+                                this.functions
+                            )
+                        );
+                    } else if (file.type == 'f') {
+                        var fileItem;
+                        if (
+                            this.getFullPath() == '/' &&
+                            file.name == 'dappfile.json'
+                        ) {
+                            fileItem = this.getProject().getHiddenItem(
+                                'dappfile'
                             );
-                        } else if (file.type == 'f') {
-                            var fileItem;
-                            if (
-                                this.getFullPath() == '/' &&
-                                file.name == 'dappfile.json'
-                            ) {
-                                fileItem = this.getProject().getHiddenItem(
-                                    'dappfile'
-                                );
+                            fileItem.props.onClick = fileItem._openItem;
+                            fileItem.props.state.__parent = this;
+                            fileItem.props.state._tag = 0;
+                        } else {
+                            fileItem = new FileItem(
+                                {
+                                    type: 'file',
+                                    state: {
+                                        key: file.name,
+                                        title: file.name,
+                                        file: file.name,
+                                        __parent: this,
+                                        project: this.getProject(),
+                                        _tag: 0,
+                                    },
+                                    renameFile: this.props.renameFile
+                                },
+                                this.router,
+                                this.functions
+                            );
+                            fileItem.props.onClick = fileItem._openItem;
+                        }
+
+                        if (fileItem.getType2() == 'contract') {
+                            // WOHA! This is a contract, let's get the ContractItem representation of it.
+                            var contractItem = this.getProject().getContract(
+                                fileItem.getFullPath()
+                            );
+                            if (contractItem) {
+                                // Replace file item with contract item.
+                                fileItem = contractItem;
                                 fileItem.props.onClick = fileItem._openItem;
                                 fileItem.props.state.__parent = this;
                                 fileItem.props.state._tag = 0;
-                            } else {
-                                fileItem = new FileItem(
-                                    {
-                                        type: 'file',
-                                        state: {
-                                            key: file.name,
-                                            title: file.name,
-                                            file: file.name,
-                                            __parent: this,
-                                            project: this.getProject(),
-                                            _tag: 0,
-                                        },
-                                        renameFile: this.props.renameFile
-                                    },
-                                    this.router,
-                                    this.functions
-                                );
-                                fileItem.props.onClick = fileItem._openItem;
+                                fileItem.props.state.project = this.getProject();
+                                fileItem.props.state.toggable = true;
                             }
 
-                            if (fileItem.getType2() == 'contract') {
-                                // WOHA! This is a contract, let's get the ContractItem representation of it.
-                                var contractItem = this.getProject().getContract(
-                                    fileItem.getFullPath()
-                                );
-                                if (contractItem) {
-                                    // Replace file item with contract item.
-                                    fileItem = contractItem;
-                                    fileItem.props.onClick = fileItem._openItem;
-                                    fileItem.props.state.__parent = this;
-                                    fileItem.props.state._tag = 0;
-                                    fileItem.props.state.project = this.getProject();
-                                    fileItem.props.state.toggable = true;
-                                }
-
-                                // Set child items of the contract.
-                                const configureItem = new Item(
-                                    {
-                                        type: 'contract',
-                                        type2: 'configure',
-                                        icon: <IconConfigure />,
-                                        state: {
-                                            key: 'configure',
-                                            title: 'Configure',
-                                            __parent: fileItem,
-                                            project: this.getProject(),
-                                            _tag: 1,
-                                        },
+                            // Set child items of the contract.
+                            const configureItem = new Item(
+                                {
+                                    type: 'contract',
+                                    type2: 'configure',
+                                    icon: <IconConfigure />,
+                                    state: {
+                                        key: 'configure',
+                                        title: 'Configure',
+                                        __parent: fileItem,
+                                        project: this.getProject(),
+                                        _tag: 1,
                                     },
-                                    this.router
-                                );
-                                configureItem.props.onClick =
-                                    configureItem._openItem;
+                                },
+                                this.router
+                            );
+                            configureItem.props.onClick =
+                                configureItem._openItem;
 
-                                const interactItem = new Item(
-                                    {
-                                        type: 'contract',
-                                        type2: 'interact',
-                                        icon: <IconInteract />,
-                                        state: {
-                                            key: 'interact',
-                                            title: 'Interact',
-                                            __parent: fileItem,
-                                            project: this.getProject(),
-                                            _tag: 2,
-                                        },
+                            const interactItem = new Item(
+                                {
+                                    type: 'contract',
+                                    type2: 'interact',
+                                    icon: <IconInteract />,
+                                    state: {
+                                        key: 'interact',
+                                        title: 'Interact',
+                                        __parent: fileItem,
+                                        project: this.getProject(),
+                                        _tag: 2,
                                     },
-                                    this.router
-                                );
-                                interactItem.props.onClick =
-                                    interactItem._openItem;
+                                },
+                                this.router
+                            );
+                            interactItem.props.onClick =
+                                interactItem._openItem;
 
-                                const compileItem = new Item(
-                                    {
-                                        type: 'contract',
-                                        type2: 'compile',
-                                        icon: <IconCompile />,
-                                        state: {
-                                            key: 'compile',
-                                            title: 'Compile',
-                                            __parent: fileItem,
-                                            project: this.getProject(),
-                                            _tag: 3,
-                                        },
+                            const compileItem = new Item(
+                                {
+                                    type: 'contract',
+                                    type2: 'compile',
+                                    icon: <IconCompile />,
+                                    state: {
+                                        key: 'compile',
+                                        title: 'Compile',
+                                        __parent: fileItem,
+                                        project: this.getProject(),
+                                        _tag: 3,
                                     },
-                                    this.router
-                                );
-                                compileItem.props.onClick =
-                                    compileItem._openItem;
+                                },
+                                this.router
+                            );
+                            compileItem.props.onClick =
+                                compileItem._openItem;
 
-                                const deployItem = new Item(
-                                    {
-                                        type: 'contract',
-                                        type2: 'deploy',
-                                        icon: <IconDeploy />,
-                                        state: {
-                                            key: 'deploy',
-                                            title: 'Deploy',
-                                            __parent: fileItem,
-                                            project: this.getProject(),
-                                            _tag: 4,
-                                        },
+                            const deployItem = new Item(
+                                {
+                                    type: 'contract',
+                                    type2: 'deploy',
+                                    icon: <IconDeploy />,
+                                    state: {
+                                        key: 'deploy',
+                                        title: 'Deploy',
+                                        __parent: fileItem,
+                                        project: this.getProject(),
+                                        _tag: 4,
                                     },
-                                    this.router,
+                                },
+                                this.router,
 
-                                );
-                                deployItem.props.onClick = deployItem._openItem;
+                            );
+                            deployItem.props.onClick = deployItem._openItem;
 
-                                const contractChildren = [
-                                    configureItem,
-                                    compileItem,
-                                    deployItem,
-                                    interactItem,
-                                ];
-                                //fileItem.setChildren(contractChildren);
-                                this._copyState(
-                                    contractChildren,
-                                    fileItem.props.state.children || []
-                                );
-                                fileItem.props.state.children = contractChildren;
-                            }
-                            children.push(fileItem);
+                            const contractChildren = [
+                                configureItem,
+                                compileItem,
+                                deployItem,
+                                interactItem,
+                            ];
+                            //fileItem.setChildren(contractChildren);
+                            this._copyState(
+                                contractChildren,
+                                fileItem.props.state.children || []
+                            );
+                            fileItem.props.state.children = contractChildren;
                         }
-                    });
-                    this._copyState(children, this.props.state._children || []);
-                    this.props.state._children = children;
-                    if (cb) cb();
-                    return;
-                }
-            });
+                        children.push(fileItem);
+                    }
+                });
+                this._copyState(children, this.props.state._children || []);
+                this.props.state._children = children;
+                if (cb) cb();
+            return;
         } else {
             if (cb) cb();
         }

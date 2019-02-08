@@ -1,4 +1,4 @@
-// Copyright 2018 Superblocks AB
+// Copyright 2019 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -19,43 +19,67 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import style from './style.less';
 import { DropdownContainer } from '../common/dropdown';
-import Backend from '../projecteditor/control/backend';
-import Modal from '../modal';
 import { Tooltip } from '../common';
-import PreferencessModal from '../preferences';
+import PreferencesModal from '../preferences';
 import UploadDialog from './upload';
 import * as embedUtils from '../../utils/embed';
 import {
-    IconDownload,
-    IconTrash,
-    IconConfigure,
+    IconPreferences,
     IconHelp,
     IconProjectSelector,
     IconDropdown,
     IconDiscord,
-    IconCheck,
     IconUpload,
     IconFork,
     IconShare,
+    IconNew,
+    IconMenu,
     IconAlphabetA
 } from '../icons';
-import Dappfile from '../projecteditor/control/item/dappfileItem';
 import OnlyIf from '../onlyIf';
 import NetworkAccountSelector from '../networkAccountSelector';
 import ShareDialog from './share';
+import MenuDropdownDialog from './menu';
+import Login from "../login";
+
+const MenuAction = () => (
+    <div className={classNames([style.action, style.noBorder])}>
+        <button className={classNames([style.container, "btnNoBg"])}>
+            <IconMenu />
+        </button>
+    </div>
+);
+
+const NewAction = () => (
+    <div className={classNames([style.action, style.actionRight])}>
+        <button className={classNames([style.container, 'btnNoBg'])}>
+            <IconNew />
+        </button>
+    </div>
+);
+
+const DashboardAction = () => (
+    <div className={classNames([style.action, style.actionRight])}>
+        <Tooltip title="Dashboard">
+            <a href="/dashboard" className={classNames([style.container, "btnNoBg"])}>
+                <IconProjectSelector />
+            </a>
+        </Tooltip>
+    </div>
+);
 
 const PreferencesAction = () => (
-    <div className={style.action}>
+    <div className={classNames([style.action, style.actionRight])}>
         <Tooltip title="Preferences">
             <button className={classNames([style.container, "btnNoBg"])}>
-                <IconConfigure />
+                <IconPreferences />
             </button>
         </Tooltip>
     </div>
 );
 
 const HelpDropdownAction = () => (
-    <div className={style.action}>
+    <div className={classNames([style.action, style.actionRight])}>
         <Tooltip title="Help">
             <button className={classNames([style.container, 'btnNoBg'])}>
                 <IconHelp />
@@ -86,7 +110,7 @@ const ForkDropdownAction = (props) => {
 };
 
 const ShareDropdownAction = () => (
-    <div className={style.action}>
+    <div className={classNames([style.action, style.actionShare])}>
         <button className={classNames([style.container, 'btnNoBg'])}>
             <IconShare />
             <span>Share</span>
@@ -146,347 +170,49 @@ const HelpDropdownDialog = () => (
     </div>
 );
 
+// TODO - Finalise all this
+const NewDropdownDialog = () => (
+    <div className={style.helpMenu}>
+        <ul>
+            <li>
+                <a
+                    href="https://help.superblocks.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Start from scratch
+                </a>
+            </li>
+            <li>
+                <a
+                    href="https://help.superblocks.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Start with a template
+                </a>
+            </li>
+            <li>
+                <a
+                    href="https://help.superblocks.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Import a project
+                </a>
+            </li>
+        </ul>
+    </div>
+);
+
 const ProjectSelector = ({ title } = props) => (
     <div className={style.action}>
         <button className="btnNoBg">
-            <IconProjectSelector className={style.icon} />
             <span className={style.projectText}>{title}</span>
             <IconDropdown className={classNames([style.dropDown, 'dropDown'])} />
         </button>
     </div>
 );
-
-class ProjectDialog extends Component {
-    openProject = (e, project, cb) => {
-        this.props.router.control.openProject(project, cb);
-        this.props.onProjectSelected();
-    };
-
-    openProjectConfig = (e, project) => {
-        this.openProject(e, project, status => {
-            if (status == 0) {
-                this.props.router.control.openProjectConfig();
-            }
-        });
-    };
-
-    downloadProject = (e, project) => {
-        e.stopPropagation();
-
-        const keepState = prompt(
-            'Do you also want to save the project state (current contract addresses, ABIs, etc)?',
-            'yes'
-        );
-        if (!keepState) {
-            return;
-        }
-        const s = keepState.toLowerCase();
-        if (s != 'yes' && s != 'no') {
-            alert('Download aborted. Yes or No answer expected.');
-            return;
-        }
-        const backend = new Backend();
-        backend.downloadProject(project, keepState.toLowerCase() == 'yes');
-    };
-
-    importProject = e => {
-        // Thanks to Richard Bondi for contributing with this upload code.
-        e.preventDefault();
-        var uploadAnchorNode = document.createElement('input');
-        uploadAnchorNode.setAttribute('id', 'importFileInput');
-        uploadAnchorNode.setAttribute('type', 'file');
-        uploadAnchorNode.onchange = this.importProject2;
-        document.body.appendChild(uploadAnchorNode); // required for firefox
-        uploadAnchorNode.click();
-        uploadAnchorNode.remove();
-    };
-
-    importProject2 = e => {
-        var file = e.target.files[0];
-        var reader = new FileReader();
-
-        reader.onloadend = evt => {
-            var project;
-            if (evt.target.readyState == FileReader.DONE) {
-                if (evt.target.result.length > 1024**2) {
-                    alert('File to big to be handled. Max size in 1 MB.');
-                    return;
-                }
-
-                const backend = new Backend();
-                backend.unZip(evt.target.result).then( (project) => {
-                    this.importProject3(project);
-                })
-                    .catch( () => {
-                        console.log("Could not parse import as zip, trying JSON.");
-                        try {
-                            const obj = JSON.parse(evt.target.result);
-                            if (!obj.files) {
-                                alert('Error: Invalid project file. Must be ZIP-file (or legacy JSON format).');
-                                return;
-                            }
-                            project = obj;
-                        } catch (e) {
-                            alert('Error: Invalid project file. Must be ZIP-file (or legacy JSON format).');
-                            return;
-                        }
-                        this.importProject3(project);
-                    });
-
-            }
-        };
-        var blob = file.slice(0, file.size);
-        reader.readAsBinaryString(blob);
-    };
-
-    importProject3 = project => {
-        const backend = new Backend();
-        backend.convertProject(project, (status, project2) => {
-            if (status > 1) {
-                const modalData = {
-                    title: 'Project converted',
-                    body: (
-                        <div>
-                            <div>
-                                The imported project has been converted to the
-                                new Superblocks Lab format.
-                                <br />
-                                You might need to reconfigure your accounts and
-                                contract arguments due to these changes. We are
-                                sorry for any inconvenience.
-                            </div>
-                            <div>
-                                Please see the Superblocks Lab help center for
-                                more information on this topic.
-                            </div>
-                        </div>
-                    ),
-                    style: { width: '680px' },
-                };
-                const modal = <Modal data={modalData} />;
-                this.props.functions.modal.show({
-                    cancel: () => {
-                        this.importProject4(project2.files);
-                        return true;
-                    },
-                    render: () => {
-                        return modal;
-                    },
-                });
-            } else if (status == -1) {
-                alert('Error: Could not import project.');
-            } else {
-                this.importProject4(project.files);
-            }
-        });
-    };
-
-    importProject4 = files => {
-        var title = '';
-        var name = '';
-        var dappfile;
-
-        // Try to decode the `/dappfile.json`.
-        try {
-            dappfile = JSON.parse(
-                files['/'].children['dappfile.json'].contents
-            );
-        } catch (e) {
-            // Create a default dappfile.
-            console.log('Create default dappfile.json for import');
-            dappfile = Dappfile.getDefaultDappfile();
-            files['/'].children['dappfile.json'] = {type: 'f'};
-        }
-
-        try {
-            title = dappfile.project.info.title || '';
-            name = dappfile.project.info.name || '';
-        } catch (e) {
-            dappfile.project = { info: {} };
-        }
-
-        // This will make sure the dappfile has a sane state.
-        Dappfile.validateDappfile(dappfile);
-
-        do {
-            var name2 = prompt('Please give the project a name.', name);
-            if (!name2) {
-                alert('Import cancelled.');
-                return;
-            }
-            if (!name2.match(/^([a-zA-Z0-9-]+)$/) || name2.length > 30) {
-                alert(
-                    'Illegal projectname. Only A-Za-z0-9 and dash (-) allowed. Max 30 characters.'
-                );
-                continue;
-            }
-            name = name2;
-            break;
-        } while (true);
-
-        do {
-            var title2 = prompt(
-                'Please give the project a snappy title.',
-                title
-            );
-            if (!title2) {
-                alert('Import cancelled.');
-                return;
-            }
-            if (title2.match(/([\"\'\\]+)/) || title2.length > 100) {
-                alert(
-                    'Illegal title. No special characters allowed. Max 100 characters.'
-                );
-                continue;
-            }
-            title = title2;
-            break;
-        } while (true);
-
-        try {
-            dappfile.project.info.name = name;
-            dappfile.project.info.title = title;
-            files['/'].children['dappfile.json'].contents = JSON.stringify(
-                dappfile, null, 4
-            );
-        } catch (e) {
-            console.error(e);
-            alert('Error: could not import project.');
-            return;
-        }
-
-        this.props.router.control.importProject(files);
-    };
-
-    deleteProject = (e, project) => {
-        e.stopPropagation();
-
-        this.props.router.control.deleteProject(project, () => {
-            this.forceUpdate();
-        });
-    };
-
-    getProjectItems = () => {
-        if (this.props.router.control) {
-            const openProject = this.props.router.control.getActiveProject();
-
-            const items = this.props.router.control
-                .getProjects()
-                .slice(0)
-                .reverse()
-                .map(project => {
-                    const isActive = openProject === project;
-                    const isTemporaryProject = project.getInode() === 1;
-                    return (
-                        !isTemporaryProject &&
-                        <li
-                            key={project.getInode()}
-                            className={style.projSwitcherItem}
-                            onClick={e => {
-                                this.openProject(e, project);
-                            }}
-                        >
-                            <div
-                                className={classNames([
-                                    style.projSwitcherRow,
-                                    style.container,
-                                ])}
-                            >
-                                {isActive ? (
-                                    <div className={style.active}>
-                                        <IconCheck />
-                                    </div>
-                                ) : null}
-                                <div className={style.container}>
-                                    <div className={style.overflowText}>
-                                        {project.getName()} - &nbsp;
-                                        {project.getTitle()}
-                                    </div>
-                                </div>
-                                <div
-                                    className={classNames([
-                                        style.projSwitcherRowActions,
-                                        style.container,
-                                    ])}
-                                >
-                                    <button
-                                        className="btnNoBg"
-                                        onClick={e => {
-                                            this.openProjectConfig(e, project);
-                                        }}
-                                    >
-                                        <Tooltip title="Configure Project">
-                                            <IconConfigure />
-                                        </Tooltip>
-                                    </button>
-                                    <button
-                                        className="btnNoBg"
-                                        onClick={e => {
-                                            this.downloadProject(e, project);
-                                        }}
-                                    >
-                                        <Tooltip title="Download">
-                                            <IconDownload />
-                                        </Tooltip>
-                                    </button>
-                                    <button
-                                        className="btnNoBg"
-                                        onClick={e => {
-                                            this.deleteProject(e, project);
-                                        }}
-                                    >
-                                        <Tooltip title="Delete">
-                                            <IconTrash />
-                                        </Tooltip>
-                                    </button>
-                                </div>
-                            </div>
-                        </li>
-                    );
-                });
-
-            return items;
-        }
-    };
-
-    render() {
-        const projectItems = this.getProjectItems();
-        return (
-            <div className={classNames([style.projectMenu, 'modal'])}>
-                <div className={style.tabs}>
-                    <div className={classNames([style.tabList, style.container])}>
-                        <button className={style.tab}>Personal</button>
-                    </div>
-                    <div className={classNames([style.paneList, style.container])}>
-                        <div className={style.pane}>
-                            <ul className={style.projectSwitcherList}>
-                                {projectItems}
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div className={style.actions}>
-                    <button
-                        className="btnNoBg"
-                        onClick={this.props.router.control.newDapp}
-                    >
-                        Create New
-                    </button>
-                    <div className={style.separator} />
-                    <button className="btnNoBg" onClick={this.importProject}>
-                        Import
-                    </button>
-                </div>
-            </div>
-        );
-    }
-}
-
-ProjectDialog.propTypes = {
-    onProjectSelected: PropTypes.func.isRequired,
-    router: PropTypes.object.isRequired,
-    functions: PropTypes.object.isRequired,
-};
 
 export default class TopBar extends Component {
 
@@ -520,7 +246,7 @@ export default class TopBar extends Component {
 
     showPreferencesModal = () => {
         const modal = (
-            <PreferencessModal
+            <PreferencesModal
                 onCloseClick={this.onSettingsModalClose}
             />
         );
@@ -543,12 +269,18 @@ export default class TopBar extends Component {
     }
 
     render() {
+
         const { showUploadDialog, showUploadButton, showForkButton, showShareButton } = this.state.ipfsActions;
-        const { showSelectedProjectName, showOpenInLab } = this.props.view;
+        const { project, showOpenInLab } = this.props.view;
         const { selectedProjectName } = this.state;
 
         return (
             <div className={style.topbar}>
+                <DropdownContainer
+                    className={style.actionMenu}
+                    dropdownContent={<MenuDropdownDialog />} >
+                    <MenuAction />
+                </DropdownContainer>
                 <OnlyIf test={showOpenInLab}>
                     <a
                         className={style.openLab}
@@ -583,40 +315,40 @@ export default class TopBar extends Component {
                         onForkClicked={this.onForkClicked}
                     />
                 </OnlyIf>
-                <OnlyIf test={showShareButton}>
-                    <DropdownContainer
-                        className={style.actionShare}
-                        dropdownContent={<ShareDialog />}
-                        enableClickInside={true}
-                    >
-                        <ShareDropdownAction />
-                    </DropdownContainer>
-                </OnlyIf>
-                <OnlyIf test={showSelectedProjectName}>
-                    <DropdownContainer
-                        className={classNames([style.projectButton, !selectedProjectName ? style.projectButtonCenter : null])}
-                        dropdownContent={
-                            <ProjectDialog
-                                functions={this.props.functions}
-                                router={this.props.router}
-                                onProjectSelected={this.props.onProjectSelected}
-                            />
-                        }
-                    >
-                        <ProjectSelector title={selectedProjectName} />
-                    </DropdownContainer>
-                </OnlyIf>
+                <DropdownContainer
+                    className={style.actionShare}
+                    dropdownContent={<ShareDialog />}
+                    enableClickInside={true}
+                >
+                    <ShareDropdownAction />
+                </DropdownContainer>
+                <div className={style.projectButton}>
+                    <ProjectSelector title={project.name} />
+                </div>
 
                 <div className={style.actionsRight}>
+                    <DropdownContainer
+                        className={style.actionHelp}
+                        dropdownContent={<NewDropdownDialog />} >
+                        <NewAction />
+                    </DropdownContainer>
+
+                    <DashboardAction/>
+
                     <div onClick={this.showPreferencesModal}>
                         <PreferencesAction />
                     </div>
-
                     <DropdownContainer
                         className={style.actionHelp}
                         dropdownContent={<HelpDropdownDialog />} >
                         <HelpDropdownAction />
                     </DropdownContainer>
+                    <div>
+                        <Login
+                            functions={this.props.functions}
+                            onSettingsModalClose={this.onSettingsModalClose}
+                        />
+                    </div>
                 </div>
             </div>
         );

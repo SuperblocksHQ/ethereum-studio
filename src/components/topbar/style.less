@@ -27,7 +27,6 @@
     line-height: 190%;
     color: #fff;
     border-bottom: 1px solid rgb(18, 21, 22);
-    padding-left: 35px;
     .container {
         display: flex;
         align-content: center;
@@ -60,6 +59,7 @@
         transition: .2s background;
         margin-right: 15px;
         border: 1px solid #8641f2;
+        margin-left: 4px;
         span {
             margin-left: 10px;
         }
@@ -79,7 +79,6 @@
     .actionsRight {
         display: flex;
         margin-right: 14px;
-        margin-left: auto;
         height: 100%;
     }
     .actionHelp,
@@ -88,8 +87,21 @@
     .actionShare {
         position: relative;
         display: flex;
-        margin-left: 10px;
         height: 100%;
+    }
+    .actionMenu {
+        display: flex;
+        height: 100%;
+        .action {
+            border-color: none;
+            padding: 0px 5px;
+        }
+        &:hover {
+            background-color: @action-color-hover;
+        }
+    }
+    .actionUpload {
+        margin-left: 10px;
     }
     .action {
         display: flex;
@@ -102,6 +114,15 @@
         &:hover {
             color: #E0E0E0;
             border-color: @primary-color;
+        }
+        a {
+            padding: 0 5px;
+        }
+    }
+    .actionRight {
+        padding: 0 5px;
+        &.noBorder:hover {
+            border-color: transparent;
         }
     }
     .icon {
@@ -127,11 +148,9 @@
         }
         .projectText {
             margin-left: 3px;
-            font-size: 1.2em;
             font-weight: 700;
         }
         .dropDown {
-            padding: 4px;
             margin-left: 12px;
         }
     }

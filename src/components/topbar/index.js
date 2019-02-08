@@ -19,7 +19,6 @@ import TopBar from './Topbar';
 import { ipfsSelectors, viewSelectors } from '../../selectors';
 import { projectSelectors } from '../../selectors';
 import { ipfsActions } from '../../actions';
-import * as embedUtils from '../../utils/embed';
 
 const mapStateToProps = state => ({
     selectedProjectName: projectSelectors.getSelectedProjectName(state),
@@ -30,7 +29,7 @@ const mapStateToProps = state => ({
         showShareButton: ipfsSelectors.getShowShareButton(state),
     },
     view: {
-        showSelectedProjectName: viewSelectors.getShowTopBarSelectedProjectName(state),
+        project: projectSelectors.getProject(state),
         showOpenInLab: viewSelectors.getShowTopBarOpenInLab(state),
     }
 });

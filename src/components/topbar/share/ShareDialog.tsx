@@ -61,7 +61,7 @@ export default class ShareDialog extends React.Component<IProps, IState> {
 
         Promise.all(params).then((result) => {
             this.setState({
-                shareUrl: this.props.ipfsUrl + '?' + result.filter(Boolean).join('&')
+                shareUrl: String(window.location) + '?' + result.filter(Boolean).join('&')
             });
         });
     }

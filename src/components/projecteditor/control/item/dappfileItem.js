@@ -45,35 +45,26 @@ export default class DappfileItem extends FileItem {
      *
      */
     __load = () => {
-        return new Promise((resolve, reject) => {
-            this._load()
-                .then(() => {
-                    // Decode JSON
-                    try {
-                        const dappfileObj = JSON.parse(this.getContents());
-                        if (!Dappfile.validateDappfile(dappfileObj)) {
-                            throw 'Invalid dappfile.json.';
+        return this._load()
+                    .then(() => {
+                        // Decode JSON
+                        try {
+                            const dappfileObj = JSON.parse(this.getContents());
+                            if (!Dappfile.validateDappfile(dappfileObj)) {
+                                throw 'Invalid dappfile.json.';
+                            }
+                            this.props.state.dappfile = new Dappfile(dappfileObj);
+                        } catch (e) {
+                            console.error(e);
+                            this.props.state.dappfile = new Dappfile();
                         }
-                        this.props.state.dappfile = new Dappfile(dappfileObj);
-                    } catch (e) {
-                        console.error(e);
-                        this.props.state.dappfile = new Dappfile();
-                    }
-                    resolve();
-                })
-                .catch(() => {
-                    this.props.state.dappfile = new Dappfile(
-                        DappfileItem.getDefaultDappfile()
-                    );
-                    this.save()
-                        .then(() => {
-                            resolve();
-                        })
-                        .catch(() => {
-                            reject();
-                        });
-                });
-        });
+                    })
+                    .catch(() => {
+                        this.props.state.dappfile = new Dappfile(
+                            DappfileItem.getDefaultDappfile()
+                        );
+                        return this.save();
+                    });
     };
 
     /**

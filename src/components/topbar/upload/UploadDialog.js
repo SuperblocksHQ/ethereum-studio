@@ -50,6 +50,7 @@ class UploadDialog extends Component {
     }
 
     ipfsSyncUp = () => {
+        console.log(this.props)
         const { ipfs } = this.state;
         const { uploadToIPFS } = this.props;
 

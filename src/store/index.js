@@ -29,7 +29,7 @@ const config = {
     key: 'root',
     storage,
     version: 5,
-    whitelist: ['projects', 'settings'],
+    whitelist: ['settings'],
     migrate: createMigrate(migrations, { debug: true })
 };
 

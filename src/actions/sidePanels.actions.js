@@ -26,6 +26,11 @@ export const sidePanelsActions = {
         return { type: sidePanelsActions.TOGGLE_FILESYSTEM_PANEL };
     },
 
+    CLOSE_FILESYSTEM_PANEL: 'CLOSE_FILESYSTEM_PANEL',
+    closeFileSystemPanel() {
+        return { type: sidePanelsActions.CLOSE_FILESYSTEM_PANEL };
+    },
+
     preview: {
         TOGGLE_PANEL: 'PREVIEW.TOGGLE_PANEL',
         togglePanel() {

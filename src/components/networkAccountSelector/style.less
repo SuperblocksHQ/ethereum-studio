@@ -14,10 +14,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
+@import '../../style/index';
+
 .container {
     display: flex;
     align-items: center;
     color: white;
+    margin-left: 4px;
     border: 1px solid #595959;
     border-radius: 4px;
     .selector {
@@ -33,7 +36,7 @@
         transition: background .2s;
         height: 100%;
         &:hover {
-            background: #8641F2;
+            background: @action-color-hover;
             cursor: pointer;
         }
         &:first-of-type {
