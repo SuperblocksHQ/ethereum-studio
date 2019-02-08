@@ -14,37 +14,18 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { of } from 'rxjs';
+import { from, of } from 'rxjs';
 import { switchMap, withLatestFrom, map, catchError } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
 import { userActions } from '../../actions';
+import { projectService } from '../../services';
 
+// TODO - Handle in the UI a not logged in user
 const getProjectList: Epic = (action$: any, state$: any) => action$.pipe(
     ofType(userActions.GET_PROJECT_LIST),
     withLatestFrom(state$),
-    switchMap(([action, state]) => {
-        return of([
-            {
-                name: 'My project',
-                description: 'My super project',
-                lastModifiedAt: '2019-02-01T11:39:23+00:00'
-            },
-            {
-                name: 'My project',
-                description: 'My super project',
-                lastModifiedAt: '2019-02-01T11:39:23+00:00'
-            },
-            {
-                name: 'My project',
-                description: 'My super project',
-                lastModifiedAt: '2019-02-01T11:39:23+00:00'
-            },
-            {
-                name: 'My project',
-                description: 'My super project',
-                lastModifiedAt: '2019-02-01T11:39:23+00:00'
-            }
-        ]).pipe(
+    switchMap(([, ]) => {
+        return from(projectService.getProjectsInfo()).pipe(
             map(userActions.getProjectListSuccess),
             catchError((error) => {
                 console.log('There was an issue fetching the user projects: ' + error);
