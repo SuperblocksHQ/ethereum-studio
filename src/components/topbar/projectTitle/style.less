@@ -17,6 +17,7 @@
 .projectButton {
     position: relative;
     display: flex;
+    justify-content: center;
     align-items: center;
     height: 50px;
     padding: 0;
@@ -27,6 +28,8 @@
     z-index: 2;
     margin-left: auto;
     margin-right: auto;
+    width: 100%;
+    text-align: center;
     &:hover {
         cursor: default;
     }
@@ -57,13 +60,21 @@
             }
         }
     }
+    form {
+        width: 100%;
+    }
     input,
     input:focus {
         background: transparent;
-        border: 0;
+        border: 0px;
         color: white;
         font-style: italic;
         outline: none;
+        width: auto;
+        appearance: none;
+        -webkit-appearance: none;
+        text-align: center;
+        width: 100%;
     }
     .dropDown {
         position: relative;

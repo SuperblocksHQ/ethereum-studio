@@ -26,16 +26,20 @@ export default class Project extends Component<IProps> {
 
     render() {
         const { project }  = this.props;
+
+        console.log(project);
         return (
             <div className={style.container}>
-                <div className={style.name}>
-                    {project.name}
-                </div>
-                <div className={style.description}>
-                    {project.description}
-                </div>
-                <div className={style.infoContainer}>
-                    {project.lastModifiedAt}
+                <div className={style.innerWrapper}>
+                    <div className={style.name}>
+                        {project.name}
+                    </div>
+                    <div className={style.description}>
+                        {project.description}
+                    </div>
+                    <div className={style.infoContainer}>
+                        {project.lastModifiedAt}
+                    </div>
                 </div>
             </div>
         );
