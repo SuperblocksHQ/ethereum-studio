@@ -37,40 +37,18 @@ import { BaseSidePanel } from '../sidePanels/baseSidePanel';
 export default class Control extends Component {
 
     state = {
-        isProjectLoaded: false
+        isProjectLoaded: false,
+        activeProject: null
     }
 
     constructor(props) {
         super(props);
-        // this._projectsList = [];
-
-        // this.state = {
-        //     activeProject: null,
-        // };
 
         props.router.register('control', this);
     }
 
     componentDidMount() {
-        // this._loadProjects(status => {
-        //     if (status == 0) {
-        //         // Make sure no project gets loaded if we are importing one from IPFS
-        //         if (!this.props.isImportedProject) {
-        //             if (!this._openLastProject()) {
-        //                 this._setProjectActive(null);
-        //                 this._showWelcome();
-        //             }
-        //         }
-        //     }
-        // });
-    }
-
-    componentDidUpdate(prevProps) {
-        const { project } = this.props;
-
-        if (project !== prevProps.project)  {
-            this._initProject();
-        }
+        this._initProject();
     }
 
     _initProject() {
@@ -107,7 +85,8 @@ export default class Control extends Component {
         projectItem.load(status => {
             if (status == 0) {
                 this.setState({
-                    isProjectLoaded: true
+                    isProjectLoaded: true,
+                    activeProject: projectItem,
                 });
             } else {
                 // TODO - make sure we have a fallback here
@@ -262,14 +241,6 @@ export default class Control extends Component {
      */
     getActiveProject = () => {
         return this.state.activeProject;
-    };
-
-    /**
-     * Return the list of loaded projects.
-     *
-     */
-    getProjects = () => {
-        return this._projectsList;
     };
 
     /**
@@ -453,7 +424,7 @@ Control.propTypes = {
     appVersion: PropTypes.string.isRequired,
     selectProject: PropTypes.func.isRequired,
     renameFile: PropTypes.func.isRequired,
-    selectedProjectId: PropTypes.number,
+    selectedProjectId: PropTypes.string,
     toggleFileSystemPanel: PropTypes.func.isRequired,
     project: PropTypes.object
 };

@@ -1,20 +1,20 @@
 import { connect } from 'react-redux';
-import { userActions } from '../../../actions';
-import { userSelectors } from '../../../selectors';
+import { projectSelectors } from '../../../selectors';
+import { projectsActions } from '../../../actions';
 import ProjectTitle from './ProjectTitle';
 import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
 
 const mapStateToProps = (state: any) => ({
-    projectList: userSelectors.getProjectList(state),
+    projectId: projectSelectors.getProjectId(state),
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
+function mapDispatchToProps(dispatch: Dispatch<AnyAction>) {
     return {
-        getProjectList: () => {
-            dispatch(userActions.getProjectList());
-        },
+        renameProject: (newName: string) => {
+            dispatch(projectsActions.renameProject(newName));
+        }
     };
-};
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProjectTitle);

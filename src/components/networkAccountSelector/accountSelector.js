@@ -187,6 +187,7 @@ export class AccountSelector extends Component {
     };
 
     render() {
+        console.log('Here');
         const project = this.props.router.control.getActiveProject();
         if (!project) { return (<div/>); }
         const account = project.getAccount();
@@ -241,7 +242,7 @@ export class AccountSelector extends Component {
                             <IconDropdown height="8" width="10" />
                         </div>
                     </div>
-                </div>  
+                </div>
             </DropdownContainer>
         );
     }

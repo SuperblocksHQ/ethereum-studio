@@ -25,7 +25,9 @@ export const deleteProject: Epic = (action$: any, state$: any) => action$.pipe(
     ofType(projectsActions.DELETE_PROJECT),
     withLatestFrom(state$),
     switchMap(([, state]) => {
-        if (confirm('Are you sure you want to fork your own project?'))  {
+        console.log('Here1');
+        if (confirm('Are you sure you want to delete the project?')) {
+            console.log('Here');
             return from(projectService.deleteProjectById(state.projects.project.id))
                 .pipe(
                     map(projectsActions.deleteProjectSuccess),

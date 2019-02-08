@@ -22,23 +22,29 @@ import { IconDropdown } from '../icons';
 import { NetworksList } from './networksList';
 import { IconCubeTransparent } from '../icons';
 
+interface IProps {
+    selectedNetwork: any;
+    networks: any;
+    onNetworkSelected: () => void;
+}
 // Note: We display networks, which really are environments, which map to networks.
 // This is due to a simplification where we do not show environments, only networks, but technically it's environments which we work with.
-export function NetworkSelector(props) {
+export function NetworkSelector(props: IProps) {
+    const { selectedNetwork, networks, onNetworkSelected } = props;
     return (
         <DropdownContainer
             dropdownContent={
                 <NetworksList
-                    selectedNetwork={props.selectedNetwork.name}
-                    networks={props.networks}
-                    onNetworkSelected={props.onNetworkSelected}
+                    selectedNetwork={selectedNetwork.name}
+                    networks={networks}
+                    onNetworkSelected={onNetworkSelected}
                 />
             }
         >
             <div className={classnames([style.selector])}>
                 <IconCubeTransparent />
-                <div className={classnames([style.capitalize, style.nameContainer])} title={props.selectedNetwork.endpoint}>
-                    {props.selectedNetwork.name}
+                <div className={classnames([style.capitalize, style.nameContainer])} title={selectedNetwork.endpoint}>
+                    {selectedNetwork.name}
                 </div>
                 <div className={style.dropdownIcon}>
                     <IconDropdown />

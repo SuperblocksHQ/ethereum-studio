@@ -27,7 +27,7 @@ import classNames from 'classnames';
 
 interface IProps {
     projectName: string;
-    getProjectList: () => void;
+    renameProject: (newName: string) => void;
 }
 
 export default class ProjectTitle extends Component<IProps> {
@@ -44,9 +44,12 @@ export default class ProjectTitle extends Component<IProps> {
     }
 
     handleChangeName = () => {
+        const { renameProject } = this.props;
+
         this.setState({
           projectNameUpdating: false
         });
+        this.props.renameProject(this.state.newProjectName);
     }
 
     handleChange = (e: any) => {

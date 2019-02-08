@@ -25,7 +25,7 @@ const updateIPFSActionButtons = (action$, state$) => action$.pipe(
     ofType(projectsActions.SELECT_PROJECT),
     withLatestFrom(state$),
     switchMap(([,state]) => {
-        return of(projectSelectors.getSelectedProjectId(state))
+        return of(projectSelectors.getProjectId(state))
         .pipe(
             map(projectId => {
                 if (ipfsService.isTemporaryProject(projectId)) {

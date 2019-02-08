@@ -24,7 +24,7 @@ interface IProps {
     showMenu: boolean;
     onCloseMenu?: () => void;
     enableClickInside?: boolean;
-    className: string;
+    className?: string;
 }
 interface IState { menuVisible: boolean; }
 

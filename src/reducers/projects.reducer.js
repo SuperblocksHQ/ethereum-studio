@@ -17,14 +17,10 @@
 import { projectsActions } from '../actions/projects.actions';
 
 export const initialState = {
-    selectedProject: {
-        id: 0,
-        name: '',
-        environments: [],
-        selectedEnvironment: { name: null, endpoint: null },
-        selectedAccount: {name: null, balance: null, address: null}
-    },
-    project: undefined
+    project: undefined,
+    environments: [],
+    selectedEnvironment: { name: null, endpoint: null },
+    selectedAccount: {name: null, balance: null, address: null}
 };
 
 function getEnvOrNull(environment) {

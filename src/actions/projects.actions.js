@@ -81,10 +81,10 @@ export const projectsActions = {
     },
     LOAD_PROJECT: 'LOAD_PROJECT',
     loadProject(projectId) {
-       return {
+        return {
             type: projectsActions.LOAD_PROJECT,
             data: { projectId }
-       };
+        };
     },
     LOAD_PROJECT_SUCCESS: 'LOAD_PROJECT_SUCCESS',
     loadProjectSuccess(project) {
