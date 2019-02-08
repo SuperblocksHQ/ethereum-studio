@@ -22,13 +22,10 @@ import { DropdownContainer } from '../common/dropdown';
 import { Tooltip } from '../common';
 import PreferencesModal from '../preferences';
 import UploadDialog from './upload';
-import * as embedUtils from '../../utils/embed';
 import {
     IconPreferences,
-    IconHelp,
     IconProjectSelector,
     IconDropdown,
-    IconDiscord,
     IconUpload,
     IconFork,
     IconShare,
@@ -41,6 +38,7 @@ import NetworkAccountSelector from '../networkAccountSelector';
 import ShareDialog from './share';
 import MenuDropdownDialog from './menu';
 import Login from "../login";
+import { HelpAction } from "../common";
 
 const MenuAction = () => (
     <div className={classNames([style.action, style.noBorder])}>
@@ -78,16 +76,6 @@ const PreferencesAction = () => (
     </div>
 );
 
-const HelpDropdownAction = () => (
-    <div className={classNames([style.action, style.actionRight])}>
-        <Tooltip title="Help">
-            <button className={classNames([style.container, 'btnNoBg'])}>
-                <IconHelp />
-            </button>
-        </Tooltip>
-    </div>
-);
-
 const UploadDrowdownAction = () => (
     <div className={style.action}>
         <button className={classNames([style.container, 'btnNoBg'])}>
@@ -115,58 +103,6 @@ const ShareDropdownAction = () => (
             <IconShare />
             <span>Share</span>
         </button>
-    </div>
-);
-
-const HelpDropdownDialog = () => (
-    <div className={style.helpMenu}>
-        <div className={style.title}>General</div>
-        <ul>
-            <li>
-                <a
-                    href="https://help.superblocks.com/hc/en-us/categories/360000486714-Using-Superblocks-Lab"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Guide to Superblocks Lab
-                </a>
-            </li>
-            <li>
-                <a
-                    href="https://www.youtube.com/playlist?list=PLjnjthhtIABuzW2MTsPGkihZtvvepy-n4"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Video tutorials
-                </a>
-            </li>
-            <li>
-                <a
-                    href="https://help.superblocks.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Help Center
-                </a>
-            </li>
-            <li>
-                <a
-                    href="https://help.superblocks.com/hc/en-us/requests/new"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Ask a question
-                </a>
-            </li>
-            <li>
-                <a className={style.container} href="https://discord.gg/6Cgg2Dw" target="_blank" rel="noopener noreferrer" title="Superblocks' community">
-                    Join our Community!
-                    <span className={style.communityIcon}>
-                        <IconDiscord color="#7289DA"/>
-                    </span>
-                </a>
-            </li>
-        </ul>
     </div>
 );
 
@@ -328,7 +264,7 @@ export default class TopBar extends Component {
 
                 <div className={style.actionsRight}>
                     <DropdownContainer
-                        className={style.actionHelp}
+                        className={style.actionMenu}
                         dropdownContent={<NewDropdownDialog />} >
                         <NewAction />
                     </DropdownContainer>
@@ -338,11 +274,9 @@ export default class TopBar extends Component {
                     <div onClick={this.showPreferencesModal}>
                         <PreferencesAction />
                     </div>
-                    <DropdownContainer
-                        className={style.actionHelp}
-                        dropdownContent={<HelpDropdownDialog />} >
-                        <HelpDropdownAction />
-                    </DropdownContainer>
+
+                    <HelpAction />
+
                     <div>
                         <Login
                             functions={this.props.functions}

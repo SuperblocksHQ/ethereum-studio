@@ -20,6 +20,7 @@ import { ofType, Epic } from 'redux-observable';
 import { projectsActions } from '../../actions';
 import { projectService } from '../../services/project.service';
 
+// TODO - Make sure to handle errors correctly
 const renameProject: Epic = (action$: any, state$: any) => action$.pipe(
     ofType(projectsActions.RENAME_PROJECT),
     withLatestFrom(state$),
