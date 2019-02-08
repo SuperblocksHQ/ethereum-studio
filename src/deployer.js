@@ -19,7 +19,8 @@ import Web3 from 'web3';
 import Networks from './networks';
 import * as analytics from './utils/analytics';
 
-const TxEth = () => import(/* webpackChunkName: "ethereumjs-tx" */ './ethereumjs-tx-1.3.3.min');
+import Tx from 'ethereumjs-tx';
+import Buffer from 'buffer';
 
 export default class DeployerRunner {
 
@@ -911,9 +912,7 @@ export default class DeployerRunner {
     }
 
     async _sign(obj, cb) {
-        const asyncTx = await TxEth();
-        const Tx = asyncTx.default;
-        const tx = new Tx.Tx({
+        const tx = new Tx({
             from: obj.account.address,
             to: "",
             //chainId: 333,
@@ -923,7 +922,7 @@ export default class DeployerRunner {
             gasLimit: obj.gasLimit,
             data: obj.bin2,
         });
-        tx.sign(Tx.Buffer.Buffer.from(obj.account.key, "hex"));
+        tx.sign(Buffer.Buffer.from(obj.account.key, "hex"));
         obj.tx = tx;
         this._stdout("Transaction signed.");
         cb(0);
