@@ -63,7 +63,17 @@ export default class Control extends Component {
         //         }
         //     }
         // });
+    }
 
+    componentDidUpdate(prevProps) {
+        const { project } = this.props;
+
+        if (project !== prevProps.project)  {
+            this._initProject();
+        }
+    }
+
+    _initProject() {
         const { project } = this.props;
 
         const projectItem = new ProjectItem({
@@ -409,8 +419,6 @@ export default class Control extends Component {
 
     renderProject() {
         const { isProjectLoaded } = this.state;
-
-        console.log(isProjectLoaded);
 
         if (!isProjectLoaded) {
             // TODO - Simply put a loader here

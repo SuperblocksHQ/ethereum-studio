@@ -36,7 +36,8 @@ class SplitterLayout extends SplitterLayoutBase {
 export default class ProjectEditor extends Component {
     state = {
         EVMInit: false,
-        sidePanelDragging: false
+        sidePanelDragging: false,
+        project: null
     };
 
     constructor(props) {
@@ -60,7 +61,14 @@ export default class ProjectEditor extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        const { project} = this.props;
+        const { project } = this.props;
+
+        if (prevProps.project !== project) {
+            this.setState({
+                project: project
+            })
+        }
+
         // if project is present, init EVM if not already initialized
         if (project && !this.state.EVMInit){
             this.initEVM()
@@ -83,6 +91,7 @@ export default class ProjectEditor extends Component {
                 'development',
                 this.props.knownWalletSeed,
                 () => {
+                    console.log(this.props.functions.EVM);
                     this.props.functions.EVM.init();
                 }
             );
@@ -122,7 +131,6 @@ export default class ProjectEditor extends Component {
             router,
             functions,
             isImportedProject,
-            project,
             displayTransactionsPanel,
             displayFileSystemPanel,
             previewSidePanel,
@@ -131,7 +139,7 @@ export default class ProjectEditor extends Component {
             previewSidePanelActions,
             selectedEnvironment } = this.props;
 
-        const { sidePanelDragging } = this.state;
+        const { sidePanelDragging, project } = this.state;
 
         return (
             <div className={style.projecteditor}>

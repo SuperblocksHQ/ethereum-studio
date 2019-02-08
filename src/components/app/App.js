@@ -88,9 +88,12 @@ export default class App extends Component {
         // on the initial state (per example turning on/off analytics)
         notifyAppStart(embedUtils.isIframe());
 
+        // TODO - Make sure all this is working correctly
+        this._init();
+
         // this._convertProjects(status => {
         //     this.setState({ isReady: true })
-        //     this._init();
+        //
         // });
     }
 

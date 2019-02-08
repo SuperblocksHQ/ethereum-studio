@@ -60,7 +60,14 @@ export const projectService = {
             },
         })
         // TODO: FIXME: manually check status 200, response.ok or throwErrors
-        .then((response) => response.json());
+        .then((response) => response.json())
+        .then((project) => {
+            // Make sure we transform here the files prop as it is represented in a string format when
+            // coming from the back-end.
+            const filesString = project.files;
+            project.files = JSON.parse(filesString);
+            return project;
+        });
     },
 
     async getProjectsInfo() {

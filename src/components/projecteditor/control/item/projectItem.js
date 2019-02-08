@@ -491,9 +491,6 @@ export default class ProjectItem extends Item {
     };
 
     loadFile = (path, cb) => {
-        // this.backend.loadFile(this.getInode(), path, cb);
-        console.log(this.files);
-        console.log(path);
         projectUtils.loadFileContent(this.files, path, cb);
     };
 
