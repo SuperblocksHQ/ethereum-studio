@@ -77,6 +77,18 @@ export default function projectsReducer(state = initialState, action) {
                 project: action.data.project
             };
         }
+        case projectsActions.DELETE_PROJECT_SUCCESS: {
+            return {
+                ...state,
+                project: null
+            };
+        }
+        case projectsActions.UPDATE_PROJECT_SUCCESS: {
+            return {
+                ...state,
+                project: action.data.project
+            };
+        }
         default:
             return state;
     }

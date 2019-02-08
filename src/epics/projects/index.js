@@ -16,9 +16,10 @@
 
 import { environmentUpdateEpic } from './environmentUpdate.epic';
 import { updateProjectSettings } from './updateProjectSettings.epic';
+import { deleteProject } from './deleteProject.epic';
 
 // TODO - Add missing epics
-// import { deleteProject } from './deleteProject.epic';
+
 // import { downloadProject } from './downloadProject.epic';
 // import { importProject } from './importProject.epic';
 
@@ -27,5 +28,6 @@ import { loadProject } from './loadProject.epic';
 export const projectsEpics = [
     environmentUpdateEpic,
     updateProjectSettings,
-    loadProject
+    loadProject,
+    deleteProject
 ];
