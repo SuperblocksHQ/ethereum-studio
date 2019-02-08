@@ -85,6 +85,8 @@ export const projectService = {
         // TODO: FIXME: validate id input
         //              Expects a string (12-byte ObjectId)
         // TODO: FIXME: validate data input
+        // TODO: Make sure we handle correctly files
+        data.files = JSON.stringify(data.files);
         return superFetch(process.env.REACT_APP_PROJECT_API_BASE_URL + '/projects/' + id, {
             method: 'PUT',
             headers: {
@@ -92,10 +94,8 @@ export const projectService = {
             },
             body: JSON.stringify(data)
         })
-        .then((response) => {
-            // TODO: FIXME: manually check status 204, response.ok or throwErrors
-            // TODO: FIXME: return anything ?
-        });
+        // TODO: FIXME: manually check status 204, response.ok or throwErrors
+        // TODO: FIXME: return anything ?
     },
 
     async deleteProjectById(id) {

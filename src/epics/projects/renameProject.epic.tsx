@@ -21,18 +21,16 @@ import { projectsActions } from '../../actions';
 import { projectService } from '../../services/project.service';
 
 // TODO - Make sure to handle errors correctly
-const renameProject: Epic = (action$: any, state$: any) => action$.pipe(
+export const renameProject: Epic = (action$: any, state$: any) => action$.pipe(
     ofType(projectsActions.RENAME_PROJECT),
     withLatestFrom(state$),
     switchMap(([action, state]) => {
         const project = state.projects.project;
         project.name = action.data.newName;
-        return from(projectService.postProject(project))
+        return from(projectService.putProjectById(project.id, project))
             .pipe(
-                map(() => projectsActions.updateProjectSuccess(project)),
-                tap(() => document.location.href = '/')
+                switchMap(() => from(projectService.getProjectById(project.id))),
+                map(projectsActions.updateProjectSuccess),
             );
     })
 );
-
-export default renameProject;

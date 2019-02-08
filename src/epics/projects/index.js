@@ -24,10 +24,12 @@ import { deleteProject } from './deleteProject.epic';
 // import { importProject } from './importProject.epic';
 
 import { loadProject } from './loadProject.epic';
+import { renameProject } from './renameProject.epic';
 
 export const projectsEpics = [
     environmentUpdateEpic,
     updateProjectSettings,
     loadProject,
-    deleteProject
+    deleteProject,
+    renameProject
 ];
