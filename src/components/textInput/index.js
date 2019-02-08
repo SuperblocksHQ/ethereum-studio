@@ -33,6 +33,7 @@ export default class TextInput extends PureComponent {
             disabled,
             error,
             readOnly,
+            onBlur,
             ...props
         } = this.props;
 
@@ -49,6 +50,7 @@ export default class TextInput extends PureComponent {
                             disabled={disabled}
                             readOnly={readOnly}
                             className={classNames({[style.error]: error != null})}
+                            onBlur={onBlur}
                             {...props}
                         />
                         {tip != null && <div className={style.tip}>{tip}</div>}

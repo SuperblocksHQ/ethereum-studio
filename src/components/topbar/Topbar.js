@@ -37,9 +37,9 @@ import OnlyIf from '../onlyIf';
 import NetworkAccountSelector from '../networkAccountSelector';
 import ShareDialog from './share';
 import MenuDropdownDialog from './menu';
-import ProjectMenuDropdownDialog from './projectMenu';
 import Login from "../login";
 import { HelpAction } from "../common";
+import ProjectTitle from './projectTitle';
 
 const MenuAction = () => (
     <div className={classNames([style.action, style.noBorder])}>
@@ -139,14 +139,6 @@ const NewDropdownDialog = () => (
                 </a>
             </li>
         </ul>
-    </div>
-);
-
-const ProjectSelector = ({ title } = props) => (
-    <div className={style.action}>
-        <button className="btnNoBg">
-            <span className={style.projectText}>{title}</span>
-        </button> 
     </div>
 );
 
@@ -258,14 +250,9 @@ export default class TopBar extends Component {
                 >
                     <ShareDropdownAction />
                 </DropdownContainer>
-                <div className={style.projectButton}>
-                    <ProjectSelector title={project.name} />
-                    <DropdownContainer
-                        className={style.projectMenuDropdown}
-                        dropdownContent={<ProjectMenuDropdownDialog />} >
-                        <IconDropdown className={classNames([style.dropDown, 'dropDown'])} />
-                    </DropdownContainer>
-                </div>
+                <ProjectTitle
+                    projectName={project.name}
+                />
                 <div className={style.actionsRight}>
                     <DropdownContainer
                         className={style.actionMenu}

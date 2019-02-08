@@ -67,11 +67,6 @@
             background-color: #7237CF;
         }
     }
-    .projectName {
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-    }
     .tools {
         margin-left: 45px;
         height: 100%;
@@ -130,51 +125,6 @@
         width: 15px;
         height: 15px;
         right: 7px;
-    }
-    .projectButton {
-        position: relative;
-        display: flex;
-        height: 50px;
-        padding: 0;
-        border-radius: 3px;
-        max-width: none;
-        border: none;
-        color: #fff;
-        z-index: 2;
-        margin-left: auto;
-        margin-right: auto;
-        &.projectButtonCenter {
-            flex-grow: 2;
-            justify-content: center;
-        }
-        .projectText {
-            margin-left: 3px;
-            font-weight: 700;
-        }
-        .projectMenuDropdown {
-            display: flex;
-            align-items: center;
-            height: 100%;
-            position: relative;
-            &>div:first-of-type {
-                height: 100%;
-                position: relative;
-                align-items: center;
-                display: flex;
-            }
-            &:hover {
-                cursor: pointer;
-                .dropDown {
-                    opacity: .6;
-                    transform: rotate(45deg) translate(2px, 2px);
-                }
-            }
-        }
-        .dropDown {
-            position: relative;
-            margin: 0px 4px;
-            transition: opacity .15s, transform .15s;
-        }
     }
 
     .projectMenu {
@@ -300,5 +250,3 @@
         text-overflow: ellipsis;
     }
 }
-
-
