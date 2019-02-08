@@ -20,12 +20,13 @@ import { ofType, Epic } from 'redux-observable';
 import { projectsActions } from '../../actions';
 import { projectService} from '../../services/project.service';
 
+// TODO - Make sure that we render correctly the 404 screen say
 export const loadProject: Epic = (action$: any, state$: any) => action$.pipe(
     ofType(projectsActions.LOAD_PROJECT),
     withLatestFrom(state$),
     switchMap(([action, state]) => {
-        const projectId = action.projectId;
-        return from(projectService.getProjectById('5c5d991e1c9d4400009d2173'))
+        const projectId = action.data.projectId;
+        return from(projectService.getProjectById(projectId))
             .pipe(
                 map(projectsActions.loadProjectSuccess),
                 catchError((error) => {
