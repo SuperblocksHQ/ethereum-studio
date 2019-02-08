@@ -132,6 +132,7 @@
         right: 7px;
     }
     .projectButton {
+        position: relative;
         display: flex;
         height: 50px;
         padding: 0;
@@ -150,8 +151,29 @@
             margin-left: 3px;
             font-weight: 700;
         }
+        .projectMenuDropdown {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            position: relative;
+            &>div:first-of-type {
+                height: 100%;
+                position: relative;
+                align-items: center;
+                display: flex;
+            }
+            &:hover {
+                cursor: pointer;
+                .dropDown {
+                    opacity: .6;
+                    transform: rotate(45deg) translate(2px, 2px);
+                }
+            }
+        }
         .dropDown {
-            margin-left: 12px;
+            position: relative;
+            margin: 0px 4px;
+            transition: opacity .15s, transform .15s;
         }
     }
 

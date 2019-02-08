@@ -35,7 +35,7 @@ export default class TextAreaInput extends PureComponent {
             readOnly,
             rows,
             cols,
-            maxlength,
+            maxLength,
             ...props
         } = this.props;
 
@@ -52,7 +52,7 @@ export default class TextAreaInput extends PureComponent {
                             className={classNames({[style.error]: error != null})}
                             rows={rows}
                             cols={cols}
-                            maxlength={maxlength}
+                            maxLength={maxLength}
                             value={value}
                             {...props}
                         >
