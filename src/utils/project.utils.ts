@@ -59,5 +59,29 @@ export const projectUtils = {
             // reject('File in path ' + path + ' not found');
             cb({ status: 3 });
         }
+    },
+
+    putFileContent: (projectFiles: any, path: string, content: string) => {
+        if (path[0] !== '/') {
+            // reject('Make sure the path is absolute');
+            return false;
+        }
+
+        const parts = path.split('/');
+        let folder = projectFiles['/'];
+        for (let index = 1; index < parts.length - 1; index++) {
+            let folder2 = folder.children[parts[index]];
+            if (!folder2) {
+                folder2 = { type: 'd', name: parts[index], children: {} };
+                folder[parts[index]] = folder2;
+            }
+            folder = folder2;
+        }
+        const file = folder.children[parts[parts.length - 1]];
+        if (!file) {
+            return false;
+        }
+        file.contents = content;
+        return true;
     }
 };

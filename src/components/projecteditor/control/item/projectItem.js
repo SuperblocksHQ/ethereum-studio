@@ -32,6 +32,8 @@ import Backend from '../backend';
 import TransactionLogData from '../../sidePanels/blockexplorer/transactionlogdata';
 import { projectUtils } from '../../../../utils/project.utils';
 
+import { projectService} from '../../../../services/project.service';
+
 export default class ProjectItem extends Item {
     constructor(props, router, functions) {
         props.state = props.state || {};
@@ -495,11 +497,25 @@ export default class ProjectItem extends Item {
     };
 
     saveFile = (path, contents, cb) => {
-        this.backend.saveFile(
-            this.getInode(),
-            { contents: contents, path: path },
-            cb
-        );
+        if (!projectUtils.putFileContent(this.files, path, contents)) {
+            cb(1);
+            return;
+        }
+
+        // TODO: how to get description?
+        const data = {
+            name: this.getName(),
+            description: "project description",
+            files: this.files,
+        };
+
+        projectService.putProjectById(this.getInode(), data)
+        .then( (s) => {
+            cb(0);
+        })
+        .catch( (err) => {
+            cb(1);
+        });
     };
 
     /************************** Dappfile operations ***************************/
