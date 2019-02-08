@@ -73,6 +73,13 @@ export default function projectsReducer(state = initialState, action) {
                 project: action.data.project
             };
         }
+        case projectsActions.LOAD_PROJECT_FAIL: {
+            console.log(action.data);
+
+            return {
+                ...state,
+            };
+        }
         case projectsActions.DELETE_PROJECT_SUCCESS: {
             return {
                 ...state,
