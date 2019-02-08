@@ -20,8 +20,7 @@ import { authActions } from '../../actions';
 import { withLatestFrom, tap, switchMap, catchError, map, concat } from 'rxjs/operators';
 import PopupWindow from '../../components/login/github/PopupWindow';
 import { AnyAction } from 'redux';
-import { authService } from '../../services/auth.service';
-import { userService } from '../../services/user.service';
+import { authService, userService } from '../../services';
 
 interface IQueryParams {
     client_id: string;
