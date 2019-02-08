@@ -53,9 +53,9 @@ export default class TextAreaInput extends PureComponent {
                             rows={rows}
                             cols={cols}
                             maxlength={maxlength}
+                            value={value}
                             {...props}
                         >
-                        {value}
                         </textarea>
                         {tip != null && <div className={style.tip}>{tip}</div>}
                     </div>

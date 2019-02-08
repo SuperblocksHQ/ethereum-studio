@@ -153,65 +153,73 @@ export default class ShareDialog extends React.Component<IProps, IState> {
         const btnHtmlUrl = this.getBtnHtmlUrl();
 
         return(
-            <div className={style.innerContent}>
-                <div className={style.inputContainer}>
-                    <TextInput
-                        id='editor'
-                        label='Editor'
-                        value={shareUrl}
-                        disabled={false}
-                        readOnly={true}
-                    />
-                    <button className='btnNoBg' onClick={() => copy(shareUrl)}>
-                        <Tooltip title='Copy URL'>
-                            <IconCopy />
-                        </Tooltip>
-                    </button>
+            <React.Fragment>
+                <div className={style.innerContent}>
+                    <div className={style.inputContainer}>
+                        <TextAreaInput
+                            id='editor'
+                            label='Editor'
+                            value={shareUrl}
+                            disabled={false}
+                            readOnly={true}
+                            rows={3}
+                        />
+                        <button className='btnNoBg' onClick={() => copy(shareUrl)}>
+                            <Tooltip title='Copy URL'>
+                                <IconCopy />
+                            </Tooltip>
+                        </button>
+                    </div>
+                    <div className={style.inputContainer}>
+                        <TextAreaInput
+                            id='embed'
+                            label='Embed'
+                            value={embedUrl}
+                            disabled={false}
+                            readOnly={true}
+                            rows={6}
+                        />
+                        <button className='btnNoBg' onClick={() => copy(embedUrl)}>
+                            <Tooltip title='Copy URL'>
+                                <IconCopy />
+                            </Tooltip>
+                        </button>
+                    </div>
                 </div>
-                <div className={style.inputContainer}>
-                    <TextAreaInput
-                        id='embed'
-                        label='Embed'
-                        value={embedUrl}
-                        disabled={false}
-                        readOnly={true}
-                    />
-                    <button className='btnNoBg' onClick={() => copy(embedUrl)}>
-                        <Tooltip title='Copy URL'>
-                            <IconCopy />
-                        </Tooltip>
-                    </button>
+                <div className={style.innerContent}>
+                    <div className={style.inputContainer}>
+                        <TextAreaInput
+                            id='button-md'
+                            label='Button Markdown'
+                            value={btnMdUrl}
+                            disabled={false}
+                            readOnly={true}
+                            rows={3}
+                        />
+                        <button className='btnNoBg' onClick={() => copy(btnMdUrl)}>
+                            <Tooltip title='Copy URL'>
+                                <IconCopy />
+                            </Tooltip>
+                        </button>
+                    </div>
+                    <div className={style.inputContainer}>
+                        <TextAreaInput
+                            id='button-html'
+                            label='Button HTML'
+                            value={btnHtmlUrl}
+                            disabled={false}
+                            readOnly={true}
+                            rows={3}
+                        />
+                        <button className='btnNoBg' onClick={() => copy(btnHtmlUrl)}>
+                            <Tooltip title='Copy URL'>
+                                <IconCopy />
+                            </Tooltip>
+                        </button>
+                    </div>
+                    <img className={style.openLabBtn} alt='Superblocks button' src={'/static/img/open-superblocks.svg'}/>
                 </div>
-                <img alt='Superblocks button' src={'/static/img/open-superblocks.svg'}/>
-                <div className={style.inputContainer}>
-                    <TextInput
-                        id='button-md'
-                        label='Button Markdown'
-                        value={btnMdUrl}
-                        disabled={false}
-                        readOnly={true}
-                    />
-                    <button className='btnNoBg' onClick={() => copy(btnMdUrl)}>
-                        <Tooltip title='Copy URL'>
-                            <IconCopy />
-                        </Tooltip>
-                    </button>
-                </div>
-                <div className={style.inputContainer}>
-                    <TextInput
-                        id='button-html'
-                        label='Button HTML'
-                        value={btnHtmlUrl}
-                        disabled={false}
-                        readOnly={true}
-                    />
-                    <button className='btnNoBg' onClick={() => copy(btnHtmlUrl)}>
-                        <Tooltip title='Copy URL'>
-                            <IconCopy />
-                        </Tooltip>
-                    </button>
-                </div>
-            </div>
+            </React.Fragment>
         );
     }
 
