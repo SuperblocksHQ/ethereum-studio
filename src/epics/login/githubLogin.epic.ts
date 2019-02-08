@@ -14,12 +14,14 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { empty, of } from 'rxjs';
+import { empty, of, from } from 'rxjs';
 import { ofType } from 'redux-observable';
 import { authActions } from '../../actions';
-import { withLatestFrom, tap, switchMap, catchError, map } from 'rxjs/operators';
+import { withLatestFrom, tap, switchMap, catchError, map, concat } from 'rxjs/operators';
 import PopupWindow from '../../components/login/github/PopupWindow';
 import { AnyAction } from 'redux';
+import { authService } from '../../services/auth.service';
+import { userService } from '../../services/user.service';
 
 interface IQueryParams {
     client_id: string;
@@ -56,16 +58,22 @@ export const githubLogin = (action$: AnyAction, state$: any) => action$.pipe(
             redirect_uri: redirectUri,
         }))
             .pipe(
-                tap((query: string) => PopupWindow.open(
+                switchMap((query: string) => from(PopupWindow.open(
                     'github-oauth-authorize',
                     `https://github.com/login/oauth/authorize?${query}`,
-                    { height: 1000, width: 600 }
-                )),
-                map(authActions.githubLoginSuccess)
+                    { height: 1000, width: 600 })
+                ).pipe(
+                    tap((data: any) => console.log(data)),
+                    concat((data: any) => from(authService.githubAuth(data))
+                    .pipe(
+                        concat(from(userService.getUser())),
+                        map(authActions.loginSuccess)
+                    )
+                )))
             );
     }),
     catchError((err: any) => {
         console.log('Error: ', err);
         return empty();
     })
-    );
+);
