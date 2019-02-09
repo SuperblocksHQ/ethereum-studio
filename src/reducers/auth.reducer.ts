@@ -38,6 +38,7 @@ export default function loginReducer(state = initialState, action: AnyAction) {
             return {
                 ...state,
                 isAuthenticated: false,
+                profileImageUrl: null
             };
         default:
             return state;
