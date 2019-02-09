@@ -15,28 +15,25 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { connect } from 'react-redux';
-import { authActions } from '../../actions'
-import { authSelectors } from "../../selectors";
-import Login from "./Login";
+import { authActions } from '../../actions';
+import { authSelectors } from '../../selectors';
+import Login from './Login';
+import { Dispatch } from 'react';
+import { AnyAction } from 'redux';
 
-const mapStateToProps = state => ({
-    authActions: {
-        getIsAuthenticated: authSelectors.getIsAuthenticated(state)
-    }
+const mapStateToProps = (state: any) => ({
+    isAuthenticated: authSelectors.getIsAuthenticated(state)
 });
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
     return {
         githubLogin: () => {
-            dispatch(authActions.githubLogin())
-        },
-        loginSuccess: () => {
-            dispatch(authActions.loginSuccess())
+            dispatch(authActions.githubLogin());
         },
         logout: () => {
-            dispatch(authActions.logout())
+            dispatch(authActions.logout());
         }
-    }
-}
+    };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

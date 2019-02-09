@@ -15,25 +15,43 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { Component } from 'react';
-import Proptypes from 'prop-types';
 import classNames from 'classnames';
 import style from './style.less';
-import LoginModal from "./LoginModal";
+import LoginModal from './LoginModal';
+import { isUndefined } from 'util';
 
-export default class Login extends Component {
+interface IProps {
+    functions: any;
+    isAuthenticated: boolean;
+    logout: () => void;
+    githubLogin: () => void;
+}
+
+export default class Login extends Component<IProps> {
 
     logout = () => {
         if (!confirm('Are you sure you want to logout?')) { return; }
 
         this.props.logout();
-    };
+    }
+
+    componentDidUpdate() {
+        if (this.props.isAuthenticated) {
+            this.closeModal();
+        }
+    }
+
+    closeModal = () => {
+        this.props.functions.modal.close();
+    }
 
     showLoginModal = () => {
+        const { githubLogin, isAuthenticated } = this.props;
         const modal = (
             <LoginModal
-                onCloseClick={this.props.onSettingsModalClose}
-                githubLogin={this.props.githubLogin}
-                loginSuccess={this.props.loginSuccess}
+                onCloseClick={this.closeModal}
+                githubLogin={githubLogin}
+                isAuthenticated={isAuthenticated}
             />
         );
         this.props.functions.modal.show({
@@ -44,24 +62,23 @@ export default class Login extends Component {
                 return modal;
             }
         });
-    };
+    }
 
     render() {
-        const isAuthenticated = this.props.authActions.getIsAuthenticated;
+        const { isAuthenticated } = this.props;
 
         return(
             <div className={style.action}>
-                {isAuthenticated
-                    ?
+                { isAuthenticated ?
                     <button
-                        className={classNames([style.container, "btnNoBg"])}
+                        className={classNames([style.container, 'btnNoBg'])}
                         onClick={this.logout}
                     >
                         <span>Logout</span>
                     </button>
                     :
                     <button
-                        className={classNames([style.container, "btnNoBg"])}
+                        className={classNames([style.container, 'btnNoBg'])}
                         onClick={this.showLoginModal}
                     >
                         <span>Login</span>
@@ -70,9 +87,4 @@ export default class Login extends Component {
             </div>
         );
     }
-}
-
-Login.proptypes = {
-    functions: Proptypes.func.isRequired,
-    onSettingsModalClose: Proptypes.func.isRequired,
 }
