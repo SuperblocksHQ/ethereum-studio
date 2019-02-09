@@ -18,13 +18,14 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 import style from './style.less';
 import LoginModal from './LoginModal';
-import { isUndefined } from 'util';
+import Loggedin from './Loggedin';
 
 interface IProps {
     functions: any;
     isAuthenticated: boolean;
     logout: () => void;
     githubLogin: () => void;
+    profileImageUrl: string;
 }
 
 export default class Login extends Component<IProps> {
@@ -65,17 +66,15 @@ export default class Login extends Component<IProps> {
     }
 
     render() {
-        const { isAuthenticated } = this.props;
+        const { isAuthenticated, profileImageUrl } = this.props;
 
         return(
             <div className={style.action}>
                 { isAuthenticated ?
-                    <button
-                        className={classNames([style.container, 'btnNoBg'])}
-                        onClick={this.logout}
-                    >
-                        <span>Logout</span>
-                    </button>
+                    <Loggedin
+                        logout={this.logout}
+                        profileImageUrl={profileImageUrl}
+                    />
                     :
                     <button
                         className={classNames([style.container, 'btnNoBg'])}

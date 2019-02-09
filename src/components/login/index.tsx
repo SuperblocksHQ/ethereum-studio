@@ -22,7 +22,8 @@ import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
 
 const mapStateToProps = (state: any) => ({
-    isAuthenticated: authSelectors.getIsAuthenticated(state)
+    isAuthenticated: authSelectors.getIsAuthenticated(state),
+    profileImageUrl: authSelectors.getProfileImageUrl(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
