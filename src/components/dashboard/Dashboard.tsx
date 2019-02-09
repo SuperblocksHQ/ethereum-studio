@@ -25,9 +25,19 @@ interface IProps {
     getProjectList: () => void;
 
     projectList: IProject[];
+
+    isAuthenticated: boolean;
 }
 
-export default class Dashboard extends Component<IProps> {
+interface IState {
+    isAuthenticated: boolean;
+}
+
+export default class Dashboard extends Component<IProps, IState> {
+
+    state: IState = {
+        isAuthenticated: this.props.isAuthenticated
+    };
 
     componentDidMount() {
         this.props.getProjectList();
@@ -38,19 +48,28 @@ export default class Dashboard extends Component<IProps> {
     }
 
     render() {
-        const { projectList } = this.props;
+        const { projectList, isAuthenticated } = this.props;
         return(
             <div className={style.dashboard}>
                 <Topbar />
-                <SideMenu
-                    onItemSelected={this.onSideMenuItemSelected}
-                />
-                <div className={style.content}>
-                    <ProjectList
-                        listName={'All Your Projects'}
-                        list={projectList}
-                    />
-                </div>
+
+                { isAuthenticated ?
+                    <div>
+                        <SideMenu
+                        onItemSelected={this.onSideMenuItemSelected}
+                        />
+                        <div className={style.content}>}
+                            <ProjectList
+                                listName={'All Your Projects'}
+                                list={projectList}
+                            />
+                        </div>
+                    </div>
+                :
+                    <div>
+                        TODO - Show login/create new project view
+                    </div>
+                }
             </div>
         );
     }
