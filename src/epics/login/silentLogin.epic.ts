@@ -38,7 +38,6 @@ export const silentLogin = (action$: AnyAction, state$: any) => action$.pipe(
     ),
     catchError((err: any) => {
         console.log(err);
-        map(authActions.githubLogin);
         return empty();
     }
 ));
