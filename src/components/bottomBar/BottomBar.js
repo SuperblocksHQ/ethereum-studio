@@ -17,8 +17,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import style from './style.less';
-import Note from '../note';
-import OnlyIf from '../onlyIf';
 import { shortenBalance } from '../../utils/accounts';
 
 export default class BottomBar extends Component {

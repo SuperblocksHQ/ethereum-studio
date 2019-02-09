@@ -16,6 +16,7 @@
 
 import React, { Component } from 'react';
 import style from './style.less';
+import { HelpAction } from '../../common';
 
 export default class Topbar extends Component {
 
@@ -28,6 +29,10 @@ export default class Topbar extends Component {
                         alt='Superblocks logo'
                     />
                 </a>
+
+                <div className={style.actionsRight}>
+                    <HelpAction />
+                </div>
             </div>
         );
     }
