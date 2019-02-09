@@ -58,7 +58,7 @@ const NewAction = () => (
 );
 
 const DashboardAction = () => (
-    <div className={classNames([style.action, style.actionRight])}>
+    <div className={classNames([style.action, style.actionRight, style.actionMenu])}>
         <Tooltip title="Dashboard">
             <a href="/dashboard" className={classNames([style.container, "btnNoBg"])}>
                 <IconProjectSelector />
@@ -68,7 +68,7 @@ const DashboardAction = () => (
 );
 
 const PreferencesAction = () => (
-    <div className={classNames([style.action, style.actionRight])}>
+    <div className={classNames([style.action, style.actionRight, style.actionMenu])}>
         <Tooltip title="Preferences">
             <button className={classNames([style.container, "btnNoBg"])}>
                 <IconPreferences />
@@ -89,7 +89,7 @@ const UploadDrowdownAction = () => (
 const ForkDropdownAction = (props) => {
     const { onForkClicked } = props;
     return(
-        <div className={classNames([style.action, style.actionFork])}>
+        <div className={classNames([style.action, style.actionFork, style.actionMenu])}>
             <button className={classNames([style.container, 'btnNoBg'])} onClick={onForkClicked}>
                 <IconFork />
                 <span>Fork</span>
@@ -229,7 +229,7 @@ export default class TopBar extends Component {
                 </OnlyIf>
                 <OnlyIf test={showUploadButton}>
                     <DropdownContainer
-                        className={style.actionUpload}
+                        className={classNames([style.actionUpload, style.actionMenu])}
                         dropdownContent={<UploadDialog />}
                         enableClickInside={true}
                         showMenu={showUploadDialog}
@@ -244,7 +244,7 @@ export default class TopBar extends Component {
                     />
                 </OnlyIf>
                 <DropdownContainer
-                    className={style.actionShare}
+                    className={classNames([style.actionShare, style.actionMenu])}
                     dropdownContent={<ShareDialog />}
                     enableClickInside={true}
                 >
@@ -256,11 +256,14 @@ export default class TopBar extends Component {
                 <div className={style.actionsRight}>
                     <DropdownContainer
                         className={style.actionMenu}
-                        dropdownContent={<NewDropdownDialog />} >
+                        dropdownContent={<NewDropdownDialog />}
+                    >
                         <NewAction />
                     </DropdownContainer>
 
-                    <DashboardAction/>
+                    <DashboardAction
+                        className={style.actionMenu}
+                    />
 
                     <div onClick={this.showPreferencesModal}>
                         <PreferencesAction />
@@ -268,7 +271,7 @@ export default class TopBar extends Component {
 
                     <HelpAction />
 
-                    <div>
+                    <div className={style.actionMenu}>
                         <Login
                             functions={this.props.functions}
                             onSettingsModalClose={this.onSettingsModalClose}

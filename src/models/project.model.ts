@@ -15,6 +15,7 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 export interface IProject {
+    id: string;
     name: string;
     description: string;
     lastModifiedAt: string;

@@ -15,15 +15,50 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 .container {
+    position: relative;
     margin-top: 30px;
     padding-bottom: 27px;
     width: 50%;
+    max-width: 1000px;
+    word-break: break-word;
     box-sizing: border-box; 
     padding: 0px 15px;
 
     .innerWrapper {
-        padding: 15px;
-        border: 1px solid white;
+        display: inline-block;
+        padding: 30px;
+        background: #252525;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+        width: 100%;
+        transition: box-shadow .25s, transform .15s, border .3s, background .15s;
+        border: 1px solid transparent;
+
+        &:hover {
+            transform: scale(1.001) translateY(-3px) translateZ(0);
+            box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+            backface-visibility: hidden;
+            -webkit-font-smoothing: subpixel-antialiased;
+
+            & + .menuWrapper {
+                transform: translate(0px, -52%) translateZ(0);
+            }
+        }
+    }
+
+    .menuWrapper {
+        transition: transform .15s, border .3s, background .15s, opacity .15s;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 15px;
+        padding: 20px 30px 20px 10px;
+        height: 100%;
+        display: flex;
+
+        &:hover {
+            opacity: .6;
+            cursor: pointer;
+        }
     }
 
     .name {

@@ -66,9 +66,7 @@ export default class ProjectTitle extends Component<IProps> {
             <div className={style.projectButton}>
                 <OnlyIf test={!projectNameUpdating}>
                         <div onClick={this.handleProjectNameClick} className={style.action}>
-                            <button className='btnNoBg'>
-                                <span className={style.projectText}>{projectName}</span>
-                            </button>
+                            <span className={style.projectText}>{projectName}</span>
                         </div>
                         <DropdownContainer
                             className={style.projectMenuDropdown}

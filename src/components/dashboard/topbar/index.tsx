@@ -22,11 +22,12 @@ export default class Topbar extends Component {
     render() {
         return(
             <div className={style.topbar}>
-                <img
-                    className={style.logo}
-                    src='/static/img/img-lab-logo.svg'
-                    alt='Superblocks logo'
-                />
+                <a href='/' className={style.logo}>
+                    <img
+                        src='/static/img/img-lab-logo.svg'
+                        alt='Superblocks logo'
+                    />
+                </a>
             </div>
         );
     }

@@ -16,18 +16,15 @@
 
 @import '../../../../style/index';
 
-.actionHelp {
-    display: flex;
-    height: 100%;
-    align-content: center;
-    align-items: center;
-}
-
 .actionRight {
     padding: 0 5px;
     &.noBorder:hover {
         border-color: transparent;
     }
+}
+
+.container {
+    display: flex;
 }
 
 .action {
@@ -41,6 +38,7 @@
     &:hover {
         color: #E0E0E0;
         border-color: @primary-color;
+        background-color: @action-color-hover;
     }
     a {
         padding: 0 5px;

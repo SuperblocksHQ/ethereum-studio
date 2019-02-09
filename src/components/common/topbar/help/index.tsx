@@ -79,9 +79,9 @@ const HelpDropdownDialog = () => (
 
 export const HelpAction = () => (
     <DropdownContainer
-            className={style.actionHelp}
+            className={classNames([style.action, style.actionMenu, style.actionRight])}
             dropdownContent={<HelpDropdownDialog />} >
-        <div className={classNames([style.action, style.actionRight])}>
+        <div className={style.actionMenu}>
             <Tooltip title='Help'>
                 <button className={classNames([style.container, 'btnNoBg'])}>
                     <IconHelp />

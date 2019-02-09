@@ -46,15 +46,14 @@
 	position: relative;
 	padding: 2.7px 10px;
 	padding-left: 0px;
-	border-left: 2px solid transparent;
 	display: flex;
 	color: white;
+	transition: background-color .15s, border-color;
 
 	&:hover,
 	&.active {
 		background-color: rgba(128, 46, 255, 0.1);
 		cursor: pointer;
-		border-color: #7237CF;
 	}
 
 	&.disabled {

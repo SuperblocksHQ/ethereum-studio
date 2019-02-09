@@ -17,6 +17,7 @@
 import React, { Component } from 'react';
 import style from './style.less';
 import { IProject } from '../../../../models';
+import { IconDots } from '../../../icons';
 
 interface IProps {
     project: IProject;
@@ -30,16 +31,16 @@ export default class Project extends Component<IProps> {
         console.log(project);
         return (
             <div className={style.container}>
-                <div className={style.innerWrapper}>
+                <a href={project.id} className={style.innerWrapper}>
                     <div className={style.name}>
                         {project.name}
                     </div>
                     <div className={style.description}>
                         {project.description}
                     </div>
-                    <div className={style.infoContainer}>
-                        {project.lastModifiedAt}
-                    </div>
+                </a>
+                <div className={style.menuWrapper}>
+                    <IconDots width='30' />
                 </div>
             </div>
         );

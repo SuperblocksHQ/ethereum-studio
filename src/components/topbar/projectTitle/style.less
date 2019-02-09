@@ -30,39 +30,45 @@
     margin-right: auto;
     width: 100%;
     text-align: center;
-    &:hover {
-        cursor: default;
-    }
+
     &.projectButtonCenter {
         flex-grow: 2;
         justify-content: center;
     }
+
     .projectText {
+        cursor: default;
         margin-left: 3px;
-        font-weight: 700;
+        font-weight: 600;
     }
+
     .projectMenuDropdown {
         display: flex;
         align-items: center;
         height: 100%;
         position: relative;
+
         &>div:first-of-type {
             height: 100%;
             position: relative;
             align-items: center;
             display: flex;
         }
+
         &:hover {
             cursor: pointer;
+
             .dropDown {
                 opacity: .6;
                 transform: rotate(45deg) translate(2px, 2px);
             }
         }
     }
+
     form {
         width: 100%;
     }
+
     input,
     input:focus {
         background: transparent;
@@ -76,9 +82,10 @@
         text-align: center;
         width: 100%;
     }
+
     .dropDown {
         position: relative;
-        margin: 0px 4px;
+        margin-left: 10px;
         transition: opacity .15s, transform .15s;
     }
 }
