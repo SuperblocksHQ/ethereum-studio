@@ -21,8 +21,7 @@ import BottomBar from './BottomBar';
 
 const mapStateToProps = state => ({
     networkPreferences: getNetworkPreferences(state),
-    selectedAccount: projectSelectors.getSelectedAccount(state),
-    showBottomBarNote: viewSelectors.getShowBottomBarNote(state),
+    selectedAccount: projectSelectors.getSelectedAccount(state)
 });
 
 export default connect(mapStateToProps, null)(BottomBar);

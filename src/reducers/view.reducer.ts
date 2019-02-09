@@ -19,8 +19,7 @@ import { appActions } from '../actions';
 
 export const initialState = {
     showTopBarSelectedProjectName: true,
-    showTopBarOpenInLab: false,
-    showBottomBarNote: true,
+    showTopBarOpenInLab: false
 };
 
 export default function viewReducer(state = initialState, action: AnyAction, root: any) {
@@ -30,7 +29,6 @@ export default function viewReducer(state = initialState, action: AnyAction, roo
                 ...state,
                 showTopBarSelectedProjectName: !root.app.isEmbeddedMode,
                 showTopBarOpenInLab: root.app.isEmbeddedMode,
-                showBottomBarNote: !root.app.isEmbeddedMode
             };
         default:
             return state;
