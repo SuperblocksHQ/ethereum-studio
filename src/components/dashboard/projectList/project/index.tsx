@@ -1,4 +1,4 @@
-// Copyright 2018 Superblocks AB
+// Copyright 2019 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -14,35 +14,23 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { Component } from 'react';
-import style from './style.less';
-import { IProject } from '../../../../models';
-import { IconDots } from '../../../icons';
+import { connect } from 'react-redux';
+import { Dispatch } from 'react';
+import { AnyAction } from 'redux';
+import { projectSelectors } from '../../../../selectors';
+import { projectsActions } from '../../../../actions';
+import Project from './Project';
 
-interface IProps {
-    project: IProject;
+const mapStateToProps = (state: any) => ({
+
+});
+
+function mapDispatchToProps(dispatch: Dispatch<AnyAction>) {
+    return {
+        deleteProject: (projectId: string) => {
+            dispatch(projectsActions.deleteProject(projectId));
+        }
+    };
 }
 
-export default class Project extends Component<IProps> {
-
-    render() {
-        const { project }  = this.props;
-
-        console.log(project);
-        return (
-            <div className={style.container}>
-                <a href={project.id} className={style.innerWrapper}>
-                    <div className={style.name}>
-                        {project.name}
-                    </div>
-                    <div className={style.description}>
-                        {project.description}
-                    </div>
-                </a>
-                <div className={style.menuWrapper}>
-                    <IconDots width='30' />
-                </div>
-            </div>
-        );
-    }
-}
+export default connect(mapStateToProps, mapDispatchToProps)(Project);

@@ -23,11 +23,13 @@ import {
     IconTrash,
     IconEdit
 } from '../../icons';
+import classNames from 'classnames';
 
 interface IProps {
     projectId: string;
     deleteProject: (projectId: string) => void;
     renameProject: () => void;
+    customClass?: string;
 }
 
 export default class ProjectMenuDropdownDialog extends Component<IProps> {
@@ -52,7 +54,7 @@ export default class ProjectMenuDropdownDialog extends Component<IProps> {
 
     render() {
         return (
-            <div className = {style.menuDialog} >
+            <div className = {classNames([style.menuDialog, this.props.customClass])} >
                 <MenuItem
                     icon={<IconDownload />}
                     action='download-project'
