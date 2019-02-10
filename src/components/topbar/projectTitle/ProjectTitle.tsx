@@ -69,8 +69,9 @@ export default class ProjectTitle extends Component<IProps> {
                             <span className={style.projectText}>{projectName}</span>
                         </div>
                         <DropdownContainer
+                            showMenu={false}
                             className={style.projectMenuDropdown}
-                            dropdownContent={<ProjectMenuDropdownDialog />}
+                            dropdownContent={<ProjectMenuDropdownDialog renameProject={this.handleProjectNameClick} />}
                         >
                             <IconDropdown className={classNames([style.dropDown, 'dropDown'])} />
                         </DropdownContainer>
