@@ -82,6 +82,7 @@ export default class ProjectTitle extends Component<IProps> {
                             value={newProjectName}
                             onBlur={this.handleChangeName}
                             onChange={this.handleChange}
+                            spellCheck={false}
                             autoFocus />
                     </form>
                 </OnlyIf>
