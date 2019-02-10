@@ -20,7 +20,8 @@ import React from 'react';
 import classNames from "classnames";
 import style from "./style.less";
 import {IconAngleDown} from "../icons";
-import {SubMenu} from "../common/menu";
+import {MenuItem} from "../common/menu";
+import { DropdownContainer } from "../common/dropdown";
 
 class Loggedin extends Component{
 
@@ -46,22 +47,25 @@ class Loggedin extends Component{
         const isExtended = this.state.isExtended;
 
         return (
-            <div>
-            <button
-                className={classNames([style.container, "btnNoBg"])}
-                onClick={this.triggerDropdown}
-            >
-                <img className={style.profilePicture} src={this.props.profileImageUrl}/>
-                <div className={style.caret} >
-                    <IconAngleDown className={style.angleDown}/>
-                </div>
-            </button>
-                { isExtended && (
-                    <div className={style.menuDialog} onClick={this.logout}>
-                        <SubMenu title="Logout" />
-                    </div> )
-                }
-            </div>
+            <React.Fragment>
+                <DropdownContainer
+                    className={style.actionMenu}
+                    dropdownContent={
+                        <div className={style.menuDialog} >
+                            <MenuItem onClick={this.logout} title="Logout" />
+                        </div>
+                    }>
+                    <button
+                        className={classNames([style.actionMenu, style.container, "btnNoBg"])}
+                        onClick={this.triggerDropdown}
+                    >
+                        <img className={style.profilePicture} src={this.props.profileImageUrl}/>
+                        <div className={style.caret} >
+                            <IconAngleDown className={style.angleDown}/>
+                        </div>
+                    </button>
+                </DropdownContainer>
+            </React.Fragment>
         );
     }
 

@@ -42,7 +42,7 @@ import { HelpAction } from "../common";
 import ProjectTitle from './projectTitle';
 
 const MenuAction = () => (
-    <div className={classNames([style.action, style.noBorder])}>
+    <div className={style.action}>
         <button className={classNames([style.container, "btnNoBg"])}>
             <IconMenu />
         </button>
@@ -58,17 +58,17 @@ const NewAction = () => (
 );
 
 const DashboardAction = () => (
-    <div className={classNames([style.action, style.actionRight, style.actionMenu])}>
+    <a href="/dashboard" className={classNames([style.action, style.actionRight])}>
         <Tooltip title="Dashboard">
-            <a href="/dashboard" className={classNames([style.container, "btnNoBg"])}>
+            <div className={classNames([style.actionMenu, style.actionDashboard, style.container, "btnNoBg"])}>
                 <IconProjectSelector />
-            </a>
+            </div>
         </Tooltip>
-    </div>
+    </a>
 );
 
 const PreferencesAction = () => (
-    <div className={classNames([style.action, style.actionRight, style.actionMenu])}>
+    <div className={classNames([style.action, style.actionRight])}>
         <Tooltip title="Preferences">
             <button className={classNames([style.container, "btnNoBg"])}>
                 <IconPreferences />
@@ -89,8 +89,8 @@ const UploadDrowdownAction = () => (
 const ForkDropdownAction = (props) => {
     const { onForkClicked } = props;
     return(
-        <div className={classNames([style.action, style.actionFork, style.actionMenu])}>
-            <button className={classNames([style.container, 'btnNoBg'])} onClick={onForkClicked}>
+        <div className={style.action}>
+            <button className={classNames([style.actionFork, style.container, 'btnNoBg'])} onClick={onForkClicked}>
                 <IconFork />
                 <span>Fork</span>
             </button>
@@ -205,7 +205,7 @@ export default class TopBar extends Component {
         return (
             <div className={style.topbar}>
                 <DropdownContainer
-                    className={style.actionMenu}
+                    className={style.actionDialogMenu}
                     dropdownContent={<MenuDropdownDialog />} >
                     <MenuAction />
                 </DropdownContainer>
@@ -229,7 +229,7 @@ export default class TopBar extends Component {
                 </OnlyIf>
                 <OnlyIf test={showUploadButton}>
                     <DropdownContainer
-                        className={classNames([style.actionUpload, style.actionMenu])}
+                        className={classNames([style.actionUpload, style.action])}
                         dropdownContent={<UploadDialog />}
                         enableClickInside={true}
                         showMenu={showUploadDialog}
@@ -261,9 +261,7 @@ export default class TopBar extends Component {
                         <NewAction />
                     </DropdownContainer>
 
-                    <DashboardAction
-                        className={style.actionMenu}
-                    />
+                    <DashboardAction />
 
                     <div onClick={this.showPreferencesModal}>
                         <PreferencesAction />
@@ -271,12 +269,10 @@ export default class TopBar extends Component {
 
                     <HelpAction />
 
-                    <div className={style.actionMenu}>
-                        <Login
-                            functions={this.props.functions}
-                            onSettingsModalClose={this.onSettingsModalClose}
-                        />
-                    </div>
+                    <Login
+                        functions={this.props.functions}
+                        onSettingsModalClose={this.onSettingsModalClose}
+                    />
                 </div>
             </div>
         );

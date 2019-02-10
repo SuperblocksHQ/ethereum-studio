@@ -94,7 +94,6 @@ export default class MenuDropdownDialog extends Component {
                     <MenuItem action="close-all-panels" onClick={this.handleMenuItemClick} title="Close All Panels" />
                     <Divider />
                     <MenuItem action="toggle-full-screen" onClick={this.handleMenuItemClick} title="Toggle Full Screen" />
-                    <MenuItem action="enter-zen-mode" onClick={this.handleMenuItemClick} title="Enter Zen Mode" />
                 </SubMenu>
             </div>
         )

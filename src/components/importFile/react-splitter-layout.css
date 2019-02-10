@@ -15,8 +15,8 @@
 }
 
 .splitter-layout >.layout-splitter:hover {
-    -webkit-transition: all 0.3s ease;
-    transition: all 0.3s ease;
+    -webkit-transition: all .15s ease;
+    transition: all .15s ease;
     border-left: 5px solid rgba(35, 35, 35, 0.7);
     border-right: 5px solid rgba(35, 35, 35, 0.7);
     background-color: #2d2d2d;
