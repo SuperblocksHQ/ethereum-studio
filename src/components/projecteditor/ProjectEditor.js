@@ -36,8 +36,7 @@ class SplitterLayout extends SplitterLayoutBase {
 export default class ProjectEditor extends Component {
     state = {
         EVMInit: false,
-        sidePanelDragging: false,
-        project: this.props.project
+        sidePanelDragging: false
     };
 
     constructor(props) {
@@ -119,19 +118,19 @@ export default class ProjectEditor extends Component {
     };
 
     render() {
-        const {
-            router,
-            functions,
-            isImportedProject,
-            displayTransactionsPanel,
-            displayFileSystemPanel,
-            previewSidePanel,
-            toggleTransactionsHistoryPanel,
-            toggleFileSystemPanel,
-            previewSidePanelActions,
-            selectedEnvironment } = this.props;
+        const { project,
+                router,
+                functions,
+                isImportedProject,
+                displayTransactionsPanel,
+                displayFileSystemPanel,
+                previewSidePanel,
+                toggleTransactionsHistoryPanel,
+                toggleFileSystemPanel,
+                previewSidePanelActions,
+                selectedEnvironment } = this.props;
 
-        const { sidePanelDragging, project } = this.state;
+        const { sidePanelDragging } = this.state;
 
         return (
             <div className={style.projecteditor}>
