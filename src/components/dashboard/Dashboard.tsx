@@ -56,9 +56,9 @@ export default class Dashboard extends Component<IProps, IState> {
                 { isAuthenticated ?
                     <div>
                         <SideMenu
-                        onItemSelected={this.onSideMenuItemSelected}
+                            onItemSelected={this.onSideMenuItemSelected}
                         />
-                        <div className={style.content}>}
+                        <div className={style.content}>
                             <ProjectList
                                 listName={'All Your Projects'}
                                 list={projectList}

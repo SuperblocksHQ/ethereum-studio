@@ -16,13 +16,14 @@
 
 import { connect } from 'react-redux';
 import { userActions } from '../../actions';
-import { userSelectors } from '../../selectors';
+import { userSelectors, authSelectors } from '../../selectors';
 import Dashboard from './Dashboard';
 import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
 
 const mapStateToProps = (state: any) => ({
     projectList: userSelectors.getProjectList(state),
+    isAuthenticated: authSelectors.getIsAuthenticated(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
