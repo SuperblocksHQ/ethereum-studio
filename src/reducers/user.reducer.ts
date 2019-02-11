@@ -15,15 +15,13 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { AnyAction } from 'redux';
-import { userActions } from '../actions';
+import { userActions, authActions } from '../actions';
 
 export const initialState = {
     projectList: [],
     isProjectListLoading: false,
     errorLoadingProjectList: null,
-    profile: {
-        profileImageUrl: null
-    }
+    profile: null
 };
 
 export default function userReducer(state = initialState, action: AnyAction) {
@@ -45,19 +43,19 @@ export default function userReducer(state = initialState, action: AnyAction) {
                 isProjectListLoading: false,
                 errorLoadingProjectList: action.data
             };
-        case userActions.SET_PROFILE_PICTURE:
+        case authActions.LOGOUT_SUCCESS:
             return {
                 ...state,
-                profile: {
-                    profileImageUrl: action.data.user.imageUrl
-                }
+                profile: null
             };
-        case userActions.REMOVE_PROFILE_PICTURE:
+        case authActions.LOGIN_SUCCESS:
+            let userData = null;
+            if (action.data.user) {
+                userData = action.data.user;
+            }
             return {
                 ...state,
-                profile: {
-                    profileImageUrl: null
-                }
+                profile: userData
             };
         default:
             return state;

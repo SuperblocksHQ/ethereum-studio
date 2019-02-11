@@ -22,7 +22,7 @@ import {
     tap,
     switchMap,
     catchError,
-    mergeMap
+    map
 } from 'rxjs/operators';
 import PopupWindow from '../../components/login/github/PopupWindow';
 import { AnyAction } from 'redux';
@@ -73,7 +73,7 @@ export const githubLogin = (action$: AnyAction, state$: any) => action$.pipe(
                 switchMap((data: any) => from(authService.githubAuth(data))),
                 switchMap(() => from(userService.getUser())),
                 tap((user: any) => console.log(user)),
-            mergeMap((data: IUser) => [userActions.setProfilePicture(data), authActions.loginSuccess(data)])
+                map(authActions.loginSuccess)
             );
     }),
     catchError((err: any) => {

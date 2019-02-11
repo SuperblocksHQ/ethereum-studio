@@ -59,7 +59,9 @@ class Loggedin extends Component{
                         className={classNames([style.actionMenu, style.container, "btnNoBg"])}
                         onClick={this.triggerDropdown}
                     >
-                        <img className={style.profilePicture} src={this.props.profileImageUrl}/>
+                        { this.props.userProfile &&
+                            <img className={style.profilePicture} src={this.props.userProfile.imageUrl} />
+                        }
                         <div className={style.caret} >
                             <IconAngleDown className={style.angleDown}/>
                         </div>
