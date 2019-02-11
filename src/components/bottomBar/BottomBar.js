@@ -48,7 +48,6 @@ export default class BottomBar extends Component {
 
 BottomBar.propType = {
     gasLimit: PropTypes.number.isRequired,
-    gasLimit: PropTypes.number.isRequired,
     endpoint:  PropTypes.string.isRequired,
     selectedAccount: PropTypes.object
 }

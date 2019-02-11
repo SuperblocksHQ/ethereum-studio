@@ -15,21 +15,23 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { projectsActions } from '../actions/projects.actions';
+import { IProjectState, IEnvironment } from '../models/state';
+import { AnyAction } from 'redux';
 
-export const initialState = {
+export const initialState: IProjectState = {
     project: undefined,
     environments: [],
     selectedEnvironment: { name: null, endpoint: null },
     selectedAccount: {name: null, balance: null, address: null}
 };
 
-function getEnvOrNull(environment) {
+function getEnvOrNull(environment: IEnvironment) {
     return (environment && environment.name)
         ? environment
         : null;
 }
 
-export default function projectsReducer(state = initialState, action) {
+export default function projectsReducer(state = initialState, action: AnyAction) {
     switch (action.type) {
         case projectsActions.SET_ALL_ENVIRONMENTS:
             return {
@@ -48,8 +50,8 @@ export default function projectsReducer(state = initialState, action) {
         case projectsActions.UPDATE_PROJECT_SETTINGS_SUCCESS: {
             return {
                 ...state,
-                selectedProject: {
-                    ...state.selectedProject,
+                project: {
+                    ...state.project,
                     name: action.data.name
                 },
             };

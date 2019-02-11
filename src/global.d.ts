@@ -18,3 +18,5 @@ declare module '*.less' {
     const content: any;
     export default content;
 }
+
+type Nullable<T> = T | null;
