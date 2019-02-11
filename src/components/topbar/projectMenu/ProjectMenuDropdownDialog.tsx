@@ -17,10 +17,19 @@
 import React, { Component } from 'react';
 import { MenuItem } from '../../common/menu';
 import style from './style.less';
+import {
+    IconConfigure,
+    IconDownload,
+    IconTrash,
+    IconEdit
+} from '../../icons';
+import classNames from 'classnames';
 
 interface IProps {
     projectId: string;
     deleteProject: (projectId: string) => void;
+    renameProject: () => void;
+    customClass?: string;
 }
 
 export default class ProjectMenuDropdownDialog extends Component<IProps> {
@@ -33,7 +42,7 @@ export default class ProjectMenuDropdownDialog extends Component<IProps> {
                 console.log('Export');
                 break;
             case 'rename-project':
-                console.log('Rename');
+                this.props.renameProject();
                 break;
             case 'delete-project':
                 this.props.deleteProject(projectId);
@@ -45,11 +54,31 @@ export default class ProjectMenuDropdownDialog extends Component<IProps> {
 
     render() {
         return (
-            <div className = {style.menuDialog} >
-                <MenuItem action='download-project' onClick = {this.handleMenuItemClick} title ='Download' />
-                <MenuItem action='configure-project' onClick = {this.handleMenuItemClick} title = 'Configure' />
-                <MenuItem action='rename-project' onClick = {this.handleMenuItemClick} title = 'Rename' />
-                <MenuItem action='delete-project' onClick = {this.handleMenuItemClick} title = 'Delete' />
+            <div className = {classNames([style.menuDialog, this.props.customClass])} >
+                <MenuItem
+                    icon={<IconDownload />}
+                    action='download-project'
+                    onClick={this.handleMenuItemClick}
+                    title='Download'
+                />
+                <MenuItem
+                    icon={<IconConfigure />}
+                    action='configure-project'
+                    onClick={this.handleMenuItemClick}
+                    title='Configure'
+                />
+                <MenuItem
+                    icon={<IconEdit />}
+                    action='rename-project'
+                    onClick={this.handleMenuItemClick}
+                    title='Rename'
+                />
+                <MenuItem
+                    icon={<IconTrash />}
+                    action='delete-project'
+                    onClick={this.handleMenuItemClick}
+                    title='Delete'
+                />
             </div>
         );
     }

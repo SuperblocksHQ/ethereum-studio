@@ -21,7 +21,7 @@
  * every time we try to make an api call)
  */
 let authToken = null;
-function getAuthToken() {
+export function getAuthToken() {
     if (authToken) {
         return ;
     } else {

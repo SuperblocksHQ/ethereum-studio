@@ -16,4 +16,5 @@
 
 export const authSelectors = {
     getIsAuthenticated: (state: any) => state.auth.isAuthenticated,
+    getProfileImageUrl: (state: any) => state.auth.profileImageUrl
 };

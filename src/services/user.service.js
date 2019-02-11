@@ -24,6 +24,16 @@ export const userService = {
                 'Content-Type': 'application/json',
             },
         })
-        .then((response) => response.json());
+            .then(handleErrors)
+            .then(response => response.json())
+            .catch(error => console.log('Get user error: ', error));
+
     }
+};
+
+function handleErrors(response) {
+    if (!response.ok) {
+        throw Error(response.statusText);
+    }
+    return response;
 }

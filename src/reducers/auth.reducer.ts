@@ -18,20 +18,27 @@ import { authActions } from '../actions/auth.actions';
 import { AnyAction } from 'redux';
 
 export const initialState = {
-    isAuthenticated : false
+    isAuthenticated : false,
+    profileImageUrl: null
 };
 
 export default function loginReducer(state = initialState, action: AnyAction) {
     switch (action.type) {
         case authActions.LOGIN_SUCCESS:
+            let imageUrl = null;
+            if (action.data.user) {
+                imageUrl = action.data.user.imageUrl;
+            }
             return {
                 ...state,
                 isAuthenticated: true,
+                profileImageUrl: imageUrl
             };
         case authActions.LOGOUT_SUCCESS:
             return {
                 ...state,
                 isAuthenticated: false,
+                profileImageUrl: null
             };
         default:
             return state;

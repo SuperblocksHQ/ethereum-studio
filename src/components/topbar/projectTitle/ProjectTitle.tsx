@@ -65,15 +65,16 @@ export default class ProjectTitle extends Component<IProps> {
         return(
             <div className={style.projectButton}>
                 <OnlyIf test={!projectNameUpdating}>
-                        <div onClick={this.handleProjectNameClick} className={style.action}>
-                            <span className={style.projectText}>{projectName}</span>
-                        </div>
-                        <DropdownContainer
-                            className={style.projectMenuDropdown}
-                            dropdownContent={<ProjectMenuDropdownDialog />}
-                        >
-                            <IconDropdown className={classNames([style.dropDown, 'dropDown'])} />
-                        </DropdownContainer>
+                    <div onClick={this.handleProjectNameClick} className={style.action}>
+                        <span className={style.projectText}>{projectName}</span>
+                    </div>
+                    <DropdownContainer
+                        showMenu={false}
+                        className={style.projectMenuDropdown}
+                        dropdownContent={<ProjectMenuDropdownDialog renameProject={this.handleProjectNameClick} />}
+                    >
+                        <IconDropdown className={classNames([style.dropDown, 'dropDown'])} />
+                    </DropdownContainer>
                 </OnlyIf>
                 <OnlyIf test={projectNameUpdating}>
                     <form onSubmit={this.handleChangeName}>
@@ -82,6 +83,7 @@ export default class ProjectTitle extends Component<IProps> {
                             value={newProjectName}
                             onBlur={this.handleChangeName}
                             onChange={this.handleChange}
+                            spellCheck={false}
                             autoFocus />
                     </form>
                 </OnlyIf>

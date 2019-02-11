@@ -26,6 +26,7 @@ interface IProps {
     isActive?: boolean;
     disabled?: boolean;
     action: string;
+    icon?: React.ReactNode;
 }
 
 export class MenuItem extends React.Component<IProps> {
@@ -39,13 +40,16 @@ export class MenuItem extends React.Component<IProps> {
     }
 
     render() {
-        const { title, description, isActive, disabled, onClick } = this.props;
+        const { title, description, isActive, disabled, onClick, icon } = this.props;
 
         return (
             <div onClick={this.onClick} className={classNames([style.title, disabled ? style.disabled : null])}>
                 <div className={style.activeContainer}>
                     {isActive &&
                         <IconCheckThin />
+                    }
+                    {icon &&
+                        icon
                     }
                 </div>
                 <div>{title}</div>

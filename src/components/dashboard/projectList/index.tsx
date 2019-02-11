@@ -1,4 +1,4 @@
-// Copyright 2018 Superblocks AB
+// Copyright 2019 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -145,6 +145,7 @@ export default class ProjectList extends Component<IProps> {
                     list.map((project: IProject) => {
                         return (
                             <Project
+                                key={project.id}
                                 project={project}
                             />
                         );

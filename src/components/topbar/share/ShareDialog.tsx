@@ -67,7 +67,7 @@ export default class ShareDialog extends React.Component<IProps, IState> {
     }
 
     getEmbedUrl = () => {
-        return `<iframe src="${this.state.shareUrl}" style="width:960px;height:500px;border:0;border-radius:4px;overflow:hidden;"></iframe>`;
+        return `<iframe src="${this.state.shareUrl}" style="width:960px;height:500px;border:0;border-radius:4px;overflow:hidden;" allowfullscreen="allowfullscreen"></iframe>`;
     }
 
     getBtnMdUrl = () => {

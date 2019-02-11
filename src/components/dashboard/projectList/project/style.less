@@ -1,4 +1,4 @@
-// Copyright 2018 Superblocks AB
+// Copyright 2019 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -24,14 +24,20 @@
     box-sizing: border-box; 
     padding: 0px 15px;
 
+    @media only screen and (max-width: 920px) {
+        width: 100%;
+    }
+
     .innerWrapper {
+        height: 100%;
         display: inline-block;
-        padding: 30px;
+        padding: 30px 60px 30px 30px;
         background: #252525;
         box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
         width: 100%;
         transition: box-shadow .25s, transform .15s, border .3s, background .15s;
         border: 1px solid transparent;
+        word-wrap: break-word;
 
         &:hover {
             transform: scale(1.001) translateY(-3px) translateZ(0);
@@ -39,25 +45,49 @@
             backface-visibility: hidden;
             -webkit-font-smoothing: subpixel-antialiased;
 
-            & + .menuWrapper {
-                transform: translate(0px, -52%) translateZ(0);
+            & + .projectButtonWrapper {
+                transform: translate(0px, -51%) translateZ(0);
             }
         }
     }
 
-    .menuWrapper {
-        transition: transform .15s, border .3s, background .15s, opacity .15s;
+    .projectButtonWrapper {
         position: absolute;
         top: 50%;
-        transform: translateY(-50%);
         right: 15px;
-        padding: 20px 30px 20px 10px;
+        transform: translateY(-50%);
+        transition: transform .15s, border .3s, background .15s;
         height: 100%;
         display: flex;
+        align-items: center;
+    }
+
+    .menuDialog {
+        position: absolute;
+        right: 45px;
+        left: auto;
+    }
+
+    .menuWrapper {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        padding: 0px 20px;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0px;
+
+        .projectButton {
+            transition: opacity .15s;
+        }
 
         &:hover {
-            opacity: .6;
             cursor: pointer;
+
+            .projectButtonIcon {
+                opacity: .6;
+            }
         }
     }
 

@@ -60,6 +60,7 @@
         margin-right: 15px;
         border: 1px solid #8641f2;
         margin-left: 4px;
+        min-width: 130px;
         span {
             margin-left: 10px;
         }
@@ -71,9 +72,15 @@
         margin-left: 45px;
         height: 100%;
     }
-    .actionsRight {
+    .actionsRight,
+    .actionDialogMenu {
         display: flex;
         height: 100%;
+    }
+    .actionDialogMenu {
+        .action {
+            padding: 0px 5px;
+        }
     }
     .actionHelp,
     .actionUpload,
@@ -83,6 +90,9 @@
         display: flex;
         height: 100%;
     }
+    .actionDashboard {
+        padding: 0px 8px;
+    }
     .actionMenu {
         display: flex;
         height: 100%;
@@ -90,8 +100,12 @@
             border-color: none;
             padding: 0px 5px;
         }
+        .actionFork {
+            padding-right: 10px;
+            padding-left: 10px;
+        }
         &:hover {
-            background-color: @action-color-hover;
+            border-color: @primary-color;
         }
     }
     .actionUpload {
@@ -101,13 +115,13 @@
         display: flex;
         align-items: center;
         align-content: center;
-        border-bottom: 2px solid transparent;
-        transition: all 0.15s ease;
+        transition: background .15s, border-color .15s;
         height: 100%;
         cursor: pointer;
+        border-bottom: 2px solid transparent;
         &:hover {
-            color: #E0E0E0;
             border-color: @primary-color;
+            background-color: @action-color-hover;
         }
         a {
             padding: 0 5px;
@@ -125,7 +139,6 @@
         height: 15px;
         right: 7px;
     }
-
     .projectMenu {
         display: block;
         position: fixed;
@@ -237,7 +250,6 @@
             }
         }
     }
-
     .show {
         visibility: visible;
         opacity: 1;
