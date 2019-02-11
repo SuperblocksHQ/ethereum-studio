@@ -1,5 +1,5 @@
 import {Observable} from 'rxjs';
-import { getAuthToken } from '../../services/utils/superFetch';
+import { getAuthToken } from '../../services/utils/fetchJson';
 
 export function createAuthorizedHttpObservable(url: any) {
     return Observable.create((observer: any) => {

@@ -13,20 +13,18 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
-import { superFetch } from './utils/superFetch';
+import { fetchJSON } from './utils/fetchJson';
+import { switchMap, tap } from 'rxjs/operators';
 
 export const authService = {
 
-    async githubAuth(data: any) {
-        const result = await superFetch(process.env.REACT_APP_API_BASE_URL + '/auth/github', {
+    githubAuth(data: any) {
+        return fetchJSON(process.env.REACT_APP_API_BASE_URL + '/auth/github', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data)
-        });
-        const jsonData = await result.json();
-        superFetch.setAuthToken(jsonData.token);
-        return result;
+            body: data
+        }).pipe(
+            switchMap(r => r.json()),
+            tap(jsonData => fetchJSON.setAuthToken(jsonData.token))
+        );
     }
 };

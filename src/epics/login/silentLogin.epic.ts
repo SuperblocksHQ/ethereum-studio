@@ -19,7 +19,6 @@ import { ofType } from 'redux-observable';
 import { appActions, authActions } from '../../actions';
 import {withLatestFrom, tap, catchError, map, flatMap} from 'rxjs/operators';
 import { AnyAction } from 'redux';
-import { userService } from '../../services';
 import {createAuthorizedHttpObservable} from '../utils/util';
 
 const login = () => {

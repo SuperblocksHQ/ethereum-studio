@@ -13,27 +13,27 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
-import { superFetch } from './utils/superFetch';
+import { fetchJSON } from './utils/fetchJson';
+import { map, switchMap, catchError } from 'rxjs/operators';
 
-export const userService = {
-
-    async getUser() {
-        return superFetch(process.env.REACT_APP_API_BASE_URL + '/user', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-            .then(handleErrors)
-            .then(response => response.json())
-            .catch(error => console.log('Get user error: ', error));
-
-    }
-};
-
-function handleErrors(response) {
+function handleErrors(response: Response) {
     if (!response.ok) {
         throw Error(response.statusText);
     }
     return response;
 }
+
+export const userService = {
+    getUser() {
+        return fetchJSON(process.env.REACT_APP_API_BASE_URL + '/user', {})
+            .pipe(
+                map(handleErrors),
+                switchMap(response => response.json()),
+                catchError(error => {
+                    console.log('Get user error: ', error);
+                    throw error;
+                })
+            );
+
+    }
+};

@@ -18,12 +18,12 @@ import { empty } from 'rxjs';
 import { ofType, Epic } from 'redux-observable';
 import { authActions, userActions } from '../../actions';
 import {tap, catchError, map} from 'rxjs/operators';
-import { superFetch } from '../../services/utils/superFetch';
+import { fetchJSON } from '../../services/utils/fetchJson';
 
 // destroy JWT token locally
 export const logout: Epic = (action$: any, state$: any) => action$.pipe(
     ofType(authActions.LOGOUT),
-    tap(() => superFetch.clearAuthToken()),
+    tap(() => fetchJSON.clearAuthToken()),
     map(authActions.logoutSuccess),
     catchError((err: any) => {
         console.log('There was an error login you out', err);

@@ -19,5 +19,6 @@ export interface IProject {
     name: string;
     description: string;
     lastModifiedAt: string;
+    files: any;
 }
 

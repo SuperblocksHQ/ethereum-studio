@@ -14,9 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import {empty, of, from, pipe} from 'rxjs';
+import {empty, of, from} from 'rxjs';
 import { ofType } from 'redux-observable';
-import { authActions, userActions } from '../../actions';
+import { authActions } from '../../actions';
 import {
     withLatestFrom,
     tap,
@@ -27,7 +27,6 @@ import {
 import PopupWindow from '../../components/login/github/PopupWindow';
 import { AnyAction } from 'redux';
 import { authService, userService } from '../../services';
-import {IUser} from '../../models';
 
 interface IQueryParams {
     client_id: string;
@@ -70,8 +69,8 @@ export const githubLogin = (action$: AnyAction, state$: any) => action$.pipe(
                     { height: 1000, width: 600 })
                 )),
                 tap((data: any) => console.log(data)),
-                switchMap((data: any) => from(authService.githubAuth(data))),
-                switchMap(() => from(userService.getUser())),
+                switchMap((data: any) => authService.githubAuth(data)),
+                switchMap(() => userService.getUser()),
                 tap((user: any) => console.log(user)),
                 map(authActions.loginSuccess)
             );
