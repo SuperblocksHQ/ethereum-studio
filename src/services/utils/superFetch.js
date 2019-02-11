@@ -29,35 +29,11 @@ export function getAuthToken() {
     }
 }
 
-export const superFetch = function (url, params = {}) {
-    params.headers = Object.assign(
-        {},
-        headerDict(params.headers),
-        // Default custom headers
-        {
-            Authorization: `Bearer ${getAuthToken()}`
-        }
-    );
-    params.credentials = 'same-origin';
-
-    if (params.body
-        && typeof params.body !== 'string'
-        && !(params.body instanceof FormData)) {
-
-            let body = new FormData();
-            Object.entries(params.body).forEach(([k, v]) => body.append(k, v));
-
-            params.body = body;
-    }
-
-    return fetch(url, params);
-}
-
 const headerDict = function (headers) {
     let dict = {};
 
     if (headers instanceof Headers) {
-        for (let [key, value] of headers.entries()) {
+        for (const [key, value] of headers.entries()) {
             dict[key] = value;
         }
     }else{
@@ -65,6 +41,29 @@ const headerDict = function (headers) {
     }
 
     return dict;
+}
+
+export const superFetch = function (url, params = {}) {
+    params.headers = {
+        ...headerDict(params.headers),
+        // Default custom headers
+        ...{
+            Authorization: `Bearer ${getAuthToken()}`
+        }
+    };
+    params.credentials = 'same-origin';
+
+    if (params.body
+        && typeof params.body !== 'string'
+        && !(params.body instanceof FormData)) {
+
+            const body = new FormData();
+            Object.entries(params.body).forEach(([k, v]) => body.append(k, v));
+
+            params.body = body;
+    }
+
+    return fetch(url, params);
 }
 
 superFetch.setAuthToken = function (token) {

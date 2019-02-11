@@ -23,11 +23,11 @@ import Networks from '../../networks';
 import { empty, from } from 'rxjs';
 
 function hasEnvironments(state) {
-    return state.projects.selectedProject.environments.length
+    return state.projects.environments.length
 }
 
 export const environmentUpdateEpic = (action$, state$) => action$.pipe(
-    ofType(projectsActions.SET_ENVIRONMENT, projectsActions.SELECT_PROJECT),
+    ofType(projectsActions.SET_ENVIRONMENT, projectsActions.SET_ALL_ENVIRONMENTS),
     switchMap(() => {
         if (!hasEnvironments(state$.value)) {
             return empty();

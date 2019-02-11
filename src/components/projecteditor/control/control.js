@@ -83,11 +83,21 @@ export default class Control extends Component {
         });
 
         projectItem.load(status => {
-            if (status == 0) {
+            if (status === 0) {
                 this.setState({
                     isProjectLoaded: true,
                     activeProject: projectItem,
                 });
+
+                const environments = projectItem.getHiddenItem('environments').getChildren().map(e => {
+                    const name = e.getName();
+                    return {
+                        name,
+                        endpoint: Networks[name] && Networks[name].endpoint
+                    };
+                });
+
+                this.props.setAllEnvironments(environments);
             } else {
                 // TODO - make sure we have a fallback here
             }
@@ -422,7 +432,7 @@ export default class Control extends Component {
 
 Control.propTypes = {
     appVersion: PropTypes.string.isRequired,
-    selectProject: PropTypes.func.isRequired,
+    setAllEnvironments: PropTypes.func.isRequired,
     renameFile: PropTypes.func.isRequired,
     selectedProjectId: PropTypes.string,
     toggleFileSystemPanel: PropTypes.func.isRequired,

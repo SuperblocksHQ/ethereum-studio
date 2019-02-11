@@ -1,4 +1,4 @@
-// Copyright 2018 Superblocks AB
+// Copyright 2019 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -17,20 +17,16 @@ import { superFetch } from './utils/superFetch';
 
 export const authService = {
 
-    async githubAuth(data) {
-        return superFetch(process.env.REACT_APP_API_BASE_URL + '/auth/github', {
+    async githubAuth(data: any) {
+        const result = await superFetch(process.env.REACT_APP_API_BASE_URL + '/auth/github', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(data)
-        })
-        .then((response) => response.json())
-        .then((jsonData) => {
-            console.log(jsonData);
-            superFetch.setAuthToken(jsonData.token);
         });
+        const jsonData = await result.json();
+        superFetch.setAuthToken(jsonData.token);
+        return result;
     }
-}
-
-
+};

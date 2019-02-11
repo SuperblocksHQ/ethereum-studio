@@ -10,8 +10,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => {
     return {
-        selectProject: (project) => {
-            dispatch(projectsActions.selectProject(project));
+        setAllEnvironments: (data) => {
+            dispatch(projectsActions.setAllEnvironments(data));
         },
         closeAllPanels: () => {
             dispatch(sidePanelsActions.closeAllPanels())

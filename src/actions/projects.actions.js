@@ -15,11 +15,11 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 export const projectsActions = {
-    SELECT_PROJECT: 'SELECT_PROJECT',
-    selectProject(project) {
+    SET_ALL_ENVIRONMENTS: 'SET_ALL_ENVIRONMENTS',
+    setAllEnvironments(environments) {
         return {
-            type: projectsActions.SELECT_PROJECT,
-            data: project
+            type: projectsActions.SET_ALL_ENVIRONMENTS,
+            data: environments
         };
     },
 

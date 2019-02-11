@@ -31,26 +31,19 @@ function getEnvOrNull(environment) {
 
 export default function projectsReducer(state = initialState, action) {
     switch (action.type) {
-        case projectsActions.SELECT_PROJECT: {
+        case projectsActions.SET_ALL_ENVIRONMENTS:
             return {
                 ...state,
-                selectedProject: action.data
-                    ? {
-                        ...action.data,
-                        selectedEnvironment: getEnvOrNull(state.selectedProject.selectedEnvironment)
-                            || action.data.environments[0]
-                            || initialState.selectedProject.selectedEnvironment
-                    } : initialState.selectedProject,
+                environments: action.data,
+                selectedEnvironment: getEnvOrNull(state.selectedEnvironment)
+                            || action.data[0]
+                            || initialState.selectedEnvironment
             };
-        }
         case projectsActions.SET_ENVIRONMENT:
             return {
                 ...state,
-                selectedProject: {
-                    ...state.selectedProject,
-                    selectedEnvironment: state.selectedProject.environments.find(e => e.name === action.data)
-                                        || initialState.selectedProject.selectedEnvironment
-                }
+                selectedEnvironment: state.environments.find(e => e.name === action.data)
+                                    || initialState.selectedEnvironment
             };
         case projectsActions.UPDATE_PROJECT_SETTINGS_SUCCESS: {
             return {
@@ -74,7 +67,7 @@ export default function projectsReducer(state = initialState, action) {
             };
         }
         case projectsActions.LOAD_PROJECT_FAIL: {
-            console.log(action.data);
+            console.log('project load failed', action.data);
 
             return {
                 ...state,
