@@ -16,14 +16,14 @@
 
 import { connect } from 'react-redux';
 import { authActions } from '../../actions';
-import { authSelectors } from '../../selectors';
+import { authSelectors, userSelectors } from '../../selectors';
 import Login from './Login';
 import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
 
 const mapStateToProps = (state: any) => ({
     isAuthenticated: authSelectors.getIsAuthenticated(state),
-    profileImageUrl: authSelectors.getProfileImageUrl(state)
+    profileImageUrl: userSelectors.getProfileImageUrl(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {

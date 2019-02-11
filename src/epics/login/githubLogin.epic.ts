@@ -14,13 +14,20 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { empty, of, from } from 'rxjs';
+import {empty, of, from, pipe} from 'rxjs';
 import { ofType } from 'redux-observable';
-import { authActions } from '../../actions';
-import { withLatestFrom, tap, switchMap, catchError, map, concat } from 'rxjs/operators';
+import { authActions, userActions } from '../../actions';
+import {
+    withLatestFrom,
+    tap,
+    switchMap,
+    catchError,
+    mergeMap
+} from 'rxjs/operators';
 import PopupWindow from '../../components/login/github/PopupWindow';
 import { AnyAction } from 'redux';
 import { authService, userService } from '../../services';
+import {IUser} from '../../models';
 
 interface IQueryParams {
     client_id: string;
@@ -66,7 +73,7 @@ export const githubLogin = (action$: AnyAction, state$: any) => action$.pipe(
                 switchMap((data: any) => from(authService.githubAuth(data))),
                 switchMap(() => from(userService.getUser())),
                 tap((user: any) => console.log(user)),
-                map(authActions.loginSuccess)
+            mergeMap((data: IUser) => [userActions.setProfilePicture(data), authActions.loginSuccess(data)])
             );
     }),
     catchError((err: any) => {

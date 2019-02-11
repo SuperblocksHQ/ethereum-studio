@@ -16,4 +16,5 @@
 
 export const userSelectors = {
     getProjectList: (state: any) => state.user.projectList,
+    getProfileImageUrl: (state: any) => state.user.profile.profileImageUrl
 };

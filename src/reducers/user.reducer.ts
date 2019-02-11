@@ -20,7 +20,10 @@ import { userActions } from '../actions';
 export const initialState = {
     projectList: [],
     isProjectListLoading: false,
-    errorLoadingProjectList: null
+    errorLoadingProjectList: null,
+    profile: {
+        profileImageUrl: null
+    }
 };
 
 export default function userReducer(state = initialState, action: AnyAction) {
@@ -41,6 +44,20 @@ export default function userReducer(state = initialState, action: AnyAction) {
                 ...state,
                 isProjectListLoading: false,
                 errorLoadingProjectList: action.data
+            };
+        case userActions.SET_PROFILE_PICTURE:
+            return {
+                ...state,
+                profile: {
+                    profileImageUrl: action.data.user.imageUrl
+                }
+            };
+        case userActions.REMOVE_PROFILE_PICTURE:
+            return {
+                ...state,
+                profile: {
+                    profileImageUrl: null
+                }
             };
         default:
             return state;

@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { IProject } from '../models';
+import { IProject, IUser } from '../models';
 
 export const userActions = {
 
@@ -36,6 +36,19 @@ export const userActions = {
         return {
             type: userActions.GET_PROJECT_LIST_FAIL,
             data: error
+        };
+    },
+    SET_PROFILE_PICTURE: 'SET_PROFILE_PICTURE',
+    setProfilePicture(user: any) {
+        return {
+            type: userActions.SET_PROFILE_PICTURE,
+            data: { user }
+        };
+    },
+    REMOVE_PROFILE_PICTURE: 'REMOVE_PROFILE_PICTURE',
+    removeProfilePicture() {
+        return {
+            type: userActions.REMOVE_PROFILE_PICTURE,
         };
     }
 };

@@ -15,6 +15,5 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 export const authSelectors = {
-    getIsAuthenticated: (state: any) => state.auth.isAuthenticated,
-    getProfileImageUrl: (state: any) => state.auth.profileImageUrl
+    getIsAuthenticated: (state: any) => state.auth.isAuthenticated
 };
