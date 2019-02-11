@@ -148,11 +148,14 @@ export class AccountSelector extends Component {
             return;
         }
         this.fetchBalance(network, address, balance => {
-            const a = (this.state.balances[network] =
-                this.state.balances[network] || {});
+            const a = (this.state.balances[network] = this.state.balances[network] || {});
             a[address] = balance;
-            this.props.onAccountSelected(accountName, balance, address);
-            this.forceUpdate();
+
+            const selectedAccount = this.props.selectedAccount;
+            if (selectedAccount.name !== accountName || selectedAccount.balance !== balance || selectedAccount.address !== address) {
+                this.props.onAccountSelected(accountName, balance, address);
+                this.forceUpdate();
+            }
             this.updateBalanceBusy = false;
         });
     };
@@ -187,7 +190,6 @@ export class AccountSelector extends Component {
     };
 
     render() {
-        console.log('Here');
         const project = this.props.router.control.getActiveProject();
         if (!project) { return (<div/>); }
         const account = project.getAccount();

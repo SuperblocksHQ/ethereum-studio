@@ -56,7 +56,7 @@ export const projectsActions = {
     updateSelectAccount(name, balance, address) {
         return {
             type: projectsActions.UPDATE_SELECTED_ACCOUNT,
-            data: {name: name, balance: balance, address: address}
+            data: {name, balance, address}
         };
     },
     DELETE_PROJECT: 'DELETE_PROJECT',

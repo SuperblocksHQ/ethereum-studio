@@ -49,6 +49,7 @@ const mapStateToProps = state => ({
     project: projectSelectors.getProject(state),
     selectedEnvironment: projectSelectors.getSelectedEnvironment(state),
     environments: projectSelectors.getEnvironments(state),
+    selectedAccount: projectSelectors.getSelectedAccount(state)
 });
 
 const mapDispatchToProps = dispatch => {
