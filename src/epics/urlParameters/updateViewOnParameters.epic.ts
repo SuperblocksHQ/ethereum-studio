@@ -28,5 +28,5 @@ const getParameters = () => {
 };
 
 export const updateViewOnParameters: Epic = (action$: any, state$: any) => action$.pipe(
-    ofType(projectsActions.SELECT_PROJECT),
+    ofType(projectsActions.LOAD_PROJECT_SUCCESS),
     map(() => appActions.updateViewParameters(getParameters())));
