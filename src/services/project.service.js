@@ -15,6 +15,8 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 import { superFetch } from './utils/superFetch';
 
+const objectIdRegex = /^[a-fA-F0-9]{24}$/;
+
 export const projectService = {
 
     async postProject(data) {
@@ -51,23 +53,32 @@ export const projectService = {
     },
 
     async getProjectById(id) {
-        // TODO: FIXME: validate id input
-        //              Expects a string (12-byte ObjectId)
+        // Validate input
+        // Expects a string (12-byte ObjectId)
+        const isValidId = id.match(objectIdRegex);
+        if(!isValidId) {
+            return Promise.reject(new Error("Invalid project id: " + id));
+        }
+
         return superFetch(process.env.REACT_APP_PROJECT_API_BASE_URL + '/projects/' + id, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
             },
         })
-        // TODO: FIXME: manually check status 200, response.ok or throwErrors
-        .then((response) => response.json())
-        .then((project) => {
-            // Make sure we transform here the files prop as it is represented in a string format when
-            // coming from the back-end.
-            const filesString = project.files;
-            project.files = JSON.parse(filesString);
-            return project;
-        });
+        .then((response) => {
+            return response.json().then(project => {
+                if(response.ok) {
+                    // Transform the files prop as it is represented in a string format when
+                    // coming from the back-end.
+                    const filesString = project.files;
+                    project.files = JSON.parse(filesString);
+                    return project;
+                } else {
+                    return Promise.reject(project);
+                }
+            });
+        })
     },
 
     async getProjectsInfo() {
