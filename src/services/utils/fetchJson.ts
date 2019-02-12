@@ -15,10 +15,23 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { from } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
 
 export function getAuthToken() {
     return localStorage.getItem('authToken') || null;
+}
+
+function getAnonymousToken() {
+    return localStorage.getItem('anonymousToken') || null;
+}
+
+function getTokenHeaders() {
+    const headers: any = {};
+    if (getAuthToken()) {
+        headers.Authorization = `Bearer ${getAuthToken()}`;
+    } else if (getAnonymousToken()) {
+        headers['x-anonymous-token'] = getAnonymousToken();
+    }
+    return headers;
 }
 
 export interface IRequestParams {
@@ -32,7 +45,7 @@ export function fetchJSON(url: string, params: IRequestParams) {
         method: params.method || 'GET',
         headers: {
             ...params.headers,
-            'Authorization': `Bearer ${getAuthToken()}`,
+            ...getTokenHeaders(),
             'Content-Type': 'application/json'
         },
         credentials: 'same-origin',
@@ -41,9 +54,15 @@ export function fetchJSON(url: string, params: IRequestParams) {
 }
 
 fetchJSON.setAuthToken = (token: string) => {
+    localStorage.removeItem('anonymousToken');
     localStorage.setItem('authToken', token);
 };
 
 fetchJSON.clearAuthToken = () => {
     localStorage.removeItem('authToken');
 };
+
+fetchJSON.setAnonymousToken = (token: string) => {
+    localStorage.setItem('anonymousToken', token);
+};
+
