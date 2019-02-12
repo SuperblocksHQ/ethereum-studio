@@ -147,4 +147,12 @@ export const projectsActions = {
             data: error
         };
     },
+
+     // ---------- CREATE_EMPTY_PROJECT ----------
+     CREATE_EMPTY_PROJECT: 'CREATE_EMPTY_PROJECT',
+     createEmptyProject() {
+         return {
+             type: projectsActions.CREATE_EMPTY_PROJECT,
+         };
+     }
 };

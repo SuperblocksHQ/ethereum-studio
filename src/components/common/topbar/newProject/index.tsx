@@ -21,47 +21,13 @@ import {
     IconNew
 } from '../../../icons';
 import { DropdownContainer } from '../../';
+import NewProjectDropdownDialog from './NewProjectDropdownDialog';
 import style from './style.less';
-
-// TODO - Finalise all this
-const NewDropdownDialog = () => (
-    <div className={'contextMenu'}>
-        <ul>
-            <li>
-                <a
-                    href='https://help.superblocks.com'
-                    target='_blank'
-                    rel='noopener noreferrer'
-                >
-                    Start from scratch
-                </a>
-            </li>
-            <li>
-                <a
-                    href='https://help.superblocks.com'
-                    target='_blank'
-                    rel='noopener noreferrer'
-                >
-                    Start with a template
-                </a>
-            </li>
-            <li>
-                <a
-                    href='https://help.superblocks.com'
-                    target='_blank'
-                    rel='noopener noreferrer'
-                >
-                    Import a project
-                </a>
-            </li>
-        </ul>
-    </div>
-);
 
 export const NewProjectAction = () => (
     <DropdownContainer
             className={classNames([style.actionMenu, style.actionRight])}
-            dropdownContent={<NewDropdownDialog />}
+            dropdownContent={<NewProjectDropdownDialog />}
     >
         <div className={classNames([style.action, style.actionRight])}>
             <button className={classNames([style.container, 'btnNoBg'])}>
