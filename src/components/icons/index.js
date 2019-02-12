@@ -84,7 +84,16 @@ export const IconImportFile = () => <FaIcon icon={IconFileImport} />;
 export const IconFolder = () => <FaIcon icon={iconFolder} color="#49616C" />;
 export const IconFolderOpen = () => (
     <FaIcon icon={iconFolderOpen} color="#49616C" />
+)
+
+export const IconSuperblocks = ({ ...props }) => (
+    <IconImg src={'/static/img/img-lab-logo.svg'} {...props} />
 );
+
+export const PictureVargavintern = ({ ...props }) => (
+    <IconImg src={'/static/img/vargavintern.png'} {...props} />
+);
+
 export const IconAngleRight = ({ ...props }) => (
     <IconImg src={'/static/img/icon-arrow-right.svg'} {...props} />
 );

@@ -18,10 +18,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from "classnames";
 import style from "./style.less";
-import ModalHeader from "../modal/modalHeader";
-import GitHubLogin from "./github";
 
 import { authService, userService } from '../../services';
+import {IconClose, IconSuperblocks, PictureVargavintern} from "../icons";
+import GithubLoginButton from "../common/buttons/githubLogin";
 
 export const LoginModal = (props) => {
 
@@ -30,7 +30,7 @@ export const LoginModal = (props) => {
     }
 
     function onSuccess(response) {
-        console.log("Success")
+        console.log("Success");
         console.log(response);
 
         props.loginSuccess();
@@ -50,7 +50,7 @@ export const LoginModal = (props) => {
     }
 
     function onFailure (e) {
-        console.log("Failure")
+        console.log("Failure");
         console.log(e);
     }
 
@@ -61,35 +61,22 @@ export const LoginModal = (props) => {
     return (
         <div className={classNames([style.loginModal, "modal"])}>
             <div className={style.container}>
-                <ModalHeader
-                    classname={style.header}
-                    title="Login"
-                    onCloseClick={onCloseClickHandle}
-                />
                 <div className={style.area}>
-                    <GitHubLogin clientId={process.env.REACT_APP_GITHUB_CLIENT_ID}
-                                 redirectUri={process.env.REACT_APP_GITHUB_REDIRECT_URI}
-                                 scope=""
-                                 onSuccess={onSuccess}
-                                 onFailure={onFailure}
-                    />
-                    <br />
-                    <button onClick={githubLogin}>
-                        Epic Github Login
-                    </button>
-                    <br/>
-                    <button onClick={queryUserEndpoint}>
-                        QueryUserEndpoint
-                    </button>
-                    <br />
-                    <button onClick={random}>
-                        LoginSuccess
-                    </button>
-                    <br />
+                    < PictureVargavintern className={style.background}/>
+                    <IconClose className={style.closeIcon} onClick={onCloseClickHandle}/>
+                    <div className={style.headerText}>
+                        <span>Login wih Github and sync all your projects</span>
+                    </div >
+                    <div className={style.superblocks}>
+                        <IconSuperblocks />
+                    </div>
+                    <div className={style.promoText}>
+                        <span>Discover the world's top blockchain companies and</span>
+                    </div>
                 </div>
                 <div className={style.footer}>
                     <div className={style.buttonsContainer}>
-                        <button onClick={onCloseClickHandle} className="btn2 noBg mr-2">Cancel</button>
+                        <GithubLoginButton githubLogin={githubLogin}/>
                     </div>
                 </div>
             </div>

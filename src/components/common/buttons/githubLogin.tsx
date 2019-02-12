@@ -1,4 +1,4 @@
-// Copyright 2018 Superblocks AB
+// Copyright 2019 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -14,9 +14,20 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export * from './dropdown';
-export * from './select';
-export * from './tooltip';
-export * from './menu';
-export * from './topbar';
-export * from './buttons';
+import React from 'react';
+import style from './style.less';
+import {IconGithub} from '../../icons';
+import classNames from 'classnames';
+
+const GithubLoginButton = (props: any) => (
+    <button onClick={props.githubLogin} className={classNames([style.buttons, 'btn2'])}>
+        <IconGithub />
+        <span>
+            Login with Github
+        </span>
+    </button>
+);
+
+export default GithubLoginButton;
+
+
