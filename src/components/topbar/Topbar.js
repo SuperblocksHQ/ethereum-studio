@@ -25,11 +25,9 @@ import UploadDialog from './upload';
 import {
     IconPreferences,
     IconProjectSelector,
-    IconDropdown,
     IconUpload,
     IconFork,
     IconShare,
-    IconNew,
     IconMenu,
     IconAlphabetA
 } from '../icons';
@@ -37,21 +35,13 @@ import OnlyIf from '../onlyIf';
 import NetworkAccountSelector from '../networkAccountSelector';
 import ShareDialog from './share';
 import MenuDropdownDialog from './menu';
-import Login from "../login";
+import LoginButton from "../login";
 import ProjectTitle from './projectTitle';
 
 const MenuAction = () => (
     <div className={style.action}>
         <button className={classNames([style.container, "btnNoBg"])}>
             <IconMenu />
-        </button>
-    </div>
-);
-
-const NewAction = () => (
-    <div className={classNames([style.action, style.actionRight])}>
-        <button className={classNames([style.container, 'btnNoBg'])}>
-            <IconNew />
         </button>
     </div>
 );
@@ -103,41 +93,6 @@ const ShareDropdownAction = () => (
             <IconShare />
             <span>Share</span>
         </button>
-    </div>
-);
-
-// TODO - Finalise all this
-const NewDropdownDialog = () => (
-    <div className={style.helpMenu}>
-        <ul>
-            <li>
-                <a
-                    href="https://help.superblocks.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Start from scratch
-                </a>
-            </li>
-            <li>
-                <a
-                    href="https://help.superblocks.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Start with a template
-                </a>
-            </li>
-            <li>
-                <a
-                    href="https://help.superblocks.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Import a project
-                </a>
-            </li>
-        </ul>
     </div>
 );
 
@@ -255,22 +210,13 @@ export default class TopBar extends Component {
                     projectName={project.name}
                 />
                 <div className={style.actionsRight}>
-                    <DropdownContainer
-                        className={style.actionMenu}
-                        dropdownContent={<NewDropdownDialog />}
-                    >
-                        <NewAction />
-                    </DropdownContainer>
-
+                    <NewProjectAction />
                     <DashboardAction />
-
                     <div onClick={this.showPreferencesModal}>
                         <PreferencesAction />
                     </div>
-
                     <HelpAction />
-
-                    <Login
+                    <LoginButton
                         functions={this.props.functions}
                         onSettingsModalClose={this.onSettingsModalClose}
                     />

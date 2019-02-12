@@ -1,0 +1,60 @@
+// Copyright 2018 Superblocks AB
+//
+// This file is part of Superblocks Lab.
+//
+// Superblocks Lab is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation version 3 of the License.
+//
+// Superblocks Lab is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
+
+@import '../../../../style/index';
+
+.actionRight {
+    &.noBorder:hover {
+        border-color: transparent;
+    }
+}
+
+.container {
+    display: flex;
+}
+
+.action {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    border-bottom: 2px solid transparent;
+    transition: all .15s ease;
+    height: 100%;
+    cursor: pointer;
+    &:hover {
+        color: #E0E0E0;
+        border-color: @primary-color;
+        background-color: @action-color-hover;
+    }
+}
+
+.actionMenu {
+    display: flex;
+    height: 100%;
+}
+
+.caret {
+    display: flex;
+    margin-right: 7px;
+    img.angleRight {
+        height: 8px;
+        width: 5px;
+    }
+    img.angleDown {
+        height: 5px;
+        width: 8px;
+    }
+}

@@ -16,7 +16,7 @@
 
 import React, { Component } from 'react';
 import style from './style.less';
-import { HelpAction } from '../../common';
+import { HelpAction, NewProjectAction } from '../../common';
 
 export default class Topbar extends Component {
 
@@ -31,6 +31,7 @@ export default class Topbar extends Component {
                 </a>
 
                 <div className={style.actionsRight}>
+                    <NewProjectAction />
                     <HelpAction />
                 </div>
             </div>
