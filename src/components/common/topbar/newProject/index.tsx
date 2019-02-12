@@ -21,7 +21,7 @@ import {
     IconNew
 } from '../../../icons';
 import { DropdownContainer } from '../../';
-import NewProjectDropdownDialog from './NewProjectDropdownDialog';
+import NewProjectDropdownDialog from './newProjectDropdownDialog';
 import style from './style.less';
 
 export const NewProjectAction = () => (
