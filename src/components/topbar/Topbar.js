@@ -19,7 +19,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import style from './style.less';
 import { DropdownContainer } from '../common/dropdown';
-import { Tooltip, HelpAction } from '../common';
+import { Tooltip, HelpAction, NewProjectAction } from '../common';
 import PreferencesModal from '../preferences';
 import UploadDialog from './upload';
 import {
