@@ -29,7 +29,7 @@ export const deleteProject: Epic = (action$: any, state$: any) => action$.pipe(
         if (confirm('Are you sure you want to delete the project?')) {
             console.log('Here');
             // TODO - Pass id of project in here and not selected project only
-            return from(projectService.deleteProjectById(state.projects.project.id))
+            return projectService.deleteProjectById(state.projects.project.id)
                 .pipe(
                     map(projectsActions.deleteProjectSuccess),
                     tap(() => document.location.href = '/')
