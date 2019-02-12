@@ -45,8 +45,8 @@ const initTrackingAnalytics: Epic = (action$: any, state$: any) => action$.pipe(
     withLatestFrom(state$),
     switchMap(([, state]) => {
         const { trackAnalytics } = state.settings.preferences.advanced;
-        analitics.setEnable(trackAnalytics)
+        analitics.setEnable(trackAnalytics);
         return empty();
-    }))
+    }));
 
 export default initTrackingAnalytics;

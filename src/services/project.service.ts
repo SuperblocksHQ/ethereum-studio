@@ -16,20 +16,21 @@
 import { fetchJSON } from './utils/fetchJson';
 import { switchMap, map } from 'rxjs/operators';
 import { IProject } from '../models';
+import { Observable } from 'rxjs';
 
 export const projectService = {
 
-    postProject(data: IProject) {
+    createProject(data: Partial<IProject>): Observable<IProject> {
         return fetchJSON(process.env.REACT_APP_PROJECT_API_BASE_URL + '/projects', {
             method: 'POST',
-            body: data
+            body: { ...data, files: JSON.stringify(data.files) }
         })
         .pipe(
             switchMap(response => response.json())
         );
     },
 
-    postProjectClaim(id: string) {
+    claimProject(id: string) {
         return fetchJSON(process.env.REACT_APP_PROJECT_API_BASE_URL + '/projects/' + id + '/_claim' , {
             method: 'POST',
         })

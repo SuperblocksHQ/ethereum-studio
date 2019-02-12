@@ -19,7 +19,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import style from './style.less';
 import { DropdownContainer } from '../common/dropdown';
-import { Tooltip } from '../common';
+import { Tooltip, HelpAction } from '../common';
 import PreferencesModal from '../preferences';
 import UploadDialog from './upload';
 import {
@@ -38,7 +38,6 @@ import NetworkAccountSelector from '../networkAccountSelector';
 import ShareDialog from './share';
 import MenuDropdownDialog from './menu';
 import Login from "../login";
-import { HelpAction } from "../common";
 import ProjectTitle from './projectTitle';
 
 const MenuAction = () => (

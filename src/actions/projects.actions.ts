@@ -14,9 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
+import { IEnvironment } from '../models/state';
+import { IProject } from '../models';
+
 export const projectsActions = {
     SET_ALL_ENVIRONMENTS: 'SET_ALL_ENVIRONMENTS',
-    setAllEnvironments(environments) {
+    setAllEnvironments(environments: IEnvironment[]) {
         return {
             type: projectsActions.SET_ALL_ENVIRONMENTS,
             data: environments
@@ -24,7 +27,7 @@ export const projectsActions = {
     },
 
     SET_ENVIRONMENT: 'SET_ENVIRONMENT',
-    setEnvironment(environmentName) {
+    setEnvironment(environmentName: string) {
        return {
             type: projectsActions.SET_ENVIRONMENT,
             data: environmentName
@@ -32,35 +35,37 @@ export const projectsActions = {
     },
 
     UPDATE_PROJECT_SETTINGS: 'UPDATE_PROJECT_SETTINGS',
-    updateProjectSettings(projectSettings) {
+    updateProjectSettings(projectSettings: any) {
         return {
             type: projectsActions.UPDATE_PROJECT_SETTINGS,
             data: projectSettings
         };
     },
     UPDATE_PROJECT_SETTINGS_SUCCESS: 'UPDATE_PROJECT_SETTINGS_SUCCESS',
-    updateProjectSettingsSuccess(newProjectSettings) {
+    updateProjectSettingsSuccess(newProjectSettings: any) {
         return {
             type: projectsActions.UPDATE_PROJECT_SETTINGS_SUCCESS,
             data: newProjectSettings,
         };
     },
     UPDATE_PROJECT_SETTINGS_FAIL: 'UPDATE_PROJECT_SETTINGS_FAIL',
-    updateProjectSettingsFail(error) {
+    updateProjectSettingsFail(error: any) {
         return {
             type: projectsActions.UPDATE_PROJECT_SETTINGS_FAIL,
-            error: error
+            error
         };
     },
     UPDATE_SELECTED_ACCOUNT: 'UPDATE_SELECTED_ACCOUNT',
-    updateSelectAccount(name, balance, address) {
+    updateSelectAccount(name: string, balance: string, address: string) {
         return {
             type: projectsActions.UPDATE_SELECTED_ACCOUNT,
             data: {name, balance, address}
         };
     },
+
+    // ---------- CRUD Project actions ----------
     DELETE_PROJECT: 'DELETE_PROJECT',
-    deleteProject(projectId) {
+    deleteProject(projectId: string) {
        return {
             type: projectsActions.DELETE_PROJECT,
             data: { projectId }
@@ -73,52 +78,73 @@ export const projectsActions = {
        };
     },
     DELETE_PROJECT_FAIL: 'DELETE_PROJECT_FAIL',
-    deleteProjectFail(error) {
+    deleteProjectFail(error: string) {
        return {
             type: projectsActions.DELETE_PROJECT_FAIL,
             data: error
        };
     },
     LOAD_PROJECT: 'LOAD_PROJECT',
-    loadProject(projectId) {
+    loadProject(projectId: string) {
         return {
             type: projectsActions.LOAD_PROJECT,
             data: { projectId }
         };
     },
     LOAD_PROJECT_SUCCESS: 'LOAD_PROJECT_SUCCESS',
-    loadProjectSuccess(project) {
+    loadProjectSuccess(project: IProject) {
        return {
             type: projectsActions.LOAD_PROJECT_SUCCESS,
             data: { project }
        };
     },
     LOAD_PROJECT_FAIL: 'LOAD_PROJECT_FAIL',
-    loadProjectFail(error) {
+    loadProjectFail(error: string) {
        return {
             type: projectsActions.LOAD_PROJECT_FAIL,
             data: error
        };
     },
     RENAME_PROJECT: 'RENAME_PROJECT',
-    renameProject(newName) {
+    renameProject(newName: string) {
        return {
             type: projectsActions.RENAME_PROJECT,
             data: { newName }
        };
     },
     UPDATE_PROJECT_SUCCESS: 'UPDATE_PROJECT_SUCCESS',
-    updateProjectSuccess(project) {
+    updateProjectSuccess(project: IProject) {
        return {
             type: projectsActions.UPDATE_PROJECT_SUCCESS,
             data: { project}
        };
     },
     UPDATE_PROJECT_FAIL: 'UPDATE_PROJECT_FAIL',
-    updateProjectFail(error) {
+    updateProjectFail(error: string) {
        return {
             type: projectsActions.UPDATE_PROJECT_FAIL,
             data: error
        };
+    },
+
+    // ---------- FORK ----------
+    FORK_PROJECT: 'FORK_PROJECT',
+    forkProject() {
+        return {
+            type: projectsActions.FORK_PROJECT,
+        };
+    },
+    FORK_PROJECT_SUCCESS: 'FORK_PROJECT_SUCCESS',
+    forkProjectSuccess() {
+        return {
+            type: projectsActions.FORK_PROJECT_SUCCESS,
+        };
+    },
+    FORK_PROJECT_FAIL: 'FORK_PROJECT_FAIL',
+    forkProjectFail(error: string) {
+        return {
+            type: projectsActions.FORK_PROJECT_FAIL,
+            data: error
+        };
     },
 };

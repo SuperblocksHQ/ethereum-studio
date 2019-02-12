@@ -74,25 +74,6 @@ export const ipfsActions = {
             type: ipfsActions.HIDE_UPLOAD_DIALOG,
         }
     },
-    FORK_PROJECT: 'FORK_PROJECT',
-    forkProject() {
-        return {
-            type: ipfsActions.FORK_PROJECT,
-        }
-    },
-    FORK_PROJECT_SUCCESS: 'FORK_PROJECT_SUCCESS',
-    forkProjectSuccess() {
-        return {
-            type: ipfsActions.FORK_PROJECT_SUCCESS,
-        }
-    },
-    FORK_PROJECT_FAIL: 'FORK_PROJECT_FAIL',
-    forkProjectFail(error) {
-        return {
-            type: ipfsActions.FORK_PROJECT_FAIL,
-            data: error
-        }
-    },
     IMPORT_PROJECT_FROM_IPFS: 'IMPORT_PROJECT_FROM_IPFS',
     importProjectFromIpfs(hash) {
         return {

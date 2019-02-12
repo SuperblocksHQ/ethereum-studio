@@ -16,9 +16,8 @@
 
 import { connect } from 'react-redux';
 import TopBar from './Topbar';
-import { ipfsSelectors, viewSelectors } from '../../selectors';
-import { projectSelectors } from '../../selectors';
-import { ipfsActions } from '../../actions';
+import { ipfsSelectors, viewSelectors, projectSelectors } from '../../selectors';
+import { ipfsActions, projectsActions } from '../../actions';
 
 const mapStateToProps = state => ({
     selectedProjectName: projectSelectors.getProjectName(state),
@@ -40,7 +39,7 @@ function mapDispatchToProps(dispatch) {
             dispatch(ipfsActions.hideUploadDialog())
         },
         forkProject: () => {
-            dispatch(ipfsActions.forkProject())
+            dispatch(projectsActions.forkProject())
         },
     };
 }
