@@ -16,11 +16,11 @@
 
 import React from 'react';
 import style from './style.less';
-import {IconGithub} from '../../icons';
+import { IconGithub } from '../../icons';
 import classNames from 'classnames';
 
 const GithubLoginButton = (props: any) => (
-    <button onClick={props.githubLogin} className={classNames([style.buttons, 'btn2'])}>
+    <button onClick={props.githubLogin} className={classNames(['btn2', style.githubLoginButton])}>
         <IconGithub />
         <span>
             Login with Github
