@@ -18,7 +18,7 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 import style from './style.less';
 import LoginModal from './LoginModal';
-import Loggedin from './Loggedin';
+import LoggedInButton from './LoggedInButton';
 import {IUser} from '../../models';
 
 interface IProps {
@@ -29,7 +29,7 @@ interface IProps {
     userProfile: IUser;
 }
 
-export default class Login extends Component<IProps> {
+export default class LoginButton extends Component<IProps> {
 
     logout = () => {
         if (!confirm('Are you sure you want to logout?')) { return; }
@@ -72,13 +72,13 @@ export default class Login extends Component<IProps> {
         return(
             <div className={style.action}>
                 { isAuthenticated ?
-                    <Loggedin
+                    <LoggedInButton
                         logout={this.logout}
                         userProfile={userProfile}
                     />
                     :
                     <button
-                        className={classNames([style.container, 'btnNoBg'])}
+                        className={classNames([style.container, 'btn2'])}
                         onClick={this.showLoginModal}
                     >
                         <span>Login</span>

@@ -17,63 +17,44 @@ import react, {Component} from 'react';
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from 'react';
-import classNames from "classnames";
-import style from "./style.less";
-import {IconAngleDown} from "../icons";
-import {MenuItem} from "../common/menu";
-import { DropdownContainer } from "../common/dropdown";
+import classNames from 'classnames';
+import style from './style.less';
+import { IconAngleDown } from '../icons';
+import OnlyIf from '../onlyIf';
+import { MenuItem } from '../common';
+import { DropdownContainer } from '../common/dropdown';
+import { IUser } from '../../models';
 
-class Loggedin extends Component{
+interface IProps {
+    logout: () => void;
+    userProfile: IUser;
+}
 
-   constructor(props) {
-       super(props);
-       this.state = {
-           isExtended: false
-       }
-   }
+export default class LoggedInButton extends Component<IProps> {
 
     logout = () => {
         this.props.logout();
-        this.setState({isExtended: false})
-    };
-
-    triggerDropdown = () => {
-        this.setState(prevState => ({
-            isExtended: !prevState.isExtended
-        }));
-    };
+    }
 
     render() {
-        const isExtended = this.state.isExtended;
-
+        const { userProfile } = this.props;
         return (
-            <React.Fragment>
-                <DropdownContainer
+            <DropdownContainer
                     className={style.actionMenu}
                     dropdownContent={
                         <div className={style.menuDialog} >
-                            <MenuItem onClick={this.logout} title="Logout" />
+                            <MenuItem onClick={this.logout} title='Logout' />
                         </div>
                     }>
-                    <button
-                        className={classNames([style.actionMenu, style.container, "btnNoBg"])}
-                        onClick={this.triggerDropdown}
-                    >
-                        { this.props.userProfile &&
+                    <button className={classNames([style.actionMenu, style.container, 'btnNoBg'])}>
+                        <OnlyIf test={userProfile}>
                             <img className={style.profilePicture} src={this.props.userProfile.imageUrl} />
-                        }
+                        </OnlyIf>
                         <div className={style.caret} >
                             <IconAngleDown className={style.angleDown}/>
                         </div>
                     </button>
                 </DropdownContainer>
-            </React.Fragment>
         );
     }
-
-};
-
-export default Loggedin;
-
-Loggedin.propTypes = {
-};
+}

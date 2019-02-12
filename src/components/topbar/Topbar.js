@@ -226,29 +226,31 @@ export default class TopBar extends Component {
                         functions={this.props.functions}
                    />
                 </OnlyIf>
-                <OnlyIf test={showUploadButton}>
+                <div className={style.projectActions}>
+                    <OnlyIf test={showUploadButton}>
+                        <DropdownContainer
+                            className={classNames([style.actionUpload, style.action])}
+                            dropdownContent={<UploadDialog />}
+                            enableClickInside={true}
+                            showMenu={showUploadDialog}
+                            onCloseMenu={this.onCloseUploadDialog}
+                        >
+                            <UploadDrowdownAction />
+                        </DropdownContainer>
+                    </OnlyIf>
+                    <OnlyIf test={showForkButton}>
+                        <ForkDropdownAction
+                            onForkClicked={this.onForkClicked}
+                        />
+                    </OnlyIf>
                     <DropdownContainer
-                        className={classNames([style.actionUpload, style.action])}
-                        dropdownContent={<UploadDialog />}
+                        className={classNames([style.actionShare, style.actionMenu])}
+                        dropdownContent={<ShareDialog />}
                         enableClickInside={true}
-                        showMenu={showUploadDialog}
-                        onCloseMenu={this.onCloseUploadDialog}
                     >
-                        <UploadDrowdownAction />
+                        <ShareDropdownAction />
                     </DropdownContainer>
-                </OnlyIf>
-                <OnlyIf test={showForkButton}>
-                    <ForkDropdownAction
-                        onForkClicked={this.onForkClicked}
-                    />
-                </OnlyIf>
-                <DropdownContainer
-                    className={classNames([style.actionShare, style.actionMenu])}
-                    dropdownContent={<ShareDialog />}
-                    enableClickInside={true}
-                >
-                    <ShareDropdownAction />
-                </DropdownContainer>
+                </div>
                 <ProjectTitle
                     projectName={project.name}
                 />

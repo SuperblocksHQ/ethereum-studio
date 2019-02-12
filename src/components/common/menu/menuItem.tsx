@@ -22,35 +22,24 @@ import { IconCheckThin } from '../../icons';
 interface IProps {
     title: string;
     description?: string;
-    onClick: (action: string) => void;
+    onClick: () => void;
     isActive?: boolean;
     disabled?: boolean;
-    action: string;
     icon?: React.ReactNode;
 }
 
 export class MenuItem extends React.Component<IProps> {
-    constructor(props: IProps) {
-        super(props);
-    }
-
-    onClick: React.MouseEventHandler = (e) => {
-        e.preventDefault();
-        this.props.onClick(this.props.action);
-    }
 
     render() {
         const { title, description, isActive, disabled, onClick, icon } = this.props;
 
         return (
-            <div onClick={this.onClick} className={classNames([style.title, disabled ? style.disabled : null])}>
+            <div onClick={onClick} className={classNames([style.title, disabled ? style.disabled : null])}>
                 <div className={style.activeContainer}>
-                    {isActive &&
+                    { isActive &&
                         <IconCheckThin />
                     }
-                    {icon &&
-                        icon
-                    }
+                    {icon}
                 </div>
                 <div>{title}</div>
                 <div className={style.description}>{description}</div>

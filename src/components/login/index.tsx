@@ -17,7 +17,7 @@
 import { connect } from 'react-redux';
 import { authActions } from '../../actions';
 import { authSelectors, userSelectors } from '../../selectors';
-import Login from './Login';
+import LoginButton from './LoginButton';
 import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
 
@@ -37,4 +37,4 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginButton);

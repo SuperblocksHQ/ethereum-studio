@@ -35,17 +35,17 @@ interface IProps {
 export default class ProjectMenuDropdownDialog extends Component<IProps> {
 
     handleMenuItemClick = (action: string) => {
-        const { projectId } = this.props;
+        const { projectId, renameProject, deleteProject } = this.props;
 
         switch (action) {
             case 'export-project':
                 console.log('Export');
                 break;
             case 'rename-project':
-                this.props.renameProject();
+                renameProject();
                 break;
             case 'delete-project':
-                this.props.deleteProject(projectId);
+                deleteProject(projectId);
                 break;
             default:
                 return;
@@ -56,27 +56,19 @@ export default class ProjectMenuDropdownDialog extends Component<IProps> {
         return (
             <div className = {classNames([style.menuDialog, this.props.customClass])} >
                 <MenuItem
-                    icon={<IconDownload />}
-                    action='download-project'
-                    onClick={this.handleMenuItemClick}
+                    onClick={() => this.handleMenuItemClick('download-project')}
                     title='Download'
                 />
                 <MenuItem
-                    icon={<IconConfigure />}
-                    action='configure-project'
-                    onClick={this.handleMenuItemClick}
+                    onClick={() => this.handleMenuItemClick('configure-project')}
                     title='Configure'
                 />
                 <MenuItem
-                    icon={<IconEdit />}
-                    action='rename-project'
-                    onClick={this.handleMenuItemClick}
+                    onClick={() => this.handleMenuItemClick('rename-project')}
                     title='Rename'
                 />
                 <MenuItem
-                    icon={<IconTrash />}
-                    action='delete-project'
-                    onClick={this.handleMenuItemClick}
+                    onClick={() => this.handleMenuItemClick('delete-project')}
                     title='Delete'
                 />
             </div>
