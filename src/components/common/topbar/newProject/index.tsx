@@ -21,13 +21,13 @@ import {
     IconNew
 } from '../../../icons';
 import { DropdownContainer } from '../../';
-import NewProjectDropdownDialog from './mierda';
+import NewProjectDialog from './newProjectDialog';
 import style from './style.less';
 
 export const NewProjectAction = () => (
     <DropdownContainer
             className={classNames([style.actionMenu, style.actionRight])}
-            dropdownContent={<NewProjectDropdownDialog />}
+            dropdownContent={<NewProjectDialog />}
     >
         <div className={classNames([style.action, style.actionRight])}>
             <button className={classNames([style.container, 'btnNoBg'])}>

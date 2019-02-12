@@ -22,7 +22,7 @@ import { projectsActions } from '../../actions';
 import { projectService} from '../../services/project.service';
 
 // TODO - Make sure that we render correctly the 404 screen say
-export const loadProject: Epic = (action$: any, state$: any) => action$.pipe(
+export const createEmptyProject: Epic = (action$: any, state$: any) => action$.pipe(
     ofType(projectsActions.CREATE_EMPTY_PROJECT),
     withLatestFrom(state$),
     switchMap(([, ]) => {

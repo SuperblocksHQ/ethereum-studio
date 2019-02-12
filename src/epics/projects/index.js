@@ -26,6 +26,7 @@ import { forkProjectEpic } from './forkProject.epic';
 
 import { loadProject } from './loadProject.epic';
 import { renameProject } from './renameProject.epic';
+import { createEmptyProject } from './createEmptyProject.epic';
 
 export const projectsEpics = [
     environmentUpdateEpic,
@@ -33,5 +34,6 @@ export const projectsEpics = [
     loadProject,
     deleteProject,
     renameProject,
-    forkProjectEpic
+    forkProjectEpic,
+    createEmptyProject
 ];

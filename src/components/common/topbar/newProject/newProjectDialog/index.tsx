@@ -26,7 +26,7 @@ interface IProps {
     createEmptyProject: () => void;
 }
 
-class NewProjectDropdownDialog extends Component<IProps> {
+class NewProjectDialog extends Component<IProps> {
     render() {
         const { createEmptyProject } = this.props;
         return (
@@ -69,4 +69,4 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
     };
 };
 
-export default connect(null, mapDispatchToProps)(NewProjectDropdownDialog);
+export default connect(null, mapDispatchToProps)(NewProjectDialog);
