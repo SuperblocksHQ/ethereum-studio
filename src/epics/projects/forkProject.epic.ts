@@ -20,6 +20,7 @@ import { ofType, Epic } from 'redux-observable';
 import { projectSelectors } from '../../selectors';
 import { projectsActions } from '../../actions';
 import { projectService } from '../../services';
+import { fetchJSON } from '../../services/utils/fetchJson';
 
 export const forkProjectEpic: Epic = (action$, state$) => action$.pipe(
     ofType(projectsActions.FORK_PROJECT),
@@ -30,7 +31,10 @@ export const forkProjectEpic: Epic = (action$, state$) => action$.pipe(
             description: currentProject.description,
             files: currentProject.files
         }).pipe(
-            map(project => {
+            map((project) => {
+                if (project.anonymousToken) {
+                    fetchJSON.setAnonymousToken(project.anonymousToken);
+                }
                 window.location.href = `${window.location.origin}/${project.id}`;
                 return projectsActions.forkProjectSuccess();
             }),

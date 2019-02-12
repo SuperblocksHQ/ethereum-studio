@@ -20,5 +20,6 @@ export interface IProject {
     description: string;
     lastModifiedAt: string;
     files: any;
+    anonymousToken?: string;
 }
 
