@@ -22,7 +22,6 @@ import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
 
 const mapStateToProps = (state: any) => ({
-    
 });
 
 function mapDispatchToProps(dispatch: Dispatch<AnyAction>) {
