@@ -1,4 +1,4 @@
-// Copyright 2018 Superblocks AB
+// Copyright 2019 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -17,10 +17,20 @@
 import React, { Component } from 'react';
 import style from './style.less';
 import { HelpAction, NewProjectAction } from '../../common';
+import LoggedInButton from './../../login/LoggedInButton';
+import { IUser } from './../../../models/user.model';
 
-export default class Topbar extends Component {
+interface IProps {
+    logout: () => void;
+    userProfile: IUser;
+    isAuthenticated: boolean;
+}
+
+export default class Topbar extends Component<IProps> {
 
     render() {
+        const { userProfile, logout, isAuthenticated } = this.props;
+
         return(
             <div className={style.topbar}>
                 <a href='/' className={style.logo}>
@@ -33,6 +43,12 @@ export default class Topbar extends Component {
                 <div className={style.actionsRight}>
                     <NewProjectAction />
                     <HelpAction />
+                    { isAuthenticated &&
+                        <LoggedInButton
+                            logout={logout}
+                            userProfile={userProfile}
+                        />
+                    }
                 </div>
             </div>
         );

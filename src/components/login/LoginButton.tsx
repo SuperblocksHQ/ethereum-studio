@@ -70,21 +70,23 @@ export default class LoginButton extends Component<IProps> {
         const { isAuthenticated, userProfile } = this.props;
 
         return(
-            <div className={style.action}>
+            <React.Fragment>
                 { isAuthenticated ?
                     <LoggedInButton
                         logout={this.logout}
                         userProfile={userProfile}
                     />
                     :
-                    <button
-                        className={classNames([style.container, 'btn2'])}
-                        onClick={this.showLoginModal}
-                    >
-                        <span>Login</span>
-                    </button>
+                    <div className={style.action}>
+                        <button
+                            className={classNames([style.container, 'btn2'])}
+                            onClick={this.showLoginModal}
+                        >
+                            <span>Login</span>
+                        </button>
+                    </div>
                 }
-            </div>
+            </React.Fragment>
         );
     }
 }

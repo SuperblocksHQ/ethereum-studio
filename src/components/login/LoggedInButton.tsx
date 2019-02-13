@@ -39,22 +39,24 @@ export default class LoggedInButton extends Component<IProps> {
     render() {
         const { userProfile } = this.props;
         return (
-            <DropdownContainer
-                    className={style.actionMenu}
-                    dropdownContent={
-                        <div className={style.menuDialog} >
-                            <MenuItem onClick={this.logout} title='Logout' />
-                        </div>
-                    }>
-                    <button className={classNames([style.actionMenu, style.container, 'btnNoBg'])}>
-                        <OnlyIf test={userProfile}>
-                            <img className={style.profilePicture} src={this.props.userProfile.imageUrl} />
-                        </OnlyIf>
-                        <div className={style.caret} >
-                            <IconAngleDown className={style.angleDown}/>
-                        </div>
-                    </button>
+            <div className={style.action}>
+                <DropdownContainer
+                        className={style.actionMenu}
+                        dropdownContent={
+                            <div className={style.menuDialog} >
+                                <MenuItem onClick={this.logout} title='Logout' />
+                            </div>
+                        }>
+                        <button className={classNames([style.actionMenu, style.container, 'btnNoBg'])}>
+                            <OnlyIf test={userProfile}>
+                                <img className={style.profilePicture} src={this.props.userProfile.imageUrl} />
+                            </OnlyIf>
+                            <div className={style.caret} >
+                                <IconAngleDown className={style.angleDown}/>
+                            </div>
+                        </button>
                 </DropdownContainer>
+            </div>
         );
     }
 }
