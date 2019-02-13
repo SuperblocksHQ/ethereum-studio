@@ -18,7 +18,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from "classnames";
 import style from "./style.less";
-
+import OnlyIf from '../onlyIf';
 import { authService, userService } from '../../services';
 import {IconClose, IconSuperblocks, PictureVargavintern} from "../icons";
 import GithubLoginButton from "../common/buttons/githubLogin";
@@ -59,11 +59,13 @@ export const LoginModal = (props) => {
     }
 
     return (
-        <div className={classNames([style.loginModal, "modal"])}>
+        <div className={classNames([style.loginModal, props.customClassName, "modal"])}>
             <div className={style.container}>
                 <div className={style.area}>
-                    < PictureVargavintern className={style.background}/>
-                    <IconClose className={style.closeIcon} onClick={onCloseClickHandle}/>
+                    <PictureVargavintern className={style.background}/>
+                    <OnlyIf test={!props.hideCloseButton}>
+                        <IconClose className={style.closeIcon} onClick={onCloseClickHandle}/>
+                    </OnlyIf>
                     <div className={style.headerText}>
                         <span>Login wih Github and sync all your projects</span>
                     </div >
@@ -71,7 +73,7 @@ export const LoginModal = (props) => {
                         <IconSuperblocks />
                     </div>
                     <div className={style.promoText}>
-                        <span>Discover the world's top blockchain companies and</span>
+                        <span>Discover the world's top blockchain companies and developers</span>
                     </div>
                 </div>
                 <div className={style.footer}>
@@ -88,6 +90,8 @@ export const LoginModal = (props) => {
 export default LoginModal;
 
 LoginModal.propTypes = {
-    onCloseClick: PropTypes.func.isRequired,
-    githubLogin: PropTypes.func.isRequired
+    onCloseClick: PropTypes.func,
+    githubLogin: PropTypes.func.isRequired,
+    hideCloseButton: PropTypes.bool,
+    customClassName: PropTypes.string
 };

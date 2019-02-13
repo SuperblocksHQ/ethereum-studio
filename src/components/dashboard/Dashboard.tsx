@@ -20,6 +20,8 @@ import SideMenu, { ItemType } from './sideMenu';
 import Topbar from './topbar';
 import { IProject } from '../../models';
 import style from './style.less';
+import LoginModal from '../login/LoginModal';
+import { githubLogin } from './../../epics/login/githubLogin.epic';
 
 interface IProps {
     getProjectList: () => void;
@@ -27,6 +29,10 @@ interface IProps {
     projectList: IProject[];
 
     isAuthenticated: boolean;
+
+    githubLoginAction: () => void;
+
+    isProjectListLoading: boolean;
 }
 
 interface IState {
@@ -48,13 +54,13 @@ export default class Dashboard extends Component<IProps, IState> {
     }
 
     render() {
-        const { projectList, isAuthenticated } = this.props;
+        const { projectList, isAuthenticated, githubLoginAction, isProjectListLoading} = this.props;
+
         return(
             <div className={style.dashboard}>
                 <Topbar />
-
                 { isAuthenticated ?
-                    <div>
+                    <React.Fragment>
                         <SideMenu
                             onItemSelected={this.onSideMenuItemSelected}
                         />
@@ -64,10 +70,14 @@ export default class Dashboard extends Component<IProps, IState> {
                                 list={projectList}
                             />
                         </div>
-                    </div>
+                    </React.Fragment>
                 :
-                    <div>
-                        TODO - Show login/create new project view
+                    <div className={style.loginSection}>
+                        <LoginModal
+                            customClassName={style.loginModal}
+                            githubLogin={githubLoginAction}
+                            hideCloseButton={true}
+                        />
                     </div>
                 }
             </div>

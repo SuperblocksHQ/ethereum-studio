@@ -17,6 +17,7 @@
 .dashboard {
     background-color: #fff;
     font-size: 14px;
+    height: 100%;
 
     .content {
         position: absolute;
@@ -29,6 +30,17 @@
         overflow-y: auto;
         overflow-x: hidden;
     }
+
+    .loginSection,
+    .loadingSection {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        background: #1C2022;
+    }
+
+    .loginModal {
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
 }
-
-
