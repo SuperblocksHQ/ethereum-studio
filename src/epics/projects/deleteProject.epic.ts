@@ -24,12 +24,9 @@ import { projectService } from '../../services/project.service';
 export const deleteProject: Epic = (action$: any, state$: any) => action$.pipe(
     ofType(projectsActions.DELETE_PROJECT),
     withLatestFrom(state$),
-    switchMap(([, state]) => {
-        console.log('Here1');
+    switchMap(([action, state]) => {
         if (confirm('Are you sure you want to delete the project?')) {
-            console.log('Here');
-            // TODO - Pass id of project in here and not selected project only
-            return projectService.deleteProjectById(state.projects.project.id)
+            return projectService.deleteProjectById(action.data.projectId)
                 .pipe(
                     map(projectsActions.deleteProjectSuccess),
                     tap(() => document.location.href = '/')

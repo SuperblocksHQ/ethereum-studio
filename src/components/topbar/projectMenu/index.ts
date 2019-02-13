@@ -22,7 +22,7 @@ import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
 
 const mapStateToProps = (state: any) => ({
-    projectId: projectSelectors.getProjectId(state),
+    
 });
 
 function mapDispatchToProps(dispatch: Dispatch<AnyAction>) {

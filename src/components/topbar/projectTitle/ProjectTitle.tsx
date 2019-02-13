@@ -26,6 +26,7 @@ import ProjectMenuDropdownDialog from '../projectMenu';
 import classNames from 'classnames';
 
 interface IProps {
+    projectId: string;
     projectName: string;
     renameProject: (newName: string) => void;
 }
@@ -59,7 +60,7 @@ export default class ProjectTitle extends Component<IProps> {
     }
 
     render() {
-        const { projectName } = this.props;
+        const { projectName, projectId } = this.props;
         const { projectNameUpdating, newProjectName } = this.state;
 
         return(
@@ -71,7 +72,7 @@ export default class ProjectTitle extends Component<IProps> {
                     <DropdownContainer
                         showMenu={false}
                         className={style.projectMenuDropdown}
-                        dropdownContent={<ProjectMenuDropdownDialog renameProject={this.handleProjectNameClick} />}
+                        dropdownContent={<ProjectMenuDropdownDialog projectId={projectId} renameProject={this.handleProjectNameClick} />}
                     >
                         <IconDropdown className={classNames([style.dropDown, 'dropDown'])} />
                     </DropdownContainer>

@@ -53,7 +53,6 @@ export default class Project extends Component<IProps> {
                             customClass={style.menuDialog}
                             projectId={project.id}
                             deleteProject={this.props.deleteProject}
-                            renameProject={this.handleRenameProject}
                         />}
                 >
                     <div className={style.menuWrapper}>

@@ -24,53 +24,47 @@ import {
     IconEdit
 } from '../../icons';
 import classNames from 'classnames';
+import OnlyIf from '../../onlyIf';
 
 interface IProps {
     projectId: string;
-    deleteProject: (projectId: string) => void;
-    renameProject: () => void;
+    downloadProject?: () => void;
+    configureProject?: () => void;
+    renameProject?: () => void;
+    deleteProject?: (projectId: string) => void;
     customClass?: string;
 }
 
 export default class ProjectMenuDropdownDialog extends Component<IProps> {
-
-    handleMenuItemClick = (action: string) => {
-        const { projectId, renameProject, deleteProject } = this.props;
-
-        switch (action) {
-            case 'export-project':
-                console.log('Export');
-                break;
-            case 'rename-project':
-                renameProject();
-                break;
-            case 'delete-project':
-                deleteProject(projectId);
-                break;
-            default:
-                return;
-        }
-    }
-
     render() {
+        const { projectId, downloadProject, configureProject, renameProject, deleteProject } = this.props;
+
         return (
             <div className = {classNames([style.menuDialog, this.props.customClass])} >
-                <MenuItem
-                    onClick={() => this.handleMenuItemClick('download-project')}
-                    title='Download'
-                />
-                <MenuItem
-                    onClick={() => this.handleMenuItemClick('configure-project')}
-                    title='Configure'
-                />
-                <MenuItem
-                    onClick={() => this.handleMenuItemClick('rename-project')}
-                    title='Rename'
-                />
-                <MenuItem
-                    onClick={() => this.handleMenuItemClick('delete-project')}
-                    title='Delete'
-                />
+                { downloadProject &&
+                    <MenuItem
+                        onClick={() => downloadProject()}
+                        title='Download'
+                    />
+                }
+                { configureProject &&
+                    <MenuItem
+                        onClick={() => configureProject()}
+                        title='Configure'
+                    />
+                }
+                { renameProject &&
+                    <MenuItem
+                        onClick={() => renameProject()}
+                        title='Rename'
+                    />
+                }
+                { deleteProject &&
+                    <MenuItem
+                        onClick={() => deleteProject(projectId)}
+                        title='Delete'
+                    />
+                }
             </div>
         );
     }
