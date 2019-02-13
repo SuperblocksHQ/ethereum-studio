@@ -28,7 +28,8 @@ function getTokenHeaders() {
     const headers: any = {};
     if (getAuthToken()) {
         headers.Authorization = `Bearer ${getAuthToken()}`;
-    } else if (getAnonymousToken()) {
+    }
+    if (getAnonymousToken()) {
         headers['x-anonymous-token'] = getAnonymousToken();
     }
     return headers;
@@ -54,7 +55,6 @@ export function fetchJSON(url: string, params: IRequestParams) {
 }
 
 fetchJSON.setAuthToken = (token: string) => {
-    localStorage.removeItem('anonymousToken');
     localStorage.setItem('authToken', token);
 };
 
@@ -66,3 +66,6 @@ fetchJSON.setAnonymousToken = (token: string) => {
     localStorage.setItem('anonymousToken', token);
 };
 
+fetchJSON.clearAnonymousToken = () => {
+    localStorage.removeItem('anonymousToken');
+};
