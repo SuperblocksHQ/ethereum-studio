@@ -39,21 +39,26 @@ export default class ProjectTitle extends Component<IProps> {
     };
 
     handleProjectNameClick = () => {
+        const { projectName } = this.props;
+
         this.setState({
           projectNameUpdating: true,
+          newProjectName: projectName
         });
     }
 
     handleChangeName = () => {
         const { renameProject } = this.props;
+        const { newProjectName } = this.state;
 
         this.setState({
           projectNameUpdating: false
         });
-        this.props.renameProject(this.state.newProjectName);
+
+        renameProject(newProjectName);
     }
 
-    handleChange = (e: any) => {
+    handleInputChange = (e: any) => {
         this.setState({
             newProjectName: e.target.value
         });
@@ -83,9 +88,10 @@ export default class ProjectTitle extends Component<IProps> {
                             type='text'
                             value={newProjectName}
                             onBlur={this.handleChangeName}
-                            onChange={this.handleChange}
+                            onChange={this.handleInputChange}
                             spellCheck={false}
-                            autoFocus />
+                            autoFocus
+                        />
                     </form>
                 </OnlyIf>
             </div>
