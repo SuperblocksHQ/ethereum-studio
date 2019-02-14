@@ -41,41 +41,17 @@ export default class MenuDropdownDialog extends Component {
       }  
     }
 
-    handleMenuItemClick = (action) => {
-        switch(action) {
-            case "new-project":
-                break;
-            case "new-file":
-                break;
-            case "toggle-explorer":
-                this.props.toggleFileSystemPanel();
-                break;
-            case "toggle-transactions":
-                this.props.toggleTransactionsHistoryPanel();
-                break;
-            case "toggle-preview":
-                this.props.togglePreviewPanel();
-                break;
-            case "close-all-panels":
-                this.props.closeAllPanels();
-                break;
-            case "toggle-full-screen":
-                this.toggleFullScreen();
-                break;
-            default:
-                return;
-        }
-    }
-
     render() {
-        const { showTransactionsHistory, showFileSystem, showPreview, closeAllPanels } = this.props;
+        const { showTransactionsHistory, showFileSystem, showPreview, 
+                toggleFileSystemPanel, toggleTransactionsHistoryPanel, togglePreviewPanel, closeAllPanels } = this.props;
+
         return (
             <div className={style.menuDialog}>
 
                 <SubMenu title="File">
-                    <MenuItem action="new-project" onClick={this.handleMenuItemClick} title="New Project" />
-                    <MenuItem action="new-file" onClick={this.handleMenuItemClick} title="New File" />
-                    <MenuItem title="New Folder" onClick={this.handleMenuItemClick} />
+                    <MenuItem title="New Project" />
+                    <MenuItem title="New File" />
+                    <MenuItem title="New Folder"/>
                     <Divider />
                     <MenuItem title="Save" />
                     <MenuItem title="Save All" />
@@ -88,12 +64,12 @@ export default class MenuDropdownDialog extends Component {
                     <MenuItem title="Download Project" />
                 </SubMenu>
                 <SubMenu title="View">
-                    <MenuItem action="toggle-explorer" onClick={this.handleMenuItemClick} isActive={showFileSystem} title="Explorer" />
-                    <MenuItem action="toggle-transactions" onClick={this.handleMenuItemClick} isActive={showTransactionsHistory} title="Transactions" />
-                    <MenuItem action="toggle-preview" onClick={this.handleMenuItemClick} isActive={showPreview} title="Preview" />
-                    <MenuItem action="close-all-panels" onClick={this.handleMenuItemClick} title="Close All Panels" />
+                    <MenuItem onClick={() => toggleFileSystemPanel()} isActive={showFileSystem} title="Explorer" />
+                    <MenuItem onClick={() => toggleTransactionsHistoryPanel()} isActive={showTransactionsHistory} title="Transactions" />
+                    <MenuItem onClick={() => togglePreviewPanel()} isActive={showPreview} title="Preview" />
+                    <MenuItem onClick={() => closeAllPanels()} title="Close All Panels" />
                     <Divider />
-                    <MenuItem action="toggle-full-screen" onClick={this.handleMenuItemClick} title="Toggle Full Screen" />
+                    <MenuItem onClick={() => this.toggleFullScreen()} title="Toggle Full Screen" />
                 </SubMenu>
             </div>
         )
