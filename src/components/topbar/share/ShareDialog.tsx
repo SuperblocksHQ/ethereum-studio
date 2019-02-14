@@ -35,7 +35,7 @@ interface IState {
     options: {
         hideExplorer: boolean;
         showTransactions: boolean;
-        showAppview: boolean;
+        showPreview: boolean;
         [key: string]: boolean;
     };
 }
@@ -47,7 +47,7 @@ export default class ShareDialog extends React.Component<IProps, IState> {
         options: {
             hideExplorer: false,
             showTransactions: false,
-            showAppview: false,
+            showPreview: false,
         }
     };
 
@@ -79,7 +79,7 @@ export default class ShareDialog extends React.Component<IProps, IState> {
     }
 
     RenderOptions = () => {
-        const { hideExplorer, showTransactions, showAppview } = this.state.options;
+        const { hideExplorer, showTransactions, showPreview } = this.state.options;
 
         return(
             <div className={style.innerContent}>
@@ -107,7 +107,7 @@ export default class ShareDialog extends React.Component<IProps, IState> {
                     <Switch
                         checked={showTransactions}
                         onChange={() => {
-                               this.setState({options: { ...this.state.options, showTransactions: !showTransactions, showAppview: false }}, () => {
+                               this.setState({options: { ...this.state.options, showTransactions: !showTransactions, showPreview: false }}, () => {
                                         this.updateUrl();
                                     }
                                );
@@ -123,11 +123,11 @@ export default class ShareDialog extends React.Component<IProps, IState> {
                     />
                 </div>
                 <div className={classNames([style.inputContainer, style.optionInput])}>
-                    <p>Show Appview</p>
+                    <p>Show Preview</p>
                     <Switch
-                        checked={showAppview}
+                        checked={showPreview}
                         onChange={() => {
-                                this.setState({options: { ...this.state.options, showAppview: !showAppview, showTransactions: false }}, () => {
+                                this.setState({options: { ...this.state.options, showPreview: !showPreview, showTransactions: false }}, () => {
                                         this.updateUrl();
                                     }
                                 );
@@ -146,7 +146,7 @@ export default class ShareDialog extends React.Component<IProps, IState> {
     }
 
     RenderInputs = () => {
-        const { hideExplorer, showTransactions, showAppview } = this.state.options;
+        const { hideExplorer, showTransactions, showPreview } = this.state.options;
         const { shareUrl } = this.state;
         const embedUrl = this.getEmbedUrl();
         const btnMdUrl = this.getBtnMdUrl();

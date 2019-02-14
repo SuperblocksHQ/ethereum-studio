@@ -22,9 +22,9 @@ const getParameters = () => {
     const url = String(window.location);
     const hideExplorer = url.includes('hideExplorer=1');
     const showTransactions = url.includes('showTransactions=1');
-    const showAppview = url.includes('showAppview=1');
+    const showPreview = url.includes('showPreview=1');
 
-    return { hideExplorer, showTransactions, showAppview };
+    return { hideExplorer, showTransactions, showPreview };
 };
 
 export const updateViewOnParameters: Epic = (action$: any, state$: any) => action$.pipe(

@@ -112,7 +112,7 @@ export default function sidePanelsReducer(state = initialState, action) {
                 showTransactionsHistory: action.data.parameters.showTransactions,
                 preview : {
                     ...state.preview,
-                    open: action.data.parameters.showAppview
+                    open: action.data.parameters.showPreview
                 }
             };
         case sidePanelsActions.preview.TOGGLE_WEB3_ACCOUNTS:
