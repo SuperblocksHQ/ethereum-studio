@@ -20,7 +20,7 @@ import {
     IconAngleDown,
     IconNew
 } from '../../../icons';
-import { DropdownContainer } from '../../';
+import { DropdownContainer, Tooltip } from '../../';
 import NewProjectDialog from './newProjectDialog';
 import style from './style.less';
 
@@ -30,12 +30,16 @@ export const NewProjectAction = () => (
             dropdownContent={<NewProjectDialog />}
     >
         <div className={classNames([style.action, style.actionRight])}>
-            <button className={classNames([style.container, 'btnNoBg'])}>
-                <IconNew />
-            </button>
-            <div className={style.caret} >
-                <IconAngleDown className={style.angleDown}/>
-            </div>
+            <Tooltip title='New Project'>
+                <div className={style.alignCenter}>
+                    <button className={classNames([style.container, 'btnNoBg'])}>
+                        <IconNew />
+                    </button>
+                    <div className={style.caret} >
+                        <IconAngleDown className={style.angleDown}/>
+                    </div>
+                </div>
+            </Tooltip>
         </div>
     </DropdownContainer>
 );
