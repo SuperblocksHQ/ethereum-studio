@@ -19,35 +19,75 @@ import style from './style.less';
 import { IProject } from '../../../models';
 import Project from './project';
 import Header from './header';
-// import Backend from '../../projecteditor/control/backend';
-// import Modal from '../../modal';
-// import { Tooltip } from '../../common';
-// import {
-//     IconDownload,
-//     IconTrash,
-//     IconPreferences,
-//     IconCheck,
-// } from '../../icons';
 
 interface IProps {
     list: IProject[];
     listName: string;
 }
 
-export default class ProjectList extends Component<IProps> {
+interface IState {
+    orderBy: string;
+    order: string;
+}
+
+export default class ProjectList extends Component<IProps, IState> {
+
+    state: IState = {
+        orderBy: 'lastModifiedAt',
+        order: 'desc'
+    };
+
+    handleOrderByChange = (orderValue: string) => {
+        this.setState({
+            orderBy: orderValue
+        });
+    }
+
+    handleOrderChange = () => {
+        this.setState({
+            order: this.state.order === 'asc' ? 'desc' : 'asc'
+        });
+    }
+
+    dynamicSort = (property: string) => {
+        let sortOrder = 1;
+
+        if (this.state.order === 'desc') {
+            sortOrder = -1;
+        }
+
+        return (a: any, b: any)  => {
+            if (sortOrder === -1) {
+                return b[property].localeCompare(a[property]);
+            } else {
+                return a[property].localeCompare(b[property]);
+            }
+        };
+    }
 
     render() {
         const { list, listName } = this.props;
+        const { orderBy, order } = this.state;
+
+        let orderedList = list.sort(this.dynamicSort(orderBy));
+
+        if (orderBy === 'name') {
+            orderedList = orderedList.reverse();
+        }
 
         return (
             <div className={style.container}>
                 <Header
                     title={listName}
                     numOfProjects={list.length}
+                    orderBy={orderBy}
+                    order={order}
+                    onOrderChange={this.handleOrderChange}
+                    onOrderByChange={this.handleOrderByChange}
                 />
                 <div className={style.content}>
                 {
-                    list.map((project: IProject) => {
+                    orderedList.map((project: IProject) => {
                         return (
                             <Project
                                 key={project.id}

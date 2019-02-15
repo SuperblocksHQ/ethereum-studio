@@ -21,7 +21,7 @@ interface IProps {
     dropdownContent: React.ReactNode;
     useRightClick?: boolean;
     children: React.ReactNode;
-    showMenu: boolean;
+    showMenu?: boolean;
     onCloseMenu?: () => void;
     enableClickInside?: boolean;
     className?: string;
@@ -40,7 +40,7 @@ export class DropdownContainer extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
         this.state = {
-            menuVisible: this.props.showMenu,
+            menuVisible: this.props.showMenu || false,
         };
 
         // the ignore class name should be specific only this instance of the component
@@ -51,7 +51,7 @@ export class DropdownContainer extends React.Component<IProps, IState> {
     componentDidUpdate(prevProps: IProps) {
         if (prevProps.showMenu !== this.props.showMenu) {
             this.setState({
-                menuVisible: this.props.showMenu
+                menuVisible: this.props.showMenu || false
             });
         }
     }

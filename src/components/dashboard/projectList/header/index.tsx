@@ -16,17 +16,34 @@
 
 import React, { Component } from 'react';
 import style from './style.less';
+import { DropdownContainer, MenuItem } from '../../../common';
+import classNames from 'classnames';
+import { IconArrowUpThin } from '../../../icons';
 
 interface IProps {
     title: string;
     numOfProjects: number;
+    onOrderByChange: (orderValue: string) => any;
+    orderBy: string;
+    onOrderChange: () => any;
+    order: string;
 }
 
 export default class Header extends Component<IProps> {
 
-    render() {
-        const { title, numOfProjects } = this.props;
+    getOrderBy = () => {
+        switch (this.props.orderBy) {
+            case 'lastModifiedAt':
+                return 'Last Modified';
+            case 'createdAt':
+                return 'Last Created';
+            default:
+                return 'Name';
+        }
+    }
 
+    render() {
+        const { title, numOfProjects, onOrderByChange, orderBy, onOrderChange, order } = this.props;
         return (
             <div className={style.container}>
                 <div className={style.titleContainer}>
@@ -34,7 +51,20 @@ export default class Header extends Component<IProps> {
                     <span className={style.numOfProjects}>{numOfProjects}</span>
                 </div>
                 <div className={style.sortContainer}>
-                    Sorted by Last Viewed
+                    <span className={style.desc}>Sorted by </span>
+                    <DropdownContainer
+                        dropdownContent={
+                            <div className={style.menuDialog} >
+                                <MenuItem onClick={() => onOrderByChange('lastModifiedAt')} title='Last Modified' />
+                                <MenuItem onClick={() => onOrderByChange('createdAt')} title='Last Created' />
+                                <MenuItem onClick={() => onOrderByChange('name')} title='Name' />
+                            </div>
+                        }>
+                            <span className={style.orderBy}> {this.getOrderBy()}</span>
+                    </DropdownContainer>
+                    <div onClick={() => onOrderChange()} className={classNames([style.orderButton, order === 'asc' ? style.orderAsc : style.orderDesc])}>
+                        <IconArrowUpThin />
+                    </div>
                 </div>
             </div>
         );

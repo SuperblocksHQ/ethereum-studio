@@ -28,10 +28,6 @@ interface IProps {
 
 export default class Project extends Component<IProps> {
 
-    handleRenameProject = () => {
-        // TODO - rename project
-    }
-
     render() {
         const { project }  = this.props;
 

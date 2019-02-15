@@ -18,8 +18,10 @@ export interface IProject {
     id: string;
     name: string;
     description: string;
+    createdAt: string;
     lastModifiedAt: string;
     files: any;
     anonymousToken?: string;
+    [key: string]: any;
 }
 
