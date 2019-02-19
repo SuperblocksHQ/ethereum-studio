@@ -22,6 +22,10 @@ import ErrorMessage from '../errorMessage';
 
 export default class TextAreaInput extends PureComponent {
 
+    handleFocus = (e) => {
+        e.target.select();
+    }
+
     render() {
         const {
             id,
@@ -54,6 +58,7 @@ export default class TextAreaInput extends PureComponent {
                             cols={cols}
                             maxLength={maxLength}
                             value={value}
+                            onFocus={this.handleFocus}
                             {...props}
                         >
                         </textarea>

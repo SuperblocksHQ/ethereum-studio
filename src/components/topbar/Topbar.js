@@ -33,7 +33,7 @@ import {
 } from '../icons';
 import OnlyIf from '../onlyIf';
 import NetworkAccountSelector from '../networkAccountSelector';
-import ShareDialog from './share';
+import ShareModal from '../shareModal';
 import MenuDropdownDialog from './menu';
 import LoginButton from "../login";
 import ProjectTitle from './projectTitle';
@@ -88,12 +88,10 @@ const ForkDropdownAction = (props) => {
 };
 
 const ShareDropdownAction = () => (
-    <div className={classNames([style.action, style.actionShare])}>
-        <button className={classNames([style.container, 'btnNoBg'])}>
-            <IconShare />
-            <span>Share</span>
-        </button>
-    </div>
+    <button className={classNames([style.container, 'btnNoBg'])}>
+        <IconShare />
+        <span>Share</span>
+    </button>
 );
 
 export default class TopBar extends Component {
@@ -122,16 +120,30 @@ export default class TopBar extends Component {
         }
     }
 
-    onSettingsModalClose = () => {
+    onModalClose = () => {
         this.props.functions.modal.close();
     };
 
-    showPreferencesModal = () => {
-        const modal = (
-            <PreferencesModal
-                onCloseClick={this.onSettingsModalClose}
-            />
-        );
+    showModal = (modalType) => {
+        let modal;
+
+        switch (modalType) {
+            case 'preferences':
+                modal = (
+                    <PreferencesModal
+                        onCloseClick={this.onModalClose}
+                    />
+                );
+                break;
+            case 'share':
+                modal = (
+                    <ShareModal
+                        defaultUrl={String(window.location)}
+                        onCloseClick={this.onModalClose}
+                    />
+                );
+                break;
+        }
         this.props.functions.modal.show({
             cancel: () => {
                 return false;
@@ -198,13 +210,9 @@ export default class TopBar extends Component {
                             onForkClicked={this.onForkClicked}
                         />
                     </OnlyIf>
-                    <DropdownContainer
-                        className={classNames([style.actionShare, style.actionMenu])}
-                        dropdownContent={<ShareDialog />}
-                        enableClickInside={true}
-                    >
+                    <div className={classNames([style.action, style.actionMenu])} onClick={() => this.showModal('share')}>
                         <ShareDropdownAction />
-                    </DropdownContainer>
+                    </div>
                 </div>
                 <ProjectTitle
                     projectName={project.name}
@@ -212,7 +220,7 @@ export default class TopBar extends Component {
                 <div className={style.actionsRight}>
                     <NewProjectAction />
                     <DashboardAction />
-                    <div onClick={this.showPreferencesModal}>
+                    <div onClick={() => this.showModal('preferences')}>
                         <PreferencesAction />
                     </div>
                     <HelpAction />

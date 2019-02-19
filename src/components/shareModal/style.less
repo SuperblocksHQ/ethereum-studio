@@ -13,27 +13,29 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
+@import '../../style/index';
 
-.shareDialogContainer {
+.shareModal {
 	display: block;
 	position: absolute;
 	left: 0px;
 	top: 45px;
 	border-radius: 4px;
-	background-color: #2B2B2B;
-	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+    background-color: @modal-background-color;
 	z-index: 2;
 	color: #fff;
 	transition: visibility 0s, opacity 0.2s ease;
-	padding: 0px 15px 15px 15px;
+	padding: 0px 0px 15px 0px;
 
     .content {
 	    display: flex;
 	    flex-direction: row;
 	    align-items: left;
 	    align-content: center;
-	    line-height: 1.5em;
-			
+        line-height: 1.5em;
+        padding: 0px 20px;
+
 		.innerContent {
 			padding: 20px 20px;
 		}
@@ -43,6 +45,7 @@
 	    }
 
         .inputContainer {
+            position: relative;
             display: flex;
             align-items: flex-end;
             margin-top: 5px;
@@ -55,21 +58,24 @@
 			input, textarea {
 				font-size: 13px;
 				padding: 4px 8px !important;
-			}
+            }
 
             button {
                 margin-bottom: 5px;
                 margin-left: 10px;
+                position: absolute;
+                right: -5px;
+                top: 10px;
             }
         }
 
 		.openLabBtn {
-			margin-top: 5px;
+			margin-top: 15px;
 		}
 
         .optionInput {
         	align-items: center;
-        	
+
         	p {
 				min-width: 150px;
         	}
