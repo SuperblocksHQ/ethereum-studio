@@ -20,13 +20,36 @@ import { IProject } from '../../../../models';
 import { IconDots } from '../../../icons';
 import { DropdownContainer } from '../../../common/dropdown';
 import ProjectMenuDropdownDialog from '../../../topbar/projectMenu/ProjectMenuDropdownDialog';
+import ShareModal from '../../../shareModal';
 
 interface IProps {
     project: IProject;
     deleteProject: (projectId: string) => void;
+    functions: any;
 }
 
 export default class Project extends Component<IProps> {
+
+    onShareModalClose = () => {
+        this.props.functions.modal.close();
+    }
+
+    showShareModal = () => {
+        const modal = (
+            <ShareModal
+                defaultUrl={`${String(window.location.origin)}/${this.props.project.id}`}
+                onCloseClick={this.onShareModalClose}
+            />
+        );
+        this.props.functions.modal.show({
+            cancel: () => {
+                return false;
+            },
+            render: () => {
+                return modal;
+            }
+        });
+    }
 
     render() {
         const { project }  = this.props;
@@ -49,6 +72,7 @@ export default class Project extends Component<IProps> {
                             customClass={style.menuDialog}
                             projectId={project.id}
                             deleteProject={this.props.deleteProject}
+                            shareProject={this.showShareModal}
                         />}
                 >
                     <div className={style.menuWrapper}>

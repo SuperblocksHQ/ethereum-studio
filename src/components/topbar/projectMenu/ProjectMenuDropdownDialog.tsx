@@ -32,12 +32,13 @@ interface IProps {
     configureProject?: () => void;
     renameProject?: () => void;
     deleteProject?: (projectId: string) => void;
+    shareProject?: () => void;
     customClass?: string;
 }
 
 export default class ProjectMenuDropdownDialog extends Component<IProps> {
     render() {
-        const { projectId, downloadProject, configureProject, renameProject, deleteProject } = this.props;
+        const { projectId, downloadProject, configureProject, renameProject, deleteProject, shareProject } = this.props;
 
         return (
             <div className = {classNames([style.menuDialog, this.props.customClass])} >
@@ -57,6 +58,12 @@ export default class ProjectMenuDropdownDialog extends Component<IProps> {
                     <MenuItem
                         onClick={() => renameProject()}
                         title='Rename'
+                    />
+                }
+                { shareProject &&
+                    <MenuItem
+                        onClick={() => shareProject()}
+                        title='Share'
                     />
                 }
                 { deleteProject &&

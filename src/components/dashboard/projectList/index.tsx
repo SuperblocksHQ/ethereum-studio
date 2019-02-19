@@ -23,6 +23,7 @@ import Header from './header';
 interface IProps {
     list: IProject[];
     listName: string;
+    functions: any;
 }
 
 interface IState {
@@ -66,7 +67,7 @@ export default class ProjectList extends Component<IProps, IState> {
     }
 
     render() {
-        const { list, listName } = this.props;
+        const { list, listName, functions } = this.props;
         const { orderBy, order } = this.state;
 
         let orderedList = list.sort(this.dynamicSort(orderBy));
@@ -90,6 +91,7 @@ export default class ProjectList extends Component<IProps, IState> {
                     orderedList.map((project: IProject) => {
                         return (
                             <Project
+                                functions={functions}
                                 key={project.id}
                                 project={project}
                             />

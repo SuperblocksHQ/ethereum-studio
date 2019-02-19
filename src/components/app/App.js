@@ -274,9 +274,9 @@ export default class App extends Component {
                 <div id="app" className={this.getClassNames()}>
                     <div id="app_content">
                         <div className="maincontent">
-                            <Route path="/" exact component={Dashboard} />
+                            <Route path="/" exact render={(props) => <Dashboard {...props} functions={this.functions} />} />
                             <Switch>
-                                <Route path="/dashboard" exact component={Dashboard} />
+                                <Route path="/dashboard" exact render={(props) => <Dashboard {...props} functions={this.functions} />} />
                                 <Route path="/:projectId" exact component={this.renderProject} />
                             </Switch>
                         </div>

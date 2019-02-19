@@ -33,6 +33,8 @@ interface IProps {
     githubLoginAction: () => void;
 
     isProjectListLoading: boolean;
+
+    functions: any;
 }
 
 interface IState {
@@ -54,7 +56,7 @@ export default class Dashboard extends Component<IProps, IState> {
     }
 
     render() {
-        const { projectList, isAuthenticated, githubLoginAction, isProjectListLoading} = this.props;
+        const { projectList, isAuthenticated, githubLoginAction, isProjectListLoading, functions} = this.props;
 
         return(
             <div className={style.dashboard}>
@@ -66,6 +68,7 @@ export default class Dashboard extends Component<IProps, IState> {
                         />
                         <div className={style.content}>
                             <ProjectList
+                                functions={functions}
                                 listName={'All Your Projects'}
                                 list={projectList}
                             />
