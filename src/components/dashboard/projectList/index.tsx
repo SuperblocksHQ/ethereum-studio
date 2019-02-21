@@ -91,6 +91,7 @@ export default class ProjectList extends Component<IProps, IState> {
                     orderedList.map((project: IProject) => {
                         return (
                             <Project
+                                orderBy={orderBy}
                                 functions={functions}
                                 key={project.id}
                                 project={project}

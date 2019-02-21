@@ -21,11 +21,13 @@ import { IconDots } from '../../../icons';
 import { DropdownContainer } from '../../../common/dropdown';
 import ProjectMenuDropdownDialog from '../../../topbar/projectMenu/ProjectMenuDropdownDialog';
 import ShareModal from '../../../shareModal';
+import moment from 'moment';
 
 interface IProps {
     project: IProject;
     deleteProject: (projectId: string) => void;
     functions: any;
+    orderBy: string;
 }
 
 export default class Project extends Component<IProps> {
@@ -52,7 +54,7 @@ export default class Project extends Component<IProps> {
     }
 
     render() {
-        const { project }  = this.props;
+        const { project, orderBy }  = this.props;
 
         return (
             <div className={style.container}>
@@ -62,6 +64,12 @@ export default class Project extends Component<IProps> {
                     </div>
                     <div className={style.description}>
                         {project.description}
+                    </div>
+                    <div className={style.timestamp}>
+                        { orderBy === 'createdAt'
+                            ? `Created ${moment.utc(project.createdAt).fromNow()}`
+                            : `Edited ${moment.utc(project.lastModifiedAt).fromNow()}`
+                        }
                     </div>
                 </a>
                 <DropdownContainer
