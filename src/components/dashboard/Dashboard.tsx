@@ -40,10 +40,8 @@ interface IProps {
 }
 
 export default class Dashboard extends Component<IProps> {
-
-    shouldComponentUpdate() {
+    componentDidMount() {
         this.props.getProjectList();
-        return true;
     }
 
     onSideMenuItemSelected = (item: ItemType) => {

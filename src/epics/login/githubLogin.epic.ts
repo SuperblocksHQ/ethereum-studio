@@ -16,13 +16,13 @@
 
 import {empty, of, from} from 'rxjs';
 import { ofType } from 'redux-observable';
-import { authActions } from '../../actions';
+import { authActions, userActions } from '../../actions';
 import {
     withLatestFrom,
     tap,
     switchMap,
     catchError,
-    map
+    map, concatMap, mergeMap
 } from 'rxjs/operators';
 import PopupWindow from '../../components/login/github/PopupWindow';
 import { AnyAction } from 'redux';
@@ -70,7 +70,7 @@ export const githubLogin = (action$: AnyAction, state$: any) => action$.pipe(
                 )),
                 switchMap((data: any) => authService.githubAuth(data)),
                 switchMap(() => userService.getUser()),
-                map(authActions.loginSuccess)
+                mergeMap((data) => [authActions.loginSuccess(data), userActions.getProjectList()])
             );
     }),
     catchError((err: any) => {
