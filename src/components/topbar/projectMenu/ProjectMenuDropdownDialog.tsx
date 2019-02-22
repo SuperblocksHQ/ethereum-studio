@@ -15,7 +15,7 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { Component } from 'react';
-import { MenuItem } from '../../common/menu';
+import { MenuItem, Divider } from '../../common/menu';
 import style from './style.less';
 import {
     IconConfigure,
@@ -33,15 +33,34 @@ interface IProps {
     renameProject?: () => void;
     deleteProject?: (projectId: string) => void;
     shareProject?: () => void;
+    editProject?: () => void;
+    openProject?: () => void;
+    openProjectNewTab?: () => void;
+    forkProject?: (projectId: string) => void;
     customClass?: string;
 }
 
 export default class ProjectMenuDropdownDialog extends Component<IProps> {
     render() {
-        const { projectId, downloadProject, configureProject, renameProject, deleteProject, shareProject } = this.props;
+        const { projectId, downloadProject, configureProject, renameProject, deleteProject, shareProject, editProject, openProject, openProjectNewTab, forkProject } = this.props;
 
         return (
             <div className = {classNames([style.menuDialog, this.props.customClass])} >
+                { openProject &&
+                    <MenuItem
+                        onClick={() => openProject()}
+                        title='Open Project'
+                    />
+                }
+                { openProjectNewTab &&
+                    <React.Fragment>
+                        <MenuItem
+                            onClick={() => openProjectNewTab()}
+                            title='Open Project in new tab'
+                        />
+                        <Divider />
+                    </React.Fragment>
+                }
                 { downloadProject &&
                     <MenuItem
                         onClick={() => downloadProject()}
@@ -58,6 +77,18 @@ export default class ProjectMenuDropdownDialog extends Component<IProps> {
                     <MenuItem
                         onClick={() => renameProject()}
                         title='Rename'
+                    />
+                }
+                { editProject &&
+                    <MenuItem
+                        onClick={() => editProject()}
+                        title='Edit'
+                    />
+                }
+                { forkProject &&
+                    <MenuItem
+                        onClick={() => forkProject(projectId)}
+                        title='Duplicate'
                     />
                 }
                 { shareProject &&

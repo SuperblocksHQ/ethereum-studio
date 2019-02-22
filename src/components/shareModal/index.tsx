@@ -21,7 +21,6 @@ import style from './style.less';
 import {
     IconCopy
 } from '../icons';
-import TextInput from '../textInput';
 import TextAreaInput from '../textAreaInput';
 import { Tooltip } from '../common';
 import Switch from 'react-switch';

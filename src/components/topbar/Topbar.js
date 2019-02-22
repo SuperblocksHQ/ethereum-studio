@@ -155,7 +155,7 @@ export default class TopBar extends Component {
     };
 
     onForkClicked = () => {
-        this.props.forkProject();
+        this.props.forkCurrentProject();
     }
 
     onCloseUploadDialog = () => {

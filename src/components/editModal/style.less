@@ -1,0 +1,64 @@
+// Copyright 2018 Superblocks AB
+//
+// This file is part of Superblocks Lab.
+//
+// Superblocks Lab is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation version 3 of the License.
+//
+// Superblocks Lab is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
+@import '../../style/index';
+
+.shareModal {
+	display: block;
+	position: absolute;
+	left: 0px;
+	top: 45px;
+	border-radius: 4px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+    background-color: @modal-background-color;
+	z-index: 2;
+	color: #fff;
+	transition: visibility 0s, opacity 0.2s ease;
+	padding: 0px 0px 15px 0px;
+
+    .content {
+        line-height: 1.5em;
+        padding: 20px 20px;
+
+	    .title {
+	    	font-weight: bold;
+	    }
+
+        .inputContainer {
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+			margin-top: 5px;
+			margin-bottom: 25px;
+
+			&:last-of-type {
+				margin-bottom: 0px;
+			}
+
+			&:first-of-type {
+				margin-top: 0px;
+			}
+        }
+	}
+
+    .footer {
+        display: flex;
+        border-top: 1px solid @modal-separator-color;
+        .buttonsContainer {
+            margin-left: auto;
+            padding: 15px 20px;
+        }
+    }
+}

@@ -38,8 +38,8 @@ function mapDispatchToProps(dispatch) {
         hideUploadDialog: () => {
             dispatch(ipfsActions.hideUploadDialog())
         },
-        forkProject: () => {
-            dispatch(projectsActions.forkProject())
+        forkCurrentProject: () => {
+            dispatch(projectsActions.forkCurrentProject())
         },
     };
 }

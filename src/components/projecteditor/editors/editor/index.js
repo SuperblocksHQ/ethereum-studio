@@ -4,8 +4,8 @@ import Editor from './Editor';
 
 const mapDispatchToProps = dispatch => {
     return {
-        forkProject: () => {
-            dispatch(ipfsActions.forkProject())
+        forkCurrentProject: () => {
+            dispatch(ipfsActions.forkCurrentProject())
         },
     };
 };

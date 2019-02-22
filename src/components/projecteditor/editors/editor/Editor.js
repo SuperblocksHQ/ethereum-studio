@@ -97,7 +97,7 @@ export default class Editor extends Component {
             .then(() => {
                 // if save action is triggered, move temporary to normal projects
                 if (routerControl.getActiveProject().getInode() === 1) {
-                    this.props.forkProject();
+                    this.props.forkCurrentProject();
                 } else {
                     // Trigger other windows to refresh.
                     this.props.parent.props.parent.props.parent.redraw();

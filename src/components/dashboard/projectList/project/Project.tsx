@@ -21,18 +21,20 @@ import { IconDots } from '../../../icons';
 import { DropdownContainer } from '../../../common/dropdown';
 import ProjectMenuDropdownDialog from '../../../topbar/projectMenu/ProjectMenuDropdownDialog';
 import ShareModal from '../../../shareModal';
+import EditModal from '../../../editModal';
 import moment from 'moment';
 
 interface IProps {
     project: IProject;
     deleteProject: (projectId: string) => void;
+    forkProjectById: (projectId: string) => void;
     functions: any;
     orderBy: string;
 }
 
 export default class Project extends Component<IProps> {
 
-    onShareModalClose = () => {
+    onModalClose = () => {
         this.props.functions.modal.close();
     }
 
@@ -40,7 +42,7 @@ export default class Project extends Component<IProps> {
         const modal = (
             <ShareModal
                 defaultUrl={`${String(window.location.origin)}/${this.props.project.id}`}
-                onCloseClick={this.onShareModalClose}
+                onCloseClick={this.onModalClose}
             />
         );
         this.props.functions.modal.show({
@@ -51,6 +53,37 @@ export default class Project extends Component<IProps> {
                 return modal;
             }
         });
+    }
+
+    showEditModal = () => {
+        const modal = (
+            <EditModal
+                project={this.props.project}
+                onCloseClick={this.onModalClose}
+            />
+        );
+        this.props.functions.modal.show({
+            cancel: () => {
+                return false;
+            },
+            render: () => {
+                return modal;
+            }
+        });
+    }
+
+    openProject = () => {
+        const { project } = this.props;
+        window.location.href = `${window.location.origin}/${project.id}`;
+    }
+
+    openProjectNewTab = () => {
+        const { project } = this.props;
+        window.open(`${window.location.origin}/${project.id}`, '_blank');
+    }
+
+    editProject = () => {
+        console.log('TODO Edit project');
     }
 
     render() {
@@ -79,7 +112,11 @@ export default class Project extends Component<IProps> {
                         <ProjectMenuDropdownDialog
                             customClass={style.menuDialog}
                             projectId={project.id}
+                            editProject={this.showEditModal}
+                            openProject={this.openProject}
+                            openProjectNewTab={this.openProjectNewTab}
                             deleteProject={this.props.deleteProject}
+                            forkProject={this.props.forkProjectById}
                             shareProject={this.showShareModal}
                         />}
                 >

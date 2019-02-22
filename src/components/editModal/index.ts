@@ -17,9 +17,9 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
-import { projectSelectors } from '../../../../selectors';
-import { projectsActions } from '../../../../actions';
-import Project from './Project';
+import { projectSelectors } from '../../selectors';
+import { projectsActions } from '../../actions';
+import EditModal from './EditModal';
 
 const mapStateToProps = (state: any) => ({
 
@@ -29,11 +29,8 @@ function mapDispatchToProps(dispatch: Dispatch<AnyAction>) {
     return {
         deleteProject: (projectId: string) => {
             dispatch(projectsActions.deleteProject(projectId));
-        },
-        forkProjectById: (projectId: string) => {
-            dispatch(projectsActions.forkProjectById(projectId));
         }
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Project);
+export default connect(mapStateToProps, mapDispatchToProps)(EditModal);

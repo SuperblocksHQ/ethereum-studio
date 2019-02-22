@@ -1,4 +1,4 @@
-// Copyright 2018 Superblocks AB
+// Copyright 2019 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -22,8 +22,8 @@ import { projectsActions } from '../../actions';
 import { projectService } from '../../services';
 import { fetchJSON } from '../../services/utils/fetchJson';
 
-export const forkProjectEpic: Epic = (action$, state$) => action$.pipe(
-    ofType(projectsActions.FORK_PROJECT),
+export const forkCurrentProject: Epic = (action$, state$) => action$.pipe(
+    ofType(projectsActions.FORK_CURRENT_PROJECT),
     switchMap(() => {
         const currentProject = projectSelectors.getProject(state$.value);
         return projectService.createProject({
