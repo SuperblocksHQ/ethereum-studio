@@ -15,5 +15,6 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 export const authSelectors = {
-    getIsAuthenticated: (state: any) => state.auth.isAuthenticated
+    getIsAuthenticated: (state: any) => state.auth.isAuthenticated,
+    getIsLoginInProgress: (state: any) => state.auth.isLoginInProgress
 };

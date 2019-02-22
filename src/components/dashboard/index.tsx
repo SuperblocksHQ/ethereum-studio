@@ -24,7 +24,8 @@ import { AnyAction } from 'redux';
 const mapStateToProps = (state: any) => ({
     projectList: userSelectors.getProjectList(state),
     isAuthenticated: authSelectors.getIsAuthenticated(state),
-    isProjectListLoading: userSelectors.isProjectListLoading(state)
+    isProjectListLoading: userSelectors.isProjectListLoading(state),
+    isLoginInProgress: authSelectors.getIsLoginInProgress(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {

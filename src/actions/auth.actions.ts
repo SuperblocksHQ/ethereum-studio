@@ -31,6 +31,13 @@ export const authActions = {
         };
     },
 
+    SILENT_LOGIN_FAIL: 'SILENT_LOGIN_FAIL',
+    silentLoginFail() {
+        return {
+            type: authActions.SILENT_LOGIN_FAIL
+        };
+    },
+
     LOGIN: 'LOGIN',
     login(githubData: any) {
         return {

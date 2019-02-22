@@ -18,7 +18,8 @@ import { authActions } from '../actions/auth.actions';
 import { AnyAction } from 'redux';
 
 export const initialState = {
-    isAuthenticated : false
+    isAuthenticated : false,
+    isLoginInProgress: true
 };
 
 export default function loginReducer(state = initialState, action: AnyAction) {
@@ -27,11 +28,17 @@ export default function loginReducer(state = initialState, action: AnyAction) {
             return {
                 ...state,
                 isAuthenticated: true,
+                isLoginInProgress: false
             };
         case authActions.LOGOUT_SUCCESS:
             return {
                 ...state,
                 isAuthenticated: false,
+            };
+        case authActions.SILENT_LOGIN_FAIL:
+            return {
+                ...state,
+                isLoginInProgress: false
             };
         default:
             return state;
