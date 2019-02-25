@@ -19,6 +19,8 @@ import style from './style.less';
 import LearnAndResources from '../../learnAndResources';
 import { FolderItem, FileItem, ContractItem } from './items';
 import { IProjectItem, ProjectItemTypes } from '../../../models';
+import { BaseSidePanel } from '../sidePanels/baseSidePanel';
+import { IconFileAlt } from '../../icons';
 
 interface IProps {
     tree: IProjectItem;
@@ -111,10 +113,15 @@ export class Explorer extends React.Component<IProps> {
         const treeHtml = this.props.tree ? this.renderTree(this.props.tree, this.props) : null;
         return (
             <div className='full'>
-                <div className={ style.treeContainer }>
-                    { treeHtml }
-                    <LearnAndResources className='mt-3' />
-                </div>
+                <BaseSidePanel
+                        icon={ <IconFileAlt /> }
+                        name='Explorer'
+                        onClose={() => null}>
+                    <div className={ style.treeContainer }>
+                        { treeHtml }
+                        <LearnAndResources className='mt-3' />
+                    </div>
+                </BaseSidePanel>
             </div>
         );
     }

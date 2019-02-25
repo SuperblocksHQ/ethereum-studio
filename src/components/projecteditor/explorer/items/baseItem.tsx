@@ -3,14 +3,31 @@ import classnames from 'classnames';
 import style from './style.less';
 import Caret from '../../../caret';
 import { DropdownContainer } from '../../../common';
+import { IProjectItem } from '../../../../models';
 
-export function BaseItem(props) {
+interface IProps {
+    data: IProjectItem;
+    icon: JSX.Element;
+    iconOpen?: JSX.Element;
+    togglable?: boolean;
+    contextMenu?: Nullable<JSX.Element>;
+    toolbar?: Nullable<JSX.Element>;
+    children?: Nullable<JSX.Element> | Nullable<JSX.Element>[];
+    nocaretStyle?: any;
+
+    onToggle?: (id: string) => void;
+    onClick(data: IProjectItem): void;
+}
+
+export function BaseItem(props: IProps) {
     let icon = props.icon;
     let caret;
 
-    function onCaretClick(e) {
+    function onCaretClick(e: React.MouseEvent) {
         e.stopPropagation();
-        props.onToggle(props.data.id);
+        if (props.onToggle) {
+            props.onToggle(props.data.id);
+        }
     }
 
     if (props.togglable) {

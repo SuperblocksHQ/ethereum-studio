@@ -25,8 +25,6 @@ import CodeEditor from "./sections/descriptionArea/CodeEditor";
 import SplitterLayout from 'react-splitter-layout';
 import Description from "./sections/descriptionArea/Description";
 
-import './react-splitter-layout.css';
-
 import data from '../../assets/static/json/openzeppelin.json';
 
 export default class ImportFileModal extends Component {

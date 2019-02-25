@@ -4,31 +4,42 @@ import { IconFolder, IconFolderOpen, IconAddFile, IconImportFile, IconAddFolder,
 import { Tooltip } from '../../../common';
 import { BaseItem } from './baseItem';
 import style from './style.less';
-import { ProjectItemTypes } from '../../../../models';
+import { ProjectItemTypes, IProjectItem } from '../../../../models';
 
-function getToolbar(props) {
+interface IProps {
+    data: IProjectItem;
+    children: JSX.Element | Nullable<JSX.Element>[];
+    onToggle(id: string): void;
+    onClick(data: IProjectItem): void;
+    onRenameClick(id: string): void;
+    onCreateItemClick(parentId: string, type: ProjectItemTypes): void;
+    onImportFileClick(parentId: string): void;
+    onDeleteClick(id: string): void;
+}
+
+function getToolbar(props: IProps) {
     return (
         <div className={classnames(style.buttonsWrapper, { [style.alwaysOn]: props.data.isRoot })}>
             <div className={style.buttons} onClick={e => e.stopPropagation()}>
-                <a href="#" title="New File" onClick={() => props.onCreateItemClick(props.data.id, ProjectItemTypes.File) }>
-                    <Tooltip title="New File">
+                <a href='#' title='New File' onClick={() => props.onCreateItemClick(props.data.id, ProjectItemTypes.File) }>
+                    <Tooltip title='New File'>
                         <IconAddFile />
                     </Tooltip>
                 </a>
-                <a href="#" title="New Folder" onClick={() => props.onCreateItemClick(props.data.id, ProjectItemTypes.Folder)}>
-                    <Tooltip title="New Folder">
+                <a href='#' title='New Folder' onClick={() => props.onCreateItemClick(props.data.id, ProjectItemTypes.Folder)}>
+                    <Tooltip title='New Folder'>
                         <IconAddFolder />
                     </Tooltip>
                 </a>
                 { props.data.mutable &&
                 <React.Fragment>
-                    <a href="#" title="Rename" onClick={() => props.onRenameClick(props.data.id)}>
-                        <Tooltip title="Rename">
+                    <a href='#' title='Rename' onClick={() => props.onRenameClick(props.data.id)}>
+                        <Tooltip title='Rename'>
                             <IconEdit />
                         </Tooltip>
                     </a>
-                    <a href="#" title="Delete" onClick={() => props.onDeleteClick(props.data.id)} >
-                        <Tooltip title="Delete">
+                    <a href='#' title='Delete' onClick={() => props.onDeleteClick(props.data.id)} >
+                        <Tooltip title='Delete'>
                             <IconTrash />
                         </Tooltip>
                     </a>
@@ -38,10 +49,10 @@ function getToolbar(props) {
     );
 }
 
-export function FolderItem(props) {
+export function FolderItem(props: IProps) {
     const toolbar = getToolbar(props);
 
-    const contextMenu=(
+    const contextMenu = (
         <div className={ style.contextMenu }>
             <div onClick={ () => props.onCreateItemClick(props.data.id, ProjectItemTypes.File) }>
                 <div className={style.icon} >
@@ -87,7 +98,6 @@ export function FolderItem(props) {
             toolbar={ toolbar }
             icon={ <IconFolder /> }
             iconOpen={ <IconFolderOpen /> }
-            contextMenu={ contextMenu }>
-        </BaseItem>
+            contextMenu={ contextMenu } />
     );
 }

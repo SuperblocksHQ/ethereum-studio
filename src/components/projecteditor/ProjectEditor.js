@@ -16,8 +16,8 @@
 
 import React, { Component } from 'react';
 import style from './style.less';
-import Control from './control';
-import Panes from './panes1';
+import './react-splitter-layout.css';
+import Panes from './panes';
 import Explorer from './explorer';
 import TopBar from '../topbar';
 import BottomBar from './bottomBar';

@@ -3,27 +3,40 @@ import { IconContract, IconConfigure, IconCompile, IconDeploy, IconInteract, Ico
 import { BaseItem } from './baseItem';
 import style from './style.less';
 import { getToolbar } from './fileItem';
+import { IProjectItem } from '../../../../models';
 
-export function ContractItem(props) {
+interface IProps {
+    data: IProjectItem;
+    onToggle(id: string): void;
+    onClick(data: IProjectItem): void;
+    onRenameClick(id: string): void;
+    onDeleteClick(id: string): void;
+    onConfigureClick(data: IProjectItem): void;
+    onCompileClick(data: IProjectItem): void;
+    onDeployClick(data: IProjectItem): void;
+    onInteractClick(data: IProjectItem): void;
+}
+
+export function ContractItem(props: IProps) {
     const toolbar = getToolbar(props);
 
-    function getActionButtonProps(name, onClick) {
-        return { 
-            data: { id: props.data.id, name, opened: false }, 
+    function getActionButtonProps(name: string, onClick: (data: IProjectItem) => void) {
+        return {
+            data: { id: props.data.id, name, opened: false } as IProjectItem,
             onClick: () => onClick(props.data),
             nocaretStyle: style.reduced
         };
     }
 
-    const contextMenu=(
+    const contextMenu = (
         <div className={ style.contextMenu }>
-            <div onClick={ props.onRenameClick }>
+            <div onClick={ () => props.onRenameClick(props.data.id) }>
                 <div className={style.icon}>
                     <IconEdit />
                 </div>
                 Rename
             </div>
-            <div onClick={ props.onDeleteClick }>
+            <div onClick={ () => props.onDeleteClick(props.data.id) }>
                 <div className={style.icon}>
                     <IconTrash />
                 </div>
