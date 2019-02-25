@@ -63,6 +63,8 @@ export const getToastComponent = (type) => {
             return error('Error importing project!');
         case projectsActions.UPDATE_PROJECT_SETTINGS_FAIL:
             return error('Error updating project settings');
+        case projectsActions.UPDATE_PROJECT_SUCCESS:
+            return info('Project updated!');
         default:
             return null;
     }

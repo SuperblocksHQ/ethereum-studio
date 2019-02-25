@@ -141,6 +141,13 @@ export const projectsActions = {
             data: { newName }
        };
     },
+    UPDATE_PROJECT: 'UPDATE_PROJECT',
+    updateProject(project: IProject) {
+       return {
+            type: projectsActions.UPDATE_PROJECT,
+            data: { project }
+       };
+    },
     UPDATE_PROJECT_SUCCESS: 'UPDATE_PROJECT_SUCCESS',
     updateProjectSuccess(project: IProject) {
        return {

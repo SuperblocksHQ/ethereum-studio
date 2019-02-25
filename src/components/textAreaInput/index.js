@@ -57,6 +57,7 @@ export default class TextAreaInput extends PureComponent {
                             rows={rows}
                             cols={cols}
                             maxLength={maxLength}
+                            defaultValue={defaultValue}
                             value={value}
                             onFocus={this.handleFocus}
                             {...props}

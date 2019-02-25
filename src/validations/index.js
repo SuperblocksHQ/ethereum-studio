@@ -1,4 +1,4 @@
-// Copyright 2018 Superblocks AB
+// Copyright 2019 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -22,3 +22,6 @@ export const validateGasPrice = (gasPrice) =>
 
 export const validateMainnetWarning = (projectName, value) =>
     (projectName !== value ? 'MAINNNET_WARNING' : null);
+
+export const validateProjectName = (projectName) =>
+    (!/^[a-zA-ZA-Z0-9 -]+$/.test(projectName) || /^\s*$/.test(projectName) || projectName === '' ? 'PROJECT_NAME' : null);
