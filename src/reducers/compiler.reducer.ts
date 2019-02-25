@@ -193,7 +193,7 @@ export default function compilerReducer(state = initialState, action: AnyAction,
                         return {
                             ...state,
                             outputFiles,
-                            outputFolderPath: [ 'build' ].concat(state.targetContractPath).concat([ contractName ]),
+                            outputFolderPath: [ 'build' ].concat(state.targetContractPath.slice(0, -1)).concat([ contractName ]),
                             consoleRows: state.consoleRows.concat([{ channel: 1, msg: 'Success in compilation' }])
                         };
                     } catch {
@@ -211,7 +211,7 @@ export default function compilerReducer(state = initialState, action: AnyAction,
 
             // this means errors occured
             return {
-                ...state, // TODO: think if it is right
+                ...state,
                 consoleRows: state.consoleRows.concat(errorRows)
             };
         }

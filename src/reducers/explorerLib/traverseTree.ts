@@ -17,7 +17,9 @@
 import { IProjectItem } from '../../models';
 
 function traverseTreeImpl(item: IProjectItem, currentPath: string[], callback: (item: IProjectItem, path: () => string[]) => void) {
-    currentPath.push(item.name);
+    if (!item.isRoot) {
+        currentPath.push(item.name);
+    }
     // argument should always be copied, otherwise it is a reference which may be modified later
     callback(item, () => currentPath.slice());
 
@@ -27,6 +29,11 @@ function traverseTreeImpl(item: IProjectItem, currentPath: string[], callback: (
     currentPath.pop();
 }
 
+/**
+ * Goes though every node in the tree and executes callback with the node and its path
+ * @param item 
+ * @param callback 
+ */
 export function traverseTree(item: IProjectItem, callback: (item: IProjectItem, path: () => string[]) => void) {
     return traverseTreeImpl(item, [], callback);
 }
