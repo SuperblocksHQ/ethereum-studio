@@ -19,4 +19,16 @@ declare module '*.less' {
     export default content;
 }
 
+declare module 'react-monaco-editor' {
+    const content: any;
+    export default content;
+}
+
+declare module 'eth-lightwallet/dist/lightwallet.min.js' {
+    const content: any;
+    export default content;
+}
+
 type Nullable<T> = T | null;
+
+declare interface Window { web3: any; Web3: any; }

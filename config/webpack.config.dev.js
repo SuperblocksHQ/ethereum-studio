@@ -77,7 +77,7 @@ module.exports = {
   mode: 'development',
   // You may want 'eval' instead if you prefer to see the compiled output in DevTools.
   // See the discussion in https://github.com/facebook/create-react-app/issues/343
-  devtool: 'cheap-module-source-map',
+  devtool: 'cheap-module-eval-source-map',
   // These are the "entry points" to our application.
   // This means they will be the "root" imports that are included in JS bundle.
   entry: [
@@ -378,7 +378,7 @@ module.exports = {
         module: 'esnext',
         moduleResolution: 'node',
         resolveJsonModule: true,
-        isolatedModules: true,
+        isolatedModules: false,
         noEmit: true,
         jsx: 'preserve',
       },
@@ -396,8 +396,8 @@ module.exports = {
     }),
     new CopyWebpackPlugin([{ context: `src/assets`, from: `**/*` }]),
     new CopyWebpackPlugin([ { from: 'node_modules/monaco-editor/min/vs', to: 'vs', } ]),
-    new CopyWebpackPlugin([ { context: `src/components/solc/dist`, from: '**/*', to: 'solc', } ]),
-    new CopyWebpackPlugin([ { context: `src/components/evm/dist`, from: '**/*', to: 'evm', } ]),
+    new CopyWebpackPlugin([ { context: `src/services/solc/dist`, from: '**/*', to: 'solc', } ]),
+    new CopyWebpackPlugin([ { context: `src/services/evm/dist`, from: '**/*', to: 'evm', } ]),
     new CopyWebpackPlugin([ { context: `src/components/superprovider/dist`, from: 'web3provider.js', to: 'static/js', } ])
   ],
 

@@ -58,10 +58,10 @@ export const githubLogin = (action$: AnyAction, state$: any) => action$.pipe(
         const clientId = process.env.REACT_APP_GITHUB_CLIENT_ID || '';
         const redirectUri = process.env.REACT_APP_GITHUB_REDIRECT_URI || '';
         return of(toQuery({
-            client_id: clientId,
-            scope,
-            redirect_uri: redirectUri,
-        }))
+                client_id: clientId,
+                scope,
+                redirect_uri: redirectUri,
+            }))
             .pipe(
                 switchMap((query: string) => from(PopupWindow.open(
                     'github-oauth-authorize',

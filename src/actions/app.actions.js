@@ -19,4 +19,16 @@ export const appActions = {
             data: { parameters }
         }
     },
+    INIT_EVM: 'INIT_EVM',
+    initEvm() {
+        return {
+            type: appActions.INIT_EVM
+        };
+    },
+    EVM_READY: 'EVM_READY',
+    emvReady() {
+        return {
+            type: appActions.EVM_READY
+        }
+    }
 };

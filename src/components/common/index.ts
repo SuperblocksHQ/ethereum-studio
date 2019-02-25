@@ -20,3 +20,4 @@ export * from './tooltip';
 export * from './menu';
 export * from './topbar';
 export * from './buttons';
+export * from './fileIcon';

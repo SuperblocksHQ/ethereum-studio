@@ -23,7 +23,7 @@ export const projectService = {
     createProject(data: Partial<IProject>): Observable<IProject> {
         return fetchJSON(process.env.REACT_APP_PROJECT_API_BASE_URL + '/projects', {
             method: 'POST',
-            body: { ...data, files: JSON.stringify(data.files) }
+            body: data
         })
         .pipe(
             switchMap(response => response.json())
@@ -42,11 +42,7 @@ export const projectService = {
     getProjectById(id: string) {
         return fetchJSON(process.env.REACT_APP_PROJECT_API_BASE_URL + '/projects/' + id, {})
             .pipe(
-                switchMap(response => response.json()),
-                map(project => {
-                    const filesString = project.files;
-                    return { ...project, files: JSON.parse(filesString) };
-                })
+                switchMap(response => response.json())
             );
     },
 
@@ -58,7 +54,6 @@ export const projectService = {
     },
 
     putProjectById(id: string, data: any) {
-        data.files = JSON.stringify(data.files);
         return fetchJSON(process.env.REACT_APP_PROJECT_API_BASE_URL + '/projects/' + id, {
             method: 'PUT',
             body: data
@@ -71,60 +66,3 @@ export const projectService = {
         });
     },
 };
-
-// TODO: FIXME: debugging-purposes only
-// export async function demoProjectService() {
-
-//     // Read
-//     projectService.getProjectsInfo().then(function (response) {
-//         console.log("getProjectsInfo: ", response);
-//     });
-
-//     //
-//     // Write
-//     var data = {
-//         name: "testproject1",
-//         description: "my test project 1",
-//         files: "data here"
-//     };
-//     var projectId;
-//     projectService.postProject(data).then(function (response) {
-//         console.log("postProject [" + data.name + "]: ", response);
-
-//         projectId = response.id;
-//         // Load by id
-//         projectService.getProjectById(projectId).then(function (response) {
-//             console.log("getProjectById [" + projectId + "]: ", response);
-//         });
-
-//         // Read
-//         projectService.getProjectsInfo().then(function (response) {
-//             console.log("getProjectsInfo: ", response);
-
-//             // Rewrite
-//             data = {
-//                 name: "testproject1",
-//             description: "Modified test test project 1: " + (new Date()).toString(),
-//             files: "new data here"
-//             };
-//             projectService.putProjectById(projectId, data).then(function (response) {
-//                 console.log("putProjectById [" + projectId + "]: ", response);
-
-//                 // Read
-//                 projectService.getProjectById(projectId).then(function (response) {
-//                     console.log("getProjectById [" + projectId + "]: ", response);
-
-//                     // Delete
-//                     projectService.deleteProjectById(projectId).then(function (response) {
-//                         console.log("deleteProjectById [" + projectId + "]: ", response);
-//                     });
-
-//                     // Read
-//                     projectService.getProjectsInfo().then(function (response) {
-//                         console.log("getProjectsInfo: ", response);
-//                     });
-//                 });
-//             });
-//         });
-//     });
-// }

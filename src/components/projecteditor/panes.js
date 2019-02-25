@@ -349,7 +349,7 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(panesActions.addPane(id, name, fileId))
         },
         removePane: (id) => {
-            dispatch(panesActions.removePane(id))
+            dispatch(panesActions.closePane(id))
         },
         setActivePane: (id) => {
             dispatch(panesActions.setActivePane(id));

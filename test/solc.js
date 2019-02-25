@@ -29,7 +29,7 @@ describe('solc', function() {
     const raiseToSummonTemplatePath = "./src/templates/raisetosummon.zip";
 
     // Compiler settings
-    const compilerPath = "../src/components/solc/dist/soljson-v0.4.25+commit.59dbf8f1.js"
+    const compilerPath = "../src/services/solc/dist/soljson-v0.4.25+commit.59dbf8f1.js"
     const compiler = require(compilerPath);
     const compile = compiler.cwrap("compileStandard", "string", ["string", "number"]);
 

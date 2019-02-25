@@ -25,13 +25,33 @@ export const projectsActions = {
             data: environments
         };
     },
-
     SET_ENVIRONMENT: 'SET_ENVIRONMENT',
     setEnvironment(environmentName: string) {
        return {
             type: projectsActions.SET_ENVIRONMENT,
             data: environmentName
        };
+    },
+    SELECT_ACCOUNT: 'SELECT_ACCOUNT',
+    selectAccount(name: string) {
+        return {
+            type: projectsActions.SELECT_ACCOUNT,
+            data: name
+        };
+    },
+    UPDATE_ACCOUNT_BALANCE: 'UPDATE_ACCOUNT_BALANCE',
+    updateAccountBalance(balance: string) {
+        return {
+            type: projectsActions.UPDATE_ACCOUNT_BALANCE,
+            data: {balance}
+        };
+    },
+    SET_METAMASK_ACCOUNTS: 'SET_METAMASK_ACCOUNTS',
+    setMetamaskAccounts(addresses: string[]) {
+        return {
+            type: projectsActions.SET_METAMASK_ACCOUNTS,
+            data: addresses
+        };
     },
 
     UPDATE_PROJECT_SETTINGS: 'UPDATE_PROJECT_SETTINGS',
@@ -55,11 +75,20 @@ export const projectsActions = {
             error
         };
     },
-    UPDATE_SELECTED_ACCOUNT: 'UPDATE_SELECTED_ACCOUNT',
-    updateSelectAccount(name: string, balance: string, address: string) {
+
+    // ----------- Wallet ---------------
+    OPEN_WALLET: 'OPEN_WALLET',
+    openWallet(name: string, seed: string) {
         return {
-            type: projectsActions.UPDATE_SELECTED_ACCOUNT,
-            data: {name, balance, address}
+            type: projectsActions.OPEN_WALLET,
+            data: { name, seed }
+        };
+    },
+    OPEN_WALLET_SUCCESS: 'OPEN_WALLET_SUCCESS',
+    openWalletSuccess(name: string, addresses: string[]) {
+        return {
+            type: projectsActions.OPEN_WALLET_SUCCESS,
+            data: { name, addresses }
         };
     },
 

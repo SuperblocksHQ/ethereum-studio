@@ -26,7 +26,7 @@ import { projectSelectors } from '../../selectors';
 
 class NetworkAccountSelector extends Component {
     render() {
-        const { project, selectedEnvironment, onNetworkSelected, environments, onAccountSelected } = this.props;
+        const { project, selectedEnvironment, onNetworkSelected, environments, onAccountSelected, accounts, selectedAccount } = this.props;
         return (
             <OnlyIf test={Boolean(project.id)}>
                 <div className={style.container}>
@@ -37,7 +37,10 @@ class NetworkAccountSelector extends Component {
                             onNetworkSelected={onNetworkSelected} />
                     </div>
                     <div className={style.actionWrapper}>
-                        <AccountSelector {...this.props} onAccountSelected={onAccountSelected} selectedEnvironment={selectedEnvironment.name} />
+                        <AccountSelector
+                            accounts={accounts}
+                            selectedAccount={selectedAccount}
+                            onAccountSelected={onAccountSelected} />
                     </div>
                 </div>
             </OnlyIf>
@@ -49,7 +52,8 @@ const mapStateToProps = state => ({
     project: projectSelectors.getProject(state),
     selectedEnvironment: projectSelectors.getSelectedEnvironment(state),
     environments: projectSelectors.getEnvironments(state),
-    selectedAccount: projectSelectors.getSelectedAccount(state)
+    selectedAccount: projectSelectors.getSelectedAccount(state),
+    accounts: state.projects.accounts
 });
 
 const mapDispatchToProps = dispatch => {
@@ -57,9 +61,18 @@ const mapDispatchToProps = dispatch => {
         onNetworkSelected(environment) {
             dispatch(projectsActions.setEnvironment(environment));
         },
-        onAccountSelected: (name, balance, address) => {
-            dispatch(projectsActions.updateSelectAccount(name, balance, address))
+        onAccountSelected(name) {
+            dispatch(projectsActions.selectAccount(name))
         },
+        onAccountEdit(name) {
+
+        },
+        onAccountDelete(name) {
+
+        },
+        onAccountCreate() {
+
+        }
     };
 };
 

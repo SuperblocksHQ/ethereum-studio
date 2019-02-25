@@ -40,179 +40,34 @@
         border-right: 1px solid #121516;
     }
     .mainWrapper {
-        position: relative;
         flex: 1;
-        padding-right: 70px;
+        display: flex;
     }
     .mainLayout {
-        position: relative;
-        left: 35px;
         width: 100%;
-        height: calc(100% - 22px);
-    }
-    .panescontainer {
-        background-color: #1E1E1E;
         height: 100%;
+        flex: 1;
         display: flex;
         flex-direction: column;
 
-        .header {
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            -khtml-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            background-color: #252525;
-            min-height: 35px;
-            width: 100%;
-            overflow-y: hidden;
-            overflow-x: auto;
-            display: flex;
-            .tab {
-                background-color: #2D2D2D;
-                cursor: pointer;
-                color: #969696;
-                border-right: 1px solid #121516;
-                padding-right: 24px;
-                .tabContainer {
-                    padding: 10px 12px 10px 12px;
-                    display: flex;
-                    white-space: nowrap;
-                    .title {
-                        padding-right: 10px;
-                        display: flex;
-                        div {
-                            display: flex;
-                        }
-                        .icon {
-                            margin-right: 10px;
-                        }
-                    }
-                    .close {
-                        display: none;
-                        font-size: 0.85em;
-                    }
-                }
-                &.selected {
-                    background-color: #1e1e1e;
-                    color: #FFFFFF;
-                    padding-right: 10px;
-                    .close {
-                        display: block;
-                        opacity: 1;
-                        color: #fff;
-                        opacity: 0.8;
-                        &:hover {
-                            opacity: 1;
-                        }
-                        button {
-                            padding: 0 0;
-                        }
-                    }
-                }
-                &:hover{
-                    padding-right: 10px;
-                    .close {
-                        display: block;
-                        opacity: 1;
-                        color: #fff;
-                        opacity: 0.8;
-                        &:hover {
-                            opacity: 1;
-                        }
-                        button {
-                            padding: 0 0;
-                        }
-                    }
-                }
-            }
-            .contextMenu {
-                display: block;
-                position: fixed;
-                margin-left: 0px;
-                margin-top: 20px;
-                background-color: #141414;
-                z-index: 1;
-                min-width: 180px;
-                padding: 4px 0;
-                z-index: 5;
-                border-radius: 4px;
-                right: auto;
-                .item {
-                    display: flex;
-                    align-items: center;
-                    color: #c7c7c7;
-                    border-left: 2px solid;
-                    border-color: transparent;
-                    margin: 0;
-                    padding: 6px 8px;
-                    padding-left: 20px;
-                    &:hover {
-                        background-color: rgba(128, 46, 255, 0.10);
-                        cursor: pointer;
-                        color: #ffffff;
-                        border-color: #7237CF;
-                    }
-                }
-            }
-        }
-        .panes {
-            width: 100%;
+        .splitterContainer {
             flex: 1;
-            overflow: hidden;
-            .pane {
-                display: none;
-                &.visible {
-                    display: block;
-                }
-                float: left;
-                width: 100%;
-                .window {
-                    float: left;
-                    height: 100%;
-                    width: 100%;
-                    display: inherit;
-                    overflow: hidden;
-                    border-top: 1px solid #121516;
-                    border-right: 1px solid #121516;
-                    &:only-child {
-                        .close_btn {
-                            display: none;
-                        }
-                    }
-                    .close_btn {
-                        position: absolute;
-                        margin-top: 12px;
-                        margin-right: 12px;
-                        right: 0;
-                        z-index: 1;
-                        font-size: 0.85em;
-                    }
-                }
-            }
+            position: relative;
         }
-    }
-
-    .sidePanelContainer {
-        position: relative;
     }
 
     .sideButtonsContainer {
-        position: absolute;
-        top: 0;
-        bottom: 0;
         background-color: #1C2022;
         width: 35px;
-        .verticalText {
+
+        .buttonText {
             writing-mode: vertical-rl;
             text-orientation: mixed;
             margin-top: 7px;
         }
         &.sideButtonsContainerRight {
-            right: 0;
             border-left: 1px solid #121516;
-            .sideButtonWrapper .sideButton {
+            .sideButton {
                 border-left: 2px solid;
                 border-color: transparent;
                 &:hover {
@@ -221,12 +76,11 @@
             }
         }
         &.sideButtonsContainerLeft {
-            left: 0;
             border-right: 1px solid #121516;
-            .verticalText {
+            .buttonText {
                 transform: rotate(180deg);
             }
-            .sideButtonWrapper .sideButton {
+            .sideButton {
                 border-right: 2px solid;
                 border-color: transparent;
                 &:hover {
@@ -235,22 +89,44 @@
             }
         }
     }
-    .sideButtonWrapper {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+
+    .bottomBarContainer {
+        background-color: #1C2022;
+        border-top: 1px solid #121516;
+        height: 35px;
+        position: relative;
 
         .sideButton {
+            border-bottom: 2px solid;
             border-color: transparent;
-            padding: 5px;
-            transition: all .15s ease;
-            width: 100%;
-
             &:hover {
-                background-color: rgba(64, 169, 243, 0.1);
-                cursor: pointer;
                 border-color: @primary-color;
             }
+
+            .buttonText {
+                margin-left: 7px;
+            }
+        }
+
+        .bottomPanelContainer {
+            position: absolute;
+            bottom: 35px;
+            height: 200px;
+            width: 100%;
+            overflow: hidden;
+            z-index: 2;
+        }
+    }
+
+    .sideButton {
+        border-color: transparent;
+        padding: 5px;
+        transition: all .15s ease;
+
+        &:hover {
+            background-color: rgba(64, 169, 243, 0.1);
+            cursor: pointer;
+            border-color: @primary-color;
         }
     }
 }

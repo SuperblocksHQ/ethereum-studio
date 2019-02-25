@@ -1,0 +1,129 @@
+// Copyright 2018 Superblocks AB
+//
+// This file is part of Superblocks Lab.
+//
+// Superblocks Lab is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation version 3 of the License.
+//
+// Superblocks Lab is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
+
+.panescontainer {
+    background-color: #1E1E1E;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .header {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        background-color: #252525;
+        min-height: 35px;
+        width: 100%;
+        overflow-y: hidden;
+        overflow-x: auto;
+        display: flex;
+        .tab {
+            background-color: #2D2D2D;
+            cursor: pointer;
+            color: #969696;
+            border-right: 1px solid #121516;
+            padding-right: 24px;
+            .tabContainer {
+                padding: 10px 12px 10px 12px;
+                display: flex;
+                white-space: nowrap;
+                .title {
+                    padding-right: 10px; 
+                    display: flex;
+                    div {
+                        display: flex;
+                    }
+                    .icon {
+                        margin-right: 10px;
+                    }
+                }
+                .close {
+                    display: none;
+                    font-size: 0.85em;
+                }
+            }
+            &.selected {
+                background-color: #1e1e1e;
+                color: #FFFFFF;
+                padding-right: 10px;
+                .close {
+                    display: block;
+                    opacity: 1;
+                    color: #fff;
+                    opacity: 0.8;
+                    &:hover {
+                        opacity: 1;
+                    }
+                    button {
+                        padding: 0 0;
+                    }
+                }
+            }
+            &:hover{
+                padding-right: 10px;
+                .close {
+                    display: block;
+                    opacity: 1;
+                    color: #fff;
+                    opacity: 0.8;
+                    &:hover {
+                        opacity: 1;
+                    }
+                    button {
+                        padding: 0 0;
+                    }
+                }
+            }
+        }
+        .contextMenu {
+            display: block;
+            position: fixed;
+            margin-left: -40px;
+            margin-top: 0px;
+            background-color: #141414;
+            z-index: 1;
+            min-width: 180px;
+            padding: 4px 0;
+            z-index: 5;
+            border-radius: 4px;
+            .item {
+                display: flex;
+                align-items: center;
+                color: #c7c7c7;
+                border-left: 2px solid;
+                border-color: transparent;
+                margin: 0;
+                padding: 6px 8px;
+                padding-left: 20px;
+                &:hover {
+                    background-color: rgba(128, 46, 255, 0.10);
+                    cursor: pointer;
+                    color: #ffffff;
+                    border-color: #7237CF;
+                }
+            }
+        }
+    }
+
+    .panes {
+        width: 100%;
+        flex: 1;
+        overflow: hidden;
+    }
+}

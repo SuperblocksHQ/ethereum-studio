@@ -1,0 +1,186 @@
+// Copyright 2018 Superblocks AB
+//
+// This file is part of Superblocks Lab.
+//
+// Superblocks Lab is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation version 3 of the License.
+//
+// Superblocks Lab is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
+
+select {
+    width: 100%;
+    color: #fff;
+    background-color: #433753;
+    border: 0px;
+    border-radius: 0;
+}
+
+.item {
+    user-select: none;
+    // position: relative;
+    display: block;
+    color: #fff;
+    line-height: 28px;
+    clear: both;
+    cursor: pointer;
+
+    .icons {
+        display: flex;
+        position: relative;
+
+        .nocaret {
+            float: left;
+            overflow: hidden;
+            width: 25px;
+
+            &.reduced {
+                width: 10px;
+            }
+        }
+        .icon {
+            float: left;
+            width: 25px;
+            overflow: hidden;
+            margin-top: 2px;
+            text-align: center;
+            margin-right: 3px;
+        }
+        .noicon {
+            float: left;
+            width: 0;
+            overflow: hidden;
+        }
+        a {
+            display: block;
+            border: none;
+            color: inherit;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+        }
+    }
+    .header {
+        // border-left: 2px solid;
+        // border-color: transparent;
+        // padding-right: 10px;
+        width: 100%;
+        display: flex;
+        .overlay {
+            position: absolute;
+            height: 30px;
+            left: 0;
+            right: 0px;
+            border-left: 2px solid;
+            border-color: transparent;
+            pointer-events: none;
+        }
+
+        &:after {
+            content: " ";
+            display: block;
+            clear: both;
+        }
+        &:hover {
+            .overlay {
+                display: block;
+                border-color: #7237CF;
+                color: #fff;
+                background-color: rgba(128, 46, 255, 0.10);
+            }
+            .buttonsWrapper {
+                opacity: 1;
+            }
+        }
+    }
+    .title {
+        display: flex;
+        max-width: 99%;
+        float: left;
+        position: relative;
+        flex: 1;
+        white-space: nowrap;
+    }
+    .hidden {
+        display: none;
+    }
+    .childrenContainer {
+        padding-left: 20px;
+    }
+}
+
+.buttonsWrapper {
+    display: flex;
+    order: 3;
+    justify-content: flex-end;
+    padding-right: 5px;
+    transition: opacity .3s;
+    opacity: 0;
+
+    &.alwaysOn {
+        opacity: 1;
+    }
+
+    .buttons {
+        display: flex;
+        overflow: hidden;
+        justify-content: flex-end;
+        width: 100%;
+        button, a {
+            color: #fff;
+            opacity: .6;
+            font-size: 0.8em;
+            padding-left: 4px;
+            padding-right: 4px;
+            transition: opacity .2s;
+            &:hover {
+                opacity: 1;
+                text-decoration: none;
+            }
+        }
+    }
+}
+
+.contextMenu {
+    display: block;
+    position: absolute;
+    margin-top: -1px;
+    margin-left: 0px;
+    background-color: #141414;
+    z-index: 1;
+    min-width: 233px;
+    z-index: 5;
+    border-radius: 4px;
+    padding: 4px 0;
+    div {
+        display: flex;
+        align-items: center;
+        color: #c7c7c7;
+        padding: 2px 4px;
+        border-left: 2px solid;
+        border-color: transparent;
+        margin: 0;
+        &:hover {
+            background-color: rgba(128, 46, 255, 0.10);
+            cursor: pointer;
+            color: #ffffff;
+            border-color: #7237CF;
+            .icon {
+                border-color: transparent;
+                background: transparent;
+                color: #ffffff;
+            }
+        }
+        .icon {
+            margin-left: 10px;
+            margin-right: 20px;
+            color: #c7c7c7;
+        }
+    }
+}

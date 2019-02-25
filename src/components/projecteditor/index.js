@@ -23,7 +23,8 @@ const mapStateToProps = state => ({
     displayTransactionsPanel: state.sidePanels.showTransactionsHistory,
     displayFileSystemPanel: state.sidePanels.showFileSystem,
     previewSidePanel: state.sidePanels.preview,
-    selectedEnvironment: projectSelectors.getSelectedEnvironment(state)
+    selectedEnvironment: projectSelectors.getSelectedEnvironment(state),
+    project: projectSelectors.getProject(state)
 });
 
 const mapDispatchToProps = (dispatch) => {
@@ -33,9 +34,6 @@ const mapDispatchToProps = (dispatch) => {
         },
         openTransactionsHistoryPanel() {
             dispatch(sidePanelsActions.openTransactionsHistoryPanel())
-        },
-        closeTransactionsHistoryPanel() {
-            dispatch(sidePanelsActions.closeTransactionsHistoryPanel())
         },
         toggleFileSystemPanel() {
             dispatch(sidePanelsActions.toggleFileSystemPanel())

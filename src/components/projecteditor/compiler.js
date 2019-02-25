@@ -18,6 +18,7 @@ import React, { Component } from 'react';
 import sha256 from 'crypto-js/sha256';
 import style from './style-console.less';
 import Toolbar from './toolbar';
+import { compilerService } from '../../services';
 
 export default class Compiler extends Component {
 
@@ -106,13 +107,13 @@ export default class Compiler extends Component {
                     var contractbody;
 
                     this._initCompiler();
-                    if (this.props.functions.compiler.isReady()) {
+                    if (compilerService.isReady()) {
 
                         this._updateConsole({
                             channel: 1,
                             msg:
                                 'Using Solidity compiler version ' +
-                                this.props.functions.compiler.getVersion(),
+                                compilerService.getVersion(),
                         });
                     } else {
 
@@ -184,7 +185,7 @@ export default class Compiler extends Component {
                         //});
                     };
 
-                    this.props.functions.compiler.queue(
+                    compilerService.queue(
                         { input: JSON.stringify(input), files: files },
                         data => {
                             if (data) data = JSON.parse(data);
@@ -258,7 +259,7 @@ export default class Compiler extends Component {
                                                 contractObj.metadata
                                             );
                                         }
-                                        catch(e) {
+                                        catch {
                                             console.error("Could not parse compiler output", contractObj);
                                             this._updateConsole({
                                                 channel: 2,
@@ -437,7 +438,7 @@ export default class Compiler extends Component {
 
     _initCompiler() {
         // Init compiler
-        this.props.functions.compiler.init();
+        compilerService.init();
     }
 
     renderToolbar = () => {

@@ -17,14 +17,8 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import Backend from '../projecteditor/control/backend';
-import Modal from '../modal';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { Wallet } from '../projecteditor/wallet';
-import Solc from '../solc';
-import EVM from '../evm';
-import Networks from '../../networks';
-import { previewService, ipfsService } from '../../services';
+import { previewService } from '../../services';
 import AnalyticsDialog from '../analyticsDialog';
 import OnlyIf from '../onlyIf';
 import ToastContainer from "../toasts/toastcontainer";
@@ -35,15 +29,13 @@ import * as embedUtils from '../../utils/embed';
 export default class App extends Component {
 
     state = {
-        modals: [],
-        isReady: false
+        modals: []
     };
 
     constructor(props) {
         super(props);
         this.idCounter = 0;
         this.isImportedProject = false;
-        this.backend = new Backend();
 
         this.session = {
             start_time: Date.now(),
@@ -61,24 +53,13 @@ export default class App extends Component {
             },
             session: {
                 start_time: this.session_start_time,
-            },
-            networks: {
-                endpoints: Networks,
-            },
-            generateId: this.generateId,
+            }
         };
-        this.knownWalletSeed =
-            'butter toward celery cupboard blind morning item night fatal theme display toy';
-        this.functions.wallet = new Wallet({
-            functions: this.functions,
-            length: 30,
-        });
+        this.knownWalletSeed = 'butter toward celery cupboard blind morning item night fatal theme display toy';
 
         // The development wallets seed is well known and the first few addresses are seeded
         // with ether in the genesis block.
-        console.log(
-            'Known development Ethereum wallet seed is: ' + this.knownWalletSeed
-        );
+        console.log('Known development Ethereum seed is: ' + this.knownWalletSeed);
     }
 
     componentDidMount() {
@@ -90,106 +71,20 @@ export default class App extends Component {
 
         // TODO - Make sure all this is working correctly
         this._init();
-
-        // this._convertProjects(status => {
-        //     this.setState({ isReady: true })
-        //
-        // });
     }
 
-    // _convertProjects = cb => {
-    //     this.backend.convertProjects(status => {
-    //         if (status == 1) {
-    //             const modalData = {
-    //                 title: 'Projects converted',
-    //                 body: (
-    //                     <div>
-    //                         <div>
-    //                             Your projects have been converted to the new
-    //                             Superblocks Lab format.
-    //                             <br />
-    //                             You might need to reconfigure your accounts and
-    //                             contract arguments due to these changes. We are
-    //                             sorry for any inconvenience.
-    //                         </div>
-    //                         <div>
-    //                             Please see the Superblocks Lab help center for
-    //                             more information on this topic.
-    //                         </div>
-    //                     </div>
-    //                 ),
-    //                 style: { width: '680px' },
-    //             };
-    //             const modal = <Modal data={modalData} />;
-    //             this.functions.modal.show({
-    //                 cancel: () => {
-    //                     cb(0);
-    //                     return true;
-    //                 },
-    //                 render: () => {
-    //                     return modal;
-    //                 },
-    //             });
-    //         } else {
-    //             cb(0);
-    //         }
-    //     });
-    // };
 
     redraw = all => {
-        this.forceUpdate();
+        // this.forceUpdate();
+        console.error('YOoo, someone calls redraw!!!')
     };
 
     _init = () => {
-        let { appVersion } = this.props;
-        const modalData = {
-            title: 'Loading Superblocks Lab',
-            body:
-                'Initializing Wallet and Ethereum Virtual Machine...',
-            style: { textAlign: 'center' },
-        };
-        const modal = <Modal data={modalData} />;
-        this.functions.modal.show({
-            cancel: () => {
-                return false;
-            },
-            render: () => {
-                return modal;
-            },
-        });
-        this.functions.compiler = new Solc({ id: this.generateId() });
-        this.functions.EVM = new EVM({ id: this.generateId() });
-
-        previewService.init(this.functions.wallet);
-        ipfsService.init(this.backend);
-
-        const fn = () => {
-            if (this.functions.compiler && this.functions.EVM) {
-                console.log('Superblocks Lab ' + appVersion + ' Ready.');
-                this.functions.modal.close();
-                this._checkIpfsOnUrl();
-            } else {
-                setTimeout(fn, 500);
-            }
-        };
-        fn();
-    };
-
-    _checkIpfsOnUrl = () => {
-        const a = document.location.href.match("^.*/ipfs/([a-zA-Z0-9]+)");
-        if (a) {
-            // TODO: pop modal about importing being processed.
-            this.isImportedProject = true;
-            this.props.importProjectFromIpfs(a[1]);
-        }
+        previewService.init(null);
     };
 
     session_start_time = () => {
         return this.session.start_time;
-    };
-
-    generateId = () => {
-        return ++this.idCounter;
     };
 
     getClassNames = () => {
@@ -208,7 +103,7 @@ export default class App extends Component {
     };
 
     closeModal = index => {
-        if (index == null) index = this.state.modals.length - 1;
+        if (index === null) { index = this.state.modals.length - 1; }
         var modal = this.state.modals[index];
         this.state.modals.splice(index, 1);
         this.forceUpdate();
@@ -218,7 +113,7 @@ export default class App extends Component {
         return this.state.modals.map((elm, index) => {
             const stl = { position: 'absolute' };
             stl['zIndex'] = index;
-            if (index < this.state.modals.length - 1) stl['opacity'] = '0.33';
+            if (index < this.state.modals.length - 1) { stl['opacity'] = '0.33'; }
             return (
                 <div
                     key={index}
@@ -240,7 +135,7 @@ export default class App extends Component {
         }
         const index = this.state.modals.length - 1;
         var modal = this.state.modals[index];
-        if (modal.cancel && modal.cancel(modal) === false) return;
+        if (modal.cancel && modal.cancel(modal) === false) { return; }
         this.state.modals.splice(index, 1);
         this.forceUpdate();
     };
@@ -257,7 +152,7 @@ export default class App extends Component {
 
     renderProject = ({match}) => (
         <LoadProject
-            match={match}
+            projectId={match.params.projectId}
             router={this.router}
             functions={this.functions}
             knownWalletSeed={this.knownWalletSeed}

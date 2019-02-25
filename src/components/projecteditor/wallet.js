@@ -18,12 +18,6 @@ import React, { Component } from 'react';
 
 const walletLight = () => import(/* webpackChunkName: "lightwallet" */ 'eth-lightwallet/dist/lightwallet.min.js');
 
-export class WalletDialog extends Component {
-    constructor(props) {
-        super(props);
-    }
-}
-
 export class Wallet {
     constructor(props) {
         this.props = props;
@@ -96,7 +90,7 @@ export class Wallet {
     };
 
     isOpen = name => {
-        return this.wallets[name] && true;
+        return Boolean(this.wallets[name]);
     };
 
     openWallet = (name, seed, cb) => {
@@ -144,25 +138,6 @@ export class Wallet {
                     wallet.secret.key
                 );
                 cb(0, key);
-                return;
-            }
-            cb(status);
-        });
-    };
-
-    getSeed = (walletName, cb) => {
-        const wallet = this.wallets[walletName];
-        if (!wallet) {
-            cb(1);
-            return;
-        }
-        if (wallet.permissions.seed === 1) {
-            cb(0, wallet.secret.seed);
-            return;
-        }
-        this._authorize(wallet, 'seed', status => {
-            if (status === 0) {
-                cb(0, wallet.secret.seed);
                 return;
             }
             cb(status);

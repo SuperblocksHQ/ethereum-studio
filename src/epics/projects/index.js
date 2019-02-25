@@ -16,6 +16,7 @@
 
 import { environmentUpdateEpic } from './environmentUpdate.epic';
 import { updateProjectSettings } from './updateProjectSettings.epic';
+import { initExplorerEpic } from './initExplorer.epic';
 import { deleteProject } from './deleteProject.epic';
 import { forkCurrentProject } from './forkCurrentProject.epic';
 import { forkProjectById } from './forkProjectById.epic';
@@ -26,16 +27,21 @@ import { forkProjectById } from './forkProjectById.epic';
 // import { importProject } from './importProject.epic';
 
 import { loadProject } from './loadProject.epic';
-import { renameProject } from './renameProject.epic';
+import { renameProjectEpic } from './renameProject.epic';
 import { createEmptyProject } from './createEmptyProject.epic';
+import { openWalletEpic } from './openWallet.epic';
+import { updateAccountBalanceEpic } from './updateAccountBalance.epic';
 
 export const projectsEpics = [
     environmentUpdateEpic,
     updateProjectSettings,
+    initExplorerEpic,
     loadProject,
     deleteProject,
-    renameProject,
+    renameProjectEpic,
     forkCurrentProject,
     forkProjectById,
-    createEmptyProject
+    createEmptyProject,
+    openWalletEpic,
+    updateAccountBalanceEpic
 ];

@@ -17,7 +17,7 @@
 import React, { Component } from 'react';
 import ProjectEditor from '../projecteditor';
 import OnlyIf from '../onlyIf';
-import { IProject } from '../../models';
+import { Modal } from '../modal/new';
 
 // interface IProps {
 //     loadProject: (projectId: string) => void;
@@ -29,26 +29,36 @@ import { IProject } from '../../models';
 //     isImportedProject: boolean;
 // }
 
+// TODO: rename this component.
 export default class LoadProject extends Component {
 
     componentDidMount() {
-        const { loadProject, match } = this.props;
-        loadProject(match.params.projectId);
+        const { loadProject, projectId, openDevWallet, knownWalletSeed, initEvm } = this.props;
+        openDevWallet(knownWalletSeed);
+        initEvm();
+        loadProject(projectId);
     }
 
     render() {
-        const { project, router, functions, knownWalletSeed, isImportedProject } = this.props;
+        const { project, router, functions, isImportedProject, isEvmReady } = this.props;
 
         return (
-            <OnlyIf test={project}>
-                <ProjectEditor
-                    project={project}
-                    router={router}
-                    functions={functions}
-                    knownWalletSeed={knownWalletSeed}
-                    isImportedProject={isImportedProject}
-                />
-            </OnlyIf>
+            <React.Fragment>
+                <OnlyIf test={project}>
+                    <ProjectEditor
+                        project={project}
+                        router={router}
+                        functions={functions}
+                        isImportedProject={isImportedProject}
+                    />
+                </OnlyIf>
+                <OnlyIf test={!isEvmReady}>
+                    <Modal onClose={() => {}}>
+                        <h2>Loading Superblocks Lab</h2>
+                        <div style={{textAlign: 'center'}}>Initializing Wallet and Ethereum Virtual Machine...</div>
+                    </Modal>
+                </OnlyIf>
+            </React.Fragment>
         );
     }
 }

@@ -19,7 +19,8 @@ import { appActions } from '../actions';
 
 export const initialState = {
     version: '1.6.1',
-    isEmbeddedMode: false
+    isEmbeddedMode: false,
+    isEvmReady: false
 };
 
 export default function appReducer(state = initialState, action: AnyAction) {
@@ -29,6 +30,8 @@ export default function appReducer(state = initialState, action: AnyAction) {
                 ...state,
                 isEmbeddedMode: action.data.isEmbeddedMode
             };
+        case appActions.EVM_READY:
+            return { ...state, isEvmReady: true };
         default:
             return state;
     }
