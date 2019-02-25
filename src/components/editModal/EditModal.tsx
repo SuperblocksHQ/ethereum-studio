@@ -26,47 +26,69 @@ import TextAreaInput from '../textAreaInput';
 import { Tooltip } from '../common';
 import Switch from 'react-switch';
 import ModalHeader from '../modal/modalHeader';
+import { validateProjectName } from '../../validations';
 import { IProject } from '../../models';
 
 interface IProps {
     project: IProject;
     onCloseClick: () => void;
+    updateProject: (project: IProject) => void;
 }
 
 interface IState {
     errorName: string | null;
     errorDescription: string | null;
+    newName: string;
+    newDescription: string;
+    canSave: boolean;
 }
 
 export default class EditModal extends React.Component<IProps, IState> {
 
     state: IState = {
         errorName: null,
-        errorDescription: null
+        errorDescription: null,
+        newName: this.props.project.name,
+        newDescription: this.props.project.description,
+        canSave: true
     };
 
     onNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value;
-        // TODO Add to validations and validate name
-        const valid = /^[a-zA-ZA-Z0-9 -]+$/.test(value);
-        if (!valid) {
-            this.setState({
-                errorName: 'Wrong name'
-            });
-        }
+        const newName = e.target.value || ' ';
+        const errorName = newName ? validateProjectName(newName) : null;
 
+        this.setState({
+            errorName,
+            newName,
+            canSave: !errorName
+        });
     }
 
     onDescChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        // Todo validate same as name
-        // Todo save and update through epic
-        console.log('desc');
+        const newDescription = e.target.value;
+
+        // TODO: Validate Description
+
+        this.setState({
+            newDescription
+        });
+    }
+
+    onSave = () => {
+        const { project } = this.props;
+        const { newName, newDescription} = this.state;
+
+        project.name = newName;
+        project.description = newDescription;
+
+        this.props.updateProject(project);
+        this.props.onCloseClick();
     }
 
     render() {
         const { project } = this.props;
-        const { errorName, errorDescription } = this.state;
-        const canSave = true;
+        const { errorName, errorDescription, canSave } = this.state;
+
         return (
             <div className={classNames([style.shareModal, 'modal'])}>
                 <ModalHeader
@@ -101,7 +123,7 @@ export default class EditModal extends React.Component<IProps, IState> {
                 <div className={style.footer}>
                     <div className={style.buttonsContainer}>
                         <button onClick={this.props.onCloseClick} className='btn2 noBg mr-2'>Cancel</button>
-                        <button onClick={this.props.onCloseClick} className='btn2' disabled={!canSave}>Save</button>
+                        <button onClick={this.onSave} className='btn2' disabled={!canSave}>Save</button>
                     </div>
                 </div>
             </div>

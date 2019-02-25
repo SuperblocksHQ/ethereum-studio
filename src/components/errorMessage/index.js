@@ -31,6 +31,12 @@ class ErrorMessage extends PureComponent {
             {"The Gas Price has to be between 1 and 100000000000"}
           </div>
         );
+      case 'PROJECT_NAME':
+        return (
+          <div id="error.projectName">
+            {"Invalid project name. Only alphanumeric characters are allowed."}
+          </div>
+        );
       default:
         // eslint-disable-next-line no-unused-expressions
         (error);

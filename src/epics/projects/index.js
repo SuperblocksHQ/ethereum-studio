@@ -20,6 +20,7 @@ import { initExplorerEpic } from './initExplorer.epic';
 import { deleteProject } from './deleteProject.epic';
 import { forkCurrentProject } from './forkCurrentProject.epic';
 import { forkProjectById } from './forkProjectById.epic';
+import { updateProject } from './updateProject.epic';
 
 // TODO - Add missing epics
 
@@ -43,5 +44,6 @@ export const projectsEpics = [
     forkProjectById,
     createEmptyProject,
     openWalletEpic,
-    updateAccountBalanceEpic
+    updateAccountBalanceEpic,
+    updateProject
 ];
