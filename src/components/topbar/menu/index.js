@@ -16,29 +16,29 @@
 
 import { connect } from 'react-redux';
 import MenuDropdownDialog from './MenuDropdownDialog';
-import { sidePanelsSelectors } from '../../../selectors';
-import { sidePanelsActions } from '../../../actions';
+import { panelsSelectors } from '../../../selectors';
+import { panelsActions } from '../../../actions';
 
 const mapStateToProps = state => ({
-    showTransactionsHistory: sidePanelsSelectors.getShowTransactionsHistory(state),
-    showFileSystem: sidePanelsSelectors.getShowFileSystem(state),
-    showPreview: sidePanelsSelectors.getShowPreview(state),
+    showTransactionsHistory: panelsSelectors.getShowTransactionsHistory(state),
+    showFileSystem: panelsSelectors.getShowFileSystem(state),
+    showPreview: panelsSelectors.getShowPreview(state),
 });
 
 function mapDispatchToProps(dispatch) {
     return {
         toggleFileSystemPanel: () => {
-            dispatch(sidePanelsActions.toggleFileSystemPanel())
+            dispatch(panelsActions.toggleFileSystemPanel())
         },
         toggleTransactionsHistoryPanel: () => {
-            dispatch(sidePanelsActions.toggleTransactionsHistoryPanel())
+            dispatch(panelsActions.toggleTransactionsHistoryPanel())
         },
         togglePreviewPanel: () => {
-            dispatch(sidePanelsActions.preview.togglePanel())
+            dispatch(panelsActions.preview.togglePanel())
         },
         closeAllPanels: () => {
-            dispatch(sidePanelsActions.closeAllPanels());
-            dispatch(sidePanelsActions.closeFileSystemPanel());
+            dispatch(panelsActions.closeAllPanels());
+            dispatch(panelsActions.closeFileSystemPanel());
         }
     };
 }

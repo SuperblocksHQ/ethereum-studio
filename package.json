@@ -31,6 +31,7 @@
     "@types/react-onclickoutside": "^6.7.0",
     "@types/react-redux": "^7.0.1",
     "@types/react-router-dom": "^4.3.1",
+    "@types/react-splitter-layout": "^3.0.0",
     "babel-cli": "^6.26.0",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "9.0.0",

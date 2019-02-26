@@ -14,8 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export * from './explorer.model';
-export * from './project-state.model';
-export * from './panes-state.model';
-export * from './compilerState.model';
-export * from './panelsState.model';
+import SplitterLayoutBase from 'react-splitter-layout';
+
+export class SplitterLayout extends SplitterLayoutBase {
+    handleResize() {
+        // all this does is just disabling recalculation of sizes in non-persengate mode when window is resized
+    }
+}

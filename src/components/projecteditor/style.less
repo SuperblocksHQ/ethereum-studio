@@ -130,3 +130,42 @@
         }
     }
 }
+
+.actionContainer {
+    height: 100%;
+    width: 100%;
+    background-color: #272727;
+    border-left: 1px solid #121516;
+    display: flex;
+    flex-direction: column;
+
+    .header {
+        background-color: #333;
+        display: flex;
+        align-content: center;
+        align-items: center;
+        height: 35px;
+        padding: 7px 12px 8px 12px;
+        border-bottom: 1px solid #121516;
+        .panelIcon {
+            color: #fff;
+            margin-left: 7px;
+            margin-right: 10px;
+        }
+        .title {
+            color: #fff;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .icon {
+            margin-left: auto;
+            color: #c7c7c7;
+            padding-left: 0px;
+            padding-right: 0px;
+            display: flex;
+            &:hover {
+                color: white;
+            }
+        }
+    }
+}

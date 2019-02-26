@@ -14,25 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { connect } from 'react-redux';
-import { ProjectEditor } from './ProjectEditor';
-import { projectSelectors } from '../../selectors';
-import { panelsActions } from '../../actions';
+import { Panels } from "../models/state";
 
-const mapStateToProps = state => ({
-    panels: state.panels,
-    selectedEnvironment: projectSelectors.getSelectedEnvironment(state)
-});
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        togglePanel(panel) {
-            dispatch(panelsActions.togglePanel(panel));
-        },
-        closePanel(panel) {
-            dispatch(panelsActions.closePanel(panel));
-        }
-    }
+export const panelsSelectors = {
+    getShowTransactionsHistory: state => state.panels[Panels.Transations] && state.panels[Panels.Transations].open,
+    getShowFileSystem:  state => state.panels[Panels.Explorer] && state.panels[Panels.Explorer].open,
+    getShowPreview: state => state.panels[Panels.Preview] && state.panels[Panels.Preview].open,
 }
-
-export default connect(mapStateToProps, mapDispatchToProps)(ProjectEditor);

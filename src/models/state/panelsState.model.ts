@@ -14,8 +14,24 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export * from './explorer.model';
-export * from './project-state.model';
-export * from './panes-state.model';
-export * from './compilerState.model';
-export * from './panelsState.model';
+export enum Panels {
+    Explorer = 'Explorer',
+    Preview = 'Preview',
+    Transations = 'Transations',
+    CompilerOutput = 'CompilerOutput'
+}
+
+export enum PanelSides {
+    Left = 'Left',
+    Right = 'Right',
+    Bottom = 'Bottom'
+}
+
+export interface IPanelData {
+    open: boolean;
+    side: PanelSides;
+}
+
+export interface IPanelsState {
+    [key: string]: IPanelData;
+}

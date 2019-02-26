@@ -14,25 +14,18 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { connect } from 'react-redux';
-import { ProjectEditor } from './ProjectEditor';
-import { projectSelectors } from '../../selectors';
-import { panelsActions } from '../../actions';
+import { map } from 'rxjs/operators';
+import { ofType } from 'redux-observable';
+import { previewActions } from '../../actions';
+import { previewService } from '../../services';
 
-const mapStateToProps = state => ({
-    panels: state.panels,
-    selectedEnvironment: projectSelectors.getSelectedEnvironment(state)
-});
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        togglePanel(panel) {
-            dispatch(panelsActions.togglePanel(panel));
-        },
-        closePanel(panel) {
-            dispatch(panelsActions.closePanel(panel));
+export const downloadEpic = (action$, state$) => action$.pipe(
+    ofType(previewActions.DOWNLOAD),
+    map(() => {
+        if (state$.value.preview.showDownloadModal) {
+            previewService.downloadDapp();
         }
-    }
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProjectEditor);
+        return previewActions.hideModals();
+    })
+);

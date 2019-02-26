@@ -15,7 +15,7 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { settingsEpics } from './settings';
-import { sidePanelsEpics } from './sidePanels';
+import { previewEpics } from './preview';
 import { projectsEpics } from './projects';
 import { appEpics } from './app';
 import { explorerEpics } from './explorer';
@@ -27,7 +27,7 @@ import { compilerEpics } from './compiler';
 
 export const epics = [
     ...settingsEpics,
-    ...sidePanelsEpics,
+    ...previewEpics,
     ...projectsEpics,
     ...appEpics,
     ...explorerEpics,

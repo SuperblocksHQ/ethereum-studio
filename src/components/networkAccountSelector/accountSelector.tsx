@@ -66,15 +66,6 @@ export class AccountSelector extends React.Component<IProps> {
         this.props.onAccountDelete(name);
     }
 
-    // onNewAccountClick: React.MouseEventHandler = e => {
-    //     e.preventDefault();
-    //     e.stopPropagation();
-    //     // project.addAccount(() => {
-    //     //     // TODO: how to open new item?
-    //     //     this.props.router.main.redraw(true);
-    //     // });
-    // }
-
     render() {
         const { selectedAccount, accounts } = this.props;
 

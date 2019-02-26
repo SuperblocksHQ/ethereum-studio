@@ -19,6 +19,6 @@ export * from './ipfs.selectors';
 export * from './toast.selectors';
 export * from './project.selectors';
 export * from './user.selectors';
-export * from './sidePanels.selectors';
+export * from './panels.selectors';
 export * from './view.selectors';
 export * from './auth.selectors'

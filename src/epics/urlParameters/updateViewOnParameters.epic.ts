@@ -14,19 +14,29 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { map } from 'rxjs/operators';
+import {  switchMap } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
-import { appActions, projectsActions } from '../../actions';
-
-const getParameters = () => {
-    const url = String(window.location);
-    const hideExplorer = url.includes('hideExplorer=1');
-    const showTransactions = url.includes('showTransactions=1');
-    const showPreview = url.includes('showPreview=1');
-
-    return { hideExplorer, showTransactions, showPreview };
-};
+import { projectsActions, panelsActions } from '../../actions';
+import { Panels } from '../../models/state';
+import { from } from 'rxjs';
 
 export const updateViewOnParameters: Epic = (action$: any, state$: any) => action$.pipe(
     ofType(projectsActions.LOAD_PROJECT_SUCCESS),
-    map(() => appActions.updateViewParameters(getParameters())));
+    switchMap(() => {
+        const actions = [];
+        const url = String(window.location);
+        if (url.includes('hideExplorer=1')) {
+            actions.push(panelsActions.closePanel(Panels.Explorer));
+        } else {
+            actions.push(panelsActions.openPanel(Panels.Explorer));
+        }
+        if (url.includes('showTransactions=1')) {
+            actions.push(panelsActions.openPanel(Panels.Transations));
+        }
+        if (url.includes('showPreview=1')) {
+            actions.push(panelsActions.openPanel(Panels.Preview));
+        }
+
+        return from(actions);
+    })
+);

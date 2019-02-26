@@ -14,25 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { connect } from 'react-redux';
-import { ProjectEditor } from './ProjectEditor';
-import { projectSelectors } from '../../selectors';
-import { panelsActions } from '../../actions';
+import { downloadEpic } from './download.epic';
+import { toggleWeb3AccountsEpic } from './toggleWeb3Accounts.epic';
 
-const mapStateToProps = state => ({
-    panels: state.panels,
-    selectedEnvironment: projectSelectors.getSelectedEnvironment(state)
-});
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        togglePanel(panel) {
-            dispatch(panelsActions.togglePanel(panel));
-        },
-        closePanel(panel) {
-            dispatch(panelsActions.closePanel(panel));
-        }
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ProjectEditor);
+export const previewEpics = [
+    downloadEpic,
+    toggleWeb3AccountsEpic
+];
