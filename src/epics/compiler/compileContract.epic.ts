@@ -17,9 +17,10 @@
 import { from, interval, concat, of } from 'rxjs';
 import { switchMap, first } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
-import { explorerActions, compilerActions } from '../../actions';
+import { explorerActions, compilerActions, panelsActions } from '../../actions';
 import { compilerService } from '../../services';
 import { AnyAction } from 'redux';
+import { Panels } from '../../models/state';
 
 function compileContract(compilerState: any) {
     return from<AnyAction>(
@@ -37,12 +38,15 @@ export const compileContractsEpic: Epic = (action$: any, state$: any) => action$
     switchMap(() => {
         compilerService.init();
 
-        return interval(200).pipe(
-            first(() => compilerService.isReady()), // compiler has to be ready to be able to do smth
-            switchMap(() => concat(
-                of(compilerActions.compilerReady(compilerService.getVersion())),
-                compileContract(state$.value.compiler)
-            ))
+        return concat(
+            of(panelsActions.openPanel(Panels.CompilerOutput)), // show output
+            interval(200).pipe(
+                first(() => compilerService.isReady()), // compiler has to be ready to be able to do smth
+                switchMap(() => concat(
+                    of(compilerActions.compilerReady(compilerService.getVersion())),
+                    compileContract(state$.value.compiler)
+                ))
+            )
         );
     })
 );

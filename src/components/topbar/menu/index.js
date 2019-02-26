@@ -27,18 +27,11 @@ const mapStateToProps = state => ({
 
 function mapDispatchToProps(dispatch) {
     return {
-        toggleFileSystemPanel: () => {
-            dispatch(panelsActions.toggleFileSystemPanel())
-        },
-        toggleTransactionsHistoryPanel: () => {
-            dispatch(panelsActions.toggleTransactionsHistoryPanel())
-        },
-        togglePreviewPanel: () => {
-            dispatch(panelsActions.preview.togglePanel())
+        togglePanel: (panel) => {
+            dispatch(panelsActions.togglePanel(panel))
         },
         closeAllPanels: () => {
             dispatch(panelsActions.closeAllPanels());
-            dispatch(panelsActions.closeFileSystemPanel());
         }
     };
 }

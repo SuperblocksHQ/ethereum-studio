@@ -16,6 +16,7 @@
 
 import React, { Component } from 'react';
 import { SubMenu, MenuItem, Divider } from '../../common/menu';
+import { Panels } from '../../../models/state';
 import style from './style.less';
 
 export default class MenuDropdownDialog extends Component {
@@ -43,7 +44,7 @@ export default class MenuDropdownDialog extends Component {
 
     render() {
         const { showTransactionsHistory, showFileSystem, showPreview, 
-                toggleFileSystemPanel, toggleTransactionsHistoryPanel, togglePreviewPanel, closeAllPanels } = this.props;
+                togglePanel, closeAllPanels } = this.props;
 
         return (
             <div className={style.menuDialog}>
@@ -64,9 +65,9 @@ export default class MenuDropdownDialog extends Component {
                     <MenuItem title="Download Project" />
                 </SubMenu>
                 <SubMenu title="View">
-                    <MenuItem onClick={() => toggleFileSystemPanel()} isActive={showFileSystem} title="Explorer" />
-                    <MenuItem onClick={() => toggleTransactionsHistoryPanel()} isActive={showTransactionsHistory} title="Transactions" />
-                    <MenuItem onClick={() => togglePreviewPanel()} isActive={showPreview} title="Preview" />
+                    <MenuItem onClick={() => togglePanel(Panels.Explorer)} isActive={showFileSystem} title="Explorer" />
+                    <MenuItem onClick={() => togglePanel(Panels.Transations)} isActive={showTransactionsHistory} title="Transactions" />
+                    <MenuItem onClick={() => togglePanel(Panels.Preview)} isActive={showPreview} title="Preview" />
                     <MenuItem onClick={() => closeAllPanels()} title="Close All Panels" />
                     <Divider />
                     <MenuItem onClick={() => this.toggleFullScreen()} title="Toggle Full Screen" />
