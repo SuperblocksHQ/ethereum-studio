@@ -19,6 +19,11 @@ declare module '*.less' {
     export default content;
 }
 
+declare module "*.json" {
+    const value: any;
+    export default value;
+}
+
 declare module 'react-monaco-editor' {
     const content: any;
     export default content;
