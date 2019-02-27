@@ -20,7 +20,7 @@ import classNames from 'classnames';
 import style from './style.less';
 import ErrorMessage from '../errorMessage';
 
-export default class TextAreaInput extends PureComponent {
+export class TextAreaInput extends PureComponent {
 
     handleFocus = (e) => {
         e.target.select();

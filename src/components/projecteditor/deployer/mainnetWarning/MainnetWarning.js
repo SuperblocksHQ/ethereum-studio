@@ -19,7 +19,7 @@ import Proptypes from 'prop-types';
 import classNames from 'classnames';
 import style from './style.less';
 import ModalHeader from '../../../modal/modalHeader';
-import TextInput from '../../../textInput';
+import { TextInput } from '../../../common';
 import { validateMainnetWarning } from '../../../../validations';
 
 export default class MainnetWarning extends Component {

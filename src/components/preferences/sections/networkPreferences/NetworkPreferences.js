@@ -18,7 +18,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import style from './style.less';
 import * as validations from '../../../../validations';
-import TextInput from '../../../textInput';
+import { TextInput } from '../../../common';
 import Web3 from 'web3';
 
 export default class NetworkPreferences extends Component {

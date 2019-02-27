@@ -17,8 +17,7 @@
 import React, { Component } from 'react';
 import style from './style.less';
 import OnlyIf from '../../onlyIf';
-import TextInput from '../../textInput';
-import { DropdownContainer } from '../../common/dropdown';
+import { DropdownContainer, TextInput } from '../../common';
 import {
     IconDropdown
 } from '../../icons';

@@ -21,3 +21,8 @@ export * from './menu';
 export * from './topbar';
 export * from './buttons';
 export * from './fileIcon';
+export * from './switch';
+export * from './textInput';
+export * from './note';
+export * from './textAreaInput';
+export * from './caret';

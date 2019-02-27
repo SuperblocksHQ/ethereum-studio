@@ -19,7 +19,7 @@ import Proptypes from 'prop-types';
 import classNames from 'classnames';
 import style from './style.less';
 
-const Note = ({
+export const Note = ({
     title,
     text,
     backgroundColor = "#F8E71C",
@@ -32,8 +32,6 @@ const Note = ({
         { text && <span className={classNames([style.noteText, textClassName])}>{text}</span> }
     </div>
 );
-
-export default Note;
 
 Note.propTypes = {
     title: Proptypes.string.isRequired,

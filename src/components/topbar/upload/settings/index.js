@@ -20,7 +20,7 @@ import style from './style.less';
 import {
     IconBack
 } from '../../../icons';
-import Switch from '../../../switch';
+import { Switch } from '../../../common';
 
 export default class UploadSettings extends Component {
 

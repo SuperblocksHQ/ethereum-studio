@@ -14,15 +14,14 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { Component } from 'react';
+import React from 'react';
 import copy from 'copy-to-clipboard';
 import classNames from 'classnames';
 import style from './style.less';
 import {
     IconCopy
 } from '../icons';
-import TextAreaInput from '../textAreaInput';
-import { Tooltip } from '../common';
+import { Tooltip, TextAreaInput } from '../common';
 import Switch from 'react-switch';
 import ModalHeader from '../modal/modalHeader';
 

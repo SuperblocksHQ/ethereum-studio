@@ -23,9 +23,7 @@ import {
     IconCopy,
     IconConfigure
 } from '../../icons';
-import Note from '../../note';
-import TextInput from '../../textInput';
-import { Tooltip } from '../../common';
+import { Tooltip, TextInput, Note } from '../../common';
 import UploadSettings from './settings';
 
 class UploadDialog extends Component {

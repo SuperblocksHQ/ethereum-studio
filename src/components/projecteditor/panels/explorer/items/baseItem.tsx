@@ -1,8 +1,7 @@
 import React from 'react';
 import classnames from 'classnames';
 import style from './style.less';
-import Caret from '../../../../caret';
-import { DropdownContainer } from '../../../../common';
+import { DropdownContainer, Caret } from '../../../../common';
 import { IProjectItem } from '../../../../../models';
 
 interface IProps {

@@ -20,7 +20,7 @@ import classNames from 'classnames';
 import style from './style.less';
 import ErrorMessage from '../errorMessage';
 
-export default class TextInput extends PureComponent {
+export class TextInput extends PureComponent {
 
     render() {
         const {

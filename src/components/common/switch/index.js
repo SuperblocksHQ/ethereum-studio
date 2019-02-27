@@ -18,7 +18,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import * as ReactSwitch from "react-switch";
 
-const Switch = ({checked, onChange, className}) => {
+export const Switch = ({checked, onChange, className}) => {
     return (
         <ReactSwitch
             checked={checked}
@@ -32,8 +32,6 @@ const Switch = ({checked, onChange, className}) => {
         />
     )
 };
-
-export default Switch;
 
 Switch.propTypes = {
     checked: PropTypes.bool.isRequired,

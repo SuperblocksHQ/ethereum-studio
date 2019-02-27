@@ -14,17 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { Component } from 'react';
-import copy from 'copy-to-clipboard';
+import React from 'react';
 import classNames from 'classnames';
 import style from './style.less';
-import {
-    IconCopy
-} from '../icons';
-import TextInput from '../textInput';
-import TextAreaInput from '../textAreaInput';
-import { Tooltip } from '../common';
-import Switch from 'react-switch';
+import { TextInput, TextAreaInput } from '../common';
 import ModalHeader from '../modal/modalHeader';
 import { validateProjectName } from '../../validations';
 import { IProject } from '../../models';
