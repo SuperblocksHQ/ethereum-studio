@@ -21,6 +21,7 @@ import { ipfsActions, projectsActions } from '../../actions';
 
 const mapStateToProps = state => ({
     selectedProjectName: projectSelectors.getProjectName(state),
+    selectedProjectId: projectSelectors.getProjectId(state),
     ipfsActions: {
         showUploadDialog: ipfsSelectors.getShowUploadDialog(state),
         showUploadButton: ipfsSelectors.getShowUploadButton(state),
@@ -38,8 +39,8 @@ function mapDispatchToProps(dispatch) {
         hideUploadDialog: () => {
             dispatch(ipfsActions.hideUploadDialog())
         },
-        forkCurrentProject: () => {
-            dispatch(projectsActions.forkCurrentProject())
+        forkProject: (projectId, redirect) => {
+            dispatch(projectsActions.forkProject(projectId, redirect))
         },
     };
 }

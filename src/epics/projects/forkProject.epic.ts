@@ -14,16 +14,15 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { of, empty } from 'rxjs';
-import { switchMap, map, catchError, tap, mergeMap } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { switchMap, catchError } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
-import { projectSelectors } from '../../selectors';
 import { projectsActions, userActions } from '../../actions';
 import { projectService } from '../../services';
 import { fetchJSON } from '../../services/utils/fetchJson';
 
-export const forkProjectById: Epic = (action$, state$) => action$.pipe(
-    ofType(projectsActions.FORK_PROJECT_BY_ID),
+export const forkProject: Epic = (action$, state$) => action$.pipe(
+    ofType(projectsActions.FORK_PROJECT),
     switchMap((action) => {
         return projectService.getProjectById(action.data.projectId)
         .pipe(
@@ -37,6 +36,11 @@ export const forkProjectById: Epic = (action$, state$) => action$.pipe(
                         if (project.anonymousToken) {
                             fetchJSON.setAnonymousToken(project.anonymousToken);
                         }
+
+                        if (action.data.redirect) {
+                            window.location.href = `${window.location.origin}/${project.id}`;
+                        }
+
                         return [userActions.getProjectList(), projectsActions.forkProjectSuccess()];
                     }),
                     catchError((error) => {

@@ -30,8 +30,8 @@ function mapDispatchToProps(dispatch: Dispatch<AnyAction>) {
         deleteProject: (projectId: string) => {
             dispatch(projectsActions.deleteProject(projectId));
         },
-        forkProjectById: (projectId: string) => {
-            dispatch(projectsActions.forkProjectById(projectId));
+        forkProject: (projectId: string, redirect: boolean) => {
+            dispatch(projectsActions.forkProject(projectId, redirect));
         }
     };
 }

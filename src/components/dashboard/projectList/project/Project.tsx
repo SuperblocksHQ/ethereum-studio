@@ -27,7 +27,7 @@ import moment from 'moment';
 interface IProps {
     project: IProject;
     deleteProject: (projectId: string) => void;
-    forkProjectById: (projectId: string) => void;
+    forkProject: (projectId: string, redirect: boolean) => void;
     functions: any;
     orderBy: string;
 }
@@ -116,7 +116,7 @@ export default class Project extends Component<IProps> {
                             openProject={this.openProject}
                             openProjectNewTab={this.openProjectNewTab}
                             deleteProject={this.props.deleteProject}
-                            forkProject={this.props.forkProjectById}
+                            forkProject={this.props.forkProject}
                             shareProject={this.showShareModal}
                         />}
                 >

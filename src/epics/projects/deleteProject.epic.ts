@@ -17,7 +17,7 @@
 import { empty, from } from 'rxjs';
 import { switchMap, withLatestFrom, map, tap } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
-import { projectsActions } from '../../actions';
+import { projectsActions, userActions } from '../../actions';
 import { projectService } from '../../services/project.service';
 
 // TODO - Make sure to handle errors correctly
@@ -28,8 +28,8 @@ export const deleteProject: Epic = (action$: any, state$: any) => action$.pipe(
         if (confirm('Are you sure you want to delete the project?')) {
             return projectService.deleteProjectById(action.data.projectId)
                 .pipe(
-                    map(projectsActions.deleteProjectSuccess),
-                    tap(() => document.location.href = '/')
+                    switchMap(() => [userActions.getProjectList(), projectsActions.deleteProjectSuccess()]),
+                    tap(() => action.data.redirect ? document.location.href = '/' : null)
                 );
         } else {
             return empty();

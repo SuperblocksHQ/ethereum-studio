@@ -36,7 +36,7 @@ interface IProps {
     editProject?: () => void;
     openProject?: () => void;
     openProjectNewTab?: () => void;
-    forkProject?: (projectId: string) => void;
+    forkProject?: (projectId: string, redirect: boolean) => void;
     customClass?: string;
 }
 
@@ -87,7 +87,7 @@ export default class ProjectMenuDropdownDialog extends Component<IProps> {
                 }
                 { forkProject &&
                     <MenuItem
-                        onClick={() => forkProject(projectId)}
+                        onClick={() => forkProject(projectId, false)}
                         title='Duplicate'
                     />
                 }

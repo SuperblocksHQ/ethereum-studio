@@ -18,8 +18,7 @@ import { environmentUpdateEpic } from './environmentUpdate.epic';
 import { updateProjectSettings } from './updateProjectSettings.epic';
 import { initExplorerEpic } from './initExplorer.epic';
 import { deleteProject } from './deleteProject.epic';
-import { forkCurrentProject } from './forkCurrentProject.epic';
-import { forkProjectById } from './forkProjectById.epic';
+import { forkProject } from './forkProject.epic';
 import { updateProject } from './updateProject.epic';
 
 // TODO - Add missing epics
@@ -40,8 +39,7 @@ export const projectsEpics = [
     loadProject,
     deleteProject,
     renameProjectEpic,
-    forkCurrentProject,
-    forkProjectById,
+    forkProject,
     createEmptyProject,
     openWalletEpic,
     updateAccountBalanceEpic,

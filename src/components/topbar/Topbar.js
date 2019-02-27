@@ -155,7 +155,8 @@ export default class TopBar extends Component {
     };
 
     onForkClicked = () => {
-        this.props.forkCurrentProject();
+        const { forkProject, selectedProjectId } = this.props;
+        forkProject(selectedProjectId, true);
     }
 
     onCloseUploadDialog = () => {
@@ -232,6 +233,7 @@ export default class TopBar extends Component {
 TopBar.propTypes = {
     functions: PropTypes.object.isRequired,
     selectedProjectName: PropTypes.string,
+    selectedProjectId: PropTypes.string,
     ipfsActions: PropTypes.shape({
         showUploadDialog: PropTypes.bool.isRequired,
         showUploadButton: PropTypes.bool.isRequired,
@@ -242,4 +244,6 @@ TopBar.propTypes = {
         showSelectedProjectName: PropTypes.bool,
         showOpenInLab: PropTypes.bool,
     }),
+    hideUploadDialog: PropTypes.func.isRequired,
+    forkProject: PropTypes.func.isRequired
 };

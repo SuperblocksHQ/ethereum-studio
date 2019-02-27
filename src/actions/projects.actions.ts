@@ -164,17 +164,11 @@ export const projectsActions = {
     },
 
     // ---------- FORK ----------
-    FORK_CURRENT_PROJECT: 'FORK_CURRENT_PROJECT',
-    forkCurrentProject() {
+    FORK_PROJECT: 'FORK_PROJECT',
+    forkProject(projectId: string, redirect: boolean) {
         return {
-            type: projectsActions.FORK_CURRENT_PROJECT,
-        };
-    },
-    FORK_PROJECT_BY_ID: 'FORK_PROJECT_BY_ID',
-    forkProjectById(projectId: string) {
-        return {
-            type: projectsActions.FORK_PROJECT_BY_ID,
-            data: { projectId }
+            type: projectsActions.FORK_PROJECT,
+            data: { projectId, redirect }
         };
     },
     FORK_PROJECT_SUCCESS: 'FORK_PROJECT_SUCCESS',
