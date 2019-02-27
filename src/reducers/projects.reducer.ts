@@ -127,7 +127,7 @@ export default function projectsReducer(state = initialState, action: AnyAction)
 
             return {
                 ...state,
-                project: { ...action.data.project, files: undefined },
+                project: action.data.project,
                 ...stateChange
             };
         }
@@ -147,7 +147,7 @@ export default function projectsReducer(state = initialState, action: AnyAction)
         case projectsActions.UPDATE_PROJECT_SUCCESS: {
             return {
                 ...state,
-                project: { ...action.data.project, files: undefined }
+                project: action.data.project
             };
         }
         default:
