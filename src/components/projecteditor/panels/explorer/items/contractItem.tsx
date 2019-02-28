@@ -1,6 +1,6 @@
 import React from 'react';
 import { IconContract, IconConfigure, IconCompile, IconDeploy, IconInteract, IconEdit, IconTrash } from '../../../../icons';
-import { BaseItem } from './baseItem';
+import BaseItem from './baseItem';
 import style from './style.less';
 import { getToolbar } from './fileItem';
 import { IProjectItem } from '../../../../../models';
