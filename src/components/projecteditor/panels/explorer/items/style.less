@@ -24,12 +24,19 @@ select {
 
 .item {
     user-select: none;
-    // position: relative;
     display: block;
     color: #fff;
     line-height: 28px;
     clear: both;
     cursor: pointer;
+
+    &.isOver {
+        opacity: .6;
+    }
+
+    &.isDragging {
+        opacity: .25 !important;
+    }
 
     .icons {
         display: flex;
@@ -38,7 +45,7 @@ select {
         .nocaret {
             float: left;
             overflow: hidden;
-            width: 25px;
+            width: 0xpx;
 
             &.reduced {
                 width: 10px;
@@ -67,9 +74,6 @@ select {
         }
     }
     .header {
-        // border-left: 2px solid;
-        // border-color: transparent;
-        // padding-right: 10px;
         width: 100%;
         display: flex;
         .overlay {

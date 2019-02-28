@@ -1,7 +1,7 @@
 import React from 'react';
 import { IconEdit, IconTrash } from '../../../../icons';
 import { Tooltip, FileIcon } from '../../../../common';
-import { BaseItem } from './baseItem';
+import BaseItem from './baseItem';
 import style from './style.less';
 import { IProjectItem } from '../../../../../models';
 
@@ -10,6 +10,7 @@ interface IProps {
     onClick(data: IProjectItem): void;
     onRenameClick(id: string): void;
     onDeleteClick(id: string): void;
+    onMoveItem(sourceId: string, targetId: string): void;
 }
 
 export function getToolbar(props: IProps) {
@@ -57,6 +58,7 @@ export function FileItem(props: IProps) {
             togglable={false}
             toolbar={ toolbar }
             contextMenu={ contextMenu }
-            icon={ <FileIcon filename={props.data.name} /> } />
+            icon={ <FileIcon filename={props.data.name} /> }
+            onMoveItem={props.onMoveItem} />
     );
 }

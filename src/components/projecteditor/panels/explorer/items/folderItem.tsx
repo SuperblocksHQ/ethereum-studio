@@ -2,19 +2,22 @@ import React from 'react';
 import classnames from 'classnames';
 import { IconFolder, IconFolderOpen, IconAddFile, IconImportFile, IconAddFolder, IconEdit, IconTrash } from '../../../../icons';
 import { Tooltip } from '../../../../common';
-import { BaseItem } from './baseItem';
+import BaseItem from './baseItem';
 import style from './style.less';
 import { ProjectItemTypes, IProjectItem } from '../../../../../models';
+import {DropTarget, DropTargetSpec } from 'react-dnd';
 
 interface IProps {
     data: IProjectItem;
     children: JSX.Element | Nullable<JSX.Element>[];
+    connectDropTarget?: any;
     onToggle(id: string): void;
     onClick(data: IProjectItem): void;
     onRenameClick(id: string): void;
     onCreateItemClick(parentId: string, type: ProjectItemTypes): void;
     onImportFileClick(parentId: string): void;
     onDeleteClick(id: string): void;
+    onMoveItem(sourceId: string, targetId: string): void;
 }
 
 function getToolbar(props: IProps) {
@@ -49,7 +52,31 @@ function getToolbar(props: IProps) {
     );
 }
 
+
+const itemTarget: DropTargetSpec<IProps> = {
+    drop(props, monitor) {
+        const { id } = props.data;
+
+        if (monitor.didDrop()) {
+            return;
+        }
+
+        return {
+            id
+        };
+    }
+};
+
+const collect: any = (connect: any, monitor: any) => {
+    return {
+        connectDropTarget: connect.dropTarget(),
+        isOver: monitor.isOver({shallow: true}),
+        canDrop: monitor.canDrop()
+    };
+};
+
 export function FolderItem(props: IProps) {
+    const { connectDropTarget, onMoveItem } = props;
     const toolbar = getToolbar(props);
 
     const contextMenu = (
@@ -92,12 +119,21 @@ export function FolderItem(props: IProps) {
     );
 
     return (
-        <BaseItem
-            { ...props }
-            togglable={true}
-            toolbar={ toolbar }
-            icon={ <IconFolder /> }
-            iconOpen={ <IconFolderOpen /> }
-            contextMenu={ contextMenu } />
+        connectDropTarget ? connectDropTarget(
+            <div>
+                <BaseItem
+                    {...props}
+                    togglable={true}
+                    toolbar={ toolbar }
+                    icon={ <IconFolder /> }
+                    iconOpen={ <IconFolderOpen /> }
+                    contextMenu={ contextMenu }
+                    onMoveItem={onMoveItem} />
+            </div>
+        )
+        :
+        null
     );
 }
+
+export default DropTarget<IProps>('ITEM', itemTarget, collect)(FolderItem);
