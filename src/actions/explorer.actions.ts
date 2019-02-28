@@ -68,6 +68,22 @@ export const explorerActions = {
         };
     },
 
+    MOVE_ITEM_SUCCESS: 'MOVE_ITEM_SUCCESS',
+    moveItemSuccess(sourceId: string) {
+        return {
+            type: explorerActions.MOVE_ITEM_SUCCESS,
+            data: { sourceId }
+        };
+    },
+
+    MOVE_ITEM_FAIL: 'MOVE_ITEM_FAIL',
+    moveItemFail(sourceId: string) {
+        return {
+            type: explorerActions.MOVE_ITEM_FAIL,
+            data: { sourceId }
+        };
+    },
+
     // --------- Contract specific
 
     CONFIGURE_CONTRACT: 'CONFIGURE_CONTRACT',
