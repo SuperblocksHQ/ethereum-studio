@@ -177,7 +177,7 @@ module.exports = {
         use: [
             {
                 loader: 'tslint-loader',
-                options: { emitErrors: true, failOnHint: true, typeCheck: true, configFile: paths.appTsLint, tsConfigFile: paths.appTsConfig }
+                options: { emitErrors: true, failOnHint: true, typeCheck: false, configFile: paths.appTsLint, tsConfigFile: paths.appTsConfig }
             }
         ],
         include: paths.appSrc,
