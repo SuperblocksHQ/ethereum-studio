@@ -50,6 +50,14 @@ export const explorerActions = {
         };
     },
 
+    MOVE_ITEM: 'MOVE_ITEM',
+    moveItem(sourceId: string, targetId: string) {
+        return {
+            type: explorerActions.MOVE_ITEM,
+            data: { sourceId, targetId }
+        };
+    },
+
     // --------- Contract specific
 
     CONFIGURE_CONTRACT: 'CONFIGURE_CONTRACT',

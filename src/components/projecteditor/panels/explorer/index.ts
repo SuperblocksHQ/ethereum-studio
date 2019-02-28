@@ -44,6 +44,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
         onDeleteItem: (id: string) => {
             dispatch(explorerActions.deleteItem(id));
         },
+        onMoveItem: (sourceId: string, targetId: string) => {
+            dispatch(explorerActions.moveItem(sourceId, targetId));
+        },
 
         // smart contract specific
         onConfigureContract: (file: IProjectItem) => {

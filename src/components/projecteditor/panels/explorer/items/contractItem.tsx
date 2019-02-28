@@ -15,6 +15,7 @@ interface IProps {
     onCompileClick(data: IProjectItem): void;
     onDeployClick(data: IProjectItem): void;
     onInteractClick(data: IProjectItem): void;
+    onMoveItem(sourceId: string, targetId: string): void;
 }
 
 export function ContractItem(props: IProps) {
@@ -51,7 +52,8 @@ export function ContractItem(props: IProps) {
             togglable={true}
             toolbar={ toolbar }
             contextMenu={ contextMenu }
-            icon={ <IconContract /> }>
+            icon={ <IconContract /> }
+            onMoveItem={props.onMoveItem}>
             <BaseItem icon={ <IconConfigure /> } { ...getActionButtonProps('Configure', props.onConfigureClick) }  />
             <BaseItem icon={ <IconCompile /> } { ...getActionButtonProps('Compile', props.onCompileClick) }  />
             <BaseItem icon={ <IconDeploy /> } { ...getActionButtonProps('Deploy', props.onDeployClick ) }  />

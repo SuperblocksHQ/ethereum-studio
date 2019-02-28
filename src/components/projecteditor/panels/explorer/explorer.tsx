@@ -16,8 +16,11 @@
 
 import React from 'react';
 import style from './style.less';
-import { FolderItem, FileItem, ContractItem } from './items';
+import { FileItem, ContractItem } from './items';
+import FolderItem from './items/folderItem';
 import { IProjectItem, ProjectItemTypes } from '../../../../models';
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 
 interface IProps {
     tree: IProjectItem;
@@ -26,6 +29,7 @@ interface IProps {
     onRenameItem(id: string, name: string): void;
     onCreateItem(parentId: string, type: ProjectItemTypes, name: string): void;
     onDeleteItem(id: string): void;
+    onMoveItem(sourceId: string, targetId: string): void;
 
     onConfigureContract(file: IProjectItem): void;
     onCompileContract(file: IProjectItem): void;
@@ -33,6 +37,7 @@ interface IProps {
     onInteractContract(file: IProjectItem): void;
 }
 
+@DragDropContext(HTML5Backend)
 export class Explorer extends React.Component<IProps> {
 
     onRenameItem = (id: string, currName: string) => {
@@ -55,6 +60,10 @@ export class Explorer extends React.Component<IProps> {
         }
     }
 
+    onMoveItem = (sourceId: string, targetId: string) => {
+        this.props.onMoveItem(sourceId, targetId);
+    }
+
     renderTree(itemData: IProjectItem, actions: any) {
         if (itemData.deleted) {
             return null;
@@ -72,6 +81,7 @@ export class Explorer extends React.Component<IProps> {
                         onClick={ actions.onOpenFile }
                         onRenameClick={ (id: string) => this.onRenameItem(id, itemData.name) }
                         onDeleteClick={ (id: string) => this.onDeleteItem(id, itemData.name) }
+                        onMoveItem={this.onMoveItem}
 
                         onConfigureClick={ actions.onConfigureContract }
                         onCompileClick={ actions.onCompileContract }
@@ -84,7 +94,8 @@ export class Explorer extends React.Component<IProps> {
                         data={ itemData }
                         onClick={ actions.onOpenFile }
                         onRenameClick={ (id: string) => this.onRenameItem(id, itemData.name) }
-                        onDeleteClick={ (id: string) => this.onDeleteItem(id, itemData.name) } />
+                        onDeleteClick={ (id: string) => this.onDeleteItem(id, itemData.name) }
+                        onMoveItem={this.onMoveItem} />
                 );
             }
         } else if (itemData.type === ProjectItemTypes.Folder) {
@@ -97,7 +108,8 @@ export class Explorer extends React.Component<IProps> {
                         onCreateItemClick={ this.onCreateItem }
                         onImportFileClick={ actions.onImportFile }
                         onRenameClick={ (id: string) => this.onRenameItem(id, itemData.name) }
-                        onDeleteClick={ (id: string) => this.onDeleteItem(id, itemData.name) }>
+                        onDeleteClick={ (id: string) => this.onDeleteItem(id, itemData.name) }
+                        onMoveItem={this.onMoveItem}>
                         { childHtml }
                 </FolderItem>
             );
