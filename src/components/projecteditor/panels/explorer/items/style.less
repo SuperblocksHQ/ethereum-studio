@@ -99,7 +99,7 @@ select {
                 background-color: rgba(128, 46, 255, 0.10);
             }
             .buttonsWrapper {
-                opacity: 1;
+                display: flex;
             }
         }
     }
@@ -110,7 +110,15 @@ select {
         position: relative;
         flex: 1;
         white-space: nowrap;
+        min-width: 40px;
+        overflow: hidden;
     }
+
+    .titleOverflow {
+        overflow: hidden;
+        text-overflow: ellipsis
+    }
+
     .hidden {
         display: none;
     }
@@ -124,8 +132,7 @@ select {
     order: 3;
     justify-content: flex-end;
     padding-right: 5px;
-    transition: opacity .3s;
-    opacity: 0;
+    display: none;
 
     &.alwaysOn {
         opacity: 1;

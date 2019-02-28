@@ -16,36 +16,23 @@
 
 .bottomStatusBar {
     box-shadow: 0 -2px 4px 0 rgba(0, 0, 0, 0.0);
-    z-index: 1;
-    overflow: hidden;
-    margin: 0 auto;
     font-size: 0.80em;
-    display: flex;
-    align-items: center;
-    right: 0;
-    top: 0;
-    height: 100%;
-    position: absolute;
     white-space: nowrap;
+    padding: 3px 0px;
+    background: #1a1818;
 
-    .note {
-        font-size: 10px;
-    }
     a {
         color: #fff;
         text-decoration: none;
     }
     span {
         color: #fff;
+
+
     }
     .left {
         margin-left: 15px;
         float: left;
-        span {
-            @media only screen and (max-width: 1025px) {
-                display: none;
-            }
-        }
     }
     .right {
         margin-right: 15px;
@@ -54,6 +41,9 @@
 
         span {
             margin: 0px 10px;
+            &:last-of-type {
+                margin-right: 0px;
+            }
         }
     }
 }

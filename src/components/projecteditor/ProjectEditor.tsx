@@ -135,21 +135,6 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                                 </div>
                             </SplitterLayout>
                         </div>
-
-                        <div className={style.bottomBarContainer}>
-                            { this.isPanelOpen(Panels.CompilerOutput) &&
-                            <div className={style.bottomPanelContainer}>
-                                <Panel icon={<IconCompile />} name='Compiler output' onClose={() => closePanel(Panels.CompilerOutput)} dragging={sidePanelDragging}>
-                                    <CompilerPanel />
-                                </Panel>
-                            </div>
-                            }
-
-                            <SideButton name='Compiler output'
-                                icon={<IconCompile />}
-                                onClick={() => togglePanel(Panels.CompilerOutput)}  />
-                             <BottomBar endpoint={selectedEnvironment.endpoint} />
-                        </div>
                     </div>
 
                     <div className={classnames([style.sideButtonsContainer, style.sideButtonsContainerRight])}>
@@ -162,6 +147,22 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                             onClick={() => togglePanel(Panels.Preview)}  />
                     </div>
                 </div>
+
+                <div className={style.bottomButtonsContainer}>
+                    { this.isPanelOpen(Panels.CompilerOutput) &&
+                        <div className={style.bottomPanelContainer}>
+                            <Panel icon={<IconCompile />} name='Compiler output' onClose={() => closePanel(Panels.CompilerOutput)} dragging={sidePanelDragging}>
+                                <CompilerPanel />
+                            </Panel>
+                        </div>
+                    }
+
+                    <SideButton name='Compiler output'
+                        icon={<IconCompile />}
+                        onClick={() => togglePanel(Panels.CompilerOutput)}  />
+                </div>
+
+                <BottomBar endpoint={selectedEnvironment.endpoint} />
             </div>
         );
     }

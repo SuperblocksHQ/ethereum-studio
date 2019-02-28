@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import style from './style.less';
 import { DropdownContainer, Caret } from '../../../../common';
 import { IProjectItem } from '../../../../../models';
-import {DragSource, DragSourceSpec, ConnectDragSource } from 'react-dnd';
+import { DragSource, DragSourceSpec, ConnectDragSource } from 'react-dnd';
 import classNames from 'classnames';
 
 interface IProps {
@@ -106,14 +106,18 @@ export function BaseItem(props: IProps) {
         connectDragSource ? connectDragSource(
             <div className={ classNames(style.item, cls) }>
                 <DropdownContainer dropdownContent={ props.contextMenu } useRightClick={ true }>
-                    <div className={ classNames(style.header) }  onClick={ () => props.onClick(props.data) } onContextMenu={ e => e.preventDefault() }>
-                        <div className={ style.overlay }></div>
-                        <div className={ style.icons }>
-                            { caret }
-                            <div className={style.icon}>{ icon }</div>
+                    <div onClick={ () => props.onClick(props.data) } onContextMenu={ e => e.preventDefault() }>
+                        <div className={ classNames(style.header) }>
+                            <div className={ style.overlay }></div>
+                            <div className={ style.icons }>
+                                { caret }
+                                <div className={style.icon}>{ icon }</div>
+                            </div>
+                            <div className={ style.title }>
+                                <div className={ style.titleOverflow}>{ props.data.name }</div>
+                            </div>
+                            {props.toolbar}
                         </div>
-                        <div className={ style.title }><a>{ props.data.name }</a></div>
-                        {props.toolbar}
                     </div>
                 </DropdownContainer>
 
