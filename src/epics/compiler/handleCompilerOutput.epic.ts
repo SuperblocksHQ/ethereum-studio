@@ -24,7 +24,7 @@ export const handleCompilerOutputEpic: Epic = (action$: any, state$: any) => act
     switchMap(() => {
         const compilerState = state$.value.compiler;
         if (compilerState.outputFolderPath.length && compilerState.outputFiles.length) {
-            return of(explorerActions.createFolderWith(compilerState.outputFolderPath, compilerState.outputFiles));
+            return of(explorerActions.createPathWithContent(compilerState.outputFolderPath, compilerState.outputFiles));
         } else {
             return empty();
         }

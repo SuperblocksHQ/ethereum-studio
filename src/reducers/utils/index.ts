@@ -14,12 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export function replaceInArray<T>(array: T[], where: (item: T) => boolean, modify: (item: T) => T): T[] {
+export function replaceInArray<T>(array: T[], where: (item: T) => boolean, modify: (item: T, index: number) => T): T[] {
     const index = array.findIndex(where);
     if (index < 0) {
         return array;
     }
-    return [ ...array.slice(0, index), modify(array[index]), ...array.slice(index + 1)];
+    return [ ...array.slice(0, index), modify(array[index], index), ...array.slice(index + 1)];
 }
 
 export function replaceOrRemoveInArray<T>(array: T[], where: (item: T) => boolean, modify: (item: T) => Nullable<T>): T[] {

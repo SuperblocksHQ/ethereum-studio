@@ -15,12 +15,12 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { explorerActions, panesActions } from '../actions';
-import { isValidProjectItemName } from './utils';
+import { isValidProjectItemName, replaceInArray } from './utils';
 import { IExplorerState, IItemNameValidation } from '../models/state';
 import { IProjectItem } from '../models';
 import { AnyAction } from 'redux';
 import { generateUniqueId } from '../services/utils';
-import { updateItemInTree, sortProjectItems, findItemInTree } from './explorerLib';
+import { updateItemInTree, sortProjectItems, findItemInTree, createFolder, addOrReplaceChildItems, ensurePath } from './explorerLib';
 
 export const initialState: IExplorerState = {
     tree: null,
@@ -167,6 +167,18 @@ export default function explorerReducer(state = initialState, action: AnyAction)
                 ...state,
                 tree: updateItemInTree(state.tree, action.data.fileId, i => ({...i, code: action.data.code}))[0],
             };
+
+        case explorerActions.CREATE_PATH_WITH_CONTENT: {
+            if (!state.tree) {
+                return state;
+            }
+
+            const tree: IProjectItem = { ...state.tree };
+            const resultFolder = ensurePath(tree, action.data.path);
+            resultFolder.children = addOrReplaceChildItems(resultFolder, action.data.items).children;
+
+            return { ...state, tree };
+        }
 
         default:
             return state;

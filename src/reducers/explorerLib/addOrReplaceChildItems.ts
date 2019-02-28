@@ -14,10 +14,16 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export * from './sortProjectItems';
-export * from './updateItemInTree';
-export * from './findItemInTree';
-export * from './traverseTree';
-export * from './createProjectItem';
-export * from './addOrReplaceChildItems';
-export * from './ensurePath';
+import { IProjectItem } from '../../models';
+import { sortProjectItems } from './sortProjectItems';
+
+/**
+ * Adds or replaces item's content by name (and type)
+ * @param item 
+ * @param itemsToAdd
+ */
+export function addOrReplaceChildItems(item: IProjectItem, itemsToAdd: IProjectItem[]) {
+    const children = item.children.filter(c => itemsToAdd.some(ci => ci.name === c.name && ci.type === c.type));
+    children.push.apply(children, itemsToAdd);
+    return { ...item, children: sortProjectItems(children) };
+}

@@ -42,11 +42,21 @@ export const explorerActions = {
         };
     },
 
-    CREATE_FOLDER_BY_PATH: 'CREATE_FOLDER_BY_PATH',
-    createFolderWith(path: string[], items: IProjectItem[]) {
+    /**
+     * Ensure there is folder with provided path and add item to it.
+     */
+    CREATE_PATH_WITH_CONTENT: 'CREATE_PATH_WITH_CONTENT',
+    createPathWithContent(path: string[], items: IProjectItem[]) {
         return {
-            type: explorerActions.CREATE_FOLDER_BY_PATH,
+            type: explorerActions.CREATE_PATH_WITH_CONTENT,
             data: { path, items }
+        };
+    },
+
+    FAIL_SAVING_FILES: 'FAIL_SAVING_FILES',
+    failSavingFiles() {
+        return {
+            type: explorerActions.FAIL_SAVING_FILES
         };
     },
 

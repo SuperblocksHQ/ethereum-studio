@@ -18,7 +18,7 @@ import { IProjectItem } from '../../models';
 import { sortProjectItems } from './sortProjectItems';
 import { replaceOrRemoveInArray, replaceInArray } from '../utils';
 
-export function updateItemInTreeImpl(item: IProjectItem, id: string, modify: (i: IProjectItem) => Nullable<IProjectItem>): Nullable<IProjectItem> {
+function updateItemInTreeImpl(item: IProjectItem, id: string, modify: (i: IProjectItem) => Nullable<IProjectItem>): Nullable<IProjectItem> {
     if (item.children.some(c => c.id === id)) {
         let replacedItem: Nullable<IProjectItem> = null;
         item.children = sortProjectItems(replaceOrRemoveInArray(item.children, (c: IProjectItem) => c.id === id, x => {
@@ -48,6 +48,12 @@ export function updateItemInTreeImpl(item: IProjectItem, id: string, modify: (i:
     return null;
 }
 
+/**
+ * Updates item in the tree with provided id.
+ * @param item traversing root item
+ * @param id id of the item to find
+ * @param modify function that returns modified item (should have different reference). In case null is returned - item will be deleted.
+ */
 export function updateItemInTree(item: Nullable<IProjectItem>, id: string, modify: (i: IProjectItem) => Nullable<IProjectItem>): [Nullable<IProjectItem>, Nullable<IProjectItem>] {
     if (!item) {
         return [ item, null ];

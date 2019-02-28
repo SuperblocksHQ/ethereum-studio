@@ -28,3 +28,14 @@ export function createFile(name: string, code: string) {
         children: []
     };
 }
+
+export function createFolder(name: string) {
+    return {
+        id: generateUniqueId(),
+        name,
+        mutable: true,
+        type: ProjectItemTypes.Folder,
+        opened: false,
+        children: []
+    };
+}
