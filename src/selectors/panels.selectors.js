@@ -20,4 +20,5 @@ export const panelsSelectors = {
     getShowTransactionsHistory: state => state.panels[Panels.Transations] && state.panels[Panels.Transations].open,
     getShowFileSystem:  state => state.panels[Panels.Explorer] && state.panels[Panels.Explorer].open,
     getShowPreview: state => state.panels[Panels.Preview] && state.panels[Panels.Preview].open,
+    getShowConsole: state => state.panels[Panels.CompilerOutput] && state.panels[Panels.CompilerOutput].open,
 }

@@ -20,6 +20,7 @@ import { AnyAction } from 'redux';
 import { IPanesState } from '../models/state';
 
 export const initialState: IPanesState = {
+    activePane: null,
     items: []
 };
 
@@ -29,6 +30,7 @@ export default function panesReducer(state = initialState, action: AnyAction) {
         case panesActions.OPEN_FILE: {
             const items = replaceInArray(state.items.slice(), p => p.active, p => ({ ...p, active: false }));
             const itemIndex = items.findIndex(i => i.file.id === action.data.id);
+            const activePane = action.data.id;
             if (itemIndex >= 0) {
                 items[itemIndex] = { ...items[itemIndex], active: true };
             } else {
@@ -36,6 +38,7 @@ export default function panesReducer(state = initialState, action: AnyAction) {
             }
             return {
                 ...state,
+                activePane,
                 items
             };
         }
@@ -50,17 +53,20 @@ export default function panesReducer(state = initialState, action: AnyAction) {
             // remove pane
             const items = state.items.slice();
             const removedPane = items.splice(removeItemIndex, 1)[0];
+            let activePane = null;
 
             if (removedPane.active) {
                 // activate next item or the last one
                 const activeItemIndex = Math.min(items.length - 1, removeItemIndex);
                 if (activeItemIndex >= 0) {
                     items[activeItemIndex] = { ...items[activeItemIndex], active: true };
+                    activePane = items[activeItemIndex].file.id;
                 }
             }
 
             return {
                 ...state,
+                activePane,
                 items
             };
         }

@@ -14,25 +14,34 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
+import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import MenuDropdownDialog from './MenuDropdownDialog';
-import { panelsSelectors } from '../../../selectors';
-import { panelsActions } from '../../../actions';
+import { panelsSelectors, panesSelectors } from '../../../selectors';
+import { panelsActions, panesActions } from '../../../actions';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state: any) => ({
     showTransactionsHistory: panelsSelectors.getShowTransactionsHistory(state),
     showFileSystem: panelsSelectors.getShowFileSystem(state),
     showPreview: panelsSelectors.getShowPreview(state),
+    showConsole: panelsSelectors.getShowConsole(state),
+    activePaneId: panesSelectors.getActivePane(state),
 });
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch: Dispatch) {
     return {
-        togglePanel: (panel) => {
-            dispatch(panelsActions.togglePanel(panel))
+        togglePanel: (panel: any) => {
+            dispatch(panelsActions.togglePanel(panel));
         },
         closeAllPanels: () => {
             dispatch(panelsActions.closeAllPanels());
-        }
+        },
+        closeAllPanes() {
+            dispatch(panesActions.closeAllPanes());
+        },
+        closePane(fileId: string) {
+            dispatch(panesActions.closePane(fileId));
+        },
     };
 }
 
