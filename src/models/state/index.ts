@@ -19,3 +19,4 @@ export * from './project-state.model';
 export * from './panes-state.model';
 export * from './compilerState.model';
 export * from './panelsState.model';
+export * from './consoleState.model';

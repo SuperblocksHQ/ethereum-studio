@@ -14,12 +14,14 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { compileContractsEpic } from './compileContract.epic';
-import { handleCompilerOutputEpic } from './handleCompilerOutput.epic';
-import { compilerReadyEpic } from './compilerReady.epic';
+import { IConsoleRow } from '../models/state';
 
-export const compilerEpics = [
-    compilerReadyEpic,
-    compileContractsEpic,
-    handleCompilerOutputEpic
-];
+export const consoleActions = {
+    ADD_ROWS: 'ADD_ROWS',
+    addRows(rows: IConsoleRow[]) {
+        return {
+            type: consoleActions.ADD_ROWS,
+            data: rows
+        };
+    }
+};

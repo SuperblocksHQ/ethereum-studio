@@ -14,12 +14,11 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { compileContractsEpic } from './compileContract.epic';
-import { handleCompilerOutputEpic } from './handleCompilerOutput.epic';
-import { compilerReadyEpic } from './compilerReady.epic';
+export interface IConsoleRow {
+    channel: number;
+    msg: string;
+}
 
-export const compilerEpics = [
-    compilerReadyEpic,
-    compileContractsEpic,
-    handleCompilerOutputEpic
-];
+export interface IConsoleState {
+    rows: IConsoleRow[];
+}

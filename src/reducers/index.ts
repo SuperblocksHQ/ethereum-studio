@@ -26,6 +26,7 @@ import toast from './toast.reducer';
 import user from './user.reducer';
 import view from './view.reducer';
 import compiler from './compiler.reducer';
+import console from './console.reducer';
 import { AnyAction } from 'redux';
 
 const rehydrated = (state = false, action: AnyAction) => {
@@ -50,5 +51,6 @@ export default {
     explorer,
     user,
     view,
-    compiler
+    compiler,
+    console
 };

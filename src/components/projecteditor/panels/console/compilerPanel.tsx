@@ -22,7 +22,7 @@ interface IProps {
     consoleRows: IConsoleRow[];
 }
 
-export function CompilerPanel(props: IProps) {
+export function Console(props: IProps) {
     return (
         <div className='scrollable-y'>
             <div className={style.console}>

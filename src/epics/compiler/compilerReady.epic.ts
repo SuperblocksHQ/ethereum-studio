@@ -14,17 +14,11 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { CompilerPanel as CompilerPanelComponent } from './compilerPanel';
-import { connect } from 'react-redux';
-import { Dispatch } from 'react';
-import { AnyAction } from 'redux';
+import { map } from 'rxjs/operators';
+import { ofType, Epic } from 'redux-observable';
+import { compilerActions, consoleActions } from '../../actions';
 
-const mapStateToProps = (state: any) => ({
-    consoleRows: state.compiler.consoleRows
-});
-
-const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
-    return {};
-};
-
-export const CompilerPanel = connect(mapStateToProps, mapDispatchToProps)(CompilerPanelComponent);
+export const compilerReadyEpic: Epic = (action$: any, state$: any) => action$.pipe(
+    ofType(compilerActions.COMPILER_READY),
+    map(() => consoleActions.addRows(state$.value.compiler.consoleRows))
+);

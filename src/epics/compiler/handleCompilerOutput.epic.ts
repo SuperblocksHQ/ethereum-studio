@@ -17,14 +17,19 @@
 import { of, empty } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
-import { compilerActions, explorerActions } from '../../actions';
+import { compilerActions, explorerActions, consoleActions } from '../../actions';
 
 export const handleCompilerOutputEpic: Epic = (action$: any, state$: any) => action$.pipe(
     ofType(compilerActions.HANDLE_COMPILE_OUTPUT),
     switchMap(() => {
         const compilerState = state$.value.compiler;
         if (compilerState.outputFolderPath.length && compilerState.outputFiles.length) {
-            return of(explorerActions.createPathWithContent(compilerState.outputFolderPath, compilerState.outputFiles));
+            return of(
+                // save files
+                explorerActions.createPathWithContent(compilerState.outputFolderPath, compilerState.outputFiles),
+                // show output in console
+                consoleActions.addRows(compilerState.consoleRows)
+            );
         } else {
             return empty();
         }

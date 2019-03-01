@@ -21,7 +21,7 @@ import Panes from './panes';
 import TopBar from '../topbar';
 import BottomBar from './bottomBar';
 import ContactContainer from '../contactContainer';
-import { Preview, TransactionLogPanel, CompilerPanel, Explorer } from './panels';
+import { Preview, TransactionLogPanel, Console, Explorer } from './panels';
 import { IconTransactions, IconShowPreview, IconFileAlt, IconCompile } from '../icons';
 import { SideButton } from './sideButton';
 import { SplitterLayout } from './splitterLayout';
@@ -151,13 +151,13 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                 <div className={style.bottomButtonsContainer}>
                     { this.isPanelOpen(Panels.CompilerOutput) &&
                         <div className={style.bottomPanelContainer}>
-                            <Panel icon={<IconCompile />} name='Compiler output' onClose={() => closePanel(Panels.CompilerOutput)} dragging={sidePanelDragging}>
-                                <CompilerPanel />
+                            <Panel icon={<IconCompile />} name='Console output' onClose={() => closePanel(Panels.CompilerOutput)} dragging={sidePanelDragging}>
+                                <Console />
                             </Panel>
                         </div>
                     }
 
-                    <SideButton name='Compiler output'
+                    <SideButton name='Console output'
                         icon={<IconCompile />}
                         onClick={() => togglePanel(Panels.CompilerOutput)}  />
                 </div>

@@ -14,12 +14,25 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { compileContractsEpic } from './compileContract.epic';
-import { handleCompilerOutputEpic } from './handleCompilerOutput.epic';
-import { compilerReadyEpic } from './compilerReady.epic';
+import { AnyAction } from 'redux';
+import { consoleActions } from '../actions';
+import { IConsoleState } from '../models/state';
 
-export const compilerEpics = [
-    compilerReadyEpic,
-    compileContractsEpic,
-    handleCompilerOutputEpic
-];
+const initialState: IConsoleState = {
+    rows: [],
+};
+
+export default function compilerReducer(state = initialState, action: AnyAction) {
+    switch (action.type) {
+        case consoleActions.ADD_ROWS: {
+            return {
+                ...state,
+                rows: state.rows.concat(action.data).slice(0, 5000) // limit total number or rows
+            };
+        }
+
+        default:
+            return state;
+    }
+}
+

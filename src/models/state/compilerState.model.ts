@@ -15,11 +15,7 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { IProjectItem } from '../project';
-
-export interface IConsoleRow {
-    channel: number;
-    msg: string;
-}
+import { IConsoleRow } from '.';
 
 export interface ICompilerState {
     input: any;

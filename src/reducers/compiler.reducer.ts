@@ -25,7 +25,7 @@ const initialState: ICompilerState = {
     input: null,
     files: {},
 
-    consoleRows: [],
+    consoleRows: [], // console output of the last action
 
     targetContractPath: [],
     targetContractHash: '',
@@ -165,7 +165,6 @@ export default function compilerReducer(state = initialState, action: AnyAction,
         }
 
         case compilerActions.HANDLE_COMPILE_OUTPUT: {
-            console.log(action.data);
             let errorRows = checkForGeneralErrors(action.data);
 
             if (errorRows.length === 0) {
@@ -194,7 +193,7 @@ export default function compilerReducer(state = initialState, action: AnyAction,
                             ...state,
                             outputFiles,
                             outputFolderPath: [ 'build' ].concat(state.targetContractPath.slice(0, -1)).concat([ contractName ]),
-                            consoleRows: state.consoleRows.concat([{ channel: 1, msg: 'Success in compilation' }])
+                            consoleRows: [{ channel: 1, msg: 'Success in compilation' }]
                         };
                     } catch {
                         console.error('Could not parse compiler output', targetContractOutput);
@@ -212,7 +211,7 @@ export default function compilerReducer(state = initialState, action: AnyAction,
             // this means errors occured
             return {
                 ...state,
-                consoleRows: state.consoleRows.concat(errorRows)
+                consoleRows: errorRows
             };
         }
 
