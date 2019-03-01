@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import style from './style.less';
 import { IconAngleRight, IconAngleDown } from '../../icons';
+import classNames from 'classnames';
 
 export const Caret = ({ onClick, expanded = false } = props) => (
-    <div className={style.caret} onClick={onClick}>
+    <div className={classNames(style.caret, expanded ? style.caretExpanded : null)} onClick={onClick}>
         {expanded ? (
             <IconAngleDown height="5" width="8" />
         ) : (

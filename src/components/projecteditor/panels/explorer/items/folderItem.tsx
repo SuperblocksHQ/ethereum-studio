@@ -11,6 +11,7 @@ interface IProps {
     data: IProjectItem;
     children: JSX.Element | Nullable<JSX.Element>[];
     connectDropTarget?: any;
+    depth: number;
     onToggle(id: string): void;
     onClick(data: IProjectItem): void;
     onRenameClick(id: string): void;
@@ -76,7 +77,7 @@ const collect: any = (connect: any, monitor: any) => {
 };
 
 export function FolderItem(props: IProps) {
-    const { connectDropTarget, onMoveItem } = props;
+    const { connectDropTarget, onMoveItem, depth } = props;
     const toolbar = getToolbar(props);
 
     const contextMenu = (
@@ -123,6 +124,7 @@ export function FolderItem(props: IProps) {
             <div>
                 <BaseItem
                     {...props}
+                    depth={depth}
                     togglable={true}
                     toolbar={ toolbar }
                     icon={ <IconFolder /> }

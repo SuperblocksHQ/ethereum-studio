@@ -7,6 +7,7 @@ import { IProjectItem } from '../../../../../models';
 
 interface IProps {
     data: IProjectItem;
+    depth: number;
     onToggle(id: string): void;
     onClick(data: IProjectItem): void;
     onRenameClick(id: string): void;
@@ -46,18 +47,20 @@ export function ContractItem(props: IProps) {
         </div>
     );
 
+    // TODO: Remove all the actions when we move it to config file
     return (
         <BaseItem
             { ...props }
+            depth={props.depth}
             togglable={true}
             toolbar={ toolbar }
             contextMenu={ contextMenu }
             icon={ <IconContract /> }
             onMoveItem={props.onMoveItem}>
-            <BaseItem icon={ <IconConfigure /> } { ...getActionButtonProps('Configure', props.onConfigureClick) }  />
-            <BaseItem icon={ <IconCompile /> } { ...getActionButtonProps('Compile', props.onCompileClick) }  />
-            <BaseItem icon={ <IconDeploy /> } { ...getActionButtonProps('Deploy', props.onDeployClick ) }  />
-            <BaseItem icon={ <IconInteract /> } { ...getActionButtonProps('Interact', props.onInteractClick) }  />
+            <BaseItem depth={props.depth} icon={ <IconConfigure /> } { ...getActionButtonProps('Configure', props.onConfigureClick) }  />
+            <BaseItem depth={props.depth} icon={ <IconCompile /> } { ...getActionButtonProps('Compile', props.onCompileClick) }  />
+            <BaseItem depth={props.depth} icon={ <IconDeploy /> } { ...getActionButtonProps('Deploy', props.onDeployClick ) }  />
+            <BaseItem depth={props.depth} icon={ <IconInteract /> } { ...getActionButtonProps('Interact', props.onInteractClick) }  />
         </BaseItem>
     );
 }

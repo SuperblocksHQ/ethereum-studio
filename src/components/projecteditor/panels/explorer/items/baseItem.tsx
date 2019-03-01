@@ -18,6 +18,7 @@ interface IProps {
     connectDragSource?: ConnectDragSource;
     isDragging?: boolean;
     isOver?: boolean;
+    depth: number;
 
     onToggle?: (id: string) => void;
     onMoveItem?: (sourceId: string, targetId: string) => void;
@@ -72,7 +73,7 @@ const collect: any = (connect: any, monitor: any) => {
 export function BaseItem(props: IProps) {
     let icon = props.icon;
     let caret;
-    const { connectDragSource, isDragging, isOver } = props;
+    const { connectDragSource, isDragging, isOver, depth } = props;
     const { id, opened } = props.data;
     const cls = [
         isOver ? style.isOver : null,
@@ -107,7 +108,7 @@ export function BaseItem(props: IProps) {
             <div className={ classNames(style.item, cls) }>
                 <DropdownContainer dropdownContent={ props.contextMenu } useRightClick={ true }>
                     <div onClick={ () => props.onClick(props.data) } onContextMenu={ e => e.preventDefault() }>
-                        <div className={ classNames(style.header) }>
+                        <div style={{paddingLeft: (depth * 20)}}  className={ classNames(style.header) }>
                             <div className={ style.overlay }></div>
                             <div className={ style.icons }>
                                 { caret }

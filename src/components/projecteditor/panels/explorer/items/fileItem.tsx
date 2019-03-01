@@ -7,6 +7,7 @@ import { IProjectItem } from '../../../../../models';
 
 interface IProps {
     data: IProjectItem;
+    depth: number;
     onClick(data: IProjectItem): void;
     onRenameClick(id: string): void;
     onDeleteClick(id: string): void;
@@ -55,6 +56,7 @@ export function FileItem(props: IProps) {
     return (
         <BaseItem
             { ...props }
+            depth={props.depth}
             togglable={false}
             toolbar={ toolbar }
             contextMenu={ contextMenu }

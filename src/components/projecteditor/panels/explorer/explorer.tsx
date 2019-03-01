@@ -64,18 +64,20 @@ export class Explorer extends React.Component<IProps> {
         this.props.onMoveItem(sourceId, targetId);
     }
 
-    renderTree(itemData: IProjectItem, actions: any) {
+    renderTree(itemData: IProjectItem, actions: any, depth: number) {
         if (itemData.deleted) {
             return null;
         }
 
-        const childHtml = itemData.children.map(i => this.renderTree(i, actions));
+        depth++;
+        const childHtml = itemData.children.map(i => this.renderTree(i, actions, depth));
 
         if (itemData.type === ProjectItemTypes.File) {
             if (itemData.name.toLowerCase().endsWith('.sol')) {
                 return (
                     <ContractItem key={ itemData.id }
                         data={ itemData }
+                        depth= { depth }
 
                         onToggle={ actions.onToggleTreeItem }
                         onClick={ actions.onOpenFile }
@@ -92,6 +94,8 @@ export class Explorer extends React.Component<IProps> {
                 return (
                     <FileItem key={ itemData.id }
                         data={ itemData }
+                        depth= { depth }
+
                         onClick={ actions.onOpenFile }
                         onRenameClick={ (id: string) => this.onRenameItem(id, itemData.name) }
                         onDeleteClick={ (id: string) => this.onDeleteItem(id, itemData.name) }
@@ -102,6 +106,8 @@ export class Explorer extends React.Component<IProps> {
             return (
                 <FolderItem key={ itemData.id }
                         data={ itemData }
+                        depth= { depth }
+
                         onClick={ (i: IProjectItem) => actions.onToggleTreeItem(i.id) }
                         onToggle={ actions.onToggleTreeItem }
 
@@ -119,7 +125,7 @@ export class Explorer extends React.Component<IProps> {
     }
 
     render() {
-        const treeHtml = this.props.tree ? this.renderTree(this.props.tree, this.props) : null;
+        const treeHtml = this.props.tree ? this.renderTree(this.props.tree, this.props, 0) : null;
         return (
             <div className={ style.treeContainer }>
                 { treeHtml }
