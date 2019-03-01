@@ -135,6 +135,20 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                                 </div>
                             </SplitterLayout>
                         </div>
+
+                        <div className={style.bottomButtonsContainer}>
+                            { this.isPanelOpen(Panels.CompilerOutput) &&
+                                <div className={style.bottomPanelContainer}>
+                                    <Panel icon={<IconCompile />} name='Console output' onClose={() => closePanel(Panels.CompilerOutput)} dragging={sidePanelDragging}>
+                                        <Console />
+                                    </Panel>
+                                </div>
+                            }
+
+                            <SideButton name='Console output'
+                                icon={<IconCompile />}
+                                onClick={() => togglePanel(Panels.CompilerOutput)}  />
+                        </div>
                     </div>
 
                     <div className={classnames([style.sideButtonsContainer, style.sideButtonsContainerRight])}>
@@ -146,20 +160,6 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                             icon={<IconShowPreview />}
                             onClick={() => togglePanel(Panels.Preview)}  />
                     </div>
-                </div>
-
-                <div className={style.bottomButtonsContainer}>
-                    { this.isPanelOpen(Panels.CompilerOutput) &&
-                        <div className={style.bottomPanelContainer}>
-                            <Panel icon={<IconCompile />} name='Console output' onClose={() => closePanel(Panels.CompilerOutput)} dragging={sidePanelDragging}>
-                                <Console />
-                            </Panel>
-                        </div>
-                    }
-
-                    <SideButton name='Console output'
-                        icon={<IconCompile />}
-                        onClick={() => togglePanel(Panels.CompilerOutput)}  />
                 </div>
 
                 <BottomBar endpoint={selectedEnvironment.endpoint} />

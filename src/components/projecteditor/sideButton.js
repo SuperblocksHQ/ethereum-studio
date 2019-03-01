@@ -8,7 +8,9 @@ export function SideButton(props) {
             className={classNames([style.sideButton, 'btnNoBg'])}
             onClick={props.onClick}
         >
-            {props.icon}
+            <span className={style.icon}>
+                {props.icon}
+            </span>
             <span className={style.buttonText}>
                 {props.name}
             </span>

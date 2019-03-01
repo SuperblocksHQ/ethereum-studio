@@ -83,6 +83,20 @@
             .sideButton {
                 border-right: 2px solid;
                 border-color: transparent;
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                align-items: center;
+
+                span:first-of-type {
+                    order: 2;
+                }
+
+                span:last-of-type {
+                    order: 1;
+                    margin-bottom: 7px;
+                }
+
                 &:hover {
                     border-color: @primary-color;
                 }
@@ -101,7 +115,7 @@
             border-color: transparent;
             height: 100%;
             padding: 0px 10px;
-            margin-left: 35px;
+
             &:hover {
                 border-color: @primary-color;
             }
