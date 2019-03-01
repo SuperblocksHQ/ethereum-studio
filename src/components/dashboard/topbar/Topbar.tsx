@@ -35,7 +35,7 @@ export default class Topbar extends Component<IProps> {
             <div className={style.topbar}>
                 <a href='/' className={style.logo}>
                     <img
-                        src='/static/img/img-lab-logo.svg'
+                        src='/static/img/img-logo-dashboard.svg'
                         alt='Superblocks logo'
                     />
                 </a>

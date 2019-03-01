@@ -113,12 +113,12 @@ export class ProjectEditor extends React.Component<IProps, IState> {
 
                                         <Panes dragging={sidePanelDragging} />
 
-                                        { this.isPanelOpen(Panels.Transations) &&
-                                        <Panel icon={ <IconTransactions /> } name='Transactions History' onClose={() => closePanel(Panels.Transations)} dragging={sidePanelDragging}>
+                                        { this.isPanelOpen(Panels.Transactions) &&
+                                        <Panel icon={ <IconTransactions /> } name='Transactions History' onClose={() => closePanel(Panels.Transactions)} dragging={sidePanelDragging}>
                                             <TransactionLogPanel
                                                 dragging={sidePanelDragging}
                                                 router={router}
-                                                onClose={() => closePanel(Panels.Transations)}
+                                                onClose={() => closePanel(Panels.Transactions)}
                                                 selectedEnvironment={selectedEnvironment.name}
                                             />
                                         </Panel>}
@@ -154,7 +154,7 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                     <div className={classnames([style.sideButtonsContainer, style.sideButtonsContainerRight])}>
                         <SideButton name='Transactions'
                             icon={<IconTransactions />}
-                            onClick={() => togglePanel(Panels.Transations)}  />
+                            onClick={() => togglePanel(Panels.Transactions)}  />
 
                         <SideButton name='Preview'
                             icon={<IconShowPreview />}

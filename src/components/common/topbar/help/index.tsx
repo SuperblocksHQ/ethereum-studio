@@ -35,7 +35,7 @@ const HelpDropdownDialog = () => (
                     target='_blank'
                     rel='noopener noreferrer'
                 >
-                    Guide to Superblocks Lab
+                    Guide to Superblocks
                 </a>
             </li>
             <li>

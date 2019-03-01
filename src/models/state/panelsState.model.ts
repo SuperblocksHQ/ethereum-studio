@@ -17,7 +17,7 @@
 export enum Panels {
     Explorer = 'Explorer',
     Preview = 'Preview',
-    Transations = 'Transations',
+    Transactions = 'Transactions',
     CompilerOutput = 'CompilerOutput'
 }
 
