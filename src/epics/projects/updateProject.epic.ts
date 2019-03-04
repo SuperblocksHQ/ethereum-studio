@@ -14,8 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { from } from 'rxjs';
-import { switchMap, withLatestFrom, map, tap } from 'rxjs/operators';
+import { from, of } from 'rxjs';
+import { switchMap, withLatestFrom, catchError } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
 import { projectsActions, userActions } from '../../actions';
 import { projectService } from '../../services/project.service';
@@ -23,14 +23,25 @@ import { projectService } from '../../services/project.service';
 export const updateProject: Epic = (action$: any, state$: any) => action$.pipe(
     ofType(projectsActions.UPDATE_PROJECT),
     withLatestFrom(state$),
-    switchMap(([action, state]) => {
-        const project = action.data.project;
-        return from(projectService.putProjectById(project.id, project))
-            .pipe(
-                switchMap(() => {
-                    return [userActions.getProjectList(), projectsActions.updateProjectSuccess(project)];
-                }
-            )
+    switchMap(([action]) => {
+        return projectService.getProjectById(action.data.project.id)
+        .pipe(
+            switchMap((selectedProject) => {
+                selectedProject.name = action.data.project.name;
+                selectedProject.description = action.data.project.description;
+
+                return from(projectService.putProjectById(selectedProject.id, selectedProject))
+                    .pipe(
+                        switchMap(() => {
+                            return [projectsActions.updateProjectSuccess(selectedProject), userActions.getProjectList()];
+                        }
+                    )
+                );
+            }),
+            catchError((error) => {
+                console.log('There was an issue updating the project: ' + error);
+                return of(projectsActions.updateProjectFail(error.message));
+            })
         );
     })
 );
