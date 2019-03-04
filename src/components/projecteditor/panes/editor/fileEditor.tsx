@@ -69,6 +69,7 @@ export class FileEditor extends React.Component<IProps> {
             readOnly: !this.props.file.mutable,
             folding: 'true',
             foldingStrategyif: 'indentation',
+            automaticLayout: 'true',
         };
 
         this.code = props.file.code || '';
