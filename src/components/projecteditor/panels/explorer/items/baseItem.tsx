@@ -108,8 +108,7 @@ export function BaseItem(props: IProps) {
             <div className={ classNames(style.item, cls) }>
                 <DropdownContainer dropdownContent={ props.contextMenu } useRightClick={ true }>
                     <div onClick={ () => props.onClick(props.data) } onContextMenu={ e => e.preventDefault() }>
-                        <div style={{paddingLeft: (depth * 20)}}  className={ classNames(style.header) }>
-                            <div className={ style.overlay }></div>
+                        <div className={style.header} style={{paddingLeft: (depth * 20)}}>
                             <div className={ style.icons }>
                                 { caret }
                                 <div className={style.icon}>{ icon }</div>

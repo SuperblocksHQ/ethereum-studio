@@ -29,6 +29,7 @@ select {
     line-height: 28px;
     clear: both;
     cursor: pointer;
+    position: relative;
 
     &.isOver {
         opacity: .6;
@@ -76,28 +77,14 @@ select {
     .header {
         width: 100%;
         display: flex;
-        .overlay {
-            position: absolute;
-            height: 30px;
-            left: 0;
-            right: 0px;
-            border-left: 2px solid;
-            border-color: transparent;
-            pointer-events: none;
-        }
+        border-left: 2px solid;
+        border-color: transparent;
 
-        &:after {
-            content: " ";
-            display: block;
-            clear: both;
-        }
         &:hover {
-            .overlay {
-                display: block;
-                border-color: #7237CF;
-                color: #fff;
-                background-color: rgba(128, 46, 255, 0.10);
-            }
+            border-color: #7237CF;
+            color: #fff;
+            background-color: rgba(128, 46, 255, 0.10);
+
             .buttonsWrapper {
                 display: flex;
             }
@@ -116,7 +103,7 @@ select {
 
     .titleOverflow {
         overflow: hidden;
-        text-overflow: ellipsis
+        text-overflow: ellipsis;
     }
 
     .hidden {
@@ -159,7 +146,7 @@ select {
     display: block;
     position: absolute;
     margin-top: -1px;
-    margin-left: 0px;
+    margin-left: 30px;
     background-color: #141414;
     z-index: 1;
     min-width: 233px;

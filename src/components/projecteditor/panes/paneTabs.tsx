@@ -22,6 +22,10 @@ import { DropdownContainer, FileIcon } from '../../common';
 import { IPane } from '../../../models/state';
 import { IProjectItem } from '../../../models';
 
+interface IState {
+    mousePositionX: number;
+}
+
 interface IProps {
     panes: IPane[];
     onCloseAllTabs: () => void;
@@ -30,48 +34,66 @@ interface IProps {
     onTabClose: (fileId: string) => void;
 }
 
-export function PaneTabs(props: IProps) {
-    const getContextMenuElement = (fileId: string) => {
+export class PaneTabs extends React.Component<IProps, IState> {
+    state: IState = {
+        mousePositionX: 0
+    };
+
+    getContextMenuElement = (fileId: string) => {
+        const { mousePositionX } = this.state;
+
         return (
-            <div className={style.contextMenu}>
-                <div className={style.item} onClick={props.onCloseAllTabs}>
+            <div className={style.contextMenu} style={{left: mousePositionX}}>
+                <div className={style.item} onClick={this.props.onCloseAllTabs}>
                     Close all
                 </div>
-                <div className={style.item} onClick={() => props.onCloseAllOtherTabs(fileId)}>
+                <div className={style.item} onClick={() => this.props.onCloseAllOtherTabs(fileId)}>
                     Close all other
                 </div>
             </div>
         );
-    };
+    }
 
-    return (
-        <React.Fragment>
-            {props.panes.map((paneData) =>
-                <div key={paneData.file.id}
-                    className={ classnames(style.tab, { [style.selected]: paneData.active }) }
-                    onMouseDown={() => props.onTabClick(paneData.file)}
-                    onContextMenu={ e => e.preventDefault()}>
+    handleRightClick = (e: React.MouseEvent) => {
+        e.preventDefault();
 
-                    <DropdownContainer
-                        dropdownContent={getContextMenuElement(paneData.file.id)}
-                        useRightClick={true}>
-                        <div className={style.tabContainer}>
-                            <div className={style.title}>
-                                <div className={style.icon}>{<FileIcon filename={paneData.file.name} />}</div>
-                                <div className={style.title2}>{paneData.file.name}</div>
+        this.setState({
+            mousePositionX: e.pageX
+        });
+    }
+
+    render() {
+        const { panes, onTabClick, onTabClose } = this.props;
+
+        return (
+            <React.Fragment>
+                {panes.map((paneData) =>
+                    <div key={paneData.file.id}
+                        className={ classnames(style.tab, { [style.selected]: paneData.active }) }
+                        onMouseDown={ e => e.button === 1 ? onTabClose(paneData.file.id) : onTabClick(paneData.file) }
+                        onContextMenu={ e => this.handleRightClick(e)}>
+
+                        <DropdownContainer
+                            dropdownContent={this.getContextMenuElement(paneData.file.id)}
+                            useRightClick={true}>
+                            <div className={style.tabContainer}>
+                                <div className={style.title}>
+                                    <div className={style.icon}>{<FileIcon filename={paneData.file.name} />}</div>
+                                    <div className={style.title2}>{paneData.file.name}</div>
+                                </div>
+                                <div className={style.close}>
+                                    <button className='btnNoBg'
+                                        onMouseDown={e => e.stopPropagation()}
+                                        onClick={e => onTabClose(paneData.file.id)}>
+                                        <IconClose />
+                                    </button>
+                                </div>
                             </div>
-                            <div className={style.close}>
-                                <button className='btnNoBg'
-                                    onMouseDown={e => e.stopPropagation()}
-                                    onClick={e => props.onTabClose(paneData.file.id)}>
-                                    <IconClose />
-                                </button>
-                            </div>
-                        </div>
-                    </DropdownContainer>
+                        </DropdownContainer>
 
-                </div>
-            )}
-        </React.Fragment>
-    );
+                    </div>
+                )}
+            </React.Fragment>
+        );
+    }
 }

@@ -125,7 +125,7 @@ export class Explorer extends React.Component<IProps> {
     }
 
     render() {
-        const treeHtml = this.props.tree ? this.renderTree(this.props.tree, this.props, 0) : null;
+        const treeHtml = this.props.tree ? this.renderTree(this.props.tree, this.props, -1) : null;
         return (
             <div className={ style.treeContainer }>
                 { treeHtml }
