@@ -52,7 +52,7 @@ export default class LoadProject extends Component {
                         isImportedProject={isImportedProject}
                     />
                 </OnlyIf>
-                <OnlyIf test={!isEvmReady}>
+                <OnlyIf test={!isEvmReady || !project}>
                     <Modal onClose={() => {}}>
                         <h2>Loading Superblocks Lab</h2>
                         <div style={{textAlign: 'center'}}>Initializing Wallet and Ethereum Virtual Machine...</div>
