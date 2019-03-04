@@ -70,7 +70,7 @@ export default class ProjectTitle extends Component<IProps> {
         return(
             <div className={style.projectButton}>
                 <OnlyIf test={!projectNameUpdating}>
-                    <div onClick={this.handleProjectNameClick} className={style.action}>
+                    <div onClick={this.handleProjectNameClick} className={style.titleOverflow}>
                         <span className={style.projectText}>{projectName}</span>
                     </div>
                     <DropdownContainer

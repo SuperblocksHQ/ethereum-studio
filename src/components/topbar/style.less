@@ -72,12 +72,17 @@
         margin-left: 45px;
         height: 100%;
     }
-    .actionsRight,
-    .actionDialogMenu {
+    .actionsLeft,
+    .actionsRight {
         display: flex;
+        flex: 1;
         height: 100%;
     }
+    .actionsRight {
+        justify-content: flex-end;
+    }
     .actionDialogMenu {
+        display: flex;
         .action {
             padding: 0px 5px;
         }

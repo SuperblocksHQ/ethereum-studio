@@ -165,49 +165,50 @@ export default class TopBar extends Component {
 
     render() {
 
-        const { showUploadDialog, showUploadButton, showForkButton, showShareButton } = this.state.ipfsActions;
+        const { showUploadDialog, showUploadButton, showForkButton } = this.state.ipfsActions;
         const { project, showOpenInLab } = this.props.view;
-        const { selectedProjectName } = this.state;
 
         return (
             <div className={style.topbar}>
-                <DropdownContainer
-                    className={style.actionDialogMenu}
-                    dropdownContent={<MenuDropdownDialog />} >
-                    <MenuAction />
-                </DropdownContainer>
-                <OnlyIf test={showOpenInLab}>
-                    <a
-                        className={style.openLab}
-                        href={window.location}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        title="Open in Lab"
-                    >
-                        <IconAlphabetA style={{width: 17, height: 17}} />
-                        <span>Open in Lab</span>
-                    </a>
-                </OnlyIf>
-                <NetworkAccountSelector />
-                <div className={style.projectActions}>
-                    <OnlyIf test={showUploadButton}>
-                        <DropdownContainer
-                            className={classNames([style.actionUpload, style.action])}
-                            dropdownContent={<UploadDialog />}
-                            enableClickInside={true}
-                            showMenu={showUploadDialog}
-                            onCloseMenu={this.onCloseUploadDialog}
+                <div className={style.actionsLeft}>
+                    <DropdownContainer
+                        className={style.actionDialogMenu}
+                        dropdownContent={<MenuDropdownDialog />} >
+                        <MenuAction />
+                    </DropdownContainer>
+                    <OnlyIf test={showOpenInLab}>
+                        <a
+                            className={style.openLab}
+                            href={window.location}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            title="Open in Lab"
                         >
-                            <UploadDrowdownAction />
-                        </DropdownContainer>
+                            <IconAlphabetA style={{width: 17, height: 17}} />
+                            <span>Open in Lab</span>
+                        </a>
                     </OnlyIf>
-                    <OnlyIf test={showForkButton}>
-                        <ForkDropdownAction
-                            onForkClicked={this.onForkClicked}
-                        />
-                    </OnlyIf>
-                    <div className={classNames([style.action, style.actionMenu])} onClick={() => this.showModal('share')}>
-                        <ShareDropdownAction />
+                    <NetworkAccountSelector />
+                    <div className={style.projectActions}>
+                        <OnlyIf test={showUploadButton}>
+                            <DropdownContainer
+                                className={classNames([style.actionUpload, style.action])}
+                                dropdownContent={<UploadDialog />}
+                                enableClickInside={true}
+                                showMenu={showUploadDialog}
+                                onCloseMenu={this.onCloseUploadDialog}
+                            >
+                                <UploadDrowdownAction />
+                            </DropdownContainer>
+                        </OnlyIf>
+                        <OnlyIf test={showForkButton}>
+                            <ForkDropdownAction
+                                onForkClicked={this.onForkClicked}
+                            />
+                        </OnlyIf>
+                        <div className={classNames([style.action, style.actionMenu])} onClick={() => this.showModal('share')}>
+                            <ShareDropdownAction />
+                        </div>
                     </div>
                 </div>
                 <ProjectTitle
