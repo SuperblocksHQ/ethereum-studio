@@ -17,21 +17,15 @@
 import React, { Component } from 'react';
 import { MenuItem, Divider } from '../../common/menu';
 import style from './style.less';
-import {
-    IconConfigure,
-    IconDownload,
-    IconTrash,
-    IconEdit
-} from '../../icons';
 import classNames from 'classnames';
-import OnlyIf from '../../onlyIf';
 
 interface IProps {
     projectId: string;
+    redirect: boolean;
     downloadProject?: () => void;
     configureProject?: () => void;
     renameProject?: () => void;
-    deleteProject?: (projectId: string) => void;
+    deleteProject?: (projectId: string, redirect: boolean) => void;
     shareProject?: () => void;
     editProject?: () => void;
     openProject?: () => void;
@@ -42,7 +36,7 @@ interface IProps {
 
 export default class ProjectMenuDropdownDialog extends Component<IProps> {
     render() {
-        const { projectId, downloadProject, configureProject, renameProject, deleteProject, shareProject, editProject, openProject, openProjectNewTab, forkProject } = this.props;
+        const { projectId, downloadProject, configureProject, renameProject, deleteProject, shareProject, editProject, openProject, openProjectNewTab, forkProject, redirect } = this.props;
 
         return (
             <div className = {classNames([style.menuDialog, this.props.customClass])} >
@@ -99,7 +93,7 @@ export default class ProjectMenuDropdownDialog extends Component<IProps> {
                 }
                 { deleteProject &&
                     <MenuItem
-                        onClick={() => deleteProject(projectId)}
+                        onClick={() => deleteProject(projectId, redirect)}
                         title='Delete'
                     />
                 }

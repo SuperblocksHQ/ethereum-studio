@@ -16,7 +16,6 @@
 
 import { connect } from 'react-redux';
 import ProjectMenuDropdownDialog from './ProjectMenuDropdownDialog';
-import { projectSelectors } from '../../../selectors';
 import { projectsActions } from '../../../actions';
 import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
@@ -26,8 +25,8 @@ const mapStateToProps = (state: any) => ({
 
 function mapDispatchToProps(dispatch: Dispatch<AnyAction>) {
     return {
-        deleteProject: (projectId: string) => {
-            dispatch(projectsActions.deleteProject(projectId));
+        deleteProject: (projectId: string, redirect: boolean) => {
+            dispatch(projectsActions.deleteProject(projectId, redirect));
         }
     };
 }

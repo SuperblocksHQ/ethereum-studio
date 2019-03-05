@@ -94,10 +94,10 @@ export const projectsActions = {
 
     // ---------- CRUD Project actions ----------
     DELETE_PROJECT: 'DELETE_PROJECT',
-    deleteProject(projectId: string) {
+    deleteProject(projectId: string, redirect: boolean = false) {
        return {
             type: projectsActions.DELETE_PROJECT,
-            data: { projectId }
+            data: { projectId, redirect }
        };
     },
     DELETE_PROJECT_SUCCESS: 'DELETE_PROJECT_SUCCESS',

@@ -112,6 +112,7 @@ export default class Project extends Component<IProps> {
                         <ProjectMenuDropdownDialog
                             customClass={style.menuDialog}
                             projectId={project.id}
+                            redirect={false}
                             editProject={this.showEditModal}
                             openProject={this.openProject}
                             openProjectNewTab={this.openProjectNewTab}

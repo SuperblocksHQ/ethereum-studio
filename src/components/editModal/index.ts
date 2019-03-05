@@ -17,7 +17,6 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
-import { projectSelectors } from '../../selectors';
 import { projectsActions } from '../../actions';
 import EditModal from './EditModal';
 import { IProject } from '../../models';
@@ -28,9 +27,6 @@ const mapStateToProps = (state: any) => ({
 
 function mapDispatchToProps(dispatch: Dispatch<AnyAction>) {
     return {
-        deleteProject: (projectId: string) => {
-            dispatch(projectsActions.deleteProject(projectId));
-        },
         updateProject: (project: IProject) => {
             dispatch(projectsActions.updateProject(project));
         }

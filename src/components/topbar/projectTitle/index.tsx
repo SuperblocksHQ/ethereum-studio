@@ -11,6 +11,9 @@ const mapStateToProps = (state: any) => ({
 
 function mapDispatchToProps(dispatch: Dispatch<AnyAction>) {
     return {
+        deleteProject: (projectId: string, redirect: boolean) => {
+            dispatch(projectsActions.deleteProject(projectId, redirect));
+        },
         renameProject: (newName: string) => {
             dispatch(projectsActions.renameProject(newName));
         }
