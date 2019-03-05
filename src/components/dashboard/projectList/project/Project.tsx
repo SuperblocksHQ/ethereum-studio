@@ -82,10 +82,6 @@ export default class Project extends Component<IProps> {
         window.open(`${window.location.origin}/${project.id}`, '_blank');
     }
 
-    editProject = () => {
-        console.log('TODO Edit project');
-    }
-
     render() {
         const { project, orderBy }  = this.props;
 
