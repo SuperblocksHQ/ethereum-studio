@@ -17,8 +17,9 @@
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import MenuDropdownDialog from './MenuDropdownDialog';
-import { panelsSelectors, panesSelectors } from '../../../selectors';
-import { panelsActions, panesActions } from '../../../actions';
+import { panelsSelectors, panesSelectors, explorerSelectors } from '../../../selectors';
+import { panelsActions, panesActions, explorerActions } from '../../../actions';
+import { ProjectItemTypes } from '../../../models';
 
 const mapStateToProps = (state: any) => ({
     showTransactionsHistory: panelsSelectors.getShowTransactionsHistory(state),
@@ -26,6 +27,7 @@ const mapStateToProps = (state: any) => ({
     showPreview: panelsSelectors.getShowPreview(state),
     showConsole: panelsSelectors.getShowConsole(state),
     activePaneId: panesSelectors.getActivePane(state),
+    rootFolderId: explorerSelectors.getRootFolderId(state),
 });
 
 function mapDispatchToProps(dispatch: Dispatch) {
@@ -35,6 +37,9 @@ function mapDispatchToProps(dispatch: Dispatch) {
         },
         closeAllPanels: () => {
             dispatch(panelsActions.closeAllPanels());
+        },
+        onCreateItem: (parentId: string, type: ProjectItemTypes, name: string) => {
+            dispatch(explorerActions.createItem(parentId, type, name));
         },
         closeAllPanes() {
             dispatch(panesActions.closeAllPanes());

@@ -14,10 +14,11 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { Component } from 'react';
+import React from 'react';
 import { SubMenu, MenuItem, Divider } from '../../common/menu';
 import { Panels } from '../../../models/state';
 import style from './style.less';
+import { ProjectItemTypes } from '../../../models';
 
 interface IProps {
   showTransactionsHistory: boolean;
@@ -25,10 +26,12 @@ interface IProps {
   showPreview: boolean;
   showConsole: boolean;
   activePaneId: string;
+  rootFolderId: string;
   togglePanel: (panel: any) => void;
   closeAllPanels: () => void;
   closeAllPanes: () => void;
   closePane: (fileId: string) => void;
+  onCreateItem: (parentId: string, type: ProjectItemTypes, name: string) => void;
 }
 
 export default class MenuDropdownDialog extends React.Component<IProps> {
@@ -57,17 +60,23 @@ export default class MenuDropdownDialog extends React.Component<IProps> {
       }
     }
 
+    onCreateItem = (parentId: string, type: ProjectItemTypes) => {
+        const name = prompt('Enter a name.');
+        if (name) {
+            this.props.onCreateItem(parentId, type, name);
+        }
+    }
+
     render() {
         const { showTransactionsHistory, showFileSystem, showPreview, showConsole,
-                togglePanel, closeAllPanels, closeAllPanes, closePane, activePaneId } = this.props;
+                togglePanel, closeAllPanels, closeAllPanes, closePane, activePaneId, rootFolderId } = this.props;
 
         return (
             <div className={style.menuDialog}>
 
                 <SubMenu title='File'>
-                    <MenuItem title='New Project' onClick={() => console.log('TODO')} />
-                    <MenuItem title='New File' onClick={() => console.log('TODO')} />
-                    <MenuItem title='New Folder' onClick={() => console.log('TODO')} />
+                    <MenuItem title='New File' onClick={() => this.onCreateItem(rootFolderId, ProjectItemTypes.File)} />
+                    <MenuItem title='New Folder' onClick={() => this.onCreateItem(rootFolderId, ProjectItemTypes.Folder)}  />
                     <Divider />
                     <MenuItem title='Save' onClick={() => console.log('TODO')} />
                     <MenuItem title='Save All' onClick={() => console.log('TODO')} />
