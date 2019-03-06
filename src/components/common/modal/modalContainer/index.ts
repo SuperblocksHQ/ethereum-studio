@@ -1,4 +1,4 @@
-// Copyright 2018 Superblocks AB
+// Copyright 2019 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -14,24 +14,21 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import React from 'react';
-import Proptypes from 'prop-types';
-import style from './style.less';
-import classNames from 'classnames';
-import { IconClose } from '../../icons';
+import { connect } from 'react-redux';
+import { ModalContainer } from './ModalContainer';
+import { modalActions } from './../../../../actions/modal.actions';
 
-const ModalHeader = ({ title, onCloseClick }) => (
-    <div className={style.header}>
-        <div className={style.title}>{title}</div>
-        <button className={classNames([style.closeIcon, "btnNoBg"])} onClick={onCloseClick}>
-            <IconClose className={style.icon}/>
-        </button>
-    </div>
-);
+const mapStateToProps = (state: any) => ({
+    modalType: state.modal.modalType,
+    modalProps: state.modal.modalProps
+});
 
-export default ModalHeader;
-
-ModalHeader.propTypes = {
-    title: Proptypes.string.isRequired,
-    onCloseClick: Proptypes.func.isRequired
+const mapDispatchToProps = (dispatch: any) => {
+    return {
+        hideModal: () => {
+            dispatch(modalActions.hideModal());
+        }
+    };
 };
+
+export default connect(mapStateToProps, mapDispatchToProps)(ModalContainer);

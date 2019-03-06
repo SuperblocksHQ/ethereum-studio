@@ -1,4 +1,4 @@
-// Copyright 2018 Superblocks AB
+// Copyright 2019 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -14,12 +14,4 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { connect } from 'react-redux';
-import { getNetworkPreferences } from '../../../../selectors/settings';
-import NetworkPreferences from './NetworkPreferences';
-
-const mapStateToProps = state => ({
-    networkPreferences: getNetworkPreferences(state),
-});
-
-export default connect(mapStateToProps, null)(NetworkPreferences);
+@import '../../../style/index';

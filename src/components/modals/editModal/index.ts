@@ -17,13 +17,9 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
-import { projectsActions } from '../../actions';
+import { projectsActions } from '../../../actions';
 import EditModal from './EditModal';
-import { IProject } from '../../models';
-
-const mapStateToProps = (state: any) => ({
-
-});
+import { IProject } from '../../../models';
 
 function mapDispatchToProps(dispatch: Dispatch<AnyAction>) {
     return {
@@ -33,4 +29,4 @@ function mapDispatchToProps(dispatch: Dispatch<AnyAction>) {
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditModal);
+export default connect(null, mapDispatchToProps)(EditModal);

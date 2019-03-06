@@ -18,14 +18,14 @@ import React, { Component } from 'react';
 import Proptypes from 'prop-types';
 import classNames from 'classnames';
 import style from './style.less';
-import ModalHeader from '../modal/modalHeader';
+import { ModalHeader } from '../../common';
 import PreferenceCategory from './preferenceCategory';
 import NetworkPreferences from './sections/networkPreferences';
 import AdvancedPreferences from './sections/advancedPreferences';
 import {
     IconChain,
     IconAdvanced
-} from '../icons';
+} from '../../icons';
 
 export default class PreferencesModal extends Component {
 
@@ -45,7 +45,7 @@ export default class PreferencesModal extends Component {
     }
 
     onCloseClickHandle = () => {
-        this.props.onCloseClick();
+        this.props.hideModal();
     }
 
     onSavePreferences = () => {

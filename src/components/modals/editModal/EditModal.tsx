@@ -15,17 +15,16 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from 'react';
-import classNames from 'classnames';
 import style from './style.less';
-import { TextInput, TextAreaInput } from '../common';
-import ModalHeader from '../modal/modalHeader';
-import { validateProjectName } from '../../validations';
-import { IProject } from '../../models';
+import { TextInput, TextAreaInput, ModalHeader } from '../../common';
+import { validateProjectName } from '../../../validations';
+import { IProject } from '../../../models';
+import classNames from 'classnames';
 
 interface IProps {
     project: IProject;
-    onCloseClick: () => void;
     updateProject: (project: IProject) => void;
+    hideModal: () => void;
 }
 
 interface IState {
@@ -68,25 +67,25 @@ export default class EditModal extends React.Component<IProps, IState> {
     }
 
     onSave = () => {
-        const { project } = this.props;
+        const { project, hideModal, updateProject } = this.props;
         const { newName, newDescription} = this.state;
 
         project.name = newName;
         project.description = newDescription;
 
-        this.props.updateProject(project);
-        this.props.onCloseClick();
+        updateProject(project);
+        hideModal();
     }
 
     render() {
-        const { project } = this.props;
+        const { project, hideModal } = this.props;
         const { errorName, errorDescription, canSave } = this.state;
 
         return (
-            <div className={classNames([style.shareModal, 'modal'])}>
+            <div className={classNames([style.editModal, 'modal'])}>
                 <ModalHeader
                     title='Project info'
-                    onCloseClick={this.props.onCloseClick}
+                    onCloseClick={hideModal}
                 />
                 <div className={style.content}>
                     <div className={style.title}>
@@ -115,7 +114,7 @@ export default class EditModal extends React.Component<IProps, IState> {
                 </div>
                 <div className={style.footer}>
                     <div className={style.buttonsContainer}>
-                        <button onClick={this.props.onCloseClick} className='btn2 noBg mr-2'>Cancel</button>
+                        <button onClick={hideModal} className='btn2 noBg mr-2'>Cancel</button>
                         <button onClick={this.onSave} className='btn2' disabled={!canSave}>Save</button>
                     </div>
                 </div>

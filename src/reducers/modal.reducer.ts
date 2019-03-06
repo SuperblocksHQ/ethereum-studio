@@ -1,4 +1,4 @@
-// Copyright 2018 Superblocks AB
+// Copyright 2019 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -14,16 +14,28 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export * from './dropdown';
-export * from './select';
-export * from './tooltip';
-export * from './menu';
-export * from './topbar';
-export * from './buttons';
-export * from './fileIcon';
-export * from './switch';
-export * from './textInput';
-export * from './note';
-export * from './textAreaInput';
-export * from './caret';
-export * from './modal';
+import { AnyAction } from 'redux';
+import { modalActions } from '../actions';
+
+const initialState: any = {
+    modalType: null,
+    modalProps: {}
+};
+
+export default function modalReducer(state = initialState, action: AnyAction) {
+    switch (action.type) {
+        case modalActions.SHOW_MODAL: {
+            return {
+                ...state,
+                modalType: action.data.modalType,
+                modalProps: action.data.modalProps
+            };
+        }
+        case 'HIDE_MODAL': {
+            return initialState;
+        }
+        default:
+            return state;
+    }
+}
+

@@ -80,10 +80,6 @@ export default class NewDapp extends Component {
         });
     };
 
-    closeModal() {
-        this.props.functions.modal.cancel();
-    }
-
     pop = () => {
         this.setState({
             currentStep: this.state.currentStep - 1,

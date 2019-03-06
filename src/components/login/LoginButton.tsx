@@ -17,7 +17,6 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
 import style from './style.less';
-import LoginModal from './LoginModal';
 import LoggedInButton from './LoggedInButton';
 import {IUser} from '../../models';
 
@@ -26,6 +25,8 @@ interface IProps {
     isAuthenticated: boolean;
     logout: () => void;
     githubLogin: () => void;
+    showModal: (modalType: string, modalProps: any) => void;
+    hideModal: () => void;
     userProfile: IUser;
 }
 
@@ -39,31 +40,13 @@ export default class LoginButton extends Component<IProps> {
 
     componentDidUpdate() {
         if (this.props.isAuthenticated) {
-            this.closeModal();
+            this.props.hideModal();
         }
     }
 
-    closeModal = () => {
-        this.props.functions.modal.close();
-    }
-
     showLoginModal = () => {
-        const { githubLogin, isAuthenticated } = this.props;
-        const modal = (
-            <LoginModal
-                onCloseClick={this.closeModal}
-                githubLogin={githubLogin}
-                isAuthenticated={isAuthenticated}
-            />
-        );
-        this.props.functions.modal.show({
-            cancel: () => {
-                return false;
-            },
-            render: () => {
-                return modal;
-            }
-        });
+        const { showModal, githubLogin, isAuthenticated } = this.props;
+        showModal('GITHUB_MODAL', {githubLogin, isAuthenticated});
     }
 
     render() {

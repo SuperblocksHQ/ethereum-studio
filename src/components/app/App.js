@@ -25,16 +25,12 @@ import ToastContainer from "../toasts/toastcontainer";
 import Dashboard from '../dashboard';
 import LoadProject from '../loadProject';
 import * as embedUtils from '../../utils/embed';
+import ModalContainer  from '../common/modal/modalContainer';
 
 export default class App extends Component {
 
-    state = {
-        modals: []
-    };
-
     constructor(props) {
         super(props);
-        this.idCounter = 0;
         this.isImportedProject = false;
 
         this.session = {
@@ -45,12 +41,6 @@ export default class App extends Component {
         this.router.register('app', this);
 
         this.functions = {
-            modal: {
-                show: this.showModal,
-                close: this.closeModal,
-                cancel: this.cancelModal,
-                getCurrentIndex: this.getCurrentModalIndex,
-            },
             session: {
                 start_time: this.session_start_time,
             }
@@ -87,69 +77,6 @@ export default class App extends Component {
         return this.session.start_time;
     };
 
-    getClassNames = () => {
-        return classNames({
-            modals: this.state.modals.length > 0,
-        });
-    };
-
-    getCurrentModalIndex = () => {
-        return this.state.modals.length - 1;
-    };
-
-    showModal = modal => {
-        this.state.modals.push(modal);
-        this.forceUpdate();
-    };
-
-    closeModal = index => {
-        if (index === null) { index = this.state.modals.length - 1; }
-        var modal = this.state.modals[index];
-        this.state.modals.splice(index, 1);
-        this.forceUpdate();
-    };
-
-    getModal = () => {
-        return this.state.modals.map((elm, index) => {
-            const stl = { position: 'absolute' };
-            stl['zIndex'] = index;
-            if (index < this.state.modals.length - 1) { stl['opacity'] = '0.33'; }
-            return (
-                <div
-                    key={index}
-                    id={'app_modal_' + index}
-                    style={stl}
-                    className="full"
-                    onClick={this.modalOutside}
-                >
-                    {elm.render()}
-                </div>
-            );
-        });
-    };
-
-    cancelModal = e => {
-        if (e) {
-            e.preventDefault();
-            e.stopPropagation();
-        }
-        const index = this.state.modals.length - 1;
-        var modal = this.state.modals[index];
-        if (modal.cancel && modal.cancel(modal) === false) { return; }
-        this.state.modals.splice(index, 1);
-        this.forceUpdate();
-    };
-
-    modalOutside = e => {
-        if (e) {
-            e.preventDefault();
-            e.stopPropagation();
-        }
-        if (e.target.id.indexOf('app_modal') === 0) {
-            this.cancelModal();
-        }
-    };
-
     renderProject = ({match}) => (
         <LoadProject
             projectId={match.params.projectId}
@@ -162,11 +89,10 @@ export default class App extends Component {
 
     render() {
         const { showTrackingAnalyticsDialog } = this.props;
-        const modalContent = this.getModal();
 
         return (
             <Router>
-                <div id="app" className={this.getClassNames()}>
+                <div id="app">
                     <div id="app_content">
                         <div className="maincontent">
                             <Route path="/" exact render={(props) => <Dashboard {...props} functions={this.functions} />} />
@@ -180,9 +106,7 @@ export default class App extends Component {
                         <AnalyticsDialog />
                     </OnlyIf>
                     <ToastContainer />
-                    <div id="app_modal" onClick={this.modalOutside}>
-                        {modalContent}
-                    </div>
+                    <ModalContainer />
                 </div>
             </Router>
         );

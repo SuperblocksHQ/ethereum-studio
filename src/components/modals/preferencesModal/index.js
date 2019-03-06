@@ -16,7 +16,7 @@
 
 import { connect } from 'react-redux';
 import PreferencesModal from './PreferencesModal';
-import { settingsActions } from '../../actions';
+import { settingsActions } from '../../../actions';
 
 const mapDispatchToProps = (dispatch) => {
     return {

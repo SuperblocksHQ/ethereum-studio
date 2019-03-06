@@ -15,7 +15,7 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { connect } from 'react-redux';
-import { authActions } from '../../actions';
+import { authActions, modalActions } from '../../actions';
 import { authSelectors, userSelectors } from '../../selectors';
 import LoginButton from './LoginButton';
 import { Dispatch } from 'react';
@@ -33,6 +33,12 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
         },
         logout: () => {
             dispatch(authActions.logout());
+        },
+        showModal: (modalType: string, modalProps: any) => {
+            dispatch(modalActions.showModal(modalType, modalProps));
+        },
+        hideModal: () => {
+            dispatch(modalActions.hideModal());
         }
     };
 };

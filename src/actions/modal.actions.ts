@@ -1,4 +1,4 @@
-// Copyright 2018 Superblocks AB
+// Copyright 2019 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -14,12 +14,19 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { connect } from 'react-redux';
-import { getAdvancedPreferences } from '../../../../selectors/settings';
-import AdvancedPreferences from './AdvancedPreferences';
-
-const mapStateToProps = state => ({
-    advancedPreferences: getAdvancedPreferences(state),
-});
-
-export default connect(mapStateToProps, null)(AdvancedPreferences);
+export const modalActions = {
+    SHOW_MODAL: 'SHOW_MODAL',
+    showModal(modalType: string, modalProps: any) {
+        return {
+            type: modalActions.SHOW_MODAL,
+            data: { modalType, modalProps }
+        };
+    },
+    HIDE_MODAL: 'HIDE_MODAL',
+    hideModal() {
+        return {
+            type: modalActions.HIDE_MODAL,
+            data: null
+        };
+    }
+};

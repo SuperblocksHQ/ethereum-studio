@@ -20,23 +20,15 @@ import SideMenu, { ItemType } from './sideMenu';
 import Topbar from './topbar';
 import { IProject } from '../../models';
 import style from './style.less';
-import LoginModal from '../login/LoginModal';
-import { githubLogin } from './../../epics/login/githubLogin.epic';
+import { LoginModal } from '../modals';
 
 interface IProps {
     getProjectList: () => void;
-
     projectList: IProject[];
-
     isAuthenticated: boolean;
-
     githubLoginAction: () => void;
-
     isProjectListLoading: boolean;
-
     isLoginInProgress: boolean;
-
-    functions: any;
 }
 
 export default class Dashboard extends Component<IProps> {
@@ -49,19 +41,18 @@ export default class Dashboard extends Component<IProps> {
     }
 
     render() {
-        const { projectList, isAuthenticated, githubLoginAction, isLoginInProgress, functions} = this.props;
+        const { projectList, isAuthenticated, isLoginInProgress, githubLoginAction } = this.props;
 
-        return(
+        return (
             <div className={style.dashboard}>
-                <Topbar />
                 { isAuthenticated ?
                     <React.Fragment>
+                        <Topbar />
                         <SideMenu
                             onItemSelected={this.onSideMenuItemSelected}
                         />
                         <div className={style.content}>
                             <ProjectList
-                                functions={functions}
                                 listName={'All Your Projects'}
                                 list={projectList}
                             />

@@ -17,7 +17,7 @@
 import { connect } from 'react-redux';
 import TopBar from './Topbar';
 import { ipfsSelectors, viewSelectors, projectSelectors } from '../../selectors';
-import { ipfsActions, projectsActions } from '../../actions';
+import { ipfsActions, projectsActions, modalActions } from '../../actions';
 
 const mapStateToProps = state => ({
     selectedProjectName: projectSelectors.getProjectName(state),
@@ -42,6 +42,9 @@ function mapDispatchToProps(dispatch) {
         forkProject: (projectId, redirect) => {
             dispatch(projectsActions.forkProject(projectId, redirect))
         },
+        showModal: (modalType, modalProps) => {
+            dispatch(modalActions.showModal(modalType, modalProps));
+        }
     };
 }
 

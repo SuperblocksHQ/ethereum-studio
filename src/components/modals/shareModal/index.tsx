@@ -20,14 +20,13 @@ import classNames from 'classnames';
 import style from './style.less';
 import {
     IconCopy
-} from '../icons';
-import { Tooltip, TextAreaInput } from '../common';
+} from '../../icons';
+import { Tooltip, TextAreaInput, ModalHeader } from '../../common';
 import Switch from 'react-switch';
-import ModalHeader from '../modal/modalHeader';
 
 interface IProps {
     defaultUrl: string;
-    onCloseClick: () => void;
+    hideModal: () => void;
 }
 
 interface IState {
@@ -151,7 +150,6 @@ export default class ShareModal extends React.Component<IProps, IState> {
     }
 
     RenderInputs = () => {
-        const { hideExplorer, showTransactions, showPreview } = this.state.options;
         const { shareUrl } = this.state;
         const embedUrl = this.getEmbedUrl();
         const btnMdUrl = this.getBtnMdUrl();
@@ -235,11 +233,13 @@ export default class ShareModal extends React.Component<IProps, IState> {
     }
 
     render() {
+        const { hideModal } = this.props;
+
         return (
             <div className={classNames([style.shareModal, 'modal'])}>
                 <ModalHeader
                     title='Share your project'
-                    onCloseClick={this.props.onCloseClick}
+                    onCloseClick={hideModal}
                 />
                 <div className={style.content}>
                     {this.RenderOptions()}

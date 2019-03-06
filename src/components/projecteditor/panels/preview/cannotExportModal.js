@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Modal } from '../../../modal/new';
+import { SimpleModal } from './../../../modals/simpleModal';
 
 export function CannotExportModal(props) {
     return (
-        <Modal onClose={props.onClose}>
+        <SimpleModal onClose={props.hideModal}>
             <h2>Cannot export DApp for the Browser network</h2>
             <div style={{ textAlign: 'center' }}>
                 <p>Computer says no.</p>
@@ -22,7 +22,7 @@ export function CannotExportModal(props) {
                     </a>
                 </div>
             </div>
-        </Modal>
+        </SimpleModal>
     );
 }
 

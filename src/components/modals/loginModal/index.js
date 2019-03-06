@@ -18,15 +18,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from "classnames";
 import style from "./style.less";
-import OnlyIf from '../onlyIf';
-import { authService, userService } from '../../services';
-import {IconClose, IconSuperblocks, PictureVargavintern} from "../icons";
-import GithubLoginButton from "../common/buttons/githubLogin";
+import OnlyIf from '../../onlyIf';
+import { authService, userService } from '../../../services';
+import {IconClose, IconSuperblocks, PictureVargavintern} from "../../icons";
+import GithubLoginButton from "../../common/buttons/githubLogin";
 
 export const LoginModal = (props) => {
 
     function onCloseClickHandle () {
-        props.onCloseClick();
+        props.hideModal();
     }
 
     function onSuccess(response) {
@@ -59,7 +59,7 @@ export const LoginModal = (props) => {
     }
 
     return (
-        <div className={classNames([style.loginModal, props.customClassName, "modal"])}>
+        <div className={classNames([style.loginModal, props.customClassName, 'modal'])}>
             <div className={style.container}>
                 <div className={style.area}>
                     <PictureVargavintern className={style.background}/>
@@ -90,7 +90,7 @@ export const LoginModal = (props) => {
 export default LoginModal;
 
 LoginModal.propTypes = {
-    onCloseClick: PropTypes.func,
+    hideModal: PropTypes.func,
     githubLogin: PropTypes.func.isRequired,
     hideCloseButton: PropTypes.bool,
     customClassName: PropTypes.string
