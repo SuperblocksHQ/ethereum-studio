@@ -19,6 +19,7 @@ import { IProjectItem } from '../../../models';
 import { connect } from 'react-redux';
 import { Panes } from './panes';
 import { panesActions, explorerActions } from '../../../actions';
+import { deployerActions } from '../../../actions/deployer.actions';
 
 const mapStateToProps = (state: any) => ({
     panes: state.panes.items,
@@ -53,7 +54,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
             dispatch(explorerActions.compileContract(file));
         },
         onDeployContract: (file: IProjectItem) => {
-            dispatch(explorerActions.deployContract(file));
+            dispatch(deployerActions.deployContract(file));
         },
         onInteractContract: (file: IProjectItem) => {
             dispatch(explorerActions.interactContract(file));

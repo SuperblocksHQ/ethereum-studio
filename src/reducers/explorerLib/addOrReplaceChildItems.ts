@@ -23,7 +23,7 @@ import { sortProjectItems } from './sortProjectItems';
  * @param itemsToAdd
  */
 export function addOrReplaceChildItems(item: IProjectItem, itemsToAdd: IProjectItem[]) {
-    const children = item.children.filter(c => itemsToAdd.some(ci => ci.name === c.name && ci.type === c.type));
+    const children = item.children.filter(c => !itemsToAdd.some(ci => ci.name === c.name && ci.type === c.type));
     children.push.apply(children, itemsToAdd);
     return { ...item, children: sortProjectItems(children) };
 }

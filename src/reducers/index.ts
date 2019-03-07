@@ -26,6 +26,7 @@ import toast from './toast.reducer';
 import user from './user.reducer';
 import view from './view.reducer';
 import compiler from './compiler.reducer';
+import deployer from './deployer.reducer';
 import console from './console.reducer';
 import { AnyAction } from 'redux';
 
@@ -52,5 +53,6 @@ export default {
     user,
     view,
     compiler,
+    deployer,
     console
 };

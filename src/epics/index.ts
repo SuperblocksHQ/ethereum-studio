@@ -24,6 +24,7 @@ import { urlParametersEpics } from './urlParameters';
 import { loginEpics } from './login';
 import { panesEpics } from './panes';
 import { compilerEpics } from './compiler';
+import { deployerEpics } from './deployer';
 
 export const epics = [
     ...settingsEpics,
@@ -35,5 +36,6 @@ export const epics = [
     ...userEpics,
     ...loginEpics,
     ...panesEpics,
-    ...compilerEpics
+    ...compilerEpics,
+    ...deployerEpics
 ];

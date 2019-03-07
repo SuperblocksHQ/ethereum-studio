@@ -15,31 +15,23 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import sha256 from 'crypto-js/sha256';
-import Web3 from 'web3';
-import Networks from './networks';
-import * as analytics from './utils/analytics';
+import Networks from '../../networks';
+import * as analytics from '../../utils/analytics';
+import { getWeb3 } from '../utils';
 
 import Tx from 'ethereumjs-tx';
 import Buffer from 'buffer';
 
 export default class DeployerRunner {
 
-    constructor(props,
-                recompile,
-                redeploy,
-                redraw,
-                updateStatus,
+    constructor(account,
                 showExternalProviderModal,
                 closeExternalProviderModal,
                 showMainnetWarning,
                 networkPreferences,
                 item,
                 log) {
-        this.props = props;
-        this.recompile = recompile;
-        this.redeploy = redeploy;
-        this.redraw = redraw;
-        this.updateStatus = updateStatus;
+        this.account = account;
         this.showExternalProviderModal = showExternalProviderModal;
         this.closeExternalProviderModal = closeExternalProviderModal;
         this.showMainnetWarning = showMainnetWarning;
@@ -51,240 +43,151 @@ export default class DeployerRunner {
     }
 
     run(e, selectedEnvironment) {
-        const { networkPreferences, functions: {EVM} } = this.props;
-
-        var redeploy = this.redeploy;
-        if (e) {
-            e.preventDefault();
-            e.stopPropagation(); // Don't auto focus on the window.
-            redeploy = true;
-        }
-        if (this.isRunning) { return; }
-
-        // Make sure we reset everything first
-        this.isRunning = true;
-
-        const project = this.item.getProject();
         const env = selectedEnvironment.name;
-        const contract = this.item.getParent();
+        // const contract = this.item.getParent();
         const src = contract.getSource();
-        const tag = env;
         this.network = env;
 
-        const endpoint = (
-            this.props.functions.networks.endpoints[this.network] || {}
-        ).endpoint;
-        if (!endpoint) {
-            this._stderr('No endpoint matched network ' + this.network + '.');
-            this.callback(1);
-            return;
-        }
-
         const obj = {
-            web3: this._getWeb3(endpoint),
-            endpoint: endpoint,
+            web3: getWeb3(selectedEnvironment.endpoint),
+            endpoint: selectedEnvironment.endpoint,
             network: this.network,
-            gasPrice: "0x".concat(Number(networkPreferences.gasPrice).toString(16)),
-            gasLimit: "0x".concat(Number(networkPreferences.gasLimit).toString(16)),
-            recompile: this.recompile,
-            redeploy: redeploy,
-            contract: contract,
-            env: env,
-            tag: tag,
-            src: src,
-            abisrc: this._makeFileName(src, '', 'abi'),
-            binsrc: this._makeFileName(src, '', 'bin'),
-            hashsrc: this._makeFileName(src, '', 'hash'),
-            metasrc: this._makeFileName(src, '', 'meta'),
-            addresssrc: this._makeFileName(src, this.network, 'address'),
-            txsrc: this._makeFileName(src, this.network, 'tx'),
-            deploysrc: this._makeFileName(src, this.network, 'deploy'),
-            contractsjssrc: this._makeFileName(src, this.network, 'js'),
+            gasPrice: "0x".concat(Number(this.networkPreferences.gasPrice).toString(16)),
+            gasLimit: "0x".concat(Number(this.networkPreferences.gasLimit).toString(16)),
+            recompile: this.recompile, // ?
+            redeploy: false,
+            env,
+            tag: env,
+            src,
+            // abisrc: this._makeFileName(src, '', 'abi'),
+            // binsrc: this._makeFileName(src, '', 'bin'),
+            // hashsrc: this._makeFileName(src, '', 'hash'),
+            // metasrc: this._makeFileName(src, '', 'meta'),
+            // addresssrc: this._makeFileName(src, this.network, 'address'),
+            // txsrc: this._makeFileName(src, this.network, 'tx'),
+            // deploysrc: this._makeFileName(src, this.network, 'deploy'),
+            // contractsjssrc: this._makeFileName(src, this.network, 'js'),
+            args: [] // string array - should be done by reducer
         };
 
-        this.accountName = project.getAccount();
-        if (!this.accountName || this.accountName == '(locked)') {
-            this._stderr(
-                'No account chosen. Please choose an account for the network in the left menu.'
-            );
-            this.callback(1);
-            return;
-        }
-        const accounts = this.item.getProject().getHiddenItem('accounts');
-        const account = accounts.getByName(this.accountName);
-        const accountIndex = account.getAccountIndex(env);
         const walletName = account.getWallet(env);
         const wallets = this.item.getProject().getHiddenItem('wallets');
         const wallet = wallets.getByName(walletName);
 
-        if (!wallet) {
-            this._stderr(
-                'Can not deploy with chosen account on public network. Choose the first account in the list.'
-            );
-            this.callback(1);
-            return;
-        }
-
-        if (!EVM.isReady()) {
-            this._stderr(
-                'The Ethereum Virtual Machine is not ready yet. Please try again in a few seconds!'
-            );
-            this.callback(1);
-            return;
-        }
-
-        this._buildArgs(obj, status => {
-            if (status != 0) {
+        this._buildBin(obj, status => {
+            if (status !== 0) {
                 this.callback(1);
                 return;
             }
-            this._checkCompile(obj, status => {
-                if (status != 0) {
+            const walletType = wallet.getWalletType();
+            if (accountInfo.type === 'metamask') { // walletType == 'external'
+                ///////////////////////////////////////////////
+                // SWAP THE WEB3 OBJECT FOR THE EXTERNAL ONE //
+                ///////////////////////////////////////////////
+                if (window.web3) {
+                    this._stdwarn(
+                        'Switching to external provider, endpoint is now unknown.'
+                    );
+                    obj.internalweb3 = obj.web3;
+                    obj.web3 = window.web3;
+                } else {
+                    this._stderr('External provider not found.');
                     this.callback(1);
                     return;
                 }
-                this._loadFiles(obj, status => {
-                    if (status != 0) {
-                        this.callback(1);
-                        return;
-                    }
-                    this._buildBin(obj, status => {
-                        if (status != 0) {
-                            this.callback(1);
-                            return;
-                        }
-                        const walletType = wallet.getWalletType();
-                        if (walletType == 'external') {
-                            ///////////////////////////////////////////////
-                            // SWAP THE WEB3 OBJECT FOR THE EXTERNAL ONE //
-                            ///////////////////////////////////////////////
-                            if (window.web3) {
-                                this._stdwarn(
-                                    'Switching to external provider, endpoint is now unknown.'
-                                );
-                                obj.internalweb3 = obj.web3;
-                                obj.web3 = window.web3;
-                            } else {
-                                this._stderr('External provider not found.');
-                                this.callback(1);
-                                return;
-                            }
-                        }
-                        this._checkDeploy(obj, status => {
-                            if (status == 1) {
-                                // Do not redeploy, all good.
-                                this.callback(0);
-                                return;
-                            }
+            }
+            this._checkDeploy(obj, status => {
+                // if (status == 1) {
+                //     // Do not redeploy, all good.
+                //     this.callback(0);
+                //     return;
+                // }
+                // if (status != 0) {
+                //     this.callback(1);
+                //     return;
+                // }
+                const finalize = obj => {
+                    this._stdout(
+                        'Waiting for contract to be deployed...'
+                    );
+                    this._waitContract(obj, status => {
+                        analytics.logEvent('CONTRACT_DEPLOYED', { network: env });
+                        this._buildJs(obj, status => {
                             if (status != 0) {
                                 this.callback(1);
                                 return;
                             }
-                            const finalize = obj => {
-                                this._stdout(
-                                    'Waiting for contract to be deployed...'
-                                );
-                                this._waitContract(obj, status => {
-                                    analytics.logEvent('CONTRACT_DEPLOYED', { network: env });
-                                    this._buildJs(obj, status => {
-                                        if (status != 0) {
-                                            this.callback(1);
-                                            return;
-                                        }
-                                        this._saveFiles(obj, status => {
-                                            if (status != 0) {
-                                                this.callback(1);
-                                                return;
-                                            }
-                                            this.callback(0);
-                                        });
-                                    });
-                                });
-                            };
-                            if (walletType == 'external') {
-                                // Metamask seems to always only provide one (the chosen) account.
-                                const extAccounts =
-                                    window.web3.eth.accounts || [];
-                                if (extAccounts.length == 0) {
-                                    this._stderr(
-                                        'External account not found. Metamask unlocked?'
-                                    );
-                                    this.callback(1);
-                                    return;
-                                } else if (
-                                    extAccounts.length <
-                                    accountIndex + 1
-                                ) {
-                                    this._stderr(
-                                        'External account not found. Metamask only unlocks one account but your setup is referencing a higher index than 0.'
-                                    );
+                            this._saveFiles(obj, status => {
+                                if (status != 0) {
                                     this.callback(1);
                                     return;
                                 }
-
-                                // Check the Metamask network so that it matches
-                                const chainId = (this.props.functions.networks.endpoints[this.network] || {}).chainId;
-                                if (chainId && window.web3.version.network != chainId) {
-                                    this._stderr("The Metamask network does not match the Superblocks Lab network. Check so that you have the same network chosen in Metamask as in Superblocks Lab, then try again.");
-                                    this.callback(1);
-                                    return;
-                                }
-
-                                const params={
-                                    from: extAccounts[accountIndex],
-                                    to: "",
-                                    value: "0x0",
-                                    gasPrice: obj.gasPrice,
-                                    gasLimit: obj.gasLimit,
-                                    data: obj.bin2,
-                                };
-                                this._stdout("External account detected. Opening external account provider...");
-
-                                if (window.web3.version.network == Networks.mainnet.chainId && this.props.functions.networks.endpoints[this.network].chainId == Networks.mainnet.chainId) {
-                                    console.log("Deploying to Mainnet!");
-                                    this.showMainnetWarning()
-                                        .then(() => this._sendExternalTransaction(obj, params, finalize))
-                                        .catch(() => {
-                                            this._stderr("Deployment to Mainnet cancelled");
-                                            this.callback(1);
-                                        });
-                                } else {
-                                    this._sendExternalTransaction(obj, params, finalize)
-                                }
-                            } else {
-                                this._openWallet(
-                                    obj,
-                                    this.accountName,
-                                    status => {
-                                        if (status != 0) {
-                                            this.callback(1);
-                                            return;
-                                        }
-                                        this._getNonce(obj, status => {
-                                            if (status != 0) {
-                                                this.callback(1);
-                                                return;
-                                            }
-                                            this._sign(obj, status => {
-                                                if (status != 0) {
-                                                    this.callback(1);
-                                                    return;
-                                                }
-                                                this._sendTx(obj, status => {
-                                                    if (status != 0) {
-                                                        this.callback(1);
-                                                        return;
-                                                    }
-                                                    finalize(obj);
-                                                });
-                                            });
-                                        });
-                                    }
-                                );
-                            }
+                                this.callback(0);
+                            });
                         });
                     });
-                });
+                };
+                if (walletType === 'external') {
+                    // Check the Metamask network so that it matches
+                    const chainId = (Networks[this.network] || {}).chainId;
+                    if (chainId && window.web3.version.network !== chainId) {
+                        this._stderr("The Metamask network does not match the Superblocks Lab network. Check so that you have the same network chosen in Metamask as in Superblocks Lab, then try again.");
+                        this.callback(1);
+                        return;
+                    }
+
+                    const params={
+                        from: this.account.address,
+                        to: "",
+                        value: "0x0",
+                        gasPrice: obj.gasPrice,
+                        gasLimit: obj.gasLimit,
+                        data: obj.bin2,
+                    };
+                    this._stdout("External account detected. Opening external account provider...");
+
+                    if (window.web3.version.network === Networks.mainnet.chainId && this.props.functions.networks.endpoints[this.network].chainId === Networks.mainnet.chainId) {
+                        console.log("Deploying to Mainnet!");
+                        this.showMainnetWarning()
+                            .then(() => this._sendExternalTransaction(obj, params, finalize))
+                            .catch(() => {
+                                this._stderr("Deployment to Mainnet cancelled");
+                                this.callback(1);
+                            });
+                    } else {
+                        this._sendExternalTransaction(obj, params, finalize)
+                    }
+                } else {
+                    this._openWallet(
+                        obj,
+                        this.account.name,
+                        status => {
+                            if (status != 0) {
+                                this.callback(1);
+                                return;
+                            }
+                            this._getNonce(obj, status => {
+                                if (status != 0) {
+                                    this.callback(1);
+                                    return;
+                                }
+                                this._sign(obj, status => {
+                                    if (status != 0) {
+                                        this.callback(1);
+                                        return;
+                                    }
+                                    this._sendTx(obj, status => {
+                                        if (status != 0) {
+                                            this.callback(1);
+                                            return;
+                                        }
+                                        finalize(obj);
+                                    });
+                                });
+                            });
+                        }
+                    );
+                }
             });
         });
     }
@@ -340,17 +243,6 @@ export default class DeployerRunner {
         );
     };
 
-    _getWeb3(endpoint) {
-        var provider;
-        if (endpoint.toLowerCase() == Networks.browser.endpoint) {
-            provider = this.props.functions.EVM.getProvider();
-        } else {
-            var provider = new Web3.providers.HttpProvider(endpoint);
-        }
-        var web3 = new Web3(provider);
-        return web3;
-    }
-
     _compile = cb => {
         const subitem = this.item
             .getParent()
@@ -370,7 +262,7 @@ export default class DeployerRunner {
         this._stop();
         const callback = this.props.parent.callback;
         delete this.props.parent.callback;
-        this.props.router.control.redrawMain(true);
+        // this.props.router.control.redrawMain(true);
         if (callback) callback(status);
     };
 
@@ -496,7 +388,6 @@ export default class DeployerRunner {
                 return;
             }
 
-            const tag = env;
             const txsrc = this._makeFileName(src, this.network, 'tx');
             const deploysrc = this._makeFileName(src, this.network, 'deploy');
             const addresssrc = this._makeFileName(src, this.network, 'address');
@@ -580,188 +471,6 @@ export default class DeployerRunner {
         });
     }
 
-    _buildArgs = (obj, cb) => {
-        var fn;
-        fn = (args, args2, env, tag, cb2) => {
-            if (args.length == 0) {
-                cb2(0);
-                return;
-            }
-            this._buildArgs2(obj, args, args2, env, tag, status => {
-                if (status == 0) {
-                    fn(args, args2, env, tag, status => {
-                        cb2(status);
-                    });
-                } else {
-                    cb2(1);
-                }
-            });
-        };
-
-        const args = (obj.contract.getArgs() || []).slice(0); // We MUST copy the array since we are shifting out the elements.
-        const args2 = [];
-
-        fn(args, args2, obj.env, obj.tag, status => {
-            if (status == 0) {
-                obj.args = args2;
-                this._stdout(
-                    'Arguments parsed successfully: ' + args2.join(' ')
-                );
-                cb(0);
-            } else {
-                this._stderr('Arguments contains incorrect formatted values.');
-                cb(1);
-                return;
-            }
-        });
-
-    }
-
-    _checkCompile(obj, cb) {
-        this._isCompileFresh(obj, status => {
-            if (status != 0 || obj.recompile) {
-                this._stdout('Starting contract compiler...');
-                this._compile(status => {
-                    if (status == 0) {
-                        this._stdout('Contract compiled.');
-                        cb(0);
-                    } else {
-                        this._stderr(
-                            'The contract could apparently not be compiled.'
-                        );
-                        cb(1);
-                    }
-                });
-            } else {
-                this._stdout('Contract freshly compiled, not recompiling.');
-                cb(0);
-            }
-        });
-    }
-
-    _isCompileFresh(obj, cb) {
-        // Check for fresh abi and bin.
-        const project = this.item.getProject();
-        project.loadFile(
-            obj.src,
-            srcbody => {
-                if (srcbody.status != 0) {
-                    cb(1);
-                    return;
-                }
-                project.loadFile(
-                    obj.abisrc,
-                    abibody => {
-                        if (abibody.status != 0) {
-                            cb(1);
-                            return;
-                        }
-                        project.loadFile(
-                            obj.binsrc,
-                            binbody => {
-                                if (binbody.status != 0) {
-                                    cb(1);
-                                    return;
-                                }
-                                project.loadFile(
-                                    obj.hashsrc,
-                                    hashbody => {
-                                        if (hashbody.status != 0) {
-                                            cb(1);
-                                            return;
-                                        }
-                                        const hash = sha256(
-                                            srcbody.contents
-                                        ).toString();
-                                        if (hash != hashbody.contents) cb(1);
-                                        else cb(0);
-                                    }, true, true);
-                            }, true, true);
-                    }, true, true);
-            }, true, true);
-    }
-
-    _loadFiles(obj,cb) {
-        const project = this.item.getProject();
-        project.loadFile(
-            obj.src,
-            srcbody => {
-                if (srcbody.status != 0) {
-                    this._stderr('Could not load contract source file.');
-                    cb(1);
-                    return;
-                }
-                project.loadFile(
-                    obj.abisrc,
-                    abibody => {
-                        if (abibody.status != 0) {
-                            this._stderr(
-                                'Could not load contract ABI: ' + obj.abisrc
-                            );
-                            cb(1);
-                            return;
-                        }
-                        project.loadFile(
-                            obj.binsrc,
-                            binbody => {
-                                if (binbody.status != 0) {
-                                    this._stderr(
-                                        'Could not load contract binary.'
-                                    );
-                                    cb(1);
-                                    return;
-                                }
-                                project.loadFile(
-                                    obj.metasrc,
-                                    metabody => {
-                                        if (metabody.status != 0) {
-                                            this._stderr(
-                                                'Could not load contract meta file.'
-                                            );
-                                            cb(1);
-                                            return;
-                                        }
-                                        project.loadFile(
-                                            obj.txsrc,
-                                            txbody => {
-                                                // Allow non existing
-                                                project.loadFile(
-                                                    obj.addresssrc,
-                                                    addressbody => {
-                                                        // Allow non existing
-                                                        project.loadFile(
-                                                            obj.deploysrc,
-                                                            deploybody => {
-                                                                // Allow non existing
-                                                                project.loadFile(
-                                                                    obj.hashsrc,
-                                                                    hashbody => {
-                                                                        if ( hashbody.status != 0) {
-                                                                            this._stderr(
-                                                                                'Could not load contract hash.'
-                                                                            );
-                                                                            cb(1);
-                                                                            return;
-                                                                        }
-                                                                        //obj.src=srcbody.contents;
-                                                                        obj.abi = abibody.contents;
-                                                                        obj.bin = binbody.contents;
-                                                                        obj.meta = metabody.contents;
-                                                                        obj.hash = hashbody.contents;
-                                                                        obj.txhash = txbody.contents;
-                                                                        obj.address = addressbody.contents;
-                                                                        obj.deploy = deploybody.contents;
-                                                                        cb(0);
-                                                                    }, true, true);
-                                                            }, true, true);
-                                                    }, true, true);
-                                            }, true, true);
-                                    }, true, true);
-                            }, true, true);
-                    }, true, true);
-            }, true, true);
-    }
-
     _buildBin(obj, cb) {
         var contract = null;
         var parsedABI;
@@ -816,11 +525,6 @@ export default class DeployerRunner {
     _checkDeploy(obj, cb) {
         if (obj.txhash && obj.deploy) {
             if (obj.deploy == obj.bin2) {
-                if (obj.redeploy) {
-                    this._stdout('Will redeploy contract.');
-                    cb(0);
-                    return;
-                }
                 this._getInputByTx(obj, obj.txhash, (status, input) => {
                     if (status > 0) {
                         this._stdout(
@@ -931,6 +635,7 @@ export default class DeployerRunner {
     _sendTx(obj, cb) {
         this._stdout('Gaslimit=' + obj.gasLimit + ', gasPrice=' + obj.gasPrice + '.');
         this._stdout('Sending transaction to network ' + obj.network + ' on endpoint ' + obj.endpoint + '...');
+        
         obj.web3.eth.sendRawTransaction(
             '0x' + obj.tx.serialize().toString('hex'),
             (err, res) => {

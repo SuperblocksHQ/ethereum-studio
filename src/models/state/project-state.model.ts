@@ -10,6 +10,7 @@ export interface IAccount {
     balance: Nullable<string>;
     address: Nullable<string>;
     type: string;
+    walletName: Nullable<string>;
     isLocked: boolean;
 }
 

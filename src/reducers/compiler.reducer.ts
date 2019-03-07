@@ -20,6 +20,7 @@ import { IExplorerState, ICompilerState } from '../models/state';
 import { traverseTree, createFile } from './explorerLib';
 import { isSolitidyFile } from './utils';
 import sha256 from 'crypto-js/sha256';
+import { getContractName, getCompilerOutputPath } from './compilerLib';
 
 const initialState: ICompilerState = {
     input: null,
@@ -90,10 +91,6 @@ function checkForTargetContractOutputErrors(targetContractOutput: any, compilerO
     return errorRows;
 }
 
-function getContractName(path: string[]) {
-    return path[path.length - 1].slice(0, -4);
-}
-
 function getTargetContractOutput(compilerOutput: any, targetContractPath: string[]): any {
     let targetContractOutput = null;
     if (compilerOutput.contracts) {
@@ -138,6 +135,7 @@ export default function compilerReducer(state = initialState, action: AnyAction,
             const files = initialState.files;
             let targetContractPath = initialState.targetContractPath;
 
+            // find target solidity file and all others
             traverseTree(explorer.tree, (item, path) => {
                 if (isSolitidyFile(item)) {
                     if (item.id === action.data.id) {
@@ -192,7 +190,7 @@ export default function compilerReducer(state = initialState, action: AnyAction,
                         return {
                             ...state,
                             outputFiles,
-                            outputFolderPath: [ 'build' ].concat(state.targetContractPath.slice(0, -1)).concat([ contractName ]),
+                            outputFolderPath: getCompilerOutputPath(state.targetContractPath),
                             consoleRows: [{ channel: 1, msg: 'Success in compilation' }]
                         };
                     } catch {

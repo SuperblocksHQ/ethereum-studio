@@ -16,3 +16,4 @@
 
 export * from './common';
 export * from './convertProject';
+export * from './web3Utils';

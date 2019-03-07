@@ -15,7 +15,7 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { interval, empty, of } from 'rxjs';
-import { switchMap, map,  takeUntil, catchError } from 'rxjs/operators';
+import { switchMap,  takeUntil, catchError } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
 import { projectsActions } from '../../actions';
 import { walletService } from '../../services';
@@ -26,11 +26,11 @@ export const updateAccountBalanceEpic: Epic = (action$: any, state$: any) => act
         return interval(3000).pipe(
             takeUntil(action$.ofType(projectsActions.LOAD_PROJECT)),
             switchMap(() => {
-                const enrivonment = state$.value.projects.selectedEnvironment.name;
+                const endpoint = state$.value.projects.selectedEnvironment.endpoint;
                 const selectedAccount = state$.value.projects.selectedAccount;
 
                 if (selectedAccount.name && selectedAccount.address) {
-                    return walletService.fetchBalance(enrivonment, selectedAccount.address).pipe(
+                    return walletService.fetchBalance(endpoint, selectedAccount.address).pipe(
                         switchMap(balance => {
                             if (selectedAccount.balance !== balance) { // little optimization to keep redux log cleaner
                                 return of(projectsActions.updateAccountBalance(balance));

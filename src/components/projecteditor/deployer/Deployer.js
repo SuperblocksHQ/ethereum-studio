@@ -15,12 +15,10 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { Component } from 'react';
-import styleConsole from '../style-console.less';
 import style from './style.less';
 import Modal from '../../modal';
 import MainnetWarning from './mainnetWarning';
-import DeployerRunner from '../../../deployer';
-import Toolbar from '../toolbar';
+import DeployerRunner from '../../../services/deployer/deployer';
 
 export default class Deployer extends Component {
 
@@ -33,13 +31,7 @@ export default class Deployer extends Component {
     constructor(props) {
         super(props);
 
-        this.id = props.id + '_deployer';
-        this.props.parent.childComponent = this;
-        const recompile = this.props.recompile || false;
-        const redeploy = this.props.redeploy || false;
-
-        this.deployer = new DeployerRunner(props, recompile, redeploy, this.redraw,
-            this.updateStatus, this.showExternalProviderModal, this.closeExternalProviderModal, this.showMainnetWarning,
+        this.deployer = new DeployerRunner(account, this.showExternalProviderModal, this.closeExternalProviderModal, this.showMainnetWarning,
             this.props.networkPreferences, this.props.item, this.log);
     }
 
@@ -47,45 +39,8 @@ export default class Deployer extends Component {
         this.deploy();
     }
 
-    canClose = (cb) => {
-        cb(0);
-    };
-
-    focus = (rePerform) => {
-        if (rePerform) {
-            if (!this.deployer.isRunning) {
-                this.deploy();
-            }
-        }
-    };
-
-    updateStatus = (msg) => {
-        this.setState({
-            status: msg ? msg : ""
-        });
-    };
-
     onRedeployClickHandle = () => {
         this.deploy();
-    };
-
-    getHeight = () => {
-        const a = document.getElementById(this.id);
-        const b = document.getElementById(this.id+"_header");
-        if(!a) return 99;
-        return (a.offsetHeight - b.offsetHeight);
-    };
-
-    getWait = () => {
-        if(this.state.consoleRows.length === 0) {
-            return <div className={styleConsole.loading}>
-                    <span>Loading...</span>
-                </div>;
-        }
-    };
-
-    redraw = () => {
-        this.forceUpdate();
     };
 
     log = (msg, channel) => {
@@ -153,50 +108,37 @@ export default class Deployer extends Component {
             status: ''
         },
         () => this.deployer.run(null, this.props.selectedEnvironment));
-    };
+    }
 
-    renderContents = () => {
-        const waiting = this.getWait();
-        const scrollId = "scrollBottom_" + this.props.id;
-        const { consoleRows } = this.state;
-        return (
-            <div className={styleConsole.console}>
-                <div className={styleConsole.terminal} id={scrollId}>
-                    {waiting}
-                    {consoleRows.map((row, index) => {
-                        return row.msg.split("\n").map(i => {
-                            var cl = styleConsole.std1;
-                            if (row.channel === 2)
-                                cl = styleConsole.std2;
-                            else if (row.channel === 3)
-                                cl = styleConsole.std3;
-                            return <div key={row} className={cl}>{i}</div>;
-                        })
-                    })}
-                </div>
-            </div>
-        );
-    };
+    // renderContents = () => {
+    //     const waiting = this.getWait();
+    //     const scrollId = "scrollBottom_" + this.props.id;
+    //     const { consoleRows } = this.state;
+    //     return (
+    //         <div className={styleConsole.console}>
+    //             <div className={styleConsole.terminal} id={scrollId}>
+    //                 {waiting}
+    //                 {consoleRows.map((row, index) => {
+    //                     return row.msg.split("\n").map(i => {
+    //                         var cl = styleConsole.std1;
+    //                         if (row.channel === 2)
+    //                             cl = styleConsole.std2;
+    //                         else if (row.channel === 3)
+    //                             cl = styleConsole.std3;
+    //                         return <div key={row} className={cl}>{i}</div>;
+    //                     })
+    //                 })}
+    //             </div>
+    //         </div>
+    //     );
+    // };
 
     render() {
         const contents = this.renderContents();
-        const height = this.getHeight();
-        const maxHeight = {
-            height: height + "px"
-        };
 
         return (
           <div className="full" id={this.id}>
-            <Toolbar
-                id={this.id}
-                status={this.state.status}
-                contractPath={this.props.item.getParent().getSource()}
-                onTriggerActionClick={this.onRedeployClickHandle}
-                isRunning={this.deployer.isRunning}
-                iconTitle="Redeploy"
-                infoTitle="Deploy"
-            />
-            <div id={this.id+"_scrollable"} className="scrollable-y" style={maxHeight}>
+            <div className="scrollable-y">
                 {contents}
             </div>
           </div>

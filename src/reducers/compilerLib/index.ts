@@ -14,29 +14,15 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { IProjectItem } from '../../models';
+export function getContractName(path: string[]) {
+    return path[path.length - 1].slice(0, -4);
+}
 
 /**
- * Returns item and its parent item in the tree
- * @param item root item
- * @param id find item by this id
- * @param parentItem parent item in case of subtree search
+ * Path to contract build folder
+ * @param targetContractPath 
  */
-export function findItemInTree(item: Nullable<IProjectItem>, id: string, parentItem: Nullable<IProjectItem> = null): [Nullable<IProjectItem>, Nullable<IProjectItem>] {
-    if (!item) {
-        return [null, null];
-    }
-
-    if (item.id === id) {
-        return [item, parentItem];
-    }
-
-    for (const childItem of item.children) {
-        const result = findItemInTree(childItem, id, item);
-        if (result[0]) {
-            return result;
-        }
-    }
-
-    return [null, null];
+export function getCompilerOutputPath(targetContractPath: string[]): string[] {
+    const contractName = getContractName(targetContractPath);
+    return [ 'build' ].concat(targetContractPath.slice(0, -1)).concat([ contractName ]);
 }

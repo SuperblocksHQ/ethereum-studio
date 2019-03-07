@@ -25,7 +25,7 @@ export const initialState: IProjectState = {
     environments: [],
     selectedEnvironment: { name: null, endpoint: null },
     accounts: [],
-    selectedAccount: { name: '', balance: null, address: null, isLocked: false, type: '' },
+    selectedAccount: { name: '', balance: null, address: null, walletName: null, isLocked: false, type: '' },
     openWallets: {},
     metamaskAccounts: [],
     dappfileData: null
