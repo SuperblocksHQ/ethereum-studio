@@ -1,4 +1,4 @@
-// Copyright 2018 Superblocks AB
+// Copyright 2019 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -14,18 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-@import '../../style/index';
+@import '../../../style/index';
 
-.centerScreen {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    min-height: 100vh;
-}
-
-.newDapp {
+.projectTemplateModal {
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
@@ -35,27 +26,7 @@
     .area {
         border-bottom: 1px solid #3c3c3c;
     }
-    .step1 {
-        width: 512px;
-        .area{
-            padding-left: 20px;
-        }
-        .form {
-            display: inline-block;
-            -webkit-border-radius: 17px;
-            -moz-border-radius: 17px;
-            border-radius: 17px;
-            width: 100%;
-            margin: 10px auto;
-            label {
-                margin-left: 3px;
-            }
-        }
-        input {
-            width: 443px;
-        }
-    }
-    .step2 {
+    .innerContent {
         min-width: 890px;
         .container {
             display: flex;

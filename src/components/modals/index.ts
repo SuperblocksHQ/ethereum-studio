@@ -19,3 +19,4 @@ export * from './shareModal';
 export * from './preferencesModal';
 export * from './loginModal';
 export * from './simpleModal';
+export * from './projectTemplateModal';

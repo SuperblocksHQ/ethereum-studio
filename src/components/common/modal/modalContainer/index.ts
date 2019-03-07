@@ -17,13 +17,14 @@
 import { connect } from 'react-redux';
 import { ModalContainer } from './ModalContainer';
 import { modalActions } from './../../../../actions/modal.actions';
+import { AnyAction, Dispatch } from 'redux';
 
 const mapStateToProps = (state: any) => ({
     modalType: state.modal.modalType,
     modalProps: state.modal.modalProps
 });
 
-const mapDispatchToProps = (dispatch: any) => {
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
     return {
         hideModal: () => {
             dispatch(modalActions.hideModal());

@@ -18,19 +18,29 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
-import { projectsActions } from '../../../../../actions';
+import { projectsActions, modalActions } from '../../../../../actions';
+import classNames from 'classnames';
+import style from '../style.less';
 
 // TODO - Finalise all this
 
 interface IProps {
     createEmptyProject: () => void;
+    showModal: (modalType: string, modalProps: any) => void;
 }
 
 class NewProjectDialog extends Component<IProps> {
+
+    startWithTemplate = () => {
+        const { showModal } = this.props;
+        showModal('PROJECT_TEMPLATE_MODAL', null);
+    }
+
     render() {
         const { createEmptyProject } = this.props;
+
         return (
-            <div className={'contextMenu'}>
+            <div className={classNames([style.menu, 'contextMenu'])}>
                 <ul>
                     <li>
                         <div onClick={createEmptyProject}>
@@ -38,13 +48,9 @@ class NewProjectDialog extends Component<IProps> {
                         </div>
                     </li>
                     <li>
-                        <a
-                            href='https://help.superblocks.com'
-                            target='_blank'
-                            rel='noopener noreferrer'
-                        >
+                        <div onClick={this.startWithTemplate}>
                             Start with a template
-                        </a>
+                        </div>
                     </li>
                     <li>
                         <a
@@ -66,6 +72,9 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
         createEmptyProject: () => {
             dispatch(projectsActions.createEmptyProject());
         },
+        showModal: (modalType: string, modalProps: any) => {
+            dispatch(modalActions.showModal(modalType, modalProps));
+        }
     };
 };
 

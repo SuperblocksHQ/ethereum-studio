@@ -19,6 +19,7 @@ import EditModal from '../../../modals/editModal';
 import ShareModal from '../../../modals/shareModal';
 import PreferencesModal from '../../../modals/preferencesModal';
 import LoginModal from '../../../modals/loginModal';
+import ProjectTemplateModal from '../../../modals/projectTemplateModal';
 import style from './style.less';
 
 interface IProps {
@@ -31,7 +32,8 @@ const MODAL_COMPONENTS: any = {
     EDIT_MODAL: EditModal,
     SHARE_MODAL: ShareModal,
     PREFERENCES_MODAL: PreferencesModal,
-    GITHUB_MODAL: LoginModal
+    GITHUB_MODAL: LoginModal,
+    PROJECT_TEMPLATE_MODAL: ProjectTemplateModal,
     /* other modals */
 };
 
