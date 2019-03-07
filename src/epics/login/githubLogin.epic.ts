@@ -74,7 +74,7 @@ export const githubLogin = (action$: AnyAction, state$: any) => action$.pipe(
             );
     }),
     catchError((err: any) => {
-        console.log('Error: ', err);
+        console.log('Error while logging in via GitHub: ', err);
         return empty();
     })
 );
