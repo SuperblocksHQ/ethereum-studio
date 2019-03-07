@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Modal } from '../../../modal/new';
+import { SimpleModal } from './../../../modals/simpleModal';
 
 export function DownloadModal(props) {
     return (
-        <Modal onClose={props.onClose}>
+        <SimpleModal onClose={props.onClose}>
             <h2>Download DApp for the {props.environment} network</h2>
             <div style={{ 'textAlign': 'center' }}>
                 <p>
@@ -31,7 +31,7 @@ export function DownloadModal(props) {
                     </a>
                 </div>
             </div>
-        </Modal>
+        </SimpleModal>
     );
 }
 

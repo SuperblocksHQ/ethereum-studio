@@ -20,56 +20,27 @@ import { IProject } from '../../../../models';
 import { IconDots } from '../../../icons';
 import { DropdownContainer } from '../../../common/dropdown';
 import ProjectMenuDropdownDialog from '../../../topbar/projectMenu/ProjectMenuDropdownDialog';
-import ShareModal from '../../../shareModal';
-import EditModal from '../../../editModal';
 import moment from 'moment';
 
 interface IProps {
     project: IProject;
     deleteProject: (projectId: string) => void;
     forkProject: (projectId: string, redirect: boolean) => void;
-    functions: any;
+    showModal: (modalType: string, modalProps: any) => void;
     orderBy: string;
 }
 
 export default class Project extends Component<IProps> {
 
-    onModalClose = () => {
-        this.props.functions.modal.close();
-    }
-
     showShareModal = () => {
-        const modal = (
-            <ShareModal
-                defaultUrl={`${String(window.location.origin)}/${this.props.project.id}`}
-                onCloseClick={this.onModalClose}
-            />
-        );
-        this.props.functions.modal.show({
-            cancel: () => {
-                return false;
-            },
-            render: () => {
-                return modal;
-            }
-        });
+        const { showModal } = this.props;
+        const defaultUrl = `${String(window.location.origin)}/${this.props.project.id}`;
+        showModal('SHARE_MODAL', {defaultUrl});
     }
 
     showEditModal = () => {
-        const modal = (
-            <EditModal
-                project={this.props.project}
-                onCloseClick={this.onModalClose}
-            />
-        );
-        this.props.functions.modal.show({
-            cancel: () => {
-                return false;
-            },
-            render: () => {
-                return modal;
-            }
-        });
+        const { showModal, project } = this.props;
+        showModal('EDIT_MODAL', {project});
     }
 
     openProject = () => {

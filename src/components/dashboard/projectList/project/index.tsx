@@ -18,7 +18,7 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
 import { projectSelectors } from '../../../../selectors';
-import { projectsActions } from '../../../../actions';
+import { projectsActions, modalActions } from '../../../../actions';
 import Project from './Project';
 
 const mapStateToProps = (state: any) => ({
@@ -32,6 +32,9 @@ function mapDispatchToProps(dispatch: Dispatch<AnyAction>) {
         },
         forkProject: (projectId: string, redirect: boolean) => {
             dispatch(projectsActions.forkProject(projectId, redirect));
+        },
+        showModal: (modalType: string, modalProps: any) => {
+            dispatch(modalActions.showModal(modalType, modalProps));
         }
     };
 }

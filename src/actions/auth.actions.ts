@@ -32,9 +32,10 @@ export const authActions = {
     },
 
     SILENT_LOGIN_FAIL: 'SILENT_LOGIN_FAIL',
-    silentLoginFail() {
+    silentLoginFail(error: string) {
         return {
-            type: authActions.SILENT_LOGIN_FAIL
+            type: authActions.SILENT_LOGIN_FAIL,
+            data: error
         };
     },
 

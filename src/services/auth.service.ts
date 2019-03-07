@@ -13,18 +13,72 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
-import { fetchJSON } from './utils/fetchJson';
-import { switchMap, tap } from 'rxjs/operators';
+
+import { fetchJSON, getRefreshToken } from './utils/fetchJson';
+import { catchError, switchMap, tap, map } from 'rxjs/operators';
+import { userService } from '../services';
+import { EMPTY, throwError } from 'rxjs';
 
 export const authService = {
 
     githubAuth(data: any) {
+        const code = data.code;
+        const userDevice = this.getUserDeviceInfo();
+
         return fetchJSON(process.env.REACT_APP_API_BASE_URL + '/auth/github', {
             method: 'POST',
-            body: data
+            body: {code, userDevice},
         }).pipe(
-            switchMap(r => r.json()),
-            tap(jsonData => fetchJSON.setAuthToken(jsonData.token))
+            switchMap(r => (r.ok ? r.json() : throwError(r.statusText))),
+            tap(jsonData => fetchJSON.setAuthTokens(jsonData.token, jsonData.refreshToken)),
+            catchError(err => {
+                throw err;
+            })
         );
+    },
+
+    refreshAuth() {
+        const refreshToken = getRefreshToken();
+        if (refreshToken === null) {
+            throw Error('RefreshToken is not available');
+        }
+        return fetchJSON(process.env.REACT_APP_API_BASE_URL + '/auth/refreshToken', {
+            method: 'POST',
+            body: { refreshToken }
+        }).pipe(
+            switchMap(r => (r.ok ? r.json() : throwError('Invalid refreshToken'))),
+            tap(jsonData => fetchJSON.setAuthToken(jsonData.token)),
+            catchError(err => {
+                // Delete invalid refreshToken
+                fetchJSON.clearAuthTokens();
+                throw Error(err);
+            })
+        );
+    },
+
+    logout() {
+        const refreshToken = getRefreshToken();
+        if (refreshToken === null) {
+            return EMPTY;
+        }
+        return fetchJSON(process.env.REACT_APP_API_BASE_URL + '/auth/refreshToken', {
+            method: 'DELETE',
+            body: { refreshToken }
+        }).pipe(
+            switchMap(r => (r.ok ? r.json() : EMPTY)),
+            catchError(err => {
+                throw Error(err);
+            })
+        );
+    },
+
+    getUserDeviceInfo() {
+        const platform = require('platform');
+        const isMobile = this.isMobile();
+        return {os: platform.os.family, isMobile, userAgent: navigator.userAgent};
+    },
+
+    isMobile() {
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     }
 };

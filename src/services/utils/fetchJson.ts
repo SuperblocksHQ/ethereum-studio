@@ -20,6 +20,10 @@ export function getAuthToken() {
     return localStorage.getItem('authToken') || null;
 }
 
+export function getRefreshToken() {
+    return localStorage.getItem('refreshToken') || null;
+}
+
 function getAnonymousToken() {
     return localStorage.getItem('anonymousToken') || null;
 }
@@ -54,12 +58,20 @@ export function fetchJSON(url: string, params: IRequestParams) {
     }));
 }
 
-fetchJSON.setAuthToken = (token: string) => {
-    localStorage.setItem('authToken', token);
+fetchJSON.setAuthTokens = (authToken: string, refreshToken: string) => {
+    localStorage.setItem('authToken', authToken);
+    localStorage.setItem('refreshToken', refreshToken);
 };
 
-fetchJSON.clearAuthToken = () => {
+fetchJSON.setAuthToken = (token: string) => {
+    if (token) {
+        localStorage.setItem('authToken', token);
+    }
+};
+
+fetchJSON.clearAuthTokens = () => {
     localStorage.removeItem('authToken');
+    localStorage.removeItem('refreshToken');
 };
 
 fetchJSON.setAnonymousToken = (token: string) => {

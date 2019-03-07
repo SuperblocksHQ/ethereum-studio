@@ -20,7 +20,6 @@ import classNames from 'classnames';
 import style from './style.less';
 import { DropdownContainer } from '../common/dropdown';
 import { Tooltip, HelpAction, NewProjectAction } from '../common';
-import PreferencesModal from '../preferences';
 import UploadDialog from './upload';
 import {
     IconPreferences,
@@ -33,7 +32,6 @@ import {
 } from '../icons';
 import OnlyIf from '../onlyIf';
 import NetworkAccountSelector from '../networkAccountSelector';
-import ShareModal from '../shareModal';
 import MenuDropdownDialog from './menu';
 import LoginButton from "../login";
 import ProjectTitle from './projectTitle';
@@ -120,38 +118,18 @@ export default class TopBar extends Component {
         }
     }
 
-    onModalClose = () => {
-        this.props.functions.modal.close();
-    };
-
     showModal = (modalType) => {
-        let modal;
+        const { showModal} = this.props;
 
         switch (modalType) {
             case 'preferences':
-                modal = (
-                    <PreferencesModal
-                        onCloseClick={this.onModalClose}
-                    />
-                );
+                showModal('PREFERENCES_MODAL', null);
                 break;
             case 'share':
-                modal = (
-                    <ShareModal
-                        defaultUrl={String(window.location)}
-                        onCloseClick={this.onModalClose}
-                    />
-                );
+                const defaultUrl = String(window.location);
+                showModal('SHARE_MODAL', {defaultUrl});
                 break;
         }
-        this.props.functions.modal.show({
-            cancel: () => {
-                return false;
-            },
-            render: () => {
-                return modal;
-            }
-        });
     };
 
     onForkClicked = () => {

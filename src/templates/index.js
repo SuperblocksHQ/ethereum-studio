@@ -23,6 +23,7 @@ const SafeMathZip = require('./safemath.zip');
 const ERC20TokenZip = require('./erc-20-token.zip');
 const CryptoPizzaZip = require('./cryptopizza.zip');
 
+// TODO: Remove all these when we have projects in cloud
 export default class Templates {
     static categories = [
         {
