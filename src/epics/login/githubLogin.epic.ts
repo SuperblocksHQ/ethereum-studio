@@ -14,16 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import {empty, of, from} from 'rxjs';
+import { of, from } from 'rxjs';
 import { ofType } from 'redux-observable';
 import { authActions, userActions } from '../../actions';
-import {
-    withLatestFrom,
-    tap,
-    switchMap,
-    catchError,
-    map, concatMap, mergeMap
-} from 'rxjs/operators';
+import { withLatestFrom, switchMap, catchError, mergeMap } from 'rxjs/operators';
 import PopupWindow from '../../components/login/github/PopupWindow';
 import { AnyAction } from 'redux';
 import { authService, userService } from '../../services';
@@ -70,11 +64,15 @@ export const githubLogin = (action$: AnyAction, state$: any) => action$.pipe(
                 )),
                 switchMap((data: any) => authService.githubAuth(data)),
                 switchMap(() => userService.getUser()),
-                mergeMap((data) => [authActions.loginSuccess(data), userActions.getProjectList()])
+                mergeMap((data) => [authActions.loginSuccess(data), userActions.getProjectList()]),
+                catchError((err: any) => {
+                    console.log('Error while logging in via GitHub: ', err);
+                    return of(authActions.loginFail(err));
+                })
             );
     }),
     catchError((err: any) => {
         console.log('Error while logging in via GitHub: ', err);
-        return empty();
+        return of(authActions.loginFail(err));
     })
 );
