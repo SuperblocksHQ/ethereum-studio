@@ -7,7 +7,7 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "build:beta": "sh -ac '. .env.beta; node scripts/build.js'",
-    "test": "mocha ./test/*.js && jest",
+    "test": "mocha ./test/*.js",
     "test:watch": "npm test -- --watch",
     "format": "prettier --trailing-comma es5 --single-quote --write 'src/*/*.js' 'src/*/!(node_modules)/**/*.js' '!src/services/solc/**/*.js' '!src/services/evm/**/*.js' webpack.config.js",
     "lint-javascript": "exec eslint --config ./config/eslint/eslint.json --ext \".js\" ./src",
