@@ -16,7 +16,7 @@
 
 import { fetchJSON, getRefreshToken } from './utils/fetchJson';
 import { catchError, switchMap, tap, map } from 'rxjs/operators';
-import { userService } from '../services';
+import platform from 'platform';
 import { EMPTY, throwError } from 'rxjs';
 
 export const authService = {
@@ -73,9 +73,8 @@ export const authService = {
     },
 
     getUserDeviceInfo() {
-        const platform = require('platform');
         const isMobile = this.isMobile();
-        return {os: platform.os.family, isMobile, userAgent: navigator.userAgent};
+        return {os: (platform.os || {}).family, isMobile, userAgent: navigator.userAgent};
     },
 
     isMobile() {

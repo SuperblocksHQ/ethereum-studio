@@ -15,13 +15,14 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { concat, of, empty, throwError } from 'rxjs';
-import { switchMap, catchError, mergeMap } from 'rxjs/operators';
+import { switchMap, catchError, mergeMap, map } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
 import { consoleActions } from '../../actions';
 import { deployerActions } from '../../actions/deployer.actions';
 import { projectSelectors } from '../../selectors';
 import { deployerService, walletService } from '../../services';
 import { IAccount } from '../../models/state';
+import { convertGas } from '../../services/utils';
 
 function externalDeploy() {
     return empty();
@@ -31,30 +32,43 @@ function browserDeploy(state: any, deployFile: string) {
     const account: IAccount = projectSelectors.getSelectedAccount(state);
     const environment = projectSelectors.getSelectedEnvironment(state);
     const networkSettings = state.settings.preferences.network;
+    const gasSettings = { gasPrice: convertGas(networkSettings.gasPrice), gasLimit: convertGas(networkSettings.gasLimit) };
 
     if (!account.walletName || !account.address) {
         return throwError('walletName and address property should be set on the account');
     }
     const key = walletService.getKey(account.walletName, account.address);
 
+    // get nonce
     return deployerService.getNonce(account.address).pipe(
         switchMap(nonce => {
-            const signedTransaction = deployerService.signTransaction(<string>account.address, nonce, networkSettings, key, deployFile);
+            // sign transaction
+            const signedTransaction = deployerService.signTransaction(<string>account.address, nonce, gasSettings, key, deployFile);
             return concat(
                 of(consoleActions.addRows([
                     { channel: 1, msg: `Nonce for address ${account.address} is ${nonce}.` },
                     { channel: 1, msg: `Transaction signed.` },
-                    { channel: 1, msg: 'Gaslimit=' + networkSettings.gasLimit + ', gasPrice=' + networkSettings.gasPrice + '.' },
-                    { channel: 1, msg: 'Sending transaction to network ' + environment.network + ' on endpoint ' + environment.endpoint + '...' }
+                    { channel: 1, msg: `Gaslimit=${gasSettings.gasLimit}, gasPrice=${gasSettings.gasPrice}.` },
+                    { channel: 1, msg: `Sending transaction to network ${environment.network} on endpoint ${environment.endpoint}...` }
                 ])),
-                deployerService.sendInteralTransation(signedTransaction).pipe(
-                    mergeMap(receipt => {
-                        return [
-                            consoleActions.addRows([{ channel: 1, msg: `Got receipt: ${receipt}.` }]),
+                // send transaction
+                deployerService.sendInteralTransaction(signedTransaction).pipe(
+                    switchMap(hash => {
+                        return concat(
+                            of (consoleActions.addRows([{ channel: 1, msg: `Got receipt: ${hash}.` }]) ),
                             // TODO: add transaction to transaction log
-                            // TODO: finalize!
-                        ];
-                    })
+                            deployerService.waitForContract(hash).pipe(
+                                map((output: any) => {
+                                    if (output.msg) {
+                                        return consoleActions.addRows([output]);
+                                    } else {
+                                        return { type: 'DONE' };
+                                    }
+                                })
+                            )
+                        );
+                    }),
+                    catchError(e => [consoleActions.addRows([{ channel: 2, msg: e }])])
                 )
             );
         }),

@@ -15,13 +15,13 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { IProjectItem } from '../models';
-import { Observable, throwError, of, from } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { Observable, throwError, of, from, Observer, timer } from 'rxjs';
+import { catchError, map, switchMap, retryWhen, retry, tap } from 'rxjs/operators';
 import { getWeb3 } from './utils';
 import Tx from 'ethereumjs-tx';
 import Buffer from 'buffer';
 
-let web3: any = null;
+let currWeb3: any = null;
 
 function getFileCode(files: IProjectItem[], ext: string) {
     const file = files.find(f => f.name.toLowerCase().endsWith(ext));
@@ -65,7 +65,7 @@ function createDeployFile(buildFiles: IProjectItem[], contractArgs: any[]): stri
 function getInputByTx(txhash: string) {
     // TODO: check web3
     return new Promise((resolve, reject) => {
-        web3.eth.getTransaction(txhash, (err: any, res: any) => {
+        currWeb3.eth.getTransaction(txhash, (err: any, res: any) => {
             if (err) {
                 reject();
             } else if (res) {
@@ -85,9 +85,8 @@ interface ICheckDeployResult {
 
 export const deployerService = {
     init(accountType: string, endpoint: string) {
-        web3 = accountType === 'metamast' ? window.web3 : getWeb3(endpoint);
+        currWeb3 = accountType === 'metamask' ? window.web3 : getWeb3(endpoint);
     },
-
 
     checkDeploy(buildFiles: IProjectItem[], contractArgs: any[], environment: string): Observable<ICheckDeployResult> {
         // 1. create ".deploy" file
@@ -121,7 +120,7 @@ export const deployerService = {
 
     sendExternalTransaction(params: any) {
         return from(new Promise((resolve, reject) => {
-            web3.eth.sendTransaction(params, (err: any, res: any) => {
+            currWeb3.eth.sendTransaction(params, (err: any, res: any) => {
                 // this.closeExternalProviderModal();
                 if (err) {
                     console.error(res);
@@ -148,7 +147,7 @@ export const deployerService = {
 
     getNonce(address: string) {
         return from(new Promise((resolve, reject) => {
-            web3.eth.getTransactionCount(address, (err: any, res: any) => {
+            currWeb3.eth.getTransactionCount(address, (err: any, res: any) => {
                 if (err == null) {
                     resolve(res);
                 } else {
@@ -173,13 +172,13 @@ export const deployerService = {
         return tx;
     },
 
-    sendInteralTransation(tx: any) {
-        return from(new Promise((resolve, reject) => {
-            web3.eth.sendRawTransaction(
+    sendInteralTransaction(tx: any) {
+        return from<string>(new Promise((resolve, reject) => {
+            currWeb3.eth.sendRawTransaction(
                 '0x' + tx.serialize().toString('hex'),
-                (err: string, receipt: any) => {
+                (err: string, hash: string) => {
                     if (err == null) {
-                        resolve(receipt);
+                        resolve(hash);
                         // const args = (obj.contract.getArgs() || []).slice(0); // We MUST copy the array since we are shifting out the elements.
                         // TODO: add TX to log
                         // this.item
@@ -194,10 +193,90 @@ export const deployerService = {
                         //     });
                         // cb(0);
                     } else {
-                        reject();
+                        reject(err);
                     }
                 }
             );
         }));
+    },
+
+    waitForContract(hash: string) {
+        return Observable.create((observer: Observer<any>) => {
+            const getReceipt = () => currWeb3.eth.getTransactionReceipt(hash, (err: string, receipt: any) => {
+                console.log('opaopaopa');
+                if (err) {
+                    observer.error(err);
+                    return;
+                }
+                if (receipt == null || receipt.blockHash == null) {
+                    setTimeout(getReceipt, 1000);
+                } else {
+                    observer.next(receipt);
+                    observer.complete();
+                }
+            });
+
+            getReceipt();
+        }).pipe(
+            switchMap((receipt: any) => Observable.create((observer: Observer<any>) => {
+                observer.next({ msg: 'Transaction mined, verifying code...', channel: 1 });
+
+                let counter = 10;
+                const getCode = () => currWeb3.eth.getCode(receipt.contractAddress, 'latest', (err: string, res: any) => {
+                    if (err || !res || res.length < 4) {
+                        if (counter-- === 0) {
+                            observer.next({
+                                msg: `Contract code could not be verified on chain. The contract might not have been deployed.
+                                This is possibly a mismatch in the number/type of arguments given to the constructor or could
+                                also be a temporary issue in reading back the contract code from the chain.`,
+                                channel: 3
+                            });
+                            observer.error(null);
+                            return;
+                        }
+                        setTimeout(getCode, 2000);
+                        return;
+                    }
+                    observer.next({ msg: 'Contract deployed at address ' + receipt.contractAddress + '.\nDone.', channel: 1 });
+                    observer.next({ address: receipt.contractAddress });
+                    observer.complete();
+                });
+                getCode();
+            }))
+        );
+
+        // const getReceipt = () => currWeb3.eth.getTransactionReceipt(receipt, (err: string, res: any) => {
+
+        //     if (res == null || res.blockHash == null) {
+        //         setTimeout(() => getReceipt, 1000);
+        //     } else {
+        //         this._stdout('Transaction mined, verifying code...');
+        //         obj.address2 = res.contractAddress;
+        //         obj.deployMeta = { gasUsed: res.gasUsed };
+        //         var counter = 10;
+        //         const waitCode = () => {
+        //             obj.web3.eth.getCode(obj.address2, 'latest', (err, res) => {
+        //                 if (err || !res || res.length < 4) {
+        //                     if (counter-- == 0) {
+        //                         // Final timeout
+        //                         this._stderr(
+        //                             'Contract code could not be verified on chain. The contract might not have been deployed.
+        // This is possibly a mismatch in the number/type of arguments given to the constructor or could also be a temporary issue in reading back the contract code from the chain.'
+        //                         );
+        //                         cb(1);
+        //                         return;
+        //                     }
+        //                     setTimeout(waitCode, 2000);
+        //                     return;
+        //                 }
+        //                 this._stdout('Contract deployed at address ' + obj.address2 + '.');
+        //                 this._stdout('Done.');
+        //                 cb(0);
+        //             });
+        //         };
+
+        //         waitCode();
+        //     }
+        // });
     }
 };

@@ -27,3 +27,7 @@ export function getWeb3(endpoint: string) {
 
     return new window.Web3(provider);
 }
+
+export function convertGas(value: string) {
+    return '0x'.concat(Number(value).toString(16));
+}
