@@ -24,10 +24,14 @@ import { DropdownContainer, Tooltip } from '../../';
 import NewProjectDialog from './newProjectDialog';
 import style from './style.less';
 
-export const NewProjectAction = () => (
+interface IProps {
+    redirect: boolean;
+}
+
+export const NewProjectAction = (props: IProps) => (
     <DropdownContainer
             className={classNames([style.actionMenu, style.actionRight])}
-            dropdownContent={<NewProjectDialog />}
+            dropdownContent={<NewProjectDialog redirect={props.redirect} />}
     >
         <div className={classNames([style.action, style.actionRight])}>
             <Tooltip title='New Project'>
