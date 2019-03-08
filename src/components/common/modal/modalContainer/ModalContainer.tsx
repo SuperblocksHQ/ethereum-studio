@@ -39,6 +39,22 @@ const MODAL_COMPONENTS: any = {
 
 export class ModalContainer extends Component<IProps> {
 
+    constructor(props: IProps) {
+        super(props);
+
+        window.addEventListener(
+            'keydown',
+            (e) => {
+                // Hide modal with escape button
+                if ( e.keyCode === 27 ) {
+                    e.preventDefault();
+                    props.hideModal();
+                }
+            },
+            false
+        );
+    }
+
     render() {
         const { modalType, modalProps, hideModal } = this.props;
 
@@ -53,7 +69,6 @@ export class ModalContainer extends Component<IProps> {
                 <SpecificModal hideModal={hideModal} {...modalProps} />
             </div>
         );
-
     }
 }
 
