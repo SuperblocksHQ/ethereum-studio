@@ -1,5 +1,86 @@
 {
-    "name": "Vanilla",
-    "description": "This is an empty Ethereum project",
-    "files": "{ \"/\": { \"children\": { \"app\": { \"type\": \"d\", \"children\": { \"app.html\": { \"type\": \"f\", \"contents\": \"<!DOCTYPE html>\n<html lang=\"en\">\n    <head>\n        <script type=\"text/javascript\" src=\"https://unpkg.com/jquery@3.3.1/dist/jquery.js\"></script>\n        <script type=\"text/javascript\" src=\"https://unpkg.com/web3@0.20.5/dist/web3.min.js\"></script>\n        <!-- The generated javascript and app.js will be substituted in below -->\n        <!-- JAVASCRIPT -->\n\n        <!-- The app.css contents will be substituted in below -->\n        <!-- STYLE -->\n    </head>\n    <body>\n        <h1><span id=\"message\"></span></h1>\n    </body>\n</html>\" }, \"app.css\": { \"type\": \"f\", \"contents\": \"body {\n    background-color: #725BA4;\n    color: #FCE8DF;\n    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;\n    text-align: center;\n}\" }, \"app.js\": { \"type\": \"f\", \"contents\": \"// The object 'Contracts' will be injected here, which contains all data for all contracts, keyed on contract name:\n// Contracts['MyContract'] = {\n//  abi: [],\n//  address: \"0x..\",\n//  endpoint: \"http://....\"\n// }\n\nfunction Empty(Contract) {\n    this.web3 = null;\n    this.instance = null;\n    this.Contract = Contract;\n}\n\nEmpty.prototype.onReady = function() {\n    this.init(function () {\n        $('#message').append(\"DApp loaded successfully.\");\n    });\n}\n\nEmpty.prototype.init = function(cb) {\n    // We create a new Web3 instance using either the Metamask provider\n    // or an independent provider created towards the endpoint configured for the contract.\n    this.web3 = new Web3(\n        (window.web3 && window.web3.currentProvider) ||\n        new Web3.providers.HttpProvider(this.Contract.endpoint));\n\n    // Create the contract interface using the ABI provided in the configuration.\n    var contract_interface = this.web3.eth.contract(this.Contract.abi);\n\n    // Create the contract instance for the specific address provided in the configuration.\n    this.instance = contract_interface.at(this.Contract.address);\n\n    cb();\n}\n\nvar empty = new Empty(Contracts['MyContract']);\n\n$(document).ready(function() {\n    empty.onReady();\n});\" } } }, \"contracts\": { \"type\": \"d\", \"children\": { \"Empty.sol\": { \"type\": \"f\", \"contents\": \"pragma solidity ^0.4.25;\n\ncontract MyContract {\n    constructor() public {\n    }\n}\" } } }, \"README.md\": { \"type\": \"f\", \"contents\": \"# Empty DApp project\n\nThis is a bare bones dapp project containing a smart contract and boilerplate app files to get started.\n\n## Where to go from here\n\nCheck out the tutorials to find our more how to build your dapp.\n\" }, \"dappfile.json\": { \"type\": \"f\", \"contents\": \"{\n    \"project\": {\n        \"info\": {\n            \"name\": \"Empty\",\n            \"title\": \"Empty\"\n        }\n    },\n    \"environments\": [\n        {\n            \"name\": \"browser\"\n        },\n        {\n            \"name\": \"custom\"\n        },\n        {\n            \"name\": \"rinkeby\"\n        },\n        {\n            \"name\": \"ropsten\"\n        },\n        {\n            \"name\": \"kovan\"\n        },\n        {\n            \"name\": \"infuranet\"\n        },\n        {\n            \"name\": \"mainnet\"\n        }\n    ],\n    \"contracts\": [\n        {\n            \"source\": \"/contracts/Empty.sol\",\n            \"name\": \"MyContract\",\n            \"args\": []\n        }\n    ],\n    \"wallets\": [\n        {\n            \"desc\": \"This is a wallet for local development\",\n            \"name\": \"development\"\n        },\n        {\n            \"desc\": \"A private wallet\",\n            \"name\": \"private\"\n        },\n        {\n            \"desc\": \"External wallet integrating with Metamask and other compatible wallets\",\n            \"name\": \"external\",\n            \"type\": \"external\"\n        }\n    ],\n    \"accounts\": [\n        {\n            \"name\": \"Default\",\n            \"_environments\": [\n                {\n                    \"name\": \"browser\",\n                    \"data\": {\n                        \"wallet\": \"development\",\n                        \"index\": 0\n                    }\n                },\n                {\n                    \"name\": \"custom\",\n                    \"data\": {\n                        \"wallet\": \"private\",\n                        \"index\": 0\n                    }\n                },\n                {\n                    \"name\": \"rinkeby\",\n                    \"data\": {\n                        \"wallet\": \"external\",\n                        \"index\": 0\n                    }\n                },\n                {\n                    \"name\": \"ropsten\",\n                    \"data\": {\n                        \"wallet\": \"external\",\n                        \"index\": 0\n                    }\n                },\n                {\n                    \"name\": \"kovan\",\n                    \"data\": {\n                        \"wallet\": \"external\",\n                        \"index\": 0\n                    }\n                },\n                {\n                    \"name\": \"infuranet\",\n                    \"data\": {\n                        \"wallet\": \"external\",\n                        \"index\": 0\n                    }\n                },\n                {\n                    \"name\": \"mainnet\",\n                    \"data\": {\n                        \"wallet\": \"external\",\n                        \"index\": 0\n                    }\n                }\n            ]\n        }\n    ]\n}\" } } } }"
+    "name": "Empty Project",
+    "description": "Empty project",
+    "files": {
+        "id": "123",
+        "name": "Files",
+        "type": "FOLDER",
+        "opened": true,
+        "mutable": false,
+        "isRoot": "true",
+        "children": [
+            {
+            "id": "6s7wll9rv7m",
+            "name": "app",
+            "mutable": true,
+            "type": "FOLDER",
+            "opened": false,
+            "children": [
+                {
+                "id": "zax46gdqpwf",
+                "name": "app.css",
+                "mutable": true,
+                "type": "FILE",
+                "opened": false,
+                "children": [],
+                "code": "body {\r\n    background-color: #725BA4;\r\n    color: #FCE8DF;\r\n    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;\r\n    text-align: center;\r\n}"
+                },
+                {
+                "id": "8el0tuglq9",
+                "name": "app.html",
+                "mutable": true,
+                "type": "FILE",
+                "opened": false,
+                "children": [],
+                "code": "<!DOCTYPE html>\r\n<html lang=\"en\">\r\n    <head>\r\n        <script type=\"text/javascript\" src=\"https://unpkg.com/jquery@3.3.1/dist/jquery.js\"></script>\r\n        <script type=\"text/javascript\" src=\"https://unpkg.com/web3@0.20.5/dist/web3.min.js\"></script>\r\n        <!-- The generated javascript and app.js will be substituted in below -->\r\n        <!-- JAVASCRIPT -->\r\n\r\n        <!-- The app.css contents will be substituted in below -->\r\n        <!-- STYLE -->\r\n    </head>\r\n    <body>\r\n        <h1><span id=\"message\"></span></h1>\r\n    </body>\r\n</html>"
+                },
+                {
+                "id": "ignml5a1mc",
+                "name": "app.js",
+                "mutable": true,
+                "type": "FILE",
+                "opened": false,
+                "children": [],
+                "code": "// The object 'Contracts' will be injected here, which contains all data for all contracts, keyed on contract name:\r\n// Contracts['MyContract'] = {\r\n//  abi: [],\r\n//  address: \"0x..\",\r\n//  endpoint: \"http://....\"\r\n// }\r\n\r\nfunction Empty(Contract) {\r\n    this.web3 = null;\r\n    this.instance = null;\r\n    this.Contract = Contract;\r\n}\r\n\r\nEmpty.prototype.onReady = function() {\r\n    this.init(function () {\r\n        $('#message').append(\"DApp loaded successfully.\");\r\n    });\r\n}\r\n\r\nEmpty.prototype.init = function(cb) {\r\n    // We create a new Web3 instance using either the Metamask provider\r\n    // or an independent provider created towards the endpoint configured for the contract.\r\n    this.web3 = new Web3(\r\n        (window.web3 && window.web3.currentProvider) ||\r\n        new Web3.providers.HttpProvider(this.Contract.endpoint));\r\n\r\n    // Create the contract interface using the ABI provided in the configuration.\r\n    var contract_interface = this.web3.eth.contract(this.Contract.abi);\r\n\r\n    // Create the contract instance for the specific address provided in the configuration.\r\n    this.instance = contract_interface.at(this.Contract.address);\r\n\r\n    cb();\r\n}\r\n\r\nvar empty = new Empty(Contracts['MyContract']);\r\n\r\n$(document).ready(function() {\r\n    empty.onReady();\r\n});"
+                }
+            ]
+            },
+            {
+            "id": "hwl2e9fb2r",
+            "name": "contracts",
+            "mutable": true,
+            "type": "FOLDER",
+            "opened": false,
+            "children": [
+                {
+                "id": "fs4whgrdrac",
+                "name": "MyContract.sol",
+                "mutable": true,
+                "type": "FILE",
+                "opened": false,
+                "children": [],
+                "code": "pragma solidity ^0.4.25;\r\n\r\ncontract MyContract {\r\n    constructor() public {\r\n    }\r\n}"
+                }
+            ]
+            },
+            {
+            "id": "0rtgf3uq546p",
+            "name": "dappfile.json",
+            "mutable": false,
+            "type": "FILE",
+            "opened": false,
+            "children": [],
+            "code": "{\r\n    \"project\": {\r\n        \"info\": {\r\n            \"name\": \"Empty\",\r\n            \"title\": \"Empty project\"\r\n        }\r\n    },\r\n    \"environments\": [\r\n        {\r\n            \"name\": \"browser\"\r\n        },\r\n        {\r\n            \"name\": \"custom\"\r\n        },\r\n        {\r\n            \"name\": \"rinkeby\"\r\n        },\r\n        {\r\n            \"name\": \"ropsten\"\r\n        },\r\n        {\r\n            \"name\": \"kovan\"\r\n        },\r\n        {\r\n            \"name\": \"infuranet\"\r\n        },\r\n        {\r\n            \"name\": \"mainnet\"\r\n        }\r\n    ],\r\n    \"contracts\": [\r\n        {\r\n            \"source\": \"/contracts/MyContract.sol\",\r\n            \"name\": \"MyContract\",\r\n            \"args\": []\r\n        }\r\n    ],\r\n    \"wallets\": [\r\n        {\r\n            \"desc\": \"This is a wallet for local development\",\r\n            \"name\": \"development\"\r\n        },\r\n        {\r\n            \"desc\": \"A private wallet\",\r\n            \"name\": \"private\"\r\n        },\r\n        {\r\n            \"desc\": \"External wallet integrating with Metamask and other compatible wallets\",\r\n            \"name\": \"external\",\r\n            \"type\": \"external\"\r\n        }\r\n    ],\r\n    \"accounts\": [\r\n        {\r\n            \"name\": \"Default\",\r\n            \"_environments\": [\r\n                {\r\n                    \"name\": \"browser\",\r\n                    \"data\": {\r\n                        \"wallet\": \"development\",\r\n                        \"index\": 0\r\n                    }\r\n                },\r\n                {\r\n                    \"name\": \"custom\",\r\n                    \"data\": {\r\n                        \"wallet\": \"private\",\r\n                        \"index\": 0\r\n                    }\r\n                },\r\n                {\r\n                    \"name\": \"rinkeby\",\r\n                    \"data\": {\r\n                        \"wallet\": \"external\",\r\n                        \"index\": 0\r\n                    }\r\n                },\r\n                {\r\n                    \"name\": \"ropsten\",\r\n                    \"data\": {\r\n                        \"wallet\": \"external\",\r\n                        \"index\": 0\r\n                    }\r\n                },\r\n                {\r\n                    \"name\": \"kovan\",\r\n                    \"data\": {\r\n                        \"wallet\": \"external\",\r\n                        \"index\": 0\r\n                    }\r\n                },\r\n                {\r\n                    \"name\": \"infuranet\",\r\n                    \"data\": {\r\n                        \"wallet\": \"external\",\r\n                        \"index\": 0\r\n                    }\r\n                },\r\n                {\r\n                    \"name\": \"mainnet\",\r\n                    \"data\": {\r\n                        \"wallet\": \"external\",\r\n                        \"index\": 0\r\n                    }\r\n                }\r\n            ]\r\n        }\r\n    ]\r\n}"
+            },
+            {
+            "id": "bn330exm2ua",
+            "name": "README.MD",
+            "mutable": true,
+            "type": "FILE",
+            "opened": false,
+            "children": [],
+            "code": "# Empty DApp project\r\n\r\nThis is a bare bones dapp project containing a smart contract and boilerplate app files to get started.\r\n\r\n## Where to go from here\r\n\r\nCheck out the tutorials to find our more how to build your dapp.\r\n"
+            }
+        ]
+    }
 }
