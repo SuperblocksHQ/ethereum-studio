@@ -125,6 +125,7 @@ export class FileEditor extends React.Component<IProps> {
                     onChange={this.onFileChange}
                     editorDidMount={this.editorDidMount}
                     requireConfig={requireConfig}
+                    height='calc(100% - 42px)'
                 />
             </div>
         );
