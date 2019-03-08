@@ -152,6 +152,14 @@ export const explorerActions = {
         };
     },
 
+    RENAME_ITEM_SUCCESS: 'RENAME_ITEM_SUCCESS',
+    renameItemSuccess(id: string, name: string) {
+        return {
+            type: explorerActions.RENAME_ITEM_SUCCESS,
+            data: { id, name }
+        };
+    },
+
     RENAME_ITEM_FAIL: 'RENAME_ITEM_FAIL',
     renameItemFail(id: string, oldName: string) {
         return {
