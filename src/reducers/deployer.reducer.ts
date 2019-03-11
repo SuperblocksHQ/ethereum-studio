@@ -25,7 +25,8 @@ import { deployerActions } from '../actions';
 const initialState = {
     needsCompilation: false,
     contractArgs: [],
-    buildFiles: []
+    buildFiles: [],
+    outputPath: []
 };
 
 function isCompilationFresh(buildFiles: IProjectItem[], contractItem: IProjectItem): boolean {
@@ -56,7 +57,8 @@ export default function deployerReducer(state = initialState, action: AnyAction,
             if (!findItemResult.item) {
                 return state;
             }
-            const contractBuildFolder = findItemByPath(explorer.tree, getContractBuildPath(findItemResult.path), ProjectItemTypes.Folder);
+            const outputPath = getContractBuildPath(findItemResult.path);
+            const contractBuildFolder = findItemByPath(explorer.tree, outputPath, ProjectItemTypes.Folder);
             if (!contractBuildFolder || !isCompilationFresh(contractBuildFolder.children, findItemResult.item)) {
                 return {
                     ...state,
@@ -68,7 +70,8 @@ export default function deployerReducer(state = initialState, action: AnyAction,
                     ...state,
                     needsCompilation: false,
                     // we know here that file already exists
-                    buildFiles: contractBuildFolder.children
+                    buildFiles: contractBuildFolder.children,
+                    outputPath
                 };
             }
 

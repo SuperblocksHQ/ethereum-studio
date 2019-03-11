@@ -51,13 +51,5 @@ export const deployerActions = {
         return {
             type: deployerActions.HIDE_EXTERNAL_PROVIDER_INFO
         };
-    },
-
-    SET_DEPLOY_FILE: 'SET_DEPLOY_FILE',
-    setDeployFile(code: string) {
-        return {
-            type: deployerActions.SET_DEPLOY_FILE,
-            data: code
-        };
     }
 };

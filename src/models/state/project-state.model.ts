@@ -1,8 +1,8 @@
 import { IProjectItem } from '../project';
 
 export interface IEnvironment {
-    name: Nullable<string>;
-    endpoint: Nullable<string>;
+    name: string;
+    endpoint: string;
 }
 
 export interface IAccount {
