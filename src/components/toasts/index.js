@@ -65,6 +65,12 @@ export const getToastComponent = (type) => {
             return error('Error updating project settings');
         case projectsActions.UPDATE_PROJECT_SUCCESS:
             return info('Project updated!');
+        case projectsActions.CREATE_PROJECT_SUCCESS:
+            return info('Project created!');
+        case projectsActions.DELETE_PROJECT_SUCCESS:
+            return info('Project deleted!');
+        case projectsActions.DELETE_PROJECT_SUCCESS:
+            return error('Error deleting project!');
         default:
             return null;
     }

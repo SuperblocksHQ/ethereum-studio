@@ -14,8 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { empty, from } from 'rxjs';
-import { switchMap, withLatestFrom, map, tap } from 'rxjs/operators';
+import { empty, from, of } from 'rxjs';
+import { switchMap, withLatestFrom, map, tap, catchError } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
 import { projectsActions, userActions } from '../../actions';
 import { projectService } from '../../services/project.service';
@@ -28,8 +28,13 @@ export const deleteProject: Epic = (action$: any, state$: any) => action$.pipe(
         if (confirm('Are you sure you want to delete the project?')) {
             return projectService.deleteProjectById(action.data.projectId)
                 .pipe(
-                    switchMap(() => [userActions.getProjectList(), projectsActions.deleteProjectSuccess()]),
-                    tap(() => action.data.redirect ? document.location.href = '/' : null)
+                    switchMap(() => [projectsActions.deleteProjectSuccess()]),
+                    tap(() => action.data.redirect ? document.location.href = '/' : null),
+
+                    catchError((error) => {
+                        console.log('There was an issue deleting the project: ' + error);
+                        return [userActions.getProjectList(), of(projectsActions.deleteProjectFail(error))];
+                    })
                 );
         } else {
             return empty();

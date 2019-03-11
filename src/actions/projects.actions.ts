@@ -187,9 +187,17 @@ export const projectsActions = {
 
      // ---------- CREATE_EMPTY_PROJECT ----------
      CREATE_EMPTY_PROJECT: 'CREATE_EMPTY_PROJECT',
-     createEmptyProject() {
+     createEmptyProject(redirect: boolean) {
          return {
              type: projectsActions.CREATE_EMPTY_PROJECT,
+             data: { redirect }
+         };
+     },
+
+     CREATE_PROJECT_SUCCESS: 'CREATE_PROJECT_SUCCESS',
+     createProjectSuccess() {
+         return {
+             type: projectsActions.CREATE_PROJECT_SUCCESS,
          };
      }
 };

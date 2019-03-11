@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { panesActions } from '../actions';
+import { panesActions, explorerActions } from '../actions';
 import { replaceInArray } from './utils';
 import { AnyAction } from 'redux';
 import { IPanesState } from '../models/state';
@@ -105,6 +105,16 @@ export default function panesReducer(state = initialState, action: AnyAction) {
                     state.items,
                     p => p.file.id === action.data.fileId,
                     p => ({ ...p, hasUnsavedChanges: action.data.hasUnsavedChanges })
+                )
+            };
+
+        case explorerActions.RENAME_ITEM_SUCCESS:
+            return {
+                ...state,
+                items: replaceInArray(
+                    state.items,
+                    p => p.file.id === action.data.id,
+                    p => ({ ...p, file: { ...p.file, name: action.data.name }})
                 )
             };
 

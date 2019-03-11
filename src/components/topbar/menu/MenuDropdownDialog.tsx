@@ -81,8 +81,8 @@ export default class MenuDropdownDialog extends React.Component<IProps> {
                     <MenuItem title='Save' onClick={() => console.log('TODO')} />
                     <MenuItem title='Save All' onClick={() => console.log('TODO')} />
                     <Divider />
-                    <MenuItem onClick={() => closePane(activePaneId)} title='Close File' />
-                    <MenuItem onClick={() => closeAllPanes()} title='Close All Files' />
+                    <MenuItem onClick={() => closePane(activePaneId)} disabled={!activePaneId} title='Close File' />
+                    <MenuItem onClick={() => closeAllPanes()} disabled={!activePaneId} title='Close All Files' />
                     <Divider />
                     <MenuItem title='Configure Project' onClick={() => console.log('TODO')} />
                     <MenuItem title='Export Project' onClick={() => console.log('TODO')} />
