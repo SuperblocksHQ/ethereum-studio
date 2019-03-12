@@ -23,7 +23,11 @@ import sha256 from 'crypto-js/sha256';
 import { deployerActions } from '../actions';
 
 const initialState = {
+    isRunning: false,
+    allowLastDeploy: false,
     needsCompilation: false,
+    showMainnetWarning: false,
+    showExternalProviderInfo: false,
     contractArgs: [],
     buildFiles: [],
     outputPath: []
@@ -48,6 +52,9 @@ export default function deployerReducer(state = initialState, action: AnyAction,
             if (!explorer.tree) {
                 return state;
             }
+            if (state.isRunning) {
+                return { ...state, allowLastDeploy: false };
+            }
 
             // 1. build arguments
             // const contractArgs = [];
@@ -63,27 +70,38 @@ export default function deployerReducer(state = initialState, action: AnyAction,
                 return {
                     ...state,
                     needsCompilation: true,
+                    isRunning: false,
+                    allowLastDeploy: true,
                     buildFiles: []
                 };
             } else {
                 return {
                     ...state,
                     needsCompilation: false,
+                    isRunning: true,
+                    allowLastDeploy: true,
                     // we know here that file already exists
                     buildFiles: contractBuildFolder.children,
                     outputPath
                 };
             }
 
-            // 3. load all files from 'build/contracts/[contract_name]' folder
-
-            // 4. build bin file - need output from outside
-
-            // 5. check deploy???- need output from outside
-
-            // 6. do deploy
-
         }
+
+        case deployerActions.DEPLOY_SUCCESS:
+        case deployerActions.DEPLOY_FAIL:
+            return { ...initialState };
+
+        case deployerActions.SHOW_MAIN_NET_WARNING:
+            return { ...state, showMainnetWarning: true };
+        case deployerActions.DEPLOY_TO_MAINNET:
+        case deployerActions.HIDE_MAIN_NET_WARNING:
+            return { ...state, showMainnetWarning: false };
+        case deployerActions.SHOW_EXTERNAL_PROVIDER_INFO:
+            return { ...state, showExternalProviderInfo: true };
+        case deployerActions.HIDE_EXTERNAL_PROVIDER_INFO:
+            return { ...state, showExternalProviderInfo: false };
+
         default:
             return state;
     }

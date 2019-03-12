@@ -15,59 +15,20 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { concat, of, empty, throwError } from 'rxjs';
-import { switchMap, catchError, map } from 'rxjs/operators';
+import { switchMap, catchError, filter, mergeMap } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
-import { consoleActions, explorerActions } from '../../actions';
+import { consoleActions, panelsActions } from '../../actions';
 import { deployerActions } from '../../actions/deployer.actions';
 import { projectSelectors } from '../../selectors';
-import { walletService, DeployRunner, IDeployResult } from '../../services';
-import { IAccount, IConsoleRow } from '../../models/state';
-import * as analytics from '../../utils/analytics';
-import { createFile } from '../../reducers/explorerLib';
+import { DeployRunner, CheckDeployResult } from '../../services';
+import { IConsoleRow, Panels } from '../../models/state';
+import { tryExternalDeploy, browserDeploy, doDeployExternally } from './deployContract.epicLib';
 
-function finalizeDeploy(deployRunner: DeployRunner, hash: string, outputPath: string[]) {
-    return deployRunner.waitForContract(hash).pipe(
-        map((o: any) => {
-            if (o.msg) {
-                return consoleActions.addRows([o]);
-            } else {
-                const res = <IDeployResult>o;
-                analytics.logEvent('CONTRACT_DEPLOYED', res.environment);
-                const files = res.files.map(f => createFile(f.name, f.code));
-                return explorerActions.createPathWithContent(outputPath, files);
-            }
-        })
-    );
-}
-
-function externalDeploy() {
-    return empty();
-}
-
-function browserDeploy(state: any, deployRunner: DeployRunner) {
-    const account: IAccount = projectSelectors.getSelectedAccount(state);
-    const networkSettings = state.settings.preferences.network;
-
-    if (!account.walletName || !account.address) {
-        return throwError('walletName and address property should be set on the account');
-    }
-    const key = walletService.getKey(account.walletName, account.address);
-
-    return deployRunner.deployToBrowser(networkSettings, key).pipe(
-        switchMap(output => {
-            if (output.msg) {
-                return of(consoleActions.addRows([ output ]));
-            } else if (output.hash) {
-                return finalizeDeploy(deployRunner, output.hash, state.deployer.outputPath);
-            } else {
-                return of(consoleActions.addRows([{ msg: 'Unexpected error occured. Please try again!', channel: 3 }]));
-            }
-        })
-    );
-}
+export let lastDeployRunner: Nullable<DeployRunner> = null;
 
 export const deployContractEpic: Epic = (action$: any, state$: any) => action$.pipe(
     ofType(deployerActions.DEPLOY_CONTRACT),
+    filter(() => state$.value.deployer.allowLastDeploy),
     switchMap(() => {
         // prepare params
         const deployerState = state$.value.deployer;
@@ -79,18 +40,37 @@ export const deployContractEpic: Epic = (action$: any, state$: any) => action$.p
         const contractName = deployerState.outputPath[deployerState.outputPath.length - 1]; // TODO: this would be taken from contract settings
 
         // create deploy runner
-        const deployRunner = new DeployRunner(selectedAccount, environment, contractName);
+        lastDeployRunner = new DeployRunner(selectedAccount, environment, contractName);
 
-        return deployRunner.checkExistingDeployment(deployerState.buildFiles, deployerState.contractArgs)
-            .pipe(
-                switchMap(result => {
-                    const obs$ = selectedAccount.type === 'metamask' ? externalDeploy() : browserDeploy(state$.value, deployRunner);
-                    return concat(
-                        result.msg ? of(consoleActions.addRows([ <IConsoleRow>result ])) : empty(),
-                        result.canDeploy ? obs$ : empty()
-                    );
-                }),
-                catchError(e => [ consoleActions.addRows([ { channel: 2, msg: e } ]) ])
-            );
+        return concat(
+            of(panelsActions.openPanel(Panels.CompilerOutput)),
+            lastDeployRunner.checkExistingDeployment(deployerState.buildFiles, deployerState.contractArgs)
+                .pipe(
+                    mergeMap(result => {
+                        if (!lastDeployRunner) {
+                            return throwError('Unexpected error during deployment process. Please try again.');
+                        }
+
+                        const obs$ = selectedAccount.type === 'metamask' ? tryExternalDeploy(state$.value, lastDeployRunner) : browserDeploy(state$.value, lastDeployRunner);
+                        return concat(
+                            result.msg ? of(consoleActions.addRows([ <IConsoleRow>result ])) : empty(),
+                            result.result === CheckDeployResult.CanDeploy ? obs$ : empty(),
+                            result.result === CheckDeployResult.AlreadyDeployed ? of(deployerActions.deploySuccess()) : empty()
+                        );
+                    }),
+                    catchError(e => [ consoleActions.addRows([ { channel: 2, msg: e } ]), deployerActions.deployFail() ])
+                )
+        );
+    })
+);
+
+export const deployToMainnetEpic: Epic = (action$: any, state$: any) => action$.pipe(
+    ofType(deployerActions.DEPLOY_TO_MAINNET),
+    switchMap(() => {
+        if (!lastDeployRunner) {
+            return of(consoleActions.addRows([{ msg: 'Smth went wrong. Please delete build folder and try again.', channel: 2 }]));
+        }
+
+        return doDeployExternally(state$.value, lastDeployRunner);
     })
 );

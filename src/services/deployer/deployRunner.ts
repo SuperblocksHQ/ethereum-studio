@@ -19,7 +19,7 @@ import { Observable, throwError, of, from, Observer } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { getWeb3, convertGas } from '../utils';
 import { IEnvironment } from '../../models/state';
-import { IDeployAccount, ICheckDeployResult, IDeployResult } from './deploy.models';
+import { IDeployAccount, ICheckDeployResult, IDeployResult, CheckDeployResult } from './deploy.models';
 import { createDeployFile, getFileCode, signTransaction } from './deploy.utils';
 
 export class DeployRunner {
@@ -42,7 +42,7 @@ export class DeployRunner {
         try {
             this.deployFile = createDeployFile(buildFiles, contractArgs);
         } catch (e) {
-            return throwError(e.message);
+            return throwError({ msg: e.message, channel: 2, result: CheckDeployResult.CanNotDeploy });
         }
 
         // 2. check if old deploy files exist
@@ -50,34 +50,43 @@ export class DeployRunner {
         const existingDeployFile = getFileCode(buildFiles, this.environment.name + '.deploy');
         this.abiFile = getFileCode(buildFiles, this.contractName + '.abi');
         if (!this.abiFile) {
-            return throwError('No abi file exists. Please check compilation results.');
+            return throwError({ msg: 'No abi file exists. Please check compilation results.', channel: 2, result: CheckDeployResult.CanNotDeploy });
         }
 
         if (txhash && existingDeployFile) {
             if (existingDeployFile === this.deployFile) {
                 return from(this.getInputByTx(txhash)).pipe(
                     map((input) => (input === this.deployFile)
-                        ? { msg: 'Contract on chain is the same, not redeploying.\nDone.', channel: 1 }
-                        : { msg:  'Contract on chain is different, redeploying.', channel: 1, canDeploy: true }
+                        ? { msg: 'Contract on chain is the same, not redeploying.\nDone.', channel: 1, result: CheckDeployResult.AlreadyDeployed }
+                        : { msg:  'Contract on chain is different, redeploying.', channel: 1, result: CheckDeployResult.CanDeploy }
                     ),
-                    catchError(() => of({ msg: 'Contract not found at address, redeploying..', canDeploy: true }))
+                    catchError(() => of({ msg: 'Contract not found at address, redeploying..', result: CheckDeployResult.CanDeploy }))
                 );
             } else {
-                return of({ msg: 'Contract on chain is different, redeploying.', channel: 1, canDeploy: true });
+                return of({ msg: 'Contract on chain is different, redeploying.', channel: 1, result: CheckDeployResult.CanDeploy });
             }
         } else {
-            return of({ canDeploy: true });
+            return of({ result: CheckDeployResult.CanDeploy });
         }
     }
 
-    sendExternalTransaction(params: any) {
-        return from(new Promise((resolve, reject) => {
-            this.currWeb3.eth.sendTransaction(params, (err: any, res: any) => {
-                // this.closeExternalProviderModal();
+    deployExternally(gasSettings: any) {
+        gasSettings = { gasPrice: convertGas(gasSettings.gasPrice), gasLimit: convertGas(gasSettings.gasLimit) };
+
+        const params = {
+            from: this.account.address,
+            to: '',
+            value: '0x0',
+            gasPrice: gasSettings.gasPrice,
+            gasLimit: gasSettings.gasLimit,
+            data: this.deployFile
+        };
+
+        return from(new Promise<any>((resolve, reject) => {
+            this.currWeb3.eth.sendTransaction(params, (err: any, hash: string) => {
                 if (err) {
-                    console.error(res);
-                    // reject('Could not deploy contract using external provider.');
-                    reject();
+                    console.error(hash);
+                    reject({ msg: 'Could not deploy contract using external provider.', channel: 2 });
                     return;
                 }
                 // this._stdout('Got receipt: ' + res);
@@ -92,7 +101,7 @@ export class DeployRunner {
                 //     context: 'Contract deployment using external provider',
                 //     network: obj.network,
                 // });
-                resolve(res);
+                resolve({ msg: 'Got receipt: ' + hash, channel: 1, hash });
             });
         }));
     }
@@ -123,7 +132,7 @@ export class DeployRunner {
         return Observable.create((observer: Observer<any>) => {
             const getReceipt = () => this.currWeb3.eth.getTransactionReceipt(hash, (err: string, receipt: any) => {
                 if (err) {
-                    observer.error(err);
+                    observer.error({ msg: err, channel: 2 });
                     return;
                 }
                 if (receipt == null || receipt.blockHash == null) {
@@ -149,7 +158,7 @@ export class DeployRunner {
                                 also be a temporary issue in reading back the contract code from the chain.`,
                                 channel: 3
                             });
-                            observer.error(null);
+                            observer.error({ msg: '', channel: 2 });
                             return;
                         }
                         setTimeout(getCode, 2000);
@@ -180,10 +189,10 @@ export class DeployRunner {
             if(typeof(Contracts)==="undefined") var Contracts={};
             (function(module, Contracts) {
                 var data={
-                    address: ${contractAddress},
-                    network: ${this.environment.name},
-                    endpoint: ${this.environment.endpoint},
-                    abi: ${this.abiFile}
+                    address: "${contractAddress}",
+                    network: "${this.environment.name}",
+                    endpoint: "${this.environment.endpoint}",
+                    abi: "${this.abiFile}"
             };
             Contracts["${this.contractName}"]=data;
             module.exports=data;

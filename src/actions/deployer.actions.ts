@@ -25,6 +25,13 @@ export const deployerActions = {
         };
     },
 
+    DEPLOY_TO_MAINNET: 'DEPLOY_TO_MAINNET',
+    deployToMainnet() {
+        return {
+            type: deployerActions.DEPLOY_TO_MAINNET
+        };
+    },
+
     SHOW_MAIN_NET_WARNING: 'SHOW_MAIN_NET_WARNING',
     showMainNetWarning() {
         return {
@@ -51,5 +58,15 @@ export const deployerActions = {
         return {
             type: deployerActions.HIDE_EXTERNAL_PROVIDER_INFO
         };
+    },
+
+    DEPLOY_SUCCESS: 'DEPLOY_SUCCESS',
+    deploySuccess() {
+        return { type: deployerActions.DEPLOY_SUCCESS };
+    },
+
+    DEPLOY_FAIL: 'DEPLOY_FAIL',
+    deployFail() {
+        return { type: deployerActions.DEPLOY_FAIL };
     }
 };

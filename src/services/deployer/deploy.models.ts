@@ -14,10 +14,16 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
+export enum CheckDeployResult {
+    CanDeploy,
+    CanNotDeploy,
+    AlreadyDeployed
+}
+
 export interface ICheckDeployResult {
     msg?: string;
     channel?: number;
-    canDeploy?: boolean;
+    result: CheckDeployResult;
 }
 
 export interface IDeployResult {
