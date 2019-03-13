@@ -20,7 +20,7 @@ import { IExplorerState, IItemNameValidation } from '../models/state';
 import { IProjectItem } from '../models';
 import { AnyAction } from 'redux';
 import { generateUniqueId } from '../services/utils';
-import { updateItemInTree, sortProjectItems, findItemInTree, createFolder, addOrReplaceChildItems, ensurePath } from './explorerLib';
+import { updateItemInTree, sortProjectItems, findItemById, addOrReplaceChildItems, ensurePath } from './explorerLib';
 
 export const initialState: IExplorerState = {
     tree: null,
@@ -49,7 +49,7 @@ export default function explorerReducer(state = initialState, action: AnyAction)
             const name = action.data.name.trim();
 
             if (isValidProjectItemName(name)) {
-                const [item, parentItem] = findItemInTree(state.tree, action.data.id);
+                const parentItem = findItemById(state.tree, action.data.id).parentItem;
 
                 // do update only in case there is no item with the same name in target directory
                 if (hasNoChildWithName(parentItem, name.toLowerCase())) {
@@ -92,7 +92,7 @@ export default function explorerReducer(state = initialState, action: AnyAction)
             const name = action.data.name.trim();
 
             if (isValidProjectItemName(action.data.name)) {
-                const [parentItem] = findItemInTree(state.tree, action.data.parentId);
+                const parentItem = findItemById(state.tree, action.data.parentId).item;
 
                 if (hasNoChildWithName(parentItem, name)) {
 

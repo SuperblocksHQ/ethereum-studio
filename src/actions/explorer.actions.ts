@@ -102,14 +102,6 @@ export const explorerActions = {
         };
     },
 
-    DEPLOY_CONTRACT: 'DEPLOY_CONTRACT',
-    deployContract(item: IProjectItem) {
-        return {
-            type: explorerActions.DEPLOY_CONTRACT,
-            data: item
-        };
-    },
-
     INTERACT_CONTRACT: 'INTERACT_CONTRACT',
     interactContract(item: IProjectItem) {
         return {

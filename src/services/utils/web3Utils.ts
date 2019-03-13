@@ -8,31 +8,26 @@
 // 
 // Superblocks Lab is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULA PURPOSE.  See the
 // GNU General Public License for more details.
 // 
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { AnyAction } from 'redux';
-import { consoleActions } from '../actions';
-import { IConsoleState } from '../models/state';
+import Networks from '../../networks';
+import { evmService } from '..';
 
-const initialState: IConsoleState = {
-    rows: [],
-};
-
-export default function consoleReducer(state = initialState, action: AnyAction) {
-    switch (action.type) {
-        case consoleActions.ADD_ROWS: {
-            return {
-                ...state,
-                rows: state.rows.concat(action.data).slice(0, 5000) // limit total number or rows
-            };
-        }
-
-        default:
-            return state;
+export function getWeb3(endpoint: string) {
+    let provider;
+    if (endpoint.toLowerCase() === Networks.browser.endpoint) {
+        provider = evmService.getProvider();
+    } else {
+        provider = new window.Web3.providers.HttpProvider(endpoint);
     }
+
+    return new window.Web3(provider);
 }
 
+export function convertGas(value: string) {
+    return '0x'.concat(Number(value).toString(16));
+}

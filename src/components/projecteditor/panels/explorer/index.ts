@@ -19,6 +19,7 @@ import { explorerActions, panesActions } from '../../../../actions';
 import { Explorer } from './explorer';
 import { Dispatch } from 'redux';
 import { ProjectItemTypes, IProjectItem } from '../../../../models';
+import { deployerActions } from '../../../../actions/deployer.actions';
 
 const mapStateToProps = (state: any) => ({
     ...state.explorer
@@ -56,7 +57,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
             dispatch(explorerActions.compileContract(file));
         },
         onDeployContract: (file: IProjectItem) => {
-            dispatch(explorerActions.deployContract(file));
+            dispatch(deployerActions.deployContract(file));
         },
         onInteractContract: (file: IProjectItem) => {
             dispatch(explorerActions.interactContract(file));

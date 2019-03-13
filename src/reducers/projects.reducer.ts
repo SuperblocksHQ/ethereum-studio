@@ -23,9 +23,9 @@ import { getDappSettings, resolveAccounts } from './dappfileLib';
 export const initialState: IProjectState = {
     project: undefined,
     environments: [],
-    selectedEnvironment: { name: null, endpoint: null },
+    selectedEnvironment: { name: '', endpoint: '' },
     accounts: [],
-    selectedAccount: { name: '', balance: null, address: null, isLocked: false, type: '' },
+    selectedAccount: { name: '', balance: null, address: null, walletName: null, isLocked: false, type: '' },
     openWallets: {},
     metamaskAccounts: [],
     dappfileData: null

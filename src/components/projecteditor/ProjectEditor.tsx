@@ -28,6 +28,7 @@ import { SplitterLayout } from './splitterLayout';
 import { Panel } from './panel';
 import classnames from 'classnames';
 import { Panels, IPanelsState, IEnvironment } from '../../models/state';
+import { Deployer } from './deployer';
 
 interface IProps {
     router: any;
@@ -163,6 +164,7 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                 </div>
 
                 <BottomBar endpoint={selectedEnvironment.endpoint} />
+                <Deployer />
             </div>
         );
     }

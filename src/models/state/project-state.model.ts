@@ -1,8 +1,8 @@
 import { IProjectItem } from '../project';
 
 export interface IEnvironment {
-    name: Nullable<string>;
-    endpoint: Nullable<string>;
+    name: string;
+    endpoint: string;
 }
 
 export interface IAccount {
@@ -10,6 +10,7 @@ export interface IAccount {
     balance: Nullable<string>;
     address: Nullable<string>;
     type: string;
+    walletName: Nullable<string>;
     isLocked: boolean;
 }
 
