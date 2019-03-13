@@ -41,7 +41,7 @@ export default class Topbar extends Component<IProps> {
                 </a>
 
                 <div className={style.actionsRight}>
-                    <NewProjectAction />
+                    <NewProjectAction redirect={true} />
                     <HelpAction />
                     { isAuthenticated &&
                         <LoggedInButton

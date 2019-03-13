@@ -62,15 +62,25 @@ export class PaneTabs extends React.Component<IProps, IState> {
         });
     }
 
+    handleTabClose = (paneId: string, hasUnsavedChanges: boolean) => {
+        const { onTabClose } = this.props;
+
+        if (hasUnsavedChanges && !confirm('File is not saved, close anyway?')) {
+            return;
+        }
+
+        onTabClose(paneId);
+    }
+
     render() {
-        const { panes, onTabClick, onTabClose } = this.props;
+        const { panes, onTabClick } = this.props;
 
         return (
             <React.Fragment>
                 {panes.map((paneData) =>
                     <div key={paneData.file.id}
                         className={ classnames(style.tab, { [style.selected]: paneData.active }) }
-                        onMouseDown={ e => e.button === 1 ? onTabClose(paneData.file.id) : onTabClick(paneData.file) }
+                        onMouseDown={ e => e.button === 1 ? this.handleTabClose(paneData.file.id, paneData.hasUnsavedChanges) : onTabClick(paneData.file) }
                         onContextMenu={ e => this.handleRightClick(e)}>
 
                         <DropdownContainer
@@ -84,7 +94,7 @@ export class PaneTabs extends React.Component<IProps, IState> {
                                 <div className={style.close}>
                                     <button className='btnNoBg'
                                         onMouseDown={e => e.stopPropagation()}
-                                        onClick={e => onTabClose(paneData.file.id)}>
+                                        onClick={() => this.handleTabClose(paneData.file.id, paneData.hasUnsavedChanges)}>
                                         <IconClose />
                                     </button>
                                 </div>

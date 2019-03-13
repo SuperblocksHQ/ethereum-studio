@@ -1,4 +1,4 @@
-// Copyright 2019 Superblocks AB
+// Copyright 2018 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -15,21 +15,28 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { connect } from 'react-redux';
-import { ModalContainer } from './ModalContainer';
-import { modalActions } from './../../../../actions/modal.actions';
-import { AnyAction, Dispatch } from 'redux';
+// import { getNetworkPreferences } from '../../../selectors/settings';
+import { projectSelectors } from '../../../selectors';
+import { Deployer as  DeployerComponent } from './deployer';
+import { Dispatch } from 'react';
+import { AnyAction } from 'redux';
+import { deployerActions } from '../../../actions';
 
 const mapStateToProps = (state: any) => ({
-    modalType: state.modal.modalType,
-    modalProps: state.modal.modalProps
+    projectName: projectSelectors.getProjectName(state),
+    showMainnetWarning: state.deployer.showMainnetWarning,
+    showExternalProviderInfo: state.deployer.showExternalProviderInfo
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
     return {
-        hideModal: () => {
-            dispatch(modalActions.hideModal());
+        hideMainnetWarning() {
+            dispatch(deployerActions.hideMainNetWarning());
+        },
+        deployToMainnet() {
+            dispatch(deployerActions.deployToMainnet());
         }
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ModalContainer);
+export const Deployer = connect(mapStateToProps, mapDispatchToProps)(DeployerComponent);

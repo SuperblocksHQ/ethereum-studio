@@ -15,9 +15,8 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import walletLight from 'eth-lightwallet/dist/lightwallet.min.js';
-import Networks from '../networks';
-import { evmService } from './evm';
 import { from, Observable } from 'rxjs';
+import { getWeb3 } from './utils';
 
 interface IEthWallet {
     name: string;
@@ -31,17 +30,6 @@ interface IEthWallet {
 }
 
 const openWallets: { wallet: IEthWallet, keyStore: any }[] = [];
-
-function getWeb3(environment: string) {
-    let provider;
-    if (environment.toLowerCase() === Networks.browser.name) {
-        provider = evmService.getProvider();
-    } else {
-        provider = new window.Web3.providers.HttpProvider(Networks[environment].endpoint);
-    }
-
-    return new window.Web3(provider);
-}
 
 export const walletService = {
 
@@ -89,9 +77,9 @@ export const walletService = {
         });
     },
 
-    fetchBalance(environment: string, address: string): Observable<string> {
+    fetchBalance(endpoint: string, address: string): Observable<string> {
         return from(new Promise((resolve, reject) => {
-            const web3 = getWeb3(environment);
+            const web3 = getWeb3(endpoint);
             web3.eth.getBalance(address, (err: any, res: any) => {
                 if (err) {
                     reject(err);
@@ -100,6 +88,27 @@ export const walletService = {
                 }
             });
         }));
+    },
+
+    getKey(walletName: string, address: string) {
+        const openWalletPair = openWallets.find(w => w.wallet.name === walletName);
+        if (!openWalletPair) {
+            throw new Error(`Wallet ${walletName} is not open`);
+        }
+
+        if (!openWalletPair.wallet.addresses.some(a => a === address)) {
+            throw new Error(`Current account address is not found in ${walletName} wallet`);
+        }
+
+        // rigt now other permission level does not happen
+        // if (wallet.permissions.key === 1) {
+        const key = openWalletPair.keyStore.exportPrivateKey(
+            address,
+            openWalletPair.wallet.secret.key
+        );
+        // }
+
+        return key;
     }
 
 };

@@ -15,7 +15,8 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { AnyAction } from 'redux';
-import { userActions, authActions } from '../actions';
+import { userActions, authActions, projectsActions } from '../actions';
+import { IProject } from '../models';
 
 export const initialState = {
     projectList: [],
@@ -30,6 +31,11 @@ export default function userReducer(state = initialState, action: AnyAction) {
             return {
                 ...state,
                 isProjectListLoading: true
+            };
+        case projectsActions.DELETE_PROJECT:
+            return {
+                ...state,
+                projectList: state.projectList.filter((project: IProject) => project.id !== action.data.projectId )
             };
         case userActions.GET_PROJECT_LIST_SUCCESS:
             return {

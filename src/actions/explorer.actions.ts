@@ -102,14 +102,6 @@ export const explorerActions = {
         };
     },
 
-    DEPLOY_CONTRACT: 'DEPLOY_CONTRACT',
-    deployContract(item: IProjectItem) {
-        return {
-            type: explorerActions.DEPLOY_CONTRACT,
-            data: item
-        };
-    },
-
     INTERACT_CONTRACT: 'INTERACT_CONTRACT',
     interactContract(item: IProjectItem) {
         return {
@@ -156,6 +148,14 @@ export const explorerActions = {
     renameItem(id: string, name: string) {
         return {
             type: explorerActions.RENAME_ITEM,
+            data: { id, name }
+        };
+    },
+
+    RENAME_ITEM_SUCCESS: 'RENAME_ITEM_SUCCESS',
+    renameItemSuccess(id: string, name: string) {
+        return {
+            type: explorerActions.RENAME_ITEM_SUCCESS,
             data: { id, name }
         };
     },

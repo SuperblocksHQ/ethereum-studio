@@ -22,3 +22,4 @@ export * from './auth.service';
 export * from './wallet.service';
 export * from './evm';
 export * from './solc';
+export * from './deployer';

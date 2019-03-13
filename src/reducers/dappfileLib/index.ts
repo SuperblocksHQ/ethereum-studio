@@ -27,7 +27,8 @@ function getAccountInfo(dappfileAccount: any, dappfileWallets: any[], environmen
         address: accountEnvironment ? accountEnvironment.data.address : '0x0',
         balance: null,
         type: 'pseudo',
-        isLocked: false
+        isLocked: false,
+        walletName: null
     };
 
     if (!walletName) {
@@ -54,6 +55,7 @@ function getAccountInfo(dappfileAccount: any, dappfileWallets: any[], environmen
         }
     }
 
+    accountInfo.walletName = walletName;
     return accountInfo;
 }
 

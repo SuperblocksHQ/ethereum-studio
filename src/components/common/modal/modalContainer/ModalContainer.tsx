@@ -19,6 +19,7 @@ import EditModal from '../../../modals/editModal';
 import ShareModal from '../../../modals/shareModal';
 import PreferencesModal from '../../../modals/preferencesModal';
 import LoginModal from '../../../modals/loginModal';
+import ProjectTemplateModal from '../../../modals/projectTemplateModal';
 import style from './style.less';
 import ImportFileModal from '../../../modals/importFileModal';
 
@@ -33,11 +34,28 @@ const MODAL_COMPONENTS: any = {
     SHARE_MODAL: ShareModal,
     PREFERENCES_MODAL: PreferencesModal,
     GITHUB_MODAL: LoginModal,
-    IMPORT_FILE_MODAL: ImportFileModal
+    IMPORT_FILE_MODAL: ImportFileModal,
+    PROJECT_TEMPLATE_MODAL: ProjectTemplateModal,
     /* other modals */
 };
 
 export class ModalContainer extends Component<IProps> {
+
+    constructor(props: IProps) {
+        super(props);
+
+        window.addEventListener(
+            'keydown',
+            (e) => {
+                // Hide modal with escape button
+                if ( e.keyCode === 27 ) {
+                    e.preventDefault();
+                    props.hideModal();
+                }
+            },
+            false
+        );
+    }
 
     render() {
         const { modalType, modalProps, hideModal } = this.props;
@@ -53,7 +71,6 @@ export class ModalContainer extends Component<IProps> {
                 <SpecificModal hideModal={hideModal} {...modalProps} />
             </div>
         );
-
     }
 }
 

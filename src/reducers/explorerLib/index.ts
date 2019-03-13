@@ -16,7 +16,7 @@
 
 export * from './sortProjectItems';
 export * from './updateItemInTree';
-export * from './findItemInTree';
+export * from './findItem';
 export * from './traverseTree';
 export * from './createProjectItem';
 export * from './addOrReplaceChildItems';

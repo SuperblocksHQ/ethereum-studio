@@ -14,25 +14,24 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { AnyAction } from 'redux';
-import { consoleActions } from '../actions';
-import { IConsoleState } from '../models/state';
-
-const initialState: IConsoleState = {
-    rows: [],
-};
-
-export default function consoleReducer(state = initialState, action: AnyAction) {
-    switch (action.type) {
-        case consoleActions.ADD_ROWS: {
-            return {
-                ...state,
-                rows: state.rows.concat(action.data).slice(0, 5000) // limit total number or rows
-            };
-        }
-
-        default:
-            return state;
-    }
+export enum CheckDeployResult {
+    CanDeploy,
+    CanNotDeploy,
+    AlreadyDeployed
 }
 
+export interface ICheckDeployResult {
+    msg?: string;
+    channel?: number;
+    result: CheckDeployResult;
+}
+
+export interface IDeployResult {
+    files: { name: string, code: string }[];
+    environment: string;
+}
+
+export interface IDeployAccount {
+    address: string;
+    type: string;
+}

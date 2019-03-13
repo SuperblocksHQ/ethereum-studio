@@ -15,8 +15,8 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { ofType } from 'redux-observable';
-import { appActions, authActions } from '../../actions';
-import { withLatestFrom, tap, catchError, map, switchMap } from 'rxjs/operators';
+import { appActions, authActions, userActions } from '../../actions';
+import { withLatestFrom, tap, catchError, map, switchMap, mergeMap } from 'rxjs/operators';
 import { AnyAction } from 'redux';
 import { userService, authService } from '../../services';
 
@@ -36,7 +36,7 @@ export const silentLogin = (action$: AnyAction, state$: any) => action$.pipe(
                                     tap((e) => console.log(e)),
                                     switchMap(() => userService.getUser()
                                         .pipe(
-                                            map(authActions.loginSuccess),
+                                            mergeMap((data) => [authActions.loginSuccess(data), userActions.getProjectList()]),
                                             tap(() => console.log('Silent login success using refreshToken')),
                                             catchError((error) => [authActions.silentLoginFail(error.message)])
                                         )
