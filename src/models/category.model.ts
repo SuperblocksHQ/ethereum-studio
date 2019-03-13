@@ -14,7 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { connect } from 'react-redux';
-import ImportFileModal from './ImportFileModal';
+export interface ICategory {
+    id: number;
+    name: string;
+    description: string;
+    logo: string;
+}
 
-export default connect(null, null)(ImportFileModal);
