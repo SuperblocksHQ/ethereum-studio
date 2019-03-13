@@ -15,12 +15,12 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { explorerActions, panesActions } from '../actions';
-import { isValidProjectItemName, replaceInArray } from './utils';
+import { insert, isValidProjectItemName } from './utils';
 import { IExplorerState, IItemNameValidation } from '../models/state';
 import { IProjectItem } from '../models';
 import { AnyAction } from 'redux';
 import { generateUniqueId } from '../services/utils';
-import { updateItemInTree, sortProjectItems, findItemInTree, createFolder, addOrReplaceChildItems, ensurePath } from './explorerLib';
+import { addOrReplaceChildItems, ensurePath, findItemInTree, sortProjectItems, updateItemInTree } from './explorerLib';
 
 export const initialState: IExplorerState = {
     tree: null,
@@ -102,7 +102,8 @@ export default function explorerReducer(state = initialState, action: AnyAction)
                         mutable: true,
                         type: action.data.itemType,
                         opened: false,
-                        children: []
+                        children: [],
+                        code: action.data.code
                     };
 
                     // add new item to the tree
@@ -219,6 +220,53 @@ export default function explorerReducer(state = initialState, action: AnyAction)
             resultFolder.children = addOrReplaceChildItems(resultFolder, action.data.items).children;
 
             return { ...state, tree };
+        }
+
+        case explorerActions.IMPORT_FILES: {
+            const {parentId, importPathArray, importSourceArray} = action.data;
+
+            if (!state.tree) {
+                return state;
+            }
+
+            let itemNameValidation: IItemNameValidation = initialState.itemNameValidation;
+            let tree: Nullable<IProjectItem> = state.tree;
+
+            // create array to be inserted into state
+            const objectArray: IProjectItem[] = importPathArray
+                // add '/' to each string
+                .map((path: string) => path.startsWith('/') ? path : '/' + path)
+                .map((path: any) => path.split('/').slice(1))
+                .reduce((children: any, path: any, idx: number) => insert(children, path, importSourceArray[idx]), <IProjectItem[]>[]);
+
+            // add new item to the tree
+            const [newTree, replacedTargetItem] = updateItemInTree(
+                state.tree,
+                parentId,
+                i => ({ ...i, children: sortProjectItems(i.children.concat(objectArray)) })
+            );
+
+            // parent item was found and child was added
+            if (replacedTargetItem) {
+                objectArray.forEach((item) => {
+                    itemNameValidation = {
+                        isValid: true,
+                        name,
+                        itemId: item.id
+                    };
+                });
+                tree = newTree;
+            }
+
+            return {
+                ...state,
+                tree,
+                itemNameValidation
+            };
+        }
+
+        case explorerActions.IMPORT_FILES_FAIL: {
+            return { ...state };
         }
 
         default:
