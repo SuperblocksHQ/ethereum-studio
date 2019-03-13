@@ -119,7 +119,7 @@ export default class TopBar extends Component {
     }
 
     showModal = (modalType) => {
-        const { showModal} = this.props;
+        const { showModal } = this.props;
 
         switch (modalType) {
             case 'preferences':
