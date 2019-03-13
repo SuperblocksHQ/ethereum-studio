@@ -23,10 +23,10 @@ import CodeEditor from './sections/descriptionArea/CodeEditor';
 import SplitterLayout from 'react-splitter-layout';
 import Description from './sections/descriptionArea/Description';
 
-import data from '../../assets/static/json/openzeppelin.json';
-import {IDependenciesModel, ICategory, IProjectItem, ProjectItemTypes} from '../../models';
-import {generateUniqueId} from '../../services/utils';
-import ModalHeader from '../common/modal/modalHeader';
+import data from '../../../assets/static/json/openzeppelin.json';
+import {IDependenciesModel, ICategory, IProjectItem, ProjectItemTypes} from '../../../models';
+import {generateUniqueId} from '../../../services/utils';
+import ModalHeader from '../../common/modal/modalHeader';
 
 interface IProps {
     parentId: string;

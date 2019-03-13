@@ -16,8 +16,8 @@
 
 import React from 'react';
 import style from './style.less';
-import data from '../../../../assets/static/json/openzeppelin.json';
-import FolderTree from "../../../folderTree/FolderTree";
+import data from '../../../../../assets/static/json/openzeppelin.json';
+import FolderTree from "../../../../folderTree/FolderTree";
 
 const FileFinder = (props) => {
 

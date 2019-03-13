@@ -16,8 +16,8 @@
 
 import { connect } from 'react-redux';
 import ImportFileModal from './ImportFileModal';
-import { explorerActions } from '../../actions';
-import {Dispatch} from 'redux';
+import { explorerActions } from '../../../actions';
+import { Dispatch } from 'redux';
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
     return {
