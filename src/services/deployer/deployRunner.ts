@@ -115,7 +115,7 @@ export class DeployRunner {
                 const tx = signTransaction(this.account.address, nonce, gasSettings, key, this.deployFile);
                 observer.next({ channel: 1, msg: `Transaction signed.` });
                 observer.next({ channel: 1, msg: `Gaslimit=${gasSettings.gasLimit}, gasPrice=${gasSettings.gasPrice}.` });
-                    // observer.next({ channel: 1, msg: `Sending transaction to network ${environment.network} on endpoint ${environment.endpoint}...` });
+                observer.next({ channel: 1, msg: `Sending transaction to network ${this.environment.name} on endpoint ${this.environment.endpoint}...` });
                 return tx;
             })
             .then(tx => this.sendInteralTransaction(tx))
@@ -124,7 +124,7 @@ export class DeployRunner {
                 observer.next({ hash });
                 observer.complete();
             })
-            .catch(err => observer.error(err));
+            .catch(err => observer.error({ msg: err, channel: 2 }));
         });
     }
 
@@ -232,7 +232,9 @@ export class DeployRunner {
             this.currWeb3.eth.sendRawTransaction(
                 '0x' + tx.serialize().toString('hex'),
                 (err: string, hash: string) => {
-                    if (err == null) {
+                    if (err) {
+                        reject(err);
+                    } else {
                         resolve(hash);
                         // const args = (obj.contract.getArgs() || []).slice(0); // We MUST copy the array since we are shifting out the elements.
                         // TODO: add TX to log
@@ -246,8 +248,6 @@ export class DeployRunner {
                         //         context: 'Contract deployment',
                         //         network: obj.network,
                         //     });
-                    } else {
-                        reject(err);
                     }
                 }
             );

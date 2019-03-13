@@ -100,6 +100,6 @@ export function browserDeploy(state: any, deployRunner: DeployRunner) {
                 return of(consoleActions.addRows([{ msg: 'Unexpected error occured. Please try again!', channel: 3 }]));
             }
         }),
-        catchError(() => [deployerActions.deployFail()])
+        catchError((e) => [ consoleActions.addRows([e]), deployerActions.deployFail()])
     );
 }
