@@ -35,6 +35,9 @@ interface IProps {
     onCompileContract(file: IProjectItem): void;
     onDeployContract(file: IProjectItem): void;
     onInteractContract(file: IProjectItem): void;
+
+    showModal(action: any, modalProps: any): void;
+    closeModal(): void;
 }
 
 @DragDropContext(HTML5Backend)
@@ -62,6 +65,20 @@ export class Explorer extends React.Component<IProps> {
 
     onMoveItem = (sourceId: string, targetId: string) => {
         this.props.onMoveItem(sourceId, targetId);
+    }
+
+    onModalClose = () => {
+        this.props.closeModal();
+    }
+
+    showModal = (modalType: string, parentId: string) => {
+        const { showModal } = this.props;
+
+        switch (modalType) {
+            default:
+                showModal('IMPORT_FILE_MODAL', { parentId });
+                break;
+        }
     }
 
     renderTree(itemData: IProjectItem, actions: any, depth: number) {
@@ -112,7 +129,7 @@ export class Explorer extends React.Component<IProps> {
                         onToggle={ actions.onToggleTreeItem }
 
                         onCreateItemClick={ this.onCreateItem }
-                        onImportFileClick={ actions.onImportFile }
+                        onImportFileClick={(parentId) => this.showModal('import', parentId)}
                         onRenameClick={ (id: string) => this.onRenameItem(id, itemData.name) }
                         onDeleteClick={ (id: string) => this.onDeleteItem(id, itemData.name) }
                         onMoveItem={this.onMoveItem}>
