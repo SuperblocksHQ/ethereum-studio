@@ -16,29 +16,55 @@
 
 import { switchMap, catchError } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
-import { explorerActions } from '../../actions';
+import { explorerActions, projectsActions } from '../../actions';
 import { projectSelectors } from '../../selectors';
-import { empty } from 'rxjs';
+import { EMPTY, of } from 'rxjs';
 import { projectService } from '../../services';
+import { fetchJSON } from '../../services/utils/fetchJson';
 
 export const createItemEpic: Epic = (action$, state$) => action$.pipe(
     ofType(explorerActions.CREATE_ITEM),
     switchMap(() => {
         const project = projectSelectors.getProject(state$.value);
         const explorerState = state$.value.explorer;
+        const isOwnProject = state$.value.projects.isOwnProject;
 
         if (explorerState.itemNameValidation.isValid) {
-            return projectService.putProjectById(project.id, {
-                name: project.name,
-                description: project.description,
-                files: state$.value.explorer.tree
-            }).pipe(
-                switchMap(() => empty()),
-                catchError(() => [ explorerActions.createItemFail(explorerState.itemNameValidation.itemId) ])
-            );
+            if (isOwnProject) {
+                return projectService.putProjectById(project.id, {
+                    name: project.name,
+                    description: project.description,
+                    files: state$.value.explorer.tree
+                }).pipe(
+                    switchMap(() => [explorerActions.createItemSuccess()]),
+                    catchError(() => [ explorerActions.createItemFail(explorerState.itemNameValidation.itemId) ])
+                );
+            } else {
+                // fork with new tree structure
+                return projectService.createProject({
+                    name: project.name,
+                    description: project.description,
+                    files: state$.value.explorer.tree
+                }).pipe(
+                    switchMap((newProject) =>  {
+                        if (newProject.anonymousToken) {
+                            fetchJSON.setAnonymousToken(newProject.anonymousToken);
+                        }
+
+                        // redirect
+                        window.location.href = `${window.location.origin}/${newProject.id}`;
+
+                        return [explorerActions.createItemSuccess(), projectsActions.forkProjectSuccess()];
+                    }),
+                    catchError((error) => {
+                        console.log('There was an issue forking the project: ' + error);
+                        return of(projectsActions.forkProjectFail(error.message));
+                    })
+                );
+            }
         } else {
             alert('Invalid file or folder name.');
-            return empty();
+            return EMPTY;
         }
     })
 );
