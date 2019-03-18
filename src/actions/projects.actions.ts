@@ -141,6 +141,13 @@ export const projectsActions = {
             data: { newName }
        };
     },
+    RENAME_PROJECT_FAIL: 'RENAME_PROJECT_FAIL',
+    renameProjectFail(error: string) {
+        return {
+            type: projectsActions.RENAME_PROJECT_FAIL,
+            data: error
+        };
+    },
     UPDATE_PROJECT: 'UPDATE_PROJECT',
     updateProject(project: IProject) {
        return {
