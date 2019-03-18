@@ -120,6 +120,13 @@ export const explorerActions = {
         };
     },
 
+    CREATE_ITEM_SUCCESS: 'CREATE_ITEM_SUCCESS',
+    createItemSuccess() {
+        return {
+            type: explorerActions.CREATE_ITEM_SUCCESS,
+        };
+    },
+
     CREATE_ITEM_FAIL: 'CREATE_ITEM_FAIL',
     createItemFail(id: string) {
         return {
