@@ -129,10 +129,10 @@ export const explorerActions = {
     },
 
     IMPORT_FILES: 'IMPORT_FILES',
-    importFiles(parentId: string, importPathArray: string[], importSourceArray: string[]) {
+    importFiles(parentId: string, items: IProjectItem[]) {
         return {
             type: explorerActions.IMPORT_FILES,
-            data: { parentId, importPathArray, importSourceArray }
+            data: { parentId, items }
         };
     },
 

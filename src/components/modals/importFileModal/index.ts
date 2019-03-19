@@ -18,11 +18,12 @@ import { connect } from 'react-redux';
 import ImportFileModal from './ImportFileModal';
 import { explorerActions } from '../../../actions';
 import { Dispatch } from 'redux';
+import {IProjectItem} from '../../../models';
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
     return {
-        importFiles: (parentId: string, importPathArray: string[], importSourceArray: string[]) => {
-            dispatch(explorerActions.importFiles(parentId, importPathArray, importSourceArray));
+        importFiles: (parentId: string, items: IProjectItem[]) => {
+            dispatch(explorerActions.importFiles(parentId, items));
         },
     };
 };
