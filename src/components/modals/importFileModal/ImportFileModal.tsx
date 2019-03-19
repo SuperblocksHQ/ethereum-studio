@@ -27,10 +27,11 @@ import data from '../../../assets/static/json/openzeppelin.json';
 import {IDependenciesModel, ICategory, IProjectItem, ProjectItemTypes} from '../../../models';
 import {generateUniqueId} from '../../../services/utils';
 import ModalHeader from '../../common/modal/modalHeader';
+import {insert} from '../../../reducers/utils';
 
 interface IProps {
     parentId: string;
-    importFiles(parentId: string, importPathArray: string[], importSourceArray: string[]): void;
+    importFiles(parentId: string, items: IProjectItem[]): void;
     hideModal(): void;
 }
 
@@ -113,45 +114,38 @@ export default class ImportFileModal extends Component<IProps, IState> {
     }
 
     onImportClickHandle = () => {
-            const {parentId, importFiles} = this.props;
-            const {selectedDependencies, selectedPath, selectedSource} = this.state;
+        const {parentId, importFiles} = this.props;
+        const {selectedDependencies, selectedPath, selectedSource} = this.state;
 
-            const importPathArray = [];
-            const importSourceArray = [];
+        const importPathArray = [];
+        const importSourceArray: string[] = [];
 
-            // Import selected contract file
-            importPathArray.push(selectedPath.replace('/contracts', ''));
-            importSourceArray.push(selectedSource);
+        // Import selected contract file
+        importPathArray.push(selectedPath.replace('/contracts', ''));
+        importSourceArray.push(selectedSource);
 
-            // Import dependencies if any
-            selectedDependencies.forEach((dependency: IDependenciesModel) => {
+        // Import dependencies if any
+        selectedDependencies.forEach((dependency: IDependenciesModel) => {
 
-                const path = dependency.absolutePath;
+            const path = dependency.absolutePath;
 
-                importPathArray.push(path);
+            importPathArray.push(path);
 
-                // get source code for given dependency
-                const source = this.getSourceFromAbsolutePath(path);
-                importSourceArray.push(source);
-            });
+            // get source code for given dependency
+            const source = this.getSourceFromAbsolutePath(path);
+            importSourceArray.push(source);
+        });
 
-            importFiles(parentId, importPathArray, importSourceArray);
+        // create array to be inserted into state
+        const objectArray: IProjectItem[] = importPathArray
+            .map((path: string) => path.startsWith('/') ? path : '/' + path)
+            .map((path: any) => path.split('/').slice(1))
+            .reduce((children: any, path: any, idx: any) => insert(children, path, importSourceArray[idx]), []);
 
-            // Close modal
-            this.onCloseClickHandle();
+        importFiles(parentId, objectArray);
 
-    }
-
-    generateNewItem = (name: string, source: string) => {
-        return {
-            id: generateUniqueId(),
-            name,
-            mutable: true,
-            type: ProjectItemTypes.File,
-            opened: false,
-            children: [],
-            code: source
-        };
+        // Close modal
+        this.onCloseClickHandle();
     }
 
     createPathArray = (pathString: string) => {

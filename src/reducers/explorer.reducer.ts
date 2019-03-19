@@ -223,7 +223,7 @@ export default function explorerReducer(state = initialState, action: AnyAction)
         }
 
         case explorerActions.IMPORT_FILES: {
-            const {parentId, importPathArray, importSourceArray} = action.data;
+            const {parentId, items} = action.data;
 
             if (!state.tree) {
                 return state;
@@ -232,23 +232,16 @@ export default function explorerReducer(state = initialState, action: AnyAction)
             let itemNameValidation: IItemNameValidation = initialState.itemNameValidation;
             let tree: Nullable<IProjectItem> = state.tree;
 
-            // create array to be inserted into state
-            const objectArray: IProjectItem[] = importPathArray
-                // add '/' to each string
-                .map((path: string) => path.startsWith('/') ? path : '/' + path)
-                .map((path: any) => path.split('/').slice(1))
-                .reduce((children: any, path: any, idx: number) => insert(children, path, importSourceArray[idx]), <IProjectItem[]>[]);
-
             // add new item to the tree
             const [newTree, replacedTargetItem] = updateItemInTree(
                 state.tree,
                 parentId,
-                i => ({ ...i, children: sortProjectItems(i.children.concat(objectArray)) })
+                i => ({ ...i, children: sortProjectItems(i.children.concat(items)) })
             );
 
             // parent item was found and child was added
             if (replacedTargetItem) {
-                objectArray.forEach((item) => {
+                items.forEach((item: any) => {
                     itemNameValidation = {
                         isValid: true,
                         name,
