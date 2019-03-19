@@ -15,7 +15,7 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { IProjectItem, ProjectItemTypes } from '../../models';
-import { generateUniqueId } from '../../services/utils';
+import {createFile, createFolder} from '../explorerLib';
 
 export function isSolitidyFile(item: IProjectItem): boolean {
     return item.type === ProjectItemTypes.File && item.name.toLowerCase().endsWith('.sol');
@@ -29,28 +29,16 @@ export function isValidProjectItemName(name: string): boolean {
     return name.length > 0 && name.length < 255 && !UNIX_RESERVED_CHARS_REGEX.test(name) && !WINDOWS_RESERVED_CHARS_REGEX.test(name);
 }
 
-export function generateItem(name: string, type: ProjectItemTypes, code?: string): IProjectItem {
-    return {
-        id: generateUniqueId(),
-        name,
-        mutable: true,
-        type,
-        opened: false,
-        children: [],
-        code
-    };
-}
-
 // Insert path into directory tree structure:
 export function insert(children: any[], [head, ...tail]: any, code: string): IProjectItem[] {
     let child = children.find((item: IProjectItem)  => item.name === head);
     if (!child) {
         if (head.endsWith('.sol')) {
             // file
-            children.push(child = generateItem(head, ProjectItemTypes.File, code));
+            children.push(child = createFile(head, code));
         } else {
             // folder
-            children.push(child = generateItem(head, ProjectItemTypes.Folder));
+            children.push(child = createFolder(head));
         }
     }
     if (tail.length > 0) {
