@@ -46,3 +46,12 @@ export function insert(children: any[], [head, ...tail]: any, code: string): IPr
     }
     return children;
 }
+
+// Insert item into tree structure overwriting items with same type and name
+export function appendWithoutDuplicate(baseArray: IProjectItem[], newArray: IProjectItem[]): IProjectItem[] {
+    const filtered = baseArray.filter((entry: IProjectItem) => {
+        const newEntry = newArray[0];
+        return (entry.type !== newEntry.type || entry.name !== newEntry.name);
+    });
+    return filtered.concat(newArray);
+}

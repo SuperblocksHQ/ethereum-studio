@@ -15,7 +15,7 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { explorerActions, panesActions } from '../actions';
-import { insert, isValidProjectItemName } from './utils';
+import { isValidProjectItemName, appendWithoutDuplicate } from './utils';
 import { IExplorerState, IItemNameValidation } from '../models/state';
 import { IProjectItem } from '../models';
 import { AnyAction } from 'redux';
@@ -236,18 +236,16 @@ export default function explorerReducer(state = initialState, action: AnyAction)
             const [newTree, replacedTargetItem] = updateItemInTree(
                 state.tree,
                 parentId,
-                i => ({ ...i, children: sortProjectItems(i.children.concat(items)) })
+                i => ({ ...i, children: sortProjectItems(appendWithoutDuplicate(i.children, items)) })
             );
 
             // parent item was found and child was added
             if (replacedTargetItem) {
-                items.forEach((item: any) => {
-                    itemNameValidation = {
-                        isValid: true,
-                        name,
-                        itemId: item.id
-                    };
-                });
+                itemNameValidation = {
+                    isValid: true,
+                    name,
+                    itemId: items[0].id
+                };
                 tree = newTree;
             }
 
