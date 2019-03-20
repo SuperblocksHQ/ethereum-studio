@@ -26,6 +26,7 @@
     background-color: #252525;
     border-right: 1px solid #121516;
     color: white;
+    padding-top: 5px;
 
     .item {
         display: flex;
@@ -34,7 +35,15 @@
         height: 30px;
         cursor: default;
         user-select: none;
-        margin: 5px 10px;
+        padding: 15px 10px 15px 15px;
+        border-left: 2px solid transparent;
+
+        &:hover {
+            cursor: pointer;
+            border-color: #7237CF;
+            color: #fff;
+            background-color: rgba(128, 46, 255, 0.1);
+        }
 
         span {
             margin-left: 10px;
