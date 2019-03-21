@@ -16,7 +16,6 @@
 
 import React, { Component } from 'react';
 import ProjectList from './projectList';
-import SideMenu from './sideMenu';
 import Topbar from './topbar';
 import { IProject } from '../../models';
 import style from './style.less';
@@ -44,7 +43,6 @@ export default class Dashboard extends Component<IProps> {
                 { isAuthenticated ?
                     <React.Fragment>
                         <Topbar />
-                        <SideMenu />
                         <div className={style.content}>
                             <ProjectList
                                 listName={'All Your Projects'}
