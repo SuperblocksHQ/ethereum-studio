@@ -53,16 +53,20 @@ const error = (text) => ({
 
 export const getToastComponent = (type) => {
     switch(type) {
-        case ipfsActions.FORK_PROJECT_SUCCESS:
+        case projectsActions.FORK_PROJECT_SUCCESS:
             return info('Project Forked!');
-        case ipfsActions.FORK_PROJECT_FAIL:
+        case projectsActions.FORK_PROJECT_FAIL:
             return error('Error while forking!');
         case ipfsActions.IMPORT_PROJECT_FROM_IPFS_SUCCESS:
-            return info('Project Downloaded!');
+            return info('Project Loaded!');
         case ipfsActions.IMPORT_PROJECT_FROM_IPFS_FAIL:
             return error('Error importing project!');
         case projectsActions.UPDATE_PROJECT_SETTINGS_FAIL:
             return error('Error updating project settings');
+        case projectsActions.CREATE_PROJECT_SUCCESS:
+            return info('Project created!');
+        case projectsActions.DELETE_PROJECT_FAIL:
+            return error('Error deleting project!');
         default:
             return null;
     }

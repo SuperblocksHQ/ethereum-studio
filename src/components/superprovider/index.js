@@ -18,7 +18,8 @@ import React from 'react';
 import Web3 from 'web3';
 import Modal from '../modal/index.js';
 
-const TxEth = () => import(/* webpackChunkName: "ethereumjs-tx" */ '../../ethereumjs-tx-1.3.3.min.js');
+import Tx from 'ethereumjs-tx';
+import Buffer from 'buffer';
 
 export default class SuperProvider {
     constructor(channelId, projectItem, notifyTx, getCurrentEnv) {
@@ -229,9 +230,7 @@ export default class SuperProvider {
                             callback(err, null);
                             return;
                         }
-                        const asyncTx = await TxEth();
-                        const Tx = asyncTx.default;
-                        const tx = new Tx.Tx({
+                        const tx = new Tx({
                             from: obj2.account.address,
                             to: obj.to,
                             value: obj.value,
@@ -240,7 +239,7 @@ export default class SuperProvider {
                             gasLimit: obj.gas,
                             data: obj.data,
                         });
-                        tx.sign(Tx.Buffer.Buffer.from(obj2.account.key, 'hex'));
+                        tx.sign(Buffer.Buffer.from(obj2.account.key, 'hex'));
                         const obj3 = {
                             jsonrpc: '2.0',
                             method: 'eth_sendRawTransaction',

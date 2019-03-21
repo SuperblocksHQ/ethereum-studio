@@ -24,4 +24,5 @@ export const ipfsSelectors = {
     getShowUploadDialog: state => state.ipfs.showUploadDialog,
     getShowUploadButton: state => state.ipfs.showUploadButton,
     getShowForkButton: state => state.ipfs.showForkButton,
+    getShowShareButton: state => state.ipfs.showShareButton,
 }

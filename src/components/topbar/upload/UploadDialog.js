@@ -23,9 +23,7 @@ import {
     IconCopy,
     IconConfigure
 } from '../../icons';
-import Note from '../../note';
-import TextInput from '../../textInput';
-import { Tooltip } from '../../common';
+import { Tooltip, TextInput, Note } from '../../common';
 import UploadSettings from './settings';
 
 class UploadDialog extends Component {
@@ -50,6 +48,7 @@ class UploadDialog extends Component {
     }
 
     ipfsSyncUp = () => {
+        console.log(this.props)
         const { ipfs } = this.state;
         const { uploadToIPFS } = this.props;
 
@@ -125,7 +124,7 @@ class UploadDialog extends Component {
         return (
             <div className={style.content}>
                 <img src={'/static/img/img-ipfs-logo.svg'} className={style.logo}/>
-                <div className={style.share}>
+                <div className={style.ipfsURL}>
                     <TextInput
                         id="share-project"
                         label="Share your project"
@@ -154,7 +153,7 @@ class UploadDialog extends Component {
     render() {
         const { ipfs } = this.state;
         return (
-            <div className={style.shareDialogContainer}>
+            <div className={style.ipfsDialogContainer}>
                 { ipfs.uploading ?
                     this.renderUploading()
                 :

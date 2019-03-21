@@ -14,19 +14,18 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { from, of, interval } from 'rxjs';
+import { from, of } from 'rxjs';
 import { switchMap,
     withLatestFrom,
     map,
     catchError,
     tap,
     delayWhen,
-    retry,
-    take
  } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import { ipfsActions } from '../../actions';
 import { ipfsService } from '../../services';
+import { epicUtils } from '../utils';
 
 const files = {
     '/': {
@@ -62,18 +61,6 @@ const convertFile = (file) => {
 }
 
 /**
- * Simple Observable which will only finish once the router.control is actually available
- *
- * @param {*} router - The router object containing the control.js reference
- */
-const controlAvailable$ = (router) => interval(100)
-    .pipe(
-        map(() => router.control),
-        retry(),
-        take(1)
-    )
-
-/**
  * Epic in charge of importing a project from IPFS.
  */
 const importProjectFromIPFS = (action$, state$, { router }) => action$.pipe(
@@ -83,7 +70,7 @@ const importProjectFromIPFS = (action$, state$, { router }) => action$.pipe(
         const hash = action.data;
         return from(ipfsService.ipfsFetchFiles(hash))
         .pipe(
-            delayWhen(() => controlAvailable$(router)),
+            delayWhen(() => epicUtils.controlAvailable$(router)),
             map(response => response.map(f => convertFile(f))),
             tap(() => router.control.importProject(files, true)),
             map(ipfsActions.importProjectFromIpfsSuccess),

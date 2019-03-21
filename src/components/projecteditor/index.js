@@ -15,57 +15,22 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { connect } from 'react-redux';
-import ProjectEditor from './ProjectEditor';
+import { ProjectEditor } from './ProjectEditor';
 import { projectSelectors } from '../../selectors';
-import { sidePanelsActions } from '../../actions';
+import { panelsActions } from '../../actions';
 
 const mapStateToProps = state => ({
-    displayTransactionsPanel: state.sidePanels.showTransactionsHistory,
-    displayFileSystemPanel: state.sidePanels.showFileSystem,
-    previewSidePanel: state.sidePanels.preview,
+    panels: state.panels,
     selectedEnvironment: projectSelectors.getSelectedEnvironment(state)
 });
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        toggleTransactionsHistoryPanel() {
-            dispatch(sidePanelsActions.toggleTransactionsHistoryPanel())
+        togglePanel(panel) {
+            dispatch(panelsActions.togglePanel(panel));
         },
-        openTransactionsHistoryPanel() {
-            dispatch(sidePanelsActions.openTransactionsHistoryPanel())
-        },
-        closeTransactionsHistoryPanel() {
-            dispatch(sidePanelsActions.closeTransactionsHistoryPanel())
-        },
-        toggleFileSystemPanel() {
-            dispatch(sidePanelsActions.toggleFileSystemPanel())
-        },
-        openFileSystemPanel() {
-            dispatch(sidePanelsActions.openFileSystemPanel())
-        },
-        closeFileSystemPanel() {
-            dispatch(sidePanelsActions.closeFileSystemPanel())
-        },
-        
-        previewSidePanelActions: {
-            onClose() {
-                dispatch(sidePanelsActions.preview.togglePanel());
-            },
-            onOpen() {
-                dispatch(sidePanelsActions.preview.togglePanel());
-            },
-            onHideModals() {
-                dispatch(sidePanelsActions.preview.hideModals());
-            },
-            onTryDownload(hasExportableContent, currentEnvironment) {
-                dispatch(sidePanelsActions.preview.tryDownload(hasExportableContent, currentEnvironment));
-            },
-            onDownload() {
-                dispatch(sidePanelsActions.preview.download());
-            },
-            onToggleWeb3Accounts() {
-                dispatch(sidePanelsActions.preview.toggleWeb3Accounts());
-            }
+        closePanel(panel) {
+            dispatch(panelsActions.closePanel(panel));
         }
     }
 }

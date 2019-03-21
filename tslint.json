@@ -6,6 +6,7 @@
     "jsRules": {},
     "rules": {
         "arrow-parens": false,
+        "array-type": [true, "array"],
         "quotemark": [ true, "single", "avoid-escape" ],
         "align":[ true, "parameters", "statements" ],
         "class-name": true,

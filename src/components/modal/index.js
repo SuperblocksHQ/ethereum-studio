@@ -18,6 +18,7 @@ import React, { Component } from 'react';
 import classnames from 'classnames';
 import style from './style.less';
 
+// TODO: Remove whole folder of 'modal' after refactoring of deploying/compilating
 export default class Modal extends Component {
     constructor(props) {
         super(props);

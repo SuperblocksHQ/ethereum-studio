@@ -24,7 +24,7 @@ const restoreIPFSState = (action$, state$, { backend }) => action$.pipe(
     ofType(projectsActions.SELECT_PROJECT),
     withLatestFrom(state$),
     switchMap(([,state]) => {
-        const projectId = projectSelectors.getSelectedProjectId(state);
+        const projectId = projectSelectors.getProjectId(state);
         return from(backend.loadFilePromise(projectId, '/.super/ipfs.json'))
         .pipe(
             switchMap(file => from(JSON.parse(file))),

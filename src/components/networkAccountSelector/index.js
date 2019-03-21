@@ -22,22 +22,25 @@ import OnlyIf from '../onlyIf';
 import { NetworkSelector } from './networkSelector';
 import { AccountSelector } from './accountSelector';
 import { projectsActions } from '../../actions';
+import { projectSelectors } from '../../selectors';
 
 class NetworkAccountSelector extends Component {
     render() {
-        const { selectedProject, selectedAccount, onNetworkSelected, onAccountSelected } = this.props;
+        const { project, selectedEnvironment, onNetworkSelected, environments, onAccountSelected, accounts, selectedAccount } = this.props;
         return (
-            <OnlyIf test={Boolean(selectedProject.id)}>
+            <OnlyIf test={Boolean(project.id)}>
                 <div className={style.container}>
                     <div className={style.actionWrapper}>
-                        <NetworkSelector 
-                            selectedNetwork={selectedProject.selectedEnvironment}
-                            networks={selectedProject.environments}
+                        <NetworkSelector
+                            selectedNetwork={selectedEnvironment}
+                            networks={environments}
                             onNetworkSelected={onNetworkSelected} />
                     </div>
-
                     <div className={style.actionWrapper}>
-                        <AccountSelector {...this.props} onAccountSelected={onAccountSelected} selectedEnvironment={selectedProject.selectedEnvironment.name} />
+                        <AccountSelector
+                            accounts={accounts}
+                            selectedAccount={selectedAccount}
+                            onAccountSelected={onAccountSelected} />
                     </div>
                 </div>
             </OnlyIf>
@@ -46,8 +49,11 @@ class NetworkAccountSelector extends Component {
 }
 
 const mapStateToProps = state => ({
-    selectedProject: state.projects.selectedProject,
-    selectedAccount: state.projects.selectedAccount
+    project: projectSelectors.getProject(state),
+    selectedEnvironment: projectSelectors.getSelectedEnvironment(state),
+    environments: projectSelectors.getEnvironments(state),
+    selectedAccount: projectSelectors.getSelectedAccount(state),
+    accounts: state.projects.accounts
 });
 
 const mapDispatchToProps = dispatch => {
@@ -55,9 +61,18 @@ const mapDispatchToProps = dispatch => {
         onNetworkSelected(environment) {
             dispatch(projectsActions.setEnvironment(environment));
         },
-        onAccountSelected: (name, balance, address) => {
-            dispatch(projectsActions.updateSelectAccount(name, balance, address))
+        onAccountSelected(name) {
+            dispatch(projectsActions.selectAccount(name))
         },
+        onAccountEdit(name) {
+
+        },
+        onAccountDelete(name) {
+
+        },
+        onAccountCreate() {
+
+        }
     };
 };
 

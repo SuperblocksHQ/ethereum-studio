@@ -15,10 +15,10 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import IpfsAPI from 'ipfs-api';
-import Backend from '../components/projecteditor/control/backend';
+// import Backend from '../components/projecteditor/control/backend';
 
 let ipfs = null;
-let backend = null;
+// let backend = null;
 
 const TEMPORARY_PROJECT_ID = 1;
 
@@ -26,7 +26,7 @@ export const ipfsService = {
 
     init(backendInstance) {
         ipfs = new IpfsAPI({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' })
-        backend = backendInstance;
+        // backend = backendInstance;
     },
 
     isTemporaryProject(id) {
@@ -35,7 +35,7 @@ export const ipfsService = {
 
     clearTempProject() {
         this._stripIpfsHash();
-        backend.deleteProject(1, () => {});
+        // backend.deleteProject(1, () => {});
     },
 
     ipfsFetchFiles(hash, options) {
@@ -45,7 +45,7 @@ export const ipfsService = {
     ipfsSyncUp(inode, { includeBuildInfo, includeProjectConfig }) {
         return new Promise((resolve, reject) => {
             const data =
-                JSON.parse(localStorage.getItem(Backend.DAPP_FORMAT_VERSION)) || {};
+                JSON.parse(localStorage.getItem('dapp1.2')) || {};
 
             if (!data.projects) data.projects = [];
 

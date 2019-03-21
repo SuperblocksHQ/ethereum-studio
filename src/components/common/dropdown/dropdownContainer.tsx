@@ -1,16 +1,16 @@
 // Copyright 2018 Superblocks AB
-// 
+//
 // This file is part of Superblocks Lab.
-// 
+//
 // Superblocks Lab is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation version 3 of the License.
-// 
+//
 // Superblocks Lab is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -19,12 +19,12 @@ import { DropdownBasic } from './dropDownBasic';
 
 interface IProps {
     dropdownContent: React.ReactNode;
-    useRightClick: boolean;
+    useRightClick?: boolean;
     children: React.ReactNode;
-    showMenu: boolean;
-    onCloseMenu: () => void;
-    enableClickInside: boolean;
-    className: string;
+    showMenu?: boolean;
+    onCloseMenu?: () => void;
+    enableClickInside?: boolean;
+    className?: string;
 }
 interface IState { menuVisible: boolean; }
 
@@ -32,12 +32,15 @@ interface IState { menuVisible: boolean; }
  * Helper component to handle the state of showing/hiding a dropdown
  */
 export class DropdownContainer extends React.Component<IProps, IState> {
-    ignoreClassName: string;
 
+    public static defaultProps = {
+        showMenu: false
+    };
+    ignoreClassName: string;
     constructor(props: IProps) {
         super(props);
         this.state = {
-            menuVisible: this.props.showMenu,
+            menuVisible: this.props.showMenu || false,
         };
 
         // the ignore class name should be specific only this instance of the component
@@ -48,7 +51,7 @@ export class DropdownContainer extends React.Component<IProps, IState> {
     componentDidUpdate(prevProps: IProps) {
         if (prevProps.showMenu !== this.props.showMenu) {
             this.setState({
-                menuVisible: this.props.showMenu
+                menuVisible: this.props.showMenu || false
             });
         }
     }
