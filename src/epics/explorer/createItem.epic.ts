@@ -14,13 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import {switchMap, catchError, withLatestFrom} from 'rxjs/operators';
+import { switchMap, catchError } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
 import { explorerActions, projectsActions } from '../../actions';
 import { projectSelectors } from '../../selectors';
-import {EMPTY, from, of} from 'rxjs';
+import { EMPTY, of } from 'rxjs';
 import { projectService } from '../../services';
-import { fetchJSON } from '../../services/utils/fetchJson';
 
 export const createItemEpic: Epic = (action$, state$) => action$.pipe(
     ofType(explorerActions.CREATE_ITEM),
