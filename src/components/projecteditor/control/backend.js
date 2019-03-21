@@ -282,9 +282,6 @@ export default class Backend {
                 name: 'goerli',
             },
             {
-                name: 'infuranet',
-            },
-            {
                 name: 'mainnet',
             },
         ];
@@ -349,13 +346,6 @@ export default class Backend {
                     },
                     {
                         name: 'goerli',
-                        data: {
-                            wallet: 'external',
-                            index: 0,
-                        },
-                    },
-                    {
-                        name: 'infuranet',
                         data: {
                             wallet: 'external',
                             index: 0,

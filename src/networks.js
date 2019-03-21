@@ -12,11 +12,6 @@ const Networks = {
         interval: 2000,
         name: 'custom'
     },
-    infuranet: {
-        endpoint: "https://infuranet.infura.io/",
-        chainId: 5810,
-        interval: 5000,
-    },
     kovan: {
         endpoint: "https://kovan.infura.io/v3/148bee2b5da148a7b77a83f7504d00e7/",
         chainId: 42,

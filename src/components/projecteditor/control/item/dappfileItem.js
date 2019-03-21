@@ -154,9 +154,6 @@ export default class DappfileItem extends FileItem {
                     name: 'goerli',
                 },
                 {
-                    name: 'infuranet',
-                },
-                {
                     name: 'mainnet',
                 },
             ],
@@ -218,13 +215,6 @@ export default class DappfileItem extends FileItem {
                         },
                         {
                             name: 'goerli',
-                            data: {
-                                wallet: 'external',
-                                index: 0,
-                            },
-                        },
-                        {
-                            name: 'infuranet',
                             data: {
                                 wallet: 'external',
                                 index: 0,
