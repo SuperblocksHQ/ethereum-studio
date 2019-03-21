@@ -26,8 +26,10 @@
     cursor: pointer;
     &:hover {
         color: #E0E0E0;
-        border-color: @primary-color;
         background-color: @action-color-hover;
+    }
+    &.loggedIn:hover {
+        border-color: @primary-color;
     }
     .actionMenu {
         display: flex;
@@ -39,6 +41,7 @@
         align-content: center;
         align-items: center;
         padding: 0px 20px;
+        border-radius: 0px;
     }
     .caret {
         display: flex;
