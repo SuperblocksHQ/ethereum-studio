@@ -144,33 +144,37 @@ export default function explorerReducer(state = initialState, action: AnyAction)
             const { sourceId, targetId } = action.data;
             let itemNameValidation: IItemNameValidation = initialState.itemNameValidation;
             let tree: Nullable<IProjectItem> = state.tree;
+            const sourceItemTmp = findItemById(state.tree, sourceId).item;
+            const targetItem = findItemById(state.tree, targetId).item;
 
-            // Add source item to target folder
-            const sourceItem = updateItemInTree(
-                state.tree,
-                sourceId,
-                i => null
-            )[1];
-
-            let newTree = state.tree;
-            let replacedTargetItem = null;
-
-            // Remove source item
-            if (sourceItem) {
-                [newTree, replacedTargetItem] = updateItemInTree(
+            if (sourceItemTmp !== null && hasNoChildWithName(targetItem, sourceItemTmp.name.trim())) {
+                // Add source item to target folder
+                const sourceItem = updateItemInTree(
                     state.tree,
-                    targetId,
-                    i => ({ ...i, children: sortProjectItems(i.children.concat([sourceItem])) })
-                );
+                    sourceId,
+                    i => null
+                )[1];
 
-                // parent item was found and child was added
-                if (replacedTargetItem) {
-                    itemNameValidation = {
-                        isValid: true,
-                        name,
-                        itemId: sourceItem.id
-                    };
-                    tree = newTree;
+                let newTree = state.tree;
+                let replacedTargetItem = null;
+
+                // Remove source item
+                if (sourceItem) {
+                    [newTree, replacedTargetItem] = updateItemInTree(
+                        state.tree,
+                        targetId,
+                        i => ({ ...i, children: sortProjectItems(i.children.concat([sourceItem])) })
+                    );
+
+                    // parent item was found and child was added
+                    if (replacedTargetItem) {
+                        itemNameValidation = {
+                            isValid: true,
+                            name,
+                            itemId: sourceItem.id
+                        };
+                        tree = newTree;
+                    }
                 }
             }
 

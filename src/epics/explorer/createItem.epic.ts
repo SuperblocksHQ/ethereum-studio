@@ -37,7 +37,7 @@ export const createItemEpic: Epic = (action$, state$) => action$.pipe(
                 catchError(() => [ explorerActions.createItemFail(explorerState.itemNameValidation.itemId) ])
             );
         } else {
-            alert('Invalid file or folder name.');
+            alert('A file or folder with the same name already exists at this location. Please choose a different name.');
             return empty();
         }
     })

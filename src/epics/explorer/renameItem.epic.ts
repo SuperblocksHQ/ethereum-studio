@@ -38,7 +38,7 @@ export const renameItemEpic: Epic = (action$, state$) => action$.pipe(
                 catchError(() => [ explorerActions.renameItemFail(explorerState.itemNameValidation.itemId, explorerState.itemNameValidation.oldName) ])
             );
         } else {
-            alert('Invalid file or folder name.');
+            alert('A file or folder with the same name already exists at this location. Please choose a different name.');
             return empty();
         }
     })

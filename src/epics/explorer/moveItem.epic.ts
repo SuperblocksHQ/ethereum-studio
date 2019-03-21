@@ -16,9 +16,10 @@
 
 import { switchMap, catchError, map } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
-import { explorerActions, panesActions } from '../../actions';
+import { explorerActions } from '../../actions';
 import { projectSelectors } from '../../selectors';
 import { projectService } from '../../services';
+import { empty } from 'rxjs';
 
 export const moveItemEpic: Epic = (action$, state$) => action$.pipe(
     ofType(explorerActions.MOVE_ITEM),
@@ -26,14 +27,19 @@ export const moveItemEpic: Epic = (action$, state$) => action$.pipe(
         const project = projectSelectors.getProject(state$.value);
         const explorerState = state$.value.explorer;
 
-        return projectService.putProjectById(project.id, {
-            name: project.name,
-            description: project.description,
-            files: explorerState.tree
-        })
-        .pipe(
-            map(() => explorerActions.moveItemSuccess(data.sourceId)),
-            catchError(() => [ explorerActions.moveItemFail(data.sourceId) ])
-        );
+        if (explorerState.itemNameValidation.isValid) {
+            return projectService.putProjectById(project.id, {
+                name: project.name,
+                description: project.description,
+                files: explorerState.tree
+            })
+            .pipe(
+                map(() => explorerActions.moveItemSuccess(data.sourceId)),
+                catchError(() => [ explorerActions.moveItemFail(data.sourceId) ])
+            );
+        } else {
+            alert('A file or folder with the same name already exists at this location. Please choose a different name.');
+            return empty();
+        }
     })
 );
