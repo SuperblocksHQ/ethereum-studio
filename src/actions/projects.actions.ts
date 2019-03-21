@@ -16,6 +16,7 @@
 
 import { IEnvironment } from '../models/state';
 import { IProject } from '../models';
+import {AnyAction} from 'redux';
 
 export const projectsActions = {
     SET_ALL_ENVIRONMENTS: 'SET_ALL_ENVIRONMENTS',
@@ -189,6 +190,13 @@ export const projectsActions = {
         return {
             type: projectsActions.FORK_PROJECT_FAIL,
             data: error
+        };
+    },
+    CREATE_FORKED_PROJECT: 'CREATE_FORKED_PROJECT',
+    createForkedProject(name: string, description: string, tree: any) {
+        return {
+            type: projectsActions.CREATE_FORKED_PROJECT,
+            data: { name, description, tree }
         };
     },
 
