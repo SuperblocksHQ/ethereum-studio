@@ -1,4 +1,4 @@
-// Copyright 2018 Superblocks AB
+// Copyright 2019 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -16,7 +16,6 @@
 
 import React, { Component } from 'react';
 import ProjectList from './projectList';
-import SideMenu, { ItemType } from './sideMenu';
 import Topbar from './topbar';
 import { IProject } from '../../models';
 import style from './style.less';
@@ -36,10 +35,6 @@ export default class Dashboard extends Component<IProps> {
         this.props.getProjectList();
     }
 
-    onSideMenuItemSelected = (item: ItemType) => {
-        console.log(item);
-    }
-
     render() {
         const { projectList, isAuthenticated, isLoginInProgress, githubLoginAction } = this.props;
 
@@ -48,9 +43,6 @@ export default class Dashboard extends Component<IProps> {
                 { isAuthenticated ?
                     <React.Fragment>
                         <Topbar />
-                        <SideMenu
-                            onItemSelected={this.onSideMenuItemSelected}
-                        />
                         <div className={style.content}>
                             <ProjectList
                                 listName={'All Your Projects'}
