@@ -164,7 +164,7 @@ export const IconCheckThin = ({...props}) => <svg fill="currentColor" preserveAs
 export const IconAlphabetA = ({ ...props }) => (
     <IconImg src={'/static/img/icon-alphabet-a.svg'} {...props} />
 );
-export const IconPanelRun = ({...props}) => <svg fill="currentColor" preserveAspectRatio="xMidYMid meet" height="16px" width="16px" viewBox="0 0 12 12" style={{ verticalAlign: "middle" }} {...props}><g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g id="Studio-Online" transform="translate(-16.000000, -83.000000)" stroke="#fff" stroke-width="1"><g id="Group-13"><g id="Group-11" transform="translate(17.000000, 80.000000)"><polygon id="icon-deploy-green" transform="translate(4.000000, 9.000000) rotate(90.000000) translate(-4.000000, -9.000000) " points="4 5 8 13 0 13"></polygon></g></g></g></g></svg>;
+export const IconPanelRun = ({...props}) => <svg fill="currentColor" preserveAspectRatio="xMidYMid meet" height="16px" width="16px" viewBox="0 0 12 12" style={{ verticalAlign: "middle" }} {...props}><g id="Symbols" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd"><g id="Studio-Online" transform="translate(-16.000000, -83.000000)" stroke="#fff" strokeWidth="1"><g id="Group-13"><g id="Group-11" transform="translate(17.000000, 80.000000)"><polygon id="icon-deploy-green" transform="translate(4.000000, 9.000000) rotate(90.000000) translate(-4.000000, -9.000000) " points="4 5 8 13 0 13"></polygon></g></g></g></g></svg>;
 
 // File types
 export const IconContract = ({...props}) => <IconImg src={'/static/img/icon-solidity.svg'} {...props} />;
