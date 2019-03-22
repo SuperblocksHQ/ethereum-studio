@@ -21,12 +21,13 @@ import { projectSelectors } from '../../selectors';
 import { projectService } from '../../services';
 import { updateItemInTree } from '../../reducers/explorerLib';
 import { of } from 'rxjs';
+import {fetchJSON} from '../../services/utils/fetchJson';
 
 export const deleteItemEpic: Epic = (action$, state$) => action$.pipe(
     ofType(explorerActions.DELETE_ITEM),
     switchMap((action) => {
         const project = projectSelectors.getProject(state$.value);
-        const { name, description } = project;
+        const { name, description, id } = project;
 
         const explorerState = state$.value.explorer;
         // TODO: remove usage of updateItemInTree. This is done only temporary.
@@ -34,7 +35,7 @@ export const deleteItemEpic: Epic = (action$, state$) => action$.pipe(
         const isOwnProject = state$.value.projects.isOwnProject;
 
         if (isOwnProject) {
-            return projectService.putProjectById(project.id, {
+            return projectService.putProjectById(id, {
                 name,
                 description,
                 files
@@ -47,7 +48,7 @@ export const deleteItemEpic: Epic = (action$, state$) => action$.pipe(
                 );
         } else {
             // fork with new tree structure
-            return [panesActions.closePane(action.data.id), of(projectsActions.createForkedProject(name, description, files))];
+            return [projectsActions.createForkedProject(name, description, files), panesActions.closePane(action.data.id)];
         }
     })
 );

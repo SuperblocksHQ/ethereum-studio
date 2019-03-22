@@ -43,7 +43,7 @@ export const moveItemEpic: Epic = (action$, state$) => action$.pipe(
                 );
         } else {
             // fork with new tree structure
-            return [explorerActions.moveItemSuccess(data.id), of(projectsActions.createForkedProject(name, description, files))];
+            return [explorerActions.moveItemSuccess(data.id), projectsActions.createForkedProject(name, description, files)];
         }
     })
 );
