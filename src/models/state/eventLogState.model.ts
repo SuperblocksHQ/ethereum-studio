@@ -14,25 +14,11 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export enum Panels {
-    Explorer = 'Explorer',
-    Preview = 'Preview',
-    Transactions = 'Transactions',
-    CompilerOutput = 'CompilerOutput',
-    EventLog = 'EventLog'
+export interface IEventLogRow {
+    channel: number;
+    msg: string;
 }
 
-export enum PanelSides {
-    Left = 'Left',
-    Right = 'Right',
-    Bottom = 'Bottom'
-}
-
-export interface IPanelData {
-    open: boolean;
-    side: PanelSides;
-}
-
-export interface IPanelsState {
-    [key: string]: IPanelData;
+export interface IEventLogState {
+    rows: IEventLogRow[];
 }

@@ -14,25 +14,14 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export enum Panels {
-    Explorer = 'Explorer',
-    Preview = 'Preview',
-    Transactions = 'Transactions',
-    CompilerOutput = 'CompilerOutput',
-    EventLog = 'EventLog'
-}
+import { IEventLogRow } from '../models/state';
 
-export enum PanelSides {
-    Left = 'Left',
-    Right = 'Right',
-    Bottom = 'Bottom'
-}
-
-export interface IPanelData {
-    open: boolean;
-    side: PanelSides;
-}
-
-export interface IPanelsState {
-    [key: string]: IPanelData;
-}
+export const eventLogActions = {
+    ADD_ROWS: 'ADD_ROWS',
+    addRows(rows: IEventLogRow[]) {
+        return {
+            type: eventLogActions.ADD_ROWS,
+            data: rows
+        };
+    }
+};

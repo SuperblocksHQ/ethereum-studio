@@ -14,25 +14,25 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export enum Panels {
-    Explorer = 'Explorer',
-    Preview = 'Preview',
-    Transactions = 'Transactions',
-    CompilerOutput = 'CompilerOutput',
-    EventLog = 'EventLog'
+import { AnyAction } from 'redux';
+import { consoleActions } from '../actions';
+import { IEventLogState } from '../models/state';
+
+const initialState: IEventLogState = {
+    rows: [],
+};
+
+export default function eventLogReducer(state = initialState, action: AnyAction) {
+    switch (action.type) {
+        case consoleActions.ADD_ROWS: {
+            return {
+                ...state,
+                rows: state.rows.concat(action.data).slice(0, 5000) // limit total number or rows
+            };
+        }
+
+        default:
+            return state;
+    }
 }
 
-export enum PanelSides {
-    Left = 'Left',
-    Right = 'Right',
-    Bottom = 'Bottom'
-}
-
-export interface IPanelData {
-    open: boolean;
-    side: PanelSides;
-}
-
-export interface IPanelsState {
-    [key: string]: IPanelData;
-}
