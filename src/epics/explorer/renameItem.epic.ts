@@ -19,22 +19,24 @@ import { ofType, Epic } from 'redux-observable';
 import { explorerActions, projectsActions } from '../../actions';
 import { projectSelectors } from '../../selectors';
 import { projectService } from '../../services';
-import { EMPTY, of } from 'rxjs';
-import { fetchJSON } from '../../services/utils/fetchJson';
+import { EMPTY } from 'rxjs';
 
 export const renameItemEpic: Epic = (action$, state$) => action$.pipe(
     ofType(explorerActions.RENAME_ITEM),
     switchMap((action) => {
         const project = projectSelectors.getProject(state$.value);
+        const { name, description, id } = project;
+
         const explorerState = state$.value.explorer;
+        const files = explorerState.tree;
         const isOwnProject = state$.value.projects.isOwnProject;
 
         if (explorerState.itemNameValidation.isValid) {
             if (isOwnProject) {
-                return projectService.putProjectById(project.id, {
-                    name: project.name,
-                    description: project.description,
-                    files: explorerState.tree
+                return projectService.putProjectById(id, {
+                    name,
+                    description,
+                    files
                 })
                     .pipe(
                         map(() => explorerActions.renameItemSuccess(action.data.id, action.data.name)),
@@ -42,26 +44,7 @@ export const renameItemEpic: Epic = (action$, state$) => action$.pipe(
                     );
             } else {
                 // fork with new filename
-                return projectService.createProject({
-                    name: project.name,
-                    description: project.description,
-                    files: explorerState.tree
-                }).pipe(
-                    switchMap((newProject) =>  {
-                        if (newProject.anonymousToken) {
-                            fetchJSON.setAnonymousToken(newProject.anonymousToken);
-                        }
-
-                        // redirect
-                        window.location.href = `${window.location.origin}/${newProject.id}`;
-
-                        return [explorerActions.renameItemSuccess(action.data.id, action.data.name), projectsActions.forkProjectSuccess()];
-                    }),
-                    catchError((error) => {
-                        console.log('There was an issue forking the project: ' + error);
-                        return of(projectsActions.forkProjectFail(error.message));
-                    })
-                );
+                return [explorerActions.renameItemSuccess(action.data.id, action.data.name), projectsActions.createForkedProject(name, description, files)];
             }
         } else {
             alert('Invalid file or folder name.');

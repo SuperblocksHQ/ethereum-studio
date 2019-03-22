@@ -160,10 +160,10 @@ export const explorerActions = {
     },
 
     RENAME_ITEM_FAIL: 'RENAME_ITEM_FAIL',
-    renameItemFail(id: string, oldName: string) {
+    renameItemFail(id: string, name: string) {
         return {
             type: explorerActions.RENAME_ITEM_FAIL,
-            data: { id, oldName }
+            data: { id, name }
         };
     },
 
