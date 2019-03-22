@@ -63,17 +63,12 @@
         .buttonText {
             writing-mode: vertical-rl;
             text-orientation: mixed;
-            margin-top: 7px;
+            margin-top: 3px;
         }
         &.sideButtonsContainerRight {
             border-left: 1px solid #121516;
             .sideButton {
                 width: 100%;
-                border-left: 2px solid;
-                border-color: transparent;
-                &:hover {
-                    border-color: @primary-color;
-                }
             }
         }
         &.sideButtonsContainerLeft {
@@ -82,16 +77,10 @@
                 transform: rotate(180deg);
             }
             .sideButton {
-                border-right: 2px solid;
-                border-color: transparent;
                 display: flex;
                 flex-direction: column;
                 width: 100%;
                 align-items: center;
-
-                span {
-                    margin-left: 3px;
-                }
 
                 span:first-of-type {
                     order: 2;
@@ -99,11 +88,7 @@
 
                 span:last-of-type {
                     order: 1;
-                    margin-bottom: 7px;
-                }
-
-                &:hover {
-                    border-color: @primary-color;
+                    margin-bottom: 3px;
                 }
             }
         }
@@ -116,23 +101,17 @@
         position: relative;
 
         .sideButton {
-            border-bottom: 2px solid;
-            border-color: transparent;
             height: 100%;
             padding: 0px 10px;
 
-            &:hover {
-                border-color: @primary-color;
-            }
-
             .buttonText {
-                margin-left: 7px;
+                margin-left: 3px;
             }
         }
 
         .bottomPanelContainer {
             position: absolute;
-            bottom: 35px;
+            bottom: 30px;
             height: 200px;
             width: 100%;
             overflow: hidden;
@@ -141,15 +120,12 @@
     }
 
     .sideButton {
-        border-color: transparent;
         padding: 5px;
         transition: all .15s ease;
-        border-radius: 0px;
 
         &:hover {
             background-color: rgba(64, 169, 243, 0.1);
             cursor: pointer;
-            border-color: @primary-color;
         }
     }
 }
