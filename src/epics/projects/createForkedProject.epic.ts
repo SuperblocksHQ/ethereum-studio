@@ -24,7 +24,6 @@ import { fetchJSON } from '../../services/utils/fetchJson';
 
 export const createForkedProject: Epic = (action$, state$) => action$.pipe(
     ofType(projectsActions.CREATE_FORKED_PROJECT),
-    tap(() => console.log('project')),
     withLatestFrom(state$),
     switchMap(([action, state]) => {
         return projectService.createProject({
