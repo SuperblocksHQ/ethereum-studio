@@ -27,7 +27,10 @@ export const moveItemEpic: Epic = (action$, state$) => action$.pipe(
         const project = projectSelectors.getProject(state$.value);
         const explorerState = state$.value.explorer;
 
-        if (explorerState.itemNameValidation.isValid) {
+        if (!explorerState.itemNameValidation.isNotDuplicate) {
+            alert('A file or folder with the same name already exists at this location. Please rename the file first.');
+            return empty();
+        } else {
             return projectService.putProjectById(project.id, {
                 name: project.name,
                 description: project.description,
@@ -37,9 +40,6 @@ export const moveItemEpic: Epic = (action$, state$) => action$.pipe(
                 map(() => explorerActions.moveItemSuccess(data.sourceId)),
                 catchError(() => [ explorerActions.moveItemFail(data.sourceId) ])
             );
-        } else {
-            alert('A file or folder with the same name already exists at this location. Please choose a different name.');
-            return empty();
         }
     })
 );
