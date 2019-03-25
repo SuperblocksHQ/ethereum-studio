@@ -31,12 +31,7 @@ const Networks = {
         endpoint: "https://rinkeby.infura.io/v3/148bee2b5da148a7b77a83f7504d00e7/",
         chainId: 4,
         interval: 2500,
-    },
-    goerli: {
-        endpoint: "https://goerli.infura.io/v3/148bee2b5da148a7b77a83f7504d00e7/",
-        chainId: 5,
-        interval: 30000,
-    },
+    }
 };
 
 export default Networks;
