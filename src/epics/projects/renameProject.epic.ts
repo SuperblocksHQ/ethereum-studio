@@ -19,49 +19,31 @@ import { ofType, Epic } from 'redux-observable';
 import { projectsActions } from '../../actions';
 import { projectService } from '../../services/project.service';
 import { projectSelectors } from '../../selectors';
-import { of } from 'rxjs';
-import { fetchJSON } from '../../services/utils/fetchJson';
 
 export const renameProjectEpic: Epic = (action$: any, state$: any) => action$.pipe(
     ofType(projectsActions.RENAME_PROJECT),
     withLatestFrom(state$),
     switchMap(([action, state]) => {
         const project = projectSelectors.getProject(state);
+        const { description, id } =  project;
+        const name = action.data.newName;
+
         const isOwnProject = state.projects.isOwnProject;
+        const files = state.explorer.tree;
 
         if (isOwnProject) {
             // update
-            return projectService.putProjectById(project.id, {
-                name: action.data.newName,
-                description: project.description,
-                files: state.explorer.tree
+            return projectService.putProjectById(id, {
+                name,
+                description,
+                files
             })
                 .pipe(
                     switchMap(() => projectService.getProjectById(project.id)),
                     map(projectsActions.updateProjectSuccess),
                 );
         } else {
-            // fork with new name
-            return projectService.createProject({
-                name: action.data.newName,
-                description: project.description,
-                files: state.explorer.tree
-            }).pipe(
-                switchMap((newProject) =>  {
-                    if (newProject.anonymousToken) {
-                        fetchJSON.setAnonymousToken(newProject.anonymousToken);
-                    }
-
-                    // redirect
-                    window.location.href = `${window.location.origin}/${newProject.id}`;
-
-                    return [projectsActions.updateProjectSuccess(newProject), projectsActions.forkProjectSuccess()];
-                }),
-                catchError((error) => {
-                    console.log('There was an issue forking the project: ' + error);
-                    return of(projectsActions.forkProjectFail(error.message));
-                })
-            );
+            throw Error('You can only rename your own project!');
         }
     }),
     catchError(err => [projectsActions.renameProjectFail(err)])
