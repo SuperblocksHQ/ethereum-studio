@@ -81,9 +81,9 @@ export const IconGem = () => <FaIcon icon={iconGem} />;
 export const IconFile = () => <FaIcon icon={iconFile} />;
 export const IconFileAlt = () => <FaIcon icon={iconFileAlt} />;
 export const IconImportFile = () => <FaIcon icon={IconFileImport} />;
-export const IconFolder = () => <FaIcon icon={iconFolder} color="#49616C" />;
-export const IconFolderOpen = () => (
-    <FaIcon icon={iconFolderOpen} color="#49616C" />
+export const IconFolder = ({...props}) => <FaIcon icon={iconFolder} color="#49616C" {...props} />;
+export const IconFolderOpen = ({...props}) => (
+    <FaIcon icon={iconFolderOpen} color="#49616C" {...props} />
 )
 
 export const IconSuperblocks = ({ ...props }) => (

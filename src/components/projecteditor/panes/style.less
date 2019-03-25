@@ -28,19 +28,23 @@
         -ms-user-select: none;
         user-select: none;
         background-color: #252525;
-        min-height: 35px;
+        min-height: 30px;
         width: 100%;
         overflow-y: hidden;
         overflow-x: auto;
         display: flex;
+        border-bottom: 1px solid #121516;
+        scrollbar-width: thin;
         .tab {
             background-color: #2D2D2D;
             cursor: pointer;
             color: #969696;
             border-right: 1px solid #121516;
             padding-right: 14px;
+            align-items: center;
+            display: flex;
             .tabContainer {
-                padding: 10px 12px 10px 12px;
+                padding: 0px 12px;
                 display: flex;
                 white-space: nowrap;
                 .title {
