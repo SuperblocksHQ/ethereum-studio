@@ -63,7 +63,7 @@
         .buttonText {
             writing-mode: vertical-rl;
             text-orientation: mixed;
-            margin-top: 3px;
+            margin-top: 5px;
         }
         &.sideButtonsContainerRight {
             border-left: 1px solid #121516;
@@ -75,6 +75,7 @@
             border-right: 1px solid #121516;
             .buttonText {
                 transform: rotate(180deg);
+                margin-bottom: 5px;
             }
             .sideButton {
                 display: flex;
@@ -82,13 +83,15 @@
                 width: 100%;
                 align-items: center;
 
+                img:first-of-type,
                 svg:first-of-type {
                     order: 2;
+                    width: 14px;
+                    height: 14px;
                 }
 
                 span:last-of-type {
                     order: 1;
-                    margin-bottom: 3px;
                 }
             }
         }
@@ -108,8 +111,14 @@
             height: 100%;
             padding: 0px 10px;
 
+            svg,
+            img {
+                width: 14px;
+                height: 14px;
+            }
+
             .buttonText {
-                margin-left: 3px;
+                margin-left: 5px;
             }
         }
 
@@ -126,6 +135,12 @@
     .sideButton {
         padding: 5px;
         transition: all .15s ease;
+
+        svg,
+        img {
+            width: 14px;
+            height: 14px;
+        }
 
         &:hover {
             background-color: rgba(64, 169, 243, 0.1);
