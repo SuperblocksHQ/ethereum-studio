@@ -21,6 +21,7 @@ import { IProject } from '../models';
 export const initialState = {
     projectList: [],
     isProjectListLoading: false,
+    isProjectForking: false,
     errorLoadingProjectList: null,
     profile: null
 };
@@ -36,6 +37,16 @@ export default function userReducer(state = initialState, action: AnyAction) {
             return {
                 ...state,
                 projectList: state.projectList.filter((project: IProject) => project.id !== action.data.projectId )
+            };
+        case projectsActions.FORK_PROJECT:
+            return {
+                ...state,
+                isProjectForking: true
+            };
+        case projectsActions.FORK_PROJECT_SUCCESS:
+            return {
+                ...state,
+                isProjectForking: false
             };
         case userActions.GET_PROJECT_LIST_SUCCESS:
             return {

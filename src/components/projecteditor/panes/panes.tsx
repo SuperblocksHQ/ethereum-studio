@@ -21,6 +21,7 @@ import { PaneTabs } from './paneTabs';
 import { IPane } from '../../../models/state';
 import { FileEditor } from './editor';
 import { IProjectItem } from '../../../models';
+import PaneDraggable from './paneDraggable';
 
 interface IProps {
     panes: IPane[];
@@ -30,6 +31,7 @@ interface IProps {
     onClosePane: (fileId: string) => void;
     onCloseAllOtherPanes: (fileId: string) => void;
     onCloseAllPanes: () => void;
+    onMovePane: (fromIndex: number, toIndex: number) => void;
 
     onConfigureContract: (file: IProjectItem) => void;
     onCompileContract: (file: IProjectItem) => void;
@@ -42,14 +44,17 @@ interface IProps {
 export function Panes(props: IProps) {
     return (
         <div className={classnames(style.panescontainer, { dragging: props.dragging })}>
-            <div className={style.header}>
-                <PaneTabs
-                    panes={props.panes}
-                    onTabClick={props.onOpenFile}
-                    onTabClose={props.onClosePane}
-                    onCloseAllOtherTabs={props.onCloseAllOtherPanes}
-                    onCloseAllTabs={props.onCloseAllPanes} />
-            </div>
+            <PaneDraggable index={props.panes.length} onMovePane={props.onMovePane} isRoot={true}>
+                <div className={style.header}>
+                    <PaneTabs
+                        panes={props.panes}
+                        onTabClick={props.onOpenFile}
+                        onTabClose={props.onClosePane}
+                        onCloseAllOtherTabs={props.onCloseAllOtherPanes}
+                        onCloseAllTabs={props.onCloseAllPanes}
+                        onMovePane={props.onMovePane} />
+                </div>
+            </PaneDraggable>
             <div className={style.panes}>
             {
                 props.panes.map((pane) =>

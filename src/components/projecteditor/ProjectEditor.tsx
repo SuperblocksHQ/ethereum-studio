@@ -30,6 +30,8 @@ import classnames from 'classnames';
 import { Panels, IPanelsState, IEnvironment } from '../../models/state';
 import { Deployer } from './deployer';
 import OnlyIf from '../onlyIf';
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 
 interface IProps {
     router: any;
@@ -44,6 +46,7 @@ interface IState {
     sidePanelDragging: boolean;
 }
 
+@DragDropContext(HTML5Backend)
 export class ProjectEditor extends React.Component<IProps, IState> {
     state: IState = { sidePanelDragging: false };
 

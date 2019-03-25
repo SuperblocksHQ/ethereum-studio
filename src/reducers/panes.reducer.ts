@@ -15,7 +15,7 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { panesActions, explorerActions } from '../actions';
-import { replaceInArray } from './utils';
+import { replaceInArray, moveInArray } from './utils';
 import { AnyAction } from 'redux';
 import { IPanesState } from '../models/state';
 
@@ -117,6 +117,17 @@ export default function panesReducer(state = initialState, action: AnyAction) {
                     p => ({ ...p, file: { ...p.file, name: action.data.name }})
                 )
             };
+
+        case panesActions.MOVE_PANE: {
+            return {
+                ...state,
+                items: moveInArray(
+                    state.items,
+                    action.data.fromIndex,
+                    action.data.toIndex
+                )
+            };
+        }
 
         default:
             return state;

@@ -53,8 +53,8 @@ const error = (text) => ({
 
 export const getToastComponent = (type) => {
     switch(type) {
-        case projectsActions.FORK_PROJECT_SUCCESS:
-            return info('Project Forked!');
+        case projectsActions.FORK_PROJECT:
+            return info('Forking project...');
         case projectsActions.FORK_PROJECT_FAIL:
             return error('Error while forking!');
         case ipfsActions.IMPORT_PROJECT_FROM_IPFS_SUCCESS:
