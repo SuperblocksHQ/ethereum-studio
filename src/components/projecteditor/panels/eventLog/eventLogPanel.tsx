@@ -15,11 +15,15 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from 'react';
+import classNames from 'classnames';
 import style from '../../style-console.less';
 import { IEventLogRow } from '../../../../models/state';
+import { IconTrash } from '../../../icons';
+import { Tooltip } from '../../../common';
 
 interface IProps {
     eventLogRows: IEventLogRow[];
+    clearEventLog: () => void;
 }
 
 function getTime(row: IEventLogRow) {
@@ -30,6 +34,13 @@ export function EventLogPanel(props: IProps) {
     return (
         <div className='scrollable-y'>
             <div className={style.console}>
+                <div className={style.actionMenu}>
+                    <button className={classNames([style.icon, 'btnNoBg'])} onClick={props.clearEventLog}>
+                        <Tooltip title='Clear All'>
+                            <IconTrash />
+                        </Tooltip>
+                    </button>
+                </div>
                 <div className={style.terminal}>
                     { props.eventLogRows.map((row, index) => {
                         return row.msg.split('\n').map((line: string, lineIndex: number) => {

@@ -14,57 +14,30 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
+@primary-console-font-color: #e0e0e0;
+
 .console {
     position: relative;
     width: 100%;
     height: 100%;
-    font-size: 1.1em;
-    .btn2 {
-        float: right;
-    }
-    .title {
-        display: block;
-        border-top-right-radius: 5px;
-        border-top-left-radius: 5px;
-        border-bottom: 1px solid #262e33;
-        text-align: center;
-        font-size: 1.7em;
-        height: 48px;
-        background-color: #fff;
-        color: #333;
-    }
-    .heading {
-        display: block;
-        text-align: left;
-        font-size: 0.9em;
-        font-weight: bold;
-        height: 48px;
-        background-color: #fff;
-        color: #10ae3d;
-        .commands {
-            display: inline-block;
-            overflow-x: auto;
-            width: 848px;
-            height: 48px;
-            margin-left: 10px;
-        }
-        .run {
-            display: inline-block;
-            vertical-align: top;
-            text-align: right;
-            width: 160px;
-            margin-top: 8px;
-        }
-    }
-    .status {
-        display: block;
-        height: 1px;
-        background-color: #000;
-        div {
-            font-size: 1.0em;
-            margin-top: 3px;
-            margin-right: 20px;
-            float: right;
+    display: flex;
+
+    .actionMenu {
+        display: flex;
+        align-items: center;
+        align-content: center;
+        flex-direction: column;
+        min-width: 30px;
+        width: 30px;
+        border-right: 1px solid #121516;
+        background-color: #1C2022;
+        color: @primary-console-font-color;
+        .icon {
+            padding: 8px;
+            &:hover {
+                background-color: rgba(64, 169, 243, 0.1);
+                cursor: pointer;
+            }
         }
     }
     .terminal {
@@ -93,7 +66,7 @@
         }
     }
     .std1 {
-        color: #e0e0e0;
+        color: @primary-console-font-color;
     }
     .std2 {
         color: #cf0002;

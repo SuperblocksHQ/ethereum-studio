@@ -18,7 +18,7 @@ import { LogLevel } from '../models';
 
 export const eventLogActions = {
     ADD_EVENT_LOG_ROW: 'ADD_EVENT_LOG_ROW',
-addEventLogRow(channel: LogLevel, msg: string) {
+    addEventLogRow(channel: LogLevel, msg: string) {
         return {
             type: eventLogActions.ADD_EVENT_LOG_ROW,
             data: {
@@ -26,6 +26,13 @@ addEventLogRow(channel: LogLevel, msg: string) {
                 channel,
                 msg
             }
+        };
+    },
+
+    CLEAR_EVENT_LOG: 'CLEAR_EVENT_LOG',
+    clearEventLog() {
+        return {
+            type: eventLogActions.CLEAR_EVENT_LOG
         };
     }
 };

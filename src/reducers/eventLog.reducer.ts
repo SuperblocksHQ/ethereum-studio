@@ -30,6 +30,12 @@ export default function eventLogReducer(state = initialState, action: AnyAction)
                 rows: [...state.rows, action.data]
             };
         }
+        case eventLogActions.CLEAR_EVENT_LOG: {
+            return {
+                ...state,
+                rows: initialState.rows
+            };
+        }
 
         default:
             return state;
