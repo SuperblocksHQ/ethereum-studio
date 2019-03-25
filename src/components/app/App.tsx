@@ -15,41 +15,55 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { Component } from 'react';
-import classNames from 'classnames';
-import PropTypes from 'prop-types';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { previewService } from '../../services';
 import AnalyticsDialog from '../analyticsDialog';
 import OnlyIf from '../onlyIf';
-import ToastContainer from "../toasts/toastcontainer";
+import ToastContainer from '../toasts/toastcontainer';
 import Dashboard from '../dashboard';
 import LoadProject from '../loadProject';
 import * as embedUtils from '../../utils/embed';
-import ModalContainer  from '../common/modal/modalContainer';
+import ModalContainer from '../common/modal/modalContainer';
+import { IEventLogRow } from '../../models/state';
+import { LogLevel } from '../../models';
 
-export default class App extends Component {
+interface IProps {
+    showTrackingAnalyticsDialog: boolean;
+    router: any;
+    appVersion: string;
+    notifyAppStart: (isIframe: boolean) => void;
+    addEventLogRow: (logLevel: LogLevel, msg: string) => void;
+}
 
-    constructor(props) {
+export default class App extends Component<IProps> {
+    isImportedProject: boolean;
+    router: any;
+    functions: {
+        session: {
+            start_time: number;
+        }
+    };
+    knownWalletSeed: string;
+
+
+    constructor(props: IProps) {
         super(props);
+
         this.isImportedProject = false;
-
-        this.session = {
-            start_time: Date.now(),
-        };
-
         this.router = this.props.router;
         this.router.register('app', this);
 
         this.functions = {
             session: {
-                start_time: this.session_start_time,
+                start_time: Date.now(),
             }
         };
+
         this.knownWalletSeed = 'butter toward celery cupboard blind morning item night fatal theme display toy';
 
         // The development wallets seed is well known and the first few addresses are seeded
         // with ether in the genesis block.
-        console.log('Known development Ethereum seed is: ' + this.knownWalletSeed);
+        props.addEventLogRow(LogLevel.LOG, 'Known development Ethereum seed is: ' + this.knownWalletSeed);
     }
 
     componentDidMount() {
@@ -63,21 +77,15 @@ export default class App extends Component {
         this._init();
     }
 
-
-    redraw = all => {
-        // this.forceUpdate();
-        console.error('YOoo, someone calls redraw!!!')
-    };
-
     _init = () => {
         previewService.init(null);
-    };
+    }
 
-    session_start_time = () => {
-        return this.session.start_time;
-    };
+    redraw = (all: any) => {
+        console.error('YOoo, someone calls redraw!!!');
+    }
 
-    renderProject = ({match}) => (
+    renderProject = ({ match }: any) => (
         <LoadProject
             projectId={match.params.projectId}
             router={this.router}
@@ -92,13 +100,13 @@ export default class App extends Component {
 
         return (
             <Router>
-                <div id="app">
-                    <div id="app_content">
-                        <div className="maincontent">
-                            <Route path="/" exact render={(props) => <Dashboard {...props} functions={this.functions} />} />
+                <div id='app'>
+                    <div id='app_content'>
+                        <div className='maincontent'>
+                            <Route path='/' exact render={(props) => <Dashboard {...props} />} />
                             <Switch>
-                                <Route path="/dashboard" exact render={(props) => <Dashboard {...props} functions={this.functions} />} />
-                                <Route path="/:projectId" exact component={this.renderProject} />
+                                <Route path='/dashboard' exact render={(props) => <Dashboard {...props} />} />
+                                <Route path='/:projectId' exact component={this.renderProject} />
                             </Switch>
                         </div>
                     </div>
@@ -111,10 +119,4 @@ export default class App extends Component {
             </Router>
         );
     }
-}
-
-App.propTypes = {
-    router: PropTypes.object.isRequired,
-    appVersion: PropTypes.string.isRequired,
-    notifyAppStart: PropTypes.func.isRequired
 }

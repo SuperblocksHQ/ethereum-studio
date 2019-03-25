@@ -15,23 +15,26 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { connect } from 'react-redux';
-import { appActions, ipfsActions } from '../../actions';
+import { AnyAction, Dispatch } from 'redux';
+import { appActions, eventLogActions } from '../../actions';
 import { getShowAnalyticsTrackingDialog } from '../../selectors/settings';
 import { appSelectors } from '../../selectors';
+import { IEventLogRow } from '../../models/state';
 import App from './App';
+import { LogLevel } from '../../models';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state: any) => ({
     showTrackingAnalyticsDialog: getShowAnalyticsTrackingDialog(state),
     appVersion: appSelectors.getAppVersion(state),
 });
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
     return {
-        notifyAppStart: (isEmbeddedMode) => {
+        notifyAppStart: (isEmbeddedMode: boolean) => {
             dispatch(appActions.notifyAppStart(isEmbeddedMode));
         },
-        importProjectFromIpfs: (hash) => {
-            dispatch(ipfsActions.importProjectFromIpfs(hash));
+        addEventLogRow: (channel: LogLevel, msg: string) => {
+            dispatch(eventLogActions.addEventLogRow(channel, msg));
         },
     };
 };

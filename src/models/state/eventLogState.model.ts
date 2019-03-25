@@ -14,8 +14,11 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
+import { LogLevel } from '../logLevel.model';
+
 export interface IEventLogRow {
-    channel: number;
+    timestamp: Date;
+    channel: LogLevel;
     msg: string;
 }
 

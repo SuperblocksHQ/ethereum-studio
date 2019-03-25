@@ -14,14 +14,18 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { IEventLogRow } from '../models/state';
+import { LogLevel } from '../models';
 
 export const eventLogActions = {
-    ADD_ROWS: 'ADD_ROWS',
-    addRows(rows: IEventLogRow[]) {
+    ADD_EVENT_LOG_ROW: 'ADD_EVENT_LOG_ROW',
+addEventLogRow(channel: LogLevel, msg: string) {
         return {
-            type: eventLogActions.ADD_ROWS,
-            data: rows
+            type: eventLogActions.ADD_EVENT_LOG_ROW,
+            data: {
+                timestamp: new Date(),
+                channel,
+                msg
+            }
         };
     }
 };

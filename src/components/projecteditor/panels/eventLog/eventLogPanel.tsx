@@ -22,6 +22,10 @@ interface IProps {
     eventLogRows: IEventLogRow[];
 }
 
+function getTime(row: IEventLogRow) {
+    return row.timestamp.getHours() + ':' + row.timestamp.getMinutes();
+}
+
 export function EventLogPanel(props: IProps) {
     return (
         <div className='scrollable-y'>
@@ -31,7 +35,7 @@ export function EventLogPanel(props: IProps) {
                         return row.msg.split('\n').map((line: string, lineIndex: number) => {
                             let cl = style.std1;
                             if (row.channel === 2) { cl = style.std2; } else if (row.channel === 3) { cl = style.std3; }
-                            return <div key={index + lineIndex} className={cl}>{line}</div>;
+                            return <div key={index + lineIndex} className={cl}>{getTime(row)}<span>&nbsp;&nbsp;&nbsp;&nbsp;</span>{line}</div>;
                         });
                     })}
                 </div>

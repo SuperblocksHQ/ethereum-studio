@@ -14,17 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { EventLogPanel } from './eventLogPanel';
-import { connect } from 'react-redux';
-import { Dispatch } from 'react';
-import { AnyAction } from 'redux';
-
-const mapStateToProps = (state: any) => ({
-    eventLogRows: state.eventLog.rows
-});
-
-const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
-    return {};
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(EventLogPanel);
+export enum LogLevel {
+    LOG = 1,
+    ERROR = 2 ,
+    WARNING = 3
+}

@@ -20,3 +20,4 @@ export * from './project';
 export * from './project.model';
 export * from './user.model';
 export * from './account-environment.model';
+export * from './logLevel.model';

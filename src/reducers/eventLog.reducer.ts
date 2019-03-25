@@ -15,7 +15,7 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { AnyAction } from 'redux';
-import { consoleActions } from '../actions';
+import { eventLogActions } from '../actions';
 import { IEventLogState } from '../models/state';
 
 const initialState: IEventLogState = {
@@ -24,10 +24,10 @@ const initialState: IEventLogState = {
 
 export default function eventLogReducer(state = initialState, action: AnyAction) {
     switch (action.type) {
-        case consoleActions.ADD_ROWS: {
+        case eventLogActions.ADD_EVENT_LOG_ROW: {
             return {
                 ...state,
-                rows: state.rows.concat(action.data).slice(0, 5000) // limit total number or rows
+                rows: [...state.rows, action.data]
             };
         }
 
