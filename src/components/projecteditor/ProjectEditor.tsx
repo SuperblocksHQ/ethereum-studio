@@ -22,7 +22,7 @@ import TopBar from '../topbar';
 import BottomBar from './bottomBar';
 import ContactContainer from '../contactContainer';
 import { Preview, TransactionLogPanel, Console, Explorer, EventLogPanel } from './panels';
-import { IconTransactions, IconShowPreview, IconPanelRun, IconFolderOpen, IconAskQuestion } from '../icons';
+import { IconTransactions, IconShowPreview, IconPanelRun, IconFolderOpen, IconEventLog } from '../icons';
 import { SideButton } from './sideButton';
 import { SplitterLayout } from './splitterLayout';
 import { Panel } from './panel';
@@ -160,7 +160,7 @@ export class ProjectEditor extends React.Component<IProps, IState> {
 
                             <div style={{marginLeft: 'auto'}}>
                                 <SideButton name='Event Log'
-                                    icon={<IconAskQuestion />}
+                                    icon={<IconEventLog />}
                                     onClick={() => togglePanel(Panels.EventLog)}  />
                             </div>
                         </div>
