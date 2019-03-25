@@ -9,7 +9,6 @@ export const initialState = {
     showForkButton: true,
     showShareButton: false,
     showUploadSettings: false,
-    showUploadDialog: false,
     uploadSettings: {
         includeBuildInfo: false,
         includeProjectConfig: false
@@ -29,7 +28,6 @@ export default function panesReducer(state = initialState, action, rootState) {
                 uploading: false,
                 timestamp: action.data.timestamp,
                 shareURL: action.data.shareURL,
-                showUploadDialog: true,
                 showShareButton: true,
                 uploadSettings: initialState.uploadSettings, // Make we reset the settigs on every upload
             };
@@ -76,7 +74,6 @@ export default function panesReducer(state = initialState, action, rootState) {
         case ipfsActions.HIDE_UPLOAD_DIALOG: {
             return {
                 ...state,
-                showUploadDialog: false,
             };
         }
         case ipfsActions.UPDATE_IPFS_ACTION_BUTTONS: {

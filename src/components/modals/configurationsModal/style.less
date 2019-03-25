@@ -1,0 +1,71 @@
+/*
+ * Filename: c:\Src\superblocks\superblocks-lab-mainrepo\src\components\modals\configurationsModal\style.less
+ * Path: c:\Src\superblocks\superblocks-lab-mainrepo
+ * Created Date: Tuesday, March 19th 2019, 11:11:20 am
+ * Author: Ostap-PC
+ * 
+ * Copyright (c) 2019 Your Company
+ */
+// Copyright 2018 Superblocks AB
+//
+// This file is part of Superblocks Lab.
+//
+// Superblocks Lab is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation version 3 of the License.
+//
+// Superblocks Lab is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
+
+@import '../../../style/index';
+
+.configurationsModal {
+    background-color: @modal-background-color;
+    color: #fff;
+
+    h2 {
+        margin-top: 0;
+    }
+
+    .container {
+        width: 700px;
+        position: relative;
+        height: 340px;
+    }
+
+    .column {
+        padding: 12px;
+        height: 100%;
+    }
+
+    .configGroup {
+        padding: 2px 5px 2px 5px;
+    }
+
+    .configItem {
+        padding: 2px 5px 2px 15px;
+        cursor: pointer;
+    }
+
+    .nameContainer {
+        display: flex;
+        margin-bottom: 16px;
+
+        .label {
+            padding-right: 10px;
+        }
+    }
+
+    .pluginContainer {
+        flex: 1;
+    }
+
+    .buttonsContainer {
+        float: right;
+    }
+}

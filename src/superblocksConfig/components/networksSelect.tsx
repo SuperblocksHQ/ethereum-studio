@@ -1,4 +1,4 @@
-// Copyright 2018 Superblocks AB
+// Copyright 2019 Superblocks AB
 // 
 // This file is part of Superblocks Lab.
 // 
@@ -15,24 +15,24 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from 'react';
-import style from './style.less';
+import { Select } from '../../components/common';
+import { INetwork } from '../models';
 
 interface IProps {
-    value: string;
-    options: string[];
-    onChange: (value: string) => void;
+    currentNetwork: INetwork;
+    networks: INetwork[];
+    onChange(network: INetwork): void;
 }
 
-export function Select(props: IProps) {
+export function NetworksSelect(props: IProps) {
+    const value = props.currentNetwork.host + ':' + props.currentNetwork.port;
+    const options = props.networks.map(n => n.host + ':' + n.port);
+
+    const getNetwork = (v: string) => {
+        return props.networks.find(n => v.indexOf(n.host) >= 0 && v.indexOf(n.port.toString()) >= 0);
+    };
+
     return (
-        <select className={style.select} value={props.value} onChange={e => props.onChange(e.target.value)}>
-            {props.options.map((option: any) => {
-                return (
-                    <option key={option} value={option}>
-                        {option}
-                    </option>
-                );
-            })}
-        </select>
+        <Select value={value} options={options} onChange={v => getNetwork(v)} />
     );
 }

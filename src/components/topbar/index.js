@@ -23,26 +23,25 @@ const mapStateToProps = state => ({
     selectedProjectName: projectSelectors.getProjectName(state),
     selectedProjectId: projectSelectors.getProjectId(state),
     ipfsActions: {
-        showUploadDialog: ipfsSelectors.getShowUploadDialog(state),
-        showUploadButton: ipfsSelectors.getShowUploadButton(state),
         showForkButton: ipfsSelectors.getShowForkButton(state),
         showShareButton: ipfsSelectors.getShowShareButton(state),
     },
     view: {
         project: projectSelectors.getProject(state),
         showOpenInLab: viewSelectors.getShowTopBarOpenInLab(state),
-    }
+    },
+    configurations: projectSelectors.getRunConfigs(state)
 });
 
 function mapDispatchToProps(dispatch) {
     return {
-        hideUploadDialog: () => {
+        hideUploadDialog() {
             dispatch(ipfsActions.hideUploadDialog())
         },
-        forkProject: (projectId, redirect) => {
+        forkProject(projectId, redirect) {
             dispatch(projectsActions.forkProject(projectId, redirect))
         },
-        showModal: (modalType, modalProps) => {
+        showModal(modalType, modalProps) {
             dispatch(modalActions.showModal(modalType, modalProps));
         }
     };

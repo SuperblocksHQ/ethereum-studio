@@ -14,8 +14,20 @@ export interface IAccount {
     isLocked: boolean;
 }
 
+export interface IRunConfiguration {
+    id: string;
+    name: string;
+    plugin: string;
+    pluginData: any;
+    data?: any;
+    active?: boolean;
+}
+
 export interface IProjectState {
     project?: Partial<IProjectItem>;
+    selectedRunConfig?: IRunConfiguration;
+    runConfigurations: IRunConfiguration[];
+
     environments: IEnvironment[];
     selectedEnvironment: IEnvironment;
     accounts: IAccount[];
@@ -24,5 +36,4 @@ export interface IProjectState {
         [key: string]: string[]
     };
     metamaskAccounts: string[];
-    dappfileData: any;
 }

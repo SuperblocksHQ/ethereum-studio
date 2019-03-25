@@ -20,18 +20,16 @@ import classNames from 'classnames';
 import style from './style.less';
 import { DropdownContainer } from '../common/dropdown';
 import { Tooltip, HelpAction, NewProjectAction } from '../common';
-import UploadDialog from './upload';
 import {
     IconPreferences,
     IconProjectSelector,
-    IconUpload,
     IconFork,
     IconShare,
     IconMenu,
     IconAlphabetA
 } from '../icons';
 import OnlyIf from '../onlyIf';
-import NetworkAccountSelector from '../networkAccountSelector';
+import { ConfigurationSelector } from './configurationSelector';
 import MenuDropdownDialog from './menu';
 import LoginButton from "../login";
 import ProjectTitle from './projectTitle';
@@ -64,15 +62,6 @@ const PreferencesAction = () => (
     </div>
 );
 
-const UploadDrowdownAction = () => (
-    <div className={style.action}>
-        <button className={classNames([style.container, 'btnNoBg'])}>
-            <IconUpload />
-            <span>Upload</span>
-        </button>
-    </div>
-);
-
 const ForkDropdownAction = (props) => {
     const { onForkClicked } = props;
     return(
@@ -97,8 +86,6 @@ export default class TopBar extends Component {
     state = {
         selectedProjectName: this.props.selectedProjectName,
         ipfsActions: {
-            showUploadDialog: this.props.ipfsActions.showUploadDialog,
-            showUploadButton: this.props.ipfsActions.showUploadButton,
             showForkButton: this.props.ipfsActions.showForkButton,
             showShareButton: this.props.ipfsActions.showShareButton,
         }
@@ -118,19 +105,17 @@ export default class TopBar extends Component {
         }
     }
 
-    showModal = (modalType) => {
-        const { showModal} = this.props;
+    showPreferencesModal = () => {
+        this.props.showModal('PREFERENCES_MODAL', null);
+    }
 
-        switch (modalType) {
-            case 'preferences':
-                showModal('PREFERENCES_MODAL', null);
-                break;
-            case 'share':
-                const defaultUrl = String(window.location);
-                showModal('SHARE_MODAL', {defaultUrl});
-                break;
-        }
-    };
+    showShareModal = () => {
+        this.props.showModal('SHARE_MODAL', {defaultUrl: String(window.location)});
+    }
+
+    showConfigurationsModal = () => {
+        this.props.showModal('CONFIGURATIONS_MODAL', null);
+    }
 
     onForkClicked = () => {
         const { forkProject, selectedProjectId } = this.props;
@@ -143,7 +128,7 @@ export default class TopBar extends Component {
 
     render() {
 
-        const { showUploadDialog, showUploadButton, showForkButton } = this.state.ipfsActions;
+        const { showForkButton } = this.state.ipfsActions;
         const { project, showOpenInLab } = this.props.view;
 
         return (
@@ -166,25 +151,17 @@ export default class TopBar extends Component {
                             <span>Open in Lab</span>
                         </a>
                     </OnlyIf>
-                    <NetworkAccountSelector />
+                    <ConfigurationSelector
+                        items={this.props.configurations}
+                        onChange={this.props.selectConfiguration}
+                        onAddConfig={this.showConfigurationsModal} />
                     <div className={style.projectActions}>
-                        <OnlyIf test={showUploadButton}>
-                            <DropdownContainer
-                                className={classNames([style.actionUpload, style.action])}
-                                dropdownContent={<UploadDialog />}
-                                enableClickInside={true}
-                                showMenu={showUploadDialog}
-                                onCloseMenu={this.onCloseUploadDialog}
-                            >
-                                <UploadDrowdownAction />
-                            </DropdownContainer>
-                        </OnlyIf>
                         <OnlyIf test={showForkButton}>
                             <ForkDropdownAction
                                 onForkClicked={this.onForkClicked}
                             />
                         </OnlyIf>
-                        <div className={classNames([style.action, style.actionMenu])} onClick={() => this.showModal('share')}>
+                        <div className={classNames([style.action, style.actionMenu])} onClick={this.showShareModal}>
                             <ShareDropdownAction />
                         </div>
                     </div>
@@ -195,7 +172,7 @@ export default class TopBar extends Component {
                 <div className={style.actionsRight}>
                     <NewProjectAction redirect={false} />
                     <DashboardAction />
-                    <div onClick={() => this.showModal('preferences')}>
+                    <div onClick={this.showPreferencesModal}>
                         <PreferencesAction />
                     </div>
                     <HelpAction />
@@ -214,13 +191,10 @@ TopBar.propTypes = {
     selectedProjectName: PropTypes.string,
     selectedProjectId: PropTypes.string,
     ipfsActions: PropTypes.shape({
-        showUploadDialog: PropTypes.bool.isRequired,
-        showUploadButton: PropTypes.bool.isRequired,
         showForkButton: PropTypes.bool.isRequired,
         showShareButton: PropTypes.bool.isRequired,
     }),
     view: PropTypes.shape({
-        showSelectedProjectName: PropTypes.bool,
         showOpenInLab: PropTypes.bool,
     }),
     hideUploadDialog: PropTypes.func.isRequired,

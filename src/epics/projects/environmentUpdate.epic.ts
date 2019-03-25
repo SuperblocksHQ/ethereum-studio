@@ -27,7 +27,7 @@ function hasEnvironments(state: any) {
 }
 
 export const environmentUpdateEpic: Epic = (action$, state$) => action$.pipe(
-    ofType(projectsActions.SET_ENVIRONMENT, projectsActions.SET_ALL_ENVIRONMENTS),
+    ofType(projectsActions.SET_ENVIRONMENT, projectsActions.SET_ALL_NETWORKS),
     switchMap(() => {
         if (!hasEnvironments(state$.value)) {
             return empty();

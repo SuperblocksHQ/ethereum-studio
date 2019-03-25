@@ -15,75 +15,56 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { projectsActions } from '../actions/projects.actions';
-import { IProjectState, IEnvironment } from '../models/state';
+import { IProjectState } from '../models/state';
 import { AnyAction } from 'redux';
-import { IProjectItem } from '../models';
-import { getDappSettings, resolveAccounts } from './dappfileLib';
+import { getDappSettings } from './dappfileLib';
+import superblockConfigReducer from '../superblocksConfig/superblocksConfig.reducer';
+import { replaceInArray } from './utils';
 
 export const initialState: IProjectState = {
     project: undefined,
+    selectedRunConfig: undefined,
+    runConfigurations: [
+        { id: '123', plugin: 'SuperBlocks', name: 'Run Develop', active: true, pluginData: { selectedEnvironment: 'Development' } },
+        { id: '1234', plugin: 'SuperBlocks', name: 'Run Stage', active: false, pluginData: { selectedEnvironment: 'Development' } }
+    ],
     environments: [],
     selectedEnvironment: { name: '', endpoint: '' },
     accounts: [],
     selectedAccount: { name: '', balance: null, address: null, walletName: null, isLocked: false, type: '' },
     openWallets: {},
-    metamaskAccounts: [],
-    dappfileData: null
+    metamaskAccounts: []
 };
 
-function getEnvOrNull(environment: IEnvironment) {
-    return (environment && environment.name)
-        ? environment
-        : null;
+function handlePluginAction(state: IProjectState, action: AnyAction) {
+    if (state.selectedRunConfig) {
+        const prevSelectedRunConfig = state.selectedRunConfig;
+        const selectedRunConfig = { ...prevSelectedRunConfig, data: superblockConfigReducer(prevSelectedRunConfig.data, action) };
+        return {
+            ...state,
+            selectedRunConfig,
+            runConfigurations: replaceInArray(state.runConfigurations, c => c === prevSelectedRunConfig, () => selectedRunConfig)
+        };
+    } else {
+        return state;
+    }
 }
 
 export default function projectsReducer(state = initialState, action: AnyAction) {
+    // handle plugin actions
+    if (action.type.startsWith('PLUGINS.SUPERBLOCKS.')) {
+        return handlePluginAction(state, action);
+    }
+
+    // handle project actions
     switch (action.type) {
-        case projectsActions.SET_ALL_ENVIRONMENTS:
-            return {
+        case projectsActions.SELECT_RUN_CONFIGURATION: {
+            const stateChange = {
                 ...state,
-                environments: action.data,
-                selectedEnvironment: getEnvOrNull(state.selectedEnvironment)
-                            || action.data[0]
-                            || initialState.selectedEnvironment
+                selectedRunConfig: state.runConfigurations.find(r => r.id === action.data)
             };
-        case projectsActions.SET_ENVIRONMENT: {
-            const selectedEnvironment = state.environments.find(e => e.name === action.data) || initialState.selectedEnvironment;
-            let accounts = initialState.accounts;
-            let selectedAccount = state.selectedAccount;
-
-            if (selectedEnvironment.name) {
-                accounts = resolveAccounts(state.dappfileData, selectedEnvironment.name, state.openWallets, state.metamaskAccounts);
-                selectedAccount = accounts.find(a => a.name === state.selectedAccount.name) || initialState.selectedAccount;
-            }
-            return {
-                ...state,
-                selectedEnvironment,
-                accounts,
-                selectedAccount
-            };
+            return handlePluginAction(stateChange, { type: 'PLUGIN.INIT', data: initialState.runConfigurations[0].pluginData });
         }
-        case projectsActions.SET_METAMASK_ACCOUNTS: {
-            let accounts = state.accounts;
-            let selectedAccount = state.selectedAccount;
-            const metamaskAccounts = action.data;
-
-            if (state.selectedEnvironment.name) {
-                accounts = resolveAccounts(state.dappfileData, state.selectedEnvironment.name, state.openWallets, metamaskAccounts);
-                selectedAccount = accounts.find(a => a.name === state.selectedAccount.name) || initialState.selectedAccount;
-            }
-            return {
-                ...state,
-                metamaskAccounts,
-                accounts,
-                selectedAccount
-            };
-        }
-        case projectsActions.SELECT_ACCOUNT:
-            return {
-                ...state,
-                selectedAccount: state.accounts.find(a => a.name === action.data) || initialState.selectedAccount
-            };
         case projectsActions.UPDATE_PROJECT_SETTINGS_SUCCESS: {
             return {
                 ...state,
@@ -91,12 +72,6 @@ export default function projectsReducer(state = initialState, action: AnyAction)
                     ...state.project,
                     name: action.data.name
                 },
-            };
-        }
-        case projectsActions.UPDATE_ACCOUNT_BALANCE: {
-            return {
-                ...state,
-                selectedAccount: {...state.selectedAccount, balance: action.data.balance}
             };
         }
         case projectsActions.OPEN_WALLET_SUCCESS:
@@ -108,27 +83,25 @@ export default function projectsReducer(state = initialState, action: AnyAction)
                 }
             };
         case projectsActions.LOAD_PROJECT_SUCCESS: {
-            const files: IProjectItem = action.data.project.files;
-            let stateChange = {
-                environments: initialState.environments,
-                selectedEnvironment: initialState.selectedEnvironment,
-                dappfileData: null
+            const stateChange: IProjectState = {
+                ...state,
+                selectedRunConfig: state.runConfigurations.find(r => !!r.active)
             };
 
             // parse dappjson file to get environment
-            try {
-                const dappfile = files.children.find(f => f.name === 'dappfile.json');
-                if (dappfile) {
-                    stateChange = getDappSettings(dappfile.code || '', state.openWallets, state.metamaskAccounts);
-                }
-            } catch (e) {
-                console.log(e);
-            }
+            // try {
+            //     const dappfile = files.children.find(f => f.name === 'dappfile.json');
+            //     if (dappfile) {
+            //         stateChange = getDappSettings(dappfile.code || '', state.openWallets, state.metamaskAccounts);
+            //     }
+            // } catch (e) {
+            //     console.log(e);
+            // }
 
             return {
-                ...state,
+                ...stateChange,
+                ...handlePluginAction(stateChange, { type: 'PLUGIN.INIT', data: initialState.runConfigurations[0].pluginData }),
                 project: { ...action.data.project, files: undefined },
-                ...stateChange
             };
         }
         case projectsActions.LOAD_PROJECT_FAIL: {

@@ -18,10 +18,25 @@ import { IEnvironment } from '../models/state';
 import { IProject } from '../models';
 
 export const projectsActions = {
-    SET_ALL_ENVIRONMENTS: 'SET_ALL_ENVIRONMENTS',
+    SELECT_RUN_CONFIGURATION: 'SELECT_RUN_CONFIGURATION',
+    selectRunConfiguration(id: string) {
+        return {
+            type: projectsActions.SELECT_RUN_CONFIGURATION,
+            data: id
+        };
+    },
+    SAVE_RUN_CONFIGURATION: 'SAVE_RUN_CONFIGURATION',
+    saveRunConfiguration(id: string, name: string) {
+        return {
+            type: projectsActions.SAVE_RUN_CONFIGURATION,
+            data: { id, name }
+        };
+    },
+
+    SET_ALL_NETWORKS: 'SET_ALL_ENVIRONMENTS',
     setAllEnvironments(environments: IEnvironment[]) {
         return {
-            type: projectsActions.SET_ALL_ENVIRONMENTS,
+            type: projectsActions.SET_ALL_NETWORKS,
             data: environments
         };
     },
@@ -186,18 +201,18 @@ export const projectsActions = {
     },
 
      // ---------- CREATE_EMPTY_PROJECT ----------
-     CREATE_EMPTY_PROJECT: 'CREATE_EMPTY_PROJECT',
-     createEmptyProject(redirect: boolean) {
-         return {
-             type: projectsActions.CREATE_EMPTY_PROJECT,
-             data: { redirect }
-         };
-     },
+    CREATE_EMPTY_PROJECT: 'CREATE_EMPTY_PROJECT',
+    createEmptyProject(redirect: boolean) {
+        return {
+            type: projectsActions.CREATE_EMPTY_PROJECT,
+            data: { redirect }
+        };
+    },
 
-     CREATE_PROJECT_SUCCESS: 'CREATE_PROJECT_SUCCESS',
-     createProjectSuccess() {
-         return {
-             type: projectsActions.CREATE_PROJECT_SUCCESS,
-         };
-     }
+    CREATE_PROJECT_SUCCESS: 'CREATE_PROJECT_SUCCESS',
+    createProjectSuccess() {
+        return {
+            type: projectsActions.CREATE_PROJECT_SUCCESS,
+        };
+    }
 };

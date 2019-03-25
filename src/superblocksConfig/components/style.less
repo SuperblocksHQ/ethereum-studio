@@ -1,0 +1,72 @@
+// Copyright 2019 Superblocks AB
+// 
+// This file is part of Superblocks Lab.
+// 
+// Superblocks Lab is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation version 3 of the License.
+// 
+// Superblocks Lab is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
+
+.container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .row {
+        display: flex;
+        margin-bottom: 10px;
+
+        .label {
+            // width: 70px;
+            padding-right: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .field {
+            flex: 1;
+
+            input {
+                width: 100%;
+            }
+        }
+    }
+
+    .configurationArea {
+        padding: 8px 16px;
+        border: 1px solid #3C3C3C;
+        flex: 1;
+    }
+
+    .flex {
+        display: flex;
+    }
+
+    // TODO: maybe this should be in some common lib
+    .tab {
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
+        border-color: transparent;
+        padding: 5px;
+        transition: all .15s ease;
+        padding: 8px 12px;
+        user-select: none;
+
+        &:hover {
+            background-color: rgba(64, 169, 243, 0.1);
+            cursor: pointer;
+            border-color: #8641F2;
+        }
+
+        &.selected {
+            border-color: #8641F2;
+        }
+    }
+}
