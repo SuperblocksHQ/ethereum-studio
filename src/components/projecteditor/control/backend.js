@@ -279,9 +279,6 @@ export default class Backend {
                 name: 'kovan',
             },
             {
-                name: 'infuranet',
-            },
-            {
                 name: 'mainnet',
             },
         ];
@@ -339,13 +336,6 @@ export default class Backend {
                     },
                     {
                         name: 'kovan',
-                        data: {
-                            wallet: 'external',
-                            index: 0,
-                        },
-                    },
-                    {
-                        name: 'infuranet',
                         data: {
                             wallet: 'external',
                             index: 0,

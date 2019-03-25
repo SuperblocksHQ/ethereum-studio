@@ -1,3 +1,4 @@
+const INFURA_API_KEY = process.env.REACT_APP_INFURA_API_KEY;
 // Map network to endpoint.
 const Networks = {
     browser: {
@@ -12,31 +13,26 @@ const Networks = {
         interval: 2000,
         name: 'custom'
     },
-    infuranet: {
-        endpoint: "https://infuranet.infura.io/",
-        chainId: 5810,
-        interval: 5000,
-    },
     kovan: {
-        endpoint: "https://kovan.infura.io/",
+        endpoint: `https://kovan.infura.io/v3/${INFURA_API_KEY}`,
         chainId: 42,
         interval: 5000,
     },
     mainnet: {
-        endpoint: "https://mainnet.infura.io/",
+        endpoint: `https://mainnet.infura.io/v3/${INFURA_API_KEY}`,
         chainId: 1,
         interval: 10000,
     },
     ropsten: {
-        endpoint: "https://ropsten.infura.io/",
+        endpoint: `https://ropsten.infura.io/v3/${INFURA_API_KEY}`,
         chainId: 3,
         interval: 2500,
     },
     rinkeby: {
-        endpoint: "https://rinkeby.infura.io/",
+        endpoint: `https://rinkeby.infura.io/v3/${INFURA_API_KEY}`,
         chainId: 4,
         interval: 2500,
-    },
+    }
 };
 
 export default Networks;
