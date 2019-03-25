@@ -17,5 +17,6 @@
 export const userSelectors = {
     getProjectList: (state: any) => state.user.projectList,
     getUserProfile: (state: any) => state.user.profile,
-    isProjectListLoading: (state: any) => state.user.isProjectListLoading
+    isProjectListLoading: (state: any) => state.user.isProjectListLoading,
+    isProjectForking: (state: any) => state.user.isProjectForking,
 };
