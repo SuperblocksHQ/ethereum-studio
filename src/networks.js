@@ -13,22 +13,22 @@ const Networks = {
         name: 'custom'
     },
     kovan: {
-        endpoint: "https://kovan.infura.io/v3/148bee2b5da148a7b77a83f7504d00e7/",
+        endpoint: "https://kovan.infura.io/v3/148bee2b5da148a7b77a83f7504d00e7",
         chainId: 42,
         interval: 5000,
     },
     mainnet: {
-        endpoint: "https://mainnet.infura.io/v3/148bee2b5da148a7b77a83f7504d00e7/",
+        endpoint: "https://mainnet.infura.io/v3/148bee2b5da148a7b77a83f7504d00e7",
         chainId: 1,
         interval: 10000,
     },
     ropsten: {
-        endpoint: "https://ropsten.infura.io/v3/148bee2b5da148a7b77a83f7504d00e7/",
+        endpoint: "https://ropsten.infura.io/v3/148bee2b5da148a7b77a83f7504d00e7",
         chainId: 3,
         interval: 2500,
     },
     rinkeby: {
-        endpoint: "https://rinkeby.infura.io/v3/148bee2b5da148a7b77a83f7504d00e7/",
+        endpoint: "https://rinkeby.infura.io/v3/148bee2b5da148a7b77a83f7504d00e7",
         chainId: 4,
         interval: 2500,
     }
