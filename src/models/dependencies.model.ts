@@ -1,4 +1,4 @@
-// Copyright 2018 Superblocks AB
+// Copyright 2019 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -14,7 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { connect } from 'react-redux';
-import ImportFileModal from './ImportFileModal';
+export interface IDependenciesModel {
+    fileName: string;
+    absolutePath: string;
+}
 
-export default connect(null, null)(ImportFileModal);

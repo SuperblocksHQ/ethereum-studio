@@ -14,11 +14,18 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export * from './contractAgrumentData';
-export * from './category.model';
-// TODO: fix!
-export * from './project';
-export * from './project.model';
-export * from './user.model';
-export * from './account-environment.model';
-export * from './dependencies.model';
+import { connect } from 'react-redux';
+import ImportFileModal from './ImportFileModal';
+import { explorerActions } from '../../../actions';
+import { Dispatch } from 'redux';
+import {IProjectItem} from '../../../models';
+
+const mapDispatchToProps = (dispatch: Dispatch) => {
+    return {
+        importFiles: (parentId: string, items: IProjectItem[]) => {
+            dispatch(explorerActions.importFiles(parentId, items));
+        },
+    };
+};
+
+export default connect<any, any, any, any>(null, mapDispatchToProps)(ImportFileModal);

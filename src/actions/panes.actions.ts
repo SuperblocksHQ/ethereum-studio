@@ -70,5 +70,13 @@ export const panesActions = {
             type: panesActions.SET_UNSAVED_CHANGES,
             data: { fileId, hasUnsavedChanges }
         };
+    },
+
+    MOVE_PANE: 'MOVE_PANE',
+    movePane(fromIndex: number, toIndex: number) {
+        return {
+            type: panesActions.MOVE_PANE,
+            data: { fromIndex, toIndex }
+        };
     }
 };
