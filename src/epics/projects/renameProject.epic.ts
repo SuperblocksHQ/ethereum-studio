@@ -19,6 +19,7 @@ import { ofType, Epic } from 'redux-observable';
 import { projectsActions } from '../../actions';
 import { projectService } from '../../services/project.service';
 import { projectSelectors } from '../../selectors';
+import {EMPTY} from 'rxjs';
 
 export const renameProjectEpic: Epic = (action$: any, state$: any) => action$.pipe(
     ofType(projectsActions.RENAME_PROJECT),
@@ -43,7 +44,7 @@ export const renameProjectEpic: Epic = (action$: any, state$: any) => action$.pi
                     map(projectsActions.updateProjectSuccess),
                 );
         } else {
-            throw Error('You can only rename your own project!');
+            return EMPTY;
         }
     }),
     catchError(err => [projectsActions.renameProjectFail(err)])
