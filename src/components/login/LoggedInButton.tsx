@@ -39,7 +39,7 @@ export default class LoggedInButton extends Component<IProps> {
     render() {
         const { userProfile } = this.props;
         return (
-            <div className={style.action}>
+            <div className={classNames([style.action, style.loggedIn])}>
                 <DropdownContainer
                         className={style.actionMenu}
                         dropdownContent={

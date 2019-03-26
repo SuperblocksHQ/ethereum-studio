@@ -19,8 +19,6 @@ import style from './style.less';
 import { FileItem, ContractItem } from './items';
 import FolderItem from './items/folderItem';
 import { IProjectItem, ProjectItemTypes } from '../../../../models';
-import { DragDropContext } from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
 
 interface IProps {
     tree: IProjectItem;
@@ -40,7 +38,6 @@ interface IProps {
     closeModal(): void;
 }
 
-@DragDropContext(HTML5Backend)
 export class Explorer extends React.Component<IProps> {
 
     onRenameItem = (id: string, currName: string) => {

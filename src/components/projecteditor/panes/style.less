@@ -28,19 +28,25 @@
         -ms-user-select: none;
         user-select: none;
         background-color: #252525;
-        min-height: 35px;
+        min-height: 30px;
         width: 100%;
         overflow-y: hidden;
         overflow-x: auto;
         display: flex;
+        scrollbar-width: thin;
         .tab {
             background-color: #2D2D2D;
             cursor: pointer;
             color: #969696;
             border-right: 1px solid #121516;
             padding-right: 14px;
+            position: relative;
+            z-index: 2;
+            align-items: center;
+            display: flex;
+            height: 100%;
             .tabContainer {
-                padding: 10px 12px 10px 12px;
+                padding: 0px 12px;
                 display: flex;
                 white-space: nowrap;
                 .title {
@@ -118,6 +124,31 @@
                     border-color: #7237CF;
                 }
             }
+        }
+    }
+
+    .isOver {
+        position: relative;
+    
+        &:after {
+            position: absolute;
+            content: ' ';
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0; 
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 3;
+        }
+
+        &.isRoot:after {
+            z-index: 1;
+        }
+    }
+
+    .isDragging {
+        &:after {
+            background: transparent;
         }
     }
 

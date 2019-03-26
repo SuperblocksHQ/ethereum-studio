@@ -28,7 +28,8 @@ import {
     IconFork,
     IconShare,
     IconMenu,
-    IconAlphabetA
+    IconAlphabetA,
+    IconLoader,
 } from '../icons';
 import OnlyIf from '../onlyIf';
 import NetworkAccountSelector from '../networkAccountSelector';
@@ -74,11 +75,14 @@ const UploadDrowdownAction = () => (
 );
 
 const ForkDropdownAction = (props) => {
-    const { onForkClicked } = props;
+    const { onForkClicked, isProjectForking } = props;
     return(
         <div className={style.action}>
-            <button className={classNames([style.actionFork, style.container, 'btnNoBg'])} onClick={onForkClicked}>
-                <IconFork />
+            <button className={classNames([style.actionFork, style.container, 'btnNoBg'])} onClick={onForkClicked} disabled={isProjectForking}>
+                { isProjectForking
+                    ? <IconLoader />
+                    : <IconFork />
+                }
                 <span>Fork</span>
             </button>
         </div>
@@ -182,6 +186,7 @@ export default class TopBar extends Component {
                         <OnlyIf test={showForkButton}>
                             <ForkDropdownAction
                                 onForkClicked={this.onForkClicked}
+                                isProjectForking={this.props.isProjectForking}
                             />
                         </OnlyIf>
                         <div className={classNames([style.action, style.actionMenu])} onClick={() => this.showModal('share')}>

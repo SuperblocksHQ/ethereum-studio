@@ -35,4 +35,10 @@ export function replaceOrRemoveInArray<T>(array: T[], where: (item: T) => boolea
     }
 }
 
+export function moveInArray<T>(array: T[], fromIndex: number, toIndex: number): T[] {
+    const resultArray = [...array];
+    resultArray.splice(toIndex, 0, resultArray.splice(fromIndex, 1)[0]);
+    return resultArray;
+}
+
 export * from './fileUtils';
