@@ -15,7 +15,7 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { connect } from 'react-redux';
-import { explorerActions, panesActions } from '../../../../actions';
+import { explorerActions, modalActions, panesActions } from '../../../../actions';
 import { Explorer } from './explorer';
 import { Dispatch } from 'redux';
 import { ProjectItemTypes, IProjectItem } from '../../../../models';
@@ -27,17 +27,17 @@ const mapStateToProps = (state: any) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
     return {
+        showModal: (modalType: string, modalProps: any) => {
+            dispatch(modalActions.showModal(modalType, modalProps));
+        },
         onToggleTreeItem: (id: string) => {
             dispatch(explorerActions.toggleTreeItem(id));
         },
         onOpenFile: (file: IProjectItem) => {
             dispatch(panesActions.openFile(file));
         },
-        onCreateItem: (parentId: string, type: ProjectItemTypes, name: string) => {
-            dispatch(explorerActions.createItem(parentId, type, name));
-        },
-        onImportFile: (parentId: string) => {
-            dispatch(explorerActions.importFile(parentId));
+        onCreateItem: (parentId: string, type: ProjectItemTypes, name: string, code?: string) => {
+            dispatch(explorerActions.createItem(parentId, type, name, code));
         },
         onRenameItem: (id: string, name: string) => {
             dispatch(explorerActions.renameItem(id, name)); // TODO: check if correct

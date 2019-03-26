@@ -113,10 +113,10 @@ export const explorerActions = {
     // ----- Context menu
 
     CREATE_ITEM: 'CREATE_ITEM',
-    createItem(parentId: string, itemType: ProjectItemTypes, name: string) {
+    createItem(parentId: string, itemType: ProjectItemTypes, name: string, code?: string) {
         return {
             type: explorerActions.CREATE_ITEM,
-            data: { parentId, itemType, name }
+            data: { parentId, itemType, name, code }
         };
     },
 
@@ -128,11 +128,19 @@ export const explorerActions = {
         };
     },
 
-    IMPORT_FILE: 'IMPORT_FILE',
-    importFile(parentId: string) {
+    IMPORT_FILES: 'IMPORT_FILES',
+    importFiles(parentId: string, items: IProjectItem[]) {
         return {
-            type: explorerActions.IMPORT_FILE,
-            data: { parentId }
+            type: explorerActions.IMPORT_FILES,
+            data: { parentId, items }
+        };
+    },
+
+    IMPORT_FILES_FAIL: 'IMPORT_FILES_FAIL',
+    importFilesFail(id: string) {
+        return {
+            type: explorerActions.IMPORT_FILES_FAIL,
+            data: { id }
         };
     },
 

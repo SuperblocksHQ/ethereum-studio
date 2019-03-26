@@ -18,22 +18,27 @@ import { switchMap, catchError } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
 import { explorerActions } from '../../actions';
 import { projectSelectors } from '../../selectors';
-import { empty } from 'rxjs';
+import { EMPTY } from 'rxjs';
 import { projectService } from '../../services';
 
-export const createPathWithContentEpic: Epic = (action$, state$) => action$.pipe(
-    ofType(explorerActions.CREATE_PATH_WITH_CONTENT),
+export const importFilesEpic: Epic = (action$, state$) => action$.pipe(
+    ofType(explorerActions.IMPORT_FILES),
     switchMap(() => {
         const project = projectSelectors.getProject(state$.value);
         const explorerState = state$.value.explorer;
 
-        return projectService.putProjectById(project.id, {
-            name: project.name,
-            description: project.description,
-            files: explorerState.tree
-        }).pipe(
-            switchMap(() => empty()),
-            catchError(() => [ explorerActions.failSavingFiles() ])
-        );
+        if (explorerState.itemNameValidation.isValid) {
+            return projectService.putProjectById(project.id, {
+                name: project.name,
+                description: project.description,
+                files: state$.value.explorer.tree
+            }).pipe(
+                switchMap(() => EMPTY),
+                catchError(() => [explorerActions.importFilesFail(explorerState.itemNameValidation.itemId) ])
+            );
+        } else {
+            alert('Invalid file or folder name.');
+            return EMPTY;
+        }
     })
 );
