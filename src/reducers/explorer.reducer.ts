@@ -236,7 +236,7 @@ export default function explorerReducer(state = initialState, action: AnyAction)
             const [newTree, replacedTargetItem] = updateItemInTree(
                 state.tree,
                 parentId,
-                i => ({ ...i, children: sortProjectItems(appendWithoutDuplicate(i.children, items)) })
+                i => ({ ...i, children: appendWithoutDuplicate(i.children, items) })
             );
 
             // parent item was found and child was added

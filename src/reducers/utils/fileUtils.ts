@@ -15,7 +15,7 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { IProjectItem, ProjectItemTypes } from '../../models';
-import {createFile, createFolder} from '../explorerLib';
+import { createFile, createFolder, sortProjectItems } from '../explorerLib';
 
 export function isSolitidyFile(item: IProjectItem): boolean {
     return item.type === ProjectItemTypes.File && item.name.toLowerCase().endsWith('.sol');
@@ -47,11 +47,15 @@ export function insert(children: any[], [head, ...tail]: any, code: string): IPr
     return children;
 }
 
-// Insert item into tree structure overwriting items with same type and name
+/**
+ * Insert item into tree structure overwriting items with same type and name and then sorting the resulting array.
+ * @param {IProjectItem[]} baseArray - array we are appending to
+ * @param {IProjectItem[]} newArray - array to be appended
+ */
 export function appendWithoutDuplicate(baseArray: IProjectItem[], newArray: IProjectItem[]): IProjectItem[] {
     const filtered = baseArray.filter((entry: IProjectItem) => {
         const newEntry = newArray[0];
         return (entry.type !== newEntry.type || entry.name !== newEntry.name);
     });
-    return filtered.concat(newArray);
+    return sortProjectItems(filtered.concat(newArray));
 }
