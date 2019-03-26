@@ -58,10 +58,7 @@ export const projectService = {
             method: 'PUT',
             body: data
         }).pipe(
-            switchMap(r => (r.ok ? r.statusText : throwError(r.statusText))),
-            catchError(err => {
-                throw err;
-            })
+            switchMap(r => (r.ok ? r.statusText : throwError(r.statusText)))
         );
     },
 
