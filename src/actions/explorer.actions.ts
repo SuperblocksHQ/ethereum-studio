@@ -120,6 +120,13 @@ export const explorerActions = {
         };
     },
 
+    CREATE_ITEM_SUCCESS: 'CREATE_ITEM_SUCCESS',
+    createItemSuccess() {
+        return {
+            type: explorerActions.CREATE_ITEM_SUCCESS,
+        };
+    },
+
     CREATE_ITEM_FAIL: 'CREATE_ITEM_FAIL',
     createItemFail(id: string) {
         return {
@@ -161,10 +168,10 @@ export const explorerActions = {
     },
 
     RENAME_ITEM_FAIL: 'RENAME_ITEM_FAIL',
-    renameItemFail(id: string, oldName: string) {
+    renameItemFail(id: string, name: string) {
         return {
             type: explorerActions.RENAME_ITEM_FAIL,
-            data: { id, oldName }
+            data: { id, name }
         };
     },
 

@@ -14,27 +14,38 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { switchMap, withLatestFrom, map, tap } from 'rxjs/operators';
+import { switchMap, withLatestFrom, map, catchError } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
 import { projectsActions } from '../../actions';
 import { projectService } from '../../services/project.service';
 import { projectSelectors } from '../../selectors';
+import {EMPTY} from 'rxjs';
 
-// TODO - Make sure to handle errors correctly
 export const renameProjectEpic: Epic = (action$: any, state$: any) => action$.pipe(
     ofType(projectsActions.RENAME_PROJECT),
     withLatestFrom(state$),
     switchMap(([action, state]) => {
         const project = projectSelectors.getProject(state);
+        const { description, id } =  project;
+        const name = action.data.newName;
 
-        return projectService.putProjectById(project.id, {
-            name: action.data.newName,
-            description: project.description,
-            files: state.explorer.tree
-        })
-        .pipe(
-            switchMap(() => projectService.getProjectById(project.id)),
-            map(projectsActions.updateProjectSuccess),
-        );
-    })
+        const isOwnProject = state.projects.isOwnProject;
+        const files = state.explorer.tree;
+
+        if (isOwnProject) {
+            // update
+            return projectService.putProjectById(id, {
+                name,
+                description,
+                files
+            })
+                .pipe(
+                    switchMap(() => projectService.getProjectById(project.id)),
+                    map(projectsActions.updateProjectSuccess),
+                );
+        } else {
+            return EMPTY;
+        }
+    }),
+    catchError(err => [projectsActions.renameProjectFail(err)])
 );

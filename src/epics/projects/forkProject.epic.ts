@@ -14,12 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { of } from 'rxjs';
-import { switchMap, catchError } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
 import { projectsActions, userActions } from '../../actions';
 import { projectService } from '../../services';
-import { fetchJSON } from '../../services/utils/fetchJson';
 
 export const forkProject: Epic = (action$, state$) => action$.pipe(
     ofType(projectsActions.FORK_PROJECT),
@@ -27,27 +25,10 @@ export const forkProject: Epic = (action$, state$) => action$.pipe(
         return projectService.getProjectById(action.data.projectId)
         .pipe(
             switchMap((selectedProject) => {
-                return projectService.createProject({
-                    name: selectedProject.name,
-                    description: selectedProject.description,
-                    files: selectedProject.files
-                }).pipe(
-                    switchMap((project) =>  {
-                        if (project.anonymousToken) {
-                            fetchJSON.setAnonymousToken(project.anonymousToken);
-                        }
-
-                        if (action.data.redirect) {
-                            window.location.href = `${window.location.origin}/${project.id}`;
-                        }
-
-                        return [userActions.getProjectList(), projectsActions.forkProjectSuccess()];
-                    }),
-                    catchError((error) => {
-                        console.log('There was an issue forking the project: ' + error);
-                        return of(projectsActions.forkProjectFail(error.message));
-                    })
-                );
+                return [projectsActions.createForkedProject(
+                    selectedProject.name,
+                    selectedProject.description,
+                    selectedProject.files), userActions.getProjectList()];
             }
         ));
     })
