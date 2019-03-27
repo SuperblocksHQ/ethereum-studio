@@ -14,10 +14,11 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { fetchJSON, getRefreshToken } from './utils/fetchJson';
-import { catchError, switchMap, tap, map } from 'rxjs/operators';
+import { fetchJSON, getAuthToken, getRefreshToken } from './utils/fetchJson';
+import { catchError, switchMap, tap } from 'rxjs/operators';
 import platform from 'platform';
 import { EMPTY, throwError } from 'rxjs';
+import { ITokenExpiration } from '../models';
 
 export const authService = {
 
@@ -79,5 +80,24 @@ export const authService = {
 
     isMobile() {
         return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    },
+
+    getAuthTokenExpiration(): ITokenExpiration {
+        const jwtDecode = require('jwt-decode');
+        const token = getAuthToken();
+        const decoded = jwtDecode(token);
+
+        // no higher than refreshInterval in seconds
+        const refreshOffset = 15;
+
+        // how many seconds before expiration do refresh
+        const TTL = decoded.exp - Math.floor(Date.now() / 1000);
+        // refresh x seconds before expiration
+        const nextRefresh = Math.max(0, TTL - refreshOffset);
+
+        // difference between expiration and issuance
+        const refreshInterval = decoded.exp - decoded.iat - refreshOffset;
+
+        return {nextRefresh, refreshInterval};
     }
 };
