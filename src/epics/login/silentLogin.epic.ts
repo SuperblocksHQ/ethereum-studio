@@ -27,8 +27,8 @@ export const silentLogin = (action$: AnyAction, state$: any) => action$.pipe(
         .pipe(
             switchMap(() => userService.getUser()
                 .pipe(
-                    map(authActions.loginSuccess),
                     tap(() => console.log('Silent login success using authToken')),
+                    mergeMap((data) => [authActions.loginSuccess(data), authActions.refreshAuthStart(), userActions.getProjectList()]),
                     catchError((err: any) => {
                             console.log('Unable to login using authToken: ', err.message);
                             return authService.refreshAuth()
@@ -36,8 +36,8 @@ export const silentLogin = (action$: AnyAction, state$: any) => action$.pipe(
                                     tap((e) => console.log(e)),
                                     switchMap(() => userService.getUser()
                                         .pipe(
-                                            mergeMap((data) => [authActions.loginSuccess(data), userActions.getProjectList()]),
                                             tap(() => console.log('Silent login success using refreshToken')),
+                                            mergeMap((data) => [authActions.loginSuccess(data), authActions.refreshAuthStart(), userActions.getProjectList()]),
                                             catchError((error) => [authActions.silentLoginFail(error.message)])
                                         )
                                     )
