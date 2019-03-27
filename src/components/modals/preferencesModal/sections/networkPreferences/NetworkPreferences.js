@@ -38,7 +38,7 @@ export default class NetworkPreferences extends Component {
 
     onGasLimitChange = (e) => {
         const { onChange } = this.props;
-        const { tempGasPrice } = this.state;
+        const { tempGasPrice, errorGasPrice } = this.state;
 
         const gasLimitValue = e.target.value;
         const errorGasLimit = gasLimitValue ? validations.validateGasLimit(Number(gasLimitValue)) : null;
@@ -50,7 +50,7 @@ export default class NetworkPreferences extends Component {
         });
 
         onChange({
-            isValid: !errorGasLimit,
+            isValid: !errorGasLimit && !errorGasPrice,
             gasLimit: gasLimitValue,
             gasPrice: tempGasPrice
         });
@@ -58,7 +58,7 @@ export default class NetworkPreferences extends Component {
 
     onGasPriceChange = (e) => {
         const { onChange } = this.props;
-        const { tempGasLimit } = this.state;
+        const { tempGasLimit, errorGasLimit } = this.state;
 
         const gasPriceValue = e.target.value;
         const errorGasPrice = gasPriceValue ? validations.validateGasPrice(Number(gasPriceValue)) : null;
@@ -70,7 +70,7 @@ export default class NetworkPreferences extends Component {
         });
 
         onChange({
-            isValid: !errorGasPrice,
+            isValid: !errorGasPrice && !errorGasLimit,
             gasLimit: tempGasLimit,
             gasPrice: gasPriceValue
         });

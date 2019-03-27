@@ -14,21 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import React from 'react';
-import style from './style.less';
-import data from '../../../../assets/static/json/openzeppelin.json';
-import FolderTree from "../../../folderTree/FolderTree";
+export interface ICategory {
+    id: number;
+    name: string;
+    description: string;
+    logo: string;
+}
 
-const FileFinder = (props) => {
-
-    const {onFileSelected, selectedTitle} = props;
-
-    return (
-        <div className={style.container}>
-            <FolderTree data={data} onFileSelected={onFileSelected} selectedTitle={selectedTitle}/>
-        </div>
-    );
-
-};
-
-export default FileFinder;

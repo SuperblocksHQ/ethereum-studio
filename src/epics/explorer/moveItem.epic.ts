@@ -16,24 +16,34 @@
 
 import { switchMap, catchError, map } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
-import { explorerActions, panesActions } from '../../actions';
+import { explorerActions, projectsActions } from '../../actions';
 import { projectSelectors } from '../../selectors';
 import { projectService } from '../../services';
+import { of } from 'rxjs';
 
 export const moveItemEpic: Epic = (action$, state$) => action$.pipe(
     ofType(explorerActions.MOVE_ITEM),
     switchMap((data) => {
         const project = projectSelectors.getProject(state$.value);
-        const explorerState = state$.value.explorer;
+        const { name, description, id } = project;
 
-        return projectService.putProjectById(project.id, {
-            name: project.name,
-            description: project.description,
-            files: explorerState.tree
-        })
-        .pipe(
-            map(() => explorerActions.moveItemSuccess(data.sourceId)),
-            catchError(() => [ explorerActions.moveItemFail(data.sourceId) ])
-        );
+        const explorerState = state$.value.explorer;
+        const files = explorerState.tree;
+        const isOwnProject = state$.value.projects.isOwnProject;
+
+        if (isOwnProject) {
+            return projectService.putProjectById(id, {
+                name,
+                description,
+                files
+            })
+                .pipe(
+                    map(() => explorerActions.moveItemSuccess(data.sourceId)),
+                    catchError(() => [ explorerActions.moveItemFail(data.sourceId) ])
+                );
+        } else {
+            // fork with new tree structure
+            return [explorerActions.moveItemSuccess(data.id), projectsActions.createForkedProject(name, description, files)];
+        }
     })
 );

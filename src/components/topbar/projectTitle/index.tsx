@@ -7,6 +7,7 @@ import { AnyAction } from 'redux';
 
 const mapStateToProps = (state: any) => ({
     projectId: projectSelectors.getProjectId(state),
+    isOwnProject: projectSelectors.getIsOwnProject(state)
 });
 
 function mapDispatchToProps(dispatch: Dispatch<AnyAction>) {

@@ -25,4 +25,5 @@ export interface IProjectState {
     };
     metamaskAccounts: string[];
     dappfileData: any;
+    isOwnProject: boolean;
 }

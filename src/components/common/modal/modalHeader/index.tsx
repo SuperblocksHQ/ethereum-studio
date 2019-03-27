@@ -15,7 +15,6 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from 'react';
-import Proptypes from 'prop-types';
 import style from './style.less';
 import classNames from 'classnames';
 import { IconClose } from '../../../icons';
@@ -23,6 +22,7 @@ import { IconClose } from '../../../icons';
 interface IProps {
     title: string;
     onCloseClick: () => void;
+    className?: string;
 }
 
 export function ModalHeader(props: IProps)  {

@@ -16,7 +16,7 @@
 
 import { connect } from 'react-redux';
 import TopBar from './Topbar';
-import { ipfsSelectors, viewSelectors, projectSelectors } from '../../selectors';
+import { ipfsSelectors, viewSelectors, projectSelectors, userSelectors } from '../../selectors';
 import { ipfsActions, projectsActions, modalActions } from '../../actions';
 
 const mapStateToProps = state => ({
@@ -31,7 +31,8 @@ const mapStateToProps = state => ({
     view: {
         project: projectSelectors.getProject(state),
         showOpenInLab: viewSelectors.getShowTopBarOpenInLab(state),
-    }
+    },
+    isProjectForking: userSelectors.isProjectForking(state),
 });
 
 function mapDispatchToProps(dispatch) {
