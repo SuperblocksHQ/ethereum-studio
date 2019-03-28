@@ -19,6 +19,7 @@ import { catchError, switchMap, tap } from 'rxjs/operators';
 import platform from 'platform';
 import { EMPTY, throwError } from 'rxjs';
 import { ITokenExpiration } from '../models';
+import jwt_decode from 'jwt-decode';
 
 export const authService = {
 
@@ -83,9 +84,13 @@ export const authService = {
     },
 
     getAuthTokenExpiration(): ITokenExpiration {
-        const jwtDecode = require('jwt-decode');
         const token = getAuthToken();
-        const decoded = jwtDecode(token);
+
+        if (!token) {
+            return { nextRefresh: 0, refreshInterval: 45 };
+        }
+
+        const decoded: any = jwt_decode(token);
 
         // no higher than refreshInterval in seconds
         const refreshOffset = 15;
