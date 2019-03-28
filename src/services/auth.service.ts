@@ -92,8 +92,7 @@ export const authService = {
 
         const decoded: any = jwt_decode(token);
 
-        // no higher than refreshInterval in seconds
-        const refreshOffset = 15;
+        const refreshOffset: number = Number(process.env.REACT_APP_AUTH_REFRESH_OFFSET);
 
         // how many seconds before expiration do refresh
         const TTL = decoded.exp - Math.floor(Date.now() / 1000);
