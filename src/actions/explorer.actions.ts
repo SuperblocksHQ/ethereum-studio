@@ -113,10 +113,17 @@ export const explorerActions = {
     // ----- Context menu
 
     CREATE_ITEM: 'CREATE_ITEM',
-    createItem(parentId: string, itemType: ProjectItemTypes, name: string) {
+    createItem(parentId: string, itemType: ProjectItemTypes, name: string, code?: string) {
         return {
             type: explorerActions.CREATE_ITEM,
-            data: { parentId, itemType, name }
+            data: { parentId, itemType, name, code }
+        };
+    },
+
+    CREATE_ITEM_SUCCESS: 'CREATE_ITEM_SUCCESS',
+    createItemSuccess() {
+        return {
+            type: explorerActions.CREATE_ITEM_SUCCESS,
         };
     },
 
@@ -128,11 +135,19 @@ export const explorerActions = {
         };
     },
 
-    IMPORT_FILE: 'IMPORT_FILE',
-    importFile(parentId: string) {
+    IMPORT_FILES: 'IMPORT_FILES',
+    importFiles(parentId: string, items: IProjectItem[]) {
         return {
-            type: explorerActions.IMPORT_FILE,
-            data: { parentId }
+            type: explorerActions.IMPORT_FILES,
+            data: { parentId, items }
+        };
+    },
+
+    IMPORT_FILES_FAIL: 'IMPORT_FILES_FAIL',
+    importFilesFail(id: string) {
+        return {
+            type: explorerActions.IMPORT_FILES_FAIL,
+            data: { id }
         };
     },
 
@@ -153,10 +168,10 @@ export const explorerActions = {
     },
 
     RENAME_ITEM_FAIL: 'RENAME_ITEM_FAIL',
-    renameItemFail(id: string, oldName: string) {
+    renameItemFail(id: string, name: string) {
         return {
             type: explorerActions.RENAME_ITEM_FAIL,
-            data: { id, oldName }
+            data: { id, name }
         };
     },
 

@@ -27,6 +27,7 @@ import classNames from 'classnames';
 interface IProps {
     projectId: string;
     projectName: string;
+    isOwnProject: boolean;
     renameProject: (newName: string) => void;
 }
 
@@ -64,22 +65,25 @@ export default class ProjectTitle extends Component<IProps> {
     }
 
     render() {
-        const { projectName, projectId } = this.props;
+        const { projectName, projectId, isOwnProject } = this.props;
         const { projectNameUpdating, newProjectName } = this.state;
 
         return(
             <div className={style.projectButton}>
                 <OnlyIf test={!projectNameUpdating}>
-                    <div onClick={this.handleProjectNameClick} className={style.titleOverflow}>
+                    <div onClick={isOwnProject ? this.handleProjectNameClick : undefined} className={style.titleOverflow}>
                         <span className={style.projectText}>{projectName}</span>
                     </div>
-                    <DropdownContainer
-                        showMenu={false}
-                        className={style.projectMenuDropdown}
-                        dropdownContent={<ProjectMenuDropdownDialog projectId={projectId} redirect={true} renameProject={this.handleProjectNameClick} />}
-                    >
-                        <IconDropdown className={classNames([style.dropDown, 'dropDown'])} />
-                    </DropdownContainer>
+                    {
+                        isOwnProject &&
+                        <DropdownContainer
+                            showMenu={false}
+                            className={style.projectMenuDropdown}
+                            dropdownContent={<ProjectMenuDropdownDialog projectId={projectId} redirect={true} renameProject={this.handleProjectNameClick} />}
+                        >
+                            <IconDropdown className={classNames([style.dropDown, 'dropDown'])} />
+                        </DropdownContainer>
+                    }
                 </OnlyIf>
                 <OnlyIf test={projectNameUpdating}>
                     <form onSubmit={this.handleChangeName}>

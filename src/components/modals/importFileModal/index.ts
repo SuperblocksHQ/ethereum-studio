@@ -1,4 +1,4 @@
-// Copyright 2019 Superblocks AB
+// Copyright 2018 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -14,10 +14,18 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export * from './editModal';
-export * from './shareModal';
-export * from './preferencesModal';
-export * from './loginModal';
-export * from './simpleModal';
-export * from './importFileModal';
-export * from './projectTemplateModal';
+import { connect } from 'react-redux';
+import ImportFileModal from './ImportFileModal';
+import { explorerActions } from '../../../actions';
+import { Dispatch } from 'redux';
+import {IProjectItem} from '../../../models';
+
+const mapDispatchToProps = (dispatch: Dispatch) => {
+    return {
+        importFiles: (parentId: string, items: IProjectItem[]) => {
+            dispatch(explorerActions.importFiles(parentId, items));
+        },
+    };
+};
+
+export default connect<any, any, any, any>(null, mapDispatchToProps)(ImportFileModal);

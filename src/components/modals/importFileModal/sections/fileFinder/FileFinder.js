@@ -1,4 +1,4 @@
-// Copyright 2019 Superblocks AB
+// Copyright 2018 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -14,10 +14,21 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export * from './editModal';
-export * from './shareModal';
-export * from './preferencesModal';
-export * from './loginModal';
-export * from './simpleModal';
-export * from './importFileModal';
-export * from './projectTemplateModal';
+import React from 'react';
+import style from './style.less';
+import data from '../../../../../assets/static/json/openzeppelin.json';
+import FolderTree from "../../../../folderTree/FolderTree";
+
+const FileFinder = (props) => {
+
+    const {onFileSelected, selectedTitle} = props;
+
+    return (
+        <div className={style.container}>
+            <FolderTree data={data} onFileSelected={onFileSelected} selectedTitle={selectedTitle}/>
+        </div>
+    );
+
+};
+
+export default FileFinder;
