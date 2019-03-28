@@ -27,7 +27,7 @@ export const refreshAuthStart = (action$: AnyAction, state$: any) => action$.pip
     withLatestFrom(state$),
     // currently the TTL of AuthToken is 120 sec, so refresh every 110 sec
     map(() => authService.getAuthTokenExpiration()),
-    switchMap((JWT: ITokenExpiration) => timer(JWT.nextRefresh * 1000, JWT.refreshInterval * 1000)
+    switchMap((token: ITokenExpiration) => timer(token.nextRefresh * 1000, token.refreshInterval * 1000)
         .pipe(
             takeWhile(() => state$.value.auth.isAuthenticated),
             switchMap(() => userService.credentialsExist()
