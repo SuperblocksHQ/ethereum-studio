@@ -19,6 +19,7 @@ import { IProjectState, IEnvironment } from '../models/state';
 import { AnyAction } from 'redux';
 import { IProjectItem } from '../models';
 import { getDappSettings, resolveAccounts } from './dappfileLib';
+import {authActions, userActions} from '../actions';
 
 export const initialState: IProjectState = {
     project: undefined,
@@ -28,7 +29,8 @@ export const initialState: IProjectState = {
     selectedAccount: { name: '', balance: null, address: null, walletName: null, isLocked: false, type: '' },
     openWallets: {},
     metamaskAccounts: [],
-    dappfileData: null
+    dappfileData: null,
+    isOwnProject: false
 };
 
 function getEnvOrNull(environment: IEnvironment) {
@@ -37,7 +39,7 @@ function getEnvOrNull(environment: IEnvironment) {
         : null;
 }
 
-export default function projectsReducer(state = initialState, action: AnyAction) {
+export default function projectsReducer(state = initialState, action: AnyAction, wholeState: any) {
     switch (action.type) {
         case projectsActions.SET_ALL_ENVIRONMENTS:
             return {
@@ -125,10 +127,42 @@ export default function projectsReducer(state = initialState, action: AnyAction)
                 console.log(e);
             }
 
+            // determine if loaded project is own or not
+            if (wholeState.user.profile) {
+                const projectOwnerId = action.data.project.ownerId;
+
+                if (projectOwnerId === wholeState.user.profile.id) {
+                    state.isOwnProject = true;
+                }
+            }
+
             return {
                 ...state,
                 project: { ...action.data.project, files: undefined },
                 ...stateChange
+            };
+        }
+        case authActions.LOGIN_SUCCESS: {
+            if (action.data.user) {
+                const userData = action.data.user;
+
+                // if there's a project opened
+                if (state.project) {
+                    // determine if loaded project is own or not
+                    if (state.project.ownerId === userData.id) {
+                        state.isOwnProject = true;
+                    }
+                }
+            }
+            return {
+                ...state,
+            };
+        }
+        case projectsActions.RENAME_PROJECT_FAIL: {
+            console.log('rename project failed: ', action.data);
+
+            return {
+                ...state,
             };
         }
         case projectsActions.LOAD_PROJECT_FAIL: {

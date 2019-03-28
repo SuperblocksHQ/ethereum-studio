@@ -45,6 +45,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
         onUnsavedChange(fileId: string, hasUnsavedChanges: boolean) {
             dispatch(panesActions.setUnsavedChanges(fileId, hasUnsavedChanges));
         },
+        onMovePane(fromIndex: number, toIndex: number) {
+            dispatch(panesActions.movePane(fromIndex, toIndex));
+        },
 
         // contract related
         onConfigureContract: (file: IProjectItem) => {

@@ -21,6 +21,7 @@ import PreferencesModal from '../../../modals/preferencesModal';
 import LoginModal from '../../../modals/loginModal';
 import ProjectTemplateModal from '../../../modals/projectTemplateModal';
 import style from './style.less';
+import ImportFileModal from '../../../modals/importFileModal';
 
 interface IProps {
     modalType: string;
@@ -33,6 +34,7 @@ const MODAL_COMPONENTS: any = {
     SHARE_MODAL: ShareModal,
     PREFERENCES_MODAL: PreferencesModal,
     GITHUB_MODAL: LoginModal,
+    IMPORT_FILE_MODAL: ImportFileModal,
     PROJECT_TEMPLATE_MODAL: ProjectTemplateModal,
     /* other modals */
 };
