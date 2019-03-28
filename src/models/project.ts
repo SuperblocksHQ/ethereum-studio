@@ -24,6 +24,7 @@ export interface IProjectItem {
     name: string;
     code?: string;
     type: ProjectItemTypes;
+    ownerId?: string;
 
     deleted?: boolean;
 

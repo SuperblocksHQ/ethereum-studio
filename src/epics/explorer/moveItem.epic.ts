@@ -16,7 +16,7 @@
 
 import { switchMap, catchError, map } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
-import { explorerActions } from '../../actions';
+import { explorerActions, projectsActions } from '../../actions';
 import { projectSelectors } from '../../selectors';
 import { projectService } from '../../services';
 import { empty } from 'rxjs';
@@ -25,21 +25,29 @@ export const moveItemEpic: Epic = (action$, state$) => action$.pipe(
     ofType(explorerActions.MOVE_ITEM),
     switchMap((data) => {
         const project = projectSelectors.getProject(state$.value);
+        const { name, description, id } = project;
+
         const explorerState = state$.value.explorer;
+        const files = explorerState.tree;
+        const isOwnProject = state$.value.projects.isOwnProject;
 
         if (!explorerState.itemNameValidation.isNotDuplicate) {
             alert('A file or folder with the same name already exists at this location. Please rename the file first.');
             return empty();
         } else {
-            return projectService.putProjectById(project.id, {
-                name: project.name,
-                description: project.description,
-                files: explorerState.tree
-            })
-            .pipe(
-                map(() => explorerActions.moveItemSuccess(data.sourceId)),
-                catchError(() => [ explorerActions.moveItemFail(data.sourceId) ])
-            );
+            if (isOwnProject) {
+                return projectService.putProjectById(id, {
+                    name,
+                    description,
+                    files
+                })
+                .pipe(
+                    map(() => explorerActions.moveItemSuccess(data.sourceId)),
+                    catchError(() => [ explorerActions.moveItemFail(data.sourceId) ])
+                );
+            } else {
+                return [explorerActions.moveItemSuccess(data.id), projectsActions.createForkedProject(name, description, files)];
+            }
         }
     })
 );

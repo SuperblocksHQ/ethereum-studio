@@ -17,13 +17,13 @@
 import { renameItemEpic } from './renameItem.epic';
 import { createItemEpic } from './createItem.epic';
 import { deleteItemEpic } from './deleteItem.epic';
-import { createPathWithContentEpic } from './createPathWithContent.epic';
+import { importFilesEpic } from './importFilesEpic';
 import { moveItemEpic } from './moveItem.epic';
 
 export const explorerEpics = [
     renameItemEpic,
     createItemEpic,
     deleteItemEpic,
-    createPathWithContentEpic,
+    importFilesEpic,
     moveItemEpic
 ];

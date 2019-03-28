@@ -16,7 +16,7 @@
 
 import { switchMap, map, catchError } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
-import { panesActions } from '../../actions';
+import { panesActions, projectsActions } from '../../actions';
 import { projectSelectors } from '../../selectors';
 import { projectService } from '../../services';
 
@@ -24,18 +24,27 @@ export const saveFileEpic: Epic = (action$, state$) => action$.pipe(
     ofType(panesActions.SAVE_FILE),
     switchMap((action) => {
         const project = projectSelectors.getProject(state$.value);
-        const explorerState = state$.value.explorer;
-        // TODO: this should be remove when save by file is implem
-        const oldCode = state$.value.panes.items.find((i: any) => i.file.id === action.data.fileId).code;
+        const { name, description, id } = project;
 
-        return projectService.putProjectById(project.id, {
-            name: project.name,
-            description: project.description,
-            files: explorerState.tree
-        })
-        .pipe(
-            map(() => panesActions.saveFileSuccess(action.data.fileId, action.data.code)),
-            catchError(() => [ panesActions.saveFileFail(action.data.fileId, oldCode) ])
-        );
+        const explorerState = state$.value.explorer;
+        const files = explorerState.tree;
+        const isOwnProject = state$.value.projects.isOwnProject;
+
+        if (isOwnProject) {
+            // TODO: this should be remove when save by file is implem
+            const oldCode = state$.value.panes.items.find((i: any) => i.file.id === action.data.fileId).code;
+
+            return projectService.putProjectById(id, {
+                name,
+                description,
+                files
+            })
+                .pipe(
+                    map(() => panesActions.saveFileSuccess(action.data.fileId, action.data.code)),
+                    catchError(() => [ panesActions.saveFileFail(action.data.fileId, oldCode) ])
+                );
+        } else {
+            return [panesActions.saveFileSuccess(action.data.fileId, action.data.code), projectsActions.createForkedProject(name, description, files)];
+        }
     })
 );

@@ -1,4 +1,4 @@
-// Copyright 2018 Superblocks AB
+// Copyright 2019 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -14,30 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-.sideMenuContainer {
-    position: absolute;
-    top: 45px;
-    left: 0;
-    bottom: 0;
-    width: 300px;
-    box-sizing: border-box;
-    transition: left .2s ease-out;
-    z-index: 1;
-    background-color: #252525;
-    border-right: 1px solid #121516;
-    color: white;
-
-    .item {
-        display: flex;
-        align-items: center;
-        position: relative;
-        height: 30px;
-        cursor: default;
-        user-select: none;
-        margin: 5px 10px;
-
-        span {
-            margin-left: 10px;
-        }
-    }
+export interface IDependenciesModel {
+    fileName: string;
+    absolutePath: string;
 }
+

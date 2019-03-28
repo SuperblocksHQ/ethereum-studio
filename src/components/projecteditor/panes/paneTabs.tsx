@@ -21,6 +21,7 @@ import { IconClose } from '../../icons';
 import { DropdownContainer, FileIcon } from '../../common';
 import { IPane } from '../../../models/state';
 import { IProjectItem } from '../../../models';
+import PaneDraggable from './paneDraggable';
 
 interface IState {
     mousePositionX: number;
@@ -32,6 +33,7 @@ interface IProps {
     onCloseAllOtherTabs: (fileId: string) => void;
     onTabClick: (file: IProjectItem) => void;
     onTabClose: (fileId: string) => void;
+    onMovePane: (fromIndex: number, toIndex: number) => void;
 }
 
 export class PaneTabs extends React.Component<IProps, IState> {
@@ -73,35 +75,35 @@ export class PaneTabs extends React.Component<IProps, IState> {
     }
 
     render() {
-        const { panes, onTabClick } = this.props;
+        const { panes, onTabClick, onMovePane} = this.props;
 
         return (
             <React.Fragment>
-                {panes.map((paneData) =>
-                    <div key={paneData.file.id}
-                        className={ classnames(style.tab, { [style.selected]: paneData.active }) }
-                        onMouseDown={ e => e.button === 1 ? this.handleTabClose(paneData.file.id, paneData.hasUnsavedChanges) : onTabClick(paneData.file) }
-                        onContextMenu={ e => this.handleRightClick(e)}>
+                {panes.map((paneData, index) =>
+                    <PaneDraggable key={paneData.file.id} index={index} onMovePane={onMovePane}>
+                        <div className={ classnames(style.tab, { [style.selected]: paneData.active }) }
+                            onMouseDown={ e => e.button === 1 ? this.handleTabClose(paneData.file.id, paneData.hasUnsavedChanges) : onTabClick(paneData.file) }
+                            onContextMenu={ e => this.handleRightClick(e)}>
 
-                        <DropdownContainer
-                            dropdownContent={this.getContextMenuElement(paneData.file.id)}
-                            useRightClick={true}>
-                            <div className={style.tabContainer}>
-                                <div className={style.title}>
-                                    <div className={style.icon}>{<FileIcon filename={paneData.file.name} />}</div>
-                                    <div className={style.title2}>{paneData.file.name}</div>
+                            <DropdownContainer
+                                dropdownContent={this.getContextMenuElement(paneData.file.id)}
+                                useRightClick={true}>
+                                <div className={style.tabContainer}>
+                                    <div className={style.title}>
+                                        <div className={style.icon}>{<FileIcon filename={paneData.file.name} />}</div>
+                                        <div className={style.title2}>{paneData.file.name}</div>
+                                    </div>
+                                    <div className={style.close}>
+                                        <button className='btnNoBg'
+                                            onMouseDown={e => e.stopPropagation()}
+                                            onClick={() => this.handleTabClose(paneData.file.id, paneData.hasUnsavedChanges)}>
+                                            <IconClose />
+                                        </button>
+                                    </div>
                                 </div>
-                                <div className={style.close}>
-                                    <button className='btnNoBg'
-                                        onMouseDown={e => e.stopPropagation()}
-                                        onClick={() => this.handleTabClose(paneData.file.id, paneData.hasUnsavedChanges)}>
-                                        <IconClose />
-                                    </button>
-                                </div>
-                            </div>
-                        </DropdownContainer>
-
-                    </div>
+                            </DropdownContainer>
+                        </div>
+                    </PaneDraggable>
                 )}
             </React.Fragment>
         );
