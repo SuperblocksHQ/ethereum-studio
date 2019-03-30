@@ -1,4 +1,4 @@
-// Copyright 2018 Superblocks AB
+// Copyright 2019 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -14,12 +14,31 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export * from './contractAgrumentData';
-export * from './category.model';
-// TODO: fix!
-export * from './project';
-export * from './project.model';
-export * from './user.model';
-export * from './account-environment.model';
-export * from './dependencies.model';
-export * from './transaction.model';
+export enum TransactionContext {
+    Deployment,
+    Preview,
+    Interaction
+}
+
+export enum TransactionType {
+    Deploy,
+    Transaction
+}
+
+export interface ITransaction {
+    hash: string;
+    type: TransactionType.Deploy;
+    status: number;
+    contractName: string | null;
+    createdAt: number;
+    blockNumber: number;
+    from: string | null;
+    to: string | null;
+    gasUsed: string;
+    gasLimit: string;
+    gasPrice: string;
+}
+
+export interface ITransactionsState {
+    items: ITransaction[];
+}

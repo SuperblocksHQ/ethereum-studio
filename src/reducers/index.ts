@@ -29,6 +29,7 @@ import compiler from './compiler.reducer';
 import deployer from './deployer.reducer';
 import console from './console.reducer';
 import modal from './modal.reducer';
+import transactions from './transactions.reducer';
 import { AnyAction } from 'redux';
 
 const rehydrated = (state = false, action: AnyAction) => {
@@ -56,5 +57,6 @@ export default {
     compiler,
     deployer,
     console,
+    transactions,
     modal
 };
