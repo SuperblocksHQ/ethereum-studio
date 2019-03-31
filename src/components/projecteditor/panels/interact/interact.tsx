@@ -1,38 +1,37 @@
 // Copyright 2019 Superblocks AB
-// 
+//
 // This file is part of Superblocks Lab.
-// 
+//
 // Superblocks Lab is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation version 3 of the License.
-// 
+//
 // Superblocks Lab is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export enum Panels {
-    Explorer = 'Explorer',
-    Interact = 'Interact',
-    Preview = 'Preview',
-    Transactions = 'Transactions',
-    CompilerOutput = 'CompilerOutput'
+import React from 'react';
+import style from './style.less';
+
+interface IProps {
+    closeModal(): void;
 }
 
-export enum PanelSides {
-    Left = 'Left',
-    Right = 'Right',
-    Bottom = 'Bottom'
-}
+export class Interact extends React.Component<IProps> {
 
-export interface IPanelData {
-    open: boolean;
-    side: PanelSides;
-}
+    onModalClose = () => {
+        this.props.closeModal();
+    }
 
-export interface IPanelsState {
-    [key: string]: IPanelData;
+    render() {
+        return (
+            <div>
+               Ez az interakció panel.
+            </div>
+        );
+    }
 }

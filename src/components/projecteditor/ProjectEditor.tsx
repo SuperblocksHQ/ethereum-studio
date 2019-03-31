@@ -22,7 +22,7 @@ import TopBar from '../topbar';
 import BottomBar from './bottomBar';
 import ContactContainer from '../contactContainer';
 import { Preview, TransactionLogPanel, Console, Explorer } from './panels';
-import { IconTransactions, IconShowPreview, IconFileAlt, IconCompile } from '../icons';
+import { IconTransactions, IconShowPreview, IconFileAlt, IconCompile, IconInteract } from '../icons';
 import { SideButton } from './sideButton';
 import { SplitterLayout } from './splitterLayout';
 import { Panel } from './panel';
@@ -31,6 +31,7 @@ import { Panels, IPanelsState, IEnvironment } from '../../models/state';
 import { Deployer } from './deployer';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
+import { Interact } from './panels/interact/interact';
 
 interface IProps {
     router: any;
@@ -87,6 +88,10 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                             icon={<IconFileAlt />}
                             onClick={() => togglePanel(Panels.Explorer)}
                         />
+                        <SideButton name='Interact'
+                                    icon={<IconInteract />}
+                                    onClick={() => togglePanel(Panels.Interact)}
+                        />
                     </div>
 
                     <div className={style.mainLayout}>
@@ -125,6 +130,13 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                                                 onClose={() => closePanel(Panels.Transactions)}
                                                 selectedEnvironment={selectedEnvironment.name}
                                             />
+                                        </Panel>}
+
+                                        { this.isPanelOpen(Panels.Interact) &&
+                                        <Panel icon={ <IconInteract /> } name='Interact with smart contracts' onClose={() => closePanel(Panels.Interact)} dragging={sidePanelDragging}>
+                                            <Interact
+                                                closeModal={() => closePanel(Panels.Interact)}
+                                                />
                                         </Panel>}
 
                                         { this.isPanelOpen(Panels.Preview) &&
