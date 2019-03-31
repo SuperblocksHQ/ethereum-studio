@@ -15,8 +15,8 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { concat, of, throwError, empty } from 'rxjs';
-import { switchMap, catchError, map, mergeMap } from 'rxjs/operators';
-import { consoleActions, explorerActions } from '../../actions';
+import { switchMap, catchError, mergeMap } from 'rxjs/operators';
+import { consoleActions, explorerActions, transactionsActions } from '../../actions';
 import { deployerActions } from '../../actions/deployer.actions';
 import { DeployRunner, IDeployResult, walletService } from '../../services';
 import * as analytics from '../../utils/analytics';
@@ -24,8 +24,9 @@ import { createFile } from '../../reducers/explorerLib';
 import { projectSelectors } from '../../selectors';
 import Networks from '../../networks';
 import { IAccount } from '../../models/state';
+import { TransactionType, ITransaction } from '../../models';
 
-function finalizeDeploy(deployRunner: DeployRunner, hash: string, outputPath: string[]) {
+function finalizeDeploy(deployRunner: DeployRunner, hash: string, tx: any, account: IAccount, networkSettings: any, outputPath: string[]) {
     return deployRunner.waitForContract(hash).pipe(
         mergeMap((o: any) => {
             if (o.msg) {
@@ -34,7 +35,23 @@ function finalizeDeploy(deployRunner: DeployRunner, hash: string, outputPath: st
                 const res = <IDeployResult>o;
                 analytics.logEvent('CONTRACT_DEPLOYED', res.environment);
                 const files = res.files.map(f => createFile(f.name, f.code));
-                return of(explorerActions.createPathWithContent(outputPath, files), deployerActions.deploySuccess());
+                const transaction: ITransaction = {
+                    hash,
+                    index: tx.transactionIndex ? tx.transactionIndex : res.receipt.transactionIndex,
+                    type: TransactionType.Deploy,
+                    contractName: res.contractName,
+                    createdAt: Date.now(),
+                    blockNumber: res.receipt.blockNumber,
+                    from: account.address,
+                    to: res.receipt.contractAddress,
+                    network: res.environment,
+                    origin: 'Superblocks Lab',
+                    gasUsed: res.receipt.gasUsed,
+                    status: res.receipt.status,
+                    gasLimit: networkSettings.gasLimit,
+                    gasPrice: networkSettings.gasPrice
+                };
+                return of(explorerActions.createPathWithContent(outputPath, files), deployerActions.deploySuccess(), transactionsActions.addTransaction(transaction));
             }
         }),
         catchError(e => [ consoleActions.addRows([ e ]), deployerActions.deployFail() ])
@@ -47,11 +64,15 @@ function finalizeDeploy(deployRunner: DeployRunner, hash: string, outputPath: st
  * @param deployRunner 
  */
 export function doDeployExternally(state: any, deployRunner: DeployRunner) {
-    return deployRunner.deployExternally(state.settings.preferences.network).pipe(
+    const account: IAccount = projectSelectors.getSelectedAccount(state);
+    const networkSettings = state.settings.preferences.network;
+
+    return deployRunner.deployExternally(networkSettings).pipe(
         switchMap((result: any) => concat(
             of(consoleActions.addRows([ result ])),
             of(deployerActions.hideExternalProviderInfo()),
-            finalizeDeploy(deployRunner, result.hash, state.deployer.outputPath)
+            // TODO: ADD TX INSTEAD NULL
+            finalizeDeploy(deployRunner, result.hash, null, account, networkSettings, state.deployer.outputPath)
         )),
         catchError(e => [ consoleActions.addRows([ e ]), deployerActions.deployFail() ])
     );
@@ -94,8 +115,8 @@ export function browserDeploy(state: any, deployRunner: DeployRunner) {
         mergeMap(output => {
             if (output.msg) { // intermediate messages comming
                 return of(consoleActions.addRows([ output ]));
-            } else if (output.hash) { // result
-                return finalizeDeploy(deployRunner, output.hash, state.deployer.outputPath);
+            } else if (output.hash && output.tx) { // result
+                return finalizeDeploy(deployRunner, output.hash, output.tx, account, networkSettings, state.deployer.outputPath);
             } else { // unexpected error
                 return of(consoleActions.addRows([{ msg: 'Unexpected error occured. Please try again!', channel: 3 }]));
             }

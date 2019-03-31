@@ -14,26 +14,11 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export enum CheckDeployResult {
-    CanDeploy,
-    CanNotDeploy,
-    AlreadyDeployed
-}
+import { connect } from 'react-redux';
+import { TransactionLogPanel } from './transactionlogPanel';
 
-export interface ICheckDeployResult {
-    msg?: string;
-    channel?: number;
-    result: CheckDeployResult;
-}
+const mapStateToProps = (state: any) => ({
+    transactions: state.transactions.items,
+});
 
-export interface IDeployResult {
-    files: { name: string, code: string }[];
-    environment: string;
-    receipt: any;
-    contractName: string;
-}
-
-export interface IDeployAccount {
-    address: string;
-    type: string;
-}
+export default connect(mapStateToProps, null)(TransactionLogPanel);

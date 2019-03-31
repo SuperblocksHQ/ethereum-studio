@@ -14,19 +14,15 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export enum TransactionContext {
-    Deployment,
-    Preview,
-    Interaction
-}
-
 export enum TransactionType {
-    Deploy,
-    Transaction
+    Deploy = 'Deploy',
+    TransactionInteract = 'Transaction Interact',
+    TransactionPreview = 'Transaction Preview'
 }
 
 export interface ITransaction {
     hash: string;
+    index: number;
     type: TransactionType.Deploy;
     status: number;
     contractName: string | null;
@@ -34,6 +30,8 @@ export interface ITransaction {
     blockNumber: number;
     from: string | null;
     to: string | null;
+    network: string;
+    origin: string;
     gasUsed: string;
     gasLimit: string;
     gasPrice: string;
