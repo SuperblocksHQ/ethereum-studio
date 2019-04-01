@@ -41,7 +41,7 @@ function formatTransaction(state: any, hash?: string, res?: any, contractName?: 
         from: account.address,
         to: res ? res.receipt.contractAddress : '',
         network: res ? res.environment : '',
-        origin: 'Superblocks Lab',
+        origin: 'Superblocks',
         value: 0,
         gasUsed: res ? res.receipt.gasUsed : 0,
         status: res ? Number(res.receipt.status) : null,
