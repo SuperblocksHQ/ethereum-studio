@@ -15,10 +15,11 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { Component } from 'react';
-import style from './style-normal.less';
+import style from './style-transaction.less';
 import { TransactionType, ITransaction } from '../../../../models';
 import { IconRun } from '../../../icons';
 import classNames from 'classnames';
+import Web3 from 'web3';
 
 interface IProps {
     transaction: ITransaction;
@@ -27,15 +28,22 @@ interface IProps {
 interface IState {
     transactionAge: string;
     timer: any;
-    expanded: boolean;
+    isExpanded: boolean;
 }
 
 export class Transaction extends Component<IProps, IState> {
     state: IState = {
         transactionAge: '0 sec',
         timer: null,
-        expanded: false
+        isExpanded: false
     };
+
+    private readonly web3: any;
+
+    constructor(props: IProps) {
+        super(props);
+        this.web3 = new Web3();
+    }
 
     componentDidMount() {
         this.state.timer = setInterval(() => this._updateAge(), 1000);
@@ -45,7 +53,7 @@ export class Transaction extends Component<IProps, IState> {
         clearInterval(this.state.timer);
     }
 
-    _renderStatus = () => {
+    _renderStatus() {
         const { status } = this.props.transaction;
 
         if (!status) {
@@ -84,13 +92,13 @@ export class Transaction extends Component<IProps, IState> {
         }
     }
 
-    _renderHeader = () => {
-        const { transaction } = this.props;
+    _renderHeader() {
+        const { type, contractName } = this.props.transaction;
 
-        if (transaction.type === TransactionType.Deploy) {
+        if (type === TransactionType.Deploy) {
             return (
                 <div className={style.header}>
-                    <div className={style.title}>Deploy {transaction.contractName}</div>
+                    <div className={style.title}>Deploy {contractName}</div>
                     {this._renderStatus()}
                 </div>
             );
@@ -104,8 +112,8 @@ export class Transaction extends Component<IProps, IState> {
         }
     }
 
-    _renderLeft = (/*tx, type, network*/) => {
-        const { type, network, from, status, to } = this.props.transaction;
+    _renderLeft() {
+        const { type, from, to, value } = this.props.transaction;
 
         if (type === TransactionType.Deploy) {
             return (
@@ -121,11 +129,8 @@ export class Transaction extends Component<IProps, IState> {
                 </div>
             );
         } else {
-            /*const value =
-                typeof tx.obj.value == 'object'
-                    ? tx.obj.value.toNumber()
-                    : tx.obj.value;
-            const valueFormatted = this.web3.fromWei(value);*/
+            const valueFormatted = this.web3.fromWei(value);
+
             return (
                 <div className={style.left}>
                     <div className={style.row}>
@@ -138,62 +143,49 @@ export class Transaction extends Component<IProps, IState> {
                     </div>
                     <div className={style.row}>
                         <b>Value:</b>{' '}
-                        <span title='{value} wei'>{/*valueFormatted*/} ether</span>
+                        <span title='{value} wei'>{valueFormatted} ether</span>
                     </div>
                 </div>
             );
         }
     }
 
-
-    _updateAge = () => {
+    _updateAge() {
         const { createdAt } = this.props.transaction;
-        // var seconds = parseInt((Date.now() - createdAt) / 1000);
+
         let seconds = Math.floor((Date.now() - createdAt) / 1000);
         let minutes = Math.floor(seconds / 60);
         seconds -= minutes * 60;
         const hours = Math.floor(minutes / 60);
         minutes -= hours * 60;
-        let ret = '';
+        let result = '';
         if (hours > 0) {
-            ret += hours + ' h ';
+            result += hours + ' h ';
         }
         if (minutes > 0) {
-            ret += minutes + ' min ';
+            result += minutes + ' min ';
         } else if (hours === 0) {
-            ret += seconds + ' sec';
+            result += seconds + ' sec';
         }
         this.setState({
-            transactionAge: ret
+            transactionAge: result
         });
     }
 
-    _renderOrigin = () => {
-        const { origin } = this.props.transaction;
-
-        return (
-            <div>
-                <b>Origin:</b> {origin}
-            </div>
-        );
-    }
-
-    _renderBlockNr = () => {
+    _renderBlockNr() {
         const { blockNumber, index } = this.props.transaction;
-        const blockNr: string | number = blockNumber >= 0 ? blockNumber : 'n/a';
-        const txIndex: string | number = index >= 0 ? index : 'n/a';
-        console.log('WTF', blockNumber, index);
+
         return (
             <div>
-                <b>Block</b> #{blockNr}{' '}
+                <b>Block</b> #{blockNumber}{' '}
                 <span title='Order of this transaction inside the block'>
-                    (Index {txIndex})
+                    (Index {index})
                 </span>
             </div>
         );
     }
 
-    _renderBottomContentLeft = () => {
+    _renderBottomContentLeft() {
         const { transaction } = this.props;
 
         if (transaction.type === TransactionType.Deploy) {
@@ -209,44 +201,29 @@ export class Transaction extends Component<IProps, IState> {
         }
     }
 
-    _toggleBottom = () => {
+    _toggleBottom() {
         this.setState({
-            expanded: !this.state.expanded
+            isExpanded: !this.state.isExpanded
         });
     }
 
-    _renderDeployArguments = () => {
-        // TODO: Constructor args
-        /*
-        const args2 = [];
-        tx.deployArgs.map(arg => {
-            if (arg.value !== undefined) args2.push(arg.value);
-            else if (arg.account !== undefined) args2.push(arg.account);
-            else if (arg.contract !== undefined) args2.push(arg.contract);
-        });*/
+    _renderDeployArguments() {
+        const { constructorArgs } = this.props.transaction;
+
         return (
             <div>
-                <b>Constructor arguments:</b> {/*args2.join(', ')*/ ' TODO'}
+                <b>Constructor arguments:</b> {constructorArgs.join(', ')}
             </div>
         );
     }
 
-    _renderBox = (/*type, network, classes*/) => {
-        // classes = classes || {};
+    render() {
         const { transaction } = this.props;
-        const classes = {};
-        // const gasUsed = (transaction.status || {}).gasUsed || 0;
-        /*const gasPrice =
-            typeof tx.obj.gasPrice == 'object'
-                ? tx.obj.gasPrice.toNumber()
-                : tx.obj.gasPrice;
-        const gasCost = gasUsed * gasPrice;
-        // const gasPriceFormatted = this.web3.fromWei(gasPrice, 'gwei');
-        // const gasCostFormatted = this.web3.fromWei(gasCost, 'ether');
-        
+        const { transactionAge, isExpanded } = this.state;
 
-        classes[style.txbox] = true;*/
-        const gasCostFormatted = transaction.gasLimit;
+        const gasPriceFormatted = this.web3.fromWei(transaction.gasPrice, 'gwei');
+        const gasCostFormatted = transaction.gasUsed * gasPriceFormatted;
+
         return (
             <div key={transaction.hash} className={style.txbox}>
                 {this._renderHeader()}
@@ -255,11 +232,8 @@ export class Transaction extends Component<IProps, IState> {
                     <div className={style.right}>
                         <div className={style.row}>
                             <div>
-                                <b>Age:</b> {this.state.transactionAge}
+                                <b>Age:</b> {transactionAge}
                             </div>
-                        </div>
-                        <div className={style.row}>
-                            {this._renderOrigin()}
                         </div>
                         <div className={style.row}>
                             {this._renderBlockNr()}
@@ -277,14 +251,14 @@ export class Transaction extends Component<IProps, IState> {
                                     e.preventDefault();
                                 }}
                             >
-                                {this.state.expanded ? (
+                                {isExpanded ? (
                                     <b>Hide more</b>
                                 ) : (
                                     <b>Show more</b>
                                 )}
                             </button>
                         </div>
-                        {this.state.expanded && (
+                        {isExpanded && (
                             <div className={style.bottomContent}>
                                 {this._renderBottomContentLeft()}
                                 <div className={style.right}>
@@ -305,18 +279,6 @@ export class Transaction extends Component<IProps, IState> {
                     </div>
                 </div>
             </div>
-        );
-    }
-
-
-
-    render() {
-        const { transaction } = this.props;
-
-        return (
-            <React.Fragment>
-                { this._renderBox() }
-            </React.Fragment>
         );
     }
 }

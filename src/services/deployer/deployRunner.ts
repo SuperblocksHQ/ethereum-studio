@@ -89,19 +89,7 @@ export class DeployRunner {
                     reject({ msg: 'Could not deploy contract using external provider.', channel: 2 });
                     return;
                 }
-                // this._stdout('Got receipt: ' + res);
-                // const args = (obj.contract.getArgs() || []).slice(0); // We MUST copy the array since we are shifting out the elements.
-                // add transaction log
-                // this.item.getProject().getTxLog().addTx({
-                //     deployArgs: args,
-                //     contract: this.props.item
-                //         .getParent()
-                //         .getName(),
-                //     hash: res,
-                //     context: 'Contract deployment using external provider',
-                //     network: obj.network,
-                // });
-                resolve({ msg: 'Got receipt: ' + hash, channel: 1, hash });
+                resolve({ msg: 'Got receipt: ' + hash, channel: 1, hash, contractName: this.contractName });
             });
         }));
     }
@@ -113,7 +101,6 @@ export class DeployRunner {
             this.getNonce(this.account.address).then(nonce => {
                 observer.next({ channel: 1, msg: `Nonce for address ${this.account.address} is ${nonce}.` });
                 const tx = signTransaction(this.account.address, nonce, gasSettings, key, this.deployFile);
-                tx.transactionIndex = nonce;
                 observer.next({ channel: 1, msg: `Transaction signed.` });
                 observer.next({ channel: 1, msg: `Gaslimit=${gasSettings.gasLimit}, gasPrice=${gasSettings.gasPrice}.` });
                 observer.next({ channel: 1, msg: `Sending transaction to network ${this.environment.name} on endpoint ${this.environment.endpoint}...` });

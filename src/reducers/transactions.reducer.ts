@@ -17,6 +17,7 @@
 import { AnyAction } from 'redux';
 import { transactionsActions } from '../actions';
 import { ITransactionsState } from '../models';
+import { replaceInArray } from './utils';
 
 const initialState: ITransactionsState = {
     items: []
@@ -31,6 +32,15 @@ export default function transactionsReducer(state = initialState, action: AnyAct
                     {...action.data.transaction},
                     ...state.items,
                 ]
+            };
+        case transactionsActions.UPDATE_TRANSACTION:
+            return {
+                ...state,
+                items: replaceInArray(
+                    state.items,
+                    item => item.hash === action.data.transaction.hash,
+                    item => ({...item, ...action.data.transaction, createdAt: item.createdAt})
+                )
             };
         default:
             return state;

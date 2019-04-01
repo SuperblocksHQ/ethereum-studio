@@ -24,17 +24,19 @@ export interface ITransaction {
     hash: string;
     index: number;
     type: TransactionType.Deploy;
-    status: number;
+    status: number | null;
     contractName: string | null;
+    constructorArgs: [];
     createdAt: number;
     blockNumber: number;
     from: string | null;
     to: string | null;
     network: string;
     origin: string;
-    gasUsed: string;
-    gasLimit: string;
-    gasPrice: string;
+    value: number;
+    gasUsed: number;
+    gasLimit: number;
+    gasPrice: number;
 }
 
 export interface ITransactionsState {

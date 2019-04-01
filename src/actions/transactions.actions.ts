@@ -24,4 +24,11 @@ export const transactionsActions = {
             data: { transaction }
         };
     },
+    UPDATE_TRANSACTION: 'UPDATE_TRANSACTION',
+    updateTransaction(transaction: ITransaction) {
+        return {
+            type: transactionsActions.UPDATE_TRANSACTION,
+            data: { transaction }
+        };
+    },
 };

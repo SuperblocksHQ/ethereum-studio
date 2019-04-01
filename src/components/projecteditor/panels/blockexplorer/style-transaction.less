@@ -26,12 +26,14 @@
 }
 
 .txbox {
-    display: inline-block;
+    display: block;
     margin-left: auto;
     margin-right: auto;
     max-width: 800px;
     color: #fff;
     padding: 6px 0px;
+    animation: fadein .5s;
+    width: 100%;
     .header {
         position: relative;
         display: flex;
@@ -81,6 +83,7 @@
         padding: 10px 0px;
         display: inline-block;
         background-color: #202020;
+        width: 100%;
         .left {
             width: 95%;
             max-width: 95%;
@@ -130,4 +133,17 @@
 @keyframes spin {
     from {transform:rotate(0deg);}
     to {transform:rotate(360deg);}
+}
+
+@-moz-keyframes fadein {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+@-webkit-keyframes fadein {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+@keyframes fadein {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }

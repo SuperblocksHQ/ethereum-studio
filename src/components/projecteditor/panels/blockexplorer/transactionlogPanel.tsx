@@ -24,7 +24,6 @@ interface IProps {
 
 export class TransactionLogPanel extends Component<IProps> {
     render() {
-
         const { transactions } = this.props;
 
         return (

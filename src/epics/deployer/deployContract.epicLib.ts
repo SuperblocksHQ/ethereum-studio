@@ -26,7 +26,31 @@ import Networks from '../../networks';
 import { IAccount } from '../../models/state';
 import { TransactionType, ITransaction } from '../../models';
 
-function finalizeDeploy(deployRunner: DeployRunner, hash: string, tx: any, account: IAccount, networkSettings: any, outputPath: string[]) {
+function formatTransaction(state: any, hash?: string, res?: any, contractName?: string, tx?: any): ITransaction {
+    const account: IAccount = projectSelectors.getSelectedAccount(state);
+    const networkSettings = state.settings.preferences.network;
+
+    return  {
+        hash: hash || '',
+        index: res ? res.receipt.transactionIndex : 'n/a',
+        type: TransactionType.Deploy,
+        contractName: contractName || '',
+        constructorArgs: [], // TODO: Add args
+        createdAt: Date.now(),
+        blockNumber: res ? res.receipt.blockNumber : 'n/a',
+        from: account.address,
+        to: res ? res.receipt.contractAddress : '',
+        network: res ? res.environment : '',
+        origin: 'Superblocks Lab',
+        value: 0,
+        gasUsed: res ? res.receipt.gasUsed : 0,
+        status: res ? Number(res.receipt.status) : null,
+        gasLimit: networkSettings.gasLimit,
+        gasPrice: networkSettings.gasPrice
+    };
+}
+
+function finalizeDeploy(state: any, deployRunner: DeployRunner, hash: string, outputPath: string[], isNewTransaction: boolean, tx?: any) {
     return deployRunner.waitForContract(hash).pipe(
         mergeMap((o: any) => {
             if (o.msg) {
@@ -35,23 +59,12 @@ function finalizeDeploy(deployRunner: DeployRunner, hash: string, tx: any, accou
                 const res = <IDeployResult>o;
                 analytics.logEvent('CONTRACT_DEPLOYED', res.environment);
                 const files = res.files.map(f => createFile(f.name, f.code));
-                const transaction: ITransaction = {
-                    hash,
-                    index: tx.transactionIndex ? tx.transactionIndex : res.receipt.transactionIndex,
-                    type: TransactionType.Deploy,
-                    contractName: res.contractName,
-                    createdAt: Date.now(),
-                    blockNumber: res.receipt.blockNumber,
-                    from: account.address,
-                    to: res.receipt.contractAddress,
-                    network: res.environment,
-                    origin: 'Superblocks Lab',
-                    gasUsed: res.receipt.gasUsed,
-                    status: res.receipt.status,
-                    gasLimit: networkSettings.gasLimit,
-                    gasPrice: networkSettings.gasPrice
-                };
-                return of(explorerActions.createPathWithContent(outputPath, files), deployerActions.deploySuccess(), transactionsActions.addTransaction(transaction));
+                const transaction: ITransaction = formatTransaction(state, hash, res, res.contractName, tx);
+                return of(
+                    explorerActions.createPathWithContent(outputPath, files),
+                    deployerActions.deploySuccess(),
+                    isNewTransaction ? transactionsActions.addTransaction(transaction) : transactionsActions.updateTransaction(transaction)
+                );
             }
         }),
         catchError(e => [ consoleActions.addRows([ e ]), deployerActions.deployFail() ])
@@ -64,16 +77,15 @@ function finalizeDeploy(deployRunner: DeployRunner, hash: string, tx: any, accou
  * @param deployRunner 
  */
 export function doDeployExternally(state: any, deployRunner: DeployRunner) {
-    const account: IAccount = projectSelectors.getSelectedAccount(state);
-    const networkSettings = state.settings.preferences.network;
-
-    return deployRunner.deployExternally(networkSettings).pipe(
-        switchMap((result: any) => concat(
-            of(consoleActions.addRows([ result ])),
-            of(deployerActions.hideExternalProviderInfo()),
-            // TODO: ADD TX INSTEAD NULL
-            finalizeDeploy(deployRunner, result.hash, null, account, networkSettings, state.deployer.outputPath)
-        )),
+    return deployRunner.deployExternally(state.settings.preferences.network).pipe(
+        switchMap((result: any) =>
+            concat(
+                of(consoleActions.addRows([ result ])),
+                of(deployerActions.hideExternalProviderInfo()),
+                of(transactionsActions.addTransaction(formatTransaction(state, result.hash, null, result.contractName))),
+                finalizeDeploy(state, deployRunner, result.hash, state.deployer.outputPath, false)
+            )
+        ),
         catchError(e => [ consoleActions.addRows([ e ]), deployerActions.deployFail() ])
     );
 }
@@ -116,7 +128,7 @@ export function browserDeploy(state: any, deployRunner: DeployRunner) {
             if (output.msg) { // intermediate messages comming
                 return of(consoleActions.addRows([ output ]));
             } else if (output.hash && output.tx) { // result
-                return finalizeDeploy(deployRunner, output.hash, output.tx, account, networkSettings, state.deployer.outputPath);
+                return finalizeDeploy(state, deployRunner, output.hash, state.deployer.outputPath, true, output.tx);
             } else { // unexpected error
                 return of(consoleActions.addRows([{ msg: 'Unexpected error occured. Please try again!', channel: 3 }]));
             }
