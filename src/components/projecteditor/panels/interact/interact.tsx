@@ -16,6 +16,7 @@
 
 import React from 'react';
 import style from './style.less';
+import classnames from 'classnames';
 
 interface IProps {
     closeModal(): void;
@@ -29,9 +30,56 @@ export class Interact extends React.Component<IProps> {
 
     render() {
         return (
-            <div>
-               Ez az interakció panel.
-            </div>
+            <React.Fragment>
+                <div className={style.contractInstance}>
+                    <div className={style.transactionInfo}>
+                        <div className={classnames(style.transactionField, style.superInputDark)}>
+                            <div className={style.name}>Gas limit</div>
+                            <input className={style.value} type='number' id='gasLimit'></input>
+                        </div>
+                        <div className={classnames(style.transactionField, style.superInputDark)}>
+                            <div className={style.name}>Value</div>
+                            <input className={style.value} type='text' id='value' title='Enter the value and choose the unit'></input>
+                            <select name='unit' id='unit'>
+                                <option data-unit='wei'>wei</option>
+                                <option data-unit='gwei'>gwei</option>
+                                <option data-unit='finney'>finney</option>
+                                <option data-unit='ether'>ether</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div className={style.contractInfo}>
+                        Contract address: 0xa9e73bb65b54c445081dae9d67f08ccbcce8bcb7
+                    </div>
+                    <div className={style.actionContainer}>
+                        <div className={classnames(style.singleAction, style.superInputDark)}>
+                            <button
+                                className={style.actionButton}
+                                title='delegate - transact (not payable)' >
+                                delegate
+                            </button>
+                            <input
+                                placeholder='address to'
+                                title='address to'
+                            />
+                        </div>
+                    </div>
+
+                    <div className={style.actionContainer}>
+                        <div className={classnames(style.singleAction, style.superInputDark)}>
+                            <button
+                                className={style.actionButton}
+                                title='delegate - transact (not payable)' >
+                                delegate
+                            </button>
+                            <input
+                                placeholder='address to'
+                                title='address to'
+                            />
+                        </div>
+                    </div>
+                </div>
+            </React.Fragment>
         );
     }
 }

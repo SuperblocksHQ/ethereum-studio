@@ -1,0 +1,53 @@
+@import '../../../../style/index';
+
+.contractInstance {
+    color: #fff;
+    .transactionInfo {
+        padding-bottom: 10px;
+        .transactionField {
+            margin-top: .5em;
+            display: inline-flex;
+            .name {
+                display: inline-flex;
+                width: 15%;
+                min-width: 75px;
+                float: left;
+                align-self: center;
+            }
+            .value {
+                display: inline-flex;
+                height: 25px;
+                width: 250px;
+                padding: 0 8px;
+                overflow: hidden;
+                word-break: normal;
+            }
+            select {
+                text-align: center;
+                overflow: hidden;
+                word-break: normal;
+                width: 62px;
+                min-width: 62px;
+            }
+        }
+    }
+
+    .contractInfo {
+        border-top: 1px solid red;
+        padding-top: 5px;
+    }
+    .actionContainer {
+        .singleAction {
+            display: inline-flex;
+            margin-top: .5em;
+            .actionButton {
+                font-size: 12px;
+                overflow: hidden;
+                word-break: normal;
+                font-size: 10px;
+                margin: 0;
+                word-break: inherit;
+            }
+        }
+    }
+}
