@@ -18,10 +18,10 @@ import { IEnvironment } from '../models/state';
 import { IProject } from '../models';
 
 export const projectsActions = {
-    SELECT_RUN_CONFIGURATION: 'SELECT_RUN_CONFIGURATION',
-    selectRunConfiguration(id: string) {
+    SHOW_RUN_CONFIGURATION: 'SHOW_RUN_CONFIGURATION',
+    showRunConfiguration(id: string) {
         return {
-            type: projectsActions.SELECT_RUN_CONFIGURATION,
+            type: projectsActions.SHOW_RUN_CONFIGURATION,
             data: id
         };
     },
@@ -30,6 +30,12 @@ export const projectsActions = {
         return {
             type: projectsActions.SAVE_RUN_CONFIGURATION,
             data: { id, name }
+        };
+    },
+    PROJECT_FILES_UPDATE: 'PROJECT_FILES_UPDATE',
+    projectFilesUpdate() {
+        return {
+            type: projectsActions.PROJECT_FILES_UPDATE
         };
     },
 

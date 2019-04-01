@@ -163,7 +163,7 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                     </div>
                 </div>
 
-                <BottomBar endpoint={selectedEnvironment.endpoint} />
+                {/* <BottomBar endpoint={selectedEnvironment.endpoint} /> */}
                 <Deployer />
             </div>
         );

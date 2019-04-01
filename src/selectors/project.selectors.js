@@ -22,5 +22,6 @@ export const projectSelectors = {
     getProjectId: state => state.projects.project.id,
     getProjectName: state => state.projects.project.name,
     getLoadingProject: state => state.projects.loadingProject,
-    getRunConfigs: state => state.projects.runConfigurations
+    getRunConfigs: state => state.projects.runConfigurations,
+    getPluginsState: state => state.projects.pluginsState
 }

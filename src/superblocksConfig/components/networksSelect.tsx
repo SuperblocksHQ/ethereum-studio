@@ -29,10 +29,10 @@ export function NetworksSelect(props: IProps) {
     const options = props.networks.map(n => n.host + ':' + n.port);
 
     const getNetwork = (v: string) => {
-        return props.networks.find(n => v.indexOf(n.host) >= 0 && v.indexOf(n.port.toString()) >= 0);
+        return props.networks.find(n => v.indexOf(n.host) >= 0 && v.indexOf(n.port.toString()) >= 0) as INetwork;
     };
 
     return (
-        <Select value={value} options={options} onChange={v => getNetwork(v)} />
+        <Select value={value} options={options} onChange={v =>  props.onChange(getNetwork(v))} />
     );
 }

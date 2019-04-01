@@ -26,23 +26,24 @@ export const updateAccountBalanceEpic: Epic = (action$: any, state$: any) => act
         return interval(3000).pipe(
             takeUntil(action$.ofType(projectsActions.LOAD_PROJECT)),
             switchMap(() => {
-                const endpoint = state$.value.projects.selectedEnvironment.endpoint;
-                const selectedAccount = state$.value.projects.selectedAccount;
+                // TODO: maybe get it back
+                // const endpoint = state$.value.projects.selectedEnvironment.endpoint;
+                // const selectedAccount = state$.value.projects.selectedAccount;
 
-                if (selectedAccount.name && selectedAccount.address) {
-                    return walletService.fetchBalance(endpoint, selectedAccount.address).pipe(
-                        switchMap(balance => {
-                            if (selectedAccount.balance !== balance) { // little optimization to keep redux log cleaner
-                                return of(projectsActions.updateAccountBalance(balance));
-                            } else {
-                                return empty();
-                            }
-                        }),
-                        catchError(() => [ /*projectsActions.updateAccountBalance('')*/ ])
-                    );
-                } else {
+                // if (selectedAccount.name && selectedAccount.address) {
+                //     return walletService.fetchBalance(endpoint, selectedAccount.address).pipe(
+                //         switchMap(balance => {
+                //             if (selectedAccount.balance !== balance) { // little optimization to keep redux log cleaner
+                //                 return of(projectsActions.updateAccountBalance(balance));
+                //             } else {
+                //                 return empty();
+                //             }
+                //         }),
+                //         catchError(() => [ /*projectsActions.updateAccountBalance('')*/ ])
+                //     );
+                // } else {
                     return empty();
-                }
+                // }
             })
         );
     })

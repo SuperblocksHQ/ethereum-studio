@@ -49,17 +49,31 @@ export interface IEnvironment {
     accounts: IAccount[];
 }
 
-export interface ISuperblocksRunConfigurationData {
-    accountInfo: IAccountInfo;
-    networks: INetwork[];
+export interface ISuperblocksRunConfiguration {
+    id: string;
+    data: { environmentName: string; };
+}
 
-    environmentName: string;
-
+export interface IDappfile {
     environments: IEnvironment[];
     compilerOptions: any;
+}
 
+export interface ISuperblocksConfigUI {
+    selectedConfig: ISuperblocksRunConfiguration;
+    environment?: IEnvironment;
+    networks: INetwork[];
+}
+
+export interface ISuperblocksPluginState {
+    configUI: ISuperblocksConfigUI;
+    activeConfig: ISuperblocksRunConfiguration;
+    dappfile: IDappfile;
+
+    accountInfo: IAccountInfo;
     openWallets: {
         [key: string]: string[]
     };
     metamaskAccounts: string[];
 }
+

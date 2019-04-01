@@ -24,13 +24,13 @@ import { updateProject } from './updateProject.epic';
 // TODO - Add missing epics
 
 // import { downloadProject } from './downloadProject.epic';
-// import { importProject } from './importProject.epic';
 
 import { loadProject } from './loadProject.epic';
 import { renameProjectEpic } from './renameProject.epic';
 import { createEmptyProject } from './createEmptyProject.epic';
 import { openWalletEpic } from './openWallet.epic';
 import { updateAccountBalanceEpic } from './updateAccountBalance.epic';
+import { projectFilesUpdateEpic } from './projectFilesUpdate.epic';
 
 export const projectsEpics = [
     environmentUpdateEpic,
@@ -43,5 +43,6 @@ export const projectsEpics = [
     createEmptyProject,
     openWalletEpic,
     updateAccountBalanceEpic,
-    updateProject
+    updateProject,
+    projectFilesUpdateEpic
 ];

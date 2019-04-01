@@ -14,38 +14,38 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { IEnvironment, INetwork } from './models';
+import { INetwork } from './models';
 
 export const superblocksConfigActions = {
-    SET_ENVIRONMENT: 'PLUGINS.SUPERBLOCKS.SET_ENVIRONMENT',
+    SET_ENVIRONMENT: 'PLUGINS:SUPERBLOCKS.SET_ENVIRONMENT',
     setEnvironment(name: string) {
         return {
             type: superblocksConfigActions.SET_ENVIRONMENT,
             data: name
         };
     },
-    SET_ALL_NETWORKS: 'PLUGINS.SUPERBLOCKS.SET_ALL_NETWORKS',
+    SET_ALL_NETWORKS: 'PLUGINS:SUPERBLOCKS.SET_ALL_NETWORKS',
     setAllNetworks(networks: INetwork[]) {
         return {
             type: superblocksConfigActions.SET_ALL_NETWORKS,
             data: networks
         };
     },
-    SET_NETWORK: 'PLUGINS.SUPERBLOCKS.SET_NETWORK',
+    SET_NETWORK: 'PLUGINS:SUPERBLOCKS.SET_NETWORK',
     setNetwork(network: INetwork) {
        return {
             type: superblocksConfigActions.SET_NETWORK,
             data: network
        };
     },
-    SET_ACCOUNT: 'PLUGINS.SUPERBLOCKS.SET_ACCOUNT',
+    SET_ACCOUNT: 'PLUGINS:SUPERBLOCKS.SET_ACCOUNT',
     setAccount(name: string) {
         return {
             type: superblocksConfigActions.SET_ACCOUNT,
             data: name
         };
     },
-    SET_METAMASK_ACCOUNTS: 'PLUGINS.SUPERBLOCKS.SET_METAMASK_ACCOUNTS',
+    SET_METAMASK_ACCOUNTS: 'PLUGINS:SUPERBLOCKS.SET_METAMASK_ACCOUNTS',
     setMetamaskAccounts(addresses: string[]) {
         return {
             type: superblocksConfigActions.SET_METAMASK_ACCOUNTS,
@@ -53,14 +53,14 @@ export const superblocksConfigActions = {
         };
     },
 
-    OPEN_WALLET: 'PLUGINS.SUPERBLOCKS.OPEN_WALLET',
+    OPEN_WALLET: 'PLUGINS:SUPERBLOCKS.OPEN_WALLET',
     openWallet(name: string, seed: string) {
         return {
             type: superblocksConfigActions.OPEN_WALLET,
             data: { name, seed }
         };
     },
-    OPEN_WALLET_SUCCESS: 'PLUGINS.SUPERBLOCKS.OPEN_WALLET_SUCCESS',
+    OPEN_WALLET_SUCCESS: 'PLUGINS:SUPERBLOCKS.OPEN_WALLET_SUCCESS',
     openWalletSuccess(name: string, addresses: string[]) {
         return {
             type: superblocksConfigActions.OPEN_WALLET_SUCCESS,

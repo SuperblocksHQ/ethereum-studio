@@ -16,73 +16,85 @@
 
 import { superblocksConfigActions } from './superblocksConfig.actions';
 import { AnyAction } from 'redux';
-import { ISuperblocksRunConfigurationData, AccountType, IEnvironment } from './models';
+import { ISuperblocksRunConfiguration, IEnvironment, ISuperblocksPluginState } from './models';
+import { IProjectItem } from '../models';
 import { Networks } from './networks';
-import { replaceInArray } from '../reducers/utils';
 
-export const initialState: ISuperblocksRunConfigurationData = {
-    environmentName: 'Development',
+export const initialState: ISuperblocksPluginState = {
+    configUI: {
+        selectedConfig: { id: '', data: { environmentName: '' } },
+        environment: undefined,
+        networks: Networks
+    },
+
+    activeConfig: { id: '', data: { environmentName: '' } },
+    dappfile: { environments: [], compilerOptions: {} },
+
     accountInfo: { balance: '', address: '' },
-    networks: [{ host: 'http://superblocks-browser', port: 8545, id: '*' }],
-
-    environments: [
-        {
-            name: 'Development',
-            network: {
-                host: 'http://superblocks-browser',  //
-                port: 8545,                           //
-                id: '*'                               // Optional. Defaults to '*' (any) i.e. reads network id from host.
-            },
-            accounts: [
-                {
-                    name: 'Account 1',                // Optional
-                    type: AccountType.Seed,
-                    seed: 'butter toward celery cupboard blind morning item night fatal theme display toy',
-                    addressIndex: 0,                  // Optional. Defaults to 0.
-                    hdpath: "m/44'/60'/0'/0/"         // Optional. Defaults to m/44'/60'/0'/0/ (BIP44).
-                },
-                {
-                    name: 'Account 2',                // Optional
-                    type: AccountType.Key,
-                    key: '4a3aa20b292bb17c9d6efg000h00ff0f111c11c2f33cf4444444c5f66b777d00',
-                    default: true
-                },
-                {
-                    name: 'Account 3',                // Optional
-                    type: AccountType.External
-                }
-            ],
-        }
-    ],
-    compilerOptions: {},
-
-    openWallets: {},
+    openWallets: { },
     metamaskAccounts: []
 };
 
-function getEnv(state: ISuperblocksRunConfigurationData): IEnvironment {
-    return <IEnvironment>state.environments.find(e => e.name === state.environmentName);
+function findEnvironment(config: ISuperblocksRunConfiguration, environments: IEnvironment[]) {
+    return (config.id && environments.find((e: IEnvironment) => e.name === config.data.environmentName)) || undefined;
 }
 
-function updateCurrentEnvironment(state: ISuperblocksRunConfigurationData, modifier: (env: IEnvironment) => IEnvironment) {
-    return {
-        environments: replaceInArray(state.environments, e => e.name === state.environmentName, e => modifier(e))
-    };
-}
-
-export default function superblockConfigReducer(state = initialState, action: AnyAction): ISuperblocksRunConfigurationData {
+// TODO: IProjectItem - should be separate plugin interface or in the shared package
+export default function superblocksConfigReducer(state = initialState, action: AnyAction, explorerTree: Nullable<IProjectItem>): ISuperblocksPluginState {
     switch (action.type) {
-        case 'PLUGIN.INIT': {
-            return state;
+        case 'PLUGINS:SUPERBLOCKS.FILE_SYSTEM_UPDATE': {
+            if (!explorerTree) {
+                return state;
+            }
+            // parse dappjson file to get environments
+            try {
+                const dappfile: any = explorerTree.children.find(f => f.name === 'dappfile.json');
+                const dappfileData: any = JSON.parse(dappfile.code || '');
+
+                return {
+                    ...state,
+                    dappfile: dappfileData,
+                    configUI: { // TODO: enhance logic here
+                        ...state.configUI,
+                        environment: findEnvironment(state.configUI.selectedConfig, dappfileData.environments)
+                        // TODO: update networks as well
+                    }
+                };
+            } catch (e) {
+                console.error(e);
+                return state;
+            }
         }
-        case superblocksConfigActions.SET_ALL_NETWORKS:
+        case 'PLUGINS:SUPERBLOCKS.SET_ACTIVE_RUN_CONFIGURATION': {
             return {
                 ...state,
-                networks: Networks.concat(action.data)
+                activeConfig: action.data
             };
+        }
+        case 'PLUGINS:SUPERBLOCKS.SHOW_RUN_CONFIGURATION': {
+            return {
+                ...state,
+                configUI: {
+                    ...state.configUI,
+                    selectedConfig: action.data,
+                    environment: findEnvironment(action.data, state.dappfile.environments)
+                }
+            };
+        }
+        case superblocksConfigActions.SET_ENVIRONMENT: {
+            const selectedConfig = { ...state.configUI.selectedConfig, data: { environmentName: action.data } };
+            return {
+                ...state,
+                configUI: {
+                    ...state.configUI,
+                    selectedConfig,
+                    environment: findEnvironment(selectedConfig, state.dappfile.environments)
+                }
+            };
+        }
         case superblocksConfigActions.SET_NETWORK: {
-            const network = state.networks.find(e => e.host === action.data.host && e.port === action.data.port);
-            if (!network) {
+            const network = state.configUI.networks.find(e => e.host === action.data.host && e.port === action.data.port);
+            if (!network || !state.configUI.environment) {
                 return state;
             }
 
@@ -92,7 +104,13 @@ export default function superblockConfigReducer(state = initialState, action: An
             // }
             return {
                 ...state,
-                ...updateCurrentEnvironment(state, e => ({ ...e, network }))
+                configUI: {
+                    ...state.configUI,
+                    environment: {
+                        ...state.configUI.environment,
+                        network
+                    }
+                }
             };
         }
         case superblocksConfigActions.SET_METAMASK_ACCOUNTS: {
@@ -110,14 +128,17 @@ export default function superblockConfigReducer(state = initialState, action: An
             };
         }
         case superblocksConfigActions.SET_ACCOUNT:
+            const environment = state.configUI.environment;
+            if (!environment) {
+                return state;
+            }
+
             return {
                 ...state,
-                ...updateCurrentEnvironment(state, e => {
-                    return {
-                        ...e,
-                        accounts: e.accounts.map(a => ({...a, default: a.name === action.data}))
-                    };
-                })
+                configUI: {
+                    ...state.configUI,
+                    environment: { ...environment, accounts: environment.accounts.map(a => ({...a, default: a.name === action.data})) }
+                }
             };
         // case superblocksConfigActions.UPDATE_ACCOUNT_BALANCE: {
         //     return {

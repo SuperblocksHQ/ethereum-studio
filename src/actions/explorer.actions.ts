@@ -25,12 +25,10 @@ export const explorerActions = {
         };
     },
 
-    // TODO: remove this action
-    RENAME_FILE: 'RENAME_FILE',
-    renameFile(id: string, name: string) { // maybe should use filepath instead
+    INIT_EXPLORER_COMPLETE: 'INIT_EXPLORER_COMPLETE',
+    initExplorerComplete() {
         return {
-            type: explorerActions.RENAME_FILE,
-            data: { id, name }
+            type: explorerActions.INIT_EXPLORER_COMPLETE
         };
     },
 

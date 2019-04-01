@@ -8,7 +8,12 @@ export const Networks: INetwork[] = [
         id: '*'
     },
     {
-        host: 'https://ropsten.infura.io/',
+        host: 'https://ropsten.infura.io',
+        port: 8545,
+        id: '*'
+    },
+    {
+        host: 'https://rinkeby.infura.io',
         port: 8545,
         id: '*'
     }

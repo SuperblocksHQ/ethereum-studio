@@ -1,4 +1,4 @@
-import { IProjectItem } from '../project';
+import { IProject } from '../project.model';
 
 export interface IEnvironment {
     name: string;
@@ -18,22 +18,23 @@ export interface IRunConfiguration {
     id: string;
     name: string;
     plugin: string;
-    pluginData: any;
-    data?: any;
-    active?: boolean;
+    data: any;
+    active: boolean;
+    selected: boolean;
+}
+
+export interface IPluginData {
+    name: string;
+    data: any;
 }
 
 export interface IProjectState {
-    project?: Partial<IProjectItem>;
+    project?: Partial<IProject>;
     selectedRunConfig?: IRunConfiguration;
     runConfigurations: IRunConfiguration[];
+    pluginsState: IPluginData[];
 
-    environments: IEnvironment[];
-    selectedEnvironment: IEnvironment;
-    accounts: IAccount[];
-    selectedAccount: IAccount;
     openWallets: {
         [key: string]: string[]
     };
-    metamaskAccounts: string[];
 }

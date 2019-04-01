@@ -18,13 +18,13 @@ import React from 'react';
 import style from './style.less';
 import { Select } from '../../components/common';
 import { InputRow } from './inputRow';
-import { ISuperblocksRunConfigurationData, INetwork, IEnvironment, IAccount } from '../models';
+import { INetwork, IAccount, ISuperblocksPluginState } from '../models';
 import { IconDots } from '../../components/icons';
 import classNames from 'classnames';
 import { NetworksSelect } from './networksSelect';
 
 interface IProps {
-    data: ISuperblocksRunConfigurationData;
+    data: ISuperblocksPluginState;
     setNetwork(network: INetwork): void;
     setAccount(name: string): void;
     setEnvironment(name: string): void;
@@ -57,20 +57,19 @@ export class SuperblocksConfig extends React.Component<IProps, IState> {
 
     render() {
         const { currentTab } = this.state;
-        const { data, setNetwork, setEnvironment, setAccount } = this.props;
+        const { setNetwork, setEnvironment, setAccount } = this.props;
+        const { configUI } = this.props.data;
 
-        // todo: think!
-        const environment = data.environments.find(e => e.name === data.environmentName) as IEnvironment;
-        const allEnvironments = data.environments.map(e => e.name);
-        const account = environment.accounts.find(a => !!a.default) as IAccount;
-        const allAccounts = environment.accounts.map(a => a.name);
+        let environmentName = '';
+        let innerJSX = <div>Please select environment</div>;
 
-        return (
-            <div className={style.container}>
-                <InputRow labelText='Environment'>
-                    <Select value={environment.name} options={allEnvironments} onChange={a => setEnvironment(a)} />
-                </InputRow>
+        if (configUI.environment) {
+            environmentName = configUI.environment.name;
+            const account = configUI.environment.accounts.find(a => !!a.default) as IAccount;
+            const allAccounts = configUI.environment.accounts.map(a => a.name);
 
+            innerJSX =
+                <React.Fragment>
                 <div className={style.flex}>
                     <div className={this.getTabStyle(Tabs.Configuration)} onClick={() => this.selectTab(Tabs.Configuration)}>Configuration</div>
                     <div className={this.getTabStyle(Tabs.Deployment)} onClick={() => this.selectTab(Tabs.Deployment)}>Deployment</div>
@@ -80,7 +79,7 @@ export class SuperblocksConfig extends React.Component<IProps, IState> {
                 <div className={style.configurationArea}>
                     <InputRow labelText='Network'>
                         <div className={style.flex}>
-                            <NetworksSelect currentNetwork={environment.network} networks={data.networks} onChange={e => setNetwork(e)} />
+                            <NetworksSelect currentNetwork={configUI.environment.network} networks={configUI.networks} onChange={e => setNetwork(e)} />
                             <button className='btnNoBg'><IconDots /></button>
                         </div>
                     </InputRow>
@@ -93,14 +92,22 @@ export class SuperblocksConfig extends React.Component<IProps, IState> {
                     </InputRow>
                 </div>
                 }
-
                 {currentTab === Tabs.Deployment &&
                 <div className={style.deploymentArea}>
                     do deploy
                 </div>
                 }
+                </React.Fragment>;
+        }
 
+        const allEnvironments = this.props.data.dappfile.environments.map(e => e.name);
 
+        return (
+            <div className={style.container}>
+                <InputRow labelText='Environment'>
+                    <Select value={environmentName} options={allEnvironments} onChange={a => setEnvironment(a)} />
+                </InputRow>
+                {innerJSX}
             </div>
         );
     }

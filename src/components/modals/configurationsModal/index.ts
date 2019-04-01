@@ -22,14 +22,15 @@ import { connect } from 'react-redux';
 import { projectsActions } from '../../../actions';
 
 const mapStateToProps = (state: any) => ({
-    selectedConfig: state.projects.selectedRunConfig,
+    // selectedConfig: state.projects.selectedRunConfig,
+    pluginsState: projectSelectors.getPluginsState(state),
     runConfigurations: projectSelectors.getRunConfigs(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
     return {
         selectRunConfiguration(id: string) {
-            dispatch(projectsActions.selectRunConfiguration(id));
+            dispatch(projectsActions.showRunConfiguration(id));
         },
         save(configId: string, name: string) {
             dispatch(projectsActions.saveRunConfiguration(configId, name));

@@ -18,12 +18,12 @@ import React from 'react';
 import classNames from 'classnames';
 import style from './style.less';
 import { ModalHeader, TextInput } from '../../common';
-import { IRunConfiguration } from '../../../models/state';
+import { IRunConfiguration, IPluginData } from '../../../models/state';
 import SplitterLayout from 'react-splitter-layout';
 import { SuperblocksConfig } from '../../../superblocksConfig';
 
 interface IProps {
-    selectedConfig: Nullable<IRunConfiguration>;
+    pluginsState: IPluginData[];
     runConfigurations: IRunConfiguration[];
     hideModal(): void;
     selectRunConfiguration(id: string): void;
@@ -31,6 +31,7 @@ interface IProps {
 }
 
 interface IState {
+    selectedConfig?: IRunConfiguration;
     currentConfigName: Nullable<string>;
 }
 
@@ -38,20 +39,26 @@ export class ConfigurationsModal extends React.Component<IProps, IState> {
 
     constructor(props: IProps) {
         super(props);
+        const selectedConfig = this.props.runConfigurations.find(r => r.selected);
         this.state = {
-            currentConfigName: props.selectedConfig ? props.selectedConfig.name : null
+            selectedConfig,
+            currentConfigName: selectedConfig ? selectedConfig.name : null
         };
     }
 
-    componentDidUpdate(prevProps: IProps) {
-        if (!this.props.selectedConfig) {
+    componentDidUpdate() {
+        const newSelectedConfig = this.props.runConfigurations.find(r => r.selected);
+        if (!newSelectedConfig) {
+            this.setState({ selectedConfig: undefined });
             return;
         }
 
-        if (!prevProps.selectedConfig || prevProps.selectedConfig.name !== this.props.selectedConfig.name) {
-            this.setState(state => ({
-                currentConfigName: this.props.selectedConfig ? this.props.selectedConfig.name : ''
-            }));
+        if (!this.state.selectedConfig || this.state.selectedConfig.name !== newSelectedConfig.name) {
+            this.setState((state) => ({ ...state, currentConfigName: newSelectedConfig.name }));
+        }
+
+        if (this.state.selectedConfig && this.state.selectedConfig.id !== newSelectedConfig.id) {
+            this.setState((state) => ({ ...state, selectedConfig: newSelectedConfig }));
         }
     }
 
@@ -60,19 +67,42 @@ export class ConfigurationsModal extends React.Component<IProps, IState> {
     }
 
     onSave = () => {
-        if (!this.props.selectedConfig) {
+        if (!this.state.selectedConfig) {
             return;
         }
 
-        this.props.save(this.props.selectedConfig.id, this.state.currentConfigName || '');
+        this.props.save(this.state.selectedConfig.id, this.state.currentConfigName || '');
     }
 
     render() {
-        const { selectedConfig, selectRunConfiguration, hideModal } = this.props;
+        const { selectRunConfiguration, hideModal, pluginsState } = this.props;
 
         const configsList = this.props.runConfigurations.map(c => (
-            <div key={c.id} className={style.configItem} onClick={() => selectRunConfiguration(c.id)}>{c.name}</div>
+            <div key={c.id} className={classNames(style.configItem, { [style.selected]: c.selected })} onClick={() => selectRunConfiguration(c.id)}>{c.name}</div>
         ));
+
+        let selectedConfigJSX = <div></div>;
+        if (this.state.selectedConfig) {
+            const pluginName = this.state.selectedConfig.plugin;
+            const pluginData = pluginsState.find(p => p.name === pluginName);
+
+            if (pluginData) {
+                selectedConfigJSX =
+                    <React.Fragment>
+                        <div className={style.nameContainer}>
+                            <div className={style.label}>Name:</div>
+                            <TextInput value={this.state.currentConfigName} onChange={this.onConfigNameChange} />
+                        </div>
+                        <div className={style.pluginContainer}>
+                            <SuperblocksConfig data={pluginData.data} />
+                        </div>
+                        <div className={style.buttonsContainer}>
+                            <button onClick={hideModal} className='btn2 noBg mr-2'>Cancel</button>
+                            <button onClick={this.onSave} className='btn2'>Save</button>
+                        </div>
+                    </React.Fragment>;
+            }
+        }
 
         return (
             <div className={classNames(style.configurationsModal, ['modal'])}>
@@ -88,21 +118,7 @@ export class ConfigurationsModal extends React.Component<IProps, IState> {
                             {configsList}
                         </div>
                         <div className={style.column}>
-                            { selectedConfig &&
-                                <React.Fragment>
-                                    <div className={style.nameContainer}>
-                                        <div className={style.label}>Name:</div>
-                                        <TextInput value={this.state.currentConfigName} onChange={this.onConfigNameChange} />
-                                    </div>
-                                    <div className={style.pluginContainer}>
-                                        <SuperblocksConfig data={selectedConfig.data} />
-                                    </div>
-                                    <div className={style.buttonsContainer}>
-                                        <button onClick={hideModal} className='btn2 noBg mr-2'>Cancel</button>
-                                        <button onClick={this.onSave} className='btn2'>Save</button>
-                                    </div>
-                                </React.Fragment>
-                            }
+                            {selectedConfigJSX}
                         </div>
                     </SplitterLayout>
                 </div>
