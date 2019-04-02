@@ -1,4 +1,5 @@
 import { IProject } from '../project.model';
+import { IProjectItem } from '../project';
 
 export interface IEnvironment {
     name: string;
@@ -30,9 +31,11 @@ export interface IPluginData {
 
 export interface IProjectState {
     project?: Partial<IProject>;
-    selectedRunConfig?: IRunConfiguration;
     runConfigurations: IRunConfiguration[];
     pluginsState: IPluginData[];
+    hasUpdates: boolean; // updates to be saved
+
+    runConfigurationsFile?: IProjectItem;
 
     openWallets: {
         [key: string]: string[]

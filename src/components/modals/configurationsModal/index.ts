@@ -34,6 +34,12 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
         },
         save(configId: string, name: string) {
             dispatch(projectsActions.saveRunConfiguration(configId, name));
+        },
+        addRunConfiguration() {
+            dispatch(projectsActions.addRunConfiguration());
+        },
+        removeRunConfiguration(id: string) {
+            dispatch(projectsActions.removeRunConfiguration(id));
         }
     };
 };

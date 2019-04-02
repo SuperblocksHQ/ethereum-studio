@@ -16,6 +16,7 @@
 
 import { IEnvironment } from '../models/state';
 import { IProject } from '../models';
+import { generateUniqueId } from '../services/utils';
 
 export const projectsActions = {
     SHOW_RUN_CONFIGURATION: 'SHOW_RUN_CONFIGURATION',
@@ -26,12 +27,27 @@ export const projectsActions = {
         };
     },
     SAVE_RUN_CONFIGURATION: 'SAVE_RUN_CONFIGURATION',
-    saveRunConfiguration(id: string, name: string) {
+    saveRunConfiguration(id: string, name?: string) {
         return {
             type: projectsActions.SAVE_RUN_CONFIGURATION,
             data: { id, name }
         };
     },
+    ADD_RUN_CONFIGURATION: 'ADD_RUN_CONFIGURATION',
+    addRunConfiguration() {
+        return {
+            type: projectsActions.ADD_RUN_CONFIGURATION,
+            data: generateUniqueId()
+        };
+    },
+    REMOVE_RUN_CONFIGURATION: 'REMOVE_RUN_CONFIGURATION',
+    removeRunConfiguration(id: string) {
+        return {
+            type: projectsActions.REMOVE_RUN_CONFIGURATION,
+            data: id
+        };
+    },
+
     PROJECT_FILES_UPDATE: 'PROJECT_FILES_UPDATE',
     projectFilesUpdate() {
         return {

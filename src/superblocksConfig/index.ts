@@ -19,7 +19,7 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
 import { superblocksConfigActions } from './superblocksConfig.actions';
-import { INetwork } from './models';
+import { INetwork, ISuperblocksPluginState, ISuperblocksRunConfiguration } from './models';
 
 const mapStateToProps = (state: any) => ({
 });
@@ -39,3 +39,7 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
 };
 
 export const SuperblocksConfig = connect(mapStateToProps, mapDispatchToProps)(SuperblocksConfigImpl);
+export * from './superblocksConfig.reducer';
+export function runConfigDataSelector(state: ISuperblocksPluginState) {
+    return state.configUI.selectedConfig.data;
+}

@@ -21,6 +21,7 @@ import { ModalHeader, TextInput } from '../../common';
 import { IRunConfiguration, IPluginData } from '../../../models/state';
 import SplitterLayout from 'react-splitter-layout';
 import { SuperblocksConfig } from '../../../superblocksConfig';
+import { IconPlus, IconDown, IconAdd } from '../../icons';
 
 interface IProps {
     pluginsState: IPluginData[];
@@ -28,6 +29,8 @@ interface IProps {
     hideModal(): void;
     selectRunConfiguration(id: string): void;
     save(configId: string, name: string): void;
+    addRunConfiguration(): void;
+    removeRunConfiguration(id: string): void;
 }
 
 interface IState {
@@ -54,7 +57,7 @@ export class ConfigurationsModal extends React.Component<IProps, IState> {
         }
 
         if (!this.state.selectedConfig || this.state.selectedConfig.name !== newSelectedConfig.name) {
-            this.setState((state) => ({ ...state, currentConfigName: newSelectedConfig.name }));
+            this.setState((state) => ({ ...state, currentConfigName: newSelectedConfig.name, selectedConfig: newSelectedConfig }));
         }
 
         if (this.state.selectedConfig && this.state.selectedConfig.id !== newSelectedConfig.id) {
@@ -75,15 +78,16 @@ export class ConfigurationsModal extends React.Component<IProps, IState> {
     }
 
     render() {
-        const { selectRunConfiguration, hideModal, pluginsState } = this.props;
+        const { selectRunConfiguration, hideModal, pluginsState, addRunConfiguration, removeRunConfiguration } = this.props;
+        const { selectedConfig, currentConfigName } = this.state;
 
         const configsList = this.props.runConfigurations.map(c => (
             <div key={c.id} className={classNames(style.configItem, { [style.selected]: c.selected })} onClick={() => selectRunConfiguration(c.id)}>{c.name}</div>
         ));
 
         let selectedConfigJSX = <div></div>;
-        if (this.state.selectedConfig) {
-            const pluginName = this.state.selectedConfig.plugin;
+        if (selectedConfig) {
+            const pluginName = selectedConfig.plugin;
             const pluginData = pluginsState.find(p => p.name === pluginName);
 
             if (pluginData) {
@@ -91,7 +95,7 @@ export class ConfigurationsModal extends React.Component<IProps, IState> {
                     <React.Fragment>
                         <div className={style.nameContainer}>
                             <div className={style.label}>Name:</div>
-                            <TextInput value={this.state.currentConfigName} onChange={this.onConfigNameChange} />
+                            <TextInput value={currentConfigName} onChange={this.onConfigNameChange} />
                         </div>
                         <div className={style.pluginContainer}>
                             <SuperblocksConfig data={pluginData.data} />
@@ -114,6 +118,12 @@ export class ConfigurationsModal extends React.Component<IProps, IState> {
                         primaryMinSize={200}
                         secondaryInitialSize={130}>
                         <div className={style.column}>
+                            <div>
+                                <button className='btnNoBg' onClick={addRunConfiguration}><IconAdd /></button>
+                                {selectedConfig  &&
+                                <button className='btnNoBg' onClick={() => removeRunConfiguration(selectedConfig.id)}><IconDown /></button>
+                                }
+                            </div>
                             <div className={style.configGroup}>Superblocks</div>
                             {configsList}
                         </div>

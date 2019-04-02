@@ -40,7 +40,7 @@ function findEnvironment(config: ISuperblocksRunConfiguration, environments: IEn
 }
 
 // TODO: IProjectItem - should be separate plugin interface or in the shared package
-export default function superblocksConfigReducer(state = initialState, action: AnyAction, explorerTree: Nullable<IProjectItem>): ISuperblocksPluginState {
+export function superblocksConfigReducer(state = initialState, action: AnyAction, explorerTree: Nullable<IProjectItem>): ISuperblocksPluginState {
     switch (action.type) {
         case 'PLUGINS:SUPERBLOCKS.FILE_SYSTEM_UPDATE': {
             if (!explorerTree) {

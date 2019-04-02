@@ -59,8 +59,10 @@ export function findItemByIdImpl(item: Nullable<IProjectItem>, id: string, paren
 
 export function findItemByPath(root: IProjectItem, path: string[], itemType: ProjectItemTypes): Nullable<IProjectItem> {
     let currItem: IProjectItem | undefined = root;
-    for (const folder of path) {
-        currItem = currItem.children.find(i => i.name === folder && i.type === itemType);
+    for (let j = 0; j < path.length; ++j) {
+        const folder = path[j];
+        const type = j === path.length - 1 ? itemType : ProjectItemTypes.Folder;
+        currItem = currItem.children.find(i => i.name === folder && i.type === type);
         if (!currItem) {
             return null;
         }

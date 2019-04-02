@@ -15,20 +15,19 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { projectsActions } from '../actions/projects.actions';
-import { IProjectState, IExplorerState } from '../models/state';
+import { IProjectState, IExplorerState, IRunConfiguration } from '../models/state';
 import { AnyAction } from 'redux';
-import superblockConfigReducer from '../superblocksConfig/superblocksConfig.reducer';
+import { superblocksConfigReducer, runConfigDataSelector } from '../superblocksConfig';
 import { replaceInArray } from './utils';
-import { IProjectItem } from '../models';
+import { IProjectItem, ProjectItemTypes } from '../models';
 import { explorerActions } from '../actions';
+import { createFile, findItemByPath } from './explorerLib';
 
 export const initialState: IProjectState = {
     project: undefined,
-    selectedRunConfig: undefined,
-    runConfigurations: [
-        { id: '123', plugin: 'SUPERBLOCKS', name: 'Dev', active: true, selected: true, data: { environmentName: 'Development' } },
-        { id: '1234', plugin: 'SUPERBLOCKS', name: 'Stage', active: false, selected: false, data: { environmentName: 'Staging' } }
-    ],
+    runConfigurations: [ ],
+    runConfigurationsFile: undefined,
+    hasUpdates: false,
     pluginsState: [{ name: 'SUPERBLOCKS', data: undefined }],
     openWallets: {}
 };
@@ -38,14 +37,11 @@ function handlePluginAction(state: IProjectState, action: AnyAction, explorerTre
     const pluginState = state.pluginsState.find(p => p.name === pluginName);
 
     if (pluginState) {
-        // const prevSelectedRunConfig = state.selectedRunConfig;
-        const result = superblockConfigReducer(pluginState.data, action, explorerTree);
-        // const selectedRunConfig = { ...prevSelectedRunConfig, data: result };
+        const result = superblocksConfigReducer(pluginState.data, action, explorerTree);
 
         return {
             ...state,
-            pluginsState: replaceInArray(state.pluginsState, c => c === pluginState, () => ({...pluginState, data: result})),
-            // selectedRunConfig
+            pluginsState: replaceInArray(state.pluginsState, c => c === pluginState, () => ({...pluginState, data: result}))
         };
     } else {
         return state;
@@ -70,6 +66,32 @@ export default function projectsReducer(state = initialState, action: AnyAction,
                 data: stateChange.runConfigurations.find(r => r.selected)
             };
             return handlePluginAction(stateChange, pluginAction, explorer.tree);
+        }
+        case projectsActions.SAVE_RUN_CONFIGURATION: {
+            try {
+                const runConfigurations = replaceInArray(
+                    state.runConfigurations,
+                    r => r.id === action.data.id,
+                    r => {
+                        const pluginState = state.pluginsState.find(s => s.name === r.plugin);
+                        if (!pluginState) {
+                            return r;
+                        }
+                        const name = action.data.name === undefined ? r.name : action.data.name;
+                        return {...r, name, data: runConfigDataSelector(pluginState.data) };
+                    }
+                );
+
+                return {
+                    ...state,
+                    runConfigurations,
+                    // TODO: think. not a pure peice of code because of an id generation
+                    runConfigurationsFile: createFile('.runConfigs', JSON.stringify(runConfigurations))
+                };
+            } catch (e) {
+                console.error(e);
+                return { ...state, runConfigurationsFile: undefined };
+            }
         }
         case projectsActions.UPDATE_PROJECT_SETTINGS_SUCCESS: {
             return {
@@ -97,14 +119,62 @@ export default function projectsReducer(state = initialState, action: AnyAction,
             };
 
         case explorerActions.INIT_EXPLORER_COMPLETE: {
-            const activeConfig = state.runConfigurations.find(r => r.active);
-            let intermediateState = handlePluginAction(state, { type: 'PLUGINS:SUPERBLOCKS.FILE_SYSTEM_UPDATE'  }, explorer.tree);
-            intermediateState = handlePluginAction(intermediateState, { type: 'PLUGINS:SUPERBLOCKS.SET_ACTIVE_RUN_CONFIGURATION', data: activeConfig }, explorer.tree);
-            return handlePluginAction(intermediateState, {
-                type: 'PLUGINS:SUPERBLOCKS.' + projectsActions.SHOW_RUN_CONFIGURATION,
-                data: state.runConfigurations.find(r => r.selected)
-            }, explorer.tree);
+            if (!explorer.tree) {
+                return state;
+            }
+
+            try {
+                let activeConfig: IRunConfiguration | undefined;
+                let runConfigurations = initialState.runConfigurations;
+                const configsFile = findItemByPath(explorer.tree, ['.super', '.runConfigs'], ProjectItemTypes.File);
+
+                if (configsFile && configsFile.code) {
+                    console.log('No configurations file detected');
+                    runConfigurations = <IRunConfiguration[]>JSON.parse(configsFile.code);
+                    activeConfig = runConfigurations.find(r => r.active);
+                }
+
+                let intermediateState = handlePluginAction({ ...state, runConfigurations }, { type: 'PLUGINS:SUPERBLOCKS.FILE_SYSTEM_UPDATE'  }, explorer.tree);
+                intermediateState = handlePluginAction(intermediateState, { type: 'PLUGINS:SUPERBLOCKS.SET_ACTIVE_RUN_CONFIGURATION', data: activeConfig }, explorer.tree);
+
+                const selectedConfig = runConfigurations.find(r => r.selected);
+                if (selectedConfig) {
+                    return handlePluginAction(intermediateState, {
+                        type: 'PLUGINS:SUPERBLOCKS.' + projectsActions.SHOW_RUN_CONFIGURATION,
+                        data: selectedConfig
+                    }, explorer.tree);
+                } else {
+                    return intermediateState;
+                }
+            } catch (e) {
+                console.error(e);
+                return state;
+            }
         }
+
+        case projectsActions.ADD_RUN_CONFIGURATION:
+            return {
+                ...state,
+                runConfigurations: state.runConfigurations.concat([ {
+                    id: action.data,
+                    name: 'Noname',
+                    plugin: 'SUPERBLOCKS',
+                    active: false,
+                    selected: false,
+                    data: { }
+                } ]),
+                // TODO: add some conditions here
+                hasUpdates: true
+            };
+
+        // case projectsActions.REMOVE_RUN_CONFIGURATION: {
+        //     const index = state.runConfigurations.find(r => r.id === action);
+        //     state.runConfigurations.filter(r => r.id !== action.data);
+        //     return {
+        //         ...state,
+        //         runConfigurations: 
+        //     };
+        // }
 
         case projectsActions.LOAD_PROJECT_FAIL: {
             console.log('project load failed', action.data);

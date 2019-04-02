@@ -24,8 +24,12 @@ interface IProps {
 }
 
 export function Select(props: IProps) {
+    const showDefaultValue = !props.value && props.options.indexOf(props.value) < 0;
     return (
         <select className={style.select} value={props.value} onChange={e => props.onChange(e.target.value)}>
+            {showDefaultValue &&
+                <option value={props.value}></option>
+            }
             {props.options.map((option: any) => {
                 return (
                     <option key={option} value={option}>

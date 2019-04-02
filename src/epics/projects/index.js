@@ -31,6 +31,8 @@ import { createEmptyProject } from './createEmptyProject.epic';
 import { openWalletEpic } from './openWallet.epic';
 import { updateAccountBalanceEpic } from './updateAccountBalance.epic';
 import { projectFilesUpdateEpic } from './projectFilesUpdate.epic';
+import { saveRunConfigurationsEpic } from './saveRunConfigurations.epic';
+import { addRunConfigurationEpic } from './addRunConfiguration.epic';
 
 export const projectsEpics = [
     environmentUpdateEpic,
@@ -44,5 +46,7 @@ export const projectsEpics = [
     openWalletEpic,
     updateAccountBalanceEpic,
     updateProject,
-    projectFilesUpdateEpic
+    projectFilesUpdateEpic,
+    saveRunConfigurationsEpic,
+    addRunConfigurationEpic
 ];
