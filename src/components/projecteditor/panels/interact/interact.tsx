@@ -17,8 +17,11 @@
 import React from 'react';
 import style from './style.less';
 import classnames from 'classnames';
+import { IProjectItem } from '../../../../models';
+import { getContractAbis, getFunctionsFromAbi } from '../../../../utils/abi';
 
 interface IProps {
+    project: IProjectItem;
     closeModal(): void;
 }
 
@@ -29,6 +32,12 @@ export class Interact extends React.Component<IProps> {
     }
 
     render() {
+        const abis = getContractAbis(this.props.project);
+
+        if (abis) {
+            console.log(getFunctionsFromAbi(abis[0]));
+        }
+
         return (
             <React.Fragment>
                 <div className={style.contractInstance}>

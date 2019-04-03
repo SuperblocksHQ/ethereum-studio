@@ -65,6 +65,7 @@ export default function deployerReducer(state = initialState, action: AnyAction,
                 return state;
             }
             const outputPath = getContractBuildPath(findItemResult.path);
+            console.log(outputPath);
             const contractBuildFolder = findItemByPath(explorer.tree, outputPath, ProjectItemTypes.Folder);
             if (!contractBuildFolder || !isCompilationFresh(contractBuildFolder.children, findItemResult.item)) {
                 return {

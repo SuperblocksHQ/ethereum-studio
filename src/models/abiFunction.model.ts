@@ -14,18 +14,29 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
-import { Interact } from './interact';
-import { explorerSelectors } from '../../../../selectors';
+export interface IAbiFunctionModel {
+    constant: boolean;
+    inputs: IAbiFunctionInputOutput[];
+    name: string;
+    outputs: IAbiFunctionInputOutput[];
+    payable: boolean;
+    stateMutability: string;
+    type: string;
+}
 
-const mapStateToProps = (state: any) => ({
-    project: explorerSelectors.getTree(state),
-});
+export interface IAbiFunctionInputOutput {
+    name: string;
+    type: string;
+}
 
-const mapDispatchToProps = (dispatch: Dispatch) => {
-    return {
-    };
-};
+export interface IFunctionModel {
+    name: string;
+    inputs: IAbiFunctionInputOutput[];
+    functionType: FunctionTypes;
+}
 
-export default connect<any, any, any, any>(mapStateToProps, mapDispatchToProps)(Interact);
+export enum FunctionTypes {
+    Constant = 'CONSTANT',
+    Payable = 'PAYABLE',
+    Transaction = 'TRANSACTION'
+}

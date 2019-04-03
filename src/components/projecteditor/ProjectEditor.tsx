@@ -31,7 +31,7 @@ import { Panels, IPanelsState, IEnvironment } from '../../models/state';
 import { Deployer } from './deployer';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
-import { Interact } from './panels/interact/interact';
+import {Interact} from './panels';
 
 interface IProps {
     router: any;
