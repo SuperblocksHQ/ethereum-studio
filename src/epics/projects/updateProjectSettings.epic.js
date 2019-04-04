@@ -17,7 +17,7 @@
 import { from, of } from 'rxjs';
 import { switchMap, tap, map, catchError, withLatestFrom } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
-import { projectsActions, ipfsActions } from '../../actions';
+import { projectsActions } from '../../actions';
 
 export const updateProjectSettings = (action$, state$, { router }) => action$.pipe(
     ofType(projectsActions.UPDATE_PROJECT_SETTINGS),
@@ -36,7 +36,7 @@ export const updateProjectSettings = (action$, state$, { router }) => action$.pi
             tap(() => router.control.redrawMain(true)),
             catchError(error => {
                 console.log("Error saving the DappFile: " + error);
-                return of(ipfsActions.updateProjectSettingsFail(error))
+                return of(projectsActions.updateProjectSettingsFail(error))
             })
         );
     }));
