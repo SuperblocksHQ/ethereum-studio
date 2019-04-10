@@ -28,7 +28,7 @@ import Loading from "../common/loadable";
 
 const Dashboard = Loadable({
     loader: () => import(/* webpackChunkName: "dashboard" */"../dashboard"),
-    loading: () => Loading,
+    loading: Loading,
 });
 
 export default class App extends Component {
