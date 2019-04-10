@@ -19,7 +19,8 @@ import PropTypes from 'prop-types';
 import style from './style.less';
 import * as validations from '../../../../../validations';
 import { TextInput } from '../../../../common';
-import Web3 from 'web3';
+
+const Web3Package = () => import(/* webpackChunkName: "web3" */ 'web3');
 
 export default class NetworkPreferences extends Component {
 
@@ -27,13 +28,23 @@ export default class NetworkPreferences extends Component {
         errorGasLimit: null,
         errorGasPrice: null,
         tempGasLimit: this.props.networkPreferences.gasLimit,
-        tempGasPrice: this.props.networkPreferences.gasPrice
+        tempGasPrice: this.props.networkPreferences.gasPrice,
+        web3: null,
     }
 
     constructor(props) {
         super(props);
+    }
 
-        this.web3 = new Web3();
+    componentDidMount() {
+        if (!this.state.web3) {
+            Web3Package().then((asyncWeb3) => {
+                const Web3 = asyncWeb3.default;
+                this.setState({
+                    web3: new Web3(),
+                });
+            });
+        }
     }
 
     onGasLimitChange = (e) => {
@@ -82,9 +93,15 @@ export default class NetworkPreferences extends Component {
             errorGasPrice,
             tempGasLimit,
             tempGasPrice,
+            web3,
         } = this.state;
 
-        const gasPriceGwei = this.web3.fromWei(tempGasPrice, 'Gwei');
+        // default value
+        let gasPriceGwei = 1;
+
+        if (web3 !== null) {
+            gasPriceGwei = web3.fromWei(tempGasPrice, 'Gwei');
+        }
 
         return (
             <div className={style.container}>
@@ -123,5 +140,3 @@ export default class NetworkPreferences extends Component {
 NetworkPreferences.propTypes = {
     onChange: PropTypes.func.isRequired
 }
-
-

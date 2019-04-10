@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import Web3 from 'web3';
+const Web3Package = () => import(/* webpackChunkName: "web3" */ 'web3');
 
 export default class TransactionLogData {
     constructor(props) {
@@ -113,11 +113,13 @@ export default class TransactionLogData {
         });
     };
 
-    _getWeb3 = network => {
+    _getWeb3 = async network => {
         if (this._web3s[network]) return this._web3s[network];
         const endpoint = this.props.functions.networks.endpoints[network]
             .endpoint;
         var provider;
+        const asyncWeb3 = await Web3Package();
+        const Web3 = asyncWeb3.default;
         if (endpoint.toLowerCase() == 'http://superblocks-browser') {
             provider = this.props.functions.EVM.getProvider();
         } else {

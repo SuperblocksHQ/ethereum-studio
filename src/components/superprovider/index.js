@@ -15,12 +15,12 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from 'react';
-import Web3 from 'web3';
 import Modal from '../modal/index.js';
 
 import Buffer from 'buffer';
 
 const TxEth = () => import(/* webpackChunkName: "ethereumjs-tx" */ 'ethereumjs-tx');
+const Web3Package = () => import(/* webpackChunkName: "web3" */ 'web3');
 
 export default class SuperProvider {
     constructor(channelId, projectItem, notifyTx, getCurrentEnv) {
@@ -259,15 +259,16 @@ export default class SuperProvider {
         }
     };
 
-    _getWeb3 = endpoint => {
+    _getWeb3 = async endpoint => {
         var provider;
+        const asyncWeb3 = await Web3Package();
+        const Web3 = asyncWeb3.default;
         if (endpoint.toLowerCase() === 'http://superblocks-browser') {
             provider = this.projectItem.functions.EVM.getProvider();
         } else {
             var provider = new Web3.providers.HttpProvider(endpoint);
         }
-        var web3 = new Web3(provider);
-        return web3;
+        return new Web3(provider);
     };
 
     _getNonce = (obj, cb) => {

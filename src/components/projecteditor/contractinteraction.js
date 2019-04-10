@@ -22,7 +22,8 @@ import { projectSelectors } from '../../selectors';
 
 var Generator = require('../contractinteraction');
 import SuperProvider from '../superprovider';
-import Web3 from 'web3';
+
+const Web3Package = () => import(/* webpackChunkName: "web3" */ 'web3');
 
 class ContractInteraction extends Component {
     constructor(props) {
@@ -245,15 +246,16 @@ class ContractInteraction extends Component {
         return [];
     };
 
-    _getWeb3 = endpoint => {
+    _getWeb3 = async endpoint => {
         var provider;
+        const asyncWeb3 = await Web3Package();
+        const Web3 = asyncWeb3.default;
         if (endpoint.toLowerCase() == 'http://superblocks-browser') {
             provider = this.props.functions.EVM.getProvider();
         } else {
             var provider = new Web3.providers.HttpProvider(endpoint);
         }
-        var web3 = new Web3(provider);
-        return web3;
+        return new Web3(provider);
     };
 
     _getInputByTx = (tx, endpoint, cb) => {
