@@ -15,11 +15,22 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { Component } from 'react';
-import ProjectList from './projectList';
-import Topbar from './topbar';
 import { IProject } from '../../models';
 import style from './style.less';
-import { LoginModal } from '../modals';
+import {userService} from '../../services/user.service';
+import {LoginModal} from '../modals';
+import Loading from '../common/loadable';
+import Loadable from 'react-loadable';
+
+const ProjectList = Loadable({
+    loader: () => import(/* webpackChunkName: "ProjectList" */'./projectList'),
+    loading: Loading,
+});
+
+const Topbar = Loadable({
+    loader: () => import(/* webpackChunkName: "Topbar" */'./topbar'),
+    loading: Loading,
+});
 
 interface IProps {
     getProjectList: () => void;
@@ -32,7 +43,9 @@ interface IProps {
 
 export default class Dashboard extends Component<IProps> {
     componentDidMount() {
-        this.props.getProjectList();
+        if (userService.credentialsExist()) {
+            this.props.getProjectList();
+        }
     }
 
     render() {
@@ -56,7 +69,7 @@ export default class Dashboard extends Component<IProps> {
                             <React.Fragment />
                             :
                             <LoginModal
-                                customClassName={style.loginModal}
+                                customClassName= {style.loginModal}
                                 githubLogin={githubLoginAction}
                                 hideCloseButton={true}
                             />
