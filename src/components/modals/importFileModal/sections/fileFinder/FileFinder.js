@@ -28,7 +28,7 @@ export default class FileFinder extends React.Component {
         };
     }
 
-    componentWillMount() {
+    componentDidMount() {
         openZeppelinJson().then((asyncData) => {
            console.log(asyncData);
            this.setState({
