@@ -18,8 +18,9 @@ import React from 'react';
 import Web3 from 'web3';
 import Modal from '../modal/index.js';
 
-import Tx from 'ethereumjs-tx';
 import Buffer from 'buffer';
+
+const TxEth = () => import(/* webpackChunkName: "ethereumjs-tx" */ 'ethereumjs-tx');
 
 export default class SuperProvider {
     constructor(channelId, projectItem, notifyTx, getCurrentEnv) {
@@ -230,6 +231,8 @@ export default class SuperProvider {
                             callback(err, null);
                             return;
                         }
+                        const asyncTx = await TxEth();
+                        const Tx = asyncTx.default;
                         const tx = new Tx({
                             from: obj2.account.address,
                             to: obj.to,

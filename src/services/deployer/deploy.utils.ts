@@ -14,9 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import Tx from 'ethereumjs-tx';
 import Buffer from 'buffer';
 import { IProjectItem } from '../../models';
+
+const TxEth = () => import(/* webpackChunkName: "ethereumjs-tx" */ 'ethereumjs-tx');
 
 export function getFileCode(files: IProjectItem[], name: string) {
     const file = files.find(f => f.name.toLowerCase().endsWith(name.toLowerCase()));
@@ -57,7 +58,9 @@ export function createDeployFile(buildFiles: IProjectItem[], contractArgs: any[]
     return deployFileCode;
 }
 
-export function signTransaction(address: string, nonce: any, gasSettings: any, key: string, deployFile: string) {
+export async function signTransaction(address: string, nonce: any, gasSettings: any, key: string, deployFile: string) {
+    const asyncTx = await TxEth();
+    const Tx = asyncTx.default;
     const tx = new Tx({
         from: address,
         to: '',
