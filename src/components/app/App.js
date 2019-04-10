@@ -84,7 +84,7 @@ export default class App extends Component {
 
         const LoadProject = Loadable({
             loader: () => import(/* webpackChunkName: "loadProject" */"../loadProject"),
-            loading: () => Loading,
+            loading: Loading,
         });
 
         return <LoadProject
