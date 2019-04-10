@@ -1,0 +1,120 @@
+// Copyright 2018 Superblocks AB
+//
+// This file is part of Superblocks Lab.
+//
+// Superblocks Lab is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation version 3 of the License.
+//
+// Superblocks Lab is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
+
+.sideMenuContainer {
+    position: relative;
+    width: 247px;
+    box-sizing: border-box;
+    z-index: 1;
+    background-color: #252525;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    height: calc(100% - 45px);
+    overflow-x: hidden;
+    transition: width .2s ease-out;
+    
+    &.collapsed {
+        width: 36px;
+
+        .collapseSidebar {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transform: rotate(180deg);
+        }
+
+        .sideMenuHeader {
+            display: none; 
+        }
+
+        .item {
+            padding: 5px 4px;
+            justify-content: center;
+
+            span {
+                display: none;
+            }
+        }
+    }
+    
+    .sideMenuInner {
+        height: 100%;
+        margin-bottom: 30px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .collapseSidebar {
+        margin-top: auto;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        height: 30px;
+
+        svg {
+            max-height: 100%;
+        }
+
+        &.item {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            padding: 5px 10px;
+        }
+
+        span {
+            margin-left: 10px;
+        }
+    }
+
+    .item {
+        display: flex;
+        align-items: center;
+        position: relative;
+        cursor: default;
+        user-select: none;
+        padding: 5px 13px;
+        white-space: nowrap;
+        border-left: 2px solid transparent;
+
+        &.active {
+            border-color: #7237CF;
+            background-color: rgba(128, 46, 255, 0.1);
+        }
+
+        &:hover {
+            background-color: rgba(128, 46, 255, 0.1);
+            cursor: pointer;
+        }
+
+        span {
+            margin-left: 10px;
+        }
+    }
+
+    .sideMenuHeader {
+        color: white;
+        padding-bottom: 12px;
+        padding-left: 15px;
+        padding-top: 20px;
+        white-space: nowrap;
+    }
+
+    .sideMenuFooter {
+        margin-top: auto;
+        padding-bottom: 10px;
+    }
+}

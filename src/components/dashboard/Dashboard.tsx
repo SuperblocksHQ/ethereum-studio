@@ -20,6 +20,10 @@ import Topbar from './topbar';
 import { IProject } from '../../models';
 import style from './style.less';
 import { LoginModal } from '../modals';
+import { SideMenu, SideMenuItem, SideMenuHeader, SideMenuFooter } from './sideMenu';
+import { IconConfigure, IconPlusTransparent } from '../icons';
+import { LetterAvatar } from '../common';
+import { Link } from 'react-router-dom';
 
 interface IProps {
     getProjectList: () => void;
@@ -44,6 +48,40 @@ export default class Dashboard extends Component<IProps> {
                     <React.Fragment>
                         <Topbar />
                         <div className={style.content}>
+                            <SideMenu>
+                                <SideMenuHeader title='My organizations' />
+                                {/* TODO: Remove placeholder items and fetch organizations instead */}
+                                    <SideMenuItem
+                                        icon={<LetterAvatar title='Test'/>}
+                                        title='Test'
+                                        onClick={() => console.log('1')}
+                                    />
+                                    <SideMenuItem
+                                        icon={<LetterAvatar title='Hola'/>}
+                                        title='Hola'
+                                        onClick={() => console.log('2')}
+                                    />
+                                    <SideMenuItem
+                                        icon={<LetterAvatar title='Boligrafo'/>}
+                                        title='Boligrafo'
+                                        onClick={() => console.log('3')}
+                                    />
+                                <SideMenuFooter>
+                                    <SideMenuItem
+                                        icon={<IconPlusTransparent />}
+                                        title='New organization'
+                                        onClick={() => console.log('4')}
+                                    />
+                                    {/* TODO: Add :organizationId to Link */}
+                                    <Link to='dashboard/settings'>
+                                        <SideMenuItem
+                                            icon={<IconConfigure width='10px' height='10px' />}
+                                            title='Organization settings'
+                                            onClick={() => console.log('5')}
+                                        />
+                                    </Link>
+                                </SideMenuFooter>
+                            </SideMenu>
                             <ProjectList
                                 listName={'All Your Projects'}
                                 list={projectList}
