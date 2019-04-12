@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { Component } from 'react';
+import React, { Component, lazy, Suspense } from 'react';
 import PropTypes from 'prop-types';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { previewService } from '../../services';
@@ -23,13 +23,9 @@ import OnlyIf from '../onlyIf';
 import ToastContainer from "../toasts/toastcontainer";
 import * as embedUtils from '../../utils/embed';
 import ModalContainer from '../common/modal/modalContainer';
-import Loadable from 'react-loadable';
 import { Loading } from "../common/loadable";
 
-const Dashboard = Loadable({
-    loader: () => import(/* webpackChunkName: "Dashboard" */"../dashboard"),
-    loading: Loading,
-});
+const Dashboard = lazy(() => import(/* webpackChunkName: "Dashboard" */"../dashboard"));
 
 export default class App extends Component {
 
@@ -81,11 +77,7 @@ export default class App extends Component {
     };
 
     renderProject =  ({match}) => {
-
-        const LoadProject = Loadable({
-            loader: () => import(/* webpackChunkName: "LoadProject" */"../loadProject"),
-            loading: Loading,
-        });
+        const LoadProject = lazy(() => import(/* webpackChunkName: "LoadProject" */"../loadProject"));
 
         return <LoadProject
             projectId={match.params.projectId}
@@ -104,11 +96,13 @@ export default class App extends Component {
                 <div id="app">
                     <div id="app_content">
                         <div className="maincontent">
-                            <Switch>
-                                <Route path="/" exact render={(props) => <Dashboard {...props} functions={this.functions} />} />
-                                <Route path="/dashboard" exact render={(props) => <Dashboard {...props} functions={this.functions} />} />
-                                <Route path="/:projectId" exact component={this.renderProject} />
-                            </Switch>
+                            <Suspense fallback={< Loading />}>
+                                <Switch>
+                                    <Route path="/" exact render={(props) => <Dashboard {...props} functions={this.functions} />} />
+                                    <Route path="/dashboard" exact render={(props) => <Dashboard {...props} functions={this.functions} />} />
+                                    <Route path="/:projectId" exact component={this.renderProject} />
+                                </Switch>
+                            </Suspense>
                         </div>
                     </div>
                     <OnlyIf test={showTrackingAnalyticsDialog}>

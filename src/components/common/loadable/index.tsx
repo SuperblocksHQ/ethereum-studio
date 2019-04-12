@@ -15,30 +15,17 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from 'react';
-import Loadable from 'react-loadable';
 
 const divStyle = {
     color: 'white',
 };
 
 // Creating a wrapper HOF breaks Babel, so can only export Loading component
-export class Loading extends React.Component<
-    Loadable.LoadingComponentProps
-    > {
+export class Loading extends React.Component {
     render() {
         return (
             <div>
-                {this.props.error || this.props.timedOut ? (
-                    <>
-                        Unexpected error while loading your content! Please try again later.
-                    </>
-                ) : this.props.pastDelay ? (
-                    <div>
-                       <h2 style={divStyle}>Loading...</h2>
-                    </div>
-                ) : (
-                    <></>
-                )}
+                <h2 style={divStyle}>Loading...</h2>
             </div>
         );
     }

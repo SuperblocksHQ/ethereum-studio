@@ -14,17 +14,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import style from './style.less';
-import { Loading } from "../../../../common";
-import Loadable from "react-loadable";
+import {Loading} from "../../../../common/loadable";
 
 const openZeppelinJson = () => import(/* webpackChunkName: "openzeppelin.json" */ "../../../../../assets/static/json/openzeppelin.json");
 
-const FolderTree = Loadable({
-    loader: () => import(/* webpackChunkName: "FolderTree" */"../../../../folderTree/FolderTree"),
-    loading: Loading,
-});
+const FolderTree = lazy(() => import(/* webpackChunkName: "FolderTree" */"../../../../folderTree/FolderTree"));
 
 export default class FileFinder extends React.Component {
     constructor(props) {
@@ -49,7 +45,9 @@ export default class FileFinder extends React.Component {
         return (
             <div className={style.container}>
                 {data !== null &&
-                <FolderTree data={data} onFileSelected={onFileSelected} selectedTitle={selectedTitle}/>
+                <Suspense fallback={< Loading/>}>
+                    <FolderTree data={data} onFileSelected={onFileSelected} selectedTitle={selectedTitle}/>
+                </Suspense>
                 }
             </div>
         );
