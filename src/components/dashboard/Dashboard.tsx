@@ -18,8 +18,7 @@ import React, { Component } from 'react';
 import { IProject } from '../../models';
 import style from './style.less';
 import {userService} from '../../services/user.service';
-import {LoginModal} from '../modals';
-import Loading from '../common/loadable';
+import { Loading } from '../common';
 import Loadable from 'react-loadable';
 
 const ProjectList = Loadable({
@@ -30,6 +29,15 @@ const ProjectList = Loadable({
 const Topbar = Loadable({
     loader: () => import(/* webpackChunkName: "Topbar" */'./topbar'),
     loading: Loading,
+});
+
+const LoginModal = Loadable({
+    loader: () => import(/* webpackChunkName: "LoginModal" */'../modals'),
+    loading: Loading,
+    render(loaded, props: any) {
+        const Modal = loaded.LoginModal;
+        return <Modal {...props}/>;
+    }
 });
 
 interface IProps {
