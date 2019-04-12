@@ -17,7 +17,12 @@
 import React from 'react';
 import Loadable from 'react-loadable';
 
-export default class Loading extends React.Component<
+const divStyle = {
+    color: 'white',
+};
+
+// Creating a wrapper HOF breaks Babel, so can only export Loading component
+export class Loading extends React.Component<
     Loadable.LoadingComponentProps
     > {
     render() {
@@ -29,7 +34,7 @@ export default class Loading extends React.Component<
                     </>
                 ) : this.props.pastDelay ? (
                     <div>
-                        Loading
+                       <h2 style={divStyle}>Loading...</h2>
                     </div>
                 ) : (
                     <></>
