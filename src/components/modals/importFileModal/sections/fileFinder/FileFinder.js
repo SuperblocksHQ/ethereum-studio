@@ -16,9 +16,15 @@
 
 import React from 'react';
 import style from './style.less';
-import FolderTree from "../../../../folderTree/FolderTree";
+import { Loading } from "../../../../common";
+import Loadable from "react-loadable";
 
 const openZeppelinJson = () => import(/* webpackChunkName: "openzeppelin.json" */ "../../../../../assets/static/json/openzeppelin.json");
+
+const FolderTree = Loadable({
+    loader: () => import(/* webpackChunkName: "FolderTree" */"../../../../folderTree/FolderTree"),
+    loading: Loading,
+});
 
 export default class FileFinder extends React.Component {
     constructor(props) {
@@ -30,7 +36,6 @@ export default class FileFinder extends React.Component {
 
     componentDidMount() {
         openZeppelinJson().then((asyncData) => {
-           console.log(asyncData);
            this.setState({
                data: asyncData.default,
            });
