@@ -14,19 +14,31 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { Component, lazy, Suspense } from 'react';
+import React, { Component } from 'react';
 import { IProject } from '../../models';
 import style from './style.less';
 import {userService} from '../../services/user.service';
 import { Loading } from '../common';
+import Loadable from 'react-loadable';
 
-const ProjectList = lazy(() => import(/* webpackChunkName: "ProjectList" */'./projectList'));
+const ProjectList = Loadable({
+    loader: () => import(/* webpackChunkName: "ProjectList" */'./projectList'),
+    loading: Loading,
+});
 
-const Topbar = lazy(() => import(/* webpackChunkName: "Topbar" */'./topbar'));
+const Topbar = Loadable({
+    loader: () => import(/* webpackChunkName: "Topbar" */'./topbar'),
+    loading: Loading,
+});
 
-const LoginModal = lazy(() =>
-    import(/* webpackChunkName: "LoginModal" */'../modals').then(module => ({ default: module.LoginModal }))
-);
+const LoginModal = Loadable({
+    loader: () => import(/* webpackChunkName: "LoginModal" */'../modals'),
+    loading: Loading,
+    render(loaded, props: any) {
+        const Modal = loaded.LoginModal;
+        return <Modal {...props}/>;
+    }
+});
 
 interface IProps {
     getProjectList: () => void;
@@ -50,7 +62,7 @@ export default class Dashboard extends Component<IProps> {
         return (
             <div className={style.dashboard}>
                 { isAuthenticated ?
-                    <Suspense fallback={< Loading/>}>
+                    <React.Fragment>
                         <Topbar />
                         <div className={style.content}>
                             <ProjectList
@@ -58,19 +70,17 @@ export default class Dashboard extends Component<IProps> {
                                 list={projectList}
                             />
                         </div>
-                    </Suspense>
+                    </React.Fragment>
                 :
                     <div className={style.loginSection}>
                         { isLoginInProgress ?
                             <React.Fragment />
                             :
-                            <Suspense fallback={< Loading/>}>
-                                <LoginModal
-                                    customClassName= {style.loginModal}
-                                    githubLogin={githubLoginAction}
-                                    hideCloseButton={true}
-                                />
-                            </Suspense>
+                            <LoginModal
+                                customClassName= {style.loginModal}
+                                githubLogin={githubLoginAction}
+                                hideCloseButton={true}
+                            />
                         }
                     </div>
                 }

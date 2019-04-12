@@ -14,21 +14,40 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, {Component, lazy, Suspense} from 'react';
+import React, {Component} from 'react';
 import style from './style.less';
-import {Loading} from '../../loadable';
+import Loadable from 'react-loadable';
+import { Loading } from '../../loadable';
 
-const LoginModal = lazy(() => import(/* webpackChunkName: "LoginModal" */'../../../modals/loginModal'));
+const LoginModal = Loadable({
+    loader: () => import(/* webpackChunkName: "LoginModal" */'../../../modals/loginModal'),
+    loading: Loading,
+});
 
-const ShareModal = lazy(() => import(/* webpackChunkName: "ShareModal" */'../../../modals/shareModal'));
+const ShareModal = Loadable({
+    loader: () => import(/* webpackChunkName: "ShareModal" */'../../../modals/shareModal'),
+    loading: Loading,
+});
 
-const EditModal = lazy(() => import(/* webpackChunkName: "EditModal" */'../../../modals/editModal'));
+const EditModal = Loadable({
+    loader: () => import(/* webpackChunkName: "EditModal" */'../../../modals/editModal'),
+    loading: Loading,
+});
 
-const ProjectTemplateModal = lazy(() => import(/* webpackChunkName: "ProjectTemplateModal" */'../../../modals/projectTemplateModal'));
+const ProjectTemplateModal = Loadable({
+    loader: () => import(/* webpackChunkName: "ProjectTemplateModal" */'../../../modals/projectTemplateModal'),
+    loading: Loading,
+});
 
-const PreferencesModal = lazy(() => import(/* webpackChunkName: "ShareModal" */'../../../modals/preferencesModal'));
+const PreferencesModal = Loadable({
+    loader: () => import(/* webpackChunkName: "ShareModal" */'../../../modals/preferencesModal'),
+    loading: Loading,
+});
 
-const ImportFileModal = lazy(() => import(/* webpackChunkName: "ImportFileModal" */'../../../modals/importFileModal'));
+const ImportFileModal = Loadable({
+    loader: () => import(/* webpackChunkName: "ImportFileModal" */'../../../modals/importFileModal'),
+    loading: Loading,
+});
 
 interface IProps {
     modalType: string;
@@ -75,9 +94,7 @@ export class ModalContainer extends Component<IProps> {
 
         return (
             <div className={style.modalContainer}>
-                <Suspense fallback={< Loading/>}>
-                    <SpecificModal hideModal={hideModal} {...modalProps} />
-                </Suspense>
+                <SpecificModal hideModal={hideModal} {...modalProps} />
             </div>
         );
     }
