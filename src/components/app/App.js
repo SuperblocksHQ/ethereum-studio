@@ -24,10 +24,10 @@ import ToastContainer from "../toasts/toastcontainer";
 import * as embedUtils from '../../utils/embed';
 import ModalContainer from '../common/modal/modalContainer';
 import Loadable from 'react-loadable';
-import Loading from "../common/loadable";
+import { Loading } from "../common/loadable";
 
 const Dashboard = Loadable({
-    loader: () => import(/* webpackChunkName: "dashboard" */"../dashboard"),
+    loader: () => import(/* webpackChunkName: "Dashboard" */"../dashboard"),
     loading: Loading,
 });
 
@@ -83,7 +83,7 @@ export default class App extends Component {
     renderProject =  ({match}) => {
 
         const LoadProject = Loadable({
-            loader: () => import(/* webpackChunkName: "loadProject" */"../loadProject"),
+            loader: () => import(/* webpackChunkName: "LoadProject" */"../loadProject"),
             loading: Loading,
         });
 
