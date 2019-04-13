@@ -17,7 +17,7 @@
 import React, { Component } from 'react';
 import ProjectEditor from '../projecteditor';
 import OnlyIf from '../onlyIf';
-import { Modal } from '../modal/new';
+import { GenericLoading } from "../common";
 
 // interface IProps {
 //     loadProject: (projectId: string) => void;
@@ -53,10 +53,7 @@ export default class LoadProject extends Component {
                     />
                 </OnlyIf>
                 <OnlyIf test={!isEvmReady || !project}>
-                    <Modal onClose={() => {}}>
-                        <h2>Loading Superblocks Lab</h2>
-                        <div style={{textAlign: 'center'}}>Initializing Wallet and Ethereum Virtual Machine...</div>
-                    </Modal>
+                    <GenericLoading />
                 </OnlyIf>
             </React.Fragment>
         );
