@@ -14,6 +14,14 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export * from './Loading';
-export * from './EmptyLoading';
-export * from './GenericLoading';
+import React, {Fragment} from 'react';
+
+export class EmptyLoading extends React.Component<
+    any
+    > {
+    render() {
+        return (
+            <Fragment />
+        );
+    }
+}
