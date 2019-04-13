@@ -20,14 +20,10 @@ import style from './style.less';
 import {userService} from '../../services/user.service';
 import { Loading } from '../common';
 import Loadable from 'react-loadable';
+import Topbar from './topbar';
 
 const ProjectList = Loadable({
     loader: () => import(/* webpackChunkName: "ProjectList" */'./projectList'),
-    loading: Loading,
-});
-
-const Topbar = Loadable({
-    loader: () => import(/* webpackChunkName: "Topbar" */'./topbar'),
     loading: Loading,
 });
 
