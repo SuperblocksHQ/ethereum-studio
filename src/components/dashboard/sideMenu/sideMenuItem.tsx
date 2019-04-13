@@ -16,20 +16,32 @@
 
 import React from 'react';
 import style from './style.less';
+import classNames from 'classnames';
+import { Link } from 'react-router-dom';
 
 interface IProps {
-    icon: any;
+    icon?: JSX.Element;
     title: string;
-    onClick: any;
+    onClick?: any;
+    active?: boolean;
+    linkTo: string;
+    children?: any;
 }
 
 export function SideMenuItem(props: IProps) {
     return (
-        <div onClick={props.onClick} className={style.item}>
-            {props.icon}
-            <span>
-                {props.title}
-            </span>
+        <div className={classNames([style.posRelative, !props.active ? style.flyOut : style.itemWrapper])}>
+            <Link to={props.linkTo}>
+                <div onClick={props.onClick} className={classNames([style.item, props.active ? style.active : null])}>
+                    <div className={style.iconContainer}>
+                        {props.icon}
+                    </div>
+                    <span>
+                        {props.title}
+                    </span>
+                </div>
+            </Link>
+            {props.children}
         </div>
     );
 }

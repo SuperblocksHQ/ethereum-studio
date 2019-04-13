@@ -15,7 +15,6 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { Component } from 'react';
-import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { previewService } from '../../services';
@@ -23,6 +22,9 @@ import AnalyticsDialog from '../analyticsDialog';
 import OnlyIf from '../onlyIf';
 import ToastContainer from "../toasts/toastcontainer";
 import Dashboard from '../dashboard';
+import ProjectDashboard from '../dashboard/projectDashboard';
+import ProjectSettings from '../dashboard/projectDashboard/projectSettings';
+import ProjectBuild from '../dashboard/projectDashboard/projectBuild';
 import LoadProject from '../loadProject';
 import * as embedUtils from '../../utils/embed';
 import ModalContainer  from '../common/modal/modalContainer';
@@ -98,6 +100,15 @@ export default class App extends Component {
                             <Route path="/" exact render={(props) => <Dashboard {...props} functions={this.functions} />} />
                             <Switch>
                                 <Route path="/dashboard" exact render={(props) => <Dashboard {...props} functions={this.functions} />} />
+                                <Route exact path="/dashboard/project/:projectId" render={(props) => (  
+                                    <ProjectDashboard content={<ProjectBuild />} {...props} />  
+                                )} />
+                                <Route exact path="/dashboard/project/:projectId/build" render={(props) => (  
+                                    <ProjectDashboard content={<ProjectBuild />} {...props} />  
+                                )} />
+                                <Route exact path="/dashboard/project/:projectId/settings" render={(props) => (  
+                                    <ProjectDashboard content={<ProjectSettings />} {...props} />  
+                                )} />
                                 <Route path="/:projectId" exact component={this.renderProject} />
                             </Switch>
                         </div>

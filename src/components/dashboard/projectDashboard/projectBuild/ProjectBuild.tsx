@@ -16,36 +16,14 @@
 
 import React, { Component } from 'react';
 import style from './style.less';
-import classNames from 'classnames';
-import { IconDoubleArrowLeft } from '../../icons';
 
-interface IState {
-    collapsed: boolean;
-}
-
-export class SideMenu extends Component<{}, IState> {
-    state = {
-        collapsed: false
-    };
-
-    toggleExpanded = () => {
-        this.setState({
-            collapsed: !this.state.collapsed
-        });
-    }
+export default class ProjectBuild extends Component {
 
     render() {
-        const { collapsed } = this.state;
-
         return (
-            <div className={classNames([style.sideMenuContainer, collapsed ? style.collapsed : null])}>
-                <div className={style.sideMenuInner}>
-                    {this.props.children}
-                </div>
-                <div className={classNames([style.collapseSidebar, style.item])} onClick={this.toggleExpanded}>
-                    <IconDoubleArrowLeft />
-                </div>
-            </div>
+            <React.Fragment>
+                <p>TODO: Breadcrumbs</p>
+            </React.Fragment>
         );
     }
 }

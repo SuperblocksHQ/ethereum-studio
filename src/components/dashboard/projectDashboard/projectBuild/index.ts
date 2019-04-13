@@ -14,8 +14,19 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export * from './sideMenu';
-export * from './sideMenuItem';
-export * from './sideMenuHeader';
-export * from './sideMenuFooter';
-export * from './subMenu';
+import { connect } from 'react-redux';
+import { Dispatch } from 'react';
+import { AnyAction } from 'redux';
+import ProjectBuild from './ProjectBuild';
+
+const mapStateToProps = (state: any) => ({
+
+});
+
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
+    return {
+
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProjectBuild);

@@ -15,64 +15,53 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { Component } from 'react';
-import ProjectList from './projectList';
-import Topbar from './topbar';
-import { IProject } from '../../models';
+import Topbar from '../topbar';
 import style from './style.less';
-import { LoginModal } from '../modals';
-import { SideMenu, SideMenuItem, SideMenuHeader, SideMenuFooter } from './sideMenu';
-import { IconConfigure, IconPlusTransparent } from '../icons';
-import { LetterAvatar } from '../common';
+import { SideMenu, SideMenuItem, SideMenuFooter } from '../sideMenu';
+import { LoginModal } from '../../modals';
+import { IconConfigure, IconDeploy } from '../../icons';
 
 interface IProps {
-    getProjectList: () => void;
-    projectList: IProject[];
     isAuthenticated: boolean;
-    githubLoginAction: () => void;
-    isProjectListLoading: boolean;
     isLoginInProgress: boolean;
+    location: any;
+    match: any;
+    content: JSX.Element;
+    githubLoginAction: () => void;
 }
 
-export default class Dashboard extends Component<IProps> {
-    componentDidMount() {
-        this.props.getProjectList();
-    }
+export default class ProjectDashboard extends Component<IProps> {
 
     render() {
-        const { projectList, isAuthenticated, isLoginInProgress, githubLoginAction } = this.props;
+        const { isAuthenticated, isLoginInProgress, githubLoginAction, content } = this.props;
+        const { pathname } = this.props.location;
 
         return (
-            <div className={style.dashboard}>
+            <div className={style.projectDashboard}>
                 { isAuthenticated ?
                     <React.Fragment>
                         <Topbar />
                         <div className={style.content}>
                             <SideMenu>
-                                <SideMenuHeader title='My organizations' />
-                                {/* TODO: Remove placeholder items and fetch organizations instead, add corresponding link */}
                                 <SideMenuItem
-                                    icon={<LetterAvatar title='Placeholder'/>}
-                                    title='Placeholder organization'
-                                    linkTo='TODO'
+                                        icon={<IconDeploy />}
+                                        title='Build'
+                                        active={pathname.includes('build')}
+                                        linkTo={`/dashboard/project/${this.props.match.params.projectId}/build`}
                                 />
                                 <SideMenuFooter>
                                     <SideMenuItem
-                                        icon={<IconPlusTransparent />}
-                                        title='New organization'
-                                        linkTo='dashboard/new-organization'
-                                    />
-                                    {/* TODO: Add :organizationId to linkTo */}
-                                    <SideMenuItem
-                                        icon={<IconConfigure width='10px' height='10px' />}
-                                        title='Organization settings'
-                                        linkTo='dashboard/settings'
+                                        icon={<IconConfigure />}
+                                        title='Project Settings'
+                                        active={pathname.includes('settings')}
+                                        linkTo={`/dashboard/project/${this.props.match.params.projectId}/settings`}
                                     />
                                 </SideMenuFooter>
+
                             </SideMenu>
-                            <ProjectList
-                                listName={'All Your Projects'}
-                                list={projectList}
-                            />
+                            <div className={style.pageContent}>
+                                {content}
+                            </div>
                         </div>
                     </React.Fragment>
                 :
