@@ -24,11 +24,11 @@ import ToastContainer from "../toasts/toastcontainer";
 import * as embedUtils from '../../utils/embed';
 import ModalContainer from '../common/modal/modalContainer';
 import Loadable from 'react-loadable';
-import { Loading } from "../common/loadable";
+import { EmptyLoading, Loading } from "../common";
 
 const Dashboard = Loadable({
     loader: () => import(/* webpackChunkName: "Dashboard" */"../dashboard"),
-    loading: Loading,
+    loading: EmptyLoading,
 });
 
 export default class App extends Component {
