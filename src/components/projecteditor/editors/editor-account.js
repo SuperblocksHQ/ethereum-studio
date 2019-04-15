@@ -16,9 +16,8 @@
 
 import React, { Component } from 'react';
 import classnames from 'classnames';
+import Web3 from 'web3';
 import style from './style-editor-account.less';
-
-const Web3Package = () => import(/* webpackChunkName: "web3" */ 'web3');
 
 export default class AccountEditor extends Component {
 
@@ -133,16 +132,15 @@ export default class AccountEditor extends Component {
         this.redraw();
     };
 
-    _getWeb3 = async endpoint => {
+    _getWeb3 = endpoint => {
         var provider;
-        const asyncWeb3 = await Web3Package();
-        const Web3 = asyncWeb3.default;
         if (endpoint.toLowerCase() == 'http://superblocks-browser') {
             provider = this.props.functions.EVM.getProvider();
         } else {
             provider = new Web3.providers.HttpProvider(endpoint);
         }
-        return new Web3(provider);
+        var web3 = new Web3(provider);
+        return web3;
     };
 
     _fetchBalance = address => {

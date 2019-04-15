@@ -2,27 +2,16 @@ import React from 'react';
 import classNames from 'classnames';
 import styleNormal from './style-normal.less';
 import styleSmall from './style-small.less';
+import Web3 from 'web3';
 import { IconRun } from '../../../icons';
-
-const Web3Package = () => import(/* webpackChunkName: "web3" */ 'web3');
 
 export default class RenderTransactions {
     constructor(txlog, renderSmall, redrawFn) {
         this.txlog = txlog;
         this.style = renderSmall ? styleSmall : styleNormal;
-        this.web3 = null;
+        this.web3 = new Web3();
         this.redraw = redrawFn; // We use this to trigger a redraw of the parent component.
         this.bottomVisible = {};
-    }
-
-    componentDidMount() {
-        if (!this.web3) {
-            Web3Package().then((asyncWeb3) => {
-                const Web3 = asyncWeb3.default;
-                this.web3 = new Web3();
-                this.forceUpdate();
-            });
-        }
     }
 
     renderTransactions = network => {
@@ -225,9 +214,6 @@ export default class RenderTransactions {
     };
 
     _renderLeft = (tx, type, network) => {
-        if (this.web3 == null) {
-            return;
-        }
         if (type == 'deployment') {
             return (
                 <div className={this.style.left}>
@@ -295,9 +281,6 @@ export default class RenderTransactions {
     };
 
     _renderBox = (tx, type, network, classes) => {
-        if (this.web3 == null) {
-            return;
-        }
         classes = classes || {};
         const gasUsed = (tx.receipt || {}).gasUsed || 0;
         const gasPrice =
