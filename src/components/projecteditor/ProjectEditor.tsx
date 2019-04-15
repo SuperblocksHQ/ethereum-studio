@@ -31,7 +31,6 @@ import { Panels, IPanelsState, IEnvironment } from '../../models/state';
 import { Deployer } from './deployer';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
-import {Interact} from './panels';
 
 interface IProps {
     router: any;
@@ -130,13 +129,6 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                                                 onClose={() => closePanel(Panels.Transactions)}
                                                 selectedEnvironment={selectedEnvironment.name}
                                             />
-                                        </Panel>}
-
-                                        { this.isPanelOpen(Panels.Interact) &&
-                                        <Panel icon={ <IconInteract /> } name='Interact with smart contracts' onClose={() => closePanel(Panels.Interact)} dragging={sidePanelDragging}>
-                                            <Interact
-                                                closeModal={() => closePanel(Panels.Interact)}
-                                                />
                                         </Panel>}
 
                                         { this.isPanelOpen(Panels.Preview) &&
