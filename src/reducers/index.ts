@@ -20,7 +20,6 @@ import settings from './settings.reducer';
 import panels from './panels.reducer';
 import panes from './panes.reducer';
 import explorer from './explorer.reducer';
-import ipfs from './ipfs.reducer';
 import auth from './auth.reducer';
 import toast from './toast.reducer';
 import user from './user.reducer';
@@ -46,7 +45,6 @@ export default {
     settings,
     projects,
     panes,
-    ipfs,
     auth,
     toast,
     panels,

@@ -15,17 +15,21 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { Component } from 'react';
-import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { previewService } from '../../services';
 import AnalyticsDialog from '../analyticsDialog';
 import OnlyIf from '../onlyIf';
 import ToastContainer from "../toasts/toastcontainer";
-import Dashboard from '../dashboard';
-import LoadProject from '../loadProject';
 import * as embedUtils from '../../utils/embed';
-import ModalContainer  from '../common/modal/modalContainer';
+import ModalContainer from '../common/modal/modalContainer';
+import Loadable from 'react-loadable';
+import { EmptyLoading, Loading } from "../common";
+
+const Dashboard = Loadable({
+    loader: () => import(/* webpackChunkName: "Dashboard" */"../dashboard"),
+    loading: EmptyLoading,
+});
 
 export default class App extends Component {
 
@@ -63,7 +67,6 @@ export default class App extends Component {
         this._init();
     }
 
-
     redraw = all => {
         // this.forceUpdate();
         console.error('YOoo, someone calls redraw!!!')
@@ -77,15 +80,21 @@ export default class App extends Component {
         return this.session.start_time;
     };
 
-    renderProject = ({match}) => (
-        <LoadProject
+    renderProject =  ({match}) => {
+
+        const LoadProject = Loadable({
+            loader: () => import(/* webpackChunkName: "LoadProject" */"../loadProject"),
+            loading: Loading,
+        });
+
+        return <LoadProject
             projectId={match.params.projectId}
             router={this.router}
             functions={this.functions}
             knownWalletSeed={this.knownWalletSeed}
             isImportedProject={this.isImportedProject}
-        />
-    )
+        />;
+    }
 
     render() {
         const { showTrackingAnalyticsDialog } = this.props;
@@ -95,8 +104,8 @@ export default class App extends Component {
                 <div id="app">
                     <div id="app_content">
                         <div className="maincontent">
-                            <Route path="/" exact render={(props) => <Dashboard {...props} functions={this.functions} />} />
                             <Switch>
+                                <Route path="/" exact render={(props) => <Dashboard {...props} functions={this.functions} />} />
                                 <Route path="/dashboard" exact render={(props) => <Dashboard {...props} functions={this.functions} />} />
                                 <Route path="/:projectId" exact component={this.renderProject} />
                             </Switch>

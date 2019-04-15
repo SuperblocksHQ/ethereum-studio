@@ -42,7 +42,7 @@ export const userService = {
         if (getAuthToken() || getRefreshToken()) {
             return of(true);
         } else {
-            throw Error('No credentials available!');
+            return of(false);
         }
     }
 };
