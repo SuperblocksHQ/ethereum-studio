@@ -40,9 +40,9 @@ export const userService = {
     credentialsExist() {
         // Don't try to log in if we don't have any credentials
         if (getAuthToken() || getRefreshToken()) {
-            return true;
+            return of(true);
         } else {
-            return false;
+            return of(false);
         }
     }
 };
