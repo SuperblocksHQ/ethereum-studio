@@ -14,25 +14,23 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { Component } from 'react';
-import style from './style.less';
-import { Link } from 'react-router-dom';
-import { BreadCrumbs } from '../../../common';
-import GithubRepoList from '../../githubRepoList';
+import { connect } from 'react-redux';
+import { Dispatch } from 'react';
+import { AnyAction } from 'redux';
+import { githubActions } from '../../../actions';
+import { userSelectors } from '../../../selectors';
+import GithubRepoList from './GithubRepoList';
 
-export default class ProjectBuild extends Component {
+const mapStateToProps = (state: any) => ({
+    reposList: userSelectors.getUserReposList(state),
+});
 
-    render() {
-        return (
-            <React.Fragment>
-                <BreadCrumbs>
-                    <Link to='/dashboard'>Organization Name</Link>
-                    <Link to='./'>Project Name</Link>
-                    <Link to={window.location.pathname}>Build</Link>
-                </BreadCrumbs>
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
+    return {
+        getUserRepos: () => {
+            dispatch(githubActions.getUserRepos());
+        }
+    };
+};
 
-                <GithubRepoList />
-            </React.Fragment>
-        );
-    }
-}
+export default connect(mapStateToProps, mapDispatchToProps)(GithubRepoList);

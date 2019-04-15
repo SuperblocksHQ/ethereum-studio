@@ -1,0 +1,73 @@
+// Copyright 2019 Superblocks AB
+//
+// This file is part of Superblocks Lab.
+//
+// Superblocks Lab is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation version 3 of the License.
+//
+// Superblocks Lab is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
+
+
+.container {
+    width: 100%;
+    max-width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 100px;
+
+    .searchInput {
+        background: transparent;
+        color: white;
+        border: 1px solid grey;
+        border-radius: 4px;
+        padding: 5px 15px;
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .repoList {
+        max-height: 250px;
+        overflow-y: auto;
+
+        .singleRepo {
+            display: flex;
+            align-items: center;
+            padding: 7px 5px;
+
+            .repoTitle {
+                margin-right: auto;
+            }
+
+            .btnBuild {
+                display: none;
+                background: lightseagreen;
+                padding: 3px 15px;
+                border-radius: 4px;
+                color: white;
+            }
+
+            &:hover {
+                background: #3f3e3e;
+                cursor: pointer;
+
+                .btnBuild {
+                    display: block;
+                }
+            }
+
+            img {
+                width: 24px;
+                height: auto;
+                margin-right: 15px;
+            }
+        }
+    }
+}
+
