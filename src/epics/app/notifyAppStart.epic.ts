@@ -26,7 +26,6 @@ export const notifyAppStart: Epic = (action$: any, state$: any) => action$.pipe(
         appActions.notifyAppStarted(),
         panelsActions.initPanels([
             { panel: Panels.Explorer, side: PanelSides.Left },
-            { panel: Panels.Interact, side: PanelSides.Left },
             { panel: Panels.Transactions, side: PanelSides.Right },
             { panel: Panels.Preview, side: PanelSides.Right },
             { panel: Panels.CompilerOutput, side: PanelSides.Bottom },

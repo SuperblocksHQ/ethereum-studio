@@ -16,7 +16,6 @@
 
 export enum Panels {
     Explorer = 'Explorer',
-    Interact = 'Interact',
     Preview = 'Preview',
     Transactions = 'Transactions',
     CompilerOutput = 'CompilerOutput'

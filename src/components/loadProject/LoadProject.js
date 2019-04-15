@@ -34,9 +34,9 @@ export default class LoadProject extends Component {
 
     componentDidMount() {
         const { loadProject, projectId, openDevWallet, knownWalletSeed, initEvm } = this.props;
+        loadProject(projectId);
         openDevWallet(knownWalletSeed);
         initEvm();
-        loadProject(projectId);
     }
 
     render() {

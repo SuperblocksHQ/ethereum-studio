@@ -23,7 +23,6 @@ import { ProjectItemTypes } from '../../../models';
 interface IProps {
   showTransactionsHistory: boolean;
   showFileSystem: boolean;
-  showInteract: boolean;
   showPreview: boolean;
   showConsole: boolean;
   activePaneId: string;
@@ -69,7 +68,7 @@ export default class MenuDropdownDialog extends React.Component<IProps> {
     }
 
     render() {
-        const { showTransactionsHistory, showFileSystem, showInteract, showPreview, showConsole,
+        const { showTransactionsHistory, showFileSystem, showPreview, showConsole,
                 togglePanel, closeAllPanels, closeAllPanes, closePane, activePaneId, rootFolderId } = this.props;
 
         return (
@@ -91,7 +90,6 @@ export default class MenuDropdownDialog extends React.Component<IProps> {
                 </SubMenu>
                 <SubMenu title='View'>
                     <MenuItem onClick={() => togglePanel(Panels.Explorer)} isActive={showFileSystem} title='Explorer' />
-                    <MenuItem onClick={() => togglePanel(Panels.Interact)} isActive={showInteract} title='Interact' />
                     <MenuItem onClick={() => togglePanel(Panels.Transactions)} isActive={showTransactionsHistory} title='Transactions' />
                     <MenuItem onClick={() => togglePanel(Panels.Preview)} isActive={showPreview} title='Preview' />
                     <MenuItem onClick={() => togglePanel(Panels.CompilerOutput)} isActive={showConsole} title='Console output' />
