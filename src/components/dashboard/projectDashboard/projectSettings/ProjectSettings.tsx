@@ -16,13 +16,19 @@
 
 import React, { Component } from 'react';
 import style from './style.less';
+import { BreadCrumbs } from '../../../common';
+import { Link } from 'react-router-dom';
 
 export default class ProjectSettings extends Component {
 
     render() {
         return (
             <React.Fragment>
-                <p>TODO: Breadcrumbs</p>
+                <BreadCrumbs>
+                    <Link to='/dashboard'>Organization Name</Link>
+                    <Link to='./'>Project Name</Link>
+                    <Link to={window.location.pathname}>Settings</Link>
+                </BreadCrumbs>
             </React.Fragment>
         );
     }
