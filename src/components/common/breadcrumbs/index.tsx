@@ -1,33 +1,34 @@
 // Copyright 2019 Superblocks AB
-//
+// 
 // This file is part of Superblocks Lab.
-//
+// 
 // Superblocks Lab is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation version 3 of the License.
-//
+// 
 // Superblocks Lab is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-//
+// 
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-.container {
-    margin: 0px -15px;
-    width: 100%;
-    overflow-y: auto;
-    height: calc(100% - 45px);
+import React from 'react';
+import style from './style.less';
 
-    .header {
-        margin: 18px 6px;
-        padding: 6px 4px;
-    }
+interface IProps {
+    children: JSX.Element[];
+}
 
-    .content {
-        padding: 0px 35px 20px 35px;
-        display: flex;
-        flex-wrap: wrap;
-    }
+export function BreadCrumbs(props: IProps) {
+    return (
+        <ul className={style.breadcrumbs}>
+            { props.children.map((item, index) =>
+                <li key={index} className={style.link}>
+                    {item}
+                </li>
+            )}
+        </ul>
+    );
 }

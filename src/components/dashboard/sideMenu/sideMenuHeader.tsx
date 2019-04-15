@@ -1,4 +1,4 @@
-// Copyright 2019 Superblocks AB
+// Copyright 2018 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -14,20 +14,17 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-.container {
-    margin: 0px -15px;
-    width: 100%;
-    overflow-y: auto;
-    height: calc(100% - 45px);
+import React from 'react';
+import style from './style.less';
 
-    .header {
-        margin: 18px 6px;
-        padding: 6px 4px;
-    }
+interface IProps {
+    title: string;
+}
 
-    .content {
-        padding: 0px 35px 20px 35px;
-        display: flex;
-        flex-wrap: wrap;
-    }
+export function SideMenuHeader(props: IProps) {
+    return (
+        <div className={style.sideMenuHeader}>
+            {props.title}
+        </div>
+    );
 }

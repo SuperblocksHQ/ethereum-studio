@@ -14,20 +14,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-.container {
-    margin: 0px -15px;
-    width: 100%;
-    overflow-y: auto;
-    height: calc(100% - 45px);
+import React from 'react';
+import style from './style.less';
 
-    .header {
-        margin: 18px 6px;
-        padding: 6px 4px;
-    }
-
-    .content {
-        padding: 0px 35px 20px 35px;
-        display: flex;
-        flex-wrap: wrap;
-    }
+export function SideMenuFooter(props: any) {
+    return (
+        <div className={style.sideMenuFooter}>
+            {props.children}
+        </div>
+    );
 }

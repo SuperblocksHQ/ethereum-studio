@@ -14,20 +14,42 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-.container {
-    margin: 0px -15px;
-    width: 100%;
-    overflow-y: auto;
-    height: calc(100% - 45px);
-
-    .header {
-        margin: 18px 6px;
-        padding: 6px 4px;
-    }
+.projectDashboard {
+    background-color: #fff;
+    font-size: 14px;
+    height: 100%;
 
     .content {
-        padding: 0px 35px 20px 35px;
+        height: 100%;
         display: flex;
-        flex-wrap: wrap;
+        background-color: #1e1e1e;
+        color: white;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .pageContent {
+        padding: 15px 35px;
+        margin: 0px;
+        width: 100%;
+        overflow-y: auto;
+    }
+
+    .loginSection,
+    .loadingSection {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        background: #1C2022;
+    }
+
+    .loginModal {
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    h1, h2, h3, h4, h5, p {
+        margin-top: 0px;
+        margin-bottom: 10px;
     }
 }

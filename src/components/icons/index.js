@@ -72,7 +72,7 @@ export const IconCompile = () => <FaIcon icon={iconCompile} />;
 export const IconDeploy = ({ ...props }) => (
     <IconImg src={'/static/img/icon-deploy.svg'} {...props} />
 );
-export const IconConfigure = ({ ...props }) => <FaIcon icon={iconConfigure} />;
+export const IconConfigure = ({ ...props }) => <FaIcon {...props} icon={iconConfigure} />;
 export const IconInteract = ({ ...props }) => (
     <IconImg src={'/static/img/icon-interact.svg'} {...props} />
 );
@@ -219,3 +219,5 @@ export const IconMore = ({...props}) => <svg xmlns="http://www.w3.org/2000/svg" 
 export const IconRecent = ({...props}) => <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet" fill="currentColor" height="18px" width="18px" style={{ verticalAlign: "middle" }} {...props}><g fillOpacity=".9"><path d="M255.8 48C141 48 48 141.2 48 256s93 208 207.8 208c115 0 208.2-93.2 208.2-208S370.8 48 255.8 48zm.2 374.4c-91.9 0-166.4-74.5-166.4-166.4S164.1 89.6 256 89.6 422.4 164.1 422.4 256 347.9 422.4 256 422.4z"/><path d="M266.4 152h-31.2v124.8l109.2 65.5 15.6-25.6-93.6-55.5V152z"/></g></svg>;
 export const IconDots = ({...props}) => <svg {...props} fill="currentColor" width="7px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 512"><path fill="currentColor" d="M96 184c39.8 0 72 32.2 72 72s-32.2 72-72 72-72-32.2-72-72 32.2-72 72-72zM24 80c0 39.8 32.2 72 72 72s72-32.2 72-72S135.8 8 96 8 24 40.2 24 80zm0 352c0 39.8 32.2 72 72 72s72-32.2 72-72-32.2-72-72-72-72 32.2-72 72z"></path></svg>;
 export const IconArrowUpThin = ({...props}) => <svg {...props} fill="currentColor" width="16px" height="16px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M277.375 427V167.296l119.702 119.702L427 256 256 85 85 256l29.924 29.922 119.701-118.626V427h42.75z"/></svg>
+export const IconDoubleArrowLeft = ({...props}) => <svg {...props} width="16px" height="16px" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M223.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L319.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L393.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34zm-192 34l136 136c9.4 9.4 24.6 9.4 33.9 0l22.6-22.6c9.4-9.4 9.4-24.6 0-33.9L127.9 256l96.4-96.4c9.4-9.4 9.4-24.6 0-33.9L201.7 103c-9.4-9.4-24.6-9.4-33.9 0l-136 136c-9.5 9.4-9.5 24.6-.1 34z"></path></svg>
+export const IconPlusTransparent = ({...props}) => <svg {...props} width="16px" height="16px" viewBox="0 0 512 512"><path fill="currentColor" d="M368.5 240H272v-96.5c0-8.8-7.2-16-16-16s-16 7.2-16 16V240h-96.5c-8.8 0-16 7.2-16 16 0 4.4 1.8 8.4 4.7 11.3 2.9 2.9 6.9 4.7 11.3 4.7H240v96.5c0 4.4 1.8 8.4 4.7 11.3 2.9 2.9 6.9 4.7 11.3 4.7 8.8 0 16-7.2 16-16V272h96.5c8.8 0 16-7.2 16-16s-7.2-16-16-16z"/></svg>

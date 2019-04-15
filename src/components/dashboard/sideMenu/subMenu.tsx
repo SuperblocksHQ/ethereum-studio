@@ -14,20 +14,23 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-.container {
-    margin: 0px -15px;
-    width: 100%;
-    overflow-y: auto;
-    height: calc(100% - 45px);
+import React, { Component } from 'react';
+import style from './style.less';
+import classNames from 'classnames';
 
-    .header {
-        margin: 18px 6px;
-        padding: 6px 4px;
-    }
+interface IProps {
+    active?: boolean;
+}
 
-    .content {
-        padding: 0px 35px 20px 35px;
-        display: flex;
-        flex-wrap: wrap;
+export class SubMenu extends Component<IProps> {
+
+    render() {
+        const { active } = this.props;
+
+        return (
+            <div className={classNames([style.subMenu, active ? style.visible : style.flyOut])}>
+                {this.props.children}
+            </div>
+        );
     }
 }

@@ -1,0 +1,219 @@
+// Copyright 2018 Superblocks AB
+//
+// This file is part of Superblocks Lab.
+//
+// Superblocks Lab is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation version 3 of the License.
+//
+// Superblocks Lab is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
+
+.sideMenuContainer {
+    position: relative;
+    min-width: 247px;
+    box-sizing: border-box;
+    z-index: 1;
+    background-color: #252525;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    height: calc(100% - 45px);
+    padding-top: 10px;
+    overflow-x: hidden;
+    transition: width .2s ease-out, min-width .2s ease-out;
+    
+    &.collapsed {
+        width: 36px;
+        min-width: 36px;
+
+        .collapseSidebar {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transform: rotate(180deg);
+        }
+
+        .sideMenuHeader {
+            display: none; 
+        }
+
+        .item {
+            padding: 5px 4px;
+            justify-content: center;
+
+
+            &, &.active {
+                border-right: 2px solid transparent;
+            }
+
+            span {
+                display: none;
+            }
+        }
+
+        .subMenu.visible {
+            display: none;
+
+        }
+
+        .itemWrapper {
+            &:hover .subMenu.visible {
+                position: fixed;
+                display: block;
+                background: #252525;
+                min-width: 150px;
+                margin-left: 36px;
+                margin-top: -34px;
+                padding: 5px 0px;
+                box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+
+                .item {
+                    justify-content: flex-start;
+                    border-color: transparent;
+
+                    .iconContainer {
+                        min-width: 0px;
+                    }
+
+                    span {
+                        display: block;
+                    }
+                }
+            }
+        }
+
+        .flyOut {
+            &:hover {
+                .subMenu {
+                    margin-left: 36px;
+
+                    .item {
+                        span {
+                            display: block;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .flyOut {
+        &:hover .subMenu {
+            padding: 5px 0px;
+            position: fixed;
+            display: block;
+            background: #252525;
+            min-width: 150px;
+            margin-left: 247px;
+            margin-top: -34px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        }
+    }
+
+    .subMenu {
+        display: none;
+
+        &.flyOut {
+            .item {
+                .iconContainer {
+                    min-width: 0px;
+                }
+            }
+        }
+
+        .item {
+            background: #252525;
+            justify-content: flex-start;
+        }
+
+        .item:hover {
+            background-color: rgba(128, 46, 255, 0.1);
+            cursor: pointer;
+        }
+
+        &.visible {
+            display: block;
+        }
+    }
+    
+    .sideMenuInner {
+        height: 100%;
+        margin-bottom: 30px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .collapseSidebar {
+        margin-top: auto;
+        height: 30px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+        svg {
+            max-height: 100%;
+        }
+
+        &.item {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 5px 10px;
+            justify-content: flex-end;
+        }
+    }
+
+    .item {
+        display: flex;
+        align-items: center;
+        position: relative;
+        cursor: default;
+        user-select: none;
+        padding: 5px 13px;
+        white-space: nowrap;
+        border-left: 2px solid transparent;
+
+        .iconContainer {
+            min-width: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        &.active {
+            border-color: #7237CF;
+            background-color: rgba(128, 46, 255, 0.1);
+        }
+
+        &:hover {
+            background-color: rgba(128, 46, 255, 0.1);
+            cursor: pointer;
+        }
+
+        span {
+            margin-left: 10px;
+        }
+    }
+
+    .posRelative {
+        position: relative;
+    }
+
+    .sideMenuHeader {
+        color: white;
+        padding-bottom: 12px;
+        padding-left: 15px;
+        padding-top: 20px;
+        white-space: nowrap;
+    }
+
+    .sideMenuFooter {
+        margin-top: auto;
+        padding-bottom: 10px;
+    }
+}

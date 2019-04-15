@@ -14,20 +14,19 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-.container {
-    margin: 0px -15px;
-    width: 100%;
-    overflow-y: auto;
-    height: calc(100% - 45px);
+import { connect } from 'react-redux';
+import { Dispatch } from 'react';
+import { AnyAction } from 'redux';
+import ProjectBuild from './ProjectBuild';
 
-    .header {
-        margin: 18px 6px;
-        padding: 6px 4px;
-    }
+const mapStateToProps = (state: any) => ({
 
-    .content {
-        padding: 0px 35px 20px 35px;
-        display: flex;
-        flex-wrap: wrap;
-    }
-}
+});
+
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
+    return {
+
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProjectBuild);

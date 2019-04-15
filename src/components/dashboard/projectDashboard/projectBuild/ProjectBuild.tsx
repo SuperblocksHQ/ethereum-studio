@@ -14,20 +14,22 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-.container {
-    margin: 0px -15px;
-    width: 100%;
-    overflow-y: auto;
-    height: calc(100% - 45px);
+import React, { Component } from 'react';
+import style from './style.less';
+import { Link } from 'react-router-dom';
+import { BreadCrumbs } from '../../../common';
 
-    .header {
-        margin: 18px 6px;
-        padding: 6px 4px;
-    }
+export default class ProjectBuild extends Component {
 
-    .content {
-        padding: 0px 35px 20px 35px;
-        display: flex;
-        flex-wrap: wrap;
+    render() {
+        return (
+            <React.Fragment>
+                <BreadCrumbs>
+                    <Link to='/dashboard'>Organization Name</Link>
+                    <Link to='./'>Project Name</Link>
+                    <Link to={window.location.pathname}>Build</Link>
+                </BreadCrumbs>
+            </React.Fragment>
+        );
     }
 }

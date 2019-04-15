@@ -31,6 +31,21 @@ const Dashboard = Loadable({
     loading: EmptyLoading,
 });
 
+const ProjectDashboard = Loadable({
+    loader: () => import(/* webpackChunkName: "ProjectDashboard" */"../dashboard/projectDashboard"),
+    loading: EmptyLoading,
+});
+
+const ProjectSettings = Loadable({
+    loader: () => import(/* webpackChunkName: "ProjectSettings" */"../dashboard/projectDashboard/projectSettings"),
+    loading: EmptyLoading,
+});
+
+const ProjectBuild = Loadable({
+    loader: () => import(/* webpackChunkName: "ProjectBuild" */"../dashboard/projectDashboard/projectBuild"),
+    loading: EmptyLoading,
+});
+
 export default class App extends Component {
 
     constructor(props) {
@@ -107,6 +122,15 @@ export default class App extends Component {
                             <Switch>
                                 <Route path="/" exact render={(props) => <Dashboard {...props} functions={this.functions} />} />
                                 <Route path="/dashboard" exact render={(props) => <Dashboard {...props} functions={this.functions} />} />
+                                <Route exact path="/dashboard/project/:projectId" render={(props) => (  
+                                    <ProjectDashboard content={<ProjectBuild />} {...props} />  
+                                )} />
+                                <Route exact path="/dashboard/project/:projectId/build" render={(props) => (  
+                                    <ProjectDashboard content={<ProjectBuild />} {...props} />  
+                                )} />
+                                <Route exact path="/dashboard/project/:projectId/settings" render={(props) => (  
+                                    <ProjectDashboard content={<ProjectSettings />} {...props} />  
+                                )} />
                                 <Route path="/:projectId" exact component={this.renderProject} />
                             </Switch>
                         </div>
