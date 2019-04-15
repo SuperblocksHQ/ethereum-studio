@@ -15,14 +15,28 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { Component } from 'react';
-import ProjectList from './projectList';
-import Topbar from './topbar';
 import { IProject } from '../../models';
 import style from './style.less';
-import { LoginModal } from '../modals';
 import { SideMenu, SideMenuItem, SideMenuHeader, SideMenuFooter } from './sideMenu';
 import { IconConfigure, IconPlusTransparent } from '../icons';
 import { LetterAvatar } from '../common';
+import { Loading } from '../common';
+import Loadable from 'react-loadable';
+import Topbar from './topbar';
+
+const ProjectList = Loadable({
+    loader: () => import(/* webpackChunkName: "ProjectList" */'./projectList'),
+    loading: Loading,
+});
+
+const LoginModal = Loadable({
+    loader: () => import(/* webpackChunkName: "LoginModal" */'../modals'),
+    loading: Loading,
+    render(loaded, props: any) {
+        const Modal = loaded.LoginModal;
+        return <Modal {...props}/>;
+    }
+});
 
 interface IProps {
     getProjectList: () => void;

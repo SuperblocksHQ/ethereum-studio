@@ -1,4 +1,4 @@
-// Copyright 2018 Superblocks AB
+// Copyright 2019 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -14,15 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export const ipfsSelectors = {
-    getUploadingToIPFS: state => state.ipfs.uploading,
-    getShareURL:  state => state.ipfs.shareURL,
-    getLastUploadTimestamp: state => state.ipfs.timestamp,
-    getUploadToIPFSError: state => state.ipfs.error,
-    getShowUploadSettings: state => state.ipfs.showUploadSettings,
-    getUploadSettings: state => state.ipfs.uploadSettings,
-    getShowUploadDialog: state => state.ipfs.showUploadDialog,
-    getShowUploadButton: state => state.ipfs.showUploadButton,
-    getShowForkButton: state => state.ipfs.showForkButton,
-    getShowShareButton: state => state.ipfs.showShareButton,
+import React from 'react';
+
+export class EmptyLoading extends React.Component<any> {
+    render() {
+        return (null);
+    }
 }

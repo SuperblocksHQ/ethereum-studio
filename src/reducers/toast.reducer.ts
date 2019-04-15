@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { ipfsActions, projectsActions, toastActions } from '../actions';
+import { projectsActions, toastActions } from '../actions';
 import { AnyAction } from 'redux';
 
 export const initialState = {
@@ -37,18 +37,10 @@ export default function toastsReducer(state = initialState, action: AnyAction, r
 
     switch (action.type) {
         case projectsActions.UPDATE_PROJECT_SETTINGS_FAIL:
-        case ipfsActions.IMPORT_PROJECT_FROM_IPFS_FAIL:
         case projectsActions.FORK_PROJECT:
         case projectsActions.CREATE_PROJECT_SUCCESS:
         case projectsActions.FORK_PROJECT_FAIL: {
             return pushToastToState();
-        }
-        case ipfsActions.IMPORT_PROJECT_FROM_IPFS_SUCCESS: {
-            if (rootState.app.isEmbeddedMode) {
-                return state;
-            } else {
-                return pushToastToState();
-            }
         }
         case toastActions.TOAST_DISMISSED:
             return {
