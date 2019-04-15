@@ -95,7 +95,7 @@ export default class Dashboard extends Component<IProps> {
                             <React.Fragment />
                             :
                             <LoginModal
-                                customClassName= {style.loginModal}
+                                customClassName={style.loginModal}
                                 githubLogin={githubLoginAction}
                                 hideCloseButton={true}
                             />
