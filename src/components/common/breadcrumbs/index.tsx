@@ -22,11 +22,10 @@ interface IProps {
 }
 
 export function BreadCrumbs(props: IProps) {
-
     return (
         <ul className={style.breadcrumbs}>
-            { props.children.map(item =>
-                <li className={style.link}>
+            { props.children.map((item, index) =>
+                <li key={index} className={style.link}>
                     {item}
                 </li>
             )}
