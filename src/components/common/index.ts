@@ -28,3 +28,4 @@ export * from './textAreaInput';
 export * from './caret';
 export * from './modal';
 export * from './letterAvatar';
+export * from './breadcrumbs';
