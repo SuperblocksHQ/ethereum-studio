@@ -29,3 +29,4 @@ export * from './caret';
 export * from './modal';
 export * from './letterAvatar';
 export * from './breadcrumbs';
+export * from './loadable';

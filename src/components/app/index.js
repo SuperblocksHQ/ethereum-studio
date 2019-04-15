@@ -15,7 +15,7 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { connect } from 'react-redux';
-import { appActions, ipfsActions } from '../../actions';
+import { appActions } from '../../actions';
 import { getShowAnalyticsTrackingDialog } from '../../selectors/settings';
 import { appSelectors } from '../../selectors';
 import App from './App';
@@ -29,10 +29,7 @@ const mapDispatchToProps = dispatch => {
     return {
         notifyAppStart: (isEmbeddedMode) => {
             dispatch(appActions.notifyAppStart(isEmbeddedMode));
-        },
-        importProjectFromIpfs: (hash) => {
-            dispatch(ipfsActions.importProjectFromIpfs(hash));
-        },
+        }
     };
 };
 

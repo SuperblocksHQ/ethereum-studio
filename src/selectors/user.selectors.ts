@@ -21,4 +21,5 @@ export const userSelectors = {
     isProjectListLoading: (state: any) => state.user.isProjectListLoading,
     isRepositoriesLoading: (state: any) => state.user.isRepositoriesLoading,
     isProjectForking: (state: any) => state.user.isProjectForking,
+    getShowForkButton: (state: any) => state.user.showForkButton,
 };

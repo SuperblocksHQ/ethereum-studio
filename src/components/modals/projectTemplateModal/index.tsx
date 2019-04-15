@@ -38,6 +38,16 @@ interface IState {
     selectedTemplate: ITemplate;
 }
 
+const TemplateLayout = (props: any) => (
+    <div onClick={props.onTemplateSelected} className={classNames([style.templateLayout], { [style.selected]: props.selected }, style.alignContentCenter)}>
+        <img src={props.image} width='300'/>
+        <div style={{height: '90px'}}>
+            <div className={style.title}>{props.name}</div>
+            <div className={style.description}>{props.description}</div>
+        </div>
+    </div>
+);
+
 const GridLayout = (props: any) => (
     <div className={style.gridLayout}>
         <div id='mainContent' className='container' style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 0fr)', gridGap: '10px', gridAutoRows: 'minMax(100px, auto)' }}>
@@ -54,16 +64,6 @@ const GridLayout = (props: any) => (
                     )
                 )
             }
-        </div>
-    </div>
-);
-
-const TemplateLayout = (props: any) => (
-    <div onClick={props.onTemplateSelected} className={classNames([style.templateLayout], { [style.selected]: props.selected }, style.alignContentCenter)}>
-        <img src={props.image} width='300'/>
-        <div style={{height: '90px'}}>
-            <div className={style.title}>{props.name}</div>
-            <div className={style.description}>{props.description}</div>
         </div>
     </div>
 );

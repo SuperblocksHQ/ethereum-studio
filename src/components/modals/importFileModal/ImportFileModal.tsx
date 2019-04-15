@@ -22,12 +22,11 @@ import ImportCategory from './sections/importCategory';
 import CodeEditor from './sections/descriptionArea/CodeEditor';
 import SplitterLayout from 'react-splitter-layout';
 import Description from './sections/descriptionArea/Description';
-
-import data from '../../../assets/static/json/openzeppelin.json';
-import {IDependenciesModel, ICategory, IProjectItem, ProjectItemTypes} from '../../../models';
-import {generateUniqueId} from '../../../services/utils';
+import {IDependenciesModel, ICategory, IProjectItem} from '../../../models';
 import ModalHeader from '../../common/modal/modalHeader';
 import {insert} from '../../../reducers/utils';
+
+const data = () => import(/* webpackChunkName: "openzeppelin.json" */ '../../../assets/static/json/openzeppelin.json');
 
 interface IProps {
     parentId: string;
@@ -96,10 +95,10 @@ export default class ImportFileModal extends Component<IProps, IState> {
         this.props.hideModal();
     }
 
-    getSourceFromAbsolutePath = (absolutePath: any): string => {
+    getSourceFromAbsolutePath = async (absolutePath: any): Promise<string> => {
         // remove first element from array
         const pathParts = absolutePath.split('/');
-        let currentNode: any = data;
+        let currentNode: any = await data;
         let source: string = '';
 
         pathParts.map((part: any) => {
@@ -113,7 +112,7 @@ export default class ImportFileModal extends Component<IProps, IState> {
         return source;
     }
 
-    onImportClickHandle = () => {
+    onImportClickHandle = async () => {
         const {parentId, importFiles} = this.props;
         const {selectedDependencies, selectedPath, selectedSource} = this.state;
 
@@ -125,14 +124,14 @@ export default class ImportFileModal extends Component<IProps, IState> {
         importSourceArray.push(selectedSource);
 
         // Import dependencies if any
-        selectedDependencies.forEach((dependency: IDependenciesModel) => {
+        selectedDependencies.forEach(async (dependency: IDependenciesModel) => {
 
             const path = dependency.absolutePath;
 
             importPathArray.push(path);
 
             // get source code for given dependency
-            const source = this.getSourceFromAbsolutePath(path);
+            const source = await this.getSourceFromAbsolutePath(path);
             importSourceArray.push(source);
         });
 
