@@ -1,4 +1,4 @@
-// Copyright 2018 Superblocks AB
+// Copyright 2019 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -14,11 +14,14 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export const userSelectors = {
-    getProjectList: (state: any) => state.user.projectList,
-    getUserReposList: (state: any) => state.user.githubRepositories,
-    getUserProfile: (state: any) => state.user.profile,
-    isProjectListLoading: (state: any) => state.user.isProjectListLoading,
-    isRepositoriesLoading: (state: any) => state.user.isRepositoriesLoading,
-    isProjectForking: (state: any) => state.user.isProjectForking,
+import { fetchJSON } from './utils/fetchJson';
+import { switchMap } from 'rxjs/operators';
+
+export const githubService = {
+    getUserRepos() {
+        return fetchJSON(process.env.REACT_APP_API_BASE_URL + '/github/repos', {})
+            .pipe(
+                switchMap(response => response.json())
+            );
+    },
 };

@@ -14,11 +14,27 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export const userSelectors = {
-    getProjectList: (state: any) => state.user.projectList,
-    getUserReposList: (state: any) => state.user.githubRepositories,
-    getUserProfile: (state: any) => state.user.profile,
-    isProjectListLoading: (state: any) => state.user.isProjectListLoading,
-    isRepositoriesLoading: (state: any) => state.user.isRepositoriesLoading,
-    isProjectForking: (state: any) => state.user.isProjectForking,
+export const githubActions = {
+    GET_USER_REPOS_LIST: 'GET_USER_REPOS_LIST',
+    getUserRepos() {
+        return {
+            type: githubActions.GET_USER_REPOS_LIST,
+        };
+    },
+
+    GET_USER_REPOS_SUCCESS: 'GET_USER_REPOS_SUCCESS',
+    getUserReposSuccess(githubReposList: any) { // TODO: remove any and add repo model
+        return {
+            type: githubActions.GET_USER_REPOS_SUCCESS,
+            data: { githubReposList }
+        };
+    },
+
+    GET_USER_REPOS_FAIL: 'GET_USER_REPOS_FAIL',
+    getUserReposFail(error: any) {
+        return {
+            type: githubActions.GET_USER_REPOS_FAIL,
+            error
+        };
+    },
 };
