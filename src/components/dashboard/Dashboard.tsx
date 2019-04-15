@@ -17,7 +17,6 @@
 import React, { Component } from 'react';
 import { IProject } from '../../models';
 import style from './style.less';
-import {userService} from '../../services/user.service';
 import { Loading } from '../common';
 import Loadable from 'react-loadable';
 import Topbar from './topbar';
@@ -47,9 +46,7 @@ interface IProps {
 
 export default class Dashboard extends Component<IProps> {
     componentDidMount() {
-        if (userService.credentialsExist()) {
-            this.props.getProjectList();
-        }
+        this.props.getProjectList();
     }
 
     render() {
