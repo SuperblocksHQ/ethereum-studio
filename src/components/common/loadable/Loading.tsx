@@ -14,24 +14,21 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import React from 'react';
+import React, {Fragment} from 'react';
 import Loadable from 'react-loadable';
 import style from './style.less';
 import classNames from 'classnames';
 
 // To be used with the react-loadable library
-export class Loading extends React.Component<
-    Loadable.LoadingComponentProps
-    > {
+export class Loading extends React.Component<Loadable.LoadingComponentProps> {
     render() {
         return (
             <div>
                 {this.props.error || this.props.timedOut ? (
-                        <>
+                        <Fragment>
                             Unexpected error while loading your content! Please try again later.
-                        </>
+                        </Fragment>
         ) : this.props.pastDelay ? (
-            <div>
                 <div className={style.centeredLoadingPosition}>
                     <div className={style.skCubeGrid}>
                         <div className={classNames([style.skCube, style.skCube1])}></div>
@@ -45,9 +42,8 @@ export class Loading extends React.Component<
                         <div className={classNames([style.skCube, style.skCube9])}></div>
                     </div>
                 </div>
-        </div>
     ) : (
-            <></>
+            <Fragment/>
         )}
         </div>
     );
