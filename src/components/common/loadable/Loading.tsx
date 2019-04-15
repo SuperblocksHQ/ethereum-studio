@@ -24,27 +24,26 @@ export class Loading extends React.Component<Loadable.LoadingComponentProps> {
     render() {
         return (
             <div>
-                {this.props.error || this.props.timedOut ? (
+                { this.props.error || this.props.timedOut ? (
                         <Fragment>
                             Unexpected error while loading your content! Please try again later.
                         </Fragment>
-        ) : this.props.pastDelay ? (
-                <div className={style.centeredLoadingPosition}>
-                    <div className={style.skCubeGrid}>
-                        <div className={classNames([style.skCube, style.skCube1])}></div>
-                        <div className={classNames([style.skCube, style.skCube2])}></div>
-                        <div className={classNames([style.skCube, style.skCube3])}></div>
-                        <div className={classNames([style.skCube, style.skCube4])}></div>
-                        <div className={classNames([style.skCube, style.skCube5])}></div>
-                        <div className={classNames([style.skCube, style.skCube6])}></div>
-                        <div className={classNames([style.skCube, style.skCube7])}></div>
-                        <div className={classNames([style.skCube, style.skCube8])}></div>
-                        <div className={classNames([style.skCube, style.skCube9])}></div>
-                    </div>
-                </div>
-    ) : (
-            <Fragment/>
-        )}
+                    ) : this.props.pastDelay ? (
+                        <div className={style.centeredLoadingPosition}>
+                            <div className={style.skCubeGrid}>
+                                <div className={classNames([style.skCube, style.skCube1])}></div>
+                                <div className={classNames([style.skCube, style.skCube2])}></div>
+                                <div className={classNames([style.skCube, style.skCube3])}></div>
+                                <div className={classNames([style.skCube, style.skCube4])}></div>
+                                <div className={classNames([style.skCube, style.skCube5])}></div>
+                                <div className={classNames([style.skCube, style.skCube6])}></div>
+                                <div className={classNames([style.skCube, style.skCube7])}></div>
+                                <div className={classNames([style.skCube, style.skCube8])}></div>
+                                <div className={classNames([style.skCube, style.skCube9])}></div>
+                            </div>
+                        </div>
+                    ) : null
+                }
         </div>
     );
     }

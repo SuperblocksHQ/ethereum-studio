@@ -18,10 +18,8 @@ import React, {Fragment} from 'react';
 import style from './style.less';
 import classNames from 'classnames';
 
-// Normal Component
-export class GenericLoading extends React.Component<
-    any
-    > {
+// To be used as a normal React loader component (not react-loadable)
+export class GenericLoading extends React.Component<any> {
     render() {
         return (
             <Fragment>
