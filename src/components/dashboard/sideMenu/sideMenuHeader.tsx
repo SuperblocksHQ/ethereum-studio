@@ -13,35 +13,18 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
-.container {
-    min-height: 200px;
-    padding: 0 0 10px 0;
-    .header {
-        display: flex;
-        align-content: center;
-        align-items: flex-end;
-        .text {
-            margin-left: 10px;
-            font-weight: 600;
-        }
-    }
-    .buildInfo {
-        margin-top: 25px;
-        .title {
-            font-weight: 600;
-        }
-        .descContainer {
-            display: flex;
-            align-items: center;
-            .description {
-                line-height: 1.5em;
-                color: #BCBCBC;
-                margin-right: 25px;
-            }
-            .switch {
-                margin-left: auto;
-            }
-        }
-    }
+
+import React from 'react';
+import style from './style.less';
+
+interface IProps {
+    title: string;
 }
 
+export function SideMenuHeader(props: IProps) {
+    return (
+        <div className={style.sideMenuHeader}>
+            {props.title}
+        </div>
+    );
+}

@@ -19,6 +19,7 @@ import style from './style.less';
 import { HelpAction, NewProjectAction } from '../../common';
 import LoggedInButton from './../../login/LoggedInButton';
 import { IUser } from './../../../models/user.model';
+import { Link } from 'react-router-dom';
 
 interface IProps {
     logout: () => void;
@@ -33,12 +34,12 @@ export default class Topbar extends Component<IProps> {
 
         return(
             <div className={style.topbar}>
-                <a href='/' className={style.logo}>
+                <Link to='/' className={style.logo}>
                     <img
                         src='/static/img/img-logo-dashboard.svg'
                         alt='Superblocks logo'
                     />
-                </a>
+                </Link>
 
                 <div className={style.actionsRight}>
                     <NewProjectAction redirect={true} />

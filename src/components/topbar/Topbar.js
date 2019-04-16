@@ -20,7 +20,6 @@ import classNames from 'classnames';
 import style from './style.less';
 import { DropdownContainer } from '../common/dropdown';
 import { Tooltip, HelpAction, NewProjectAction } from '../common';
-import UploadDialog from './upload';
 import {
     IconPreferences,
     IconProjectSelector,
@@ -100,20 +99,10 @@ export default class TopBar extends Component {
 
     state = {
         selectedProjectName: this.props.selectedProjectName,
-        ipfsActions: {
-            showUploadDialog: this.props.ipfsActions.showUploadDialog,
-            showUploadButton: this.props.ipfsActions.showUploadButton,
-            showForkButton: this.props.ipfsActions.showForkButton,
-            showShareButton: this.props.ipfsActions.showShareButton,
-        }
+        showForkButton: this.props.showForkButton,
     }
 
     componentDidUpdate(prevProps) {
-        if (prevProps.ipfsActions !== this.props.ipfsActions) {
-            this.setState({
-                ipfsActions: this.props.ipfsActions
-            });
-        }
 
         if (prevProps.selectedProjectName !== this.props.selectedProjectName) {
             this.setState({
@@ -141,13 +130,9 @@ export default class TopBar extends Component {
         forkProject(selectedProjectId, true);
     }
 
-    onCloseUploadDialog = () => {
-        this.props.hideUploadDialog()
-    }
-
     render() {
 
-        const { showUploadDialog, showUploadButton, showForkButton } = this.state.ipfsActions;
+        const { showForkButton } = this.state;
         const { project, showOpenInLab } = this.props.view;
 
         return (
@@ -172,26 +157,12 @@ export default class TopBar extends Component {
                     </OnlyIf>
                     <NetworkAccountSelector />
                     <div className={style.projectActions}>
-                        <OnlyIf test={showUploadButton}>
-                            <DropdownContainer
-                                className={classNames([style.actionUpload, style.action])}
-                                dropdownContent={<UploadDialog />}
-                                enableClickInside={true}
-                                showMenu={showUploadDialog}
-                                onCloseMenu={this.onCloseUploadDialog}
-                            >
-                                <UploadDrowdownAction />
-                            </DropdownContainer>
-                        </OnlyIf>
                         <OnlyIf test={showForkButton}>
                             <ForkDropdownAction
                                 onForkClicked={this.onForkClicked}
                                 isProjectForking={this.props.isProjectForking}
                             />
                         </OnlyIf>
-                        <div className={classNames([style.action, style.actionMenu])} onClick={() => this.showModal('share')}>
-                            <ShareDropdownAction />
-                        </div>
                     </div>
                 </div>
                 <ProjectTitle
@@ -218,12 +189,7 @@ TopBar.propTypes = {
     functions: PropTypes.object.isRequired,
     selectedProjectName: PropTypes.string,
     selectedProjectId: PropTypes.string,
-    ipfsActions: PropTypes.shape({
-        showUploadDialog: PropTypes.bool.isRequired,
-        showUploadButton: PropTypes.bool.isRequired,
-        showForkButton: PropTypes.bool.isRequired,
-        showShareButton: PropTypes.bool.isRequired,
-    }),
+    showForkButton: PropTypes.bool.isRequired,
     view: PropTypes.shape({
         showSelectedProjectName: PropTypes.bool,
         showOpenInLab: PropTypes.bool,

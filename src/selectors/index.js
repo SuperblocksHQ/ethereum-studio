@@ -15,7 +15,6 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 export * from './app.selectors';
-export * from './ipfs.selectors';
 export * from './toast.selectors';
 export * from './project.selectors';
 export * from './user.selectors';

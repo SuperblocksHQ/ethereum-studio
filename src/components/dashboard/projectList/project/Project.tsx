@@ -21,6 +21,7 @@ import { IconDots } from '../../../icons';
 import { DropdownContainer } from '../../../common/dropdown';
 import ProjectMenuDropdownDialog from '../../../topbar/projectMenu/ProjectMenuDropdownDialog';
 import moment from 'moment';
+import { Link } from 'react-router-dom';
 
 interface IProps {
     project: IProject;
@@ -58,7 +59,7 @@ export default class Project extends Component<IProps> {
 
         return (
             <div className={style.container}>
-                <a href={project.id} className={style.innerWrapper}>
+                <Link to={`/dashboard/project/${project.id}`} className={style.innerWrapper}>
                     <div className={style.name}>
                         {project.name}
                     </div>
@@ -71,7 +72,7 @@ export default class Project extends Component<IProps> {
                             : `Edited ${moment.utc(project.lastModifiedAt).fromNow()}`
                         }
                     </div>
-                </a>
+                </Link>
                 <DropdownContainer
                     showMenu={false}
                     className={style.projectButtonWrapper}

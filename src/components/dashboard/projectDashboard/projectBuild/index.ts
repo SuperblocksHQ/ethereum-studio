@@ -1,4 +1,4 @@
-// Copyright 2018 Superblocks AB
+// Copyright 2019 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -14,19 +14,19 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { empty } from 'rxjs';
-import { switchMap, withLatestFrom } from 'rxjs/operators';
-import { ofType } from 'redux-observable';
-import { ipfsActions } from '../../actions';
-import { logEvent } from '../../utils/analytics';
+import { connect } from 'react-redux';
+import { Dispatch } from 'react';
+import { AnyAction } from 'redux';
+import ProjectBuild from './ProjectBuild';
 
-const reportIPFSEvents = (action$, state$) => action$.pipe(
-    ofType(ipfsActions.UPLOAD_TO_IPFS, ipfsActions.IMPORT_PROJECT_FROM_IPFS),
-    withLatestFrom(state$),
-    switchMap(([action]) => {
-        logEvent(action.type);
-        return empty();
-    })
-);
+const mapStateToProps = (state: any) => ({
 
-export default reportIPFSEvents;
+});
+
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
+    return {
+
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProjectBuild);

@@ -15,7 +15,6 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 export * from './preview.service';
-export * from './ipfs.service';
 export * from './user.service';
 export * from './project.service';
 export * from './auth.service';
