@@ -64,7 +64,7 @@ export const githubLogin = (action$: AnyAction, state$: any) => action$.pipe(
                 )),
                 switchMap((data: any) => authService.githubAuth(data)),
                 switchMap(() => userService.getUser()),
-                mergeMap((data) => [authActions.loginSuccess(data), userActions.getProjectList()]),
+                mergeMap((data) => [authActions.loginSuccess(data), authActions.refreshAuthStart(), userActions.getProjectList()]),
                 catchError((err: any) => {
                     console.log('Error while logging in via GitHub: ', err);
                     return of(authActions.loginFail(err));
