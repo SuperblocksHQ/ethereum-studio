@@ -23,6 +23,7 @@ import GithubRepoList from './GithubRepoList';
 
 const mapStateToProps = (state: any) => ({
     reposList: userSelectors.getUserReposList(state),
+    isRepositoriesLoading: userSelectors.isRepositoriesLoading(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {

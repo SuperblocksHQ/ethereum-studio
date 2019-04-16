@@ -1,4 +1,4 @@
-// Copyright 2018 Superblocks AB
+// Copyright 2019 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -14,5 +14,24 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export * from './githubLogin';
-export * from './primaryButton';
+import React from 'react';
+import style from './style.less';
+import classNames from 'classnames';
+
+interface IProps {
+    text: string;
+    icon?: JSX.Element;
+    customClassName?: string;
+    onClick: () => void;
+}
+
+const PrimaryButton = (props: IProps) => (
+    <button onClick={props.onClick} className={classNames([style.btn, style.primaryButton, props.customClassName])}>
+        {props.icon}
+        <span>
+            {props.text}
+        </span>
+    </button>
+);
+
+export default PrimaryButton;

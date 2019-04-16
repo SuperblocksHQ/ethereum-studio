@@ -14,32 +14,68 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-
 .container {
     width: 100%;
-    max-width: 60%;
     margin-left: auto;
     margin-right: auto;
     margin-top: 100px;
+    display: flex;
+
+    .left {
+        margin-right: 25px;
+        flex-grow: 2;
+    }
+
+    .right {
+        margin-left: 25px;
+        flex-grow: 1;
+    }
 
     .searchInput {
-        background: transparent;
-        color: white;
-        border: 1px solid grey;
-        border-radius: 4px;
-        padding: 5px 15px;
-        width: 100%;
+        position: relative;
+
+        .icon {
+            position: absolute;
+            left: 10px;
+            top: 11px;
+            opacity: .3;
+        }
+
+        input {
+            background: transparent;
+            color: white;
+            border: 1px solid grey;
+            border-radius: 4px;
+            padding: 7px 15px 7px 30px;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+    }
+
+    a {
+        color: #04d2e5;
+        transition: opacity .15s;
+
+        &:hover {
+            opacity: .7;
+        }
+    }
+
+    p {
+        color: #c0c0c0;
         margin-bottom: 15px;
     }
 
     .repoList {
+        position: relative;
+        min-height: 250px;
         max-height: 250px;
         overflow-y: auto;
 
         .singleRepo {
             display: flex;
             align-items: center;
-            padding: 7px 5px;
+            padding: 4px 8px 5px 4px;
 
             .repoTitle {
                 margin-right: auto;
@@ -47,15 +83,11 @@
 
             .btnBuild {
                 display: none;
-                background: lightseagreen;
-                padding: 3px 15px;
-                border-radius: 4px;
-                color: white;
             }
 
             &:hover {
-                background: #3f3e3e;
-                cursor: pointer;
+                background: #283134;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
 
                 .btnBuild {
                     display: block;
@@ -63,11 +95,45 @@
             }
 
             img {
-                width: 24px;
+                max-width: 24px;
                 height: auto;
                 margin-right: 15px;
             }
         }
     }
-}
 
+    .resetFilter {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        margin-top: 50px;
+    }
+
+    .organizationsList {
+        box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+
+        .singleOrganization {
+            display: flex;
+            align-items: center;
+            padding: 8px 15px;
+            border-left: 2px solid transparent;
+
+            &.active {
+                border-color: #04d2e5;
+                background: #283134;
+            }
+
+            &:hover {
+                background: #283134;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+                cursor: pointer;
+            }
+
+            img {
+                max-width: 24px;
+                margin-right: 15px;
+            }
+        }
+    }
+}

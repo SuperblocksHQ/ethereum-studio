@@ -49,7 +49,7 @@ export default class LoggedInButton extends Component<IProps> {
                         }>
                         <button className={classNames([style.actionMenu, style.container, 'btnNoBg'])}>
                             <OnlyIf test={userProfile}>
-                                <img className={style.profilePicture} src={this.props.userProfile.imageUrl} />
+                                <img className={style.profilePicture} src={`${this.props.userProfile.imageUrl}&s=44`} />
                             </OnlyIf>
                             <div className={style.caret} >
                                 <IconAngleDown className={style.angleDown}/>

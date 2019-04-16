@@ -22,3 +22,4 @@ export * from './project.model';
 export * from './user.model';
 export * from './account-environment.model';
 export * from './dependencies.model';
+export * from './githubRepository.model';
