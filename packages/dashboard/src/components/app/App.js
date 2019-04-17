@@ -17,7 +17,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { previewService } from '../../services';
 import AnalyticsDialog from '../analyticsDialog';
 import OnlyIf from '../onlyIf';
 import ToastContainer from "../toasts/toastcontainer";
@@ -48,67 +47,12 @@ const ProjectBuild = Loadable({
 
 export default class App extends Component {
 
-    constructor(props) {
-        super(props);
-        this.isImportedProject = false;
-
-        this.session = {
-            start_time: Date.now(),
-        };
-
-        this.router = this.props.router;
-        this.router.register('app', this);
-
-        this.functions = {
-            session: {
-                start_time: this.session_start_time,
-            }
-        };
-        this.knownWalletSeed = 'butter toward celery cupboard blind morning item night fatal theme display toy';
-
-        // The development wallets seed is well known and the first few addresses are seeded
-        // with ether in the genesis block.
-        console.log('Known development Ethereum seed is: ' + this.knownWalletSeed);
-    }
-
     componentDidMount() {
         const { notifyAppStart }  = this.props;
 
         // Make sure we fire this event in order to let other parst of the app configure depending
         // on the initial state (per example turning on/off analytics)
         notifyAppStart(embedUtils.isIframe());
-
-        // TODO - Make sure all this is working correctly
-        this._init();
-    }
-
-    redraw = all => {
-        // this.forceUpdate();
-        console.error('YOoo, someone calls redraw!!!')
-    };
-
-    _init = () => {
-        previewService.init(null);
-    };
-
-    session_start_time = () => {
-        return this.session.start_time;
-    };
-
-    renderProject =  ({match}) => {
-
-        const LoadProject = Loadable({
-            loader: () => import(/* webpackChunkName: "LoadProject" */"../loadProject"),
-            loading: Loading,
-        });
-
-        return <LoadProject
-            projectId={match.params.projectId}
-            router={this.router}
-            functions={this.functions}
-            knownWalletSeed={this.knownWalletSeed}
-            isImportedProject={this.isImportedProject}
-        />;
     }
 
     render() {
@@ -122,16 +66,15 @@ export default class App extends Component {
                             <Switch>
                                 <Route path="/" exact render={(props) => <Dashboard {...props} functions={this.functions} />} />
                                 <Route path="/dashboard" exact render={(props) => <Dashboard {...props} functions={this.functions} />} />
-                                <Route exact path="/dashboard/project/:projectId" render={(props) => (  
-                                    <ProjectDashboard content={<ProjectBuild />} {...props} />  
+                                <Route exact path="/dashboard/project/:projectId" render={(props) => (
+                                    <ProjectDashboard content={<ProjectBuild />} {...props} />
                                 )} />
-                                <Route exact path="/dashboard/project/:projectId/build" render={(props) => (  
-                                    <ProjectDashboard content={<ProjectBuild />} {...props} />  
+                                <Route exact path="/dashboard/project/:projectId/build" render={(props) => (
+                                    <ProjectDashboard content={<ProjectBuild />} {...props} />
                                 )} />
-                                <Route exact path="/dashboard/project/:projectId/settings" render={(props) => (  
-                                    <ProjectDashboard content={<ProjectSettings />} {...props} />  
+                                <Route exact path="/dashboard/project/:projectId/settings" render={(props) => (
+                                    <ProjectDashboard content={<ProjectSettings />} {...props} />
                                 )} />
-                                <Route path="/:projectId" exact component={this.renderProject} />
                             </Switch>
                         </div>
                     </div>

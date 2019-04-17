@@ -16,7 +16,7 @@
 
 import React, { Component } from 'react';
 import style from './style.less';
-import { HelpAction, NewProjectAction } from '../../common';
+import { HelpAction } from '../../common';
 import LoggedInButton from './../../login/LoggedInButton';
 import { IUser } from './../../../models/user.model';
 import { Link } from 'react-router-dom';
@@ -42,7 +42,6 @@ export default class Topbar extends Component<IProps> {
                 </Link>
 
                 <div className={style.actionsRight}>
-                    <NewProjectAction redirect={true} />
                     <HelpAction />
                     { isAuthenticated &&
                         <LoggedInButton

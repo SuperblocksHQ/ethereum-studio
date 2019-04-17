@@ -14,18 +14,11 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { environmentUpdateEpic } from './environmentUpdate.epic';
 import { updateProjectSettings } from './updateProjectSettings.epic';
 import { initExplorerEpic } from './initExplorer.epic';
 import { deleteProject } from './deleteProject.epic';
 import { forkProject } from './forkProject.epic';
 import { updateProject } from './updateProject.epic';
-
-// TODO - Add missing epics
-
-// import { downloadProject } from './downloadProject.epic';
-// import { importProject } from './importProject.epic';
-
 import { loadProject } from './loadProject.epic';
 import { renameProjectEpic } from './renameProject.epic';
 import { createEmptyProject } from './createEmptyProject.epic';
@@ -34,7 +27,6 @@ import { updateAccountBalanceEpic } from './updateAccountBalance.epic';
 import { createForkedProject } from './createForkedProject.epic';
 
 export const projectsEpics = [
-    environmentUpdateEpic,
     updateProjectSettings,
     initExplorerEpic,
     loadProject,

@@ -14,10 +14,5 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export * from './editModal';
-export * from './shareModal';
-export * from './preferencesModal';
 export * from './loginModal';
 export * from './simpleModal';
-export * from './importFileModal';
-export * from './projectTemplateModal';

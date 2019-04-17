@@ -24,31 +24,6 @@ const LoginModal = Loadable({
     loading: Loading,
 });
 
-const ShareModal = Loadable({
-    loader: () => import(/* webpackChunkName: "ShareModal" */'../../../modals/shareModal'),
-    loading: Loading,
-});
-
-const EditModal = Loadable({
-    loader: () => import(/* webpackChunkName: "EditModal" */'../../../modals/editModal'),
-    loading: Loading,
-});
-
-const ProjectTemplateModal = Loadable({
-    loader: () => import(/* webpackChunkName: "ProjectTemplateModal" */'../../../modals/projectTemplateModal'),
-    loading: Loading,
-});
-
-const PreferencesModal = Loadable({
-    loader: () => import(/* webpackChunkName: "ShareModal" */'../../../modals/preferencesModal'),
-    loading: Loading,
-});
-
-const ImportFileModal = Loadable({
-    loader: () => import(/* webpackChunkName: "ImportFileModal" */'../../../modals/importFileModal'),
-    loading: Loading,
-});
-
 interface IProps {
     modalType: string;
     modalProps: any;
@@ -56,13 +31,7 @@ interface IProps {
 }
 
 const MODAL_COMPONENTS: any = {
-    EDIT_MODAL: EditModal,
-    SHARE_MODAL: ShareModal,
-    PREFERENCES_MODAL: PreferencesModal,
-    GITHUB_MODAL: LoginModal,
-    IMPORT_FILE_MODAL: ImportFileModal,
-    PROJECT_TEMPLATE_MODAL: ProjectTemplateModal,
-    /* other modals */
+    GITHUB_MODAL: LoginModal
 };
 
 export class ModalContainer extends Component<IProps> {

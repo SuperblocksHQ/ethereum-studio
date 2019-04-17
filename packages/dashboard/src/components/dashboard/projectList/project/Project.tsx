@@ -19,7 +19,6 @@ import style from './style.less';
 import { IProject } from '../../../../models';
 import { IconDots } from '../../../icons';
 import { DropdownContainer } from '../../../common/dropdown';
-import ProjectMenuDropdownDialog from '../../../topbar/projectMenu/ProjectMenuDropdownDialog';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 
@@ -73,26 +72,6 @@ export default class Project extends Component<IProps> {
                         }
                     </div>
                 </Link>
-                <DropdownContainer
-                    showMenu={false}
-                    className={style.projectButtonWrapper}
-                    dropdownContent={
-                        <ProjectMenuDropdownDialog
-                            customClass={style.menuDialog}
-                            projectId={project.id}
-                            redirect={false}
-                            editProject={this.showEditModal}
-                            openProject={this.openProject}
-                            openProjectNewTab={this.openProjectNewTab}
-                            deleteProject={this.props.deleteProject}
-                            forkProject={this.props.forkProject}
-                            shareProject={this.showShareModal}
-                        />}
-                >
-                    <div className={style.menuWrapper}>
-                        <IconDots className={style.projectButtonIcon} width='30' />
-                    </div>
-                </DropdownContainer>
             </div>
         );
     }
