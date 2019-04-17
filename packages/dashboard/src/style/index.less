@@ -1,0 +1,423 @@
+// Copyright 2018 Superblocks AB
+//
+// This file is part of Superblocks Lab.
+//
+// Superblocks Lab is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation version 3 of the License.
+//
+// Superblocks Lab is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
+
+@import './spacing';
+@import './toast';
+@import './menu';
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////// Variables //////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Generic
+@primary-color: #8641F2;
+@white-color-hover: #ecebeb;
+@action-color-hover: #333;
+
+// modal
+@modal-background-color: #2b2b2b;
+@modal-color-hover: #353535;
+@modal-color-hover-purple: rgba(128, 46, 255, 0.1);
+@modal-separator-color: #3C3C3C;
+@modal-selected-color: rgba(128, 46, 255, 0.5);
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////// Generic //////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Generic to all the application
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    background-color: #262e33;
+    font-family: 'Untitled Sans';
+    font-weight: 400;
+    color: #444;
+    -webkit-font-smoothing: antialiased;
+    // -webkit-text-stroke: 0.45px;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 14px;
+}
+
+body, input, textarea, button, select {
+    font-family: inherit;
+    font-size: inherit;
+}
+
+html {
+    scrollbar-color: hsla(0, 0%, 100%,.1) hsla(0, 0%, 100%, .1);
+    scrollbar-width: thin;
+
+    ::-webkit-scrollbar {
+        width: .5rem;
+        height: .5rem;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        transition: all .3s ease;
+        border-color: transparent;
+        background-color: hsla(0, 0%, 100%,.1);
+        z-index: 40;
+        &:hover {
+            background-color: hsla(0, 0%, 100%,.2);
+        }
+    }
+}
+
+a:active,a:focus {
+    outline: none;
+}
+
+.full {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.full-y {
+    height: 100%;
+}
+
+.full-x {
+    width: 100%;
+}
+
+#app {
+    position: absolute;
+    z-index: 1;
+    display: block;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    #app_content {
+        &.modals {
+            opacity: 0.333;
+        }
+    }
+}
+
+#app.modals {
+    #app_modal {
+        display: block;
+    }
+}
+
+#app_content {
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+
+#app_modal {
+    position: absolute;
+    z-index: 2;
+    display: none;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.75)
+}
+
+.modal {
+    overflow: hidden;
+    position: absolute;
+    display: block;
+    position: absolute;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translate(-50%);
+    top: 50px;
+}
+
+.dropDown {
+    display: inline-block;
+    transform: rotate(45deg);
+    margin-bottom: 2px;
+    padding: 2px;
+    border-style: solid;
+    border-color: rgb(255, 255, 255);
+    border-image: initial;
+    border-width: 0px 2px 2px 0px;
+}
+
+.resizer {
+    box-sizing: border-box;
+    opacity: .4;
+    z-index: 1;
+    background-clip: padding-box;
+    width: 11px;
+    margin: 0 -5px;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    cursor: col-resize;
+    &:hover {
+        transition: all .3s ease;
+        border-left: 5px solid rgba(0,0,0,.5);
+        border-right: 5px solid rgba(0,0,0,.5);
+    }
+}
+
+.maincontent {
+    background-color: #222;
+    position: absolute;
+    z-index: 1;
+    overflow: hidden;
+    margin: 0 auto;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    a {
+        color: #fff;
+        text-decoration: none;
+    }
+}
+
+.dragging {
+    pointer-events: none;
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////// Fonts //////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/* untitled-sans-regular - latin */
+@font-face {
+  font-family: 'Untitled Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Untitled Sans'), local('UntitledSans-Regular'),
+       url('/static/fonts/untitledsans/untitled-sans-regular.otf') format('opentype'),
+}
+/* untitled-sans-regular-italic - latin */
+@font-face {
+  font-family: 'Untitled Sans';
+  font-style: italic;
+  font-weight: 400;
+  src: local('Untitled Sans Italic'), local('UntitledSans-Italic'),
+       url('/static/fonts/untitledsans/untitled-sans-regular-italic.otf') format('opentype');
+
+}
+/* untitled-sans-medium - latin */
+@font-face {
+    font-family: 'Untitled Sans';
+    font-style: normal;
+    font-weight: 600;
+    src: local('Untitled Sans Medium'), local('UntitledSans-Medium'),
+        url('/static/fonts/untitledsans/untitled-sans-medium.otf') format('opentype');
+}
+  /* ntitled-sans-medium - latin */
+@font-face {
+    font-family: 'Untitled Sans';
+    font-style: italic;
+    font-weight: 600;
+    src: local('Untitled Sans Medium Italic'), local('UntitledSans-MediumItalic'),
+            url('/static/fonts/untitledsans/untitled-sans-medium-italic.otf') format('opentype');
+}
+
+/* untitled-sans-bold - latin */
+@font-face {
+  font-family: 'Untitled Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Untitled Sans Bold'), local('UntitledSans-Bold'),
+       url('/static/fonts/untitledsans/untitled-sans-bold.otf') format('opentype');
+}
+/* ntitled-sans-bold - latin */
+@font-face {
+  font-family: 'Untitled Sans';
+  font-style: italic;
+  font-weight: 700;
+  src: local('Untitled Sans Bold Italic'), local('UntitledSans-BoldItalic'),
+       url('/static/fonts/untitledsans/untitled-sans-bold-italic.otf') format('opentype');
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////// Components //////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+.btnNoBg {
+    background: transparent;
+    border-radius: 3px;
+    max-width: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    transition: color .15s;
+    &:focus {
+        outline: none;
+    }
+}
+
+.btn1 {
+    -webkit-border-radius: 17;
+    -moz-border-radius: 17;
+    border-radius: 17px;
+    border-color: #8641f2;
+    font-size: 20px;
+    background-color: #ffffff;
+    padding: 15px 25px;
+    text-decoration: none;
+    cursor: pointer;
+    &:hover {
+        background-color: #8641f2;
+        color: #fff;
+        text-decoration: none;
+    }
+}
+.btn2 {
+    background-color: #8641f2;
+    border-radius: 4px;
+    color: #fff;
+    padding: 7px 20px;
+    text-decoration: none;
+    font-weight: 600;
+    border: none;
+    user-select: none;
+    outline: none;
+    cursor: pointer;
+    transition: background-color .15s, color .15s;
+    &:hover {
+        background-color: #7237CF;
+    }
+    &.noBg {
+        color: #c7c7c7;
+        background-color: transparent;
+        border: 0;
+        &:hover {
+            background-color: @modal-color-hover;
+            color: #fff;
+        }
+    }
+    &:disabled {
+        background-color: #f4f4f4;
+        color: #C0C0C0;
+        border: 0;
+    }
+}
+.superInput {
+    label {
+        display: block;
+        font-weight: 600;
+        text-align: left;
+        margin: 12px 0;
+    }
+    input, textarea {
+        display: block;
+        box-sizing: border-box;
+        background-color: #fff;
+        line-height: normal;
+        padding: 5px;
+        border-radius: 4px;
+        border: 1px solid #D8DDE6;
+        box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+        -webkit-transition: border linear .2s,box-shadow linear .2s;
+        transition: border linear .2s,box-shadow linear .2s;
+        padding: 8px 16px !important;
+        outline: none;
+        &:focus {
+            border-color: rgba(134,65,242,.5);
+            box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(134,65,242,.6);
+        }
+    }
+}
+
+.superInputInline {
+    &:extend(.superInput all);
+    input {
+        display: inline-block;
+    }
+    button {
+        margin-left: 12px;
+    }
+}
+
+.superInputDark {
+    &:extend(.superInput all);
+    input, textarea {
+        color: #fff;
+        background-color: #3A3A3A;
+        border: none;
+    }
+}
+
+.superInputDarkInline {
+    &:extend(.superInputDark all);
+    input {
+        display: inline-block;
+    }
+    button {
+        margin-left: 12px;
+    }
+}
+
+.scrollable-y {
+    display: block;
+    height: 100%;
+    width: 100%;
+    overflow-y: auto;
+}
+
+.tippy-popper {
+    position: absolute;
+}
+
+.tippy-popper,
+.tippy-popper * {
+    pointer-events: none;
+}
+
+.tippy-tooltip [x-circle] {
+    background-color: rgb(21, 24, 25) !important;
+}
+
+.tippy-tooltip.update-theme {
+    .arrow-regular {
+        border-bottom: 7px solid #fff !important;
+    }
+
+    background-color: #fff;
+    border-radius: 2px;
+    padding: 0 !important;
+}
+
+
+.tippy-tooltip-content {
+    .arrayInfoTooltip {
+        text-align: left;
+        padding-bottom: 10px;
+
+        &>div {
+            margin-top: 10px;
+        }
+
+        .example {
+            font-style: italic;
+        }
+    }
+}

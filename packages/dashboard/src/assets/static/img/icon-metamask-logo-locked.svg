@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="403px" height="419px" viewBox="0 0 403 419" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>icon-metamask-logo-locked</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="icon-metamask-logo-locked" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="icon-metamask-logo" fill-rule="nonzero">
+            <polygon id="Shape" stroke="#E4761B" fill="#E4761B" points="381.9 289.9 357.5 372.4 309.6 359.3"></polygon>
+            <polygon id="Shape" stroke="#E4761B" fill="#E4761B" points="309.6 359.3 355.8 296 381.9 289.9"></polygon>
+            <path d="M346,227.7 L381.9,289.9 L355.8,296 L346,227.7 Z M346,227.7 L369.1,211.7 L381.9,289.9 L346,227.7 Z" id="Shape" stroke="#F6851B" fill="#F6851B"></path>
+            <path d="M316.6,180.7 L383,153.5 L379.7,168.4 L316.6,180.7 Z M377.6,186.3 L316.6,180.7 L379.7,168.4 L377.6,186.3 Z" id="Shape" stroke="#763D16" fill="#763D16"></path>
+            <path d="M377.6,186.3 L369.1,211.7 L316.6,180.7 L377.6,186.3 Z M390.9,159.8 L379.7,168.4 L383,153.5 L390.9,159.8 Z M377.6,186.3 L379.7,168.4 L388.6,175.8 L377.6,186.3 Z" id="Shape" stroke="#763D16" fill="#763D16"></path>
+            <polygon id="Shape" stroke="#E2761B" fill="#E2761B" points="258.1 339.2 274.7 344.5 309.6 359.3"></polygon>
+            <path d="M369.1,211.7 L377.6,186.3 L384.9,191.9 L369.1,211.7 Z M369.1,211.7 L300.2,189 L316.6,180.7 L369.1,211.7 Z" id="Shape" stroke="#763D16" fill="#763D16"></path>
+            <polygon id="Shape" stroke="#763D16" fill="#763D16" points="333 102.8 316.6 180.7 300.2 189"></polygon>
+            <polygon id="Shape" stroke="#763D16" fill="#763D16" points="383 153.5 316.6 180.7 333 102.8"></polygon>
+            <polygon id="Shape" stroke="#763D16" fill="#763D16" points="333 102.8 402.3 94.8 383 153.5"></polygon>
+            <polygon id="Shape" stroke="#F6851B" fill="#F6851B" points="369.1 211.7 346 227.7 300.2 189"></polygon>
+            <polygon id="Shape" stroke="#763D16" fill="#763D16" points="399.3 38.7 402.3 94.8 333 102.8"></polygon>
+            <polygon id="Shape" stroke="#E2761B" fill="#E2761B" points="399.3 38.7 260.8 139.4 259 71.1"></polygon>
+            <polygon id="Shape" stroke="#F6851B" fill="#F6851B" points="156 62.9 259 71.1 260.8 139.4"></polygon>
+            <polygon id="Shape" stroke="#763D16" fill="#763D16" points="300.2 189 260.8 139.4 333 102.8"></polygon>
+            <polygon id="Shape" stroke="#E4761B" fill="#E4761B" points="300.2 189 346 227.7 281.7 234.8"></polygon>
+            <polygon id="Shape" stroke="#E4761B" fill="#E4761B" points="281.7 234.8 260.8 139.4 300.2 189"></polygon>
+            <polygon id="Shape" stroke="#763D16" fill="#763D16" points="333 102.8 260.8 139.4 399.3 38.7"></polygon>
+            <polygon id="Shape" stroke="#C0AD9E" fill="#C0AD9E" points="156.9 357.7 189.6 391.8 145.1 351.3"></polygon>
+            <polygon id="Shape" stroke="#CD6116" fill="#CD6116" points="309.6 359.3 325.1 300.4 355.8 296"></polygon>
+            <polygon id="Shape" stroke="#E2761B" fill="#E2761B" points="24.3 193.6 80.9 134.1 31.6 186.5"></polygon>
+            <path d="M355.8,296 L325.1,300.4 L346,227.7 L355.8,296 Z M260.8,139.4 L205.7,137.6 L156,62.9 L260.8,139.4 Z" id="Shape" stroke="#F6851B" fill="#F6851B"></path>
+            <polygon id="Shape" stroke="#E4751F" fill="#E4751F" points="346 227.7 325.1 300.4 323.4 264.9"></polygon>
+            <polygon id="Shape" stroke="#CD6116" fill="#CD6116" points="281.7 234.8 346 227.7 323.4 264.9"></polygon>
+            <polygon id="Shape" stroke="#F6851B" fill="#F6851B" points="205.7 137.6 260.8 139.4 281.7 234.8"></polygon>
+            <path d="M205.7,137.6 L57,0 L156,62.9 L205.7,137.6 Z M155.9,378.6 L26.7,418.6 L0.9,320.1 L155.9,378.6 Z" id="Shape" stroke="#E4761B" fill="#E4761B"></path>
+            <polygon id="Shape" stroke="#763D16" fill="#763D16" points="43.5 218.2 92.3 179.9 133.2 189.4"></polygon>
+            <polygon id="Shape" stroke="#763D16" fill="#763D16" points="133.2 189.4 92.3 179.9 114.2 89.5"></polygon>
+            <polygon id="Shape" stroke="#763D16" fill="#763D16" points="31.6 186.5 92.3 179.9 43.5 218.2"></polygon>
+            <polygon id="Shape" stroke="#CD6116" fill="#CD6116" points="323.4 264.9 298.2 252.2 281.7 234.8"></polygon>
+            <polygon id="Shape" stroke="#763D16" fill="#763D16" points="31.6 186.5 27.3 163.8 92.3 179.9"></polygon>
+            <polygon id="Shape" stroke="#233447" fill="#233447" points="293 280.8 298.2 252.2 323.4 264.9"></polygon>
+            <polygon id="Shape" stroke="#F6851B" fill="#F6851B" points="325.1 300.4 293 280.8 323.4 264.9"></polygon>
+            <path d="M92.3,179.9 L27.3,163.8 L22,144.7 L92.3,179.9 Z M114.2,89.5 L92.3,179.9 L22,144.7 L114.2,89.5 Z M114.2,89.5 L205.7,137.6 L133.2,189.4 L114.2,89.5 Z" id="Shape" stroke="#763D16" fill="#763D16"></path>
+            <path d="M133.2,189.4 L205.7,137.6 L238,236.3 L133.2,189.4 Z M238,236.3 L137.8,234.2 L133.2,189.4 L238,236.3 Z" id="Shape" stroke="#E4761B" fill="#E4761B"></path>
+            <path d="M43.5,218.2 L133.2,189.4 L137.8,234.2 L43.5,218.2 Z M281.7,234.8 L238,236.3 L205.7,137.6 L281.7,234.8 Z" id="Shape" stroke="#F6851B" fill="#F6851B"></path>
+            <polygon id="Shape" stroke="#CD6116" fill="#CD6116" points="298.2 252.2 293 280.8 281.7 234.8"></polygon>
+            <polygon id="Shape" stroke="#763D16" fill="#763D16" points="57 0 205.7 137.6 114.2 89.5"></polygon>
+            <polygon id="Shape" stroke="#E4761B" fill="#E4761B" points="0.9 320.1 126.3 314.9 155.9 378.6"></polygon>
+            <polygon id="Shape" stroke="#CD6116" fill="#CD6116" points="155.9 378.6 126.3 314.9 187.9 311.9"></polygon>
+            <path d="M293,280.8 L325.1,300.4 L342.8,342.1 L293,280.8 Z M137.8,234.2 L0.9,320.1 L43.5,218.2 L137.8,234.2 Z M126.3,314.9 L0.9,320.1 L137.8,234.2 L126.3,314.9 Z M281.7,234.8 L289.9,264.6 L250.3,266.9 L281.7,234.8 Z M250.3,266.9 L238,236.3 L281.7,234.8 L250.3,266.9 Z" id="Shape" stroke="#F6851B" fill="#F6851B"></path>
+            <polygon id="Shape" stroke="#C0AD9E" fill="#C0AD9E" points="189.6 391.8 155.9 378.6 273.1 398.3"></polygon>
+            <polygon id="Shape" stroke="#763D16" fill="#763D16" points="43.5 218.2 24.3 193.6 31.6 186.5"></polygon>
+            <polygon id="Shape" stroke="#D7C1B3" fill="#D7C1B3" points="286.4 383.7 273.1 398.3 155.9 378.6"></polygon>
+            <polygon id="Shape" stroke="#E4761B" fill="#E4761B" points="292.7 347.9 155.9 378.6 187.9 311.9"></polygon>
+            <polygon id="Shape" stroke="#D7C1B3" fill="#D7C1B3" points="155.9 378.6 292.7 347.9 286.4 383.7"></polygon>
+            <path d="M22,144.7 L17.5,67.8 L114.2,89.5 L22,144.7 Z M31.6,186.5 L18.3,173 L27.3,163.8 L31.6,186.5 Z" id="Shape" stroke="#763D16" fill="#763D16"></path>
+            <polygon id="Shape" stroke="#CD6116" fill="#CD6116" points="215.6 256.1 238 236.3 234.8 284.7"></polygon>
+            <polygon id="Shape" stroke="#CD6116" fill="#CD6116" points="238 236.3 215.6 256.1 183 273"></polygon>
+            <polygon id="Shape" stroke="#F6851B" fill="#F6851B" points="342.8 342.1 336.7 337.6 293 280.8"></polygon>
+            <polygon id="Shape" stroke="#CD6116" fill="#CD6116" points="183 273 137.8 234.2 238 236.3"></polygon>
+            <polygon id="Shape" stroke="#E4751F" fill="#E4751F" points="234.8 284.7 238 236.3 250.3 266.9"></polygon>
+            <polygon id="Shape" stroke="#763D16" fill="#763D16" points="13.9 152.3 22 144.7 27.3 163.8"></polygon>
+            <polygon id="Shape" stroke="#233447" fill="#233447" points="234.8 284.7 183 273 215.6 256.1"></polygon>
+            <polygon id="Shape" stroke="#763D16" fill="#763D16" points="114.2 89.5 17.5 67.8 57 0"></polygon>
+            <polygon id="Shape" stroke="#C0AD9E" fill="#C0AD9E" points="273.1 398.3 278.6 413.3 189.6 391.8"></polygon>
+            <polygon id="Shape" stroke="#F6851B" fill="#F6851B" points="187.9 311.9 183 273 234.8 284.7"></polygon>
+            <polygon id="Shape" stroke="#E4751F" fill="#E4751F" points="137.8 234.2 183 273 187.9 311.9"></polygon>
+            <path d="M250.3,266.9 L289.9,264.6 L336.7,337.6 L250.3,266.9 Z M137.8,234.2 L187.9,311.9 L126.3,314.9 L137.8,234.2 Z" id="Shape" stroke="#F6851B" fill="#F6851B"></path>
+            <polygon id="Shape" stroke="#E4751F" fill="#E4751F" points="250.3 266.9 299.5 341.8 234.8 284.7"></polygon>
+            <polygon id="Shape" stroke="#F6851B" fill="#F6851B" points="234.8 284.7 299.5 341.8 292.7 347.9"></polygon>
+            <path d="M292.7,347.9 L187.9,311.9 L234.8,284.7 L292.7,347.9 Z M336.7,337.6 L299.5,341.8 L250.3,266.9 L336.7,337.6 Z" id="Shape" stroke="#F6851B" fill="#F6851B"></path>
+            <path d="M346.5,372.8 L330.5,404.9 L278.6,413.3 L346.5,372.8 Z M278.6,413.3 L273.1,398.3 L286.4,383.7 L278.6,413.3 Z" id="Shape" stroke="#C0AD9E" fill="#C0AD9E"></path>
+            <path d="M286.4,383.7 L296.2,379.8 L278.6,413.3 L286.4,383.7 Z M278.6,413.3 L296.2,379.8 L346.5,372.8 L278.6,413.3 Z" id="Shape" stroke="#C0AD9E" fill="#C0AD9E"></path>
+            <polygon id="Shape" stroke="#161616" fill="#161616" points="336.7 337.6 349 345.1 311.6 349.6"></polygon>
+            <path d="M311.6,349.6 L299.5,341.8 L336.7,337.6 L311.6,349.6 Z M307.3,355.5 L352.8,350 L346.5,372.8 L307.3,355.5 Z" id="Shape" stroke="#161616" fill="#161616"></path>
+            <path d="M346.5,372.8 L296.2,379.8 L307.3,355.5 L346.5,372.8 Z M296.2,379.8 L286.4,383.7 L292.7,347.9 L296.2,379.8 Z M292.7,347.9 L299.5,341.8 L311.6,349.6 L292.7,347.9 Z M349,345.1 L352.8,350 L307.3,355.5 L349,345.1 Z" id="Shape" stroke="#161616" fill="#161616"></path>
+            <path d="M307.3,355.5 L311.6,349.6 L349,345.1 L307.3,355.5 Z M292.7,347.9 L307.3,355.5 L296.2,379.8 L292.7,347.9 Z" id="Shape" stroke="#161616" fill="#161616"></path>
+            <polygon id="Shape" stroke="#161616" fill="#161616" points="311.6 349.6 307.3 355.5 292.7 347.9"></polygon>
+        </g>
+        <polygon id="Rectangle" fill="#000000" points="42.918335 218.275589 369.811849 212.139408 380.873945 280.352792 12.6218 290.768931"></polygon>
+    </g>
+</svg>

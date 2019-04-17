@@ -1,0 +1,183 @@
+// Copyright 2018 Superblocks AB
+//
+// This file is part of Superblocks Lab.
+//
+// Superblocks Lab is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation version 3 of the License.
+//
+// Superblocks Lab is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
+
+@import '../../style/index';
+
+.container {
+    display: flex;
+    align-items: center;
+    color: white;
+    margin-left: 4px;
+    border: 1px solid #595959;
+    border-radius: 4px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    .selector {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        padding: 0px 10px;
+        .dropdownIcon {
+            margin-left: 14px;
+        }
+    }
+    .actionWrapper {
+        transition: background .2s;
+        height: 100%;
+        &:hover {
+            background: @action-color-hover;
+            cursor: pointer;
+        }
+        &:first-of-type {
+            border-right: 1px solid #595959;
+        }
+    }
+    .account {
+        .accountContainer {
+            display: flex;
+            max-width: 295px;
+        }
+    }
+    .accountBalance {
+        white-space: nowrap;
+        font-size: 0.75em;
+        color: #929292;
+        margin-left: 38px;
+    }
+    .nameContainer {
+        padding-left: 10px;
+        max-width: 400px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+    .capitalize {
+        &:first-letter{
+            text-transform: capitalize
+        }
+    }
+    .networks {
+        position: fixed;
+        margin-top: 9px;
+        background-color: #2a2a2a;
+        width: 320px;
+        max-width: 100%;
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .50);
+        padding: 20px 0 20px 0;
+        z-index: 2;
+        .title {
+            font-weight: 600;
+            margin: 0 0 20px 20px;
+        }
+        .networkLink {
+            display: block;
+            color: #A5A5A5;
+            padding: 0px 100px 0px 20px;
+            padding-left: 20px;
+            line-height: 40px;
+            border-left: 2px solid;
+            border-color: transparent;
+            margin: 0;
+            &:hover {
+                background-color: rgba(128, 46, 255, 0.10);
+                cursor: pointer;
+                color: #fff;
+                border-color: #7237CF;
+            }
+        }
+        .networkLinkChosen {
+            background-color: rgba(128, 46, 255, 0.32);
+            color: #fff;
+            border-color: #8641F2;
+        }
+    }
+    .accounts {
+        position: fixed;
+        margin-top: 9px;
+        background-color: #2a2a2a;
+        width: 346px;
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .50);
+        padding: 20px 0 20px 0;
+        z-index: 2;
+        .title {
+            font-weight: 600;
+            margin: 0 0 20px 20px;
+        }
+        .accountLink {
+            display: flex;
+            color: #A5A5A5;
+            padding-left: 20px;
+            padding-right: 12px;
+            line-height: 40px;
+            border-left: 2px solid;
+            border-color: transparent;
+            margin: 0;
+            .accountName {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 99%;
+            }
+            &:hover {
+                background-color: rgba(128, 46, 255, 0.10);
+                cursor: pointer;
+                color: #fff;
+                border-color: #7237CF;
+            }
+            .actionsContainer {
+                display: flex;
+                margin-left: auto;
+                button {
+                    color: #c7c7c7;
+                    font-size: 0.8em;
+                    &:hover {
+                        color: #fff;
+                    }
+                }
+            }
+            .nameContainer {
+                line-height: 1.8em;
+                margin: 2px 0;
+                .address {
+                    font-size: 0.75em;
+                    color: #929292;
+                    margin: 0;
+                    line-height: 1.8em;
+                }
+            }
+
+        }
+        .accountLinkChosen {
+            background-color: rgba(128, 46, 255, 0.32);
+            color: #fff;
+            border-color: #8641F2;
+        }
+        .newAccount {
+            margin-top: 8px;
+            padding: 10px 12px;
+            color: #fff;
+            display: flex;
+            &:hover {
+                background-color: rgba(128, 46, 255, 0.10);
+                cursor: pointer;
+                color: #fff;
+                border-color: #7237CF;
+            }
+        }
+    }
+    .show {
+        visibility: visible;
+        opacity: 1;
+    }
+}

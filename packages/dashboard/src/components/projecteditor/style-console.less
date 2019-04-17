@@ -1,0 +1,113 @@
+// Copyright 2018 Superblocks AB
+//
+// This file is part of Superblocks Lab.
+//
+// Superblocks Lab is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation version 3 of the License.
+//
+// Superblocks Lab is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
+
+.console {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    font-size: 1.1em;
+    .btn2 {
+        float: right;
+    }
+    .title {
+        display: block;
+        border-top-right-radius: 5px;
+        border-top-left-radius: 5px;
+        border-bottom: 1px solid #262e33;
+        text-align: center;
+        font-size: 1.7em;
+        height: 48px;
+        background-color: #fff;
+        color: #333;
+    }
+    .heading {
+        display: block;
+        text-align: left;
+        font-size: 0.9em;
+        font-weight: bold;
+        height: 48px;
+        background-color: #fff;
+        color: #10ae3d;
+        .commands {
+            display: inline-block;
+            overflow-x: auto;
+            width: 848px;
+            height: 48px;
+            margin-left: 10px;
+        }
+        .run {
+            display: inline-block;
+            vertical-align: top;
+            text-align: right;
+            width: 160px;
+            margin-top: 8px;
+        }
+    }
+    .status {
+        display: block;
+        height: 1px;
+        background-color: #000;
+        div {
+            font-size: 1.0em;
+            margin-top: 3px;
+            margin-right: 20px;
+            float: right;
+        }
+    }
+    .terminal {
+        text-align: left;
+        height: 100%;
+        width: 100%;
+        background-color: #100c0d;
+        overflow-y: scroll;
+        padding: 10px;
+        .waiting {
+            color: #fff;
+            font-size: 2.3em;
+            text-align: center;
+            display: block;
+            margin-top: 150px;
+        }
+        .loading {
+            color: #fff;
+            display: block;
+            padding-top: 30px;
+            font-size: 2.3em;
+            text-align: center;
+            height: 550px;
+            overflow: hidden;
+        }
+    }
+    .std1 {
+        color: #41c94a;
+    }
+    .std2 {
+        color: #cf0002;
+    }
+    .std3 {
+        color: #fab563;
+    }
+}
+
+.externalProviderWarning {
+    background-color: #700000;
+    &>h2 {
+        color: #fef7ff;
+    }
+    &>div {
+        color: #fef7ff;
+    }
+}

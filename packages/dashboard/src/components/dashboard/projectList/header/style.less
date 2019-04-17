@@ -1,0 +1,116 @@
+// Copyright 2019 Superblocks AB
+//
+// This file is part of Superblocks Lab.
+//
+// Superblocks Lab is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation version 3 of the License.
+//
+// Superblocks Lab is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
+
+.container {
+    display: flex;
+    margin: 40px 50px 0px 50px;
+
+    .titleContainer {
+        font-size: 16px;
+
+        .numOfProjects {
+            border-radius: 20px;
+            background-color: #E1E4E8;
+            font-size: 12px;
+            color: #5C5C5C;
+            margin-left: 5px;
+            display: inline-block;
+            padding: 2px 5px;
+            font-weight: 600;
+            line-height: 1;
+            border-radius: 20px;
+        }
+    }
+
+    .sortContainer {
+        float: right;
+        margin-left: auto;
+        position: relative;
+        z-index: 11;
+    }
+}
+
+.orderButton {
+    opacity: .6;
+    color: white;
+    margin-left: 8px;
+    display: flex;
+    align-items: center;
+    transition: opacity .15s, transform .25s;
+    transform: rotate(0deg) translateY(0px);
+
+    &.orderAsc {
+        transform: rotate(0deg) translateY(0px);
+
+        &:hover {
+            transform: rotate(0deg) translateY(-3px);
+        }
+    }
+
+    &.orderDesc {
+        transform: rotate(180deg) translateY(0px);
+
+        &:hover {
+            transform: rotate(180deg) translateY(3px);
+        }
+    }
+
+    &:hover {
+        opacity: 1;
+        cursor: pointer;
+    }
+}
+
+.sortContainer {
+    position: relative;
+    display: flex;
+
+    .desc {
+        opacity: .6;
+        padding-right: 6px;
+    }
+
+    .orderBy {
+        opacity: .8;
+        transition: opacity .15s;
+
+        &:hover {
+            cursor: pointer;
+            opacity: 1;
+        }
+    }
+}
+
+.menuDialog {
+    display: block;
+    position: absolute;
+    left: -40px;
+    top: 30px;
+    background-color: #141414;
+    min-width: 200px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 2;
+    color: #c7c7c7;
+    transition: visibility 0s, opacity 0.2s ease;
+
+    &>div:first-of-type {
+        margin-top: 4px;
+    }
+
+    &>div:last-of-type {
+        margin-bottom: 4px;
+    }
+}

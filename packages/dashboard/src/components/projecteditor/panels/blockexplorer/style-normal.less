@@ -1,0 +1,133 @@
+.address {
+    word-wrap: break-word;
+}
+
+.status {
+    width: 20px;
+    display: block;
+}
+
+.fadein {
+    animation: fadein 0.5s;
+}
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+.fadeout {
+    animation: fadeout 2s;
+}
+
+@keyframes fadeout {
+    from { opacity: 1; }
+    to   { opacity: 0; }
+}
+
+.txbox {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 30px;
+    max-width: 800px;
+    color: #fff;
+    padding: 6px 0px;
+    .header {
+        position: relative;
+        display: block;
+        width: 100%;
+        background-color: #2F2F2F;
+        .title {
+            padding: 9px;
+            text-align: left;
+            display: block;
+            font-weight: 600;
+            color: #fff;
+        }
+        .status {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 20px;
+            height: 100%;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            &.failure {
+                background-color: red;
+            }
+            &.success {
+                background-color: green;
+            }
+            &.pending {
+                background-color: grey;
+                .running {
+                    transform-origin: center center;
+                    animation-name: spin;
+                    animation-duration: 1000ms;
+                    animation-iteration-count: infinite;
+                    animation-timing-function: linear;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    svg {
+                        width: 10px;
+                    }
+                }
+            }
+        }
+    }
+    .infoContainer {
+        padding: 10px 0;
+        background-color: #202020;
+        .left {
+            width: 95%;
+            max-width: 95%;
+            float: left;
+            height: 100%;
+            margin-left: 10px;
+        }
+        .right {
+            width: 95%;
+            max-width: 95%;
+            float: left;
+            height: 100%;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+        .row {
+            width: 100%;
+            margin: 2px 0;
+        }
+        .bottom {
+            clear: both;
+            width: 100%;
+            padding-top: 10px;
+            &:after {
+                content: " ";
+                display: block;
+                clear: both;
+            }
+            button {
+                padding: 0 10px;
+            }
+            .bottomContent {
+                padding-top: 10px;
+            }
+        }
+    }
+}
+
+@-moz-keyframes spin {
+    from { -moz-transform: rotate(0deg); }
+    to { -moz-transform: rotate(360deg); }
+}
+@-webkit-keyframes spin {
+    from { -webkit-transform: rotate(0deg); }
+    to { -webkit-transform: rotate(360deg); }
+}
+@keyframes spin {
+    from {transform:rotate(0deg);}
+    to {transform:rotate(360deg);}
+}

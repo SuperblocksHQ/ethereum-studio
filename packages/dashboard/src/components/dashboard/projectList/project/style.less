@@ -1,0 +1,112 @@
+// Copyright 2019 Superblocks AB
+//
+// This file is part of Superblocks Lab.
+//
+// Superblocks Lab is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation version 3 of the License.
+//
+// Superblocks Lab is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
+
+.container {
+    position: relative;
+    margin-top: 30px;
+    padding-bottom: 27px;
+    width: 50%;
+    max-width: 400px;
+    word-break: break-word;
+    box-sizing: border-box;
+    padding: 0px 15px;
+
+    @media only screen and (max-width: 920px) {
+        width: 100%;
+    }
+
+    .innerWrapper {
+        height: 100%;
+        display: inline-block;
+        padding: 30px 60px 15px 30px;
+        background: #252525;
+        box-shadow: 0 4px 8px rgba(0,0,0,.08);
+        width: 100%;
+        transition: box-shadow .25s, transform .15s, border .3s, background .15s;
+        border: 1px solid transparent;
+        word-wrap: break-word;
+
+        &:hover {
+            transform: scale(1.001) translateY(-3px) translateZ(0);
+            box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+            backface-visibility: hidden;
+            -webkit-font-smoothing: subpixel-antialiased;
+
+            & + .projectButtonWrapper {
+                transform: translate(0px, -51%) translateZ(0);
+            }
+        }
+    }
+
+    .projectButtonWrapper {
+        position: absolute;
+        z-index: 10;
+        top: 50%;
+        right: 15px;
+        transform: translateY(-50%);
+        transition: transform .15s, border .3s, background .15s;
+        height: 100%;
+        display: flex;
+        align-items: center;
+    }
+
+    .menuDialog {
+        position: absolute;
+        right: 45px;
+        left: auto;
+    }
+
+    .menuWrapper {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        padding: 0px 20px;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0px;
+
+        .projectButton {
+            transition: opacity .15s;
+        }
+
+        &:hover {
+            cursor: pointer;
+
+            .projectButtonIcon {
+                opacity: .6;
+            }
+        }
+    }
+
+    .name {
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    .description {
+        margin-top: 13px;
+        margin-bottom: 25px;
+    }
+
+    .timestamp {
+        opacity: 0.6;
+    }
+
+    .infoContainer {
+        margin-top: 13px;
+    }
+}

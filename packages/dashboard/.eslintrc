@@ -1,0 +1,8 @@
+{
+    "globals": {
+        "web3": true,
+        "Web3": true,
+        "process": true,
+        "module": true
+    }
+}
