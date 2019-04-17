@@ -24,11 +24,19 @@
     .left {
         margin-right: 25px;
         flex-grow: 2;
+
+        p {
+            color: #c0c0c0;
+        }
     }
 
     .right {
         margin-left: 25px;
         flex-grow: 1;
+
+        p {
+            display: flex;
+        }
     }
 
     .searchInput {
@@ -38,7 +46,6 @@
             position: absolute;
             left: 10px;
             top: 11px;
-            opacity: .3;
         }
 
         input {
@@ -62,7 +69,6 @@
     }
 
     p {
-        color: #c0c0c0;
         margin-bottom: 15px;
     }
 
@@ -96,6 +102,8 @@
 
             img {
                 max-width: 24px;
+                min-width: 24px;
+                min-height: 24px;
                 height: auto;
                 margin-right: 15px;
             }
@@ -112,6 +120,13 @@
 
     .organizationsList {
         box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+        overflow-y: auto;
+        max-height: 0px;
+        transition: max-height .5s;
+
+        &.expanded {
+            max-height: 294px;
+        }
 
         .singleOrganization {
             display: flex;
@@ -134,6 +149,17 @@
                 max-width: 24px;
                 margin-right: 15px;
             }
+        }
+    }
+
+    .ownersDropdown {
+        margin-left: 5px;
+        transition: opacity .15s, transform .15s;
+
+        &:hover {
+            cursor: pointer;
+            opacity: .6;
+            transform: translateY(2px);
         }
     }
 }

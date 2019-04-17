@@ -20,7 +20,7 @@ import classNames from 'classnames';
 import OnlyIf from '../../onlyIf';
 import { GenericLoading } from '../../common';
 import { IGithubRepository, IGithubRepositoryOwner } from '../../../models';
-import { IconFilter } from '../../icons';
+import { IconFilter, IconChevronDown } from '../../icons';
 import PrimaryButton from '../../common/buttons/primaryButton';
 
 interface IProps {
@@ -34,6 +34,8 @@ interface IState {
     filteredRepos: IGithubRepository[];
     searchFilter: string;
     ownerFilter: number;
+    isExpandedOwners: boolean;
+    timer: number;
 }
 
 export default class GithubRepoList extends Component<IProps, IState> {
@@ -41,11 +43,18 @@ export default class GithubRepoList extends Component<IProps, IState> {
     state = {
         filteredRepos: this.props.reposList,
         searchFilter: '',
-        ownerFilter: -1
+        ownerFilter: -1,
+        isExpandedOwners: true,
+        timer: 0
     };
+
+    componentWillUnmount() {
+        clearInterval(this.state.timer);
+    }
 
     componentDidMount() {
         this.props.getUserRepos();
+        this.state.timer = window.setInterval(() => this.props.getUserRepos(), 5000);
     }
 
     onSearchInputChange(e: any) {
@@ -67,6 +76,12 @@ export default class GithubRepoList extends Component<IProps, IState> {
         });
     }
 
+    toggleOwnersDropdown = () => {
+        this.setState({
+            isExpandedOwners: !this.state.isExpandedOwners
+        });
+    }
+
     removeDuplicatesByProperty(myArr: any[], prop: string) {
         return myArr.filter((obj: any, pos: number, arr: any[]) => {
             return arr.map((mapObj: any) => mapObj[prop]).indexOf(obj[prop]) === pos;
@@ -80,7 +95,7 @@ export default class GithubRepoList extends Component<IProps, IState> {
 
     render() {
         const { customClassName, reposList, isRepositoriesLoading } = this.props;
-        const { searchFilter, ownerFilter } = this.state;
+        const { searchFilter, ownerFilter, isExpandedOwners } = this.state;
         const owners = this.getOwners();
 
         const filteredRepos = reposList
@@ -96,7 +111,7 @@ export default class GithubRepoList extends Component<IProps, IState> {
                         <input type='text' placeholder='Filter projects...' disabled={isRepositoriesLoading} value={searchFilter} onChange={this.onSearchInputChange.bind(this)} />
                     </div>
 
-                    <p>If you don't see your project listed here, make sure to <a href='#'>grant us access</a></p>
+                    <p>If you don't see your project listed here, make sure to <a href='https://github.com/apps/superblocks-devops' target='_blank' rel='noreferrer noopener'>grant us access</a></p>
 
                     <div className={style.repoList}>
                         { filteredRepos.map((repo: IGithubRepository, index: number) =>
@@ -123,14 +138,17 @@ export default class GithubRepoList extends Component<IProps, IState> {
                 </div>
                 <div className={style.right}>
                     <OnlyIf test={owners.length}>
-                        <p>All Github organizations</p>
-                        <div className={style.organizationsList}>
+                        <p>
+                            All Github organizations
+                            <IconChevronDown className={style.ownersDropdown} onClick={() => this.toggleOwnersDropdown()} />
+                        </p>
+                        <div className={classNames([style.organizationsList, isExpandedOwners ? style.expanded : null])}>
                             { owners.map((owner: IGithubRepositoryOwner, index: number) =>
                                 <div onClick={() => this.onFilterOwnerChange(owner.id)}
                                     className={classNames([style.singleOrganization, owner.id === ownerFilter ? style.active : null])}
                                     key={index}
                                 >
-                                    <img src={`${owner.avatarUrl}&s=48`} alt={owner.login} />
+                                    <img src={`${owner.avatarUrl}&s=48`}/>
                                     <div className={style.orgTitle}>{owner.login}</div>
                                 </div>
                             )}
