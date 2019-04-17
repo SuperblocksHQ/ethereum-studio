@@ -11,15 +11,8 @@
     "test:watch": "npm test -- --watch",
     "format": "prettier --trailing-comma es5 --single-quote --write 'src/*/*.js' 'src/*/!(node_modules)/**/*.js' '!src/services/solc/**/*.js' '!src/services/evm/**/*.js' webpack.config.js",
     "lint-javascript": "exec eslint --config ./config/eslint/eslint.json --ext \".js\" ./src",
-    "lint": "yarn run lint-javascript",
-    "postinstall": "node scripts/postinstall.js"
+    "lint": "yarn run lint-javascript"
   },
-  "eslintIgnore": [
-    "ethereumjs-tx-*.js",
-    "src/services/evm/dist/*",
-    "src/services/solc/dist/*",
-    "src/components/superprovider/dist/*"
-  ],
   "devDependencies": {
     "@babel/core": "7.1.0",
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
