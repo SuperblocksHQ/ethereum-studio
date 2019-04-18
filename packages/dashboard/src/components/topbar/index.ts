@@ -22,7 +22,6 @@ import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
 
 const mapStateToProps = (state: any) => ({
-    isAuthenticated: authSelectors.getIsAuthenticated(state),
     userProfile: userSelectors.getUserProfile(state)
 });
 

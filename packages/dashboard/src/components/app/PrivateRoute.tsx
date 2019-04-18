@@ -1,4 +1,4 @@
-// Copyright 2019 Superblocks AB
+// Copyright 2018 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -15,25 +15,18 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from 'react';
-import style from './style.less';
-import classNames from 'classnames';
-import { IconClose } from '../../../icons';
+import { Route, Redirect } from 'react-router-dom';
 
-interface IProps {
-    title: string;
-    onCloseClick: () => void;
-    className?: string;
-}
+const PrivateRoute = ({ render, isAuthenticated, ...rest }: any) => (
+    <Route {...rest} render={(props) => (
+      isAuthenticated === true
+        ? render(props)
+        : <Redirect to={{
+                pathname: '/login',
+                state: { from: props.location }
+            }}
+          />
+    )} />
+  );
 
-export function ModalHeader(props: IProps)  {
-    return (
-        <div className={style.header}>
-            <div className={style.title}>{props.title}</div>
-            <button className={classNames([style.closeIcon, 'btnNoBg'])} onClick={props.onCloseClick}>
-                <IconClose className={style.icon}/>
-            </button>
-        </div>
-    );
-}
-
-export default ModalHeader;
+export default PrivateRoute;

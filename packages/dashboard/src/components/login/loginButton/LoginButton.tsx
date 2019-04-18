@@ -15,39 +15,35 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { Component } from 'react';
+import classNames from 'classnames';
 import style from './style.less';
-import { HelpAction } from '../common';
-import LoggedInButton from './../login/LoggedInButton';
-import { IUser } from './../../models/user.model';
-import { Link } from 'react-router-dom';
+import LoggedInButton from '../LoggedInButton';
+import {IUser} from '../../../models';
 
 interface IProps {
     logout: () => void;
+
     userProfile: IUser;
 }
 
-export default class Topbar extends Component<IProps> {
+export default class LoginButton extends Component<IProps> {
+
+    logout = () => {
+        if (!confirm('Are you sure you want to logout?')) { return; }
+
+        this.props.logout();
+    }
 
     render() {
-        const { userProfile, logout } = this.props;
+        const { userProfile } = this.props;
 
         return(
-            <div className={style.topbar}>
-                <Link to='/' className={style.logo}>
-                    <img
-                        src='/static/img/img-logo-dashboard.svg'
-                        alt='Superblocks logo'
-                    />
-                </Link>
-
-                <div className={style.actionsRight}>
-                    <HelpAction />
-                    <LoggedInButton
-                        logout={logout}
-                        userProfile={userProfile}
-                    />
-                </div>
-            </div>
+            <React.Fragment>
+                <LoggedInButton
+                    logout={this.logout}
+                    userProfile={userProfile}
+                />
+            </React.Fragment>
         );
     }
 }

@@ -1,4 +1,4 @@
-// Copyright 2019 Superblocks AB
+// Copyright 2018 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -15,21 +15,26 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { connect } from 'react-redux';
-import { ModalContainer } from './ModalContainer';
-import { modalActions } from './../../../../actions/modal.actions';
-import { AnyAction, Dispatch } from 'redux';
+import { Dispatch } from 'react';
+import { AnyAction } from 'redux';
+import { appActions } from '../../actions';
+import { appSelectors, authSelectors } from '../../selectors';
+import App from './App';
 
 const mapStateToProps = (state: any) => ({
-    modalType: state.modal.modalType,
-    modalProps: state.modal.modalProps
+    appVersion: appSelectors.getAppVersion(state),
+    isAuthenticated: authSelectors.getIsAuthenticated(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
     return {
-        hideModal: () => {
-            dispatch(modalActions.hideModal());
+        notifyAppStart: () => {
+            dispatch(appActions.notifyAppStart());
         }
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ModalContainer);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(App);

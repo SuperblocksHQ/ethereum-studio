@@ -14,31 +14,23 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-@import '../../../../style/index';
+import { connect } from 'react-redux';
+import { authActions, modalActions } from '../../../actions';
+import { authSelectors, userSelectors } from '../../../selectors';
+import LoginButton from './LoginButton';
+import { Dispatch } from 'react';
+import { AnyAction } from 'redux';
 
-.header {
-    padding: 18px 20px;
-    display: flex;
-    border-bottom: 1px solid @modal-separator-color;
+const mapStateToProps = (state: any) => ({
+    userProfile: userSelectors.getUserProfile(state)
+});
 
-    .title {
-        font-weight: 600;
-        text-align: left;
-        font-size: 1.3em;
-    }
-
-    .closeIcon {
-        margin-left: auto;
-        padding-right: 0;
-        color: #c7c7c7;
-
-        &:hover {
-            color: #fff;
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
+    return {
+        logout: () => {
+            dispatch(authActions.logout());
         }
+    };
+};
 
-        .icon {
-            height: 20px;
-            width: 20px;
-        }
-    }
-}
+export default connect(mapStateToProps, mapDispatchToProps)(LoginButton);

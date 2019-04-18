@@ -90,10 +90,6 @@ export const IconSuperblocks = ({ ...props }) => (
     <IconImg src={'/static/img/img-logo.svg'} {...props} />
 );
 
-export const PictureVargavintern = ({ ...props }) => (
-    <IconImg src={'/static/img/vargavintern.png'} {...props} />
-);
-
 export const IconAngleRight = ({ ...props }) => (
     <IconImg src={'/static/img/icon-arrow-right.svg'} {...props} />
 );

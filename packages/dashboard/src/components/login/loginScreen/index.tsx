@@ -1,4 +1,4 @@
-// Copyright 2018 Superblocks AB
+// Copyright 2019 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -15,23 +15,23 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { connect } from 'react-redux';
-import { appActions } from '../../actions';
-import { appSelectors } from '../../selectors';
-import App from './App';
+import { Dispatch } from 'react';
+import { AnyAction } from 'redux';
+import { authActions } from '../../../actions';
+import LoginScreen from './LoginScreen';
+import { authSelectors } from '../../../selectors';
 
-const mapStateToProps = state => ({
-    appVersion: appSelectors.getAppVersion(state),
+
+const mapStateToProps = (state: any) => ({
+    isAuthenticated: authSelectors.getIsAuthenticated(state)
 });
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
     return {
-        notifyAppStart: () => {
-            dispatch(appActions.notifyAppStart());
+        githubLogin: () => {
+            dispatch(authActions.githubLogin());
         }
     };
 };
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen);

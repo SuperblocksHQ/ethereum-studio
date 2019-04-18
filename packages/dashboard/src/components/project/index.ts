@@ -22,7 +22,6 @@ import { authSelectors } from '../../selectors';
 import { authActions, modalActions } from '../../actions';
 
 const mapStateToProps = (state: any) => ({
-    isAuthenticated: authSelectors.getIsAuthenticated(state),
     isLoginInProgress: authSelectors.getIsLoginInProgress(state)
 });
 

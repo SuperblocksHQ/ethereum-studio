@@ -15,34 +15,43 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import ToastContainer from "../toasts/toastcontainer";
-import ModalContainer from '../common/modal/modalContainer';
+import ToastContainer from '../toasts/toastcontainer';
 import Loadable from 'react-loadable';
-import { EmptyLoading, Loading } from "../common";
+import { EmptyLoading } from '../common';
+import PrivateRoute from './PrivateRoute';
+
+const LoginScreen = Loadable({
+    loader: () => import(/* webpackChunkName: "LoginScreen" */'../login/loginScreen'),
+    loading: EmptyLoading,
+});
 
 const Dashboard = Loadable({
-    loader: () => import(/* webpackChunkName: "Dashboard" */"../dashboard"),
+    loader: () => import(/* webpackChunkName: "Dashboard" */'../dashboard'),
     loading: EmptyLoading,
 });
 
 const ProjectDashboard = Loadable({
-    loader: () => import(/* webpackChunkName: "ProjectDashboard" */"../project/ProjectDashboard"),
+    loader: () => import(/* webpackChunkName: "ProjectDashboard" */'../project/ProjectDashboard'),
     loading: EmptyLoading,
 });
 
 const ProjectSettings = Loadable({
-    loader: () => import(/* webpackChunkName: "ProjectSettings" */"../project/settings/ProjectSettings"),
+    loader: () => import(/* webpackChunkName: "ProjectSettings" */'../project/settings/ProjectSettings'),
     loading: EmptyLoading,
 });
 
 const ProjectBuilds = Loadable({
-    loader: () => import(/* webpackChunkName: "ProjectBuild" */"../project/builds/ProjectBuilds"),
+    loader: () => import(/* webpackChunkName: "ProjectBuild" */'../project/builds/ProjectBuilds'),
     loading: EmptyLoading,
 });
 
-export default class App extends Component {
+interface IProps {
+    notifyAppStart: () => void;
+    isAuthenticated: boolean;
+}
+
+export default class App extends Component<IProps> {
 
     componentDidMount() {
         const { notifyAppStart }  = this.props;
@@ -53,35 +62,32 @@ export default class App extends Component {
     }
 
     render() {
+        const { isAuthenticated } = this.props;
+
         return (
             <Router>
-                <div id="app">
-                    <div id="app_content">
-                        <div className="maincontent">
+                <div id='app'>
+                    <div id='app_content'>
+                        <div className='maincontent'>
                             <Switch>
-                                <Route path="/" exact render={(props) => <Dashboard {...props} functions={this.functions} />} />
-                                <Route path="/dashboard" exact render={(props) => <Dashboard {...props} functions={this.functions} />} />
-                                <Route exact path="/dashboard/project/:projectId" render={(props) => (
+                                <Route path='/login' exact render={(props: any) => <LoginScreen {...props} />} />
+                                <PrivateRoute path='/' exact isAuthenticated={isAuthenticated} render={(props: any) => <Dashboard {...props} />} />
+                                <PrivateRoute path='/dashboard' exact isAuthenticated={isAuthenticated} render={(props: any) => <Dashboard {...props} />} />
+                                <PrivateRoute exact path='/dashboard/project/:projectId' isAuthenticated={isAuthenticated} render={(props: any) => (
                                     <ProjectDashboard content={<ProjectBuilds />} {...props} />
                                 )} />
-                                <Route exact path="/dashboard/project/:projectId/builds" render={(props) => (
+                                <PrivateRoute exact path='/dashboard/project/:projectId/builds' isAuthenticated={isAuthenticated} render={(props: any) => (
                                     <ProjectDashboard content={<ProjectBuilds />} {...props} />
                                 )} />
-                                <Route exact path="/dashboard/project/:projectId/settings" render={(props) => (
+                                <PrivateRoute exact path='/dashboard/project/:projectId/settings' isAuthenticated={isAuthenticated} render={(props: any) => (
                                     <ProjectDashboard content={<ProjectSettings />} {...props} />
                                 )} />
                             </Switch>
                         </div>
                     </div>
                     <ToastContainer />
-                    <ModalContainer />
                 </div>
             </Router>
         );
     }
-}
-
-App.propTypes = {
-    appVersion: PropTypes.string.isRequired,
-    notifyAppStart: PropTypes.func.isRequired
 }

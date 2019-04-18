@@ -21,12 +21,9 @@ import { SideMenu, SideMenuItem, SideMenuFooter } from '../sideMenu';
 import { IconConfigure, IconDeploy } from '../icons';
 
 interface IProps {
-    isAuthenticated: boolean;
-    isLoginInProgress: boolean;
     location: any;
     match: any;
     content: JSX.Element;
-    githubLoginAction: () => void;
 }
 
 export default class ProjectDashboard extends Component<IProps> {

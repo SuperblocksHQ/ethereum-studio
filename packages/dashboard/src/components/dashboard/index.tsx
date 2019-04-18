@@ -18,12 +18,9 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
 import { authActions, modalActions } from '../../actions';
-import { authSelectors } from '../../selectors';
 import Dashboard from './Dashboard';
 
 const mapStateToProps = (state: any) => ({
-    isAuthenticated: authSelectors.getIsAuthenticated(state),
-    isLoginInProgress: authSelectors.getIsLoginInProgress(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
