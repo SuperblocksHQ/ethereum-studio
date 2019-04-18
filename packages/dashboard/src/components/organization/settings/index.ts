@@ -14,36 +14,17 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-.projectDashboard {
-    background-color: #fff;
-    font-size: 14px;
-    height: 100%;
+import { connect } from 'react-redux';
+import { Dispatch } from 'react';
+import { AnyAction } from 'redux';
+import OrganizationSettings from './OrganizationSettings';
 
-    .content {
-        height: 100%;
-        display: flex;
-        background-color: #1e1e1e;
-        color: white;
-        overflow-y: auto;
-        overflow-x: hidden;
-    }
+const mapStateToProps = (state: any) => ({
+});
 
-    .pageContent {
-        padding: 15px 35px;
-        margin: 0px;
-        width: 100%;
-        overflow-y: auto;
-    }
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
+    return {
+    };
+};
 
-    .loadingSection {
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        background: #1C2022;
-    }
-
-    h1, h2, h3, h4, h5, p {
-        margin-top: 0px;
-        margin-bottom: 10px;
-    }
-}
+export default connect(mapStateToProps, mapDispatchToProps)(OrganizationSettings);
