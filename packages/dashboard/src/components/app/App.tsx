@@ -73,14 +73,15 @@ export default class App extends Component<IProps> {
                             <Switch>
                                 <Route path='/login' exact render={(props: any) => <LoginScreen {...props} />} />
                                 <PrivateRoute path='/' exact isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => <Dashboard {...props} />} />
+                                <PrivateRoute path='/:organizationId' exact isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => <Dashboard {...props} />} />
                                 <PrivateRoute exact path='/:organizationId/:projectId' isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => (
-                                    <ProjectDashboard content={<ProjectBuilds />} {...props} />
+                                    <ProjectDashboard content={<ProjectBuilds {...props}/>} {...props} />
                                 )} />
                                 <PrivateRoute exact path='/:organizationId/:projectId/builds' isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => (
-                                    <ProjectDashboard content={<ProjectBuilds />} {...props} />
+                                    <ProjectDashboard content={<ProjectBuilds {...props}/>} {...props} />
                                 )} />
                                 <PrivateRoute exact path='/:organizationId/:projectId/settings' isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => (
-                                    <ProjectDashboard content={<ProjectSettings />} {...props} />
+                                    <ProjectDashboard content={<ProjectSettings {...props}/>} {...props} />
                                 )} />
                             </Switch>
                         </div>

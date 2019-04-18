@@ -19,14 +19,19 @@ import style from './style.less';
 import { Link } from 'react-router-dom';
 import { BreadCrumbs } from '../../common';
 
-export default class ProjectBuilds extends Component {
+interface IProps {
+    location: any;
+    match: any;
+}
+
+export default class ProjectBuilds extends Component<IProps> {
 
     render() {
         return (
             <React.Fragment>
                 <BreadCrumbs>
-                    <Link to='/dashboard'>Organization Name</Link>
-                    <Link to='./'>Project Name</Link>
+                    <Link to={`/${this.props.match.params.organizationId}`}>Organization Name</Link>
+                    <Link to={`/${this.props.match.params.organizationId}/${this.props.match.params.projectId}`}>Project Name</Link>
                     <Link to={window.location.pathname}>Build</Link>
                 </BreadCrumbs>
             </React.Fragment>

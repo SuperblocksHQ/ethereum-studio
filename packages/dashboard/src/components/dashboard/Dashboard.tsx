@@ -29,6 +29,7 @@ interface IProps {
 
 export default class Dashboard extends Component<IProps> {
 
+    // TODO - Make sure to change the hardcoded organization Ids for the real deal
     render() {
         return (
             <div className={style.dashboard}>
@@ -46,13 +47,13 @@ export default class Dashboard extends Component<IProps> {
                             <SideMenuItem
                                 icon={<IconPlusTransparent />}
                                 title='New organization'
-                                linkTo='dashboard/new-organization'
+                                linkTo='/new-organization'
                             />
                             {/* TODO: Add :organizationId to linkTo */}
                             <SideMenuItem
                                 icon={<IconConfigure width='10px' height='10px' />}
                                 title='Organization settings'
-                                linkTo='dashboard/settings'
+                                linkTo='12334/settings'
                             />
                         </SideMenuFooter>
                     </SideMenu>
