@@ -1,4 +1,4 @@
-# [Superblocks Lab](https://superblocks.com/lab)
+# [Superblocks Clients](https://superblocks.com)
 
 [![Join the community](https://img.shields.io/badge/chat-on%20discord-7289da.svg?logo=discord)](https://discord.gg/6Cgg2Dw) [![CircleCI](https://circleci.com/gh/SuperblocksHQ/superblocks-lab.svg?style=shield)](https://circleci.com/gh/SuperblocksHQ/superblocks-lab) [![Follow in Twitter](https://img.shields.io/twitter/follow/getSuperblocks.svg?style=social&logo=twitter)](https://twitter.com/intent/follow?screen_name=GetSuperblocks)
 
@@ -60,7 +60,7 @@ Run this script to fix that for you:
 Consider double-checking and updating the `CHANGELOG` to reflect the changes. Tag the new version.
 
 ## Issues
-Bug reports and suggestions can be filed at the project [Issues](https://github.com/SuperblocksHQ/superblocks-lab/issues) page.  
+Bug reports and suggestions can be filed at the project [Issues](https://github.com/SuperblocksHQ/superblocks-lab/issues) page.
 For more information about the process involved, please refer to the Wiki: [Submitting Bugs and Suggestions](https://github.com/SuperblocksHQ/superblocks-lab/wiki/Submitting-Bugs-and-Suggestions).
 
 ## Contributing

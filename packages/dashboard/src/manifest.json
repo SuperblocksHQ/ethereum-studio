@@ -1,6 +1,6 @@
 {
-  "name": "Superblocks Lab",
-  "short_name": "Lab",
+  "name": "Superblocks",
+  "short_name": "superblocks",
   "start_url": "/",
   "display": "standalone",
   "orientation": "portrait",

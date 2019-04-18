@@ -19,18 +19,6 @@ import React, { PureComponent } from 'react';
 class ErrorMessage extends PureComponent {
   static errorToMessage(error) {
     switch (error) {
-      case 'GAS_LIMIT':
-        return (
-          <div id="error.gasLimit">
-            {"The Gas Limit has to be between 1 and 7900000"}
-          </div>
-        );
-      case 'GAS_PRICE':
-        return (
-          <div id="error.gasPrice">
-            {"The Gas Price has to be between 1 and 100000000000"}
-          </div>
-        );
       case 'PROJECT_NAME':
         return (
           <div id="error.projectName">
