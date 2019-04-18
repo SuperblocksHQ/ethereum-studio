@@ -77,8 +77,6 @@ export default class ProjectList extends Component<IProps, IState> {
         const { list, organizationName, isListLoading } = this.props;
         const { orderBy, order } = this.state;
 
-        console.log(list);
-
         let orderedList = list.sort(this.dynamicSort(orderBy));
 
         if (orderBy === 'name') {

@@ -19,7 +19,6 @@ import PropTypes from 'prop-types';
 
 import PopupWindow from './PopupWindow';
 import { toQuery } from './utils';
-import githubLogin from "../../../epics/login/githubLogin.epic";
 
 class GitHubLogin extends Component {
   static propTypes = {

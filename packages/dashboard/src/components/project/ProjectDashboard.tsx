@@ -18,7 +18,6 @@ import React, { Component } from 'react';
 import Topbar from '../topbar';
 import style from './style.less';
 import { SideMenu, SideMenuItem, SideMenuFooter } from '../sideMenu';
-import { LoginModal } from '../modals';
 import { IconConfigure, IconDeploy } from '../icons';
 
 interface IProps {
@@ -33,50 +32,34 @@ interface IProps {
 export default class ProjectDashboard extends Component<IProps> {
 
     render() {
-        const { isAuthenticated, isLoginInProgress, githubLoginAction, content } = this.props;
+        const { content } = this.props;
         const { pathname } = this.props.location;
 
         return (
             <div className={style.projectDashboard}>
-                { isAuthenticated ?
-                    <React.Fragment>
-                        <Topbar />
-                        <div className={style.content}>
-                            <SideMenu>
-                                <SideMenuItem
-                                        icon={<IconDeploy />}
-                                        title='Build'
-                                        active={pathname.includes('build')}
-                                        linkTo={`/dashboard/project/${this.props.match.params.projectId}/build`}
-                                />
-                                <SideMenuFooter>
-                                    <SideMenuItem
-                                        icon={<IconConfigure />}
-                                        title='Project Settings'
-                                        active={pathname.includes('settings')}
-                                        linkTo={`/dashboard/project/${this.props.match.params.projectId}/settings`}
-                                    />
-                                </SideMenuFooter>
-
-                            </SideMenu>
-                            <div className={style.pageContent}>
-                                {content}
-                            </div>
-                        </div>
-                    </React.Fragment>
-                :
-                    <div className={style.loginSection}>
-                        { isLoginInProgress ?
-                            <React.Fragment />
-                            :
-                            <LoginModal
-                                customClassName={style.loginModal}
-                                githubLogin={githubLoginAction}
-                                hideCloseButton={true}
+                <Topbar />
+                <div className={style.content}>
+                    <SideMenu>
+                        <SideMenuItem
+                                icon={<IconDeploy />}
+                                title='Build'
+                                active={pathname.includes('build')}
+                                linkTo={`/dashboard/project/${this.props.match.params.projectId}/build`}
+                        />
+                        <SideMenuFooter>
+                            <SideMenuItem
+                                icon={<IconConfigure />}
+                                title='Project Settings'
+                                active={pathname.includes('settings')}
+                                linkTo={`/dashboard/project/${this.props.match.params.projectId}/settings`}
                             />
-                        }
+                        </SideMenuFooter>
+
+                    </SideMenu>
+                    <div className={style.pageContent}>
+                        {content}
                     </div>
-                }
+                </div>
             </div>
         );
     }

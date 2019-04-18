@@ -15,46 +15,27 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from 'react';
-import PropTypes from 'prop-types';
-import classNames from "classnames";
-import style from "./style.less";
+import classNames from 'classnames';
+import style from './style.less';
 import OnlyIf from '../../onlyIf';
-import { authService, userService } from '../../../services';
-import {IconClose, IconSuperblocks, PictureVargavintern} from "../../icons";
-import GithubLoginButton from "../../common/buttons/githubLogin";
+import {IconClose, IconSuperblocks, PictureVargavintern} from '../../icons';
+import GithubLoginButton from '../../common/buttons/githubLogin';
 
-export const LoginModal = (props) => {
+interface IProps {
+    customClassName: string;
+    loginSuccess: () => void;
+    hideModal: () => void;
+    githubLogin: () => void;
+    hideCloseButton: boolean;
+}
 
-    function onCloseClickHandle () {
+export const LoginModal = (props: IProps) => {
+
+    function onCloseClickHandle() {
         props.hideModal();
     }
 
-    function onSuccess(response) {
-        console.log("Success");
-        console.log(response);
-
-        props.loginSuccess();
-        onCloseClickHandle();
-
-        authService.githubAuth(response);
-    }
-
-    async function queryUserEndpoint() {
-        const user = await userService.getUser();
-        console.log(user);
-    }
-
-    function random() {
-        props.loginSuccess();
-        onCloseClickHandle();
-    }
-
-    function onFailure (e) {
-        console.log("Failure");
-        console.log(e);
-    }
-
-    function githubLogin() {
+    function onGithubLoginButtonClick() {
         props.githubLogin();
     }
 
@@ -78,7 +59,7 @@ export const LoginModal = (props) => {
                 </div>
                 <div className={style.footer}>
                     <div className={style.buttonsContainer}>
-                        <GithubLoginButton githubLogin={githubLogin}/>
+                        <GithubLoginButton githubLogin={onGithubLoginButtonClick}/>
                     </div>
                 </div>
             </div>
@@ -88,10 +69,3 @@ export const LoginModal = (props) => {
 };
 
 export default LoginModal;
-
-LoginModal.propTypes = {
-    hideModal: PropTypes.func,
-    githubLogin: PropTypes.func.isRequired,
-    hideCloseButton: PropTypes.bool,
-    customClassName: PropTypes.string
-};

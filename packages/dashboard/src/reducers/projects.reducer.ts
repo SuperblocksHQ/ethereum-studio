@@ -33,7 +33,6 @@ export default function projectsReducer(state = initialState, action: AnyAction)
             };
         }
         case projectsActions.GET_PROJECT_LIST_SUCCESS: {
-            console.log(...action.data.projectList);
             return {
                 ...state,
                 projectList: action.data.projectList,
