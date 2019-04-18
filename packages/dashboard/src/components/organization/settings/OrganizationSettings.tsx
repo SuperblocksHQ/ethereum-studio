@@ -25,13 +25,13 @@ export default class OrganizationSettings extends Component<IProps> {
                             icon={<IconDeploy />}
                             title='Details'
                             active={pathname.includes('details')}
-                            linkTo={`/${this.props.match.params.organizationId}/${this.props.match.params.projectId}/build`}
+                            linkTo={`/${this.props.match.params.organizationId}/details`}
                         />
                         <SideMenuItem
                             icon={<IconDeploy />}
                             title='People'
                             active={pathname.includes('people')}
-                            linkTo={`/${this.props.match.params.organizationId}/${this.props.match.params.projectId}/build`}
+                            linkTo={`/${this.props.match.params.organizationId}/people`}
                         />
                         <SideMenuFooter>
                             <SideMenuItem
