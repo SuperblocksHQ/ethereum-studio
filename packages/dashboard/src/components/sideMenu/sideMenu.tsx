@@ -16,20 +16,36 @@
 
 import React, { Component } from 'react';
 import style from './style.less';
-import { BreadCrumbs } from '../../../common';
-import { Link } from 'react-router-dom';
+import classNames from 'classnames';
+import { IconDoubleArrowLeft } from '../icons';
 
-export default class ProjectSettings extends Component {
+interface IState {
+    collapsed: boolean;
+}
+
+export class SideMenu extends Component<{}, IState> {
+    state = {
+        collapsed: false
+    };
+
+    toggleExpanded = () => {
+        this.setState({
+            collapsed: !this.state.collapsed
+        });
+    }
 
     render() {
+        const { collapsed } = this.state;
+
         return (
-            <React.Fragment>
-                <BreadCrumbs>
-                    <Link to='/dashboard'>Organization Name</Link>
-                    <Link to='./'>Project Name</Link>
-                    <Link to={window.location.pathname}>Settings</Link>
-                </BreadCrumbs>
-            </React.Fragment>
+            <div className={classNames([style.sideMenuContainer, collapsed ? style.collapsed : null])}>
+                <div className={style.sideMenuInner}>
+                    {this.props.children}
+                </div>
+                <div className={classNames([style.collapseSidebar, style.item])} onClick={this.toggleExpanded}>
+                    <IconDoubleArrowLeft />
+                </div>
+            </div>
         );
     }
 }

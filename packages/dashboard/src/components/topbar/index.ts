@@ -14,22 +14,24 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { Component } from 'react';
-import style from './style.less';
-import { Link } from 'react-router-dom';
-import { BreadCrumbs } from '../../../common';
+import { connect } from 'react-redux';
+import { authActions } from '../../actions';
+import { userSelectors, authSelectors } from '../../selectors';
+import Topbar from './Topbar';
+import { Dispatch } from 'react';
+import { AnyAction } from 'redux';
 
-export default class ProjectBuild extends Component {
+const mapStateToProps = (state: any) => ({
+    isAuthenticated: authSelectors.getIsAuthenticated(state),
+    userProfile: userSelectors.getUserProfile(state)
+});
 
-    render() {
-        return (
-            <React.Fragment>
-                <BreadCrumbs>
-                    <Link to='/dashboard'>Organization Name</Link>
-                    <Link to='./'>Project Name</Link>
-                    <Link to={window.location.pathname}>Build</Link>
-                </BreadCrumbs>
-            </React.Fragment>
-        );
-    }
-}
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
+    return {
+        logout: () => {
+            dispatch(authActions.logout());
+        }
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Topbar);

@@ -18,8 +18,8 @@ import React, { Component } from 'react';
 import Topbar from '../topbar';
 import style from './style.less';
 import { SideMenu, SideMenuItem, SideMenuFooter } from '../sideMenu';
-import { LoginModal } from '../../modals';
-import { IconConfigure, IconDeploy } from '../../icons';
+import { LoginModal } from '../modals';
+import { IconConfigure, IconDeploy } from '../icons';
 
 interface IProps {
     isAuthenticated: boolean;

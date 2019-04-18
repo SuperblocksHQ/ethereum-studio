@@ -16,9 +16,9 @@
 
 import React, { Component } from 'react';
 import style from './style.less';
-import { HelpAction } from '../../common';
-import LoggedInButton from './../../login/LoggedInButton';
-import { IUser } from './../../../models/user.model';
+import { HelpAction } from '../common';
+import LoggedInButton from './../login/LoggedInButton';
+import { IUser } from './../../models/user.model';
 import { Link } from 'react-router-dom';
 
 interface IProps {

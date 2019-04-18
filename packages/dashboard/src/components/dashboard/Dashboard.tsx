@@ -17,12 +17,12 @@
 import React, { Component } from 'react';
 import { IProject } from '../../models';
 import style from './style.less';
-import { SideMenu, SideMenuItem, SideMenuHeader, SideMenuFooter } from './sideMenu';
+import { SideMenu, SideMenuItem, SideMenuHeader, SideMenuFooter } from '../sideMenu';
 import { IconConfigure, IconPlusTransparent } from '../icons';
 import { LetterAvatar } from '../common';
 import { Loading } from '../common';
 import Loadable from 'react-loadable';
-import Topbar from './topbar';
+import Topbar from '../topbar';
 
 const ProjectList = Loadable({
     loader: () => import(/* webpackChunkName: "ProjectList" */'./projectList'),

@@ -15,18 +15,26 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { connect } from 'react-redux';
+import ProjectDashboard from './ProjectDashboard';
 import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
-import ProjectBuild from './ProjectBuild';
+import { authSelectors } from '../../selectors';
+import { authActions, modalActions } from '../../actions';
 
 const mapStateToProps = (state: any) => ({
-
+    isAuthenticated: authSelectors.getIsAuthenticated(state),
+    isLoginInProgress: authSelectors.getIsLoginInProgress(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
     return {
-
+        githubLoginAction: () => {
+            dispatch(authActions.githubLogin());
+        },
+        showModal: (modalType: string, modalProps: any) => {
+            dispatch(modalActions.showModal(modalType, modalProps));
+        }
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProjectBuild);
+export default connect(mapStateToProps, mapDispatchToProps)(ProjectDashboard);
