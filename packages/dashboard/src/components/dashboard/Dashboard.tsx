@@ -23,11 +23,7 @@ import { LetterAvatar } from '../common';
 import { Loading } from '../common';
 import Loadable from 'react-loadable';
 import Topbar from '../topbar';
-
-const ProjectList = Loadable({
-    loader: () => import(/* webpackChunkName: "ProjectList" */'./projectList'),
-    loading: Loading,
-});
+import ProjectList from '../organization/projectList';
 
 const LoginModal = Loadable({
     loader: () => import(/* webpackChunkName: "LoginModal" */'../modals'),
@@ -39,8 +35,6 @@ const LoginModal = Loadable({
 });
 
 interface IProps {
-    getProjectList: () => void;
-    projectList: IProject[];
     isAuthenticated: boolean;
     githubLoginAction: () => void;
     isProjectListLoading: boolean;
@@ -48,12 +42,9 @@ interface IProps {
 }
 
 export default class Dashboard extends Component<IProps> {
-    componentDidMount() {
-        this.props.getProjectList();
-    }
 
     render() {
-        const { projectList, isAuthenticated, isLoginInProgress, githubLoginAction } = this.props;
+        const { isAuthenticated, isLoginInProgress, githubLoginAction } = this.props;
 
         return (
             <div className={style.dashboard}>
@@ -84,8 +75,7 @@ export default class Dashboard extends Component<IProps> {
                                 </SideMenuFooter>
                             </SideMenu>
                             <ProjectList
-                                listName={'All Your Projects'}
-                                list={projectList}
+                                organizationName={'Superblocks'}
                             />
                         </div>
                     </React.Fragment>

@@ -15,9 +15,5 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 export const userSelectors = {
-    getProjectList: (state: any) => state.user.projectList,
     getUserProfile: (state: any) => state.user.profile,
-    isProjectListLoading: (state: any) => state.user.isProjectListLoading,
-    isProjectForking: (state: any) => state.user.isProjectForking,
-    getShowForkButton: (state: any) => state.user.showForkButton,
 };

@@ -22,7 +22,6 @@ import { IconArrowUpThin } from '../../../icons';
 
 interface IProps {
     title: string;
-    numOfProjects: number;
     onOrderByChange: (orderValue: string) => any;
     orderBy: string;
     onOrderChange: () => any;
@@ -43,12 +42,11 @@ export default class Header extends Component<IProps> {
     }
 
     render() {
-        const { title, numOfProjects, onOrderByChange, orderBy, onOrderChange, order } = this.props;
+        const { title, onOrderByChange, orderBy, onOrderChange, order } = this.props;
         return (
             <div className={style.container}>
                 <div className={style.titleContainer}>
                     <span>{title}</span>
-                    <span className={style.numOfProjects}>{numOfProjects}</span>
                 </div>
                 <div className={style.sortContainer}>
                     <span className={style.desc}>Sorted by </span>

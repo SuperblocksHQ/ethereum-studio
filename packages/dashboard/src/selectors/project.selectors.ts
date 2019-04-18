@@ -15,8 +15,10 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 export const projectSelectors = {
-    getProject: state => state.projects.project,
-    getProjectId: state => state.projects.project.id,
-    getProjectName: state => state.projects.project.name,
-    getLoadingProject: state => state.projects.loadingProject
-}
+getProjectList: (state: any) => state.projects.projectList,
+    isProjectListLoading: (state: any) => state.projects.isProjectListLoading,
+    getProject: (state: any) => state.projects.project,
+    getProjectId: (state: any) => state.projects.project.id,
+    getProjectName: (state: any) => state.projects.project.name,
+    getLoadingProject: (state: any) => state.projects.loadingProject
+};

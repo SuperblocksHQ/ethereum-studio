@@ -19,11 +19,36 @@ import { IProjectState } from '../models/state';
 import { AnyAction } from 'redux';
 
 export const initialState: IProjectState = {
+    projectList: [],
+    loadingProjectList: false,
     project: undefined,
 };
 
 export default function projectsReducer(state = initialState, action: AnyAction) {
     switch (action.type) {
+        case projectsActions.GET_PROJECT_LIST: {
+            return {
+                ...state,
+                loadingProjectList: true
+            };
+        }
+        case projectsActions.GET_PROJECT_LIST_SUCCESS: {
+            console.log(...action.data.projectList);
+            return {
+                ...state,
+                projectList: action.data.projectList,
+                loadingProjectList: false
+            };
+        }
+        case projectsActions.GET_PROJECT_LIST_FAIL: {
+            console.log('Error retrieving project list: ', action.data);
+
+            return {
+                ...state,
+                projectList: [],
+                loadingProjectList: false
+            };
+        }
         case projectsActions.LOAD_PROJECT_SUCCESS: {
             return {
                 ...state,

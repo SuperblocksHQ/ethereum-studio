@@ -21,8 +21,12 @@ import Project from './project';
 import Header from './header';
 
 interface IProps {
+    getProjectList: () => void;
+
     list: IProject[];
-    listName: string;
+
+    isListLoading: boolean;
+    organizationName: string;
 }
 
 interface IState {
@@ -36,6 +40,10 @@ export default class ProjectList extends Component<IProps, IState> {
         orderBy: 'lastModifiedAt',
         order: 'desc'
     };
+
+    componentDidMount() {
+        this.props.getProjectList();
+    }
 
     handleOrderByChange = (orderValue: string) => {
         this.setState({
@@ -66,8 +74,10 @@ export default class ProjectList extends Component<IProps, IState> {
     }
 
     render() {
-        const { list, listName } = this.props;
+        const { list, organizationName, isListLoading } = this.props;
         const { orderBy, order } = this.state;
+
+        console.log(list);
 
         let orderedList = list.sort(this.dynamicSort(orderBy));
 
@@ -75,11 +85,12 @@ export default class ProjectList extends Component<IProps, IState> {
             orderedList = orderedList.reverse();
         }
 
+        // TODO - show the loading indicator
+
         return (
             <div className={style.container}>
                 <Header
-                    title={listName}
-                    numOfProjects={list.length}
+                    title={organizationName}
                     orderBy={orderBy}
                     order={order}
                     onOrderChange={this.handleOrderChange}

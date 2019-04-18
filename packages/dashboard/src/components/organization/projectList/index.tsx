@@ -1,4 +1,4 @@
-// Copyright 2018 Superblocks AB
+// Copyright 2019 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -15,26 +15,23 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { connect } from 'react-redux';
+import { projectsActions } from '../../../actions';
+import { projectSelectors } from '../../../selectors';
+import ProjectList from './ProjectList';
 import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
-import { authActions, modalActions } from '../../actions';
-import { authSelectors } from '../../selectors';
-import Dashboard from './Dashboard';
 
 const mapStateToProps = (state: any) => ({
-    isAuthenticated: authSelectors.getIsAuthenticated(state),
-    isLoginInProgress: authSelectors.getIsLoginInProgress(state)
+    list: projectSelectors.getProjectList(state),
+    isListLoading: projectSelectors.isProjectListLoading(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
     return {
-        githubLoginAction: () => {
-            dispatch(authActions.githubLogin());
-        },
-        showModal: (modalType: string, modalProps: any) => {
-            dispatch(modalActions.showModal(modalType, modalProps));
+        getProjectList: () => {
+            dispatch(projectsActions.getProjectList());
         }
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
+export default connect(mapStateToProps, mapDispatchToProps)(ProjectList);

@@ -15,5 +15,5 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 export const toastSelectors = {
-    getToasts: state => state.toast.toasts,
-}
+    getToasts: (state: any) => state.toast.toasts,
+};
