@@ -14,26 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { settingsEpics } from './settings';
 import { projectsEpics } from './projects';
 import { appEpics } from './app';
-import { explorerEpics } from './explorer';
-import { userEpics } from './user';
-import { urlParametersEpics } from './urlParameters';
 import { loginEpics } from './login';
-import { panesEpics } from './panes';
-import { compilerEpics } from './compiler';
-import { deployerEpics } from './deployer';
 
 export const epics = [
-    ...settingsEpics,
     ...projectsEpics,
     ...appEpics,
-    ...explorerEpics,
-    ...urlParametersEpics,
-    ...userEpics,
-    ...loginEpics,
-    ...panesEpics,
-    ...compilerEpics,
-    ...deployerEpics
+    ...loginEpics
 ];

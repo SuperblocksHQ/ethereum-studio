@@ -16,19 +16,10 @@
 
 import { switchMap } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
-import { appActions, panelsActions } from '../../actions';
+import { appActions } from '../../actions';
 import { of } from 'rxjs';
-import { Panels, PanelSides } from '../../models/state';
 
 export const notifyAppStart: Epic = (action$: any, state$: any) => action$.pipe(
     ofType(appActions.APP_START),
-    switchMap(() => of(
-        appActions.notifyAppStarted(),
-        panelsActions.initPanels([
-            { panel: Panels.Explorer, side: PanelSides.Left },
-            { panel: Panels.Transactions, side: PanelSides.Right },
-            { panel: Panels.Preview, side: PanelSides.Right },
-            { panel: Panels.CompilerOutput, side: PanelSides.Bottom },
-        ])
-    ))
+    switchMap(() => of(appActions.notifyAppStarted()))
 );

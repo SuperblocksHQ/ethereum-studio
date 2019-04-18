@@ -1,9 +1,8 @@
 export const appActions = {
     APP_START: 'APP_START',
-    notifyAppStart(isEmbeddedMode: boolean) {
+    notifyAppStart() {
         return {
-            type: appActions.APP_START,
-            data: { isEmbeddedMode }
+            type: appActions.APP_START
         };
     },
     APP_STARTED: 'APP_STARTED',

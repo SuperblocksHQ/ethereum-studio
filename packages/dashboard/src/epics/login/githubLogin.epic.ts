@@ -16,7 +16,7 @@
 
 import { of, from } from 'rxjs';
 import { ofType } from 'redux-observable';
-import { authActions, userActions } from '../../actions';
+import { authActions, userActions, projectsActions } from '../../actions';
 import { withLatestFrom, switchMap, catchError, mergeMap } from 'rxjs/operators';
 import PopupWindow from '../../components/login/github/PopupWindow';
 import { AnyAction } from 'redux';
@@ -64,7 +64,7 @@ export const githubLogin = (action$: AnyAction, state$: any) => action$.pipe(
                 )),
                 switchMap((data: any) => authService.githubAuth(data)),
                 switchMap(() => userService.getUser()),
-                mergeMap((data) => [authActions.loginSuccess(data), authActions.refreshAuthStart(), userActions.getProjectList()]),
+                mergeMap((data) => [authActions.loginSuccess(data), authActions.refreshAuthStart(), projectsActions.getProjectList()]),
                 catchError((err: any) => {
                     console.log('Error while logging in via GitHub: ', err);
                     return of(authActions.loginFail(err));

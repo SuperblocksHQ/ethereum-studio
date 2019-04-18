@@ -17,15 +17,12 @@
 import React, { Component } from 'react';
 import style from './style.less';
 import { IProject } from '../../../../models';
-import { IconDots } from '../../../icons';
-import { DropdownContainer } from '../../../common/dropdown';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 
 interface IProps {
     project: IProject;
     deleteProject: (projectId: string) => void;
-    forkProject: (projectId: string, redirect: boolean) => void;
     showModal: (modalType: string, modalProps: any) => void;
     orderBy: string;
 }

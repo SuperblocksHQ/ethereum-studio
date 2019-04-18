@@ -16,17 +16,9 @@
 
 import app from './app.reducer';
 import projects from './projects.reducer';
-import settings from './settings.reducer';
-import panels from './panels.reducer';
-import panes from './panes.reducer';
-import explorer from './explorer.reducer';
 import auth from './auth.reducer';
 import toast from './toast.reducer';
 import user from './user.reducer';
-import view from './view.reducer';
-import compiler from './compiler.reducer';
-import deployer from './deployer.reducer';
-import console from './console.reducer';
 import modal from './modal.reducer';
 import { AnyAction } from 'redux';
 
@@ -42,17 +34,9 @@ const rehydrated = (state = false, action: AnyAction) => {
 export default {
     rehydrated,
     app,
-    settings,
     projects,
-    panes,
     auth,
     toast,
-    panels,
-    explorer,
     user,
-    view,
-    compiler,
-    deployer,
-    console,
     modal
 };

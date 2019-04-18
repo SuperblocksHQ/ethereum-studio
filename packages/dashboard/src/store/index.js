@@ -27,8 +27,8 @@ import { epics } from '../epics';
 const config = {
     key: 'root',
     storage,
-    version: 5,
-    whitelist: ['settings'],
+    version: 1,
+    whitelist: [''],
     migrate: createMigrate(migrations, { debug: true })
 };
 
@@ -54,11 +54,10 @@ const combineReducers = reducers => {
 
 const reducer = persistReducer(config, combineReducers(reducers));
 
-const configureMiddleware = (router) => {
+const configureMiddleware = () => {
     const rootEpic = combineEpics(...epics);
     const epicMiddleware = createEpicMiddleware({
         dependencies: {
-            router: router
         }
     });
 
@@ -72,9 +71,9 @@ const configureMiddleware = (router) => {
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const configureStore = (router) => {
+const configureStore = () => {
 
-    const { middleware, epicMiddleware, rootEpic } = configureMiddleware(router);
+    const { middleware, epicMiddleware, rootEpic } = configureMiddleware();
 
     const store = createStore(
         reducer,

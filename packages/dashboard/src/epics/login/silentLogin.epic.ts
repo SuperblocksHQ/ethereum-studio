@@ -15,8 +15,8 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { ofType } from 'redux-observable';
-import { appActions, authActions, userActions } from '../../actions';
-import { withLatestFrom, tap, catchError, map, switchMap, mergeMap } from 'rxjs/operators';
+import { appActions, authActions, userActions, projectsActions } from '../../actions';
+import { withLatestFrom, tap, catchError, switchMap, mergeMap } from 'rxjs/operators';
 import { AnyAction } from 'redux';
 import { userService, authService } from '../../services';
 import { of } from 'rxjs';
@@ -32,7 +32,7 @@ export const silentLogin = (action$: AnyAction, state$: any) => action$.pipe(
             switchMap(() => userService.getUser()
                 .pipe(
                     tap(() => console.log('Silent login success using authToken')),
-                    mergeMap((data) => [authActions.loginSuccess(data), authActions.refreshAuthStart(), userActions.getProjectList()]),
+                    mergeMap((data) => [authActions.loginSuccess(data), authActions.refreshAuthStart()]),
                     catchError((err: any) => {
                             console.log('Unable to login using authToken: ', err.message);
                             return authService.refreshAuth()
@@ -41,7 +41,7 @@ export const silentLogin = (action$: AnyAction, state$: any) => action$.pipe(
                                     switchMap(() => userService.getUser()
                                         .pipe(
                                             tap(() => console.log('Silent login success using refreshToken')),
-                                            mergeMap((data) => [authActions.loginSuccess(data), authActions.refreshAuthStart(), userActions.getProjectList()]),
+                                            mergeMap((data) => [authActions.loginSuccess(data), authActions.refreshAuthStart()]),
                                             catchError((error) => [authActions.silentLoginFail(error.message)])
                                         )
                                     )

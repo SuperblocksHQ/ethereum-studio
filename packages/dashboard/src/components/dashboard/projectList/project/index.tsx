@@ -30,9 +30,6 @@ function mapDispatchToProps(dispatch: Dispatch<AnyAction>) {
         deleteProject: (projectId: string) => {
             dispatch(projectsActions.deleteProject(projectId));
         },
-        forkProject: (projectId: string, redirect: boolean) => {
-            dispatch(projectsActions.forkProject(projectId, redirect));
-        },
         showModal: (modalType: string, modalProps: any) => {
             dispatch(modalActions.showModal(modalType, modalProps));
         }

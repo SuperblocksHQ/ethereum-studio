@@ -14,82 +14,28 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { IEnvironment } from '../models/state';
 import { IProject } from '../models';
-import {AnyAction} from 'redux';
 
 export const projectsActions = {
-    SET_ALL_ENVIRONMENTS: 'SET_ALL_ENVIRONMENTS',
-    setAllEnvironments(environments: IEnvironment[]) {
-        return {
-            type: projectsActions.SET_ALL_ENVIRONMENTS,
-            data: environments
-        };
-    },
-    SET_ENVIRONMENT: 'SET_ENVIRONMENT',
-    setEnvironment(environmentName: string) {
-       return {
-            type: projectsActions.SET_ENVIRONMENT,
-            data: environmentName
-       };
-    },
-    SELECT_ACCOUNT: 'SELECT_ACCOUNT',
-    selectAccount(name: string) {
-        return {
-            type: projectsActions.SELECT_ACCOUNT,
-            data: name
-        };
-    },
-    UPDATE_ACCOUNT_BALANCE: 'UPDATE_ACCOUNT_BALANCE',
-    updateAccountBalance(balance: string) {
-        return {
-            type: projectsActions.UPDATE_ACCOUNT_BALANCE,
-            data: {balance}
-        };
-    },
-    SET_METAMASK_ACCOUNTS: 'SET_METAMASK_ACCOUNTS',
-    setMetamaskAccounts(addresses: string[]) {
-        return {
-            type: projectsActions.SET_METAMASK_ACCOUNTS,
-            data: addresses
-        };
-    },
 
-    UPDATE_PROJECT_SETTINGS: 'UPDATE_PROJECT_SETTINGS',
-    updateProjectSettings(projectSettings: any) {
+    GET_PROJECT_LIST: 'GET_PROJECT_LIST',
+    getProjectList() {
         return {
-            type: projectsActions.UPDATE_PROJECT_SETTINGS,
-            data: projectSettings
+            type: projectsActions.GET_PROJECT_LIST,
         };
     },
-    UPDATE_PROJECT_SETTINGS_SUCCESS: 'UPDATE_PROJECT_SETTINGS_SUCCESS',
-    updateProjectSettingsSuccess(newProjectSettings: any) {
+    GET_PROJECT_LIST_SUCCESS: 'GET_PROJECT_LIST_SUCCESS',
+    getProjectListSuccess(projectList: IProject[]) {
         return {
-            type: projectsActions.UPDATE_PROJECT_SETTINGS_SUCCESS,
-            data: newProjectSettings,
+            type: projectsActions.GET_PROJECT_LIST_SUCCESS,
+            data: { projectList }
         };
     },
-    UPDATE_PROJECT_SETTINGS_FAIL: 'UPDATE_PROJECT_SETTINGS_FAIL',
-    updateProjectSettingsFail(error: any) {
+    GET_PROJECT_LIST_FAIL: 'GET_PROJECT_LIST_FAIL',
+    getProjectListFail(error: any) {
         return {
-            type: projectsActions.UPDATE_PROJECT_SETTINGS_FAIL,
-            error
-        };
-    },
-
-    // ----------- Wallet ---------------
-    OPEN_WALLET: 'OPEN_WALLET',
-    openWallet(name: string, seed: string) {
-        return {
-            type: projectsActions.OPEN_WALLET,
-            data: { name, seed }
-        };
-    },
-    OPEN_WALLET_SUCCESS: 'OPEN_WALLET_SUCCESS',
-    openWalletSuccess(name: string, addresses: string[]) {
-        return {
-            type: projectsActions.OPEN_WALLET_SUCCESS,
-            data: { name, addresses }
+            type: projectsActions.GET_PROJECT_LIST_FAIL,
+            data: error
         };
     },
 
@@ -170,49 +116,4 @@ export const projectsActions = {
             data: error
        };
     },
-
-    // ---------- FORK ----------
-    FORK_PROJECT: 'FORK_PROJECT',
-    forkProject(projectId: string, redirect: boolean) {
-        return {
-            type: projectsActions.FORK_PROJECT,
-            data: { projectId, redirect }
-        };
-    },
-    FORK_PROJECT_SUCCESS: 'FORK_PROJECT_SUCCESS',
-    forkProjectSuccess() {
-        return {
-            type: projectsActions.FORK_PROJECT_SUCCESS,
-        };
-    },
-    FORK_PROJECT_FAIL: 'FORK_PROJECT_FAIL',
-    forkProjectFail(error: string) {
-        return {
-            type: projectsActions.FORK_PROJECT_FAIL,
-            data: error
-        };
-    },
-    CREATE_FORKED_PROJECT: 'CREATE_FORKED_PROJECT',
-    createForkedProject(name: string, description: string, tree: any) {
-        return {
-            type: projectsActions.CREATE_FORKED_PROJECT,
-            data: { name, description, tree }
-        };
-    },
-
-     // ---------- CREATE_EMPTY_PROJECT ----------
-     CREATE_EMPTY_PROJECT: 'CREATE_EMPTY_PROJECT',
-     createEmptyProject(redirect: boolean) {
-         return {
-             type: projectsActions.CREATE_EMPTY_PROJECT,
-             data: { redirect }
-         };
-     },
-
-     CREATE_PROJECT_SUCCESS: 'CREATE_PROJECT_SUCCESS',
-     createProjectSuccess() {
-         return {
-             type: projectsActions.CREATE_PROJECT_SUCCESS,
-         };
-     }
 };

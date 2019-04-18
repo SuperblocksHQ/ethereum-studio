@@ -17,10 +17,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import AnalyticsDialog from '../analyticsDialog';
-import OnlyIf from '../onlyIf';
 import ToastContainer from "../toasts/toastcontainer";
-import * as embedUtils from '../../utils/embed';
 import ModalContainer from '../common/modal/modalContainer';
 import Loadable from 'react-loadable';
 import { EmptyLoading, Loading } from "../common";
@@ -52,12 +49,10 @@ export default class App extends Component {
 
         // Make sure we fire this event in order to let other parst of the app configure depending
         // on the initial state (per example turning on/off analytics)
-        notifyAppStart(embedUtils.isIframe());
+        notifyAppStart();
     }
 
     render() {
-        const { showTrackingAnalyticsDialog } = this.props;
-
         return (
             <Router>
                 <div id="app">
@@ -78,9 +73,6 @@ export default class App extends Component {
                             </Switch>
                         </div>
                     </div>
-                    <OnlyIf test={showTrackingAnalyticsDialog}>
-                        <AnalyticsDialog />
-                    </OnlyIf>
                     <ToastContainer />
                     <ModalContainer />
                 </div>
@@ -90,7 +82,6 @@ export default class App extends Component {
 }
 
 App.propTypes = {
-    router: PropTypes.object.isRequired,
     appVersion: PropTypes.string.isRequired,
     notifyAppStart: PropTypes.func.isRequired
 }

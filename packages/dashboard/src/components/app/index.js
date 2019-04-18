@@ -16,19 +16,17 @@
 
 import { connect } from 'react-redux';
 import { appActions } from '../../actions';
-import { getShowAnalyticsTrackingDialog } from '../../selectors/settings';
 import { appSelectors } from '../../selectors';
 import App from './App';
 
 const mapStateToProps = state => ({
-    showTrackingAnalyticsDialog: getShowAnalyticsTrackingDialog(state),
     appVersion: appSelectors.getAppVersion(state),
 });
 
 const mapDispatchToProps = dispatch => {
     return {
-        notifyAppStart: (isEmbeddedMode) => {
-            dispatch(appActions.notifyAppStart(isEmbeddedMode));
+        notifyAppStart: () => {
+            dispatch(appActions.notifyAppStart());
         }
     };
 };

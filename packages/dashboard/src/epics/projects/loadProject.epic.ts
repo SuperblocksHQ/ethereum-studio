@@ -39,8 +39,6 @@ export const loadProject: Epic = (action$: any, state$: any) => action$.pipe(
         const projectId = action.data.projectId;
         return action$.pipe(
             withLatestFrom(state$),
-            // wait until dev wallet is initialized before loading the project
-            first(([, state]) => !!state.projects.openWallets.development),
             switchMap(() => loadProjectById(projectId))
         );
     })

@@ -29,38 +29,6 @@ export const initialState = {
 
 export default function userReducer(state = initialState, action: AnyAction) {
     switch (action.type) {
-        case userActions.GET_PROJECT_LIST:
-            return {
-                ...state,
-                isProjectListLoading: true
-            };
-        case projectsActions.DELETE_PROJECT:
-            return {
-                ...state,
-                projectList: state.projectList.filter((project: IProject) => project.id !== action.data.projectId )
-            };
-        case projectsActions.FORK_PROJECT:
-            return {
-                ...state,
-                isProjectForking: true
-            };
-        case projectsActions.FORK_PROJECT_SUCCESS:
-            return {
-                ...state,
-                isProjectForking: false
-            };
-        case userActions.GET_PROJECT_LIST_SUCCESS:
-            return {
-                ...state,
-                projectList: action.data.projectList,
-                isProjectListLoading: false
-            };
-        case userActions.GET_PROJECT_LIST_FAIL:
-            return {
-                ...state,
-                isProjectListLoading: false,
-                errorLoadingProjectList: action.data
-            };
         case authActions.LOGOUT_SUCCESS:
             return {
                 ...state,

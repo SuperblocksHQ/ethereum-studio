@@ -33,7 +33,7 @@ export const updateProject: Epic = (action$: any, state$: any) => action$.pipe(
                 return from(projectService.putProjectById(selectedProject.id, selectedProject))
                     .pipe(
                         switchMap(() => {
-                            return [projectsActions.updateProjectSuccess(selectedProject), userActions.getProjectList()];
+                            return [projectsActions.updateProjectSuccess(selectedProject)];
                         }
                     )
                 );

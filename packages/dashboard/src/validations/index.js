@@ -14,14 +14,5 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export const validateGasLimit = (gasLimit) =>
-    ((gasLimit <= 0 || gasLimit > 7900000) ? 'GAS_LIMIT' : null);
-
-export const validateGasPrice = (gasPrice) =>
-    ((gasPrice <= 0 || gasPrice > 100000000000) ? 'GAS_PRICE' : null);
-
-export const validateMainnetWarning = (projectName, value) =>
-    (projectName !== value ? 'MAINNNET_WARNING' : null);
-
 export const validateProjectName = (projectName) =>
     (!/^[a-zA-ZA-Z0-9 -]+$/.test(projectName) || /^\s*$/.test(projectName) || projectName === '' ? 'PROJECT_NAME' : null);

@@ -15,7 +15,7 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { connect } from 'react-redux';
-import { userActions, authActions, modalActions } from '../../actions';
+import { userActions, authActions, modalActions, projectsActions } from '../../actions';
 import { userSelectors, authSelectors } from '../../selectors';
 import Dashboard from './Dashboard';
 import { Dispatch } from 'react';
@@ -31,7 +31,7 @@ const mapStateToProps = (state: any) => ({
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
     return {
         getProjectList: () => {
-            dispatch(userActions.getProjectList());
+            dispatch(projectsActions.getProjectList());
         },
         githubLoginAction: () => {
             dispatch(authActions.githubLogin());
