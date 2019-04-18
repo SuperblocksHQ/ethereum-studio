@@ -16,9 +16,20 @@
 
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
+import { GenericLoading } from '../common';
 
-const PrivateRoute = ({ render, isAuthenticated, ...rest }: any) => (
-    <Route {...rest} render={(props) => (
+interface IProps {
+    render: (props: any) => JSX.Element;
+    isAuthenticated: boolean;
+    isLoading: boolean;
+    path: string;
+    exact: boolean;
+}
+
+const PrivateRoute = ({ render, isAuthenticated, isLoading, ...rest }: IProps) => (
+    isLoading
+    ? <GenericLoading />
+    : <Route {...rest} render={(props) => (
       isAuthenticated === true
         ? render(props)
         : <Redirect to={{

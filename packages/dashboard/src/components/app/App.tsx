@@ -49,6 +49,7 @@ const ProjectBuilds = Loadable({
 interface IProps {
     notifyAppStart: () => void;
     isAuthenticated: boolean;
+    isLoginInProgress: boolean;
 }
 
 export default class App extends Component<IProps> {
@@ -62,7 +63,7 @@ export default class App extends Component<IProps> {
     }
 
     render() {
-        const { isAuthenticated } = this.props;
+        const { isAuthenticated, isLoginInProgress } = this.props;
 
         return (
             <Router>
@@ -71,15 +72,15 @@ export default class App extends Component<IProps> {
                         <div className='maincontent'>
                             <Switch>
                                 <Route path='/login' exact render={(props: any) => <LoginScreen {...props} />} />
-                                <PrivateRoute path='/' exact isAuthenticated={isAuthenticated} render={(props: any) => <Dashboard {...props} />} />
-                                <PrivateRoute path='/dashboard' exact isAuthenticated={isAuthenticated} render={(props: any) => <Dashboard {...props} />} />
-                                <PrivateRoute exact path='/dashboard/project/:projectId' isAuthenticated={isAuthenticated} render={(props: any) => (
+                                <PrivateRoute path='/' exact isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => <Dashboard {...props} />} />
+                                <PrivateRoute path='/dashboard' exact isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => <Dashboard {...props} />} />
+                                <PrivateRoute exact path='/dashboard/project/:projectId' isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => (
                                     <ProjectDashboard content={<ProjectBuilds />} {...props} />
                                 )} />
-                                <PrivateRoute exact path='/dashboard/project/:projectId/builds' isAuthenticated={isAuthenticated} render={(props: any) => (
+                                <PrivateRoute exact path='/dashboard/project/:projectId/builds' isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => (
                                     <ProjectDashboard content={<ProjectBuilds />} {...props} />
                                 )} />
-                                <PrivateRoute exact path='/dashboard/project/:projectId/settings' isAuthenticated={isAuthenticated} render={(props: any) => (
+                                <PrivateRoute exact path='/dashboard/project/:projectId/settings' isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => (
                                     <ProjectDashboard content={<ProjectSettings />} {...props} />
                                 )} />
                             </Switch>

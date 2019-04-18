@@ -24,6 +24,7 @@ import App from './App';
 const mapStateToProps = (state: any) => ({
     appVersion: appSelectors.getAppVersion(state),
     isAuthenticated: authSelectors.getIsAuthenticated(state),
+    isLoginInProgress: authSelectors.getIsLoginInProgress(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
