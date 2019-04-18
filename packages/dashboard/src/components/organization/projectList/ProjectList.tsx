@@ -27,6 +27,7 @@ interface IProps {
 
     isListLoading: boolean;
     organizationName: string;
+    organizationId: string;
 }
 
 interface IState {
@@ -74,7 +75,7 @@ export default class ProjectList extends Component<IProps, IState> {
     }
 
     render() {
-        const { list, organizationName, isListLoading } = this.props;
+        const { list, organizationName, organizationId, isListLoading } = this.props;
         const { orderBy, order } = this.state;
 
         let orderedList = list.sort(this.dynamicSort(orderBy));
@@ -102,6 +103,7 @@ export default class ProjectList extends Component<IProps, IState> {
                                 orderBy={orderBy}
                                 key={project.id}
                                 project={project}
+                                organizationId={organizationId}
                             />
                         );
                     })

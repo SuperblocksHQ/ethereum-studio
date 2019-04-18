@@ -22,6 +22,7 @@ import { Link } from 'react-router-dom';
 
 interface IProps {
     project: IProject;
+    organizationId: string;
     deleteProject: (projectId: string) => void;
     showModal: (modalType: string, modalProps: any) => void;
     orderBy: string;
@@ -29,33 +30,12 @@ interface IProps {
 
 export default class Project extends Component<IProps> {
 
-    showShareModal = () => {
-        const { showModal } = this.props;
-        const defaultUrl = `${String(window.location.origin)}/${this.props.project.id}`;
-        showModal('SHARE_MODAL', {defaultUrl});
-    }
-
-    showEditModal = () => {
-        const { showModal, project } = this.props;
-        showModal('EDIT_MODAL', {project});
-    }
-
-    openProject = () => {
-        const { project } = this.props;
-        window.location.href = `${window.location.origin}/${project.id}`;
-    }
-
-    openProjectNewTab = () => {
-        const { project } = this.props;
-        window.open(`${window.location.origin}/${project.id}`, '_blank');
-    }
-
     render() {
-        const { project, orderBy }  = this.props;
+        const { organizationId, project, orderBy }  = this.props;
 
         return (
             <div className={style.container}>
-                <Link to={`/dashboard/project/${project.id}`} className={style.innerWrapper}>
+                <Link to={`${organizationId}/${project.id}`} className={style.innerWrapper}>
                     <div className={style.name}>
                         {project.name}
                     </div>

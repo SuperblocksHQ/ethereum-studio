@@ -73,14 +73,13 @@ export default class App extends Component<IProps> {
                             <Switch>
                                 <Route path='/login' exact render={(props: any) => <LoginScreen {...props} />} />
                                 <PrivateRoute path='/' exact isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => <Dashboard {...props} />} />
-                                <PrivateRoute path='/dashboard' exact isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => <Dashboard {...props} />} />
-                                <PrivateRoute exact path='/dashboard/project/:projectId' isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => (
+                                <PrivateRoute exact path='/:organizationId/:projectId' isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => (
                                     <ProjectDashboard content={<ProjectBuilds />} {...props} />
                                 )} />
-                                <PrivateRoute exact path='/dashboard/project/:projectId/builds' isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => (
+                                <PrivateRoute exact path='/:organizationId/:projectId/builds' isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => (
                                     <ProjectDashboard content={<ProjectBuilds />} {...props} />
                                 )} />
-                                <PrivateRoute exact path='/dashboard/project/:projectId/settings' isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => (
+                                <PrivateRoute exact path='/:organizationId/:projectId/settings' isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => (
                                     <ProjectDashboard content={<ProjectSettings />} {...props} />
                                 )} />
                             </Switch>
