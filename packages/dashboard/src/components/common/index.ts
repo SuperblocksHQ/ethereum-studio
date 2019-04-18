@@ -22,7 +22,6 @@ export * from './topbar';
 export * from './buttons';
 export * from './switch';
 export * from './textInput';
-export * from './note';
 export * from './textAreaInput';
 export * from './caret';
 export * from './modal';
