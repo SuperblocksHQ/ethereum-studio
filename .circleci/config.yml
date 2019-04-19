@@ -25,6 +25,10 @@ jobs:
           paths:
             - node_modules
             - packages/dashboard/node_modules
+      - save_cache:
+          key: v2-repo-{{ .Environment.CIRCLE_SHA1 }}
+          paths: 
+            - ~/superblocks-client
 
   build-prod:
     docker:
