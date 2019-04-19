@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "superblocks-client",
+  "name": "dashboard",
   "version": "0.0.1",
   "license": "GPL",
   "scripts": {

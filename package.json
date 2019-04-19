@@ -1,0 +1,21 @@
+{
+  "name": "root",
+  "private": true,
+  "scripts": {
+    "build": "yarn build:prod",
+    "build:prod": "NODE_OPTIONS=\"--max-old-space-size=4096\" lerna run build  --scope dashboard --stream && gulp",
+    "build:clean": "lerna run build:clean --scope dashboard && rimraf www",
+    "start": "lerna run start --scope dashboard --stream",
+    "lint": "lerna run lint",
+    "typecheck": "lerna run typecheck --scope dashboard"
+  },
+  "workspaces": {
+    "packages": [
+      "packages/dashboard"
+    ]
+  },
+  "devDependencies": {
+    "gulp": "^4.0.0",
+    "lerna": "^3.13.3"
+  }
+}
