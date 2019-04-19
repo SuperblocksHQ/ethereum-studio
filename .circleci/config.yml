@@ -8,6 +8,7 @@ jobs:
     docker:
       # specify the version you desire here
       - image: circleci/node:10
+    working_directory: ~/superblocks
     steps:
       - checkout
       # Download and cache dependencies
@@ -29,6 +30,7 @@ jobs:
     docker:
       # specify the version you desire here
       - image: circleci/node:10
+    working_directory: ~/repo
     steps:
       - restore_cache:
           key: v2-repo-{{ .Environment.CIRCLE_SHA1 }}
