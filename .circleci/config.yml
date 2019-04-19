@@ -14,9 +14,9 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-          - v2-dependency-cache-{{ .Branch }}-{{ checksum "yarn.lock" }}
-          - v2-dependency-cache-{{ .Branch }}
-          - v2-dependency-cache
+            - v2-dependency-cache-{{ .Branch }}-{{ checksum "yarn.lock" }}
+            - v2-dependency-cache-{{ .Branch }}
+            - v2-dependency-cache
        - run:
           name: Install Dependencies
           command: yarn install
