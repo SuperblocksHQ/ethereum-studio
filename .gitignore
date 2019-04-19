@@ -6,7 +6,7 @@ node_modules
 
 # production
 build
-dist
+www
 .deliver
 
 # misc
