@@ -18,8 +18,8 @@ jobs:
             - v2-dependency-cache-{{ .Branch }}
             - v2-dependency-cache
       - run:
-        name: Install Dependencies
-        command: yarn install
+          name: Install Dependencies
+          command: yarn install
       - save_cache:
           key: v2-dependency-cache-{{ .Branch }}-{{ checksum "yarn.lock" }}
           paths:
