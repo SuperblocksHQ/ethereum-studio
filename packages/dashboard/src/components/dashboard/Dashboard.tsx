@@ -58,7 +58,7 @@ export default class Dashboard extends Component<IProps> {
                         </SideMenuFooter>
                     </SideMenu>
                     <ProjectList
-                        organizationName={'Superblocks'}
+                        organizationName={'Placeholder organization'}
                         organizationId={'12334'}
                     />
                 </div>
