@@ -32,14 +32,14 @@ const config = {
     migrate: createMigrate(migrations, { debug: true })
 };
 
-const combineReducers = reducers => {
+const combineReducers = reducerList => {
     return (state = {}, action) => {
 
       // Reduce all the keys for reducers from `todos` and `visibilityFilter`
-      return Object.keys(reducers).reduce(
+      return Object.keys(reducerList).reduce(
         (nextState, key) => {
           // Call the corresponding reducer function for a given key
-          nextState[key] = reducers[key] (
+          nextState[key] = reducerList[key] (
             state[key],
             action,
             // Let's make the entire state available to all reducers
