@@ -15,14 +15,28 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import style from './style.less';
 import ErrorMessage from '../errorMessage';
 
-export class TextAreaInput extends PureComponent {
+interface IProps {
+    id: string;
+    onChangeText?: () => void;
+    tip?: string;
+    label?: string;
+    defaultValue?: string;
+    value?: string;
+    disabled?: boolean;
+    error?: string;
+    readOnly?: boolean;
+    rows?: number;
+    cols?: number;
+    maxLength?: number;
+}
 
-    handleFocus = (e) => {
+export class TextAreaInput extends PureComponent<IProps> {
+
+    handleFocus = (e: any) => {
         e.target.select();
     }
 
@@ -45,8 +59,8 @@ export class TextAreaInput extends PureComponent {
 
         return(
             <div>
-                <div className={classNames("superInputDark", style.container)}>
-                    { label != null && <label htmlFor="name">{label}</label> }
+                <div className={classNames('superInputDark', style.container)}>
+                    { label != null && <label htmlFor='name'>{label}</label> }
                     <div className={style.inputContainer}>
                         <textarea
                             id={id}
@@ -71,18 +85,4 @@ export class TextAreaInput extends PureComponent {
             </div>
         );
     }
-}
-
-TextAreaInput.propTypes = {
-    id: PropTypes.string.isRequired,
-    onChangeText: PropTypes.func,
-    label: PropTypes.string,
-    defaultValue: PropTypes.any,
-    value: PropTypes.any,
-    disabled: PropTypes.bool,
-    error: PropTypes.string,
-    readOnly: PropTypes.bool,
-    rows: PropTypes.number,
-    cols: PropTypes.number,
-    maxlength: PropTypes.number
 }
