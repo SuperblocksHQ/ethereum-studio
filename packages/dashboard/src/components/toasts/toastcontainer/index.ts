@@ -15,18 +15,20 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { connect } from 'react-redux';
+import { Dispatch } from 'react';
+import { AnyAction } from 'redux';
 import { toastSelectors } from '../../../selectors/toast.selectors';
 import { toastActions } from '../../../actions';
 import ToastContainer from './ToastContainer';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state: any) => ({
     toasts: toastSelectors.getToasts(state),
 });
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch: Dispatch<AnyAction>) {
     return {
-        toastDismissed: (index) => {
-            dispatch(toastActions.toastDismissed(index))
+        toastDismissed: (id: string) => {
+            dispatch(toastActions.toastDismissed(id));
         },
     };
 }

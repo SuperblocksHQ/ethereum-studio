@@ -17,39 +17,45 @@
 import React, { Component } from 'react';
 import { toast, ToastContainer as ReactToastContainer } from 'react-toastify';
 import { CloseButton, getToastComponent } from '../index';
+import { IToast } from '../../../models/toast.model';
 
-export default class ToastContainer extends Component {
+interface IProps {
+    toasts: [IToast];
 
-    componentDidUpdate(prevProps) {
+    toastDismissed: (id: string) => void;
+}
+
+export default class ToastContainer extends Component<IProps> {
+
+    componentDidUpdate(prevProps: IProps) {
         this.renderToast(prevProps);
     }
 
-    renderToast(prevProps) {
+    renderToast(prevProps: IProps) {
         this.props.toasts.map(toastItem => {
             // New toast
-            if (!(prevProps.toasts.some(toast => toast.id === toastItem.id))) {
-                const { ToastComponent, className } = getToastComponent(toastItem.type);
+            if (!(prevProps.toasts.some(item => item.id === toastItem.id))) {
+                const { ToastComponent, className }: any = getToastComponent(toastItem.type);
                 toast(<ToastComponent id={toastItem.id}/>, {
-                    className: className,
-                    onClose: ({ id }) => this.props.toastDismissed(id)
+                    className,
+                    onClose: () => this.props.toastDismissed(toastItem.id)
                 });
             }
-        })
+        });
     }
 
     render() {
         return <ReactToastContainer
-                    position="bottom-right"
-                    className={"toastContainer"}
+                    position='bottom-right'
+                    className={'toastContainer'}
                     autoClose={6000}
                     hideProgressBar
                     newestOnTop={false}
                     closeOnClick
                     rtl={false}
-                    pauseOnVisibilityChange
                     draggable
                     pauseOnHover={false}
                     closeButton={<CloseButton />}
-                />
+                />;
     }
 }

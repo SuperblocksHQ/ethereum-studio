@@ -40,6 +40,19 @@ export const projectsActions = {
     },
 
     // ---------- CRUD Project actions ----------
+    CREATE_PROJECT: 'CREATE_PROJECT',
+    createProject(redirect: boolean) {
+        return {
+            type: projectsActions.CREATE_PROJECT,
+            data: { redirect }
+        };
+    },
+    CREATE_PROJECT_SUCCESS: 'CREATE_PROJECT_SUCCESS',
+    createProjectSuccess() {
+        return {
+            type: projectsActions.CREATE_PROJECT_SUCCESS,
+        };
+    },
     DELETE_PROJECT: 'DELETE_PROJECT',
     deleteProject(projectId: string, redirect: boolean = false) {
        return {

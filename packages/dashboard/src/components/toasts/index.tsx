@@ -23,13 +23,13 @@ import {
     IconClose
 } from '../icons';
 
-export const CloseButton = ({ closeToast }) => (
-    <button className={classNames(['closeIcon', 'btnNoBg'])} onClick={closeToast}>
+export const CloseButton = () => (
+    <button className={classNames(['closeIcon', 'btnNoBg'])}>
         <IconClose className={'icon'}/>
     </button>
 );
 
-const info = (text) => ({
+const info = (text: string) => ({
     ToastComponent: () =>
     (
         <div className={'messageContainer'}>
@@ -40,7 +40,7 @@ const info = (text) => ({
     className: classNames(['body', 'info'])
 });
 
-const error = (text) => ({
+const error = (text: string) => ({
     ToastComponent: () =>
     (
         <div className={'messageContainer'}>
@@ -51,8 +51,8 @@ const error = (text) => ({
     className: classNames(['body', 'error'])
 });
 
-export const getToastComponent = (type) => {
-    switch(type) {
+export const getToastComponent = (type: string) => {
+    switch (type) {
         case projectsActions.CREATE_PROJECT_SUCCESS:
             return info('Project created!');
         case projectsActions.DELETE_PROJECT_FAIL:
@@ -60,4 +60,4 @@ export const getToastComponent = (type) => {
         default:
             return null;
     }
-}
+};
