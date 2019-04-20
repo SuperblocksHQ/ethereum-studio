@@ -16,29 +16,29 @@
 
 import React, { PureComponent } from 'react';
 
-class ErrorMessage extends PureComponent {
-  static errorToMessage(error) {
+interface IProps {
+    error: string;
+    originalErrorMessage: string;
+}
+class ErrorMessage extends PureComponent<IProps> {
+  static errorToMessage(error: string) {
     switch (error) {
       case 'PROJECT_NAME':
         return (
-          <div id="error.projectName">
-            {"Invalid project name. Only alphanumeric characters are allowed."}
+          <div id='error.projectName'>
+            {'Invalid project name. Only alphanumeric characters are allowed.'}
           </div>
         );
       default:
-        // eslint-disable-next-line no-unused-expressions
-        (error);
         return error;
     }
   }
 
   render() {
-    const {
-      error,
-      originalErrorMessage,
-      ...props
-    } = this.props;
-    if (!error) return null;
+    const { error, originalErrorMessage, ...props} = this.props;
+    if (!error) {
+        return null;
+    }
     const message = ErrorMessage.errorToMessage(error);
     const dev = process.env.NODE_ENV !== 'production';
     return (
