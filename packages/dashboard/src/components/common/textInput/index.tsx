@@ -15,12 +15,24 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import style from './style.less';
 import ErrorMessage from '../errorMessage';
 
-export class TextInput extends PureComponent {
+interface IProps {
+    id: string;
+    onChangeText?: () => void;
+    type?: string;
+    label?: string;
+    tip?: string;
+    defaultValue?: string;
+    disabled?: boolean;
+    error?: string;
+    readOnly?: boolean;
+    onBlur?: () => void;
+}
+
+export class TextInput extends PureComponent<IProps> {
 
     render() {
         const {
@@ -39,8 +51,8 @@ export class TextInput extends PureComponent {
 
         return(
             <div>
-                <div className={classNames("superInputDark", style.container)}>
-                    { label != null && <label htmlFor="name">{label}</label> }
+                <div className={classNames('superInputDark', style.container)}>
+                    { label != null && <label htmlFor='name'>{label}</label> }
                     <div className={style.inputContainer}>
                         <input
                             id={id}
@@ -61,15 +73,4 @@ export class TextInput extends PureComponent {
             </div>
         );
     }
-}
-
-TextInput.propTypes = {
-    id: PropTypes.string.isRequired,
-    onChangeText: PropTypes.func,
-    type: PropTypes.string,
-    label: PropTypes.string,
-    defaultValue: PropTypes.any,
-    disabled: PropTypes.bool,
-    error: PropTypes.string,
-    readOnly: PropTypes.bool
 }

@@ -18,7 +18,8 @@ import React, { PureComponent } from 'react';
 
 interface IProps {
     error: string;
-    originalErrorMessage: string;
+    originalErrorMessage?: string;
+    className: string;
 }
 class ErrorMessage extends PureComponent<IProps> {
   static errorToMessage(error: string) {
