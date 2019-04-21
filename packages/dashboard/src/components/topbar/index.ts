@@ -16,7 +16,7 @@
 
 import { connect } from 'react-redux';
 import { authActions } from '../../actions';
-import { userSelectors, authSelectors } from '../../selectors';
+import { userSelectors } from '../../selectors';
 import Topbar from './Topbar';
 import { Dispatch } from 'react';
 import { AnyAction } from 'redux';

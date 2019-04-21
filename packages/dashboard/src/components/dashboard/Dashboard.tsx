@@ -16,10 +16,10 @@
 
 import React, { Component } from 'react';
 import style from './style.less';
-import { SideMenu, SideMenuItem, SideMenuHeader, SideMenuFooter } from '../sideMenu';
 import { IconConfigure, IconPlusTransparent } from '../icons';
 import { LetterAvatar } from '../common';
 import Topbar from '../topbar';
+import { SideMenu, SideMenuItem, SideMenuHeader, SideMenuFooter } from '../sideMenu';
 import ProjectList from '../organization/projectList';
 
 interface IProps {
