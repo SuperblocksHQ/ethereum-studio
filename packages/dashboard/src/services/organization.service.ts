@@ -17,6 +17,7 @@ import { fetchJSON } from './utils/fetchJson';
 import { switchMap } from 'rxjs/operators';
 import { IOrganization } from '../models';
 import { Observable, throwError } from 'rxjs';
+import { IOrganizationMember, IRole } from '../models/organizationMember.model';
 
 export const organizationService = {
 
@@ -56,6 +57,41 @@ export const organizationService = {
     deleteOrganizationById(id: string) {
         return fetchJSON(process.env.REACT_APP_PROJECT_API_BASE_URL + '/organizations/' + id, {
             method: 'DELETE'
+        });
+    },
+
+    // ---------- Organization Member endpoints ----------
+    inviteMemberToOrganization(organizationId: string, email: string) {
+        return fetchJSON(`/${process.env.REACT_APP_PROJECT_API_BASE_URL}/organization/${organizationId}/members/_invite`, {
+            method: 'POST',
+            body: { email }
+        })
+        .pipe(
+            switchMap(response => response.json())
+        );
+    },
+    addMemberToOrganization(organizationId: string, data: Partial<IOrganizationMember>) {
+        return fetchJSON(`/${process.env.REACT_APP_PROJECT_API_BASE_URL}/organization/${organizationId}/members`, {
+            method: 'POST',
+            body: data
+        })
+        .pipe(
+            switchMap(response => response.json())
+        );
+    },
+
+    changeMemberRoleInOrganization(organizationId: string, memberId: any, newRole: IRole) {
+        return fetchJSON(`/${process.env.REACT_APP_PROJECT_API_BASE_URL}/organization/${organizationId}/members/${memberId}/_change-role`, {
+            method: 'PUT',
+            body: { newRole }
+        }).pipe(
+            switchMap(r => (r.ok ? r.statusText : throwError(r.statusText)))
+        );
+    },
+
+    removeMemberFromOrganization(organizationId: string, memberId: string) {
+        return fetchJSON(`/${process.env.REACT_APP_PROJECT_API_BASE_URL}/organization/${organizationId}/members/${memberId}`, {
+            method: 'DELETE',
         });
     },
 };

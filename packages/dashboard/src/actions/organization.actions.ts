@@ -15,6 +15,7 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { IOrganization } from '../models';
+import { IOrganizationMember, IRole } from '../models/organizationMember.model';
 
 export const organizationActions = {
 
@@ -133,6 +134,88 @@ export const organizationActions = {
     updateOrganizationFail(error: string) {
        return {
             type: organizationActions.UPDATE_ORGANIZATION_FAIL,
+            data: error
+       };
+    },
+
+    // ---------- CRUD Organization Member actions ----------
+    INVITE_MEMBER_TO_ORGANIZATION: 'INVITE_MEMBER_TO_ORGANIZATION',
+    inviteMemberToOrganization(organization: IOrganization, email: string) {
+       return {
+            type: organizationActions.INVITE_MEMBER_TO_ORGANIZATION,
+            data: { organization, email }
+       };
+    },
+    INVITE_MEMBER_TO_ORGANIZATION_SUCCESS: 'INVITE_MEMBER_TO_ORGANIZATION_SUCCESS',
+    inviteMemberToOrganizationSuccess() {
+       return {
+            type: organizationActions.INVITE_MEMBER_TO_ORGANIZATION_SUCCESS
+       };
+    },
+    INVITE_MEMBER_TO_ORGANIZATION_FAIL: 'INVITE_MEMBER_TO_ORGANIZATION_FAIL',
+    inviteMemberToOrganizationFail(error: string) {
+       return {
+            type: organizationActions.INVITE_MEMBER_TO_ORGANIZATION_FAIL,
+            data: error
+       };
+    },
+    ADD_MEMBER_TO_ORGANIZATION: 'ADD_MEMBER_TO_ORGANIZATION',
+    addMemberToOrganization(organization: IOrganization, member: IOrganizationMember) {
+       return {
+            type: organizationActions.ADD_MEMBER_TO_ORGANIZATION,
+            data: { organization, member }
+       };
+    },
+    ADD_MEMBER_TO_ORGANIZATION_SUCCESS: 'ADD_MEMBER_TO_ORGANIZATION_SUCCESS',
+    addMemberToOrganizationSuccess() {
+       return {
+            type: organizationActions.ADD_MEMBER_TO_ORGANIZATION_SUCCESS
+       };
+    },
+    ADD_MEMBER_TO_ORGANIZATION_FAIL: 'ADD_MEMBER_TO_ORGANIZATION_FAIL',
+    addMemberToOrganizationFail(error: string) {
+       return {
+            type: organizationActions.ADD_MEMBER_TO_ORGANIZATION_FAIL,
+            data: error
+       };
+    },
+    REMOVE_MEMBER_FROM_ORGANIZATION: 'REMOVE_MEMBER_FROM_ORGANIZATION',
+    removeMemberFromOrganization(organization: IOrganization, member: IOrganizationMember) {
+       return {
+            type: organizationActions.REMOVE_MEMBER_FROM_ORGANIZATION,
+            data: { organization, member }
+       };
+    },
+    REMOVE_MEMBER_FROM_ORGANIZATION_SUCCESS: 'REMOVE_MEMBER_FROM_ORGANIZATION_SUCCESS',
+    removeMemberFromOrganizationSuccess() {
+       return {
+            type: organizationActions.REMOVE_MEMBER_FROM_ORGANIZATION_SUCCESS
+       };
+    },
+    REMOVE_MEMBER_FROM_ORGANIZATION_FAIL: 'REMOVE_MEMBER_FROM_ORGANIZATION_FAIL',
+    removeMemberFromOrganizationFail(error: string) {
+       return {
+            type: organizationActions.REMOVE_MEMBER_FROM_ORGANIZATION_FAIL,
+            data: error
+       };
+    },
+    CHANGE_MEMBER_ROLE_IN_ORGANIZATION: 'CHANGE_MEMBER_ROLE_IN_ORGANIZATION',
+    changeMemberRoleInOrganization(organization: IOrganization, member: IOrganizationMember, newRole: IRole) {
+       return {
+            type: organizationActions.CHANGE_MEMBER_ROLE_IN_ORGANIZATION,
+            data: { organization, member, newRole }
+       };
+    },
+    CHANGE_MEMBER_ROLE_IN_ORGANIZATION_SUCCESS: 'CHANGE_MEMBER_ROLE_IN_ORGANIZATION_SUCCESS',
+    changeMemberRoleInOrganizationSuccess() {
+       return {
+            type: organizationActions.CHANGE_MEMBER_ROLE_IN_ORGANIZATION_SUCCESS
+       };
+    },
+    CHANGE_MEMBER_ROLE_IN_ORGANIZATION_FAIL: 'CHANGE_MEMBER_ROLE_IN_ORGANIZATION_FAIL',
+    changeMemberRoleInOrganizationFail(error: string) {
+       return {
+            type: organizationActions.CHANGE_MEMBER_ROLE_IN_ORGANIZATION_FAIL,
             data: error
        };
     },
