@@ -18,8 +18,17 @@ import { createOrganization } from './createOrganization.epic';
 import { deleteOrganization } from './deleteOrganization.epic';
 import { updateOrganization } from './updateOrganization.epic';
 
+import { inviteMemberToOrganization } from './members/inviteMemberToOrganization.epic';
+import { addMemberToOrganization } from './members/addMemberToOrganization.epic';
+import { changeMemberRoleInOrganization } from './members/changeMemberRoleInOrganization.epic';
+import { removeMemberFromOrganization } from './members/removeMemberFromOrganization.epic';
+
 export const projectsEpics = [
     createOrganization,
     deleteOrganization,
     updateOrganization,
+    inviteMemberToOrganization,
+    addMemberToOrganization,
+    changeMemberRoleInOrganization,
+    removeMemberFromOrganization,
 ];
