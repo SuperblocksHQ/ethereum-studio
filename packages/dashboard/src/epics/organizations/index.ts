@@ -14,8 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export * from './project';
-export * from './project.model';
-export * from './user.model';
-export * from './auth.model';
-export * from './organization.model';
+import { createOrganization } from './createOrganization.epic';
+import { deleteOrganization } from './deleteOrganization.epic';
+import { updateOrganization } from './updateOrganization.epic';
+
+export const projectsEpics = [
+    createOrganization,
+    deleteOrganization,
+    updateOrganization,
+];
