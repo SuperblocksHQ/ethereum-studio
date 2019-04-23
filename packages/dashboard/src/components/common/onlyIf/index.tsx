@@ -1,4 +1,4 @@
-// Copyright 2019 Superblocks AB
+// Copyright 2018 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -14,5 +14,16 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export const validateProjectName = (projectName) =>
-    (!/^[a-zA-ZA-Z0-9 -]+$/.test(projectName) || /^\s*$/.test(projectName) || projectName === '' ? 'PROJECT_NAME' : null);
+import { PureComponent } from 'react';
+
+interface IProps {
+    test: object | string | boolean | symbol | number;
+}
+
+class OnlyIf extends PureComponent<IProps> {
+  render() {
+    return (this.props.test ? this.props.children : null);
+  }
+}
+
+export default OnlyIf;

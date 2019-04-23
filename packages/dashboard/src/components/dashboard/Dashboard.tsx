@@ -16,7 +16,7 @@
 
 import React, { Component } from 'react';
 import style from './style.less';
-import { IconConfigure, IconPlusTransparent } from '../icons';
+import { IconConfigure, IconPlusTransparent } from '../common/icons';
 import { LetterAvatar } from '../common';
 import Topbar from '../topbar';
 import { SideMenu, SideMenuItem, SideMenuHeader, SideMenuFooter } from '../sideMenu';

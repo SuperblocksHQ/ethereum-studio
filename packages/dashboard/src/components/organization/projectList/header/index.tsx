@@ -18,7 +18,7 @@ import React, { Component } from 'react';
 import style from './style.less';
 import { DropdownContainer, MenuItem } from '../../../common';
 import classNames from 'classnames';
-import { IconArrowUpThin } from '../../../icons';
+import { IconArrowUpThin } from '../../../common/icons';
 
 interface IProps {
     title: string;

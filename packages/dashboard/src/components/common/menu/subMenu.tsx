@@ -17,7 +17,7 @@
 import React from 'react';
 import style from './style.less';
 import classNames from 'classnames';
-import { IconDropdown } from '../../icons';
+import { IconDropdown } from '../icons';
 
 interface IProps {
     children: any;

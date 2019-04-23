@@ -14,12 +14,23 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export const toastActions = {
-    TOAST_DISMISSED: 'TOAST_DISMISSED',
-    toastDismissed(id) {
-        return {
-            type: toastActions.TOAST_DISMISSED,
-            data: id
-        };
-    }
+import { connect } from 'react-redux';
+import { Dispatch } from 'react';
+import { AnyAction } from 'redux';
+import { toastSelectors } from '../../../../selectors/toast.selectors';
+import { toastActions } from '../../../../actions';
+import ToastContainer from './ToastContainer';
+
+const mapStateToProps = (state: any) => ({
+    toasts: toastSelectors.getToasts(state),
+});
+
+function mapDispatchToProps(dispatch: Dispatch<AnyAction>) {
+    return {
+        toastDismissed: (id: string) => {
+            dispatch(toastActions.toastDismissed(id));
+        },
+    };
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(ToastContainer);

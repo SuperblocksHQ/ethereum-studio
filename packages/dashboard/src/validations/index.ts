@@ -14,20 +14,5 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import React from 'react';
-import style from './style.less';
-import { IconGithub } from '../icons';
-import classNames from 'classnames';
-
-const GithubLoginButton = (props: any) => (
-    <button onClick={props.githubLogin} className={classNames(['btn2', style.githubLoginButton])}>
-        <IconGithub />
-        <span>
-            Login with Github
-        </span>
-    </button>
-);
-
-export default GithubLoginButton;
-
-
+export const validateProjectName = (projectName: string) =>
+    (!/^[a-zA-ZA-Z0-9 -]+$/.test(projectName) || /^\s*$/.test(projectName) || projectName === '' ? 'PROJECT_NAME' : null);

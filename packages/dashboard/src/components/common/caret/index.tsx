@@ -1,6 +1,6 @@
 import React from 'react';
 import style from './style.less';
-import { IconAngleRight, IconAngleDown } from '../../icons';
+import { IconAngleRight, IconAngleDown } from '../icons';
 import classNames from 'classnames';
 
 interface IProps {

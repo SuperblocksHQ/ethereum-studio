@@ -17,7 +17,7 @@
 import React, { Component } from 'react';
 import style from './style.less';
 import classNames from 'classnames';
-import { IconDoubleArrowLeft } from '../icons';
+import { IconDoubleArrowLeft } from '../common/icons';
 
 interface IState {
     collapsed: boolean;
