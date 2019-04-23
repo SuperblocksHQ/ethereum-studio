@@ -18,7 +18,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import classNames from 'classnames';
 import style from './style.less';
-import { IconSuperblocks } from '../../icons';
+import { IconSuperblocks } from '../../common/icons';
 import GithubLoginButton from '../../common/buttons/githubLogin';
 
 interface IProps {

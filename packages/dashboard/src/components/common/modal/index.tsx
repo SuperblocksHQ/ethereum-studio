@@ -17,7 +17,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import style from './style.less';
-import { IconClose } from '../../icons';
+import { IconClose } from '../icons';
 
 interface IProps {
     title: string;

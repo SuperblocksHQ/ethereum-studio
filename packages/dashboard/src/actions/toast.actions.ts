@@ -14,12 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { PureComponent } from 'react'
-
-class OnlyIf extends PureComponent {
-  render () {
-    return (this.props.test ? this.props.children : null)
-  }
-}
-
-export default OnlyIf
+export const toastActions = {
+    TOAST_DISMISSED: 'TOAST_DISMISSED',
+    toastDismissed(id: string) {
+        return {
+            type: toastActions.TOAST_DISMISSED,
+            data: id
+        };
+    }
+};

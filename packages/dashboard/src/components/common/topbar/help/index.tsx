@@ -19,7 +19,7 @@ import classNames from 'classnames';
 import {
     IconHelp,
     IconDiscord
-} from '../../../icons';
+} from '../../icons';
 import { DropdownContainer } from '../../';
 import { Tooltip } from '../../';
 import style from './style.less';

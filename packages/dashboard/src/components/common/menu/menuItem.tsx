@@ -17,7 +17,7 @@
 import React from 'react';
 import style from './style.less';
 import classNames from 'classnames';
-import { IconCheckThin } from '../../icons';
+import { IconCheckThin } from '../icons';
 
 interface IProps {
     title: string;

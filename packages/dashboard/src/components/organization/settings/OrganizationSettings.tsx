@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Topbar from '../../topbar';
 import style from './style.less';
 import { SideMenu, SideMenuItem, SideMenuFooter } from '../../sideMenu';
-import { IconConfigure, IconDeploy, IconBack } from '../../icons';
+import { IconConfigure, IconDeploy, IconBack } from '../../common/icons';
 
 interface IProps {
     location: any;

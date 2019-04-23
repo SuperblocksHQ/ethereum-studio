@@ -16,7 +16,7 @@
 
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import ToastContainer from '../toasts/toastcontainer';
+import ToastContainer from '../common/toasts/toastcontainer';
 import Loadable from 'react-loadable';
 import { EmptyLoading } from '../common';
 import PrivateRoute from './PrivateRoute';
