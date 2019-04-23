@@ -1,0 +1,103 @@
+// Copyright 2019 Superblocks AB
+//
+// This file is part of Superblocks Lab.
+//
+// Superblocks Lab is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation version 3 of the License.
+//
+// Superblocks Lab is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
+
+@import '../../style/index';
+
+.topbar {
+    position: relative;
+    z-index: 12;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 45px;
+    background-color: #1C2022;
+    line-height: 190%;
+    color: #fff;
+    border-bottom: 1px solid rgb(18, 21, 22);
+    .container {
+        display: flex;
+        align-content: center;
+        align-items: center;
+        span {
+            padding-left: 0.5rem;
+        }
+    }
+    a {
+        color: #fff;
+    }
+    .left {
+        margin-left: 30px;
+        float: left;
+    }
+    .right {
+        margin-right: 30px;
+        float: right;
+        margin-left: auto;
+    }
+    .logo {
+        margin-left: 10px;
+        display: flex;
+        align-items: center;
+        transition: opacity .15s;
+        &:hover {
+            opacity: .6;
+        }
+    }
+    .tools {
+        margin-left: 45px;
+        height: 100%;
+    }
+    .actionsRight {
+        display: flex;
+        margin-left: auto;
+        height: 100%;
+    }
+    .actionHelp {
+        display: flex;
+        height: 100%;
+    }
+    .actionUpload {
+        display: flex;
+        margin-left: 10px;
+        height: 100%;
+    }
+    .action {
+        display: flex;
+        align-items: center;
+        align-content: center;
+        border-bottom: 2px solid transparent;
+        transition: all .15s ease;
+        height: 100%;
+        cursor: pointer;
+        &:hover {
+            color: #E0E0E0;
+            border-color: @primary-color;
+        }
+        a {
+            padding: 0 5px;
+        }
+    }
+    .actionRight {
+        padding: 0 5px;
+    }
+    .icon {
+        position: relative;
+        width: 15px;
+        height: 15px;
+        right: 7px;
+    }
+}
