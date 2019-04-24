@@ -17,16 +17,14 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
-import ProjectBuilds from './ProjectBuilds';
+import BuildList from './BuildList';
 
 const mapStateToProps = (state: any) => ({
-
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
     return {
-
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProjectBuilds);
+export default connect(mapStateToProps, mapDispatchToProps)(BuildList);

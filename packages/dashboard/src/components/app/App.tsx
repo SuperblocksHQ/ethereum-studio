@@ -20,6 +20,7 @@ import ToastContainer from '../common/toasts/toastcontainer';
 import Loadable from 'react-loadable';
 import { EmptyLoading } from '../common';
 import PrivateRoute from './PrivateRoute';
+import BuildPage from '../project/builds/buildPage/BuildPage';
 
 const LoginScreen = Loadable({
     loader: () => import(/* webpackChunkName: "LoginScreen" */'../login/loginScreen'),
@@ -46,8 +47,8 @@ const ProjectSettings = Loadable({
     loading: EmptyLoading,
 });
 
-const ProjectBuilds = Loadable({
-    loader: () => import(/* webpackChunkName: "ProjectBuild" */'../project/builds/ProjectBuilds'),
+const BuildList = Loadable({
+    loader: () => import(/* webpackChunkName: "ProjectBuild" */'../project/builds/BuildList'),
     loading: EmptyLoading,
 });
 
@@ -81,10 +82,13 @@ export default class App extends Component<IProps> {
                                 <PrivateRoute path='/:organizationId' exact isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => <Dashboard {...props} />} />
                                 <PrivateRoute path='/:organizationId/settings' exact isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => <OrganizationSettings {...props} />} />
                                 <PrivateRoute exact path='/:organizationId/:projectId' isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => (
-                                    <ProjectDashboard content={<ProjectBuilds {...props}/>} {...props} />
+                                    <ProjectDashboard content={<BuildList {...props}/>} {...props} />
                                 )} />
                                 <PrivateRoute exact path='/:organizationId/:projectId/builds' isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => (
-                                    <ProjectDashboard content={<ProjectBuilds {...props}/>} {...props} />
+                                    <ProjectDashboard content={<BuildList {...props}/>} {...props} />
+                                )} />
+                               <PrivateRoute exact path='/:organizationId/:projectId/builds/:buildId' isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => (
+                                    <ProjectDashboard content={<BuildPage {...props}/>} {...props} />
                                 )} />
                                 <PrivateRoute exact path='/:organizationId/:projectId/settings' isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => (
                                     <ProjectDashboard content={<ProjectSettings {...props}/>} {...props} />

@@ -16,25 +16,13 @@
 
 import React, { Component } from 'react';
 import style from './style.less';
-import { Link } from 'react-router-dom';
-import { BreadCrumbs } from '../../common';
 
-interface IProps {
-    location: any;
-    match: any;
-}
-
-export default class ProjectBuilds extends Component<IProps> {
-
+export default class BuildConsole extends Component {
     render() {
         return (
-            <React.Fragment>
-                <BreadCrumbs>
-                    <Link to={`/${this.props.match.params.organizationId}`}>Organization Name</Link>
-                    <Link to={`/${this.props.match.params.organizationId}/${this.props.match.params.projectId}`}>Project Name</Link>
-                    <Link to={window.location.pathname}>Build</Link>
-                </BreadCrumbs>
-            </React.Fragment>
+            <div className={style.buildConsole}>
+                {/* TODO: Use compilerPanel instead as it has same functionality */}
+            </div>
         );
     }
 }

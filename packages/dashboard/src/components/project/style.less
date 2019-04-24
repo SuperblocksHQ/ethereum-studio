@@ -14,6 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
+@import '../../style/index.less';
+
 .projectDashboard {
     background-color: #fff;
     font-size: 14px;
@@ -22,14 +24,14 @@
     .content {
         height: 100%;
         display: flex;
-        background-color: #1e1e1e;
+        background-color: #1e2327;
         color: white;
         overflow-y: auto;
         overflow-x: hidden;
     }
 
     .pageContent {
-        padding: 15px 35px;
+        padding: 10px 20px;
         margin: 0px;
         width: 100%;
         overflow-y: auto;
@@ -44,6 +46,36 @@
 
     h1, h2, h3, h4, h5, p {
         margin-top: 0px;
-        margin-bottom: 10px;
+        margin-bottom: 5px;
     }
+
+    h1 {
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+    a {
+        transition: opacity .15s;
+
+        &:hover {
+            opacity: .6;
+        }
+    }
+}
+
+.flexVerticalCenter {
+    display: flex;
+    align-items: center;
+}
+
+.hr {
+    background: @border-color;
+    height: 1px;
+    margin: 15px calc(50% - 50vw) 15px calc(50% - 50vw);
+}
+
+a.linkPrimary,
+.linkPrimary {
+    color: @primary-color;
+    cursor: pointer;
 }
