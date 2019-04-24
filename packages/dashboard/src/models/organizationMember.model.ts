@@ -15,14 +15,20 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 export interface IOrganizationMember {
-    id: string;
-    name: string;
+    usedId: string;
+    userName: string;
     email: string;
+    imageUrl: string;
     role: IRole;
+    state: IState;
 }
 
 export interface IRole {
-    admin: 'admin';
+    owner: 'owner';
     basic: 'basic';
 }
 
+export interface IState {
+    invited: 'invited';
+    added: 'added';
+}
