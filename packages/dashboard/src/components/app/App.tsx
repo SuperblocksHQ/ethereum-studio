@@ -20,6 +20,7 @@ import ToastContainer from '../common/toasts/toastcontainer';
 import Loadable from 'react-loadable';
 import { EmptyLoading } from '../common';
 import PrivateRoute from './PrivateRoute';
+import ModalContainer from '../common/modal/modalContainer';
 
 const LoginScreen = Loadable({
     loader: () => import(/* webpackChunkName: "LoginScreen" */'../login/loginScreen'),
@@ -42,7 +43,7 @@ const ProjectDashboard = Loadable({
 });
 
 const ProjectSettings = Loadable({
-    loader: () => import(/* webpackChunkName: "ProjectSettings" */'../project/settings/ProjectSettings'),
+    loader: () => import(/* webpackChunkName: "ProjectSettings" */'../project/settings'),
     loading: EmptyLoading,
 });
 
@@ -93,6 +94,7 @@ export default class App extends Component<IProps> {
                         </div>
                     </div>
                     <ToastContainer />
+                    <ModalContainer />
                 </div>
             </Router>
         );

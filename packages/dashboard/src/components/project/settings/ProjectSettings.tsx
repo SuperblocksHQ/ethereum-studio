@@ -18,14 +18,20 @@ import React, { Component } from 'react';
 import style from './style.less';
 import { BreadCrumbs, TextInput, TextAreaInput } from '../../common';
 import { Link } from 'react-router-dom';
+import { PrimaryButton, DangerButton } from '../../common/buttons';
 
 interface IProps {
     location: any;
     match: any;
+    saveProject: () => void;
+    deleteProject: () => void;
+    showModal: (modalType: string, modalProps: any) => void;
 }
 export default class ProjectSettings extends Component<IProps> {
 
     render() {
+        const { saveProject, deleteProject, showModal } = this.props;
+
         return (
             <React.Fragment>
                 <BreadCrumbs>
@@ -36,8 +42,9 @@ export default class ProjectSettings extends Component<IProps> {
 
                 <h1>Details</h1>
                 <TextInput label={'Project name'} id={'project-name'} placeholder={'project-name'} />
-
                 <TextAreaInput label={'Description'} id={'description'} placeholder={'Enter a short description (optional)'} />
+                <PrimaryButton text={'Save Details'} onClick={() => deleteProject} />
+                <DangerButton text={'Delete Project'} onClick={() => showModal('DELETE_PROJECT_MODAL', null)} />
             </React.Fragment>
         );
     }

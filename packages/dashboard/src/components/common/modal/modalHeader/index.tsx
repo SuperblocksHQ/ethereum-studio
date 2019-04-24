@@ -14,22 +14,26 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { connect } from 'react-redux';
-import { Dispatch } from 'react';
-import { AnyAction } from 'redux';
-import ProjectSettings from './ProjectSettings';
-import { modalActions } from '../../../actions';
+import React from 'react';
+import style from './style.less';
+import classNames from 'classnames';
+import { IconClose } from '../../../icons';
 
-const mapStateToProps = (state: any) => ({
+interface IProps {
+    title: string;
+    onCloseClick: () => void;
+    className?: string;
+}
 
-});
+export function ModalHeader(props: IProps)  {
+    return (
+        <div className={style.header}>
+            <div className={style.title}>{props.title}</div>
+            <button className={classNames([style.closeIcon, 'btnNoBg'])} onClick={props.onCloseClick}>
+                <IconClose className={style.icon}/>
+            </button>
+        </div>
+    );
+}
 
-const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
-    return {
-        showModal: (modalType: string, modalProps: any) => {
-            dispatch(modalActions.showModal(modalType, modalProps));
-        }
-    };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ProjectSettings);
+export default ModalHeader;

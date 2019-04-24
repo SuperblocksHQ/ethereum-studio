@@ -1,9 +1,60 @@
+// Copyright 2019 Superblocks AB
+//
+// This file is part of Superblocks Lab.
+//
+// Superblocks Lab is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation version 3 of the License.
+//
+// Superblocks Lab is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
+
+@import '../../../style/index.less';
+
+.btn {
+    display: flex;
+    align-items: center;
+    color: #fff;
+    padding: 3px 15px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 400;
+    border-radius: 0px;
+    border: none;
+    user-select: none;
+    outline: none;
+    cursor: pointer;
+    transition: background-color .15s, color .15s, opacity .15s;
+}
+
 .githubLoginButton {
     display: flex;
     align-items: center;
     font-size: 16px;
     border-radius: 0;
+
     svg {
         margin-right: 10px;
+    }
+}
+
+.primaryButton {
+    background-color: @primary-color;
+
+    &:hover {
+        opacity: .7;
+    }
+}
+
+.dangerButton {
+    background-color: @error-color;
+
+    &:hover {
+        opacity: .7;
     }
 }

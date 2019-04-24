@@ -14,22 +14,22 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { connect } from 'react-redux';
-import { Dispatch } from 'react';
-import { AnyAction } from 'redux';
-import ProjectSettings from './ProjectSettings';
-import { modalActions } from '../../../actions';
+import React from 'react';
+import style from './style.less';
+import classNames from 'classnames';
 
-const mapStateToProps = (state: any) => ({
+interface IProps {
+    text: string;
+    icon?: JSX.Element;
+    customClassName?: string;
+    onClick: () => void;
+}
 
-});
-
-const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
-    return {
-        showModal: (modalType: string, modalProps: any) => {
-            dispatch(modalActions.showModal(modalType, modalProps));
-        }
-    };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ProjectSettings);
+export const DangerButton = (props: IProps) => (
+    <button onClick={props.onClick} className={classNames([style.btn, style.dangerButton, props.customClassName])}>
+        {props.icon}
+        <span>
+            {props.text}
+        </span>
+    </button>
+);

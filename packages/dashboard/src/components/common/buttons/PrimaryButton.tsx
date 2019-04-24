@@ -15,26 +15,21 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from 'react';
-import classNames from 'classnames';
 import style from './style.less';
-import { IconClose } from '../icons';
+import classNames from 'classnames';
 
 interface IProps {
-    title: string;
-    onClose: () => void;
-    children: JSX.Element;
+    text: string;
+    icon?: JSX.Element;
+    customClassName?: string;
+    onClick: () => void;
 }
 
-export function Modal(props: IProps) {
-    return (
-        <div className={style.modalContainer}>
-            <div className={style.header}>
-                <div className={style.title}>{props.title}</div>
-                <button className={classNames([style.closeIcon, 'btnNoBg'])} onClick={props.onClose}>
-                    <IconClose className={style.icon}/>
-                </button>
-            </div>
-            <div className={style.modal}>{props.children}</div>
-        </div>
-    );
-}
+export const PrimaryButton = (props: IProps) => (
+    <button onClick={props.onClick} className={classNames([style.btn, style.primaryButton, props.customClassName])}>
+        {props.icon}
+        <span>
+            {props.text}
+        </span>
+    </button>
+);
