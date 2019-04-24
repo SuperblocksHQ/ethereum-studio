@@ -18,39 +18,66 @@ import React from 'react';
 import style from './style.less';
 import classNames from 'classnames';
 import { ModalHeader } from '../../modal';
+import { IProject } from '../../../../models';
+import { TextInput, DangerButton } from '../../../common';
 
 interface IProps {
-    // project: IProject;
+    project: IProject;
     deleteProject: (projectId: string) => void;
     hideModal: () => void;
 }
 
 interface IState {
-    errorName: string | null;
-    errorDescription: string | null;
-    canSave: boolean;
+    isValid: boolean;
 }
 
 export default class DeleteProjectModal extends React.Component<IProps, IState> {
 
     state: IState = {
-        errorName: null,
-        errorDescription: null,
-        canSave: true
+        isValid: false
     };
 
+    handleTitleChange = (e: any) => {
+        this.setState({
+            isValid: this.props.project.name === e.target.value
+        });
+    }
 
+    onConfirmClick = () => {
+        const { id } = this.props.project;
+        if (this.state.isValid) {
+            this.props.deleteProject(id);
+        }
+    }
 
     render() {
-        const { hideModal } = this.props;
-        const { errorName, errorDescription, canSave } = this.state;
-
+        const { hideModal, project } = this.props;
+        const { isValid } = this.state;
+        console.log(this.props);
         return (
-            <div className={classNames([style.editModal, 'modal'])}>
+            <div className={classNames([style.deleteProjectModal, 'modal'])}>
                 <ModalHeader
-                    title='Project info'
+                    title='Delete this project'
                     onCloseClick={hideModal}
                 />
+                <div className={style.content}>
+                    <p>
+                        This action <b>cannot</b> be undone. This will permanently delete your project and its data, making it inaccessible for any of the members of the organisation.
+                    </p>
+                    <p>
+                        To confirm this action, please type "<b>{project.name}</b>":
+                    </p>
+                    <TextInput
+                        id='projectName'
+                        type='text'
+                        placeholder='Type the name of the project to confirm...'
+                        onChangeText={this.handleTitleChange}
+                    />
+                    <div className={style.footer}>
+                        <div className={style.cancelBtn} onClick={hideModal}>Cancel</div>
+                        <DangerButton text={'Delete Project'} onClick={this.onConfirmClick} isDisabled={!isValid} />
+                    </div>
+                </div>
 
             </div>
         );

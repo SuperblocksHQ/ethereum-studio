@@ -21,15 +21,17 @@ import ErrorMessage from '../errorMessage';
 
 interface IProps {
     id: string;
-    onChangeText?: () => void;
+    onChangeText?: (e?: any) => void;
     type?: string;
     label?: string;
     tip?: string;
     defaultValue?: string;
     disabled?: boolean;
-    error?: string;
+    error?: string | null;
     readOnly?: boolean;
     placeholder?: string;
+    required?: boolean;
+    className?: any;
     onBlur?: () => void;
 }
 
@@ -48,13 +50,14 @@ export class TextInput extends PureComponent<IProps> {
             readOnly,
             onBlur,
             placeholder,
+            required,
             ...props
         } = this.props;
 
         return(
             <div>
                 <div className={classNames('superInput', style.container)}>
-                    { label != null && <label htmlFor='name'>{label}</label> }
+                    { label != null && <label htmlFor='name'>{label}{required && <span> *</span>}</label> }
                     <div className={style.inputContainer}>
                         <input
                             id={id}

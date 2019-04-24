@@ -22,11 +22,12 @@ interface IProps {
     text: string;
     icon?: JSX.Element;
     customClassName?: string;
+    isDisabled?: boolean;
     onClick: () => void;
 }
 
 export const DangerButton = (props: IProps) => (
-    <button onClick={props.onClick} className={classNames([style.btn, style.dangerButton, props.customClassName])}>
+    <button onClick={props.onClick} className={classNames([style.btn, style.dangerButton, props.customClassName])} disabled={props.isDisabled}>
         {props.icon}
         <span>
             {props.text}

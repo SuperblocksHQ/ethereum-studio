@@ -19,8 +19,9 @@
 .btn {
     display: flex;
     align-items: center;
+    justify-content: center;
     color: #fff;
-    padding: 3px 15px;
+    padding: 6px 15px;
     text-decoration: none;
     font-size: 14px;
     font-weight: 400;
@@ -30,6 +31,16 @@
     outline: none;
     cursor: pointer;
     transition: background-color .15s, color .15s, opacity .15s;
+    min-width: 120px;
+
+    &:disabled {
+        opacity: .3;
+
+        &:hover {
+            opacity: .3;
+            cursor: no-drop;
+        }
+    }
 }
 
 .githubLoginButton {

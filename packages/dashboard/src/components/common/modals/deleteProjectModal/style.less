@@ -16,16 +16,15 @@
 
 @import '../../../../style/index.less';
 
-.editModal {
+.deleteProjectModal {
 	display: block;
-	border-radius: 4px;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+	border-radius: 2px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
     background-color: @modal-background-color;
 	z-index: 2;
 	color: #fff;
 	transition: visibility 0s, opacity 0.2s ease;
-	padding: 0px 0px 15px 0px;
-	max-width: 340px;
+	width: 520px;
 
     .content {
         line-height: 1.5em;
@@ -53,11 +52,22 @@
 	}
 
     .footer {
-        display: flex;
-        border-top: 1px solid @modal-separator-color;
-        .buttonsContainer {
-            margin-left: auto;
-            padding: 15px 20px;
-        }
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		margin-top: 33px;
+		
+		.cancelBtn {
+			transition: opacity .15s;
+
+			&:hover {
+				opacity: .6;
+				cursor: pointer;
+			}
+		}
+
+		button {
+			margin-left: 28px;
+		}
     }
 }

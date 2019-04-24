@@ -21,18 +21,19 @@ import ErrorMessage from '../errorMessage';
 
 interface IProps {
     id: string;
-    onChangeText?: () => void;
+    onChangeText?: (e?: any) => void;
     tip?: string;
     label?: string;
     defaultValue?: string;
     value?: string;
     disabled?: boolean;
-    error?: string;
+    error?: string | null;
     readOnly?: boolean;
     rows?: number;
     cols?: number;
     placeholder?: string;
     maxLength?: number;
+    className?: any;
 }
 
 export class TextAreaInput extends PureComponent<IProps> {
