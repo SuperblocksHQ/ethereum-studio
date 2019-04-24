@@ -1,4 +1,4 @@
-// Copyright 2018 Superblocks AB
+// Copyright 2019 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -17,20 +17,14 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
-import { toastSelectors } from '../../../selectors/toast.selectors';
-import { toastActions } from '../../../actions';
-import ToastContainer from './ToastContainer';
+import BuildPage from './BuildPage';
 
 const mapStateToProps = (state: any) => ({
-    toasts: toastSelectors.getToasts(state),
 });
 
-function mapDispatchToProps(dispatch: Dispatch<AnyAction>) {
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
     return {
-        toastDismissed: (id: string) => {
-            dispatch(toastActions.toastDismissed(id));
-        },
     };
-}
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(ToastContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(BuildPage);

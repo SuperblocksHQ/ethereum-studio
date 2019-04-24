@@ -18,7 +18,7 @@ import React, { Component } from 'react';
 import Topbar from '../topbar';
 import style from './style.less';
 import { SideMenu, SideMenuItem, SideMenuFooter } from '../sideMenu';
-import { IconConfigure, IconDeploy } from '../common/icons';
+import { IconConfigure, IconPlay } from '../common/icons';
 
 interface IProps {
     location: any;
@@ -34,29 +34,31 @@ export default class ProjectDashboard extends Component<IProps> {
 
         return (
             <div className={style.projectDashboard}>
-                <Topbar />
-                <div className={style.content}>
-                    <SideMenu>
-                        <SideMenuItem
-                                icon={<IconDeploy />}
-                                title='Build'
-                                active={pathname.includes('build')}
-                                linkTo={`/${this.props.match.params.organizationId}/${this.props.match.params.projectId}/build`}
-                        />
-                        <SideMenuFooter>
+                <React.Fragment>
+                    <Topbar />
+                    <div className={style.content}>
+                        <SideMenu>
                             <SideMenuItem
-                                icon={<IconConfigure />}
-                                title='Project Settings'
-                                active={pathname.includes('settings')}
-                                linkTo={`/${this.props.match.params.organizationId}/${this.props.match.params.projectId}/settings`}
+                                    icon={<IconPlay />}
+                                    title='Builds'
+                                    active={pathname.includes('builds')}
+                                    linkTo={`/${this.props.match.params.organizationId}/${this.props.match.params.projectId}/builds`}
                             />
-                        </SideMenuFooter>
+                            <SideMenuFooter>
+                                <SideMenuItem
+                                    icon={<IconConfigure />}
+                                    title='Project Settings'
+                                    active={pathname.includes('settings')}
+                                    linkTo={`/${this.props.match.params.organizationId}/${this.props.match.params.projectId}/settings`}
+                                />
+                            </SideMenuFooter>
 
-                    </SideMenu>
-                    <div className={style.pageContent}>
-                        {content}
+                        </SideMenu>
+                        <div className={style.pageContent}>
+                            {content}
+                        </div>
                     </div>
-                </div>
+                </React.Fragment>
             </div>
         );
     }

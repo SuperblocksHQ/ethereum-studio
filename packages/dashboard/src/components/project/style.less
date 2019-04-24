@@ -31,7 +31,7 @@
     }
 
     .pageContent {
-        padding: 15px 35px;
+        padding: 10px 20px;
         margin: 0px;
         height: calc(100% - 45px);
         width: 100%;
@@ -47,6 +47,36 @@
 
     h1, h2, h3, h4, h5, p {
         margin-top: 0px;
-        margin-bottom: 10px;
+        margin-bottom: 5px;
     }
+
+    h1 {
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+    a {
+        transition: opacity .15s;
+
+        &:hover {
+            opacity: .6;
+        }
+    }
+}
+
+.flexVerticalCenter {
+    display: flex;
+    align-items: center;
+}
+
+.hr {
+    background: @border-color;
+    height: 1px;
+    margin: 15px calc(50% - 50vw) 15px calc(50% - 50vw);
+}
+
+a.linkPrimary,
+.linkPrimary {
+    color: @primary-color;
+    cursor: pointer;
 }
