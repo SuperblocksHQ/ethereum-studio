@@ -16,7 +16,7 @@
 
 import React, { Component } from 'react';
 import style from './style.less';
-import { BreadCrumbs } from '../../common';
+import { BreadCrumbs, TextInput, TextAreaInput } from '../../common';
 import { Link } from 'react-router-dom';
 
 interface IProps {
@@ -33,6 +33,11 @@ export default class ProjectSettings extends Component<IProps> {
                     <Link to={`/${this.props.match.params.organizationId}/${this.props.match.params.projectId}`}>Project Name</Link>
                     <Link to={window.location.pathname}>Settings</Link>
                 </BreadCrumbs>
+
+                <h1>Details</h1>
+                <TextInput label={'Project name'} id={'project-name'} placeholder={'project-name'} />
+
+                <TextAreaInput label={'Description'} id={'description'} placeholder={'Enter a short description (optional)'} />
             </React.Fragment>
         );
     }

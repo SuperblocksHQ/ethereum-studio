@@ -31,6 +31,7 @@ interface IProps {
     readOnly?: boolean;
     rows?: number;
     cols?: number;
+    placeholder?: string;
     maxLength?: number;
 }
 
@@ -54,12 +55,13 @@ export class TextAreaInput extends PureComponent<IProps> {
             rows,
             cols,
             maxLength,
+            placeholder,
             ...props
         } = this.props;
 
         return(
             <div>
-                <div className={classNames('superInputDark', style.container)}>
+                <div className={classNames('superInput', style.container)}>
                     { label != null && <label htmlFor='name'>{label}</label> }
                     <div className={style.inputContainer}>
                         <textarea
@@ -74,6 +76,7 @@ export class TextAreaInput extends PureComponent<IProps> {
                             defaultValue={defaultValue}
                             value={value}
                             onFocus={this.handleFocus}
+                            placeholder={placeholder}
                             {...props}
                         >
                         </textarea>

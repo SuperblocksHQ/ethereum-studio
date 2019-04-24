@@ -29,6 +29,7 @@ interface IProps {
     disabled?: boolean;
     error?: string;
     readOnly?: boolean;
+    placeholder?: string;
     onBlur?: () => void;
 }
 
@@ -46,12 +47,13 @@ export class TextInput extends PureComponent<IProps> {
             error,
             readOnly,
             onBlur,
+            placeholder,
             ...props
         } = this.props;
 
         return(
             <div>
-                <div className={classNames('superInputDark', style.container)}>
+                <div className={classNames('superInput', style.container)}>
                     { label != null && <label htmlFor='name'>{label}</label> }
                     <div className={style.inputContainer}>
                         <input
@@ -63,6 +65,7 @@ export class TextInput extends PureComponent<IProps> {
                             readOnly={readOnly}
                             className={classNames({[style.error]: error != null})}
                             onBlur={onBlur}
+                            placeholder={placeholder}
                             {...props}
                         />
                         {tip != null && <div className={style.tip}>{tip}</div>}
