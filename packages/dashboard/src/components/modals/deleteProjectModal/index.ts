@@ -18,7 +18,7 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
 import DeleteProjectModal from './DeleteProjectModal';
-import { projectsActions } from '../../../../actions';
+import { projectsActions } from '../../../actions';
 
 function mapDispatchToProps(dispatch: Dispatch<AnyAction>) {
     return {

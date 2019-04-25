@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Topbar from '../../topbar';
 import style from './style.less';
-import { SideMenu, SideMenuItem, SideMenuFooter } from '../../sideMenu';
-import { IconConfigure, IconDeploy, IconBack } from '../../common/icons';
+import { SideMenu, SideMenuItem, SideMenuFooter, SideMenuHeader } from '../../sideMenu';
+import { IconBack, IconArchive, IconUsers } from '../../common/icons';
 
 interface IProps {
     location: any;
@@ -21,23 +21,25 @@ export default class OrganizationSettings extends Component<IProps> {
                 <Topbar />
                 <div className={style.content}>
                     <SideMenu>
+                        <SideMenuHeader title={'Organization Settings'} />
+                        <SideMenuHeader title={'General'} />
                         <SideMenuItem
-                            icon={<IconDeploy />}
+                            icon={<IconArchive />}
                             title='Details'
                             active={pathname.includes('details')}
-                            linkTo={`/${this.props.match.params.organizationId}/details`}
+                            linkTo={`/${this.props.match.params.organizationId}/settings/details`}
                         />
                         <SideMenuItem
-                            icon={<IconDeploy />}
+                            icon={<IconUsers />}
                             title='People'
                             active={pathname.includes('people')}
-                            linkTo={`/${this.props.match.params.organizationId}/people`}
+                            linkTo={`/${this.props.match.params.organizationId}/settings/people`}
                         />
                         <SideMenuFooter>
                             <SideMenuItem
                                 icon={<IconBack />}
                                 title='Back to dashboard'
-                                linkTo={`/${this.props.match.params.organizationId}/`}
+                                linkTo={`/${this.props.match.params.organizationId}`}
                             />
                         </SideMenuFooter>
                     </SideMenu>

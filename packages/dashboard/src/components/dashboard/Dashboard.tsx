@@ -53,7 +53,7 @@ export default class Dashboard extends Component<IProps> {
                             <SideMenuItem
                                 icon={<IconConfigure width='10px' height='10px' />}
                                 title='Organization settings'
-                                linkTo='12334/settings'
+                                linkTo='12334/settings/details'
                             />
                         </SideMenuFooter>
                     </SideMenu>

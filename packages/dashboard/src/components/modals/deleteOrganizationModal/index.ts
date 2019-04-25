@@ -14,4 +14,19 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export * from './deleteProjectModal';
+import { connect } from 'react-redux';
+import { Dispatch } from 'react';
+import { AnyAction } from 'redux';
+import DeleteOrganizationModal from './DeleteOrganizationModal';
+import { projectsActions } from '../../../actions';
+
+// TODO: Change project actions to organization actions
+function mapDispatchToProps(dispatch: Dispatch<AnyAction>) {
+    return {
+        deleteOrganization: (projectId: string) => {
+            dispatch(projectsActions.deleteProject(projectId));
+        }
+    };
+}
+
+export default connect(null, mapDispatchToProps)(DeleteOrganizationModal);

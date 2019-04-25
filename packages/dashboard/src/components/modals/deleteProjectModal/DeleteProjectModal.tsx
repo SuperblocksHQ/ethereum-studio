@@ -17,9 +17,9 @@
 import React from 'react';
 import style from './style.less';
 import classNames from 'classnames';
-import { ModalHeader } from '../../modal';
-import { IProject } from '../../../../models';
-import { TextInput, DangerButton } from '../../../common';
+import { ModalHeader } from '../../common';
+import { IProject } from '../../../models';
+import { TextInput, DangerButton } from '../../common';
 
 interface IProps {
     project: IProject;
@@ -53,7 +53,7 @@ export default class DeleteProjectModal extends React.Component<IProps, IState> 
     render() {
         const { hideModal, project } = this.props;
         const { isValid } = this.state;
-        console.log(this.props);
+
         return (
             <div className={classNames([style.deleteProjectModal, 'modal'])}>
                 <ModalHeader

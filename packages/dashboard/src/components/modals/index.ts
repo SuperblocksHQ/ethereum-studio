@@ -14,31 +14,5 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-@import '../../../style/index.less';
-
-.organizationSettings {
-    background-color: #fff;
-    font-size: 14px;
-    height: 100%;
-
-    .content {
-        height: 100%;
-        display: flex;
-        background-color: #1e1e1e;
-        color: white;
-        overflow-y: auto;
-        overflow-x: hidden;
-    }
-
-    .pageContent {
-        padding: 15px 35px;
-        margin: 0px;
-        width: 100%;
-        overflow-y: auto;
-    }
-
-    h1, h2, h3, h4, h5, p {
-        margin-top: 0px;
-        margin-bottom: 10px;
-    }
-}
+export * from './deleteProjectModal';
+export * from './deleteOrganizationModal';

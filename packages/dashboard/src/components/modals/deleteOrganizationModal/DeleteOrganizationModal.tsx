@@ -17,13 +17,12 @@
 import React from 'react';
 import style from './style.less';
 import classNames from 'classnames';
-import { ModalHeader } from '../../modal';
-import { IProject } from '../../../../models';
-import { TextInput, DangerButton } from '../../../common';
+import { ModalHeader } from '../../common/modal';
+import { TextInput, DangerButton } from '../../common';
 
 interface IProps {
-    project: IProject;
-    deleteProject: (projectId: string) => void;
+    organization: any; // TODO: Add organization Model
+    deleteOrganization: (projectId: string) => void;
     hideModal: () => void;
 }
 
@@ -39,43 +38,43 @@ export default class DeleteProjectModal extends React.Component<IProps, IState> 
 
     handleTitleChange = (e: any) => {
         this.setState({
-            isValid: this.props.project.name === e.target.value
+            isValid: this.props.organization.name === e.target.value
         });
     }
 
     onConfirmClick = () => {
-        const { id } = this.props.project;
+        const { id } = this.props.organization;
         if (this.state.isValid) {
-            this.props.deleteProject(id);
+            this.props.deleteOrganization(id);
         }
     }
 
     render() {
-        const { hideModal, project } = this.props;
+        const { hideModal, organization } = this.props;
         const { isValid } = this.state;
-        console.log(this.props);
+
         return (
-            <div className={classNames([style.deleteProjectModal, 'modal'])}>
+            <div className={classNames([style.deleteOrganizationModal, 'modal'])}>
                 <ModalHeader
-                    title='Delete this project'
+                    title='Delete this organization'
                     onCloseClick={hideModal}
                 />
                 <div className={style.content}>
                     <p>
-                        This action <b>cannot</b> be undone. This will permanently delete your project and its data, making it inaccessible for any of the members of the organization.
+                        This action <b>cannot</b> be undone. This will permanently delete your organization and its data, making it inaccessible for any of the members in it.
                     </p>
                     <p>
-                        To confirm this action, please type "<b>{project.name}</b>":
+                        To confirm this action, please type "<b>{organization.name}</b>":
                     </p>
                     <TextInput
-                        id='projectName'
+                        id='organizationName'
                         type='text'
-                        placeholder='Type the name of the project to confirm...'
+                        placeholder='Type the name of the organization to confirm...'
                         onChangeText={this.handleTitleChange}
                     />
                     <div className={style.footer}>
                         <div className={style.cancelBtn} onClick={hideModal}>Cancel</div>
-                        <DangerButton text={'Delete Project'} onClick={this.onConfirmClick} isDisabled={!isValid} />
+                        <DangerButton text={'Delete Organization'} onClick={this.onConfirmClick} isDisabled={!isValid} />
                     </div>
                 </div>
 

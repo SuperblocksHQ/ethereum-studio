@@ -20,7 +20,12 @@ import Loadable from 'react-loadable';
 import { Loading } from '../../loadable';
 
 const DeleteProjectModal = Loadable({
-    loader: () => import(/* webpackChunkName: "LoginModal" */'../../modals/deleteProjectModal'),
+    loader: () => import(/* webpackChunkName: "DeleteProjectModal" */'../../../modals/deleteProjectModal'),
+    loading: Loading,
+});
+
+const DeleteOrganizationModal = Loadable({
+    loader: () => import(/* webpackChunkName: "DeleteOrganizationModal" */'../../../modals/deleteOrganizationModal'),
     loading: Loading,
 });
 
@@ -32,7 +37,8 @@ interface IProps {
 }
 
 const MODAL_COMPONENTS: any = {
-    DELETE_PROJECT_MODAL: DeleteProjectModal
+    DELETE_PROJECT_MODAL: DeleteProjectModal,
+    DELETE_ORGANIZATION_MODAL: DeleteOrganizationModal
     /* other modals */
 };
 
