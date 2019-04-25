@@ -29,6 +29,10 @@ const DeleteOrganizationModal = Loadable({
     loading: Loading,
 });
 
+const InvitePeopleModal = Loadable({
+    loader: () => import(/* webpackChunkName: "InvitePeopleModal" */'../../../modals/invitePeopleModal'),
+    loading: Loading,
+});
 
 interface IProps {
     modalType: string;
@@ -38,7 +42,8 @@ interface IProps {
 
 const MODAL_COMPONENTS: any = {
     DELETE_PROJECT_MODAL: DeleteProjectModal,
-    DELETE_ORGANIZATION_MODAL: DeleteOrganizationModal
+    DELETE_ORGANIZATION_MODAL: DeleteOrganizationModal,
+    INVITE_PEOPLE_MODAL: InvitePeopleModal
     /* other modals */
 };
 

@@ -58,6 +58,11 @@ const Details = Loadable({
     loading: EmptyLoading,
 });
 
+const PeopleList = Loadable({
+    loader: () => import(/* webpackChunkName: "PeopleList" */'../organization/settings/people'),
+    loading: EmptyLoading,
+});
+
 interface IProps {
     notifyAppStart: () => void;
     isAuthenticated: boolean;
@@ -89,6 +94,9 @@ export default class App extends Component<IProps> {
                                 <PrivateRoute path='/:organizationId/settings' exact isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => <OrganizationSettings {...props} />} />
                                 <PrivateRoute exact path='/:organizationId/settings/details' isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => (
                                     <OrganizationSettings content={<Details {...props}/>} {...props} />
+                                )} />
+                                <PrivateRoute exact path='/:organizationId/settings/people' isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => (
+                                    <OrganizationSettings content={<PeopleList {...props}/>} {...props} />
                                 )} />
                                 <PrivateRoute exact path='/:organizationId/:projectId' isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => (
                                     <ProjectDashboard content={<BuildList {...props}/>} {...props} />

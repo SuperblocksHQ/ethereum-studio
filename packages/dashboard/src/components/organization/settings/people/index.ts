@@ -14,6 +14,23 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export * from './deleteProjectModal';
-export * from './deleteOrganizationModal';
-export * from './invitePeopleModal';
+import { connect } from 'react-redux';
+import { Dispatch } from 'react';
+import { AnyAction } from 'redux';
+import PeopleList from './PeopleList';
+import { userSelectors } from '../../../../selectors';
+import { modalActions } from '../../../../actions';
+
+const mapStateToProps = (state: any) => ({
+    userProfile: userSelectors.getUserProfile(state)
+});
+
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
+    return {
+        showModal: (modalType: string, modalProps: any) => {
+            dispatch(modalActions.showModal(modalType, modalProps));
+        }
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(PeopleList);

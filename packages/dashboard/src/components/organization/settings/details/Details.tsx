@@ -85,7 +85,7 @@ export default class Details extends Component<IProps, IState> {
         };
 
         return (
-            <div className={style.organizationSettings}>
+            <div className={style.details}>
                 <BreadCrumbs>
                     <Link to={`/${this.props.match.params.organizationId}`}>{organization.name}</Link>
                     <Link to={`/${this.props.match.params.organizationId}/settings/details`}>Organization Settings</Link>
