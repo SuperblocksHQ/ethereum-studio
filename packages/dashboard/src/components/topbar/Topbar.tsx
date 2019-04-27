@@ -37,6 +37,7 @@ export default class Topbar extends Component<IProps> {
                     <img
                         src='/static/img/img-logo-dashboard.svg'
                         alt='Superblocks logo'
+                        height='30px'
                     />
                 </Link>
 
