@@ -32,8 +32,8 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
         showModal: (modalType: string, modalProps: any) => {
             dispatch(modalActions.showModal(modalType, modalProps));
         },
-        updateOrganization: (project: IProject) => {
-            dispatch(projectsActions.updateProject(project));
+        updateOrganization: (name: string, description: string) => {
+            // dispatch(projectsActions.updateProjectDetails(project));
         }
     };
 };

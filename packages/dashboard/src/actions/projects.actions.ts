@@ -108,24 +108,26 @@ export const projectsActions = {
             data: error
         };
     },
-    UPDATE_PROJECT: 'UPDATE_PROJECT',
-    updateProject(project: IProject) {
+
+    // ---------- PROJECT UPDATES ----------
+    UPDATE_PROJECT_DETAILS: 'UPDATE_PROJECT_DETAILS',
+    updateProjectDetails(id: string, name: string, description: string) {
        return {
-            type: projectsActions.UPDATE_PROJECT,
-            data: { project }
+            type: projectsActions.UPDATE_PROJECT_DETAILS,
+            data: { id, name, description }
        };
     },
-    UPDATE_PROJECT_SUCCESS: 'UPDATE_PROJECT_SUCCESS',
-    updateProjectSuccess(project: IProject) {
+    UPDATE_PROJECT_DETAILS_SUCCESS: 'UPDATE_PROJECT_DETAILS_SUCCESS',
+    updateProjectDetailsSuccess(project: IProject) {
        return {
-            type: projectsActions.UPDATE_PROJECT_SUCCESS,
+            type: projectsActions.UPDATE_PROJECT_DETAILS_SUCCESS,
             data: { project}
        };
     },
-    UPDATE_PROJECT_FAIL: 'UPDATE_PROJECT_FAIL',
-    updateProjectFail(error: string) {
+    UPDATE_PROJECT_DETAILS_FAIL: 'UPDATE_PROJECT_DETAILS_FAIL',
+    updateProjectDetailsFail(error: string) {
        return {
-            type: projectsActions.UPDATE_PROJECT_FAIL,
+            type: projectsActions.UPDATE_PROJECT_DETAILS_FAIL,
             data: error
        };
     },

@@ -25,7 +25,7 @@ interface IProps {
     location: any;
     match: any;
     organization: any; // TODO: Any organization model
-    updateOrganization: (organization: any) => void; // TODO: Add organization model
+    updateOrganization: (name: string, description: string) => void; // TODO: Add organization model
     showModal: (modalType: string, modalProps: any) => void;
 }
 
@@ -65,13 +65,10 @@ export default class Details extends Component<IProps, IState> {
     }
 
     onSave = () => {
-        const { organization, updateOrganization } = this.props;
+        const { updateOrganization } = this.props;
         const { newName, newDescription} = this.state;
 
-        organization.name = newName;
-        organization.description = newDescription;
-
-        updateOrganization(organization);
+        updateOrganization(newName, newDescription);
     }
 
     render() {

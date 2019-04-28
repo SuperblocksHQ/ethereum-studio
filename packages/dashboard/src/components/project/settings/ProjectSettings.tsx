@@ -26,7 +26,7 @@ interface IProps {
     location: any;
     match: any;
     project: IProject;
-    updateProject: (project: IProject) => void;
+    updateProjectDetails: (id: string, name: string, description: string) => void;
     showModal: (modalType: string, modalProps: any) => void;
 }
 
@@ -66,13 +66,10 @@ export default class ProjectSettings extends Component<IProps, IState> {
     }
 
     onSave = () => {
-        const { project, updateProject } = this.props;
+        const { project, updateProjectDetails } = this.props;
         const { newName, newDescription} = this.state;
 
-        project.name = newName;
-        project.description = newDescription;
-
-        updateProject(project);
+        updateProjectDetails(project.id, newName, newDescription);
     }
 
     render() {

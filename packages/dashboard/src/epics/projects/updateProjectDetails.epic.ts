@@ -17,30 +17,30 @@
 import { from, of } from 'rxjs';
 import { switchMap, withLatestFrom, catchError } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
-import { projectsActions, userActions } from '../../actions';
+import { projectsActions } from '../../actions';
 import { projectService } from '../../services/project.service';
 
-export const updateProject: Epic = (action$: any, state$: any) => action$.pipe(
-    ofType(projectsActions.UPDATE_PROJECT),
+export const updateProjectDetails: Epic = (action$: any, state$: any) => action$.pipe(
+    ofType(projectsActions.UPDATE_PROJECT_DETAILS),
     withLatestFrom(state$),
     switchMap(([action]) => {
-        return projectService.getProjectById(action.data.project.id)
+        return projectService.getProjectById(action.data.id)
         .pipe(
             switchMap((selectedProject) => {
-                selectedProject.name = action.data.project.name;
-                selectedProject.description = action.data.project.description;
+                selectedProject.name = action.data.name;
+                selectedProject.description = action.data.description;
 
                 return from(projectService.putProjectById(selectedProject.id, selectedProject))
                     .pipe(
                         switchMap(() => {
-                            return [projectsActions.updateProjectSuccess(selectedProject)];
+                            return [projectsActions.updateProjectDetailsSuccess(selectedProject)];
                         }
                     )
                 );
             }),
             catchError((error) => {
                 console.log('There was an issue updating the project: ' + error);
-                return of(projectsActions.updateProjectFail(error.message));
+                return of(projectsActions.updateProjectDetailsFail(error.message));
             })
         );
     })
