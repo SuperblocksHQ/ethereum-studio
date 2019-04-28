@@ -18,8 +18,9 @@ import React, { Component } from 'react';
 import style from './style.less';
 import { Link } from 'react-router-dom';
 import PeopleListItem from './PeopleListItem';
-import { BreadCrumbs, PrimaryButton } from '../../../common';
+import { BreadCrumbs, StyledButton } from '../../../common';
 import { IUser } from '../../../../models';
+import { StyledButtonType } from '../../../../models/button.model';
 
 interface IProps {
     location: any;
@@ -73,7 +74,7 @@ export default class PeopleList extends Component<IProps> {
 
                 <div className={style.flexVerticalCenter}>
                     <h1>People</h1>
-                    <PrimaryButton text={'Invite People'} onClick={() => showModal('INVITE_PEOPLE_MODAL', null)} customClassName={style.inviteBtn} />
+                    <StyledButton type={StyledButtonType.Primary} text={'Invite People'} onClick={() => showModal('INVITE_PEOPLE_MODAL', null)} customClassName={style.inviteBtn} />
                 </div>
 
                 <div className={style.hr}></div>

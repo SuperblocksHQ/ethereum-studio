@@ -16,9 +16,9 @@
 
 import React, { Component } from 'react';
 import style from './style.less';
-import { BreadCrumbs, TextInput, TextAreaInput } from '../../common';
+import { BreadCrumbs, TextInput, TextAreaInput, StyledButton } from '../../common';
+import { StyledButtonType } from '../../../models/button.model';
 import { Link } from 'react-router-dom';
-import { PrimaryButton, DangerButton } from '../../common/buttons';
 import { IProject } from '../../../models';
 import { validateProjectName } from '../../../validations';
 
@@ -114,13 +114,13 @@ export default class ProjectSettings extends Component<IProps, IState> {
                         defaultValue={project.description}
                     />
                 </div>
-                <PrimaryButton text={'Save Details'} onClick={this.onSave} isDisabled={!canSave}/>
+                <StyledButton type={StyledButtonType.Primary} text={'Save Details'} onClick={this.onSave} isDisabled={!canSave}/>
 
                 <div className={style.sectionDivider}></div>
 
                 <h1>Delete this project</h1>
                 <p className={style['mb-4']}>Once deleted, it will be gone forever. Please be certain.</p>
-                <DangerButton text={'Delete Project'} onClick={() => showModal('DELETE_PROJECT_MODAL', { project })} />
+                <StyledButton type={StyledButtonType.Danger} text={'Delete Project'} onClick={() => showModal('DELETE_PROJECT_MODAL', { project })} />
             </div>
         );
     }

@@ -17,8 +17,10 @@
 import React from 'react';
 import style from './style.less';
 import classNames from 'classnames';
+import { StyledButtonType } from '../../../models/button.model';
 
 interface IProps {
+    type: StyledButtonType;
     text: string;
     icon?: JSX.Element;
     customClassName?: string;
@@ -26,11 +28,26 @@ interface IProps {
     onClick: () => void;
 }
 
-export const PrimaryButton = (props: IProps) => (
-    <button onClick={props.onClick} className={classNames([style.btn, style.primaryButton, props.customClassName])} disabled={props.isDisabled}>
-        {props.icon}
-        <span>
-            {props.text}
-        </span>
-    </button>
-);
+export const StyledButton = (props: IProps) => {
+    let clsBtn = {};
+
+    switch (props.type) {
+        case StyledButtonType.Primary:
+            clsBtn = style.primaryButton;
+            break;
+        case StyledButtonType.Danger:
+            clsBtn = style.dangerButton;
+            break;
+        default:
+            break;
+    }
+
+    return (
+        <button onClick={props.onClick} className={classNames([style.btn, clsBtn, props.customClassName])} disabled={props.isDisabled}>
+            {props.icon}
+            <span>
+                {props.text}
+            </span>
+        </button>
+    );
+};

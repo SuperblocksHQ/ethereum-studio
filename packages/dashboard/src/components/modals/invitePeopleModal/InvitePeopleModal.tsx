@@ -18,7 +18,8 @@ import React from 'react';
 import style from './style.less';
 import classNames from 'classnames';
 import { ModalHeader } from '../../common/modal';
-import { TextInput, PrimaryButton } from '../../common';
+import { TextInput, StyledButton } from '../../common';
+import { StyledButtonType } from '../../../models/button.model';
 
 interface IProps {
     hideModal: () => void;
@@ -63,7 +64,7 @@ export default class InvitePeopleModal extends React.Component<IProps, IState> {
                     />
                     <div className={style.footer}>
                         <div className={style.cancelBtn} onClick={hideModal}>Cancel</div>
-                        <PrimaryButton text={'Invite member'} onClick={this.onConfirmClick} />
+                        <StyledButton type={StyledButtonType.Primary} text={'Invite member'} onClick={this.onConfirmClick} />
                     </div>
                 </div>
             </div>

@@ -17,9 +17,9 @@
 import React from 'react';
 import style from './style.less';
 import classNames from 'classnames';
-import { ModalHeader } from '../../common';
 import { IProject } from '../../../models';
-import { TextInput, DangerButton } from '../../common';
+import { ModalHeader, TextInput, StyledButton } from '../../common';
+import { StyledButtonType } from '../../../models/button.model';
 
 interface IProps {
     project: IProject;
@@ -75,7 +75,7 @@ export default class DeleteProjectModal extends React.Component<IProps, IState> 
                     />
                     <div className={style.footer}>
                         <div className={style.cancelBtn} onClick={hideModal}>Cancel</div>
-                        <DangerButton text={'Delete Project'} onClick={this.onConfirmClick} isDisabled={!isValid} />
+                        <StyledButton type={StyledButtonType.Danger} text={'Delete Project'} onClick={this.onConfirmClick} isDisabled={!isValid} />
                     </div>
                 </div>
 

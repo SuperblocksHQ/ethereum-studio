@@ -18,7 +18,8 @@ import React from 'react';
 import style from './style.less';
 import classNames from 'classnames';
 import { ModalHeader } from '../../common/modal';
-import { TextInput, DangerButton } from '../../common';
+import { TextInput, StyledButton } from '../../common';
+import { StyledButtonType } from '../../../models/button.model';
 
 interface IProps {
     organization: any; // TODO: Add organization Model
@@ -74,7 +75,7 @@ export default class DeleteProjectModal extends React.Component<IProps, IState> 
                     />
                     <div className={style.footer}>
                         <div className={style.cancelBtn} onClick={hideModal}>Cancel</div>
-                        <DangerButton text={'Delete Organization'} onClick={this.onConfirmClick} isDisabled={!isValid} />
+                        <StyledButton type={StyledButtonType.Danger} text={'Delete Organization'} onClick={this.onConfirmClick} isDisabled={!isValid} />
                     </div>
                 </div>
 
