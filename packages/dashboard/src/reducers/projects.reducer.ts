@@ -54,13 +54,6 @@ export default function projectsReducer(state = initialState, action: AnyAction)
                 project: { ...action.data.project, files: undefined },
             };
         }
-        case projectsActions.RENAME_PROJECT_FAIL: {
-            console.log('rename project failed: ', action.data);
-
-            return {
-                ...state,
-            };
-        }
         case projectsActions.LOAD_PROJECT_FAIL: {
             console.log('project load failed', action.data);
 
@@ -74,10 +67,10 @@ export default function projectsReducer(state = initialState, action: AnyAction)
                 project: null
             };
         }
-        case projectsActions.UPDATE_PROJECT_SUCCESS: {
+        case projectsActions.UPDATE_PROJECT_DETAILS_SUCCESS: {
             return {
                 ...state,
-                project: { ...action.data.project, files: undefined }
+                project: { ...action.data.project }
             };
         }
         default:

@@ -16,3 +16,6 @@
 
 export const validateProjectName = (projectName: string) =>
     (!/^[a-zA-ZA-Z0-9 -]+$/.test(projectName) || /^\s*$/.test(projectName) || projectName === '' ? 'PROJECT_NAME' : null);
+
+export const validateOrganizationName = (organizationName: string) =>
+    (!/^[a-zA-ZA-Z0-9 -]+$/.test(organizationName) || /^\s*$/.test(organizationName) || organizationName === '' ? 'ORGANIZATION_NAME' : null);

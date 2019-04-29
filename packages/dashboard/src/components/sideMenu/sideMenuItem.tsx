@@ -18,6 +18,7 @@ import React from 'react';
 import style from './style.less';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
+import OnlyIf from '../common/onlyIf';
 
 interface IProps {
     icon?: JSX.Element;
@@ -26,16 +27,19 @@ interface IProps {
     active?: boolean;
     linkTo: string;
     children?: any;
+    customClassName?: any;
 }
 
 export function SideMenuItem(props: IProps) {
     return (
-        <div className={classNames([style.posRelative, !props.active ? style.flyOut : style.itemWrapper])}>
+        <div className={classNames([style.posRelative, props.customClassName, !props.active ? style.flyOut : style.itemWrapper])}>
             <Link to={props.linkTo}>
                 <div onClick={props.onClick} className={classNames([style.item, props.active ? style.active : null])}>
-                    <div className={style.iconContainer}>
-                        {props.icon}
-                    </div>
+                    <OnlyIf test={!!props.icon}>
+                        <div className={style.iconContainer}>
+                            {props.icon}
+                        </div>
+                    </OnlyIf>
                     <span>
                         {props.title}
                     </span>

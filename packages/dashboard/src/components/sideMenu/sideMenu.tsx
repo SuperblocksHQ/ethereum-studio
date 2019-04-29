@@ -17,7 +17,7 @@
 import React, { Component } from 'react';
 import style from './style.less';
 import classNames from 'classnames';
-import { IconDoubleArrowLeft } from '../common/icons';
+import { IconChevronLeft } from '../common/icons';
 
 interface IState {
     collapsed: boolean;
@@ -43,7 +43,7 @@ export class SideMenu extends Component<{}, IState> {
                     {this.props.children}
                 </div>
                 <div className={classNames([style.collapseSidebar, style.item])} onClick={this.toggleExpanded}>
-                    <IconDoubleArrowLeft />
+                    <IconChevronLeft />
                 </div>
             </div>
         );
