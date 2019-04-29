@@ -16,22 +16,18 @@
 
 import React from 'react';
 import style from './style.less';
-import { StyledButton } from '../../common';
-import { StyledButtonType } from '../../../models';
-import { Link } from 'react-router-dom';
+import Topbar from '../topbar';
+import GithubRepoList from '../githubRepoList';
 
-interface IProps {
-    organizationId: string;
-    projectId: string;
-}
-
-export const SetupBuild = (props: IProps) => (
-    <div className={style.setupBuild}>
-        <img src='/static/img/illustration-building-blocks.svg' />
-        <p>Connect to your favorite repository so we can start building your project</p>
-        <p>We'll build your app automatically on commit</p>
-        <Link to={`/${props.organizationId}/${props.projectId}/builds/connect`}>
-            <StyledButton type={StyledButtonType.Primary} text={'Setup new build'} />
-        </Link>
+export const WelcomePage = () => (
+    <div className={style.welcomePage}>
+        <Topbar />
+        <div className={style.content}>
+            <div className={style.header}>
+                <h1>Welcome to Superblocks!<br/>What would you like to build?</h1>
+                <p>Select a repository you would like to start building</p>
+            </div>
+            <GithubRepoList customClassName={style.repoList} />
+        </div>
     </div>
 );

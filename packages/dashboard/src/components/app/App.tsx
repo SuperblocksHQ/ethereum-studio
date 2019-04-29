@@ -21,7 +21,6 @@ import Loadable from 'react-loadable';
 import { EmptyLoading } from '../common';
 import PrivateRoute from './PrivateRoute';
 import ModalContainer from '../common/modal/modalContainer';
-import BuildPage from '../project/builds/buildPage/BuildPage';
 
 const LoginScreen = Loadable({
     loader: () => import(/* webpackChunkName: "LoginScreen" */'../login/loginScreen'),
@@ -50,6 +49,16 @@ const ProjectSettingsDetails = Loadable({
 
 const BuildList = Loadable({
     loader: () => import(/* webpackChunkName: "ProjectBuild" */'../project/builds/BuildList'),
+    loading: EmptyLoading,
+});
+
+const BuildPage = Loadable({
+    loader: () => import(/* webpackChunkName: "BuildPage" */'../project/builds/buildPage'),
+    loading: EmptyLoading,
+});
+
+const WelcomePage = Loadable({
+    loader: () => import(/* webpackChunkName: "WelcomePage" */'../welcomePage'),
     loading: EmptyLoading,
 });
 
@@ -95,6 +104,7 @@ export default class App extends Component<IProps> {
                             <Switch>
                                 <Route path='/login' exact render={(props: any) => <LoginScreen {...props} />} />
                                 <PrivateRoute path='/' exact isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => <Dashboard {...props} />} />
+                                <PrivateRoute path='/welcome' exact isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => <WelcomePage {...props} />} />
                                 <PrivateRoute path='/:organizationId' exact isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => <Dashboard {...props} />} />
                                 <PrivateRoute path='/:organizationId/settings' exact isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => <OrganizationSettings {...props} />} />
                                 <PrivateRoute exact path='/:organizationId/settings/details' isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => (

@@ -21,6 +21,8 @@ import { LetterAvatar } from '../common';
 import Topbar from '../topbar';
 import { SideMenu, SideMenuItem, SideMenuHeader, SideMenuFooter } from '../sideMenu';
 import ProjectList from '../organization/projectList';
+import { Redirect } from 'react-router';
+import OnlyIf from '../common/onlyIf';
 
 interface IProps {
     githubLoginAction: () => void;
@@ -29,8 +31,17 @@ interface IProps {
 
 export default class Dashboard extends Component<IProps> {
 
-    // TODO - Make sure to change the hardcoded organization Ids for the real deal
+    // TODO - Make sure to change the hardcoded organization Ids and list for the real deal
     render() {
+        const organizations = [
+            {
+                name: 'Organization numero uno',
+            },
+            {
+                name: 'Galactic Republic ™'
+            }
+        ];
+
         return (
             <div className={style.dashboard}>
                 <Topbar />
@@ -61,6 +72,9 @@ export default class Dashboard extends Component<IProps> {
                         organizationName={'Placeholder organization'}
                         organizationId={'12334'}
                     />
+                    <OnlyIf test={!organizations.length}>
+                        <Redirect to={'/welcome'} />
+                    </OnlyIf>
                 </div>
             </div>
         );

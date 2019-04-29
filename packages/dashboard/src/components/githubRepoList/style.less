@@ -14,6 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
+@import '../../style/index.less';
+
 .container {
     display: flex;
     width: 100%;
@@ -58,7 +60,7 @@
     }
 
     a {
-        color: #04d2e5;
+        color: @primary-color;
         transition: opacity .15s;
 
         &:hover {
@@ -68,6 +70,8 @@
 
     p {
         margin-bottom: 15px;
+        margin-right: 0px;
+        margin-top: 0px;
     }
 
     .repoList {
@@ -135,7 +139,7 @@
             border-left: 2px solid transparent;
 
             &.active {
-                border-color: #04d2e5;
+                border-color: @primary-color;
                 background: #283134;
             }
 

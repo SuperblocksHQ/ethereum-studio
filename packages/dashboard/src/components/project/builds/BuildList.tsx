@@ -86,12 +86,14 @@ export default class BuildList extends Component<IProps> {
             ]
         };
 
+        const { organizationId, projectId } = this.props.match.params;
+
         return (
             <React.Fragment>
                 <BreadCrumbs>
                     <Link to={'/'}>Organization Name</Link>
-                    <Link to={`/${this.props.match.params.organizationId}/${this.props.match.params.projectId}/builds`}>Project Name</Link>
-                    <Link to={`/${this.props.match.params.organizationId}/${this.props.match.params.projectId}/builds`}>Builds</Link>
+                    <Link to={`/${organizationId}/${projectId}/builds`}>Project Name</Link>
+                    <Link to={`/${organizationId}/${projectId}/builds`}>Builds</Link>
                 </BreadCrumbs>
 
                 <OnlyIf test={project.builds.length > 0}>
@@ -117,7 +119,7 @@ export default class BuildList extends Component<IProps> {
                         <tbody>
                             { project.builds.map((build, index) =>
                                 <tr className={style.buildItem} key={index}>
-                                    <BuildListItem build={build} projectId={this.props.match.params.projectId} organizationId={this.props.match.params.organizationId} />
+                                    <BuildListItem build={build} projectId={projectId} organizationId={organizationId} />
                                 </tr>
                             )}
                         </tbody>
@@ -125,7 +127,7 @@ export default class BuildList extends Component<IProps> {
                 </OnlyIf>
 
                 <OnlyIf test={!project.builds.length}>
-                    <SetupBuild />
+                    <SetupBuild projectId={projectId} organizationId={organizationId} />
                 </OnlyIf>
             </React.Fragment>
         );
