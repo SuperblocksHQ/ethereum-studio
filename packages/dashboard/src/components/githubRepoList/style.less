@@ -15,11 +15,9 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 .container {
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 100px;
     display: flex;
+    width: 100%;
+    max-width: 970px;
 
     .left {
         margin-right: 25px;
@@ -82,6 +80,7 @@
             display: flex;
             align-items: center;
             padding: 4px 8px 5px 4px;
+            max-height: 33px;
 
             .repoTitle {
                 margin-right: auto;
@@ -89,11 +88,12 @@
 
             .btnBuild {
                 display: none;
+                min-width: 68px;
+                padding: 3px 15px;
             }
 
             &:hover {
                 background: #283134;
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
 
                 .btnBuild {
                     display: block;
@@ -122,7 +122,7 @@
         box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
         overflow-y: auto;
         max-height: 0px;
-        transition: max-height .5s;
+        transition: max-height .4s;
 
         &.expanded {
             max-height: 294px;

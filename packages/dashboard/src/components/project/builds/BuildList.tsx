@@ -20,6 +20,8 @@ import { Link } from 'react-router-dom';
 import { IconGithub, IconExternalLink } from '../../common/icons';
 import BuildListItem from './BuildListItem';
 import { BreadCrumbs } from '../../common';
+import { SetupBuild } from './SetupBuild';
+import OnlyIf from '../../common/onlyIf';
 
 interface IProps {
     location: any;
@@ -92,33 +94,39 @@ export default class BuildList extends Component<IProps> {
                     <Link to={`/${this.props.match.params.organizationId}/${this.props.match.params.projectId}/builds`}>Builds</Link>
                 </BreadCrumbs>
 
-                <h1>Builds</h1>
-                <a className={style.repoLink} href={project.repository.link} target='_blank' rel='noopener noreferrer'>
-                    <IconGithub size='xs' className={style.colorGrey} />
-                    <span>
-                        {project.repository.fullName}
-                    </span>
-                    <IconExternalLink width='10px' height='10px' />
-                </a>
-                <div className={style.hr}></div>
+                <OnlyIf test={project.builds.length > 0}>
+                    <h1>Builds</h1>
+                    <a className={style.repoLink} href={project.repository.link} target='_blank' rel='noopener noreferrer'>
+                        <IconGithub size='xs' className={style.colorGrey} />
+                        <span>
+                            {project.repository.fullName}
+                        </span>
+                        <IconExternalLink width='10px' height='10px' />
+                    </a>
+                    <div className={style.hr}></div>
 
-                <table className={style.buildList}>
-                    <thead>
-                        <tr>
-                            <th>Status</th>
-                            <th>Build #</th>
-                            <th>Branch</th>
-                            <th>Commit</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        { project.builds.map(build =>
-                            <tr className={style.buildItem} key={build.commit.hash}>
-                                <BuildListItem build={build} projectId={this.props.match.params.projectId} organizationId={this.props.match.params.organizationId} />
+                    <table className={style.buildList}>
+                        <thead>
+                            <tr>
+                                <th>Status</th>
+                                <th>Build #</th>
+                                <th>Branch</th>
+                                <th>Commit</th>
                             </tr>
-                        )}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            { project.builds.map((build, index) =>
+                                <tr className={style.buildItem} key={index}>
+                                    <BuildListItem build={build} projectId={this.props.match.params.projectId} organizationId={this.props.match.params.organizationId} />
+                                </tr>
+                            )}
+                        </tbody>
+                    </table>
+                </OnlyIf>
+
+                <OnlyIf test={!project.builds.length}>
+                    <SetupBuild />
+                </OnlyIf>
             </React.Fragment>
         );
     }

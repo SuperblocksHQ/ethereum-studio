@@ -53,6 +53,11 @@ const BuildList = Loadable({
     loading: EmptyLoading,
 });
 
+const ConnectBuild = Loadable({
+    loader: () => import(/* webpackChunkName: "ConnectBuild" */'../project/builds/connectBuild'),
+    loading: EmptyLoading,
+});
+
 const Details = Loadable({
     loader: () => import(/* webpackChunkName: "Details" */'../organization/settings/details'),
     loading: EmptyLoading,
@@ -104,7 +109,10 @@ export default class App extends Component<IProps> {
                                 <PrivateRoute exact path='/:organizationId/:projectId/builds' isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => (
                                     <ProjectDashboard content={<BuildList {...props}/>} {...props} />
                                 )} />
-                               <PrivateRoute exact path='/:organizationId/:projectId/builds/:buildId' isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => (
+                                <PrivateRoute exact path='/:organizationId/:projectId/builds/connect' isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => (
+                                    <ProjectDashboard content={<ConnectBuild {...props}/>} {...props} />
+                                )} />
+                                <PrivateRoute exact path='/:organizationId/:projectId/builds/:buildId' isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => (
                                     <ProjectDashboard content={<BuildPage {...props}/>} {...props} />
                                 )} />
                                 <PrivateRoute exact path='/:organizationId/:projectId/settings/details' isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => (

@@ -14,24 +14,19 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { connect } from 'react-redux';
-import { Dispatch } from 'react';
-import { AnyAction } from 'redux';
-import { githubActions } from '../../actions';
-import { userSelectors } from '../../selectors';
-import GithubRepoList from './GithubRepoList';
+import React from 'react';
+import style from './style.less';
+import { StyledButton } from '../../common';
+import { StyledButtonType } from '../../../models';
+import { Link } from 'react-router-dom';
 
-const mapStateToProps = (state: any) => ({
-    reposList: userSelectors.getUserReposList(state),
-    isRepositoriesLoading: userSelectors.isRepositoriesLoading(state),
-});
-
-const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
-    return {
-        getUserRepos: () => {
-            dispatch(githubActions.getUserRepos());
-        }
-    };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(GithubRepoList);
+export const SetupBuild = () => (
+    <div className={style.setupBuild}>
+        <img src='/static/img/illustration-building-blocks.svg' />
+        <p>Connect to your favorite repository so we can start building your project</p>
+        <p>We'll build your app automatically on commit</p>
+        <Link to='builds/connect'>
+            <StyledButton type={StyledButtonType.Primary} text={'Setup new build'} />
+        </Link>
+    </div>
+);

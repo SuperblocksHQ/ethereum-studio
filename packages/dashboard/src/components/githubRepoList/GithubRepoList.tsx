@@ -17,11 +17,11 @@
 import React, { Component } from 'react';
 import style from './style.less';
 import classNames from 'classnames';
-import OnlyIf from '../../onlyIf';
-import { GenericLoading } from '../../common';
-import { IGithubRepository, IGithubRepositoryOwner } from '../../../models';
-import { IconFilter, IconChevronDown } from '../../icons';
-import PrimaryButton from '../../common/buttons/primaryButton';
+import { GenericLoading } from '../common';
+import { IGithubRepository, IGithubRepositoryOwner, StyledButtonType } from '../../models';
+import { IconFilter, IconChevronDown } from '../common/icons';
+import { StyledButton } from '../common/buttons/StyledButton';
+import OnlyIf from '../common/onlyIf';
 
 interface IProps {
     customClassName?: string;
@@ -93,6 +93,11 @@ export default class GithubRepoList extends Component<IProps, IState> {
         return this.removeDuplicatesByProperty(owners, 'id');
     }
 
+    handleOnBuildClick = (repo: IGithubRepository) => {
+        {/* TODO: Create project and add it to organization -> redirect to this project */}
+        console.log('TODO');
+    }
+
     render() {
         const { customClassName, reposList, isRepositoriesLoading } = this.props;
         const { searchFilter, ownerFilter, isExpandedOwners } = this.state;
@@ -100,7 +105,7 @@ export default class GithubRepoList extends Component<IProps, IState> {
 
         const filteredRepos = reposList
             .filter((repo: IGithubRepository) =>
-                (searchFilter === '' || repo.fullName.includes(searchFilter)) &&
+                (searchFilter === '' || repo.fullName.toLowerCase().includes(searchFilter.toLowerCase())) &&
                 (ownerFilter === -1 || repo.owner.id === ownerFilter ));
 
         return (
@@ -108,17 +113,17 @@ export default class GithubRepoList extends Component<IProps, IState> {
                 <div className={style.left}>
                     <div className={style.searchInput}>
                         <IconFilter className={style.icon} />
-                        <input type='text' placeholder='Filter projects...' disabled={isRepositoriesLoading} value={searchFilter} onChange={this.onSearchInputChange.bind(this)} />
+                        <input type='text' placeholder='Filter projects...' value={searchFilter} onChange={this.onSearchInputChange.bind(this)} />
                     </div>
 
                     <p>If you don't see your project listed here, make sure to <a href='https://github.com/apps/superblocks-devops' target='_blank' rel='noreferrer noopener'>grant us access</a></p>
 
                     <div className={style.repoList}>
                         { filteredRepos.map((repo: IGithubRepository, index: number) =>
-                            <div onClick={() => console.log(repo.id)} key={index} className={style.singleRepo}>
+                            <div key={index} className={style.singleRepo}>
                                 <img src={`${repo.owner.avatarUrl}&s=48`} alt={repo.owner.login} />
                                 <div className={style.repoTitle}>{repo.fullName}</div>
-                                <PrimaryButton onClick={() => console.log('TODO')} text='Build' customClassName={style.btnBuild}/>
+                                <StyledButton type={StyledButtonType.Primary} onClick={() => this.handleOnBuildClick(repo)} text='Build' customClassName={style.btnBuild}/>
                             </div>
                         )}
 
@@ -126,7 +131,7 @@ export default class GithubRepoList extends Component<IProps, IState> {
                         <OnlyIf test={searchFilter && filteredRepos.length <= 0}>
                             <div className={style.resetFilter}>
                                 <p>No repositories found</p>
-                                <PrimaryButton onClick={() => this.resetFilter()} text='Reset filter' />
+                                <StyledButton type={StyledButtonType.Primary} onClick={() => this.resetFilter()} text='Reset filter' />
                             </div>
                         </OnlyIf>
 
