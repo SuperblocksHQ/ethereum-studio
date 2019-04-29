@@ -23,9 +23,11 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Generic
-@primary-color: #8641F2;
+@primary-color: #03D2E5;
 @white-color-hover: #ecebeb;
 @action-color-hover: #333;
+@border-color: #0E0E12;
+@error-color: #d0021b;
 
 // modal
 @modal-background-color: #2b2b2b;
@@ -191,10 +193,11 @@ a:active,a:focus {
     top: 0;
     right: 0;
     bottom: 0;
-    a {
-        color: #fff;
-        text-decoration: none;
-    }
+}
+
+a {
+    color: #fff;
+    text-decoration: none;
 }
 
 .dragging {
@@ -323,26 +326,27 @@ a:active,a:focus {
 .superInput {
     label {
         display: block;
-        font-weight: 600;
+        font-weight: 400;
         text-align: left;
         margin: 12px 0;
     }
     input, textarea {
         display: block;
         box-sizing: border-box;
-        background-color: #fff;
+        background-color: transparent;
         line-height: normal;
         padding: 5px;
-        border-radius: 4px;
-        border: 1px solid #D8DDE6;
+        border-radius: 1px;
+        border: 1px solid #495556;
         box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-        -webkit-transition: border linear .2s,box-shadow linear .2s;
-        transition: border linear .2s,box-shadow linear .2s;
+        -webkit-transition: border linear .2s ,box-shadow linear .2s;
+        transition: border linear .2s, box-shadow linear .2s;
         padding: 8px 16px !important;
         outline: none;
+        color: white;
         &:focus {
-            border-color: rgba(134,65,242,.5);
-            box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(134,65,242,.6);
+            border-color: rgba(4, 210, 229, .5);
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(4, 210, 229, .6);
         }
     }
 }

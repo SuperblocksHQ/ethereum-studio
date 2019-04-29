@@ -14,31 +14,33 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
+@import '../../style/index.less';
+
 .sideMenuContainer {
     position: relative;
-    min-width: 247px;
+    min-width: 259px;
     box-sizing: border-box;
     z-index: 1;
-    background-color: #252525;
+    background-color: #262c30;
     color: white;
     display: flex;
     flex-direction: column;
     height: calc(100% - 45px);
-    padding-top: 10px;
     overflow-x: hidden;
     transition: width .2s ease-out, min-width .2s ease-out;
-    
+    border-right: 1px solid @border-color;
+
     &.collapsed {
-        width: 36px;
-        min-width: 36px;
+        width: 50px;
+        min-width: 50px;
 
         .collapseSidebar {
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid @border-color;
             transform: rotate(180deg);
         }
 
         .sideMenuHeader {
-            display: none; 
+            display: none;
         }
 
         .item {
@@ -57,14 +59,13 @@
 
         .subMenu.visible {
             display: none;
-
         }
 
         .itemWrapper {
             &:hover .subMenu.visible {
                 position: fixed;
                 display: block;
-                background: #252525;
+                background: #262c30;
                 min-width: 150px;
                 margin-left: 36px;
                 margin-top: -34px;
@@ -106,9 +107,9 @@
             padding: 5px 0px;
             position: fixed;
             display: block;
-            background: #252525;
+            background: #262c30;
             min-width: 150px;
-            margin-left: 247px;
+            margin-left: 220px;
             margin-top: -34px;
             box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
         }
@@ -126,7 +127,7 @@
         }
 
         .item {
-            background: #252525;
+            background: #262c30;
             justify-content: flex-start;
         }
 
@@ -139,20 +140,11 @@
             display: block;
         }
     }
-    
-    .sideMenuInner {
-        height: 100%;
-        margin-bottom: 30px;
-        overflow-y: auto;
-        overflow-x: hidden;
-        display: flex;
-        flex-direction: column;
-    }
 
     .collapseSidebar {
         margin-top: auto;
         height: 30px;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        border-top: 1px solid @border-color;
 
         svg {
             max-height: 100%;
@@ -163,57 +155,71 @@
             bottom: 0;
             left: 0;
             right: 0;
-            padding: 5px 10px;
+            padding: 5px 12px;
             justify-content: flex-end;
         }
     }
 
-    .item {
+    a:hover {
+        opacity: 1;
+    }
+}
+
+.sideMenuInner {
+    height: 100%;
+    margin-bottom: 37px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    position: relative;
+    cursor: default;
+    user-select: none;
+    padding: 5px 13px;
+    white-space: nowrap;
+    border-left: 2px solid transparent;
+    min-height: 37px;
+
+    .iconContainer {
+        min-width: 24px;
         display: flex;
+        justify-content: center;
         align-items: center;
-        position: relative;
-        cursor: default;
-        user-select: none;
-        padding: 5px 13px;
-        white-space: nowrap;
-        border-left: 2px solid transparent;
-
-        .iconContainer {
-            min-width: 24px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        &.active {
-            border-color: #7237CF;
-            background-color: rgba(128, 46, 255, 0.1);
-        }
-
-        &:hover {
-            background-color: rgba(128, 46, 255, 0.1);
-            cursor: pointer;
-        }
-
-        span {
-            margin-left: 10px;
-        }
     }
 
-    .posRelative {
-        position: relative;
+    &.active {
+        border-color: @primary-color;
+        background-color: #283134;
     }
 
-    .sideMenuHeader {
-        color: white;
-        padding-bottom: 12px;
-        padding-left: 15px;
-        padding-top: 20px;
-        white-space: nowrap;
+    &:hover {
+        opacity: 1;
+        background-color: #283134;
+        cursor: pointer;
     }
 
-    .sideMenuFooter {
-        margin-top: auto;
-        padding-bottom: 10px;
+    span {
+        margin-left: 10px;
     }
+}
+
+.posRelative {
+    position: relative;
+}
+
+.sideMenuHeader {
+    color: white;
+    padding-bottom: 12px;
+    padding-left: 15px;
+    padding-top: 20px;
+    white-space: nowrap;
+}
+
+.sideMenuFooter {
+    margin-top: auto;
 }

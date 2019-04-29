@@ -1,4 +1,4 @@
-// Copyright 2018 Superblocks AB
+// Copyright 2019 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -17,20 +17,15 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
-import { toastSelectors } from '../../../selectors/toast.selectors';
-import { toastActions } from '../../../actions';
-import ToastContainer from './ToastContainer';
-
-const mapStateToProps = (state: any) => ({
-    toasts: toastSelectors.getToasts(state),
-});
+import DeleteProjectModal from './DeleteProjectModal';
+import { projectsActions } from '../../../actions';
 
 function mapDispatchToProps(dispatch: Dispatch<AnyAction>) {
     return {
-        toastDismissed: (id: string) => {
-            dispatch(toastActions.toastDismissed(id));
-        },
+        deleteProject: (projectId: string) => {
+            dispatch(projectsActions.deleteProject(projectId));
+        }
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ToastContainer);
+export default connect(null, mapDispatchToProps)(DeleteProjectModal);

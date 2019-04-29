@@ -21,17 +21,19 @@ import ErrorMessage from '../errorMessage';
 
 interface IProps {
     id: string;
-    onChangeText?: () => void;
+    onChangeText?: (e?: any) => void;
     tip?: string;
     label?: string;
     defaultValue?: string;
     value?: string;
     disabled?: boolean;
-    error?: string;
+    error?: string | null;
     readOnly?: boolean;
     rows?: number;
     cols?: number;
+    placeholder?: string;
     maxLength?: number;
+    className?: any;
 }
 
 export class TextAreaInput extends PureComponent<IProps> {
@@ -54,12 +56,13 @@ export class TextAreaInput extends PureComponent<IProps> {
             rows,
             cols,
             maxLength,
+            placeholder,
             ...props
         } = this.props;
 
         return(
             <div>
-                <div className={classNames('superInputDark', style.container)}>
+                <div className={classNames('superInput', style.container)}>
                     { label != null && <label htmlFor='name'>{label}</label> }
                     <div className={style.inputContainer}>
                         <textarea
@@ -74,6 +77,7 @@ export class TextAreaInput extends PureComponent<IProps> {
                             defaultValue={defaultValue}
                             value={value}
                             onFocus={this.handleFocus}
+                            placeholder={placeholder}
                             {...props}
                         >
                         </textarea>
