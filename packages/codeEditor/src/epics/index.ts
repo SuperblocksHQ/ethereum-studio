@@ -25,7 +25,6 @@ import { loginEpics } from './login';
 import { panesEpics } from './panes';
 import { compilerEpics } from './compiler';
 import { deployerEpics } from './deployer';
-import { githubEpics } from './github';
 
 export const epics = [
     ...settingsEpics,
@@ -38,6 +37,5 @@ export const epics = [
     ...loginEpics,
     ...panesEpics,
     ...compilerEpics,
-    ...githubEpics,
     ...deployerEpics
 ];

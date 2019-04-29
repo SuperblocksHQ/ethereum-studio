@@ -16,4 +16,6 @@
 
 export const userSelectors = {
     getUserProfile: (state: any) => state.user.profile,
+    getUserReposList: (state: any) => state.user.githubRepositories,
+    isRepositoriesLoading: (state: any) => state.user.isRepositoriesLoading,
 };

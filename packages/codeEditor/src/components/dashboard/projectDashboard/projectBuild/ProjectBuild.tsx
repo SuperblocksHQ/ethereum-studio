@@ -18,7 +18,6 @@ import React, { Component } from 'react';
 import style from './style.less';
 import { Link } from 'react-router-dom';
 import { BreadCrumbs } from '../../../common';
-import GithubRepoList from '../../githubRepoList';
 
 export default class ProjectBuild extends Component {
 
@@ -30,8 +29,6 @@ export default class ProjectBuild extends Component {
                     <Link to='./'>Project Name</Link>
                     <Link to={window.location.pathname}>Build</Link>
                 </BreadCrumbs>
-
-                <GithubRepoList />
             </React.Fragment>
         );
     }

@@ -16,10 +16,8 @@
 
 export const userSelectors = {
     getProjectList: (state: any) => state.user.projectList,
-    getUserReposList: (state: any) => state.user.githubRepositories,
     getUserProfile: (state: any) => state.user.profile,
     isProjectListLoading: (state: any) => state.user.isProjectListLoading,
-    isRepositoriesLoading: (state: any) => state.user.isRepositoriesLoading,
     isProjectForking: (state: any) => state.user.isProjectForking,
     getShowForkButton: (state: any) => state.user.showForkButton,
 };

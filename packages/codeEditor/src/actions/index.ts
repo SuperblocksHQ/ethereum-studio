@@ -12,4 +12,3 @@ export * from './preview.actions';
 export * from './console.actions';
 export * from './deployer.actions';
 export * from './modal.actions';
-export * from './github.actions';

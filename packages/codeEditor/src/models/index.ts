@@ -23,4 +23,3 @@ export * from './user.model';
 export * from './account-environment.model';
 export * from './auth.model';
 export * from './dependencies.model';
-export * from './githubRepository.model';
