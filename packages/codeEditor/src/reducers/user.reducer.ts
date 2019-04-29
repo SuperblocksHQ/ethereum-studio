@@ -23,7 +23,8 @@ export const initialState = {
     isProjectListLoading: false,
     showForkButton: true,
     isProjectForking: false,
-    errorLoadingProjectList: null
+    errorLoadingProjectList: null,
+    profile: null
 };
 
 export default function userReducer(state = initialState, action: AnyAction) {
