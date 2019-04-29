@@ -43,8 +43,8 @@ const ProjectDashboard = Loadable({
     loading: EmptyLoading,
 });
 
-const ProjectSettings = Loadable({
-    loader: () => import(/* webpackChunkName: "ProjectSettings" */'../project/settings'),
+const ProjectSettingsDetails = Loadable({
+    loader: () => import(/* webpackChunkName: "ProjectSettingsDetails" */'../project/settings/projectSettingsDetails'),
     loading: EmptyLoading,
 });
 
@@ -107,8 +107,8 @@ export default class App extends Component<IProps> {
                                <PrivateRoute exact path='/:organizationId/:projectId/builds/:buildId' isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => (
                                     <ProjectDashboard content={<BuildPage {...props}/>} {...props} />
                                 )} />
-                                <PrivateRoute exact path='/:organizationId/:projectId/settings' isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => (
-                                    <ProjectDashboard content={<ProjectSettings {...props}/>} {...props} />
+                                <PrivateRoute exact path='/:organizationId/:projectId/settings/details' isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => (
+                                    <ProjectDashboard content={<ProjectSettingsDetails {...props}/>} {...props} />
                                 )} />
                             </Switch>
                         </div>

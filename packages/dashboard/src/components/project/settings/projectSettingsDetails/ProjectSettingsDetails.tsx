@@ -16,11 +16,12 @@
 
 import React, { Component } from 'react';
 import style from './style.less';
-import { BreadCrumbs, TextInput, TextAreaInput, StyledButton } from '../../common';
-import { StyledButtonType } from '../../../models/button.model';
+import { BreadCrumbs, TextInput, TextAreaInput, StyledButton } from '../../../common';
+import { StyledButtonType } from '../../../../models/button.model';
 import { Link } from 'react-router-dom';
-import { IProject } from '../../../models';
-import { validateProjectName } from '../../../validations';
+import { IProject } from '../../../../models';
+import { validateProjectName } from '../../../../validations';
+import { ProjectSettingsMenu } from '../projectSettingsMenu';
 
 interface IProps {
     location: any;
@@ -37,7 +38,7 @@ interface IState {
     canSave: boolean;
 }
 
-export default class ProjectSettings extends Component<IProps, IState> {
+export default class ProjectSettingsDetails extends Component<IProps, IState> {
 
     state: IState = {
         errorName: null,
@@ -83,42 +84,48 @@ export default class ProjectSettings extends Component<IProps, IState> {
         };
 
         return (
-            <div className={style.projectSettings}>
+            <React.Fragment>
                 <BreadCrumbs>
                     <Link to={`/${this.props.match.params.organizationId}`}>Organization Name</Link>
                     <Link to={`/${this.props.match.params.organizationId}/${this.props.match.params.projectId}`}>Project Name</Link>
                     <Link to={window.location.pathname}>Settings</Link>
                 </BreadCrumbs>
 
-                <h1>Details</h1>
-                <div className={style['mb-5']}>
-                    <TextInput
-                        onChangeText={this.onNameChange}
-                        error={errorName}
-                        label={'Project name'}
-                        id={'projectName'}
-                        placeholder={'project-name'}
-                        defaultValue={project.name}
-                        required={true}
-                    />
-                </div>
-                <div className={style['mb-4']}>
-                    <TextAreaInput
-                        onChangeText={this.onDescChange}
-                        label={'Description'}
-                        id={'description'}
-                        placeholder={'Enter a short description (optional)'}
-                        defaultValue={project.description}
-                    />
-                </div>
-                <StyledButton type={StyledButtonType.Primary} text={'Save Details'} onClick={this.onSave} isDisabled={!canSave}/>
+                <div className={style.displayFlex}>
+                    <ProjectSettingsMenu organizationId={this.props.match.params.organizationId} projectId={this.props.match.params.projectId} />
 
-                <div className={style.sectionDivider}></div>
+                    <div className={style.projectSettings}>
+                        <h1>Details</h1>
+                        <div className={style['mb-5']}>
+                            <TextInput
+                                onChangeText={this.onNameChange}
+                                error={errorName}
+                                label={'Project name'}
+                                id={'projectName'}
+                                placeholder={'project-name'}
+                                defaultValue={project.name}
+                                required={true}
+                            />
+                        </div>
+                        <div className={style['mb-4']}>
+                            <TextAreaInput
+                                onChangeText={this.onDescChange}
+                                label={'Description'}
+                                id={'description'}
+                                placeholder={'Enter a short description (optional)'}
+                                defaultValue={project.description}
+                            />
+                        </div>
+                        <StyledButton type={StyledButtonType.Primary} text={'Save Details'} onClick={this.onSave} isDisabled={!canSave}/>
 
-                <h1>Delete this project</h1>
-                <p className={style['mb-4']}>Once deleted, it will be gone forever. Please be certain.</p>
-                <StyledButton type={StyledButtonType.Danger} text={'Delete Project'} onClick={() => showModal('DELETE_PROJECT_MODAL', { project })} />
-            </div>
+                        <div className={style.sectionDivider}></div>
+
+                        <h1>Delete this project</h1>
+                        <p className={style['mb-4']}>Once deleted, it will be gone forever. Please be certain.</p>
+                        <StyledButton type={StyledButtonType.Danger} text={'Delete Project'} onClick={() => showModal('DELETE_PROJECT_MODAL', { project })} />
+                    </div>
+                </div>
+            </React.Fragment>
         );
     }
 }

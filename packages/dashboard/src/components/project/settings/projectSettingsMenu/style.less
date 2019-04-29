@@ -14,16 +14,32 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-@import '../style.less';
+@import '../../../../style/index.less';
 
-.projectSettings {
-    padding-bottom: 34px;
+.sideMenu {
+    padding-right: 25px;
+    min-width: 250px;
+    margin-left: -20px;
 
-    .sectionDivider {
-        height: 1px;
-        background: #495556;
-        width: 480px;
-        margin-top: 50px;
-        margin-bottom: 40px;
+    .menuSection {
+        margin-bottom: 20px;
+    }
+
+    .sectionHeader {
+        display: flex;
+        padding-left: 5px;
+
+        span {
+            font-size: 15px;
+            margin-left: 5px;
+        }
+    }
+
+    .item span {
+        padding-left: 6px;
+    }
+
+    a:hover {
+        opacity: 1;
     }
 }

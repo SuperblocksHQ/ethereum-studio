@@ -49,7 +49,7 @@ export default class ProjectDashboard extends Component<IProps> {
                                     icon={<IconConfigure />}
                                     title='Project Settings'
                                     active={pathname.includes('settings')}
-                                    linkTo={`/${this.props.match.params.organizationId}/${this.props.match.params.projectId}/settings`}
+                                    linkTo={`/${this.props.match.params.organizationId}/${this.props.match.params.projectId}/settings/details`}
                                 />
                             </SideMenuFooter>
 
