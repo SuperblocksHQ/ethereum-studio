@@ -20,6 +20,7 @@ import { AnyAction } from 'redux';
 import { modalActions, projectsActions } from '../../../../actions';
 import { projectSelectors } from '../../../../selectors';
 import ProjectSettingsDetails from './ProjectSettingsDetails';
+import { IProject } from '../../../../models';
 
 const mapStateToProps = (state: any) => ({
     project: projectSelectors.getProject(state)
@@ -30,8 +31,8 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
         showModal: (modalType: string, modalProps: any) => {
             dispatch(modalActions.showModal(modalType, modalProps));
         },
-        updateProjectDetails: (id: string, name: string, description: string) => {
-            dispatch(projectsActions.updateProjectDetails(id, name, description));
+        updateProjectDetails: (newProjectDetails: Partial<IProject>) => {
+            dispatch(projectsActions.updateProjectDetails(newProjectDetails));
         }
     };
 };

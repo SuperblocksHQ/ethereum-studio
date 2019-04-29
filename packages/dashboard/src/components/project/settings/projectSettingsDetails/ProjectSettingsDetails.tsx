@@ -27,7 +27,7 @@ interface IProps {
     location: any;
     match: any;
     project: IProject;
-    updateProjectDetails: (id: string, name: string, description: string) => void;
+    updateProjectDetails: (newProjectDetails: Partial<IProject>) => void;
     showModal: (modalType: string, modalProps: any) => void;
 }
 
@@ -70,7 +70,7 @@ export default class ProjectSettingsDetails extends Component<IProps, IState> {
         const { project, updateProjectDetails } = this.props;
         const { newName, newDescription} = this.state;
 
-        updateProjectDetails(project.id, newName, newDescription);
+        updateProjectDetails({id: project.id, name: newName, description: newDescription});
     }
 
     render() {
