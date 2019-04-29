@@ -14,26 +14,26 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { Component } from 'react';
+import React from 'react';
 import style from './style.less';
-import { BreadCrumbs } from '../../common';
-import { Link } from 'react-router-dom';
+import classNames from 'classnames';
+import { IconClose } from '../../../common/icons';
 
 interface IProps {
-    location: any;
-    match: any;
+    title: string;
+    onCloseClick: () => void;
+    className?: string;
 }
-export default class ProjectSettings extends Component<IProps> {
 
-    render() {
-        return (
-            <React.Fragment>
-                <BreadCrumbs>
-                    <Link to={`/${this.props.match.params.organizationId}`}>Organization Name</Link>
-                    <Link to={`/${this.props.match.params.organizationId}/${this.props.match.params.projectId}`}>Project Name</Link>
-                    <Link to={window.location.pathname}>Settings</Link>
-                </BreadCrumbs>
-            </React.Fragment>
-        );
-    }
+export function ModalHeader(props: IProps)  {
+    return (
+        <div className={style.header}>
+            <div className={style.title}>{props.title}</div>
+            <button className={classNames([style.closeIcon, 'btnNoBg'])} onClick={props.onCloseClick}>
+                <IconClose className={style.icon}/>
+            </button>
+        </div>
+    );
 }
+
+export default ModalHeader;

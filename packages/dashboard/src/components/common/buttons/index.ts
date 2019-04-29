@@ -15,3 +15,4 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 export * from './githubLogin';
+export * from './StyledButton';

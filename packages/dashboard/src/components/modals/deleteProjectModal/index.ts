@@ -13,3 +13,19 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
+
+import { connect } from 'react-redux';
+import { Dispatch } from 'react';
+import { AnyAction } from 'redux';
+import DeleteProjectModal from './DeleteProjectModal';
+import { projectsActions } from '../../../actions';
+
+function mapDispatchToProps(dispatch: Dispatch<AnyAction>) {
+    return {
+        deleteProject: (projectId: string) => {
+            dispatch(projectsActions.deleteProject(projectId));
+        }
+    };
+}
+
+export default connect(null, mapDispatchToProps)(DeleteProjectModal);

@@ -28,7 +28,7 @@ interface IProps {
 
 export default class BuildList extends Component<IProps> {
     render() {
-        console.log(window.location);
+
         // TODO: Get project from cloud
         const project = {
             repository: {

@@ -51,9 +51,9 @@ export default class Dashboard extends Component<IProps> {
                             />
                             {/* TODO: Add :organizationId to linkTo */}
                             <SideMenuItem
-                                icon={<IconConfigure width='10px' height='10px' />}
+                                icon={<IconConfigure />}
                                 title='Organization settings'
-                                linkTo='12334/settings'
+                                linkTo='12334/settings/details'
                             />
                         </SideMenuFooter>
                     </SideMenu>

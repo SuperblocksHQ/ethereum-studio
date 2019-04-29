@@ -20,6 +20,7 @@ import ToastContainer from '../common/toasts/toastcontainer';
 import Loadable from 'react-loadable';
 import { EmptyLoading } from '../common';
 import PrivateRoute from './PrivateRoute';
+import ModalContainer from '../common/modal/modalContainer';
 import BuildPage from '../project/builds/buildPage/BuildPage';
 
 const LoginScreen = Loadable({
@@ -42,13 +43,23 @@ const ProjectDashboard = Loadable({
     loading: EmptyLoading,
 });
 
-const ProjectSettings = Loadable({
-    loader: () => import(/* webpackChunkName: "ProjectSettings" */'../project/settings/ProjectSettings'),
+const ProjectSettingsDetails = Loadable({
+    loader: () => import(/* webpackChunkName: "ProjectSettingsDetails" */'../project/settings/projectSettingsDetails'),
     loading: EmptyLoading,
 });
 
 const BuildList = Loadable({
     loader: () => import(/* webpackChunkName: "ProjectBuild" */'../project/builds/BuildList'),
+    loading: EmptyLoading,
+});
+
+const Details = Loadable({
+    loader: () => import(/* webpackChunkName: "Details" */'../organization/settings/details'),
+    loading: EmptyLoading,
+});
+
+const PeopleList = Loadable({
+    loader: () => import(/* webpackChunkName: "PeopleList" */'../organization/settings/people'),
     loading: EmptyLoading,
 });
 
@@ -81,6 +92,12 @@ export default class App extends Component<IProps> {
                                 <PrivateRoute path='/' exact isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => <Dashboard {...props} />} />
                                 <PrivateRoute path='/:organizationId' exact isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => <Dashboard {...props} />} />
                                 <PrivateRoute path='/:organizationId/settings' exact isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => <OrganizationSettings {...props} />} />
+                                <PrivateRoute exact path='/:organizationId/settings/details' isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => (
+                                    <OrganizationSettings content={<Details {...props}/>} {...props} />
+                                )} />
+                                <PrivateRoute exact path='/:organizationId/settings/people' isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => (
+                                    <OrganizationSettings content={<PeopleList {...props}/>} {...props} />
+                                )} />
                                 <PrivateRoute exact path='/:organizationId/:projectId' isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => (
                                     <ProjectDashboard content={<BuildList {...props}/>} {...props} />
                                 )} />
@@ -90,13 +107,14 @@ export default class App extends Component<IProps> {
                                <PrivateRoute exact path='/:organizationId/:projectId/builds/:buildId' isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => (
                                     <ProjectDashboard content={<BuildPage {...props}/>} {...props} />
                                 )} />
-                                <PrivateRoute exact path='/:organizationId/:projectId/settings' isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => (
-                                    <ProjectDashboard content={<ProjectSettings {...props}/>} {...props} />
+                                <PrivateRoute exact path='/:organizationId/:projectId/settings/details' isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => (
+                                    <ProjectDashboard content={<ProjectSettingsDetails {...props}/>} {...props} />
                                 )} />
                             </Switch>
                         </div>
                     </div>
                     <ToastContainer />
+                    <ModalContainer />
                 </div>
             </Router>
         );

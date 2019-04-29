@@ -15,26 +15,32 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from 'react';
-import classNames from 'classnames';
 import style from './style.less';
-import { IconClose } from '../icons';
+import { IconChevronDown } from '../../../common/icons';
+import { SideMenuItem } from '../../../sideMenu';
 
 interface IProps {
-    title: string;
-    onClose: () => void;
-    children: JSX.Element;
+    organizationId: string;
+    projectId: string;
 }
 
-export function Modal(props: IProps) {
+export const ProjectSettingsMenu = (props: IProps) => {
+    const pathname = window.location.pathname;
+
     return (
-        <div className={style.modalContainer}>
-            <div className={style.header}>
-                <div className={style.title}>{props.title}</div>
-                <button className={classNames([style.closeIcon, 'btnNoBg'])} onClick={props.onClose}>
-                    <IconClose className={style.icon}/>
-                </button>
+        <div className={style.sideMenu}>
+            <div className={style.menuSection}>
+                <p className={style.sectionHeader}>
+                    <IconChevronDown/>
+                    <span>General</span>
+                </p>
+                <SideMenuItem
+                    title='Details'
+                    active={pathname.includes('details')}
+                    linkTo={`/${props.organizationId}/${props.projectId}/settings/details`}
+                    customClassName={style.item}
+                />
             </div>
-            <div className={style.modal}>{props.children}</div>
         </div>
     );
-}
+};

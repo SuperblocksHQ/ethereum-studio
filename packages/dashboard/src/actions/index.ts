@@ -5,3 +5,4 @@ export * from './user.actions';
 export * from './auth.actions';
 export * from './modal.actions';
 export * from './github.actions';
+export * from './organization.actions';

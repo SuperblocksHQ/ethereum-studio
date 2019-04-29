@@ -17,30 +17,30 @@
 import { from, of } from 'rxjs';
 import { switchMap, withLatestFrom, catchError } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
-import { projectsActions, userActions } from '../../actions';
-import { projectService } from '../../services/project.service';
+import { organizationActions } from '../../actions';
+import { organizationService } from '../../services';
 
-export const updateProject: Epic = (action$: any, state$: any) => action$.pipe(
-    ofType(projectsActions.UPDATE_PROJECT),
+export const updateOrganization: Epic = (action$: any, state$: any) => action$.pipe(
+    ofType(organizationActions.UPDATE_ORGANIZATION),
     withLatestFrom(state$),
     switchMap(([action]) => {
-        return projectService.getProjectById(action.data.project.id)
+        return organizationService.getOrganizationById(action.data.organization.id)
         .pipe(
-            switchMap((selectedProject) => {
-                selectedProject.name = action.data.project.name;
-                selectedProject.description = action.data.project.description;
+            switchMap((selectedOrganization) => {
+                selectedOrganization.name = action.data.organization.name;
+                selectedOrganization.description = action.data.organization.description;
 
-                return from(projectService.putProjectById(selectedProject.id, selectedProject))
+                return from(organizationService.putOrganizationById(selectedOrganization.id, selectedOrganization))
                     .pipe(
                         switchMap(() => {
-                            return [projectsActions.updateProjectSuccess(selectedProject)];
+                            return [organizationActions.updateOrganizationSuccess(selectedOrganization)];
                         }
                     )
                 );
             }),
             catchError((error) => {
-                console.log('There was an issue updating the project: ' + error);
-                return of(projectsActions.updateProjectFail(error.message));
+                console.log('There was an issue updating the organization: ' + error);
+                return of(organizationActions.updateOrganizationFail(error.message));
             })
         );
     })

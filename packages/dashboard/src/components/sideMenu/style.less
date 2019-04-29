@@ -141,15 +141,6 @@
         }
     }
 
-    .sideMenuInner {
-        height: 100%;
-        margin-bottom: 37px;
-        overflow-y: auto;
-        overflow-x: hidden;
-        display: flex;
-        flex-direction: column;
-    }
-
     .collapseSidebar {
         margin-top: auto;
         height: 30px;
@@ -164,62 +155,71 @@
             bottom: 0;
             left: 0;
             right: 0;
-            padding: 5px 16px;
+            padding: 5px 12px;
             justify-content: flex-end;
         }
-    }
-
-    .item {
-        display: flex;
-        align-items: center;
-        position: relative;
-        cursor: default;
-        user-select: none;
-        padding: 5px 13px;
-        white-space: nowrap;
-        border-left: 2px solid transparent;
-        min-height: 37px;
-
-        .iconContainer {
-            min-width: 24px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        &.active {
-            border-color: @primary-color;
-            background-color: #283134;
-        }
-
-        &:hover {
-            opacity: 1;
-            background-color: #283134;
-            cursor: pointer;
-        }
-
-        span {
-            margin-left: 10px;
-        }
-    }
-
-    .posRelative {
-        position: relative;
-    }
-
-    .sideMenuHeader {
-        color: white;
-        padding-bottom: 12px;
-        padding-left: 15px;
-        padding-top: 20px;
-        white-space: nowrap;
-    }
-
-    .sideMenuFooter {
-        margin-top: auto;
     }
 
     a:hover {
         opacity: 1;
     }
+}
+
+.sideMenuInner {
+    height: 100%;
+    margin-bottom: 37px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    position: relative;
+    cursor: default;
+    user-select: none;
+    padding: 5px 13px;
+    white-space: nowrap;
+    border-left: 2px solid transparent;
+    min-height: 37px;
+
+    .iconContainer {
+        min-width: 24px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &.active {
+        border-color: @primary-color;
+        background-color: #283134;
+    }
+
+    &:hover {
+        opacity: 1;
+        background-color: #283134;
+        cursor: pointer;
+    }
+
+    span {
+        margin-left: 10px;
+    }
+}
+
+.posRelative {
+    position: relative;
+}
+
+.sideMenuHeader {
+    color: white;
+    padding-bottom: 12px;
+    padding-left: 15px;
+    padding-top: 20px;
+    white-space: nowrap;
+}
+
+.sideMenuFooter {
+    margin-top: auto;
 }
