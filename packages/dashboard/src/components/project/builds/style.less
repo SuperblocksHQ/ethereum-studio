@@ -1,0 +1,147 @@
+// Copyright 2019 Superblocks AB
+//
+// This file is part of Superblocks Lab.
+//
+// Superblocks Lab is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation version 3 of the License.
+//
+// Superblocks Lab is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
+
+@import '../style.less';
+
+.repoLink {
+    color: #c4c4c4;
+    margin-bottom: 15px;
+    transition: opacity .15s;
+
+    &:hover {
+        opacity: .6;
+    }
+
+    .colorGrey {
+        color: #c4c4c4;
+    }
+
+    span {
+        margin: 0px 5px;
+    }
+}
+
+.buildList {
+    width: 100%;
+    padding-right: 50px;
+    border-collapse: collapse;
+
+    .buildItem {
+        transition: background .15s;
+
+        &:hover {
+            background: #262c30;
+        }
+    }
+
+    th {
+        font-weight: normal;
+        padding-bottom: 15px;
+    }
+
+    td, th {
+        min-width: 75px;
+        padding-right: 75px;
+        text-align: left;
+        white-space: nowrap;
+    }
+
+    tr {
+        border-bottom: 1px solid @border-color;
+    }
+
+    td {
+        padding-top: 10px;
+        padding-bottom: 10px;
+
+        img {
+            float: left;
+        }
+
+        span {
+            display: flex;
+            align-items: center;
+        }
+    }
+
+    tr td:first-of-type {
+        padding-left: 5px;
+    }
+
+    tr td:last-of-type {
+        width: 100%;
+        text-align: right;
+        padding-right: 15px;
+        border-right: 2px solid black;
+
+        span {
+            justify-content: flex-end;
+        }
+
+        &.status-1 {
+            border-right-color: #59a600;
+        }
+
+        &.status-0 {
+            border-right-color: #f0f0f0;
+        }
+
+        &.status--1 {
+            border-right-color: #d9534f;
+        }
+    }
+}
+
+.buildStatus {
+    padding: 5px 7px;
+    border: 1px solid transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    span {
+        margin-left: 5px;
+        line-height: 1;
+    }
+
+    &.passed {
+        border-color: #59a600;
+        color: #fff;
+        background-color: #59a600;
+    }
+
+    &.failed {
+        border-color: #d9534f;
+        color: #fff;
+        background-color: #d9534f;
+    }
+
+    &.pending {
+        border-color: #f0f0f0;
+        color: #000;
+        background-color: #f0f0f0;
+    }
+}
+
+.title {
+    display: flex;
+    align-items: center;
+
+    h1 {
+        margin-bottom: 0px;
+        margin-left: 15px;
+    }
+}

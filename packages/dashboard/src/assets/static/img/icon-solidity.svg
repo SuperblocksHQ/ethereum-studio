@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="10px" height="15px" viewBox="0 0 10 15" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>logo-solidity</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="logo-solidity" fill-rule="nonzero">
+            <g>
+                <polyline id="Shape" fill="#000000" opacity="0.45" points="7 0 4.66558314 4 0 4 2.33280943 4.89392419e-16 7 4.89392419e-16"></polyline>
+                <polygon id="Shape_1_" fill="#C0C0C0" opacity="0.6" points="5.33277371 4 10 4 7.66719057 0 3 0"></polygon>
+                <polygon id="Shape_2_" fill="#D8D8D8" opacity="0.8" points="2.50001914 8 5 4.000775 2.50001914 0 0 4.000775"></polygon>
+                <polyline id="Shape_3_" fill="#000000" opacity="0.45" points="3 15 5.33386902 11 10 11 7.66611313 15 3 15"></polyline>
+                <polygon id="Shape_4_" fill="#C0C0C0" opacity="0.6" points="4.66720843 11 0 11 2.33279157 15 7 15"></polygon>
+                <polygon id="Shape_5_" fill="#D8D8D8" opacity="0.8" points="7.49913898 7 5 10.9992164 7.49913898 15 10 10.9992164"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>
