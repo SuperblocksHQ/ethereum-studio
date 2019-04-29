@@ -1,4 +1,4 @@
-// Copyright 2018 Superblocks AB
+// Copyright 2019 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -14,8 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export * from './project';
-export * from './project.model';
-export * from './user.model';
-export * from './auth.model';
-export * from './organization.model';
+import { IOrganization } from '../organization.model';
+
+export interface IOrganizationState {
+    organizationList: Partial<IOrganization[]>;
+    loadingOrganizationList: boolean;
+    organization?: Partial<IOrganization>;
+}
