@@ -25,7 +25,7 @@ export const addMemberToOrganization: Epic = (action$: any, state$: any) => acti
     withLatestFrom(state$),
     switchMap(([action, state]) => {
         return organizationService.addMemberToOrganization(action.data.organization.id, {
-            id: action.data.member.id,
+            userId: action.data.member.userId,
         }).pipe(
                 switchMap(() => organizationActions.addMemberToOrganizationSuccess),
                 catchError((error) => {

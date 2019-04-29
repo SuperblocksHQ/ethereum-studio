@@ -15,7 +15,7 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 export interface IOrganizationMember {
-    usedId: string;
+    userId: string;
     userName: string;
     email: string;
     imageUrl: string;
