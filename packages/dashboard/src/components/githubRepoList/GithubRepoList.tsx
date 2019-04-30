@@ -125,6 +125,9 @@ export default class GithubRepoList extends Component<IProps, IState> {
                             <div key={index} className={style.singleRepo}>
                                 <img src={`${repo.owner.avatarUrl}&s=48`} alt={repo.owner.login} />
                                 <div className={style.repoTitle}>{repo.fullName}</div>
+                                <OnlyIf test={repo.private}>
+                                    <div className={style.repoPrivate}>Private</div>
+                                </OnlyIf>
                                 <StyledButton type={StyledButtonType.Primary} onClick={() => this.handleOnBuildClick(repo)} text='Build' customClassName={style.btnBuild}/>
                             </div>
                         )}
