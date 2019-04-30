@@ -76,7 +76,8 @@ export default class GithubRepoList extends Component<IProps, IState> {
     resetFilter = () => {
         this.setState({
             searchFilter: '',
-            ownerFilterId: -1
+            ownerFilterId: -1,
+            ownerFilterName: ''
         });
     }
 
