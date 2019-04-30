@@ -32,6 +32,7 @@
 
     .right {
         margin-left: 25px;
+        margin-top: 8px;
         flex-grow: 1;
 
         p {
@@ -83,8 +84,8 @@
         .singleRepo {
             display: flex;
             align-items: center;
-            padding: 4px 8px 5px 4px;
-            max-height: 33px;
+            padding: 8px 8px 8px 4px;
+            max-height: 35px;
 
             .repoTitle {
                 margin-right: auto;
@@ -126,7 +127,7 @@
         box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
         overflow-y: auto;
         max-height: 0px;
-        transition: max-height .4s;
+        transition: max-height .2s;
 
         &.expanded {
             max-height: 294px;
@@ -156,14 +157,16 @@
         }
     }
 
-    .ownersDropdown {
-        margin-left: 5px;
+    .ownersDropdownContainer {
         transition: opacity .15s, transform .15s;
 
         &:hover {
             cursor: pointer;
             opacity: .6;
-            transform: translateY(2px);
+        } 
+
+        .ownersDropdown {
+            margin-left: 5px;
         }
     }
 }
