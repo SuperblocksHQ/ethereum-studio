@@ -40,6 +40,28 @@ export const organizationActions = {
         };
     },
 
+    // ---------- Special case when the user does not have any organization available and we need to create a default one ---------- //
+    CREATE_DEFAULT_ORGANIZATION: 'CREATE_DEFAULT_ORGANIZATION',
+    createDefaultOrganization({ name }: any ) {
+        return {
+            type: organizationActions.CREATE_DEFAULT_ORGANIZATION,
+            data: { name }
+        };
+    },
+    CREATE_DEFAULT_ORGANIZATION_SUCCESS: 'CREATE_DEFAULT_ORGANIZATION_SUCCESS',
+    createDefaultOrganizationSuccess() {
+        return {
+            type: organizationActions.CREATE_ORGANIZATION_SUCCESS,
+        };
+    },
+    CREATE_DEFAULT_ORGANIZATION_FAIL: 'CREATE_DEFAULT_ORGANIZATION_FAIL',
+    createDefaultOrganizationFail(error: string) {
+        return {
+            type: organizationActions.CREATE_DEFAULT_ORGANIZATION_FAIL,
+            data: error
+        };
+    },
+
     // ---------- CRUD Organization actions ----------
     CREATE_ORGANIZATION: 'CREATE_ORGANIZATION',
     createOrganization({ name, description }: any, redirect: boolean = false) {
