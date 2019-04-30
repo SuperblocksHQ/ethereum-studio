@@ -28,6 +28,7 @@ interface IProps {
     repositoryList: IGithubRepository[];
     isRepositoriesLoading: boolean;
     getUserRepositoryList: () => void;
+    createDefaultOrganization: (organizationName: string, projectName: string) => void;
 }
 
 interface IState {
@@ -99,8 +100,7 @@ export default class GithubRepositoryList extends Component<IProps, IState> {
     }
 
     handleOnBuildClick = (repo: IGithubRepository) => {
-        {/* TODO: Create project and add it to organization -> redirect to this project */}
-        console.log('TODO');
+        this.props.createDefaultOrganization(repo.name, repo.owner.login);
     }
 
     render() {

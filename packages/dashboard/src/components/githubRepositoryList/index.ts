@@ -17,7 +17,7 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
-import { githubActions } from '../../actions';
+import { userActions, organizationActions } from '../../actions';
 import { userSelectors } from '../../selectors';
 import GithubRepositoryList from './GithubRepositoryList';
 
@@ -29,7 +29,10 @@ const mapStateToProps = (state: any) => ({
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
     return {
         getUserRepositoryList: () => {
-            dispatch(githubActions.getUserRepositoryList());
+            dispatch(userActions.getUserRepositoryList());
+        },
+        createDefaultOrganization: (organizationName: string, projectName: string) => {
+            dispatch(organizationActions.createDefaultOrganization(organizationName, projectName));
         }
     };
 };

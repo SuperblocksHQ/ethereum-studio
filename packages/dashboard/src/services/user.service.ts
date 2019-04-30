@@ -26,7 +26,7 @@ function handleErrors(response: Response) {
 
 export const userService = {
     getUser() {
-        return fetchJSON(process.env.REACT_APP_API_BASE_URL + '/user', {})
+        return fetchJSON(process.env.REACT_APP_API_BASE_URL + '/user/v1/user', {})
             .pipe(
                 map(handleErrors),
                 switchMap(r => (r.ok ? r.json() : throwError(r.statusText))),
@@ -36,6 +36,13 @@ export const userService = {
                 })
             );
 
+    },
+
+    getUserRepositories() {
+        return fetchJSON(process.env.REACT_APP_API_BASE_URL + '/user/v1/github/repos', {})
+            .pipe(
+                switchMap(response => response.json())
+            );
     },
     credentialsExist() {
         // Don't try to log in if we don't have any credentials

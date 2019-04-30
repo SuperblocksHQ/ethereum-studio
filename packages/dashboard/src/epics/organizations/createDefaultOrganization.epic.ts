@@ -15,28 +15,28 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { of } from 'rxjs';
-import { switchMap, withLatestFrom, catchError } from 'rxjs/operators';
+import { switchMap, withLatestFrom, catchError, map } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
 import { organizationActions } from '../../actions';
 import { organizationService } from '../../services';
 
 export const createDefaultOrganization: Epic = (action$, state$) => action$.pipe(
-    ofType(organizationActions.CREATE_ORGANIZATION),
+    ofType(organizationActions.CREATE_DEFAULT_ORGANIZATION),
     withLatestFrom(state$),
     switchMap(([action, state]) => {
         return organizationService.createOrganization({
-            name: action.data.name,
-            description: action.data.description
+            name: action.data.name
         }).pipe(
-                switchMap((newOrganization) =>  {
+                map((newOrganization) =>  {
+                    console.log(newOrganization);
                     // redirect
                     window.location.href = `${window.location.origin}/${newOrganization.id}`;
 
-                    return [organizationActions.createOrganizationSuccess()];
+                    return organizationActions.createDefaultOrganizationSuccess;
                 }),
                 catchError((error) => {
                     console.log('There was an issue forking the project: ' + error);
-                    return of(organizationActions.createOrganizationFail(error.message));
+                    return of(organizationActions.createDefaultOrganizationFail(error.message));
                 })
             );
         }
