@@ -24,6 +24,7 @@ export const createDefaultOrganization: Epic = (action$, state$) => action$.pipe
     ofType(organizationActions.CREATE_DEFAULT_ORGANIZATION),
     withLatestFrom(state$),
     switchMap(([action, state]) => {
+        console.log('here');
         return organizationService.createOrganization({
             name: action.data.name
         }).pipe(

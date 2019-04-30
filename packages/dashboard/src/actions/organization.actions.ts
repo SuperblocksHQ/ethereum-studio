@@ -51,7 +51,7 @@ export const organizationActions = {
     CREATE_DEFAULT_ORGANIZATION_SUCCESS: 'CREATE_DEFAULT_ORGANIZATION_SUCCESS',
     createDefaultOrganizationSuccess() {
         return {
-            type: organizationActions.CREATE_ORGANIZATION_SUCCESS,
+            type: organizationActions.CREATE_DEFAULT_ORGANIZATION_SUCCESS,
         };
     },
     CREATE_DEFAULT_ORGANIZATION_FAIL: 'CREATE_DEFAULT_ORGANIZATION_FAIL',
