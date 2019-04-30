@@ -1,4 +1,4 @@
-// Copyright 2019 Superblocks AB
+// Copyright 2018 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -15,24 +15,23 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { from, of } from 'rxjs';
-import { switchMap, withLatestFrom, map, catchError, tap } from 'rxjs/operators';
+import { switchMap, withLatestFrom, map, catchError } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
-import { userActions } from '../../actions';
-import { userService } from '../../services';
-
-const getUserRepositoryList: Epic = (action$: any, state$: any) => action$.pipe(
-    ofType(userActions.GET_USER_REPOSITORY_LIST),
+import { organizationActions } from '../../actions';
+import { organizationService } from '../../services';
+export const getOrganizationList: Epic = (action$: any, state$: any) => action$.pipe(
+    ofType(organizationActions.GET_ORGANIZATION_LIST),
     withLatestFrom(state$),
     switchMap(([, ]) => {
-        return userService.getUserRepositories()
-            .pipe(
-                map(userActions.getUserRepositoryListSuccess),
-                catchError((error) => {
-                    console.log('There was an issue fetching the user repositories: ' + error);
-                    return of(userActions.getUserRepositoryListFail(error));
-                })
+        console.log('helo');
+        return from(organizationService.getOrganizationList()).pipe(
+            map(organizationActions.getOrganizationListSuccess),
+            catchError((error) => {
+                console.log('There was an issue fetching the user organizations: ' + error);
+                return of(organizationActions.getOrganizationListFail(error));
+            })
         );
     })
 );
 
-export default getUserRepositoryList;
+

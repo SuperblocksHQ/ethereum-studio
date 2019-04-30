@@ -23,7 +23,7 @@ export const getProjectList: Epic = (action$: any, state$: any) => action$.pipe(
     ofType(projectsActions.GET_PROJECT_LIST),
     withLatestFrom(state$),
     switchMap(([, ]) => {
-        return from(projectService.getProjectsInfo()).pipe(
+        return from(projectService.getProjectsList()).pipe(
             map(projectsActions.getProjectListSuccess),
             catchError((error) => {
                 console.log('There was an issue fetching the projects: ' + error);

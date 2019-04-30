@@ -21,8 +21,15 @@ import { IOrganizationMember, IRole } from '../models/organizationMember.model';
 
 export const organizationService = {
 
+    getOrganizationList() {
+        return fetchJSON(process.env.REACT_APP_API_BASE_URL + '/organization/v1/organizations', {})
+            .pipe(
+                switchMap(response => response.json())
+            );
+    },
+
     createOrganization(data: Partial<IOrganization>): Observable<IOrganization> {
-        return fetchJSON(process.env.REACT_APP_API_BASE_URL + '/organizations/v1/organizations', {
+        return fetchJSON(process.env.REACT_APP_API_BASE_URL + '/organization/v1/organizations', {
             method: 'POST',
             body: data
         })
@@ -32,21 +39,21 @@ export const organizationService = {
     },
 
     getOrganizationById(id: string) {
-        return fetchJSON(process.env.REACT_APP_API_BASE_URL + '/organizations/v1/organizations/' + id, {})
+        return fetchJSON(process.env.REACT_APP_API_BASE_URL + '/organization/v1/organizations/' + id, {})
             .pipe(
                 switchMap(response => response.json())
             );
     },
 
     getOrganizationsInfo() {
-        return fetchJSON(process.env.REACT_APP_API_BASE_URL + '/organizations/v1/organizationsInfo', {})
+        return fetchJSON(process.env.REACT_APP_API_BASE_URL + '/organization/v1/organizationsInfo', {})
             .pipe(
                 switchMap(response => response.json())
             );
     },
 
     putOrganizationById(id: string, data: any) {
-        return fetchJSON(process.env.REACT_APP_API_BASE_URL + '/organizations/v1/organizations/' + id, {
+        return fetchJSON(process.env.REACT_APP_API_BASE_URL + '/organization/v1/organizations/' + id, {
             method: 'PUT',
             body: data
         }).pipe(
@@ -55,14 +62,14 @@ export const organizationService = {
     },
 
     deleteOrganizationById(id: string) {
-        return fetchJSON(process.env.REACT_APP_API_BASE_URL + '/organizations/v1/organizations/' + id, {
+        return fetchJSON(process.env.REACT_APP_API_BASE_URL + '/organization/v1/organizations/' + id, {
             method: 'DELETE'
         });
     },
 
     // ---------- Organization Member endpoints ----------
     inviteMemberToOrganization(organizationId: string, email: string) {
-        return fetchJSON(`/${process.env.REACT_APP_API_BASE_URL}/organizations/v1/organization/${organizationId}/members/_invite`, {
+        return fetchJSON(`/${process.env.REACT_APP_API_BASE_URL}/organization/v1/organization/${organizationId}/members/_invite`, {
             method: 'POST',
             body: { email }
         })
@@ -71,7 +78,7 @@ export const organizationService = {
         );
     },
     addMemberToOrganization(organizationId: string, data: Partial<IOrganizationMember>) {
-        return fetchJSON(`/${process.env.REACT_APP_API_BASE_URL}/organizations/v1/organization/${organizationId}/members`, {
+        return fetchJSON(`/${process.env.REACT_APP_API_BASE_URL}/organization/v1/organization/${organizationId}/members`, {
             method: 'POST',
             body: data
         })
@@ -81,7 +88,7 @@ export const organizationService = {
     },
 
     changeMemberRoleInOrganization(organizationId: string, memberId: any, newRole: IRole) {
-        return fetchJSON(`/${process.env.REACT_APP_API_BASE_URL}/organizations/v1/organization/${organizationId}/members/${memberId}/_change-role`, {
+        return fetchJSON(`/${process.env.REACT_APP_API_BASE_URL}/organization/v1/organization/${organizationId}/members/${memberId}/_change-role`, {
             method: 'PUT',
             body: { newRole }
         }).pipe(
@@ -90,7 +97,7 @@ export const organizationService = {
     },
 
     removeMemberFromOrganization(organizationId: string, memberId: string) {
-        return fetchJSON(`/${process.env.REACT_APP_API_BASE_URL}/organizations/v1/organization/${organizationId}/members/${memberId}`, {
+        return fetchJSON(`/${process.env.REACT_APP_API_BASE_URL}/organization/v1/organization/${organizationId}/members/${memberId}`, {
             method: 'DELETE',
         });
     },

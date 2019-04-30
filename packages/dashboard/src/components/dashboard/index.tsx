@@ -17,19 +17,19 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
-import { authActions, modalActions } from '../../actions';
+import { organizationActions } from '../../actions';
 import Dashboard from './Dashboard';
+import { organizationSelectors } from '../../selectors';
 
 const mapStateToProps = (state: any) => ({
+    organizationList: organizationSelectors.getOrganizationList(state),
+    isOrganizationListLoading: organizationSelectors.isOrganizationListLoading(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
     return {
-        githubLoginAction: () => {
-            dispatch(authActions.githubLogin());
-        },
-        showModal: (modalType: string, modalProps: any) => {
-            dispatch(modalActions.showModal(modalType, modalProps));
+        loadUserOrganizationList: () => {
+            dispatch(organizationActions.getOrganizationList());
         }
     };
 };

@@ -21,6 +21,7 @@ import auth from './auth.reducer';
 import toast from './toast.reducer';
 import user from './user.reducer';
 import modal from './modal.reducer';
+import organizations from './organizations.reducer';
 import { AnyAction } from 'redux';
 
 
@@ -42,5 +43,6 @@ export default {
     auth,
     toast,
     user,
-    modal
+    modal,
+    organizations
 };

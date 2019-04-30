@@ -24,14 +24,13 @@ export const createDefaultOrganization: Epic = (action$, state$) => action$.pipe
     ofType(organizationActions.CREATE_DEFAULT_ORGANIZATION),
     withLatestFrom(state$),
     switchMap(([action, state]) => {
-        console.log('here');
         return organizationService.createOrganization({
-            name: action.data.name
+            name: action.data.organizationName
         }).pipe(
                 map((newOrganization) =>  {
                     console.log(newOrganization);
                     // redirect
-                    window.location.href = `${window.location.origin}/${newOrganization.id}`;
+                    // window.location.href = `${window.location.origin}/${newOrganization.id}`;
 
                     return organizationActions.createDefaultOrganizationSuccess;
                 }),

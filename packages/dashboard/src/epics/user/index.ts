@@ -16,6 +16,6 @@
 
 import getUserRepositoryList from './getUserRepositoryList.epic';
 
-export const githubEpics = [
+export const userEpics = [
     getUserRepositoryList
 ];

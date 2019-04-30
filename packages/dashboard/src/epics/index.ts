@@ -17,11 +17,13 @@
 import { projectsEpics } from './projects';
 import { appEpics } from './app';
 import { loginEpics } from './login';
-import { githubEpics } from './github';
+import { userEpics } from './user';
+import { organizationEpics } from './organizations';
 
 export const epics = [
     ...projectsEpics,
     ...appEpics,
-    ...githubEpics,
-    ...loginEpics
+    ...userEpics,
+    ...loginEpics,
+    ...organizationEpics
 ];
