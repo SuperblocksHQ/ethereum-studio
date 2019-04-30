@@ -35,6 +35,7 @@ interface IState {
     searchFilter: string;
     ownerFilterId: number;
     ownerFilterName: string;
+    ownerFilterAvatar: string;
     isExpandedOwners: boolean;
     timer: number;
 }
@@ -46,6 +47,7 @@ export default class GithubRepoList extends Component<IProps, IState> {
         searchFilter: '',
         ownerFilterId: -1,
         ownerFilterName: '',
+        ownerFilterAvatar: '',
         isExpandedOwners: false,
         timer: 0
     };
@@ -65,10 +67,11 @@ export default class GithubRepoList extends Component<IProps, IState> {
         });
     }
 
-    onFilterOwnerChange = (id: number, name: string) => {
+    onFilterOwnerChange = (id: number, name: string, avatar: string) => {
         this.setState({
             ownerFilterId: id !== this.state.ownerFilterId ? id : -1,
             ownerFilterName: name !== this.state.ownerFilterName ? name : '',
+            ownerFilterAvatar: avatar !== this.state.ownerFilterAvatar ? avatar : '',
             isExpandedOwners: false
         });
     }
@@ -77,7 +80,8 @@ export default class GithubRepoList extends Component<IProps, IState> {
         this.setState({
             searchFilter: '',
             ownerFilterId: -1,
-            ownerFilterName: ''
+            ownerFilterName: '',
+            ownerFilterAvatar: ''
         });
     }
 
@@ -105,7 +109,7 @@ export default class GithubRepoList extends Component<IProps, IState> {
 
     render() {
         const { customClassName, reposList, isRepositoriesLoading } = this.props;
-        const { searchFilter, ownerFilterId, ownerFilterName, isExpandedOwners } = this.state;
+        const { searchFilter, ownerFilterId, ownerFilterName, ownerFilterAvatar, isExpandedOwners } = this.state;
         const owners = this.getOwners();
 
         const filteredRepos = reposList
@@ -152,12 +156,13 @@ export default class GithubRepoList extends Component<IProps, IState> {
                 <div className={style.right}>
                     <OnlyIf test={owners.length}>
                         <p className={style.ownersDropdownContainer} onClick={() => this.toggleOwnersDropdown()}>
+                            {ownerFilterAvatar ? <img src={`${ownerFilterAvatar}&s=48`} alt={ownerFilterName} /> : ''}
                             {ownerFilterName ? ownerFilterName : 'All repositories'}
                             <IconChevronDown className={style.ownersDropdown} />
                         </p>
                         <div className={classNames([style.organizationsList, isExpandedOwners ? style.expanded : null])}>
                             { owners.map((owner: IGithubRepositoryOwner, index: number) =>
-                                <div onClick={() => this.onFilterOwnerChange(owner.id, owner.login)}
+                                <div onClick={() => this.onFilterOwnerChange(owner.id, owner.login, owner.avatarUrl)}
                                     className={classNames([style.singleOrganization, owner.id === ownerFilterId ? style.active : null])}
                                     key={index}
                                 >
