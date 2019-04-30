@@ -53,13 +53,13 @@ export default function userReducer(state = initialState, action: AnyAction) {
             return {
                 ...state,
                 isRepositoriesLoading: false,
-                githubRepositories: action.data.githubRepositoryList
+                githubRepositoryList: action.data.githubRepositoryList
             };
         case githubActions.GET_USER_REPOSITORY_LIST_FAIL:
             return {
                 ...state,
                 isRepositoriesLoading: false,
-                githubRepositories: []
+                githubRepositoryList: []
             };
         default:
             return state;
