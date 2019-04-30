@@ -22,17 +22,20 @@ import BuildListItem from './BuildListItem';
 import { BreadCrumbs } from '../../common';
 import { SetupBuild } from './SetupBuild';
 import OnlyIf from '../../common/onlyIf';
+import { IProject } from '../../../models';
 
 interface IProps {
     location: any;
     match: any;
+    project: IProject;
 }
 
 export default class BuildList extends Component<IProps> {
     render() {
+        const { project } = this.props;
 
         // TODO: Get project from cloud
-        const project = {
+        const projectA = {
             repository: {
                 fullName: 'superblocks/ethereum-react',
                 link: 'https://github.com/SuperblocksHQ/superblocks-lab'
@@ -92,16 +95,16 @@ export default class BuildList extends Component<IProps> {
             <React.Fragment>
                 <BreadCrumbs>
                     <Link to={'/'}>Organization Name</Link>
-                    <Link to={`/${organizationId}/${projectId}/builds`}>Project Name</Link>
-                    <Link to={`/${organizationId}/${projectId}/builds`}>Builds</Link>
+                    <Link to={`/${this.props.match.params.organizationId}/projects/${this.props.match.params.projectId}/builds`}>{project.name}</Link>
+                    <Link to={`/${this.props.match.params.organizationId}/projects/${this.props.match.params.projectId}/builds`}>Builds</Link>
                 </BreadCrumbs>
 
-                <OnlyIf test={project.builds.length > 0}>
+                <OnlyIf test={projectA.builds.length > 0}>
                     <h1>Builds</h1>
-                    <a className={style.repoLink} href={project.repository.link} target='_blank' rel='noopener noreferrer'>
+                    <a className={style.repoLink} href={projectA.repository.link} target='_blank' rel='noopener noreferrer'>
                         <IconGithub size='xs' className={style.colorGrey} />
                         <span>
-                            {project.repository.fullName}
+                            {projectA.repository.fullName}
                         </span>
                         <IconExternalLink width='10px' height='10px' />
                     </a>
@@ -117,7 +120,7 @@ export default class BuildList extends Component<IProps> {
                             </tr>
                         </thead>
                         <tbody>
-                            { project.builds.map((build, index) =>
+                            { projectA.builds.map((build, index) =>
                                 <tr className={style.buildItem} key={index}>
                                     <BuildListItem build={build} projectId={projectId} organizationId={organizationId} />
                                 </tr>
@@ -126,7 +129,7 @@ export default class BuildList extends Component<IProps> {
                     </table>
                 </OnlyIf>
 
-                <OnlyIf test={!project.builds.length}>
+                <OnlyIf test={!projectA.builds.length}>
                     <SetupBuild projectId={projectId} organizationId={organizationId} />
                 </OnlyIf>
             </React.Fragment>

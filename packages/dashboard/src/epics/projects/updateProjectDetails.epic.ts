@@ -14,8 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { from, of } from 'rxjs';
-import { switchMap, withLatestFrom, catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { switchMap, withLatestFrom, catchError, map } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
 import { projectsActions } from '../../actions';
 import { projectService } from '../../services/project.service';
@@ -24,19 +24,16 @@ export const updateProjectDetails: Epic = (action$: any, state$: any) => action$
     ofType(projectsActions.UPDATE_PROJECT_DETAILS),
     withLatestFrom(state$),
     switchMap(([action]) => {
-        return projectService.getProjectById(action.data.newSettings.id)
+        return projectService.getProjectById(action.data.id)
         .pipe(
             switchMap((selectedProject) => {
-                selectedProject.name = action.data.newSettings.name;
-                selectedProject.description = action.data.newSettings.description;
+                selectedProject.name = action.data.name;
+                selectedProject.description = action.data.description;
 
-                return from(projectService.putProjectById(selectedProject.id, selectedProject))
+                return projectService.putProjectById(selectedProject.id, selectedProject)
                     .pipe(
-                        switchMap(() => {
-                            return [projectsActions.updateProjectDetailsSuccess(selectedProject)];
-                        }
-                    )
-                );
+                        map(() => projectsActions.updateProjectDetailsSuccess(selectedProject))
+                    );
             }),
             catchError((error) => {
                 console.log('There was an issue updating the project: ' + error);

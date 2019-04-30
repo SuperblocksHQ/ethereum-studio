@@ -17,5 +17,6 @@
 export * from './sideMenu';
 export * from './sideMenuItem';
 export * from './sideMenuHeader';
+export * from './sideMenuSubHeader';
 export * from './sideMenuFooter';
 export * from './subMenu';

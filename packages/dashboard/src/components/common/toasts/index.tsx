@@ -19,6 +19,7 @@ import classNames from 'classnames';
 import { projectsActions } from '../../../actions';
 import {
     IconInformation,
+    IconCheckCircle,
     IconWarning,
     IconClose
 } from '../icons';
@@ -28,6 +29,17 @@ export const CloseButton = () => (
         <IconClose className={'icon'}/>
     </button>
 );
+
+const success = (text: string) => ({
+    ToastComponent: () =>
+    (
+        <div className={'messageContainer'}>
+            <IconCheckCircle/>
+            {text}
+        </div>
+    ),
+    className: classNames(['body', 'success'])
+});
 
 const info = (text: string) => ({
     ToastComponent: () =>
@@ -55,6 +67,10 @@ export const getToastComponent = (type: string) => {
     switch (type) {
         case projectsActions.CREATE_PROJECT_SUCCESS:
             return info('Project created!');
+        case projectsActions.UPDATE_PROJECT_DETAILS_SUCCESS:
+            return success('Sweet! Your project was updated successfully.');
+        case projectsActions.UPDATE_PROJECT_DETAILS_FAIL:
+            return error('Ups! Sorry there was an error. Try again.');
         case projectsActions.DELETE_PROJECT_FAIL:
             return error('Error deleting project!');
         default:

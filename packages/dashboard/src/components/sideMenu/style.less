@@ -39,7 +39,8 @@
             transform: rotate(180deg);
         }
 
-        .sideMenuHeader {
+        .sideMenuHeader,
+        .sideMenuSubHeader {
             display: none;
         }
 
@@ -136,7 +137,7 @@
         }
 
         .item:hover {
-            background-color: rgba(128, 46, 255, 0.1);
+            background-color: rgba(49, 56, 59, 0.3);
             cursor: pointer;
         }
 
@@ -198,12 +199,12 @@
 
     &.active {
         border-color: @primary-color;
-        background-color: #283134;
+        background-color: #31383B;
     }
 
     &:hover {
         opacity: 1;
-        background-color: #283134;
+        background-color: #31383B;
         cursor: pointer;
     }
 
@@ -222,6 +223,17 @@
     padding-left: 15px;
     padding-top: 20px;
     white-space: nowrap;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.sideMenuSubHeader {
+    color: white;
+    padding-bottom: 12px;
+    padding-left: 15px;
+    padding-top: 20px;
+    white-space: nowrap;
+    font-weight: 600;
 }
 
 .sideMenuFooter {

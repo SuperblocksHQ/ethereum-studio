@@ -1,4 +1,4 @@
-// Copyright 2019 Superblocks AB
+// Copyright 2018 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -16,22 +16,15 @@
 
 import React from 'react';
 import style from './style.less';
-import { StyledButton } from '../../common';
-import { StyledButtonType } from '../../../models';
-import { Link } from 'react-router-dom';
 
 interface IProps {
-    organizationId: string;
-    projectId: string;
+    title: string;
 }
 
-export const SetupBuild = (props: IProps) => (
-    <div className={style.setupBuild}>
-        <img src='/static/img/illustration-building-blocks.svg' />
-        <p>Connect to your favorite repository so we can start building your project</p>
-        <p>We'll build your app automatically on commit</p>
-        <Link to={`/${props.organizationId}/projects/${props.projectId}/connect`}>
-            <StyledButton type={StyledButtonType.Primary} text={'Setup new build'} />
-        </Link>
-    </div>
-);
+export function SideMenuSubHeader(props: IProps) {
+    return (
+        <div className={style.sideMenuSubHeader}>
+            {props.title}
+        </div>
+    );
+}

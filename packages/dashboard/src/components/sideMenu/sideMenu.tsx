@@ -23,7 +23,11 @@ interface IState {
     collapsed: boolean;
 }
 
-export class SideMenu extends Component<{}, IState> {
+interface IProps {
+    className?: string | object;
+}
+
+export class SideMenu extends Component<IProps, IState> {
     state = {
         collapsed: false
     };
@@ -35,10 +39,11 @@ export class SideMenu extends Component<{}, IState> {
     }
 
     render() {
+        const { className } = this.props;
         const { collapsed } = this.state;
 
         return (
-            <div className={classNames([style.sideMenuContainer, collapsed ? style.collapsed : null])}>
+            <div className={classNames([style.sideMenuContainer, collapsed ? style.collapsed : null, className])}>
                 <div className={style.sideMenuInner}>
                     {this.props.children}
                 </div>

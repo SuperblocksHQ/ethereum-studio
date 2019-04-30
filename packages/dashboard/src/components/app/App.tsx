@@ -38,32 +38,12 @@ const OrganizationSettings = Loadable({
 });
 
 const ProjectDashboard = Loadable({
-    loader: () => import(/* webpackChunkName: "ProjectDashboard" */'../project/ProjectDashboard'),
-    loading: EmptyLoading,
-});
-
-const ProjectSettingsDetails = Loadable({
-    loader: () => import(/* webpackChunkName: "ProjectSettingsDetails" */'../project/settings/projectSettingsDetails'),
-    loading: EmptyLoading,
-});
-
-const BuildList = Loadable({
-    loader: () => import(/* webpackChunkName: "ProjectBuild" */'../project/builds/BuildList'),
-    loading: EmptyLoading,
-});
-
-const BuildPage = Loadable({
-    loader: () => import(/* webpackChunkName: "BuildPage" */'../project/builds/buildPage'),
+    loader: () => import(/* webpackChunkName: "ProjectDashboard" */'../project'),
     loading: EmptyLoading,
 });
 
 const WelcomePage = Loadable({
     loader: () => import(/* webpackChunkName: "WelcomePage" */'../welcomePage'),
-    loading: EmptyLoading,
-});
-
-const ConnectBuild = Loadable({
-    loader: () => import(/* webpackChunkName: "ConnectBuild" */'../project/builds/connectBuild'),
     loading: EmptyLoading,
 });
 
@@ -106,6 +86,7 @@ export default class App extends Component<IProps> {
                                 <PrivateRoute path='/' exact isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => <Dashboard {...props} />} />
                                 <PrivateRoute path='/welcome' exact isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => <WelcomePage {...props} />} />
                                 <PrivateRoute path='/:organizationId' exact isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => <Dashboard {...props} />} />
+                                <PrivateRoute path='/:organizationId/projects' exact isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => <Dashboard {...props} />} />
                                 <PrivateRoute path='/:organizationId/settings' exact isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => <OrganizationSettings {...props} />} />
                                 <PrivateRoute exact path='/:organizationId/settings/details' isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => (
                                     <OrganizationSettings content={<Details {...props}/>} {...props} />
@@ -113,20 +94,8 @@ export default class App extends Component<IProps> {
                                 <PrivateRoute exact path='/:organizationId/settings/people' isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => (
                                     <OrganizationSettings content={<PeopleList {...props}/>} {...props} />
                                 )} />
-                                <PrivateRoute exact path='/:organizationId/:projectId' isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => (
-                                    <ProjectDashboard content={<BuildList {...props}/>} {...props} />
-                                )} />
-                                <PrivateRoute exact path='/:organizationId/:projectId/builds' isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => (
-                                    <ProjectDashboard content={<BuildList {...props}/>} {...props} />
-                                )} />
-                                <PrivateRoute exact path='/:organizationId/:projectId/builds/connect' isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => (
-                                    <ProjectDashboard content={<ConnectBuild {...props}/>} {...props} />
-                                )} />
-                                <PrivateRoute exact path='/:organizationId/:projectId/builds/:buildId' isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => (
-                                    <ProjectDashboard content={<BuildPage {...props}/>} {...props} />
-                                )} />
-                                <PrivateRoute exact path='/:organizationId/:projectId/settings/details' isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => (
-                                    <ProjectDashboard content={<ProjectSettingsDetails {...props}/>} {...props} />
+                                <PrivateRoute path='/:organizationId/projects/:projectId' isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => (
+                                    <ProjectDashboard {...props} isAuthenticated={isAuthenticated} isAuthLoading={isLoginInProgress}/>
                                 )} />
                             </Switch>
                         </div>

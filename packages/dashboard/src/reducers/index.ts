@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
+import { loadingBarReducer as loadingBar } from 'react-redux-loading-bar';
 import app from './app.reducer';
 import projects from './projects.reducer';
 import auth from './auth.reducer';
@@ -21,6 +22,8 @@ import toast from './toast.reducer';
 import user from './user.reducer';
 import modal from './modal.reducer';
 import { AnyAction } from 'redux';
+
+
 
 const rehydrated = (state = false, action: AnyAction) => {
     switch (action.type) {
@@ -32,6 +35,7 @@ const rehydrated = (state = false, action: AnyAction) => {
 };
 
 export default {
+    loadingBar,
     rehydrated,
     app,
     projects,

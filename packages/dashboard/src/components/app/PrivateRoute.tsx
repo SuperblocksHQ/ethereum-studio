@@ -23,7 +23,7 @@ interface IProps {
     isAuthenticated: boolean;
     isLoading: boolean;
     path: string;
-    exact: boolean;
+    exact?: boolean;
 }
 
 const PrivateRoute = ({ render, isAuthenticated, isLoading, ...rest }: IProps) => (

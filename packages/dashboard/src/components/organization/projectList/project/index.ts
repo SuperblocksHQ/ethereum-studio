@@ -26,12 +26,6 @@ const mapStateToProps = (state: any) => ({
 
 function mapDispatchToProps(dispatch: Dispatch<AnyAction>) {
     return {
-        deleteProject: (projectId: string) => {
-            dispatch(projectsActions.deleteProject(projectId));
-        },
-        showModal: (modalType: string, modalProps: any) => {
-            dispatch(modalActions.showModal(modalType, modalProps));
-        }
     };
 }
 

@@ -22,6 +22,7 @@ export const initialState: IProjectState = {
     projectList: [],
     loadingProjectList: false,
     project: undefined,
+    loadingProject: false,
 };
 
 export default function projectsReducer(state = initialState, action: AnyAction) {
@@ -48,10 +49,17 @@ export default function projectsReducer(state = initialState, action: AnyAction)
                 loadingProjectList: false
             };
         }
+        case projectsActions.LOAD_PROJECT_REQUEST: {
+            return {
+                ...state,
+                loadingProject: true
+            };
+        }
         case projectsActions.LOAD_PROJECT_SUCCESS: {
             return {
                 ...state,
-                project: { ...action.data.project, files: undefined },
+                project: { ...action.data.project },
+                loadingProject: false
             };
         }
         case projectsActions.LOAD_PROJECT_FAIL: {
@@ -59,6 +67,7 @@ export default function projectsReducer(state = initialState, action: AnyAction)
 
             return {
                 ...state,
+                loadingProject: false
             };
         }
         case projectsActions.DELETE_PROJECT_SUCCESS: {

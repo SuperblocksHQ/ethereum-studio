@@ -37,7 +37,7 @@ export default class BuildListItem extends Component<IProps> {
                     <BuildStatus status={build.status} />
                 </td>
                 <td>
-                    <Link to={{pathname: `/${this.props.organizationId}/${this.props.projectId}/builds/${build.commit.hash}`, state: {build}}}>
+                    <Link to={{pathname: `/${this.props.organizationId}/projects/${this.props.projectId}/builds/${build.commit.hash}`, state: {build}}}>
                         #{build.buildNumber}
                     </Link>
                 </td>

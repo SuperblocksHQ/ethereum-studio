@@ -54,10 +54,10 @@ export const projectsActions = {
         };
     },
     DELETE_PROJECT: 'DELETE_PROJECT',
-    deleteProject(projectId: string, redirect: boolean = false) {
+    deleteProject(projectId: string) {
        return {
             type: projectsActions.DELETE_PROJECT,
-            data: { projectId, redirect }
+            data: { projectId }
        };
     },
     DELETE_PROJECT_SUCCESS: 'DELETE_PROJECT_SUCCESS',
@@ -73,10 +73,10 @@ export const projectsActions = {
             data: error
        };
     },
-    LOAD_PROJECT: 'LOAD_PROJECT',
+    LOAD_PROJECT_REQUEST: 'LOAD_PROJECT_REQUEST',
     loadProject(projectId: string) {
         return {
-            type: projectsActions.LOAD_PROJECT,
+            type: projectsActions.LOAD_PROJECT_REQUEST,
             data: { projectId }
         };
     },
@@ -114,14 +114,14 @@ export const projectsActions = {
     updateProjectDetails(newDetails: Partial<IProject>) {
        return {
             type: projectsActions.UPDATE_PROJECT_DETAILS,
-            data: { newDetails }
+            data: newDetails
        };
     },
     UPDATE_PROJECT_DETAILS_SUCCESS: 'UPDATE_PROJECT_DETAILS_SUCCESS',
     updateProjectDetailsSuccess(project: IProject) {
        return {
             type: projectsActions.UPDATE_PROJECT_DETAILS_SUCCESS,
-            data: { project}
+            data: { project }
        };
     },
     UPDATE_PROJECT_DETAILS_FAIL: 'UPDATE_PROJECT_DETAILS_FAIL',
