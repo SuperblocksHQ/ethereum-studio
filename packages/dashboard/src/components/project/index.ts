@@ -18,20 +18,17 @@ import { connect } from 'react-redux';
 import ProjectDashboard from './ProjectDashboard';
 import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
-import { authSelectors } from '../../selectors';
-import { authActions, modalActions } from '../../actions';
+import { projectSelectors } from '../../selectors';
+import { projectsActions,  } from '../../actions';
 
 const mapStateToProps = (state: any) => ({
-    isLoginInProgress: authSelectors.getIsLoginInProgress(state)
+    isProjectLoading: projectSelectors.getLoadingProject(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
     return {
-        githubLoginAction: () => {
-            dispatch(authActions.githubLogin());
-        },
-        showModal: (modalType: string, modalProps: any) => {
-            dispatch(modalActions.showModal(modalType, modalProps));
+        loadProject: (projectId: string) => {
+            dispatch(projectsActions.loadProject(projectId));
         }
     };
 };

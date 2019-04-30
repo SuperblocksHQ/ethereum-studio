@@ -17,6 +17,7 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import { createMigrate, persistStore, persistReducer } from 'redux-persist';
 import { createEpicMiddleware, combineEpics } from 'redux-observable';
+import { loadingBarMiddleware } from 'react-redux-loading-bar'
 import storage from 'redux-persist/lib/storage'; // default: localStorage if web
 import thunk from 'redux-thunk';
 import migrations from './migrations';
@@ -60,10 +61,14 @@ const configureMiddleware = () => {
         dependencies: {
         }
     });
+    const loadingBarMid = loadingBarMiddleware({
+        promiseTypeSuffixes: ['REQUEST', 'SUCCESS', 'FAIL'],
+    });
 
     const middleware = [
         thunk,
-        epicMiddleware
+        epicMiddleware,
+        loadingBarMid
     ];
 
     return { middleware, epicMiddleware, rootEpic };

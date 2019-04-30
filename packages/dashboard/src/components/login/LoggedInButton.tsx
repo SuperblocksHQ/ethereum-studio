@@ -19,7 +19,7 @@ import react, {Component} from 'react';
 import React from 'react';
 import classNames from 'classnames';
 import style from './style.less';
-import { IconAngleDown } from '../common/icons';
+import { IconChevronDown } from '../common/icons';
 import OnlyIf from '../common/onlyIf';
 import { MenuItem } from '../common';
 import { DropdownContainer } from '../common/dropdown';
@@ -52,7 +52,7 @@ export default class LoggedInButton extends Component<IProps> {
                                 <img className={style.profilePicture} src={this.props.userProfile.imageUrl} />
                             </OnlyIf>
                             <div className={style.caret} >
-                                <IconAngleDown className={style.angleDown}/>
+                                <IconChevronDown className={style.angleDown}/>
                             </div>
                         </button>
                 </DropdownContainer>

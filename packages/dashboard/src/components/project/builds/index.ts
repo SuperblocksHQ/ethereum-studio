@@ -18,8 +18,10 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
 import BuildList from './BuildList';
+import { projectSelectors } from '../../../selectors';
 
 const mapStateToProps = (state: any) => ({
+    project: projectSelectors.getProject(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {

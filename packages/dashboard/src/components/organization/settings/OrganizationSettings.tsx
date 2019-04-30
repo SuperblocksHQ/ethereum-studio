@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Topbar from '../../topbar';
 import style from './style.less';
-import { SideMenu, SideMenuItem, SideMenuFooter, SideMenuHeader } from '../../sideMenu';
+import { SideMenu, SideMenuItem, SideMenuFooter, SideMenuHeader, SideMenuSubHeader } from '../../sideMenu';
 import { IconBack, IconArchive, IconUsers } from '../../common/icons';
 
 interface IProps {
@@ -22,7 +22,7 @@ export default class OrganizationSettings extends Component<IProps> {
                 <div className={style.content}>
                     <SideMenu>
                         <SideMenuHeader title={'Organization Settings'} />
-                        <SideMenuHeader title={'General'} />
+                        <SideMenuSubHeader title={'General'} />
                         <SideMenuItem
                             icon={<IconArchive />}
                             title='Details'

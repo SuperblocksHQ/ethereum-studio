@@ -42,8 +42,8 @@ export default class ProjectSettingsDetails extends Component<IProps, IState> {
 
     state: IState = {
         errorName: null,
-        newName: 'Project name placeholder', // TODO: Fetch from props
-        newDescription: 'Project description placeholder', // TODO: Fetch from props
+        newName: this.props.project.name,
+        newDescription: this.props.project.description,
         canSave: true
     };
 
@@ -74,20 +74,14 @@ export default class ProjectSettingsDetails extends Component<IProps, IState> {
     }
 
     render() {
-        const { showModal } = this.props;
+        const { showModal, project } = this.props;
         const { errorName, canSave } = this.state;
-
-        {/* TODO: Fetch project from redux */}
-        const project = {
-            name: 'Project name placeholder',
-            description: 'Project description placeholder'
-        };
 
         return (
             <React.Fragment>
                 <BreadCrumbs>
                     <Link to={`/${this.props.match.params.organizationId}`}>Organization Name</Link>
-                    <Link to={`/${this.props.match.params.organizationId}/${this.props.match.params.projectId}`}>Project Name</Link>
+                    <Link to={`/${this.props.match.params.organizationId}/projects/${this.props.match.params.projectId}`}>{project.name}</Link>
                     <Link to={window.location.pathname}>Settings</Link>
                 </BreadCrumbs>
 

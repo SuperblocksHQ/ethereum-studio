@@ -23,15 +23,19 @@ import { BuildStatus } from '../BuildStatus';
 import moment from 'moment';
 import BuildConsole from './BuildConsole';
 import classNames from 'classnames';
+import { IProject } from '../../../../models';
 
 interface IProps {
     build: any;
     location: any;
     match: any;
+    project: IProject;
 }
 
 export default class BuildPage extends Component<IProps> {
     render() {
+        const { project } = this.props;
+
         const build = {
             status: 1,
             buildNumber: 3,
@@ -53,9 +57,9 @@ export default class BuildPage extends Component<IProps> {
             <div className={style.buildPage}>
                 <BreadCrumbs>
                     <Link to={'/'}>Organization Name</Link>
-                    <Link to={`/${this.props.match.params.organizationId}/${this.props.match.params.projectId}/builds`}>Project Name</Link>
-                    <Link to={`/${this.props.match.params.organizationId}/${this.props.match.params.projectId}/builds`}>Builds</Link>
-                    <Link to={`/${this.props.match.params.organizationId}/${this.props.match.params.projectId}/builds/${this.props.match.params.buildId}`}>
+                    <Link to={`/${this.props.match.params.organizationId}/projects/${this.props.match.params.projectId}/builds`}>{project.name}</Link>
+                    <Link to={`/${this.props.match.params.organizationId}/projects/${this.props.match.params.projectId}/builds`}>Builds</Link>
+                    <Link to={`/${this.props.match.params.organizationId}/projects/${this.props.match.params.projectId}/builds/${this.props.match.params.buildId}`}>
                         #{build.buildNumber}
                     </Link>
                 </BreadCrumbs>

@@ -1,4 +1,4 @@
-// Copyright 2019 Superblocks AB
+// Copyright 2018 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -14,9 +14,17 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export * from './sideMenu';
-export * from './sideMenuItem';
-export * from './sideMenuHeader';
-export * from './sideMenuSubHeader';
-export * from './sideMenuFooter';
-export * from './subMenu';
+import React from 'react';
+import style from './style.less';
+
+interface IProps {
+    title: string;
+}
+
+export function SideMenuSubHeader(props: IProps) {
+    return (
+        <div className={style.sideMenuSubHeader}>
+            {props.title}
+        </div>
+    );
+}

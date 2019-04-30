@@ -23,8 +23,6 @@ import { Link } from 'react-router-dom';
 interface IProps {
     project: IProject;
     organizationId: string;
-    deleteProject: (projectId: string) => void;
-    showModal: (modalType: string, modalProps: any) => void;
     orderBy: string;
 }
 
@@ -35,7 +33,7 @@ export default class Project extends Component<IProps> {
 
         return (
             <div className={style.container}>
-                <Link to={`${organizationId}/${project.id}/builds`} className={style.innerWrapper}>
+                <Link to={`${organizationId}/projects/${project.id}/builds`} className={style.innerWrapper}>
                     <div className={style.name}>
                         {project.name}
                     </div>

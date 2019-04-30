@@ -19,7 +19,7 @@ import style from './style.less';
 import { IconConfigure, IconPlusTransparent } from '../common/icons';
 import { LetterAvatar } from '../common';
 import Topbar from '../topbar';
-import { SideMenu, SideMenuItem, SideMenuHeader, SideMenuFooter } from '../sideMenu';
+import { SideMenu, SideMenuItem, SideMenuSubHeader, SideMenuFooter } from '../sideMenu';
 import ProjectList from '../organization/projectList';
 
 interface IProps {
@@ -36,7 +36,7 @@ export default class Dashboard extends Component<IProps> {
                 <Topbar />
                 <div className={style.content}>
                     <SideMenu>
-                        <SideMenuHeader title='My organizations' />
+                        <SideMenuSubHeader title='My organizations' />
                         {/* TODO: Remove placeholder items and fetch organizations instead, add corresponding link */}
                         <SideMenuItem
                             icon={<LetterAvatar title='Placeholder'/>}

@@ -14,6 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
+@import './index';
+
 .toastContainer {
     bottom: 2em;
     right: 46px;
@@ -54,12 +56,25 @@
     }
 
     .info {
-        background-color: #8641f2 !important;
+        background-color: @primary-background-color !important;
         color: #fff !important;
     }
 
+    .success {
+        background-color: #00e380 !important;
+        color: #000 !important;
+
+        .closeIcon {
+            color: #000;
+            &:hover {
+                color: #000;
+                opacity: 0.6;
+            }
+        }
+    }
+
     .error {
-        background-color: red !important;
+        background-color: #d9534f !important;
         color: #fff !important;
     }
 }

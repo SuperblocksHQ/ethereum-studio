@@ -37,7 +37,9 @@ export default function toastsReducer(state = initialState, action: AnyAction, r
 
     switch (action.type) {
         // Return this when ever we need to display a toast for certain action being triggered
-        // return pushToastToState();
+        case projectsActions.UPDATE_PROJECT_DETAILS_SUCCESS:
+        case projectsActions.UPDATE_PROJECT_DETAILS_FAIL:
+            return pushToastToState();
         case toastActions.TOAST_DISMISSED:
             return {
                 ...state,

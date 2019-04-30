@@ -20,17 +20,20 @@ import { Link } from 'react-router-dom';
 import { IconGithub, IconExternalLink } from '../../common/icons';
 import BuildListItem from './BuildListItem';
 import { BreadCrumbs } from '../../common';
+import { IProject } from '../../../models';
 
 interface IProps {
     location: any;
     match: any;
+    project: IProject;
 }
 
 export default class BuildList extends Component<IProps> {
     render() {
+        const { project } = this.props;
 
         // TODO: Get project from cloud
-        const project = {
+        const projectA = {
             repository: {
                 fullName: 'superblocks/ethereum-react',
                 link: 'https://github.com/SuperblocksHQ/superblocks-lab'
@@ -88,15 +91,15 @@ export default class BuildList extends Component<IProps> {
             <React.Fragment>
                 <BreadCrumbs>
                     <Link to={'/'}>Organization Name</Link>
-                    <Link to={`/${this.props.match.params.organizationId}/${this.props.match.params.projectId}/builds`}>Project Name</Link>
-                    <Link to={`/${this.props.match.params.organizationId}/${this.props.match.params.projectId}/builds`}>Builds</Link>
+                    <Link to={`/${this.props.match.params.organizationId}/projects/${this.props.match.params.projectId}/builds`}>{project.name}</Link>
+                    <Link to={`/${this.props.match.params.organizationId}/projects/${this.props.match.params.projectId}/builds`}>Builds</Link>
                 </BreadCrumbs>
 
                 <h1>Builds</h1>
-                <a className={style.repoLink} href={project.repository.link} target='_blank' rel='noopener noreferrer'>
+                <a className={style.repoLink} href={projectA.repository.link} target='_blank' rel='noopener noreferrer'>
                     <IconGithub size='xs' className={style.colorGrey} />
                     <span>
-                        {project.repository.fullName}
+                        {projectA.repository.fullName}
                     </span>
                     <IconExternalLink width='10px' height='10px' />
                 </a>
@@ -112,7 +115,7 @@ export default class BuildList extends Component<IProps> {
                         </tr>
                     </thead>
                     <tbody>
-                        { project.builds.map(build =>
+                        { projectA.builds.map(build =>
                             <tr className={style.buildItem} key={build.commit.hash}>
                                 <BuildListItem build={build} projectId={this.props.match.params.projectId} organizationId={this.props.match.params.organizationId} />
                             </tr>

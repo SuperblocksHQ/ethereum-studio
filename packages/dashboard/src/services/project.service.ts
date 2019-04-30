@@ -16,7 +16,7 @@
 import { fetchJSON } from './utils/fetchJson';
 import {switchMap, catchError} from 'rxjs/operators';
 import { IProject } from '../models';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, of } from 'rxjs';
 
 export const projectService = {
 
@@ -58,7 +58,7 @@ export const projectService = {
             method: 'PUT',
             body: data
         }).pipe(
-            switchMap(r => (r.ok ? r.statusText : throwError(r.statusText)))
+            switchMap(r => (of(r.ok ? r.statusText : throwError(r.statusText))))
         );
     },
 
