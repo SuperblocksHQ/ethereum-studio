@@ -33,7 +33,8 @@ interface IProps {
 interface IState {
     filteredRepos: IGithubRepository[];
     searchFilter: string;
-    ownerFilter: number[];
+    ownerFilterId: number;
+    ownerFilterName: string;
     isExpandedOwners: boolean;
     timer: number;
 }
@@ -43,8 +44,9 @@ export default class GithubRepoList extends Component<IProps, IState> {
     state = {
         filteredRepos: this.props.reposList,
         searchFilter: '',
-        ownerFilter: [] as number[],
-        isExpandedOwners: true,
+        ownerFilterId: -1,
+        ownerFilterName: '',
+        isExpandedOwners: false,
         timer: 0
     };
 
@@ -63,18 +65,18 @@ export default class GithubRepoList extends Component<IProps, IState> {
         });
     }
 
-    onFilterOwnerChange = (id: number) => {
+    onFilterOwnerChange = (id: number, name: string) => {
         this.setState({
-            ownerFilter: !this.state.ownerFilter.includes(id)
-                        ? [...this.state.ownerFilter, id]
-                        : [...this.state.ownerFilter.filter(ownerId => ownerId !== id )]
+            ownerFilterId: id !== this.state.ownerFilterId ? id : -1,
+            ownerFilterName: name !== this.state.ownerFilterName ? name : '',
+            isExpandedOwners: false
         });
     }
 
     resetFilter = () => {
         this.setState({
             searchFilter: '',
-            ownerFilter: []
+            ownerFilterId: -1
         });
     }
 
@@ -102,13 +104,13 @@ export default class GithubRepoList extends Component<IProps, IState> {
 
     render() {
         const { customClassName, reposList, isRepositoriesLoading } = this.props;
-        const { searchFilter, ownerFilter, isExpandedOwners } = this.state;
+        const { searchFilter, ownerFilterId, ownerFilterName, isExpandedOwners } = this.state;
         const owners = this.getOwners();
 
         const filteredRepos = reposList
             .filter((repo: IGithubRepository) =>
                 (searchFilter === '' || repo.fullName.toLowerCase().includes(searchFilter.toLowerCase())) &&
-                (ownerFilter.length === 0 || ownerFilter.includes(repo.owner.id) ));
+                (ownerFilterId === -1 || repo.owner.id === ownerFilterId ));
 
         return (
             <div className={classNames([style.container, customClassName])}>
@@ -149,13 +151,13 @@ export default class GithubRepoList extends Component<IProps, IState> {
                 <div className={style.right}>
                     <OnlyIf test={owners.length}>
                         <p className={style.ownersDropdownContainer} onClick={() => this.toggleOwnersDropdown()}>
-                            All Github organizations
+                            {ownerFilterName ? ownerFilterName : 'All repositories'}
                             <IconChevronDown className={style.ownersDropdown} />
                         </p>
                         <div className={classNames([style.organizationsList, isExpandedOwners ? style.expanded : null])}>
                             { owners.map((owner: IGithubRepositoryOwner, index: number) =>
-                                <div onClick={() => this.onFilterOwnerChange(owner.id)}
-                                    className={classNames([style.singleOrganization, ownerFilter.includes(owner.id) ? style.active : null])}
+                                <div onClick={() => this.onFilterOwnerChange(owner.id, owner.login)}
+                                    className={classNames([style.singleOrganization, owner.id === ownerFilterId ? style.active : null])}
                                     key={index}
                                 >
                                     <img src={`${owner.avatarUrl}&s=48`}/>
