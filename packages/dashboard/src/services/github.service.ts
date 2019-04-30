@@ -18,7 +18,7 @@ import { fetchJSON } from './utils/fetchJson';
 import { switchMap } from 'rxjs/operators';
 
 export const githubService = {
-    getUserRepos() {
+    getUserRepositories() {
         return fetchJSON(process.env.REACT_APP_API_BASE_URL + '/github/repos', {})
             .pipe(
                 switchMap(response => response.json())

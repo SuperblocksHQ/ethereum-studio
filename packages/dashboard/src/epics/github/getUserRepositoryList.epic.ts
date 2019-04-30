@@ -20,18 +20,18 @@ import { ofType, Epic } from 'redux-observable';
 import { githubActions } from '../../actions';
 import { githubService } from '../../services';
 
-const getUserReposList: Epic = (action$: any, state$: any) => action$.pipe(
-    ofType(githubActions.GET_USER_REPOS_LIST),
+const getUserRepositoryList: Epic = (action$: any, state$: any) => action$.pipe(
+    ofType(githubActions.GET_USER_REPOSITORY_LIST),
     withLatestFrom(state$),
     switchMap(([, ]) => {
-        return from(githubService.getUserRepos()).pipe(
-            map(githubActions.getUserReposSuccess),
+        return from(githubService.getUserRepositories()).pipe(
+            map(githubActions.getUserRepositoryListSuccess),
             catchError((error) => {
-                console.log('There was an issue fetching the user repos: ' + error);
-                return of(githubActions.getUserReposFail(error));
+                console.log('There was an issue fetching the user repositories: ' + error);
+                return of(githubActions.getUserRepositoryListFail(error));
             })
         );
     })
 );
 
-export default getUserReposList;
+export default getUserRepositoryList;

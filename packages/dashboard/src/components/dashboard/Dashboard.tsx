@@ -34,9 +34,9 @@ export default class Dashboard extends Component<IProps> {
     // TODO - Make sure to change the hardcoded organization Ids and list for the real deal
     render() {
         const organizations = [
-            {
-                name: 'Organization - 1',
-            }
+            // {
+            //     name: 'Organization - 1',
+            // }
         ];
 
         return (

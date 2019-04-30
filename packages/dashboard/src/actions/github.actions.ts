@@ -17,25 +17,25 @@
 import { IGithubRepository } from '../models';
 
 export const githubActions = {
-    GET_USER_REPOS_LIST: 'GET_USER_REPOS_LIST',
-    getUserRepos() {
+    GET_USER_REPOSITORY_LIST: 'GET_USER_REPOSITORY_LIST',
+    getUserRepositoryList() {
         return {
-            type: githubActions.GET_USER_REPOS_LIST,
+            type: githubActions.GET_USER_REPOSITORY_LIST,
         };
     },
 
-    GET_USER_REPOS_SUCCESS: 'GET_USER_REPOS_SUCCESS',
-    getUserReposSuccess(githubReposList: IGithubRepository[]) {
+    GET_USER_REPOSITORY_LIST_SUCCESS: 'GET_USER_REPOSITORY_LIST_SUCCESS',
+    getUserRepositoryListSuccess(githubRepositoryList: IGithubRepository[]) {
         return {
-            type: githubActions.GET_USER_REPOS_SUCCESS,
-            data: { githubReposList }
+            type: githubActions.GET_USER_REPOSITORY_LIST_SUCCESS,
+            data: { githubRepositoryList }
         };
     },
 
-    GET_USER_REPOS_FAIL: 'GET_USER_REPOS_FAIL',
-    getUserReposFail(error: any) {
+    GET_USER_REPOSITORY_LIST_FAIL: 'GET_USER_REPOSITORY_LIST_FAIL',
+    getUserRepositoryListFail(error: any) {
         return {
-            type: githubActions.GET_USER_REPOS_FAIL,
+            type: githubActions.GET_USER_REPOSITORY_LIST_FAIL,
             error
         };
     },
