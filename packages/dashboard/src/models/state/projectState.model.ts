@@ -5,5 +5,6 @@ export interface IProjectState {
     loadingProjectList: boolean;
     project?: Partial<IProjectItem>;
     loadingProject: boolean;
+    showCreateProjectModal: boolean;
     showDeleteProjectModal: boolean;
 }

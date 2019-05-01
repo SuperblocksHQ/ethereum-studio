@@ -23,6 +23,7 @@ export const initialState: IProjectState = {
     loadingProjectList: true,
     project: undefined,
     loadingProject: false,
+    showCreateProjectModal: false,
     showDeleteProjectModal: false
 };
 
@@ -69,6 +70,12 @@ export default function projectsReducer(state = initialState, action: AnyAction)
             return {
                 ...state,
                 loadingProject: false
+            };
+        }
+        case projectsActions.TOGGLE_CREATE_PROJECT_MODAL: {
+            return {
+                ...state,
+                showCreateProjectModal: !state.showCreateProjectModal
             };
         }
         case projectsActions.TOGGLE_DELETE_PROJECT_MODAL: {

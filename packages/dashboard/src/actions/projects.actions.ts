@@ -40,6 +40,13 @@ export const projectsActions = {
     },
 
     // ---------- MODALS ----------
+    TOGGLE_CREATE_PROJECT_MODAL: 'TOGGLE_CREATE_PROJECT_MODAL',
+    toggleCreateProjectModal() {
+        return {
+            type: projectsActions.TOGGLE_CREATE_PROJECT_MODAL,
+        };
+    },
+
     TOGGLE_DELETE_PROJECT_MODAL: 'TOGGLE_DELETE_PROJECT_MODAL',
     toggleDeleteProjectModal() {
         return {
