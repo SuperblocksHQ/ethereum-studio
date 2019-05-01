@@ -17,7 +17,7 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
-import { authActions, modalActions } from '../../actions';
+import { authActions } from '../../actions';
 import Dashboard from './Dashboard';
 
 const mapStateToProps = (state: any) => ({
@@ -27,9 +27,6 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
     return {
         githubLoginAction: () => {
             dispatch(authActions.githubLogin());
-        },
-        showModal: (modalType: string, modalProps: any) => {
-            dispatch(modalActions.showModal(modalType, modalProps));
         }
     };
 };

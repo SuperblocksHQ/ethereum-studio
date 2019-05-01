@@ -20,4 +20,6 @@ export interface IOrganizationState {
     organizationList: Partial<IOrganization[]>;
     loadingOrganizationList: boolean;
     organization?: Partial<IOrganization>;
+    showDeleteOrganizationModal: boolean;
+    showInvitePeopleModal: boolean;
 }

@@ -20,7 +20,7 @@ import classNames from 'classnames';
 import { IProject } from '../../../models';
 import { ModalHeader, TextInput, StyledButton } from '../../common';
 import { StyledButtonType } from '../../../models/button.model';
-import { Modal } from '../../common/modal/Modal';
+import { Modal } from '../../common/modal';
 
 interface IProps {
     project: IProject;

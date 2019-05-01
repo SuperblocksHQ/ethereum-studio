@@ -20,7 +20,7 @@ import projects from './projects.reducer';
 import auth from './auth.reducer';
 import toast from './toast.reducer';
 import user from './user.reducer';
-import modal from './modal.reducer';
+import organization from './organization.reducer';
 import { AnyAction } from 'redux';
 
 
@@ -42,5 +42,5 @@ export default {
     auth,
     toast,
     user,
-    modal
+    organization
 };

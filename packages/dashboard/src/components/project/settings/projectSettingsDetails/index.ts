@@ -17,7 +17,7 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
-import { modalActions, projectsActions } from '../../../../actions';
+import { projectsActions } from '../../../../actions';
 import { projectSelectors } from '../../../../selectors';
 import ProjectSettingsDetails from './ProjectSettingsDetails';
 import { IProject } from '../../../../models';
