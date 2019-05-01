@@ -41,6 +41,12 @@ export const organizationActions = {
     },
 
     // ---------- MODALS ----------
+    TOGGLE_CREATE_ORGANIZATION_MODAL: 'TOGGLE_CREATE_ORGANIZATION_MODAL',
+    toggleCreateOrganizationModal() {
+        return {
+            type: organizationActions.TOGGLE_CREATE_ORGANIZATION_MODAL,
+        };
+    },
     TOGGLE_DELETE_ORGANIZATION_MODAL: 'TOGGLE_DELETE_ORGANIZATION_MODAL',
     toggleDeleteOrganizationModal() {
         return {
