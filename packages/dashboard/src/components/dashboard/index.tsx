@@ -17,16 +17,22 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
-import { authActions } from '../../actions';
+import { authActions, projectsActions } from '../../actions';
 import Dashboard from './Dashboard';
+import { projectSelectors } from '../../selectors';
 
 const mapStateToProps = (state: any) => ({
+    projectList: projectSelectors.getProjectList(state),
+    isProjectListLoading: projectSelectors.isProjectListLoading(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
     return {
         githubLoginAction: () => {
             dispatch(authActions.githubLogin());
+        },
+        getProjectList: () => {
+            dispatch(projectsActions.getProjectList());
         }
     };
 };

@@ -20,7 +20,7 @@ import { AnyAction } from 'redux';
 
 export const initialState: IProjectState = {
     projectList: [],
-    loadingProjectList: false,
+    loadingProjectList: true,
     project: undefined,
     loadingProject: false,
     showDeleteProjectModal: false

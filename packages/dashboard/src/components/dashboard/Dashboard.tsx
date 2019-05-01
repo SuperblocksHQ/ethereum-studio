@@ -21,16 +21,26 @@ import { LetterAvatar } from '../common';
 import Topbar from '../topbar';
 import { SideMenu, SideMenuItem, SideMenuSubHeader, SideMenuFooter } from '../sideMenu';
 import ProjectList from '../organization/projectList';
+import { IProject } from '../../models';
+import CreateProject from '../organization/createProject';
 
 interface IProps {
-    githubLoginAction: () => void;
+    projectList: IProject[];
     isProjectListLoading: boolean;
+    getProjectList: () => void;
+    githubLoginAction: () => void;
 }
 
 export default class Dashboard extends Component<IProps> {
 
+    componentWillMount() {
+        this.props.getProjectList();
+    }
+
     // TODO - Make sure to change the hardcoded organization Ids for the real deal
     render() {
+        const { projectList, isProjectListLoading } = this.props;
+
         return (
             <div className={style.dashboard}>
                 <Topbar />
@@ -57,10 +67,15 @@ export default class Dashboard extends Component<IProps> {
                             />
                         </SideMenuFooter>
                     </SideMenu>
-                    <ProjectList
-                        organizationName={'Placeholder organization'}
-                        organizationId={'12334'}
-                    />
+                    { projectList.length === 0 && !isProjectListLoading ?
+                        <CreateProject />
+                        :
+                        <ProjectList
+                            list={projectList}
+                            organizationName={'Placeholder organization'}
+                            organizationId={'12334'}
+                        />
+                    }
                 </div>
             </div>
         );

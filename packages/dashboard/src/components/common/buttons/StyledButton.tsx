@@ -18,6 +18,7 @@ import React from 'react';
 import style from './style.less';
 import classNames from 'classnames';
 import { StyledButtonType } from '../../../models/button.model';
+import OnlyIf from '../onlyIf';
 
 interface IProps {
     type: StyledButtonType;
@@ -44,7 +45,11 @@ export const StyledButton = (props: IProps) => {
 
     return (
         <button onClick={props.onClick} className={classNames([style.btn, clsBtn, props.customClassName])} disabled={props.isDisabled}>
-            {props.icon}
+            <OnlyIf test={!!props.icon}>
+                <div className={style.icon}>
+                    {props.icon}
+                </div>
+            </OnlyIf>
             <span>
                 {props.text}
             </span>
