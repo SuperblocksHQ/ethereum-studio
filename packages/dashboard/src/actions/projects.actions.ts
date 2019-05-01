@@ -39,6 +39,14 @@ export const projectsActions = {
         };
     },
 
+    // ---------- MODALS ----------
+    TOGGLE_DELETE_PROJECT_MODAL: 'TOGGLE_DELETE_PROJECT_MODAL',
+    toggleDeleteProjectModal() {
+        return {
+            type: projectsActions.TOGGLE_DELETE_PROJECT_MODAL,
+        };
+    },
+
     // ---------- CRUD Project actions ----------
     CREATE_PROJECT: 'CREATE_PROJECT',
     createProject(redirect: boolean) {

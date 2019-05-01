@@ -20,6 +20,7 @@ import classNames from 'classnames';
 import { IProject } from '../../../models';
 import { ModalHeader, TextInput, StyledButton } from '../../common';
 import { StyledButtonType } from '../../../models/button.model';
+import { Modal } from '../../common/modal/Modal';
 
 interface IProps {
     project: IProject;
@@ -55,31 +56,32 @@ export default class DeleteProjectModal extends React.Component<IProps, IState> 
         const { isValid } = this.state;
 
         return (
-            <div className={classNames([style.deleteProjectModal, 'modal'])}>
-                <ModalHeader
-                    title='Delete this project'
-                    onCloseClick={hideModal}
-                />
-                <div className={style.content}>
-                    <p>
-                        This action <b>cannot</b> be undone. This will permanently delete your project and its data, making it inaccessible for any of the members of the organization.
-                    </p>
-                    <p>
-                        To confirm this action, please type "<b>{project.name}</b>":
-                    </p>
-                    <TextInput
-                        id='projectName'
-                        type='text'
-                        placeholder='Type the name of the project to confirm...'
-                        onChangeText={this.handleTitleChange}
+            <Modal>
+                <div className={classNames([style.deleteProjectModal, 'modal'])}>
+                    <ModalHeader
+                        title='Delete this project'
+                        onCloseClick={hideModal}
                     />
-                    <div className={style.footer}>
-                        <div className={style.cancelBtn} onClick={hideModal}>Cancel</div>
-                        <StyledButton type={StyledButtonType.Danger} text={'Delete Project'} onClick={this.onConfirmClick} isDisabled={!isValid} />
+                    <div className={style.content}>
+                        <p>
+                            This action <b>cannot</b> be undone. This will permanently delete your project and its data, making it inaccessible for any of the members of the organization.
+                        </p>
+                        <p>
+                            To confirm this action, please type "<b>{project.name}</b>":
+                        </p>
+                        <TextInput
+                            id='projectName'
+                            type='text'
+                            placeholder='Type the name of the project to confirm...'
+                            onChangeText={this.handleTitleChange}
+                        />
+                        <div className={style.footer}>
+                            <div className={style.cancelBtn} onClick={hideModal}>Cancel</div>
+                            <StyledButton type={StyledButtonType.Danger} text={'Delete Project'} onClick={this.onConfirmClick} isDisabled={!isValid} />
+                        </div>
                     </div>
                 </div>
-
-            </div>
+            </Modal>
         );
     }
 }

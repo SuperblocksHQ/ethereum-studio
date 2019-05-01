@@ -22,13 +22,16 @@ import { Link } from 'react-router-dom';
 import { IProject } from '../../../../models';
 import { validateProjectName } from '../../../../validations';
 import { ProjectSettingsMenu } from '../projectSettingsMenu';
+import OnlyIf from '../../../common/onlyIf';
+import DeleteProjectModal from '../../../modals/deleteProjectModal';
 
 interface IProps {
     location: any;
     match: any;
     project: IProject;
     updateProjectDetails: (newProjectDetails: Partial<IProject>) => void;
-    showModal: (modalType: string, modalProps: any) => void;
+    showDeleteProjectModal: boolean;
+    toggleDeleteProjectModal: () => void;
 }
 
 interface IState {
@@ -74,7 +77,7 @@ export default class ProjectSettingsDetails extends Component<IProps, IState> {
     }
 
     render() {
-        const { showModal, project } = this.props;
+        const { toggleDeleteProjectModal, showDeleteProjectModal, project } = this.props;
         const { errorName, canSave } = this.state;
 
         return (
@@ -116,7 +119,11 @@ export default class ProjectSettingsDetails extends Component<IProps, IState> {
 
                         <h1>Delete this project</h1>
                         <p className={style['mb-4']}>Once deleted, it will be gone forever. Please be certain.</p>
-                        <StyledButton type={StyledButtonType.Danger} text={'Delete Project'} onClick={() => showModal('DELETE_PROJECT_MODAL', { project })} />
+                        <StyledButton type={StyledButtonType.Danger} text={'Delete Project'} onClick={() => toggleDeleteProjectModal()} />
+
+                        <OnlyIf test={showDeleteProjectModal}>
+                            <DeleteProjectModal hideModal={toggleDeleteProjectModal} project={project} />
+                        </OnlyIf>
                     </div>
                 </div>
             </React.Fragment>
