@@ -154,11 +154,32 @@
                 background: #283134;
                 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
                 cursor: pointer;
+
+                .icon {
+                    opacity: 1;
+                }
             }
 
             img {
                 max-width: 24px;
                 margin-right: 15px;
+            }
+
+            .icon {
+                display: flex;
+                align-items: center;
+                margin-left: auto;
+                opacity: 0;
+            }
+
+            .githubIcon {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-width: 24px;
+                min-height: 24px;
+                margin-right: 15px;
+                background: black;
             }
         }
     }

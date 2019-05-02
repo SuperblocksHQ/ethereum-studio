@@ -19,7 +19,7 @@ import style from './style.less';
 import classNames from 'classnames';
 import { GenericLoading } from '../common';
 import { IGithubRepository, IGithubRepositoryOwner, StyledButtonType } from '../../models';
-import { IconFilter, IconChevronDown } from '../common/icons';
+import { IconFilter, IconChevronDown, IconClose, IconGithub } from '../common/icons';
 import { StyledButton } from '../common/buttons/StyledButton';
 import OnlyIf from '../common/onlyIf';
 
@@ -161,6 +161,12 @@ export default class GithubRepositoryList extends Component<IProps, IState> {
                             <IconChevronDown className={style.ownersDropdown} />
                         </p>
                         <div className={classNames([style.organizationsList, isExpandedOwners ? style.expanded : null])}>
+                            <div onClick={() => this.onFilterOwnerChange(-1, '', '')} className={classNames([style.singleOrganization, ownerFilterId === -1 ? style.active : null])}>
+                                <div className={style.githubIcon}>
+                                    <IconGithub />
+                                </div>
+                                <div className={style.orgTitle}>All repositories</div>
+                            </div>
                             { owners.map((owner: IGithubRepositoryOwner, index: number) =>
                                 <div onClick={() => this.onFilterOwnerChange(owner.id, owner.login, owner.avatarUrl)}
                                     className={classNames([style.singleOrganization, owner.id === ownerFilterId ? style.active : null])}
@@ -168,6 +174,11 @@ export default class GithubRepositoryList extends Component<IProps, IState> {
                                 >
                                     <img src={`${owner.avatarUrl}&s=48`}/>
                                     <div className={style.orgTitle}>{owner.login}</div>
+                                    <OnlyIf test={owner.id === ownerFilterId}>
+                                        <div className={style.icon}>
+                                            <IconClose />
+                                        </div>
+                                    </OnlyIf>
                                 </div>
                             )}
                         </div>
