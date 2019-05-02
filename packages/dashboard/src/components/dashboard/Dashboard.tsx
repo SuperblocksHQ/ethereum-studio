@@ -23,20 +23,27 @@ import { SideMenu, SideMenuItem, SideMenuSubHeader, SideMenuFooter } from '../si
 import ProjectList from '../organization/projectList';
 import { Redirect } from 'react-router';
 import OnlyIf from '../common/onlyIf';
+import { IOrganization } from '../../models';
 
 interface IProps {
-    githubLoginAction: () => void;
-    isProjectListLoading: boolean;
+    organizationList: [IOrganization];
+    isOrganizationListLoading: boolean;
+    loadUserOrganizationList: () => void;
 }
 
 export default class Dashboard extends Component<IProps> {
 
-    // TODO - Make sure to change the hardcoded organization Ids and list for the real deal
+    componentDidMount() {
+        this.props.loadUserOrganizationList();
+    }
+
     render() {
+        const { organizationList, isOrganizationListLoading } = this.props;
+
         const organizations = [
-            {
-                name: 'Organization - 1',
-            }
+            // {
+            //     name: 'Organization - 1',
+            // }
         ];
 
         return (
@@ -69,7 +76,7 @@ export default class Dashboard extends Component<IProps> {
                         organizationName={'Placeholder organization'}
                         organizationId={'12334'}
                     />
-                    <OnlyIf test={!organizations.length}>
+                    <OnlyIf test={!isOrganizationListLoading && !organizationList.length}>
                         <Redirect to={'/welcome'} />
                     </OnlyIf>
                 </div>

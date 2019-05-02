@@ -17,21 +17,24 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
-import { githubActions } from '../../actions';
+import { userActions, organizationActions } from '../../actions';
 import { userSelectors } from '../../selectors';
-import GithubRepoList from './GithubRepoList';
+import GithubRepositoryList from './GithubRepositoryList';
 
 const mapStateToProps = (state: any) => ({
-    reposList: userSelectors.getUserReposList(state),
+    repositoryList: userSelectors.getUserRepositoryList(state),
     isRepositoriesLoading: userSelectors.isRepositoriesLoading(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
     return {
-        getUserRepos: () => {
-            dispatch(githubActions.getUserRepos());
+        getUserRepositoryList: () => {
+            dispatch(userActions.getUserRepositoryList());
+        },
+        createDefaultOrganization: (organizationName: string, projectName: string) => {
+            dispatch(organizationActions.createDefaultOrganization(organizationName, projectName));
         }
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(GithubRepoList);
+export default connect(mapStateToProps, mapDispatchToProps)(GithubRepositoryList);

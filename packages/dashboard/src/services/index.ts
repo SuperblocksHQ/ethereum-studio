@@ -17,5 +17,4 @@
 export * from './user.service';
 export * from './project.service';
 export * from './auth.service';
-export * from './github.service';
 export * from './organization.service';

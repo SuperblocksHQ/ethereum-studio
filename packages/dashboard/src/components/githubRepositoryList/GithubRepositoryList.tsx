@@ -24,14 +24,15 @@ import { StyledButton } from '../common/buttons/StyledButton';
 import OnlyIf from '../common/onlyIf';
 
 interface IProps {
-    customClassName?: string;
-    reposList: IGithubRepository[];
+    className?: string;
+    repositoryList: IGithubRepository[];
     isRepositoriesLoading: boolean;
-    getUserRepos: () => void;
+    getUserRepositoryList: () => void;
+    createDefaultOrganization: (organizationName: string, projectName: string) => void;
 }
 
 interface IState {
-    filteredRepos: IGithubRepository[];
+    filteredRepositories: IGithubRepository[];
     searchFilter: string;
     ownerFilterId: number;
     ownerFilterName: string;
@@ -40,10 +41,10 @@ interface IState {
     timer: number;
 }
 
-export default class GithubRepoList extends Component<IProps, IState> {
+export default class GithubRepositoryList extends Component<IProps, IState> {
 
     state = {
-        filteredRepos: this.props.reposList,
+        filteredRepositories: this.props.repositoryList,
         searchFilter: '',
         ownerFilterId: -1,
         ownerFilterName: '',
@@ -57,8 +58,8 @@ export default class GithubRepoList extends Component<IProps, IState> {
     }
 
     componentDidMount() {
-        this.props.getUserRepos();
-        this.state.timer = window.setInterval(() => this.props.getUserRepos(), 5000);
+        this.props.getUserRepositoryList();
+        this.state.timer = window.setInterval(() => this.props.getUserRepositoryList(), 5000);
     }
 
     onSearchInputChange(e: any) {
@@ -98,27 +99,26 @@ export default class GithubRepoList extends Component<IProps, IState> {
     }
 
     getOwners = () => {
-        const owners = this.props.reposList.map((repo: IGithubRepository) => repo.owner);
+        const owners = this.props.repositoryList.map((repo: IGithubRepository) => repo.owner);
         return this.removeDuplicatesByProperty(owners, 'id');
     }
 
     handleOnBuildClick = (repo: IGithubRepository) => {
-        {/* TODO: Create project and add it to organization -> redirect to this project */}
-        console.log('TODO');
+        this.props.createDefaultOrganization(repo.name, repo.owner.login);
     }
 
     render() {
-        const { customClassName, reposList, isRepositoriesLoading } = this.props;
+        const { className, repositoryList, isRepositoriesLoading } = this.props;
         const { searchFilter, ownerFilterId, ownerFilterName, ownerFilterAvatar, isExpandedOwners } = this.state;
         const owners = this.getOwners();
 
-        const filteredRepos = reposList
+        const filteredRepositories = repositoryList
             .filter((repo: IGithubRepository) =>
                 (searchFilter === '' || repo.fullName.toLowerCase().includes(searchFilter.toLowerCase())) &&
                 (ownerFilterId === -1 || repo.owner.id === ownerFilterId ));
 
         return (
-            <div className={classNames([style.container, customClassName])}>
+            <div className={classNames([style.container, className])}>
                 <div className={style.left}>
                     <div className={style.searchInput}>
                         <IconFilter className={style.icon} />
@@ -128,7 +128,7 @@ export default class GithubRepoList extends Component<IProps, IState> {
                     <p>If you don't see your project listed here, make sure to <a href='https://github.com/apps/superblocks-devops' target='_blank' rel='noreferrer noopener'>grant us access</a></p>
 
                     <div className={style.repoList}>
-                        { filteredRepos.map((repo: IGithubRepository, index: number) =>
+                        { filteredRepositories.map((repo: IGithubRepository, index: number) =>
                             <div key={index} className={style.singleRepo}>
                                 <img src={`${repo.owner.avatarUrl}&s=48`} alt={repo.owner.login} />
                                 <div className={style.repoTitle}>{repo.fullName}</div>
@@ -140,7 +140,7 @@ export default class GithubRepoList extends Component<IProps, IState> {
                         )}
 
                         {/* Show 'Reset filter' button when filtering results into 0 repositories */}
-                        <OnlyIf test={searchFilter && filteredRepos.length <= 0}>
+                        <OnlyIf test={searchFilter && filteredRepositories.length <= 0}>
                             <div className={style.resetFilter}>
                                 <p>No repositories found</p>
                                 <StyledButton type={StyledButtonType.Primary} onClick={() => this.resetFilter()} text='Reset filter' />
@@ -148,7 +148,7 @@ export default class GithubRepoList extends Component<IProps, IState> {
                         </OnlyIf>
 
                         {/* Show loader until we have repositories available */}
-                        <OnlyIf test={isRepositoriesLoading && reposList.length <= 0}>
+                        <OnlyIf test={isRepositoriesLoading && repositoryList.length <= 0}>
                             <GenericLoading />
                         </OnlyIf>
                     </div>

@@ -1,4 +1,4 @@
-// Copyright 2019 Superblocks AB
+// Copyright 2018 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -17,21 +17,21 @@
 import { from, of } from 'rxjs';
 import { switchMap, withLatestFrom, map, catchError } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
-import { githubActions } from '../../actions';
-import { githubService } from '../../services';
-
-const getUserReposList: Epic = (action$: any, state$: any) => action$.pipe(
-    ofType(githubActions.GET_USER_REPOS_LIST),
+import { organizationActions } from '../../actions';
+import { organizationService } from '../../services';
+export const getOrganizationList: Epic = (action$: any, state$: any) => action$.pipe(
+    ofType(organizationActions.GET_ORGANIZATION_LIST),
     withLatestFrom(state$),
     switchMap(([, ]) => {
-        return from(githubService.getUserRepos()).pipe(
-            map(githubActions.getUserReposSuccess),
+        console.log('helo');
+        return from(organizationService.getOrganizationList()).pipe(
+            map(organizationActions.getOrganizationListSuccess),
             catchError((error) => {
-                console.log('There was an issue fetching the user repos: ' + error);
-                return of(githubActions.getUserReposFail(error));
+                console.log('There was an issue fetching the user organizations: ' + error);
+                return of(organizationActions.getOrganizationListFail(error));
             })
         );
     })
 );
 
-export default getUserReposList;
+
