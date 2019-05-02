@@ -72,6 +72,12 @@ export default function projectsReducer(state = initialState, action: AnyAction)
                 loadingProject: false
             };
         }
+        case projectsActions.CREATE_PROJECT_SUCCESS: {
+            return {
+                ...state,
+                projectList: [...state.projectList, action.data.project]
+            };
+        }
         case projectsActions.TOGGLE_CREATE_PROJECT_MODAL: {
             return {
                 ...state,

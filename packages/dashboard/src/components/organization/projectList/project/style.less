@@ -30,7 +30,9 @@
 
     .innerWrapper {
         height: 100%;
-        display: inline-block;
+        display: flex;
+        flex-direction: column;
+        min-height: 125px;
         padding: 30px 60px 15px 30px;
         background-color: #262c30;
         box-shadow: 0 4px 8px rgba(0,0,0,.08);
@@ -103,6 +105,7 @@
     }
 
     .timestamp {
+        margin-top: auto;
         opacity: 0.6;
     }
 

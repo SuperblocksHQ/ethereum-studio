@@ -56,16 +56,24 @@ export const projectsActions = {
 
     // ---------- CRUD Project actions ----------
     CREATE_PROJECT: 'CREATE_PROJECT',
-    createProject(redirect: boolean) {
+    createProject({ name, description }: any, redirect: boolean = false) {
         return {
             type: projectsActions.CREATE_PROJECT,
-            data: { redirect }
+            data: { name, description, redirect }
         };
     },
     CREATE_PROJECT_SUCCESS: 'CREATE_PROJECT_SUCCESS',
-    createProjectSuccess() {
+    createProjectSuccess(project: IProject) {
         return {
             type: projectsActions.CREATE_PROJECT_SUCCESS,
+            data: { project }
+        };
+    },
+    CREATE_PROJECT_FAIL: 'CREATE_PROJECT_FAIL',
+    createProjectFail(error: string) {
+        return {
+            type: projectsActions.CREATE_PROJECT_FAIL,
+            data: error
         };
     },
     DELETE_PROJECT: 'DELETE_PROJECT',

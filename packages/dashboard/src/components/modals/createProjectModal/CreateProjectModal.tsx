@@ -17,14 +17,13 @@
 import React from 'react';
 import style from './style.less';
 import classNames from 'classnames';
-import { ModalHeader, TextInput, StyledButton, TextAreaInput } from '../../common';
+import { ModalHeader, TextInput, StyledButton, TextAreaInput, Modal } from '../../common';
 import { StyledButtonType } from '../../../models/button.model';
-import { Modal } from '../../common/modal';
 import { validateProjectName } from '../../../validations';
 
 interface IProps {
     hideModal: () => void;
-    createProject: (redirect: boolean) => void;
+    createProject: (name: string, description: string, redirect: boolean) => void;
 }
 
 interface IState {
@@ -63,11 +62,11 @@ export default class CreateProjectModal extends React.Component<IProps, IState> 
     }
 
     onCreate = () => {
-        const { createProject } = this.props;
+        const { createProject, hideModal } = this.props;
         const { projectName, projectDescription} = this.state;
 
-        // TODO: Create epic for creating project
-        createProject(true);
+        createProject(projectName, projectDescription, false);
+        hideModal();
     }
 
     render() {

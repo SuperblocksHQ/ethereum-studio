@@ -22,7 +22,7 @@ import { IconPlusTransparent } from '../../common/icons';
 import { validateProjectName } from '../../../validations';
 
 interface IProps {
-    createProject: (redirect: boolean) => void;
+    createProject: (name: string, description: string, redirect: boolean) => void;
 }
 
 interface IState {
@@ -64,8 +64,7 @@ export default class CreateProject extends Component<IProps, IState> {
         const { createProject } = this.props;
         const { projectName, projectDescription} = this.state;
 
-        // TODO: Create epic for creating project
-        createProject(true);
+        createProject(projectName, projectDescription, false);
     }
 
     render() {
