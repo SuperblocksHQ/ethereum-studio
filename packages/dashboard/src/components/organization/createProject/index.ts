@@ -15,21 +15,18 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { connect } from 'react-redux';
-import { ModalContainer } from './ModalContainer';
-import { modalActions } from './../../../../actions/modal.actions';
-import { AnyAction, Dispatch } from 'redux';
+import { Dispatch } from 'react';
+import { AnyAction } from 'redux';
+import CreateProject from './CreateProject';
+import { projectsActions } from '../../../actions';
 
-const mapStateToProps = (state: any) => ({
-    modalType: state.modal.modalType,
-    modalProps: state.modal.modalProps
-});
-
-const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
+function mapDispatchToProps(dispatch: Dispatch<AnyAction>) {
     return {
-        hideModal: () => {
-            dispatch(modalActions.hideModal());
+        // TODO: Add appropriate action
+        createProject: (name: string, description: string, redirect: boolean) => {
+            dispatch(projectsActions.createProject({ name, description }, redirect));
         }
     };
-};
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)(ModalContainer);
+export default connect(null, mapDispatchToProps)(CreateProject);

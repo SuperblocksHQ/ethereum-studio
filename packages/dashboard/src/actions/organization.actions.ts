@@ -1,4 +1,4 @@
-// Copyright 2018 Superblocks AB
+// Copyright 2019 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -37,6 +37,26 @@ export const organizationActions = {
         return {
             type: organizationActions.GET_ORGANIZATION_LIST_FAIL,
             data: error
+        };
+    },
+
+    // ---------- MODALS ----------
+    TOGGLE_CREATE_ORGANIZATION_MODAL: 'TOGGLE_CREATE_ORGANIZATION_MODAL',
+    toggleCreateOrganizationModal() {
+        return {
+            type: organizationActions.TOGGLE_CREATE_ORGANIZATION_MODAL,
+        };
+    },
+    TOGGLE_DELETE_ORGANIZATION_MODAL: 'TOGGLE_DELETE_ORGANIZATION_MODAL',
+    toggleDeleteOrganizationModal() {
+        return {
+            type: organizationActions.TOGGLE_DELETE_ORGANIZATION_MODAL,
+        };
+    },
+    TOGGLE_INVITE_PEOPLE_MODAL: 'TOGGLE_INVITE_PEOPLE_MODAL',
+    toggleInvitePeopleModal() {
+        return {
+            type: organizationActions.TOGGLE_INVITE_PEOPLE_MODAL,
         };
     },
 

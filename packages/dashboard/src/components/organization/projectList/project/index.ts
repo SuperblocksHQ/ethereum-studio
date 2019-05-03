@@ -17,7 +17,6 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
-import { projectsActions, modalActions } from '../../../../actions';
 import Project from './Project';
 
 const mapStateToProps = (state: any) => ({

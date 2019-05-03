@@ -18,19 +18,19 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
 import Details from './Details';
-import { modalActions, projectsActions } from '../../../../actions';
 import { projectSelectors } from '../../../../selectors';
-import { IProject } from '../../../../models';
+import { organizationActions } from '../../../../actions';
 
 // TODO: Change all project actions to organization
 const mapStateToProps = (state: any) => ({
-    project: projectSelectors.getProject(state)
+    project: projectSelectors.getProject(state),
+    showDeleteOrganizationModal: state.organization.showDeleteOrganizationModal
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
     return {
-        showModal: (modalType: string, modalProps: any) => {
-            dispatch(modalActions.showModal(modalType, modalProps));
+        toggleDeleteOrganizationModal: () => {
+            dispatch(organizationActions.toggleDeleteOrganizationModal());
         },
         updateOrganization: (name: string, description: string) => {
             // dispatch(projectsActions.updateProjectDetails(project));

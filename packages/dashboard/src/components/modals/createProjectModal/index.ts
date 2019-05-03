@@ -14,5 +14,18 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export * from './modalHeader';
-export * from './modal';
+import { connect } from 'react-redux';
+import { Dispatch } from 'react';
+import { AnyAction } from 'redux';
+import CreateProjectModal from './CreateProjectModal';
+import { projectsActions } from '../../../actions';
+
+function mapDispatchToProps(dispatch: Dispatch<AnyAction>) {
+    return {
+        createProject: (name: string, description: string, redirect: boolean) => {
+            dispatch(projectsActions.createProject({ name, description }, redirect));
+        }
+    };
+}
+
+export default connect(null, mapDispatchToProps)(CreateProjectModal);
