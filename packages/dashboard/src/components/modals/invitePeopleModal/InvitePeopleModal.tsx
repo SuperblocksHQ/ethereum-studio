@@ -17,8 +17,7 @@
 import React from 'react';
 import style from './style.less';
 import classNames from 'classnames';
-import { ModalHeader } from '../../common/modal';
-import { TextInput, StyledButton } from '../../common';
+import { TextInput, StyledButton, Modal, ModalHeader } from '../../common';
 import { StyledButtonType } from '../../../models/button.model';
 
 interface IProps {
@@ -46,28 +45,30 @@ export default class InvitePeopleModal extends React.Component<IProps, IState> {
         const { hideModal } = this.props;
 
         return (
-            <div className={classNames([style.invitePeopleModal, 'modal'])}>
-                <ModalHeader
-                    title='Invite new members'
-                    onCloseClick={hideModal}
-                />
-                <div className={style.content}>
-                    <p>
-                        Invite new members to your organization
-                    </p>
-                    <TextInput
-                        id='email'
-                        type='text'
-                        label={'Email address'}
-                        required={true}
-                        onChangeText={this.handleEmailChange}
+            <Modal>
+                <div className={classNames([style.invitePeopleModal, 'modal'])}>
+                    <ModalHeader
+                        title='Invite new members'
+                        onCloseClick={hideModal}
                     />
-                    <div className={style.footer}>
-                        <div className={style.cancelBtn} onClick={hideModal}>Cancel</div>
-                        <StyledButton type={StyledButtonType.Primary} text={'Invite member'} onClick={this.onConfirmClick} />
+                    <div className={style.content}>
+                        <p>
+                            Invite new members to your organization
+                        </p>
+                        <TextInput
+                            id='email'
+                            type='text'
+                            label={'Email address'}
+                            required={true}
+                            onChangeText={this.handleEmailChange}
+                        />
+                        <div className={style.footer}>
+                            <div className={style.cancelBtn} onClick={hideModal}>Cancel</div>
+                            <StyledButton type={StyledButtonType.Primary} text={'Invite member'} onClick={this.onConfirmClick} />
+                        </div>
                     </div>
                 </div>
-            </div>
+            </Modal>
         );
     }
 }

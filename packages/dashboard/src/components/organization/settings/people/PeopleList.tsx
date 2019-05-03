@@ -21,17 +21,21 @@ import PeopleListItem from './PeopleListItem';
 import { BreadCrumbs, StyledButton } from '../../../common';
 import { IUser } from '../../../../models';
 import { StyledButtonType } from '../../../../models/button.model';
+import InvitePeopleModal from '../../../modals/invitePeopleModal/InvitePeopleModal';
+import OnlyIf from '../../../common/onlyIf';
 
 interface IProps {
     location: any;
     match: any;
     userProfile: IUser;
-    showModal: (modalType: string, modalProps: any) => void;
+    showInvitePeopleModal: boolean;
+    toggleInvitePeopleModal: () => void;
+
 }
 
 export default class PeopleList extends Component<IProps> {
     render() {
-        const { showModal } = this.props;
+        const { showInvitePeopleModal, toggleInvitePeopleModal } = this.props;
 
         // TODO: Get users from redux
         const organization = {
@@ -74,8 +78,12 @@ export default class PeopleList extends Component<IProps> {
 
                 <div className={style.flexVerticalCenter}>
                     <h1>People</h1>
-                    <StyledButton type={StyledButtonType.Primary} text={'Invite People'} onClick={() => showModal('INVITE_PEOPLE_MODAL', null)} customClassName={style.inviteBtn} />
+                    <StyledButton type={StyledButtonType.Primary} text={'Invite People'} onClick={() => toggleInvitePeopleModal()} customClassName={style.inviteBtn} />
                 </div>
+
+                <OnlyIf test={showInvitePeopleModal}>
+                    <InvitePeopleModal hideModal={toggleInvitePeopleModal} />
+                </OnlyIf>
 
                 <div className={style.hr}></div>
 

@@ -19,6 +19,7 @@ import style from './style.less';
 import { IProject } from '../../../../models';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
+import OnlyIf from '../../../common/onlyIf';
 
 interface IProps {
     project: IProject;
@@ -37,9 +38,11 @@ export default class Project extends Component<IProps> {
                     <div className={style.name}>
                         {project.name}
                     </div>
-                    <div className={style.description}>
-                        {project.description}
-                    </div>
+                    <OnlyIf test={project.description}>
+                        <div className={style.description}>
+                            {project.description}
+                        </div>
+                    </OnlyIf>
                     <div className={style.timestamp}>
                         { orderBy === 'createdAt'
                             ? `Created ${moment.utc(project.createdAt).fromNow()}`

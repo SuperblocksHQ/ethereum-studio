@@ -17,19 +17,20 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
-import { modalActions, projectsActions } from '../../../../actions';
+import { projectsActions } from '../../../../actions';
 import { projectSelectors } from '../../../../selectors';
 import ProjectSettingsDetails from './ProjectSettingsDetails';
 import { IProject } from '../../../../models';
 
 const mapStateToProps = (state: any) => ({
-    project: projectSelectors.getProject(state)
+    project: projectSelectors.getProject(state),
+    showDeleteProjectModal: state.projects.showDeleteProjectModal
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
     return {
-        showModal: (modalType: string, modalProps: any) => {
-            dispatch(modalActions.showModal(modalType, modalProps));
+        toggleDeleteProjectModal: () => {
+            dispatch(projectsActions.toggleDeleteProjectModal());
         },
         updateProjectDetails: (newProjectDetails: Partial<IProject>) => {
             dispatch(projectsActions.updateProjectDetails(newProjectDetails));

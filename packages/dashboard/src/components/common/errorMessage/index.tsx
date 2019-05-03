@@ -27,13 +27,13 @@ class ErrorMessage extends PureComponent<IProps> {
       case 'PROJECT_NAME':
         return (
           <div id='error.projectName'>
-            {'Invalid project name. Only alphanumeric characters are allowed.'}
+            {'Invalid project name. Only alphanumeric characters are allowed and name cannot be blank.'}
           </div>
         );
       case 'ORGANIZATION_NAME':
         return (
           <div id='error.organizationName'>
-            {'Invalid organization name. Only alphanumeric characters are allowed.'}
+            {'Invalid organization name. Only alphanumeric characters are allowed and name cannot be blank.'}
           </div>
         );
       default:

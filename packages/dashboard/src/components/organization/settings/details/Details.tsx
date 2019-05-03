@@ -20,13 +20,16 @@ import { BreadCrumbs, TextInput, TextAreaInput, StyledButton } from '../../../co
 import { StyledButtonType } from '../../../../models/button.model';
 import { Link } from 'react-router-dom';
 import { validateOrganizationName } from '../../../../validations';
+import OnlyIf from '../../../common/onlyIf';
+import DeleteOrganizationModal from '../../../modals/deleteOrganizationModal';
 
 interface IProps {
     location: any;
     match: any;
     organization: any; // TODO: Any organization model
     updateOrganization: (name: string, description: string) => void; // TODO: Add organization model
-    showModal: (modalType: string, modalProps: any) => void;
+    showDeleteOrganizationModal: boolean;
+    toggleDeleteOrganizationModal: () => void;
 }
 
 interface IState {
@@ -72,7 +75,7 @@ export default class Details extends Component<IProps, IState> {
     }
 
     render() {
-        const { showModal } = this.props;
+        const { showDeleteOrganizationModal, toggleDeleteOrganizationModal } = this.props;
         const { errorName, canSave } = this.state;
 
         {/* TODO: Fetch organization from redux */}
@@ -82,42 +85,48 @@ export default class Details extends Component<IProps, IState> {
         };
 
         return (
-            <div className={style.details}>
-                <BreadCrumbs>
-                    <Link to={`/${this.props.match.params.organizationId}`}>{organization.name}</Link>
-                    <Link to={`/${this.props.match.params.organizationId}/settings/details`}>Organization Settings</Link>
-                    <Link to={window.location.pathname}>Details</Link>
-                </BreadCrumbs>
+            <React.Fragment>
+                <div className={style.details}>
+                    <BreadCrumbs>
+                        <Link to={`/${this.props.match.params.organizationId}`}>{organization.name}</Link>
+                        <Link to={`/${this.props.match.params.organizationId}/settings/details`}>Organization Settings</Link>
+                        <Link to={window.location.pathname}>Details</Link>
+                    </BreadCrumbs>
 
-                <h1>Details</h1>
-                <div className={style['mb-5']}>
-                    <TextInput
-                        onChangeText={this.onNameChange}
-                        error={errorName}
-                        label={'Organization name'}
-                        id={'organizationName'}
-                        placeholder={'organization-name'}
-                        defaultValue={organization.name}
-                        required={true}
-                    />
+                    <h1>Details</h1>
+                    <div className={style['mb-5']}>
+                        <TextInput
+                            onChangeText={this.onNameChange}
+                            error={errorName}
+                            label={'Organization name'}
+                            id={'organizationName'}
+                            placeholder={'organization-name'}
+                            defaultValue={organization.name}
+                            required={true}
+                        />
+                    </div>
+                    <div className={style['mb-4']}>
+                        <TextAreaInput
+                            onChangeText={this.onDescChange}
+                            label={'Description'}
+                            id={'description'}
+                            placeholder={'Enter a short description (optional)'}
+                            defaultValue={organization.description}
+                        />
+                    </div>
+                    <StyledButton type={StyledButtonType.Primary} text={'Save Details'} onClick={this.onSave} isDisabled={!canSave}/>
+
+                    <div className={style.sectionDivider}></div>
+
+                    <h1>Delete this organization</h1>
+                    <p className={style['mb-4']}>Once deleted, it will be gone forever. Please be certain.</p>
+                    <StyledButton type={StyledButtonType.Danger} text={'Delete Organization'} onClick={() => toggleDeleteOrganizationModal()} />
                 </div>
-                <div className={style['mb-4']}>
-                    <TextAreaInput
-                        onChangeText={this.onDescChange}
-                        label={'Description'}
-                        id={'description'}
-                        placeholder={'Enter a short description (optional)'}
-                        defaultValue={organization.description}
-                    />
-                </div>
-                <StyledButton type={StyledButtonType.Primary} text={'Save Details'} onClick={this.onSave} isDisabled={!canSave}/>
 
-                <div className={style.sectionDivider}></div>
-
-                <h1>Delete this organization</h1>
-                <p className={style['mb-4']}>Once deleted, it will be gone forever. Please be certain.</p>
-                <StyledButton type={StyledButtonType.Danger} text={'Delete Organization'} onClick={() => showModal('DELETE_ORGANIZATION_MODAL', { organization })} />
-            </div>
+                <OnlyIf test={showDeleteOrganizationModal}>
+                    <DeleteOrganizationModal hideModal={toggleDeleteOrganizationModal} organization={organization} />
+                </OnlyIf>
+            </React.Fragment>
         );
     }
 }

@@ -17,7 +17,7 @@
 import React from 'react';
 import style from './style.less';
 import classNames from 'classnames';
-import { ModalHeader } from '../../common/modal';
+import { ModalHeader, Modal } from '../../common/modal';
 import { TextInput, StyledButton } from '../../common';
 import { StyledButtonType } from '../../../models/button.model';
 
@@ -55,31 +55,32 @@ export default class DeleteProjectModal extends React.Component<IProps, IState> 
         const { isValid } = this.state;
 
         return (
-            <div className={classNames([style.deleteOrganizationModal, 'modal'])}>
-                <ModalHeader
-                    title='Delete this organization'
-                    onCloseClick={hideModal}
-                />
-                <div className={style.content}>
-                    <p>
-                        This action <b>cannot</b> be undone. This will permanently delete your organization and its data, making it inaccessible for any of the members in it.
-                    </p>
-                    <p>
-                        To confirm this action, please type "<b>{organization.name}</b>":
-                    </p>
-                    <TextInput
-                        id='organizationName'
-                        type='text'
-                        placeholder='Type the name of the organization to confirm...'
-                        onChangeText={this.handleTitleChange}
+            <Modal>
+                <div className={classNames([style.deleteOrganizationModal, 'modal'])}>
+                    <ModalHeader
+                        title='Delete this organization'
+                        onCloseClick={hideModal}
                     />
-                    <div className={style.footer}>
-                        <div className={style.cancelBtn} onClick={hideModal}>Cancel</div>
-                        <StyledButton type={StyledButtonType.Danger} text={'Delete Organization'} onClick={this.onConfirmClick} isDisabled={!isValid} />
+                    <div className={style.content}>
+                        <p>
+                            This action <b>cannot</b> be undone. This will permanently delete your organization and its data, making it inaccessible for any of the members in it.
+                        </p>
+                        <p>
+                            To confirm this action, please type "<b>{organization.name}</b>":
+                        </p>
+                        <TextInput
+                            id='organizationName'
+                            type='text'
+                            placeholder='Type the name of the organization to confirm...'
+                            onChangeText={this.handleTitleChange}
+                        />
+                        <div className={style.footer}>
+                            <div className={style.cancelBtn} onClick={hideModal}>Cancel</div>
+                            <StyledButton type={StyledButtonType.Danger} text={'Delete Organization'} onClick={this.onConfirmClick} isDisabled={!isValid} />
+                        </div>
                     </div>
                 </div>
-
-            </div>
+            </Modal>
         );
     }
 }

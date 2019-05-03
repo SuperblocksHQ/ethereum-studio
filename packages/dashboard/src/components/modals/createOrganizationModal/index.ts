@@ -1,4 +1,4 @@
-// Copyright 2018 Superblocks AB
+// Copyright 2019 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -14,31 +14,18 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { loadingBarReducer as loadingBar } from 'react-redux-loading-bar';
-import app from './app.reducer';
-import projects from './projects.reducer';
-import auth from './auth.reducer';
-import toast from './toast.reducer';
-import user from './user.reducer';
-import organizations from './organizations.reducer';
+import { connect } from 'react-redux';
+import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
+import CreateOrganizationModal from './CreateOrganizationModal';
+import { organizationActions } from '../../../actions';
 
-const rehydrated = (state = false, action: AnyAction) => {
-    switch (action.type) {
-        case 'persist/REHYDRATE':
-            return true;
-        default:
-            return state;
-    }
-};
+function mapDispatchToProps(dispatch: Dispatch<AnyAction>) {
+    return {
+        createOrganization: (name: string, description: string, redirect: boolean) => {
+            dispatch(organizationActions.createOrganization({ name, description }, redirect));
+        }
+    };
+}
 
-export default {
-    loadingBar,
-    rehydrated,
-    app,
-    projects,
-    auth,
-    toast,
-    user,
-    organizations
-};
+export default connect(null, mapDispatchToProps)(CreateOrganizationModal);

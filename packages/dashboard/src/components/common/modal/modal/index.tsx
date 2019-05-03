@@ -14,5 +14,17 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export * from './modalHeader';
-export * from './modal';
+import React from 'react';
+import style from './style.less';
+
+interface IProps {
+    children: JSX.Element | JSX.Element[];
+}
+
+export function Modal(props: IProps) {
+    return (
+        <div className={style.modalContainer}>
+            {props.children}
+        </div>
+    );
+}

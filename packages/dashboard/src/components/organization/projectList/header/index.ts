@@ -14,28 +14,22 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
+import { connect } from 'react-redux';
+import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
-import { modalActions } from '../actions';
+import { projectsActions } from '../../../../actions';
+import Header from './Header';
 
-const initialState: any = {
-    modalType: null,
-    modalProps: {}
+const mapStateToProps = (state: any) => ({
+    showCreateProjectModal: state.projects.showCreateProjectModal
+});
+
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
+    return {
+        toggleCreateProjectModal: () => {
+            dispatch(projectsActions.toggleCreateProjectModal());
+        }
+    };
 };
 
-export default function modalReducer(state = initialState, action: AnyAction) {
-    switch (action.type) {
-        case modalActions.SHOW_MODAL: {
-            return {
-                ...state,
-                modalType: action.data.modalType,
-                modalProps: action.data.modalProps
-            };
-        }
-        case 'HIDE_MODAL': {
-            return initialState;
-        }
-        default:
-            return state;
-    }
-}
-
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

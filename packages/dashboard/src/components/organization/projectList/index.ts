@@ -15,22 +15,15 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { connect } from 'react-redux';
-import { projectsActions } from '../../../actions';
-import { projectSelectors } from '../../../selectors';
 import ProjectList from './ProjectList';
 import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
 
 const mapStateToProps = (state: any) => ({
-    list: projectSelectors.getProjectList(state),
-    isListLoading: projectSelectors.isProjectListLoading(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
     return {
-        getProjectList: () => {
-            dispatch(projectsActions.getProjectList());
-        }
     };
 };
 
