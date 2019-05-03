@@ -41,6 +41,18 @@
         padding: 10px 20px;
         margin: 0px -35px;
         margin-top: 20px;
+
+        @media only screen and (max-width: 1480px) {
+            .project:last-of-type {
+                display: none;
+            }
+        }
+
+        @media only screen and (max-width: 920px) {
+            .project:nth-child(2) {
+                display: none;
+            }
+        }
     }
 }
 

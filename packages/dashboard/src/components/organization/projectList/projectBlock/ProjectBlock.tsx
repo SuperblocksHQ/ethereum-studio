@@ -21,20 +21,22 @@ import moment from 'moment';
 import { Link } from 'react-router-dom';
 import OnlyIf from '../../../common/onlyIf';
 import { LetterAvatar } from '../../../common';
+import classNames from 'classnames';
 
 interface IProps {
     project: IProject;
     organizationId: string;
     orderBy: string;
+    className: string;
 }
 
 export default class ProjectBlock extends Component<IProps> {
 
     render() {
-        const { organizationId, project, orderBy }  = this.props;
+        const { organizationId, project, orderBy, className }  = this.props;
 
         return (
-            <div className={style.container}>
+            <div className={classNames([style.container, className])}>
                 <Link to={`${organizationId}/projects/${project.id}/builds`} className={style.innerWrapper}>
                     <div className={style.topSection}>
                         <LetterAvatar title={project.name} className={style.letterAvatar} />

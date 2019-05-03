@@ -20,11 +20,12 @@ import { Switch } from 'react-router-dom';
 import LoadingBar from 'react-redux-loading-bar';
 import Topbar from '../topbar';
 import style from './style.less';
-import { EmptyLoading } from '../common';
-import { SideMenu, SideMenuItem, SideMenuFooter } from '../sideMenu';
+import { EmptyLoading, LetterAvatar } from '../common';
+import { SideMenu, SideMenuItem, SideMenuFooter, SideMenuHeader } from '../sideMenu';
 import { IconConfigure, IconPlay } from '../common/icons';
 import PrivateRoute from '../app/PrivateRoute';
 import OnlyIf from '../common/onlyIf';
+import { IProject } from '../../models';
 
 const ProjectSettingsDetails = Loadable({
     loader: () => import(/* webpackChunkName: "ProjectSettingsDetails" */'../project/settings/projectSettingsDetails'),
@@ -42,6 +43,7 @@ const BuildPage = Loadable({
 });
 
 interface IProps {
+    project: IProject;
     location: any;
     match: any;
     loadProject: (projectId: string) => void;
@@ -59,7 +61,7 @@ export default class ProjectDashboard extends Component<IProps> {
     }
 
     render() {
-        const { isAuthenticated, isAuthLoading, isProjectLoading } = this.props;
+        const { isAuthenticated, isAuthLoading, isProjectLoading, project } = this.props;
         const { pathname } = this.props.location;
 
         return (
@@ -69,6 +71,13 @@ export default class ProjectDashboard extends Component<IProps> {
                     <LoadingBar className='loading' />
                     <div className={style.content}>
                         <SideMenu>
+                            { project &&
+                                <SideMenuHeader
+                                    icon={<LetterAvatar title={project.name} />}
+                                    className={style.projectName}
+                                    title={<span>{project.name}</span>}
+                                />
+                            }
                             <SideMenuItem
                                     icon={<IconPlay />}
                                     title='Builds'

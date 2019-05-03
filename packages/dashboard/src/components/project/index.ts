@@ -23,6 +23,7 @@ import { projectsActions,  } from '../../actions';
 
 const mapStateToProps = (state: any) => ({
     isProjectLoading: projectSelectors.getLoadingProject(state),
+    project: projectSelectors.getProject(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {

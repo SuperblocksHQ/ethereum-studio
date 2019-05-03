@@ -38,7 +38,7 @@ export const ProjectSettingsMenu = (props: IProps) => {
                     title='Details'
                     active={pathname.includes('details')}
                     linkTo={`/${props.organizationId}/projects/${props.projectId}/settings/details`}
-                    customClassName={style.item}
+                    className={style.item}
                 />
             </div>
         </div>

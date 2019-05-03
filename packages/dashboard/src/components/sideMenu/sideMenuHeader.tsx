@@ -16,14 +16,18 @@
 
 import React from 'react';
 import style from './style.less';
+import classNames from 'classnames';
 
 interface IProps {
-    title: string;
+    title: string | JSX.Element;
+    icon?: JSX.Element | JSX.Element[];
+    className?: string;
 }
 
 export function SideMenuHeader(props: IProps) {
     return (
-        <div className={style.sideMenuHeader}>
+        <div className={classNames([style.sideMenuHeader, props.className])}>
+            {props.icon}
             {props.title}
         </div>
     );

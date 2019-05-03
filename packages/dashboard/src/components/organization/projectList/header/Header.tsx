@@ -58,6 +58,7 @@ export default class Header extends Component<IProps> {
                                     key={project.id}
                                     project={project}
                                     organizationId={organizationId}
+                                    className={style.project}
                                 />
                             );
                         })
