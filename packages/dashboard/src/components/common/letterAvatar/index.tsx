@@ -20,12 +20,12 @@ import classNames from 'classnames';
 
 interface IProps {
     title: string;
-    customClassName?: string;
+    className?: string;
 }
 
 export class LetterAvatar extends React.Component<IProps> {
     render() {
-        const { title, customClassName } = this.props;
+        const { title, className } = this.props;
 
         // Colors taken from https://flatuicolors.com/palette/se
         const defaultColors = [
@@ -62,7 +62,7 @@ export class LetterAvatar extends React.Component<IProps> {
         const background = defaultColors[color];
 
         return (
-            <div className={classNames([style.letterAvatar, customClassName])} style={{backgroundColor: background}}>
+            <div className={classNames([style.letterAvatar, className])} style={{backgroundColor: background}}>
                 <div className={style.letterAvatarInner}>
                     {title[0]}
                 </div>

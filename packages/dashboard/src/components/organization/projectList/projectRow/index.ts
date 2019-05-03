@@ -1,4 +1,4 @@
-// Copyright 2018 Superblocks AB
+// Copyright 2019 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -14,15 +14,18 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export interface IProject {
-    id: string;
-    name: string;
-    description: string;
-    createdAt: string;
-    lastModifiedAt: string;
-    files: any;
-    anonymousToken?: string;
-    ownerId: string;
-    [key: string]: any;
+import { connect } from 'react-redux';
+import { Dispatch } from 'react';
+import { AnyAction } from 'redux';
+import ProjectRow from './ProjectRow';
+
+const mapStateToProps = (state: any) => ({
+
+});
+
+function mapDispatchToProps(dispatch: Dispatch<AnyAction>) {
+    return {
+    };
 }
 
+export default connect(mapStateToProps, mapDispatchToProps)(ProjectRow);

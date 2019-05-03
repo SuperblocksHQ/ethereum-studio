@@ -14,12 +14,42 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-.letterAvatar {
-    color: white;
-    border-radius: 2px;
-    min-width: 24px;
-    min-height: 24px;
+.container {
     display: flex;
-    justify-content: center;
+    flex-direction: row;
     align-items: center;
+    padding: 15px 15px;
+    border-bottom: 1px solid #383F41;
+    transition: background .15s;
+
+    &:hover {
+        background: #262c30;
+    }
+    
+    .projectInfo {
+        display: flex;
+        align-items: flex-start;
+
+        .letterAvatar {
+            margin-right: 10px;
+            margin-top: 3px;
+            min-height: 30px;
+            min-width: 30px;
+        }
+
+        .name {
+            font-size: 18px;
+            font-weight: 600;
+        }
+    
+        .description {
+            margin-top: 5px;
+            opacity: .6;
+        }
+    }
+
+    .timestamp {
+        opacity: 0.6;
+        margin-left: auto;
+    }
 }

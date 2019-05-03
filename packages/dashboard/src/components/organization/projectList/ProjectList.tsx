@@ -17,8 +17,9 @@
 import React, { Component } from 'react';
 import style from './style.less';
 import { IProject } from '../../../models';
-import Project from './project';
 import Header from './header';
+import Filter from './filter';
+import ProjectRow from './projectRow/ProjectRow';
 
 interface IProps {
     getProjectList: () => void;
@@ -58,10 +59,10 @@ export default class ProjectList extends Component<IProps, IState> {
         });
     }
 
-    dynamicSort = (property: string) => {
+    dynamicSort = (property: string, order: string) => {
         let sortOrder = 1;
 
-        if (this.state.order === 'desc') {
+        if (order === 'desc') {
             sortOrder = -1;
         }
 
@@ -78,7 +79,8 @@ export default class ProjectList extends Component<IProps, IState> {
         const { list, organizationName, organizationId, isListLoading } = this.props;
         const { orderBy, order } = this.state;
 
-        let orderedList = list.sort(this.dynamicSort(orderBy));
+        let orderedList = list.sort(this.dynamicSort(orderBy, order));
+        const suggestedProjects = [...list].slice(0, 3).sort(this.dynamicSort('lastModifiedAt', 'desc'));
 
         if (orderBy === 'name') {
             orderedList = orderedList.reverse();
@@ -90,16 +92,22 @@ export default class ProjectList extends Component<IProps, IState> {
             <div className={style.container}>
                 <Header
                     title={organizationName}
+                    suggestedProjects={suggestedProjects}
+                    organizationId={organizationId}
+                />
+                <Filter
                     orderBy={orderBy}
                     order={order}
                     onOrderChange={this.handleOrderChange}
                     onOrderByChange={this.handleOrderByChange}
                 />
-                <div className={style.content}>
+                <p>Name</p>
+                <div className={style.hr}></div>
+                <div className={style.projectTable}>
                 {
                     orderedList.map((project: IProject) => {
                         return (
-                            <Project
+                            <ProjectRow
                                 orderBy={orderBy}
                                 key={project.id}
                                 project={project}
