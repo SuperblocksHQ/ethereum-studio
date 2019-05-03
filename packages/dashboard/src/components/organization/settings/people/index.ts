@@ -23,7 +23,7 @@ import { organizationActions } from '../../../../actions';
 
 const mapStateToProps = (state: any) => ({
     userProfile: userSelectors.getUserProfile(state),
-    showInvitePeopleModal: state.organization.showInvitePeopleModal
+    showInvitePeopleModal: state.organizations.showInvitePeopleModal
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
