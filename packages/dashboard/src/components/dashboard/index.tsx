@@ -17,10 +17,14 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
-import { authActions, modalActions } from '../../actions';
+import { authActions, projectsActions, organizationActions } from '../../actions';
 import Dashboard from './Dashboard';
+import { projectSelectors } from '../../selectors';
 
 const mapStateToProps = (state: any) => ({
+    projectList: projectSelectors.getProjectList(state),
+    isProjectListLoading: projectSelectors.isProjectListLoading(state),
+    showCreateOrganizationModal: state.organization.showCreateOrganizationModal
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
@@ -28,8 +32,11 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
         githubLoginAction: () => {
             dispatch(authActions.githubLogin());
         },
-        showModal: (modalType: string, modalProps: any) => {
-            dispatch(modalActions.showModal(modalType, modalProps));
+        toggleCreateOrganizationModal: () => {
+            dispatch(organizationActions.toggleCreateOrganizationModal());
+        },
+        getProjectList: () => {
+            dispatch(projectsActions.getProjectList());
         }
     };
 };

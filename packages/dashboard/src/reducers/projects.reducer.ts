@@ -20,9 +20,11 @@ import { AnyAction } from 'redux';
 
 export const initialState: IProjectState = {
     projectList: [],
-    loadingProjectList: false,
+    loadingProjectList: true,
     project: undefined,
     loadingProject: false,
+    showCreateProjectModal: false,
+    showDeleteProjectModal: false
 };
 
 export default function projectsReducer(state = initialState, action: AnyAction) {
@@ -68,6 +70,24 @@ export default function projectsReducer(state = initialState, action: AnyAction)
             return {
                 ...state,
                 loadingProject: false
+            };
+        }
+        case projectsActions.CREATE_PROJECT_SUCCESS: {
+            return {
+                ...state,
+                projectList: [...state.projectList, action.data.project]
+            };
+        }
+        case projectsActions.TOGGLE_CREATE_PROJECT_MODAL: {
+            return {
+                ...state,
+                showCreateProjectModal: !state.showCreateProjectModal
+            };
+        }
+        case projectsActions.TOGGLE_DELETE_PROJECT_MODAL: {
+            return {
+                ...state,
+                showDeleteProjectModal: !state.showDeleteProjectModal
             };
         }
         case projectsActions.DELETE_PROJECT_SUCCESS: {

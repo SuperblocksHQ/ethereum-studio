@@ -22,6 +22,9 @@ export const initialState: IOrganizationState = {
     organizationList: [],
     loadingOrganizationList: false,
     organization: undefined,
+    showCreateOrganizationModal: false,
+    showDeleteOrganizationModal: false,
+    showInvitePeopleModal: false,
 };
 
 export default function projectsReducer(state = initialState, action: AnyAction) {
@@ -71,6 +74,24 @@ export default function projectsReducer(state = initialState, action: AnyAction)
             return {
                 ...state,
                 organization: { ...action.data.organization }
+            };
+        }
+        case organizationActions.TOGGLE_CREATE_ORGANIZATION_MODAL: {
+            return {
+                ...state,
+                showCreateOrganizationModal: !state.showCreateOrganizationModal
+            };
+        }
+        case organizationActions.TOGGLE_DELETE_ORGANIZATION_MODAL: {
+            return {
+                ...state,
+                showDeleteOrganizationModal: !state.showDeleteOrganizationModal
+            };
+        }
+        case organizationActions.TOGGLE_INVITE_PEOPLE_MODAL: {
+            return {
+                ...state,
+                showInvitePeopleModal: !state.showInvitePeopleModal
             };
         }
         default:

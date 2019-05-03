@@ -15,8 +15,8 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { connect } from 'react-redux';
-import { authActions, modalActions } from '../../../actions';
-import { authSelectors, userSelectors } from '../../../selectors';
+import { authActions } from '../../../actions';
+import { userSelectors } from '../../../selectors';
 import LoginButton from './LoginButton';
 import { Dispatch } from 'react';
 import { AnyAction } from 'redux';

@@ -14,55 +14,79 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import style from './style.less';
 import { IconConfigure, IconPlusTransparent } from '../common/icons';
 import { LetterAvatar } from '../common';
 import Topbar from '../topbar';
 import { SideMenu, SideMenuItem, SideMenuSubHeader, SideMenuFooter } from '../sideMenu';
 import ProjectList from '../organization/projectList';
+import { IProject } from '../../models';
+import CreateProject from '../organization/createProject';
+import OnlyIf from '../common/onlyIf';
+import CreateOrganizationModal from '../modals/createOrganizationModal';
 
 interface IProps {
-    githubLoginAction: () => void;
+    projectList: IProject[];
     isProjectListLoading: boolean;
+    showCreateOrganizationModal: boolean;
+    toggleCreateOrganizationModal: () => void;
+    getProjectList: () => void;
+    githubLoginAction: () => void;
 }
 
 export default class Dashboard extends Component<IProps> {
 
+    componentWillMount() {
+        this.props.getProjectList();
+    }
+
     // TODO - Make sure to change the hardcoded organization Ids for the real deal
     render() {
+        const { projectList, isProjectListLoading, showCreateOrganizationModal, toggleCreateOrganizationModal } = this.props;
+
         return (
-            <div className={style.dashboard}>
-                <Topbar />
-                <div className={style.content}>
-                    <SideMenu>
-                        <SideMenuSubHeader title='My organizations' />
-                        {/* TODO: Remove placeholder items and fetch organizations instead, add corresponding link */}
-                        <SideMenuItem
-                            icon={<LetterAvatar title='Placeholder'/>}
-                            title='Placeholder organization'
-                            linkTo='TODO'
-                        />
-                        <SideMenuFooter>
+            <Fragment>
+                <div className={style.dashboard}>
+                    <Topbar />
+                    <div className={style.content}>
+                        <SideMenu>
+                            <SideMenuSubHeader title='My organizations' />
+                            {/* TODO: Remove placeholder items and fetch organizations instead, add corresponding link */}
                             <SideMenuItem
-                                icon={<IconPlusTransparent />}
-                                title='New organization'
-                                linkTo='/new-organization'
+                                icon={<LetterAvatar title='Placeholder'/>}
+                                title='Placeholder organization'
+                                linkTo='TODO'
                             />
-                            {/* TODO: Add :organizationId to linkTo */}
-                            <SideMenuItem
-                                icon={<IconConfigure />}
-                                title='Organization settings'
-                                linkTo='12334/settings/details'
+                            <SideMenuFooter>
+                                <SideMenuItem
+                                    icon={<IconPlusTransparent />}
+                                    title='New organization'
+                                    onClick={toggleCreateOrganizationModal}
+                                />
+                                {/* TODO: Add :organizationId to linkTo */}
+                                <SideMenuItem
+                                    icon={<IconConfigure />}
+                                    title='Organization settings'
+                                    linkTo='12334/settings/details'
+                                />
+                            </SideMenuFooter>
+                        </SideMenu>
+                        { projectList.length === 0 && !isProjectListLoading ?
+                            <CreateProject />
+                            :
+                            <ProjectList
+                                list={projectList}
+                                organizationName={'Placeholder organization'}
+                                organizationId={'12334'}
                             />
-                        </SideMenuFooter>
-                    </SideMenu>
-                    <ProjectList
-                        organizationName={'Placeholder organization'}
-                        organizationId={'12334'}
-                    />
+                        }
+                    </div>
                 </div>
-            </div>
+                <OnlyIf test={showCreateOrganizationModal}>
+                    <CreateOrganizationModal hideModal={toggleCreateOrganizationModal} />
+                </OnlyIf>
+            </Fragment>
         );
     }
 }

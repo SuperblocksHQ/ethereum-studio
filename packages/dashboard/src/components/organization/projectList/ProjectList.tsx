@@ -20,13 +20,13 @@ import { IProject } from '../../../models';
 import Header from './header';
 import Filter from './filter';
 import ProjectRow from './projectRow/ProjectRow';
+import OnlyIf from '../../common/onlyIf';
+import { StyledButton } from '../../common';
+import { StyledButtonType } from '../../../models/button.model';
 
 interface IProps {
-    getProjectList: () => void;
-
     list: IProject[];
 
-    isListLoading: boolean;
     organizationName: string;
     organizationId: string;
 }
@@ -34,18 +34,16 @@ interface IProps {
 interface IState {
     orderBy: string;
     order: string;
+    projectFilter: string;
 }
 
 export default class ProjectList extends Component<IProps, IState> {
 
     state: IState = {
         orderBy: 'lastModifiedAt',
-        order: 'desc'
+        order: 'desc',
+        projectFilter: ''
     };
-
-    componentDidMount() {
-        this.props.getProjectList();
-    }
 
     handleOrderByChange = (orderValue: string) => {
         this.setState({
@@ -56,6 +54,18 @@ export default class ProjectList extends Component<IProps, IState> {
     handleOrderChange = () => {
         this.setState({
             order: this.state.order === 'asc' ? 'desc' : 'asc'
+        });
+    }
+
+    handleFilterChange = (filter: string) => {
+        this.setState({
+            projectFilter: filter
+        });
+    }
+
+    resetFilter = () => {
+        this.setState({
+            projectFilter: ''
         });
     }
 
@@ -76,17 +86,22 @@ export default class ProjectList extends Component<IProps, IState> {
     }
 
     render() {
-        const { list, organizationName, organizationId, isListLoading } = this.props;
-        const { orderBy, order } = this.state;
+        const { list, organizationName, organizationId } = this.props;
+        const { orderBy, order, projectFilter } = this.state;
+        const suggestedProjects = [...list].sort(this.dynamicSort('lastModifiedAt', 'desc')).slice(0, 3);
 
-        let orderedList = list.sort(this.dynamicSort(orderBy, order));
-        const suggestedProjects = [...list].slice(0, 3).sort(this.dynamicSort('lastModifiedAt', 'desc'));
+        // Filter projects from input and order them corresponding to selected sort
+        let orderedList = list.filter((project: IProject) =>
+                (projectFilter === '' ||
+                (
+                    project.name.toLowerCase().includes(projectFilter.toLowerCase()) ||
+                    project.description.toLowerCase().includes(projectFilter.toLowerCase())
+                )
+        )).sort(this.dynamicSort(orderBy, order));
 
         if (orderBy === 'name') {
             orderedList = orderedList.reverse();
         }
-
-        // TODO - show the loading indicator
 
         return (
             <div className={style.container}>
@@ -100,6 +115,8 @@ export default class ProjectList extends Component<IProps, IState> {
                     order={order}
                     onOrderChange={this.handleOrderChange}
                     onOrderByChange={this.handleOrderByChange}
+                    onFilterChange={this.handleFilterChange}
+                    projectFilter={projectFilter}
                 />
                 <p>Name</p>
                 <div className={style.hr}></div>
@@ -116,6 +133,13 @@ export default class ProjectList extends Component<IProps, IState> {
                         );
                     })
                 }
+                {/* Show 'Reset filter' button when filtering results into 0 projects */}
+                <OnlyIf test={projectFilter && orderedList.length <= 0}>
+                    <div className={style.resetFilter}>
+                        <p>No projects found</p>
+                        <StyledButton type={StyledButtonType.Primary} onClick={() => this.resetFilter()} text='Reset filter' />
+                    </div>
+                </OnlyIf>
                 </div>
             </div>
         );

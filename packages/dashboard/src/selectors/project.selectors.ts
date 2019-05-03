@@ -16,7 +16,7 @@
 
 export const projectSelectors = {
 getProjectList: (state: any) => state.projects.projectList,
-    isProjectListLoading: (state: any) => state.projects.isProjectListLoading,
+    isProjectListLoading: (state: any) => state.projects.loadingProjectList,
     getProject: (state: any) => state.projects.project,
     getProjectId: (state: any) => state.projects.project.id,
     getProjectName: (state: any) => state.projects.project.name,

@@ -16,7 +16,7 @@
 
 @import '../../../style/index.less';
 
-.deleteProjectModal {
+.createProjectModal {
 	display: block;
 	border-radius: 2px;
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
@@ -25,10 +25,18 @@
 	color: #fff;
 	transition: visibility 0s, opacity 0.2s ease;
 	width: 520px;
+	transform: translate(0px);
+	right: 5px;
+	top: 5px;
+	bottom: 5px;
+	left: unset;
 
     .content {
         line-height: 1.5em;
 		padding: 20px 20px;
+		display: flex;
+		flex-direction: column;
+		height: calc(100% - 50px);
 
 	    .title {
 	    	font-weight: bold;
@@ -55,7 +63,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: flex-end;
-		margin-top: 33px;
+		margin-top: auto;
 		
 		.cancelBtn {
 			transition: opacity .15s;

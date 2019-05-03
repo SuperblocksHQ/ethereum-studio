@@ -19,17 +19,18 @@ import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
 import PeopleList from './PeopleList';
 import { userSelectors } from '../../../../selectors';
-import { modalActions } from '../../../../actions';
+import { organizationActions } from '../../../../actions';
 
 const mapStateToProps = (state: any) => ({
-    userProfile: userSelectors.getUserProfile(state)
+    userProfile: userSelectors.getUserProfile(state),
+    showInvitePeopleModal: state.organization.showInvitePeopleModal
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
     return {
-        showModal: (modalType: string, modalProps: any) => {
-            dispatch(modalActions.showModal(modalType, modalProps));
-        }
+        toggleInvitePeopleModal: () => {
+            dispatch(organizationActions.toggleInvitePeopleModal());
+        },
     };
 };
 

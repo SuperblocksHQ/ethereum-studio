@@ -18,10 +18,12 @@ import { getProjectList } from './getProjectList.epic';
 import { deleteProject } from './deleteProject.epic';
 import { updateProjectDetails } from './updateProjectDetails.epic';
 import { loadProject } from './loadProject.epic';
+import { createProject } from './createProject.epic';
 
 export const projectsEpics = [
     getProjectList,
     loadProject,
     deleteProject,
     updateProjectDetails,
+    createProject,
 ];

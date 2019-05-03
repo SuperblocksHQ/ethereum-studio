@@ -18,10 +18,30 @@
     display: flex;
     margin-top: 10px;
     margin-bottom: 30px;
+
+    @media only screen and (max-width: 850px) {
+        flex-direction: column;
+    }
 }
 
-.filter {
+.searchInput {
+    position: relative;
     max-width: 320px;
+
+    .icon {
+        position: absolute;
+        left: 10px;
+        top: 11px;
+    }
+
+    input {
+        background: transparent;
+        color: white;
+        border: 1px solid grey;
+        border-radius: 4px;
+        padding: 7px 15px 7px 30px;
+        max-width: 100%;
+    }
 }
 
 .sortContainer {
@@ -43,6 +63,11 @@
             cursor: pointer;
             opacity: 1;
         }
+    }
+
+    @media only screen and (max-width: 850px) {
+        margin-left: 0px;
+        margin-top: 10px;
     }
 }
 

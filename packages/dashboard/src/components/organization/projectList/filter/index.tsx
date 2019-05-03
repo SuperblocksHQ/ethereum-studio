@@ -18,13 +18,15 @@ import React, { Component, Fragment } from 'react';
 import style from './style.less';
 import { DropdownContainer, MenuItem, TextInput } from '../../../common';
 import classNames from 'classnames';
-import { IconArrowUpThin } from '../../../common/icons';
+import { IconArrowUpThin, IconFilter } from '../../../common/icons';
 
 interface IProps {
     onOrderByChange: (orderValue: string) => any;
     orderBy: string;
     onOrderChange: () => any;
     order: string;
+    onFilterChange: (filter: string) => any;
+    projectFilter: string;
 }
 
 export default class Filter extends Component<IProps> {
@@ -41,11 +43,15 @@ export default class Filter extends Component<IProps> {
     }
 
     render() {
-        const { onOrderByChange, onOrderChange, order } = this.props;
+        const { onOrderByChange, onOrderChange, order, onFilterChange, projectFilter } = this.props;
 
         return (
             <div className={style.container}>
-                <TextInput id={'filter'} placeholder={'Filter by name...'} className={style.filter} />
+
+                <div className={style.searchInput}>
+                    <IconFilter className={style.icon} />
+                    <input type='text' placeholder='Filter projects...' value={projectFilter} onChange={(e) => onFilterChange(e.target.value)} />
+                </div>
                 <div className={style.sortContainer}>
                     <span className={style.desc}>Sorted by </span>
                     <DropdownContainer
