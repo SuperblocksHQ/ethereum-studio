@@ -28,6 +28,7 @@ interface IProps {
     repositoryList: IGithubRepository[];
     isRepositoriesLoading: boolean;
     getUserRepositoryList: () => void;
+    cancelGetUserRepositoryList: () => void;
     createDefaultOrganization: (organizationName: string, projectName: string) => void;
 }
 
@@ -38,7 +39,6 @@ interface IState {
     ownerFilterName: string;
     ownerFilterAvatar: string;
     isExpandedOwners: boolean;
-    timer: number;
 }
 
 export default class GithubRepositoryList extends Component<IProps, IState> {
@@ -49,17 +49,15 @@ export default class GithubRepositoryList extends Component<IProps, IState> {
         ownerFilterId: -1,
         ownerFilterName: '',
         ownerFilterAvatar: '',
-        isExpandedOwners: false,
-        timer: 0
+        isExpandedOwners: false
     };
 
     componentWillUnmount() {
-        clearInterval(this.state.timer);
+        this.props.cancelGetUserRepositoryList();
     }
 
     componentDidMount() {
         this.props.getUserRepositoryList();
-        this.state.timer = window.setInterval(() => this.props.getUserRepositoryList(), 5000);
     }
 
     onSearchInputChange(e: any) {

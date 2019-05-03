@@ -14,24 +14,34 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { from, of } from 'rxjs';
-import { switchMap, withLatestFrom, map, catchError, tap } from 'rxjs/operators';
+import { of, timer } from 'rxjs';
+import { switchMap, withLatestFrom, map, catchError, takeUntil, exhaustMap } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
 import { userActions } from '../../actions';
 import { userService } from '../../services';
+
+function getUserRepositories(action$: any) {
+    return userService.getUserRepositories()
+    .pipe(
+        map(userActions.getUserRepositoryListSuccess),
+        takeUntil(action$.pipe(
+            ofType(userActions.GET_USER_REPOSITORY_LIST_CANCELLED)
+        )),
+        catchError((error) => {
+            console.log('There was an issue fetching the user repositories: ' + error);
+            return of(userActions.getUserRepositoryListFail(error));
+        }),
+);
+}
 
 const getUserRepositoryList: Epic = (action$: any, state$: any) => action$.pipe(
     ofType(userActions.GET_USER_REPOSITORY_LIST),
     withLatestFrom(state$),
     switchMap(([, ]) => {
-        return userService.getUserRepositories()
+        return timer(0, 1000)
             .pipe(
-                map(userActions.getUserRepositoryListSuccess),
-                catchError((error) => {
-                    console.log('There was an issue fetching the user repositories: ' + error);
-                    return of(userActions.getUserRepositoryListFail(error));
-                })
-        );
+                exhaustMap(() => getUserRepositories(action$))
+            );
     })
 );
 

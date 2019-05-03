@@ -31,6 +31,9 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
         getUserRepositoryList: () => {
             dispatch(userActions.getUserRepositoryList());
         },
+        cancelGetUserRepositoryList: () => {
+            dispatch(userActions.cancelGetUserRepositoryList());
+        },
         createDefaultOrganization: (organizationName: string, projectName: string) => {
             dispatch(organizationActions.createDefaultOrganization(organizationName, projectName));
         }

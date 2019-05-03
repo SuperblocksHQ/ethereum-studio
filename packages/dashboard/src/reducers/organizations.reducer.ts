@@ -24,7 +24,7 @@ export const initialState: IOrganizationState = {
     organization: undefined,
 };
 
-export default function projectsReducer(state = initialState, action: AnyAction) {
+export default function organizationsReducer(state = initialState, action: AnyAction) {
     switch (action.type) {
         case organizationActions.GET_ORGANIZATION_LIST: {
             return {

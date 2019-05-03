@@ -35,7 +35,7 @@ export const createDefaultOrganization: Epic = (action$, state$) => action$.pipe
                     return organizationActions.createDefaultOrganizationSuccess;
                 }),
                 catchError((error) => {
-                    console.log('There was an issue forking the project: ' + error);
+                    console.log('There was an issue creating the organization: ' + error);
                     return of(organizationActions.createDefaultOrganizationFail(error.message));
                 })
             );

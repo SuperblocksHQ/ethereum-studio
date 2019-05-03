@@ -57,7 +57,7 @@ export const organizationService = {
             method: 'PUT',
             body: data
         }).pipe(
-            switchMap(r => (r.ok ? r.statusText : throwError(r.statusText)))
+            switchMap(response => response.json())
         );
     },
 
@@ -92,7 +92,7 @@ export const organizationService = {
             method: 'PUT',
             body: { newRole }
         }).pipe(
-            switchMap(r => (r.ok ? r.statusText : throwError(r.statusText)))
+            switchMap(response => response.json())
         );
     },
 

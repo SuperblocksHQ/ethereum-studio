@@ -38,6 +38,13 @@ export const userActions = {
         };
     },
 
+    GET_USER_REPOSITORY_LIST_CANCELLED: 'GET_USER_REPOSITORY_LIST_CANCELLED',
+    cancelGetUserRepositoryList() {
+        return {
+            type: userActions.GET_USER_REPOSITORY_LIST_CANCELLED,
+        };
+    },
+
     GET_USER_REPOSITORY_LIST_SUCCESS: 'GET_USER_REPOSITORY_LIST_SUCCESS',
     getUserRepositoryListSuccess(githubRepositoryList: IGithubRepository[]) {
         return {
