@@ -55,6 +55,8 @@ export function fetchJSON(url: string, params: IRequestParams) {
         },
         credentials: 'same-origin',
         body: JSON.stringify(params.body)
+    }).then(response => {
+        return response.ok ? Promise.resolve(response) : Promise.reject(`${response.statusText} ${response.status}`);
     }));
 }
 
