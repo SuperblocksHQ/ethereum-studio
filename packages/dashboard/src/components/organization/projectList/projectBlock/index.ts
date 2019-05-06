@@ -15,23 +15,16 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { connect } from 'react-redux';
-import ProjectDashboard from './ProjectDashboard';
 import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
-import { projectSelectors } from '../../selectors';
-import { projectsActions,  } from '../../actions';
+import ProjectBlock from './ProjectBlock';
 
 const mapStateToProps = (state: any) => ({
-    isProjectLoading: projectSelectors.getLoadingProject(state),
-    project: projectSelectors.getProject(state)
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
+function mapDispatchToProps(dispatch: Dispatch<AnyAction>) {
     return {
-        loadProject: (projectId: string) => {
-            dispatch(projectsActions.loadProject(projectId));
-        }
     };
-};
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProjectDashboard);
+export default connect(mapStateToProps, mapDispatchToProps)(ProjectBlock);

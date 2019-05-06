@@ -27,12 +27,12 @@ interface IProps {
     active?: boolean;
     linkTo?: string;
     children?: any;
-    customClassName?: any;
+    className?: any;
 }
 
 export function SideMenuItem(props: IProps) {
     return (
-        <div className={classNames([style.posRelative, props.customClassName, !props.active ? style.flyOut : style.itemWrapper])}>
+        <div className={classNames([style.posRelative, props.className, !props.active ? style.flyOut : style.itemWrapper])}>
             <Link to={props.linkTo || ''}>
                 <div onClick={props.onClick} className={classNames([style.item, props.active ? style.active : null])}>
                     <OnlyIf test={!!props.icon}>

@@ -17,7 +17,7 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
-import Project from './Project';
+import ProjectRow from './ProjectRow';
 
 const mapStateToProps = (state: any) => ({
 
@@ -28,4 +28,4 @@ function mapDispatchToProps(dispatch: Dispatch<AnyAction>) {
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Project);
+export default connect(mapStateToProps, mapDispatchToProps)(ProjectRow);

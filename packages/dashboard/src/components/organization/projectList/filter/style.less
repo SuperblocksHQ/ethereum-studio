@@ -1,0 +1,124 @@
+// Copyright 2019 Superblocks AB
+//
+// This file is part of Superblocks Lab.
+//
+// Superblocks Lab is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation version 3 of the License.
+//
+// Superblocks Lab is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
+
+.container {
+    display: flex;
+    margin-top: 10px;
+    margin-bottom: 30px;
+
+    @media only screen and (max-width: 850px) {
+        flex-direction: column;
+    }
+}
+
+.searchInput {
+    position: relative;
+    max-width: 320px;
+
+    .icon {
+        position: absolute;
+        left: 10px;
+        top: 11px;
+    }
+
+    input {
+        background: transparent;
+        color: white;
+        border: 1px solid grey;
+        border-radius: 4px;
+        padding: 7px 15px 7px 30px;
+        max-width: 100%;
+    }
+}
+
+.sortContainer {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-left: 25px;
+    
+    .desc {
+        opacity: .6;
+        padding-right: 6px;
+    }
+
+    .orderBy {
+        opacity: .8;
+        transition: opacity .15s;
+
+        &:hover {
+            cursor: pointer;
+            opacity: 1;
+        }
+    }
+
+    @media only screen and (max-width: 850px) {
+        margin-left: 0px;
+        margin-top: 10px;
+    }
+}
+
+.menuDialog {
+    display: block;
+    position: absolute;
+    left: 0px;
+    top: 35px;
+    background-color: #141414;
+    min-width: 200px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 2;
+    color: #c7c7c7;
+    transition: visibility 0s, opacity 0.2s ease;
+
+    &>div:first-of-type {
+        margin-top: 4px;
+    }
+
+    &>div:last-of-type {
+        margin-bottom: 4px;
+    }
+}
+
+.orderButton {
+    opacity: .6;
+    color: white;
+    margin-left: 8px;
+    display: flex;
+    align-items: center;
+    transition: opacity .15s, transform .25s;
+    transform: rotate(0deg) translateY(0px);
+
+    &.orderAsc {
+        transform: rotate(0deg) translateY(0px);
+
+        &:hover {
+            transform: rotate(0deg) translateY(-3px);
+        }
+    }
+
+    &.orderDesc {
+        transform: rotate(180deg) translateY(0px);
+
+        &:hover {
+            transform: rotate(180deg) translateY(3px);
+        }
+    }
+
+    &:hover {
+        opacity: 1;
+        cursor: pointer;
+    }
+}

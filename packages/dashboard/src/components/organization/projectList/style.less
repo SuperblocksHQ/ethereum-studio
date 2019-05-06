@@ -15,19 +15,27 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 .container {
-    margin: 0px -15px;
+    padding: 25px 20px;
     width: 100%;
     overflow-y: auto;
-    height: calc(100% - 45px);
+    overflow-x: hidden;
+    height: calc(100% - 60px);
 
-    .header {
-        margin: 18px 6px;
-        padding: 6px 4px;
+    .hr {
+        height: 1px;
+        width: 100%;
+        background: #383F41;
     }
 
-    .content {
-        padding: 0px 35px 20px 35px;
+    .resetFilter {
         display: flex;
-        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        margin-top: 50px;
+
+        p {
+            margin-right: 0px;
+        }
     }
 }
