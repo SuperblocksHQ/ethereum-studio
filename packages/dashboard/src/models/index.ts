@@ -18,4 +18,6 @@ export * from './project';
 export * from './project.model';
 export * from './user.model';
 export * from './auth.model';
+export * from './githubRepository.model';
+export * from './button.model';
 export * from './organization.model';

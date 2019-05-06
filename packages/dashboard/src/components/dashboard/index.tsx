@@ -17,19 +17,24 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
-import { authActions, projectsActions, organizationActions } from '../../actions';
 import Dashboard from './Dashboard';
-import { projectSelectors } from '../../selectors';
+import { authActions, projectsActions, organizationActions } from '../../actions';
+import { organizationSelectors, projectSelectors } from '../../selectors';
 
 const mapStateToProps = (state: any) => ({
+    organizationList: organizationSelectors.getOrganizationList(state),
+    isOrganizationListLoading: organizationSelectors.isOrganizationListLoading(state),
     projectList: projectSelectors.getProjectList(state),
     isProjectListLoading: projectSelectors.isProjectListLoading(state),
-    showCreateOrganizationModal: state.organization.showCreateOrganizationModal
+    showCreateOrganizationModal: state.organizations.showCreateOrganizationModal
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
     return {
-        githubLoginAction: () => {
+        loadUserOrganizationList: () => {
+            dispatch(organizationActions.getOrganizationList());
+        },
+        LoginAction: () => {
             dispatch(authActions.githubLogin());
         },
         toggleCreateOrganizationModal: () => {

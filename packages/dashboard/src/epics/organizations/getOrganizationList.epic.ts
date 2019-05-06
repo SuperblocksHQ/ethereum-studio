@@ -17,17 +17,18 @@
 import { from, of } from 'rxjs';
 import { switchMap, withLatestFrom, map, catchError } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
-import { projectsActions } from '../../actions';
-import { projectService } from '../../services';
-export const getProjectList: Epic = (action$: any, state$: any) => action$.pipe(
-    ofType(projectsActions.GET_PROJECT_LIST),
+import { organizationActions } from '../../actions';
+import { organizationService } from '../../services';
+export const getOrganizationList: Epic = (action$: any, state$: any) => action$.pipe(
+    ofType(organizationActions.GET_ORGANIZATION_LIST),
     withLatestFrom(state$),
     switchMap(([, ]) => {
-        return from(projectService.getProjectsList()).pipe(
-            map(projectsActions.getProjectListSuccess),
+        console.log('helo');
+        return from(organizationService.getOrganizationList()).pipe(
+            map(organizationActions.getOrganizationListSuccess),
             catchError((error) => {
-                console.log('There was an issue fetching the projects: ' + error);
-                return of(projectsActions.getProjectListFail(error));
+                console.log('There was an issue fetching the user organizations: ' + error);
+                return of(organizationActions.getOrganizationListFail(error));
             })
         );
     })

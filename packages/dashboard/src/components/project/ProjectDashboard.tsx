@@ -41,6 +41,11 @@ const BuildPage = Loadable({
     loading: EmptyLoading,
 });
 
+const ConnectBuild = Loadable({
+    loader: () => import(/* webpackChunkName: "ConnectBuild" */'../project/builds/connectBuild'),
+    loading: EmptyLoading,
+});
+
 interface IProps {
     location: any;
     match: any;
@@ -100,6 +105,9 @@ export default class ProjectDashboard extends Component<IProps> {
                                         <PrivateRoute exact path='/:organizationId/projects/:projectId/settings/details' isAuthenticated={isAuthenticated} isLoading={isAuthLoading} render={(props: any) => (
                                             <ProjectSettingsDetails {...props} />
                                         )}/>
+                                        <PrivateRoute exact path='/:organizationId/projects/:projectId/connect' isAuthenticated={isAuthenticated} isLoading={isAuthLoading} render={(props: any) => (
+                                            <ConnectBuild {...props} />
+                                        )} />
                                     </Switch>
                                 </div>
                             </OnlyIf>

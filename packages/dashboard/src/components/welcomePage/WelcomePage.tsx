@@ -1,4 +1,4 @@
-// Copyright 2018 Superblocks AB
+// Copyright 2019 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -14,9 +14,20 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export * from './app.selectors';
-export * from './toast.selectors';
-export * from './project.selectors';
-export * from './user.selectors';
-export * from './auth.selectors';
-export * from './organization.selectors';
+import React from 'react';
+import style from './style.less';
+import Topbar from '../topbar';
+import GithubRepoList from '../githubRepositoryList';
+
+export const WelcomePage = () => (
+    <div className={style.welcomePage}>
+        <Topbar />
+        <div className={style.content}>
+            <div className={style.header}>
+                <h1>Welcome to Superblocks!<br/>What would you like to build?</h1>
+                <p>Select a repository you would like to start building</p>
+            </div>
+            <GithubRepoList className={style.repoList} />
+        </div>
+    </div>
+);

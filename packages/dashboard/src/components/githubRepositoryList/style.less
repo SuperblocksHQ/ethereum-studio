@@ -1,0 +1,205 @@
+// Copyright 2019 Superblocks AB
+//
+// This file is part of Superblocks Lab.
+//
+// Superblocks Lab is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation version 3 of the License.
+//
+// Superblocks Lab is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
+
+@import '../../style/index.less';
+
+.container {
+    display: flex;
+    width: 100%;
+    max-width: 970px;
+
+    .left {
+        margin-right: 25px;
+        flex-grow: 2;
+
+        p {
+            color: #c0c0c0;
+        }
+    }
+
+    .right {
+        margin-left: 25px;
+        margin-top: 8px;
+        flex-grow: 1;
+
+        p {
+            display: flex;
+        }
+    }
+
+    .searchInput {
+        position: relative;
+
+        .icon {
+            position: absolute;
+            left: 10px;
+            top: 11px;
+        }
+
+        input {
+            background: transparent;
+            color: white;
+            border: 1px solid grey;
+            border-radius: 4px;
+            padding: 7px 15px 7px 30px;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+    }
+
+    a {
+        color: @primary-color;
+        transition: opacity .15s;
+
+        &:hover {
+            opacity: .7;
+        }
+    }
+
+    p {
+        margin-bottom: 15px;
+        margin-right: 0px;
+        margin-top: 0px;
+    }
+
+    .repoList {
+        position: relative;
+        min-height: 350px;
+        max-height: 350px;
+        overflow-y: auto;
+
+        .singleRepo {
+            display: flex;
+            align-items: center;
+            padding: 8px 8px 8px 4px;
+            max-height: 35px;
+
+            .repoPrivate {
+                font-size: 12px;
+                padding: 0px 4px;
+                opacity: .8;
+                border: 1px solid #536161;
+                color: #536161;
+                margin-left: 10px;
+            }
+
+            .btnBuild {
+                display: none;
+                min-width: 68px;
+                padding: 3px 15px;
+                margin-left: auto;
+            }
+
+            &:hover {
+                background: #283134;
+
+                .btnBuild {
+                    display: block;
+                }
+            }
+
+            img {
+                max-width: 24px;
+                min-width: 24px;
+                min-height: 24px;
+                height: auto;
+                margin-right: 15px;
+            }
+        }
+    }
+
+    .resetFilter {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        margin-top: 50px;
+    }
+
+    .organizationsList {
+        box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+        overflow-y: auto;
+        max-height: 0px;
+        transition: max-height .2s;
+
+        &.expanded {
+            max-height: 294px;
+        }
+
+        .singleOrganization {
+            display: flex;
+            align-items: center;
+            padding: 8px 15px;
+            border-left: 2px solid transparent;
+
+            &.active {
+                border-color: @primary-color;
+                background: #283134;
+            }
+
+            &:hover {
+                background: #283134;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+                cursor: pointer;
+
+                .icon {
+                    opacity: 1;
+                }
+            }
+
+            img {
+                max-width: 24px;
+                margin-right: 15px;
+            }
+
+            .icon {
+                display: flex;
+                align-items: center;
+                margin-left: auto;
+                opacity: 0;
+            }
+
+            .githubIcon {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-width: 24px;
+                min-height: 24px;
+                margin-right: 15px;
+                background: black;
+            }
+        }
+    }
+
+    .ownersDropdownContainer {
+        align-items: center;
+        transition: opacity .15s, transform .15s;
+
+        img {
+            margin-right: 10px;
+            width: 24px;
+        }
+
+        &:hover {
+            cursor: pointer;
+            opacity: .6;
+        } 
+
+        .ownersDropdown {
+            margin-left: 5px;
+        }
+    }
+}

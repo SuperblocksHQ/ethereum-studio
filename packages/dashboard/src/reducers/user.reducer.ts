@@ -15,8 +15,7 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { AnyAction } from 'redux';
-import { userActions, authActions, projectsActions } from '../actions';
-import { IProject } from '../models';
+import { authActions, userActions } from '../actions';
 
 export const initialState = {
     projectList: [],
@@ -24,7 +23,9 @@ export const initialState = {
     showForkButton: true,
     isProjectForking: false,
     errorLoadingProjectList: null,
-    profile: null
+    profile: null,
+    githubRepositoryList: [],
+    isRepositoriesLoading: false
 };
 
 export default function userReducer(state = initialState, action: AnyAction) {
@@ -42,6 +43,23 @@ export default function userReducer(state = initialState, action: AnyAction) {
             return {
                 ...state,
                 profile: userData
+            };
+        case userActions.GET_USER_REPOSITORY_LIST:
+            return {
+                ...state,
+                isRepositoriesLoading: true
+            };
+        case userActions.GET_USER_REPOSITORY_LIST_SUCCESS:
+            return {
+                ...state,
+                isRepositoriesLoading: false,
+                githubRepositoryList: action.data.githubRepositoryList
+            };
+        case userActions.GET_USER_REPOSITORY_LIST_FAIL:
+            return {
+                ...state,
+                isRepositoriesLoading: false,
+                githubRepositoryList: []
             };
         default:
             return state;

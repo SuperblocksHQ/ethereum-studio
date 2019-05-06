@@ -21,12 +21,16 @@ import { LetterAvatar } from '../common';
 import Topbar from '../topbar';
 import { SideMenu, SideMenuItem, SideMenuSubHeader, SideMenuFooter } from '../sideMenu';
 import ProjectList from '../organization/projectList';
-import { IProject } from '../../models';
-import CreateProject from '../organization/createProject';
+import { Redirect } from 'react-router';
 import OnlyIf from '../common/onlyIf';
+import { IOrganization, IProject } from '../../models';
 import CreateOrganizationModal from '../modals/createOrganizationModal';
+import CreateProject from '../organization/createProject';
 
 interface IProps {
+    organizationList: [IOrganization];
+    isOrganizationListLoading: boolean;
+    loadUserOrganizationList: () => void;
     projectList: IProject[];
     isProjectListLoading: boolean;
     showCreateOrganizationModal: boolean;
@@ -37,13 +41,13 @@ interface IProps {
 
 export default class Dashboard extends Component<IProps> {
 
-    componentWillMount() {
+    componentDidMount() {
+        this.props.loadUserOrganizationList();
         this.props.getProjectList();
     }
 
-    // TODO - Make sure to change the hardcoded organization Ids for the real deal
     render() {
-        const { projectList, isProjectListLoading, showCreateOrganizationModal, toggleCreateOrganizationModal } = this.props;
+        const { projectList, isProjectListLoading, showCreateOrganizationModal, toggleCreateOrganizationModal, organizationList, isOrganizationListLoading } = this.props;
 
         return (
             <Fragment>
@@ -81,6 +85,9 @@ export default class Dashboard extends Component<IProps> {
                                 organizationId={'12334'}
                             />
                         }
+                        <OnlyIf test={!isOrganizationListLoading && !organizationList.length}>
+                            <Redirect to={'/welcome'} />
+                        </OnlyIf>
                     </div>
                 </div>
                 <OnlyIf test={showCreateOrganizationModal}>

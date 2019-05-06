@@ -26,7 +26,7 @@ interface IProps {
     icon?: JSX.Element;
     customClassName?: string;
     isDisabled?: boolean;
-    onClick: () => void;
+    onClick?: () => void;
 }
 
 export const StyledButton = (props: IProps) => {

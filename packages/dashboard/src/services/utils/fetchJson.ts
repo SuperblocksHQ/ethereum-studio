@@ -24,17 +24,10 @@ export function getRefreshToken() {
     return localStorage.getItem('refreshToken') || null;
 }
 
-function getAnonymousToken() {
-    return localStorage.getItem('anonymousToken') || null;
-}
-
 function getTokenHeaders() {
     const headers: any = {};
     if (getAuthToken()) {
         headers.Authorization = `Bearer ${getAuthToken()}`;
-    }
-    if (getAnonymousToken()) {
-        headers['x-anonymous-token'] = getAnonymousToken();
     }
     return headers;
 }
@@ -55,6 +48,8 @@ export function fetchJSON(url: string, params: IRequestParams) {
         },
         credentials: 'same-origin',
         body: JSON.stringify(params.body)
+    }).then(response => {
+        return response.ok ? Promise.resolve(response) : Promise.reject(`${response.statusText} ${response.status}`);
     }));
 }
 

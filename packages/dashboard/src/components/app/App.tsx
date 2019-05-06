@@ -41,6 +41,11 @@ const ProjectDashboard = Loadable({
     loading: EmptyLoading,
 });
 
+const WelcomePage = Loadable({
+    loader: () => import(/* webpackChunkName: "WelcomePage" */'../welcomePage'),
+    loading: EmptyLoading,
+});
+
 const Details = Loadable({
     loader: () => import(/* webpackChunkName: "Details" */'../organization/settings/details'),
     loading: EmptyLoading,
@@ -78,6 +83,7 @@ export default class App extends Component<IProps> {
                             <Switch>
                                 <Route path='/login' exact render={(props: any) => <LoginScreen {...props} />} />
                                 <PrivateRoute path='/' exact isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => <Dashboard {...props} />} />
+                                <PrivateRoute path='/welcome' exact isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => <WelcomePage {...props} />} />
                                 <PrivateRoute path='/:organizationId' exact isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => <Dashboard {...props} />} />
                                 <PrivateRoute path='/:organizationId/projects' exact isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => <Dashboard {...props} />} />
                                 <PrivateRoute path='/:organizationId/settings' exact isAuthenticated={isAuthenticated} isLoading={isLoginInProgress} render={(props: any) => <OrganizationSettings {...props} />} />

@@ -20,23 +20,23 @@ import { ofType, Epic } from 'redux-observable';
 import { organizationActions } from '../../actions';
 import { organizationService } from '../../services';
 
-export const createOrganization: Epic = (action$, state$) => action$.pipe(
-    ofType(organizationActions.CREATE_ORGANIZATION),
+export const createDefaultOrganization: Epic = (action$, state$) => action$.pipe(
+    ofType(organizationActions.CREATE_DEFAULT_ORGANIZATION),
     withLatestFrom(state$),
     switchMap(([action, state]) => {
         return organizationService.createOrganization({
-            name: action.data.name,
-            description: action.data.description
+            name: action.data.organizationName
         }).pipe(
                 map((newOrganization) =>  {
+                    console.log(newOrganization);
                     // redirect
-                    window.location.href = `${window.location.origin}/${newOrganization.id}`;
+                    // window.location.href = `${window.location.origin}/${newOrganization.id}`;
 
-                    return organizationActions.createOrganizationSuccess;
+                    return organizationActions.createDefaultOrganizationSuccess;
                 }),
                 catchError((error) => {
-                    console.log('There was an issue forking the organization: ' + error);
-                    return of(organizationActions.createOrganizationFail(error.message));
+                    console.log('There was an issue creating the organization: ' + error);
+                    return of(organizationActions.createDefaultOrganizationFail(error.message));
                 })
             );
         }

@@ -1,6 +1,4 @@
-import { IOrganizationMember } from "./organizationMember.model";
-
-// Copyright 2018 Superblocks AB
+// Copyright 2019 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -15,6 +13,8 @@ import { IOrganizationMember } from "./organizationMember.model";
 //
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
+
+import { IOrganizationMember } from './organizationMember.model';
 
 export interface IOrganization {
     id: string;

@@ -24,7 +24,7 @@ import { organizationActions } from '../../../../actions';
 // TODO: Change all project actions to organization
 const mapStateToProps = (state: any) => ({
     project: projectSelectors.getProject(state),
-    showDeleteOrganizationModal: state.organization.showDeleteOrganizationModal
+    showDeleteOrganizationModal: state.organizations.showDeleteOrganizationModal
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {

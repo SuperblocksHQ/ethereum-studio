@@ -1,4 +1,4 @@
-// Copyright 2018 Superblocks AB
+// Copyright 2019 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -14,9 +14,33 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export * from './app.selectors';
-export * from './toast.selectors';
-export * from './project.selectors';
-export * from './user.selectors';
-export * from './auth.selectors';
-export * from './organization.selectors';
+.welcomePage {
+    height: 100%;
+
+    .header {
+        display: inline-block;
+        margin-bottom: 50px;
+        margin-top: auto;
+
+        h1 {
+            margin-top: 0px;
+            font-weight: normal;
+        }
+    }
+
+    .repoList {
+        margin-bottom: auto;
+    }
+
+    .content {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        background: #1C2123;
+        height: calc(100% - 50px);
+        color: white;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding: 20px;
+    }
+}
