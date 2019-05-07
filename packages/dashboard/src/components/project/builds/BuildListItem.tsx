@@ -15,64 +15,68 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { Component } from 'react';
+import classNames from 'classnames';
 import style from './style.less';
 import moment from 'moment';
 import { IconBranch, IconCommit, IconClock, IconCalendar } from '../../common/icons';
 import { BuildStatus } from './BuildStatus';
 import { Link } from 'react-router-dom';
+import { IPipeline } from '../../../models';
 
 interface IProps {
-    build: any;
+    pipeline: IPipeline;
     projectId: string;
     organizationId: string;
 }
 
 export default class BuildListItem extends Component<IProps> {
     render() {
-        const { build } = this.props;
+        const { pipeline } = this.props;
 
         return (
             <React.Fragment>
                 <td>
-                    <BuildStatus status={build.status} />
+                    <BuildStatus status={pipeline.status} />
                 </td>
                 <td>
-                    <Link to={{pathname: `/${this.props.organizationId}/projects/${this.props.projectId}/builds/${build.commit.hash}`, state: {build}}}>
-                        #{build.buildNumber}
+                    <Link to={{pathname: `/${this.props.organizationId}/projects/${this.props.projectId}/builds/${pipeline.commit.hash}`, state: {pipeline}}}>
+                        {/* #{pipeline.buildNumber} */}
                     </Link>
                 </td>
                 <td>
                     <span className={style.flexVerticalCenter}>
                         <IconBranch className={style['mr-2']} />
-                        <a href={build.commit.branchLink} target='_blank' rel='noopener noreferrer'>
-                            {build.branch}
+                        <a href={pipeline.commit.branchUrl} target='_blank' rel='noopener noreferrer'>
+                            {pipeline.commit.branch}
                         </a>
                     </span>
                 </td>
                 <td>
                     <div className={style.flexVerticalCenter}>
-                        <img src={build.commit.ownerAvatar} className={style['mr-2']} alt={build.commit.ownerName} />
+                        <img src={pipeline.commit.ownerAvatar} className={classNames('mr-2', style.avatarImg)} alt={pipeline.commit.ownerName} />
                         <div>
                             <span className={style['mb-1']}>
-                                {build.commit.description}
+                                {pipeline.commit.description}
                             </span>
                             <span>
                                 <IconCommit className={style['mr-1']} />
-                                <a href={build.commit.commitLink} target='_blank' rel='noopener noreferrer' className={style.linkPrimary}>
-                                    {build.commit.hash}
+                                <a href={pipeline.commit.commitUrl} target='_blank' rel='noopener noreferrer' className={style.linkPrimary}>
+                                    {pipeline.commit.hash.slice(0, 8)}
                                 </a>
                             </span>
                         </div>
                     </div>
                 </td>
-                <td className={style[`status-${build.status}`]}>
+                <td className={style[`status-${pipeline.status}`]}>
                     <span className={style['mb-2']}>
                         <IconClock className={style['mr-2']} />
-                        {build.buildTime}
+
+                        {/* TODO - This needs to be calculated */}
+                        {moment.utc(pipeline.createdAt).fromNow()}
                     </span>
                     <span>
                         <IconCalendar className={style['mr-2']} />
-                        {moment.utc(build.commit.timestamp).fromNow()}
+                        {moment.utc(pipeline.createdAt).fromNow()}
                     </span>
                 </td>
             </React.Fragment>

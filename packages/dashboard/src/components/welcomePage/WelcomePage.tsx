@@ -17,7 +17,7 @@
 import React from 'react';
 import style from './style.less';
 import Topbar from '../topbar';
-import GithubRepoList from '../githubRepositoryList';
+import GithubRepoList, { Section } from '../githubRepositoryList';
 
 export const WelcomePage = () => (
     <div className={style.welcomePage}>
@@ -27,7 +27,7 @@ export const WelcomePage = () => (
                 <h1>Welcome to Superblocks!<br/>What would you like to build?</h1>
                 <p>Select a repository you would like to start building</p>
             </div>
-            <GithubRepoList className={style.repoList} />
+            <GithubRepoList section={Section.Welcome} className={style.repoList} />
         </div>
     </div>
 );

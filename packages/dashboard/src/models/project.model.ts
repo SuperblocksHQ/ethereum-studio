@@ -14,14 +14,17 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
+export enum VcsType {
+    Github = 'github'
+}
+
 export interface IProject {
     id: string;
     name: string;
     description: string;
     createdAt: string;
     lastModifiedAt: string;
-    files: any;
-    anonymousToken?: string;
-    [key: string]: any;
+    vcsUrl: string;
+    vcsType: VcsType;
 }
 

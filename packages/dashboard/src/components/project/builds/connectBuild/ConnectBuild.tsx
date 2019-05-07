@@ -20,7 +20,7 @@ import { Link } from 'react-router-dom';
 import { BreadCrumbs, StyledButton } from '../../../common';
 import { StyledButtonType, IProject } from '../../../../models';
 import { IconGithub } from '../../../common/icons';
-import GithubRepositoryList from '../../../githubRepositoryList';
+import GithubRepositoryList, { Section } from '../../../githubRepositoryList';
 
 interface IProps {
     project: IProject;
@@ -32,7 +32,6 @@ interface IProps {
 export default class ConnectBuild extends Component<IProps> {
     render() {
         const { project } = this.props;
-        console.log(this.props);
         return (
             <div className={style.connectBuild}>
                 <BreadCrumbs>
@@ -49,7 +48,7 @@ export default class ConnectBuild extends Component<IProps> {
                     </a>
                 </div>
 
-                <GithubRepositoryList />
+                <GithubRepositoryList section={Section.ConnectToRepo}/>
             </div>
         );
     }

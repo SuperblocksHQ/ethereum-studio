@@ -117,7 +117,13 @@
         line-height: 1;
     }
 
-    &.passed {
+    &.queue {
+        border-color: #59a600;
+        color: #fff;
+        background-color: #59a600;
+    }
+
+    &.success {
         border-color: #59a600;
         color: #fff;
         background-color: #59a600;
@@ -129,7 +135,7 @@
         background-color: #d9534f;
     }
 
-    &.pending {
+    &.running {
         border-color: #f0f0f0;
         color: #000;
         background-color: #f0f0f0;
@@ -146,6 +152,10 @@
     }
 }
 
+.avatarImg {
+    height: 30px;
+}
+
 .setupBuild {
     display: flex;
     flex-direction: column;
@@ -158,7 +168,7 @@
         width: 310px;
         margin-bottom: 40px;
     }
-    
+
     p:first-of-type {
         font-weight: bold;
         font-size: 15px;

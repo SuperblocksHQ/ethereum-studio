@@ -18,18 +18,26 @@ import React, { Component } from 'react';
 import style from './style.less';
 import classNames from 'classnames';
 import { GenericLoading } from '../common';
-import { IGithubRepository, IGithubRepositoryOwner, StyledButtonType } from '../../models';
+import { IGithubRepository, IGithubRepositoryOwner, StyledButtonType, IProject, VcsType } from '../../models';
 import { IconFilter, IconChevronDown, IconClose, IconGithub } from '../common/icons';
 import { StyledButton } from '../common/buttons/StyledButton';
 import OnlyIf from '../common/onlyIf';
+
+export enum Section {
+    Welcome,
+    ConnectToRepo
+}
 
 interface IProps {
     className?: string;
     repositoryList: IGithubRepository[];
     isRepositoriesLoading: boolean;
+    projectId: string;
+    section: Section;
     getUserRepositoryList: () => void;
     cancelGetUserRepositoryList: () => void;
     createDefaultOrganization: (organizationName: string, projectName: string) => void;
+    updateProjectDetails: (newProjectDetails: Partial<IProject>) => void;
 }
 
 interface IState {
@@ -102,7 +110,12 @@ export default class GithubRepositoryList extends Component<IProps, IState> {
     }
 
     handleOnBuildClick = (repo: IGithubRepository) => {
-        this.props.createDefaultOrganization(repo.name, repo.owner.login);
+        const { section, projectId, updateProjectDetails, createDefaultOrganization } = this.props;
+        if (section === Section.Welcome) {
+            createDefaultOrganization(repo.name, repo.owner.login);
+        } else {
+            updateProjectDetails({ id: projectId, vcsUrl: repo.cloneUrl, vcsType: VcsType.Github });
+        }
     }
 
     render() {

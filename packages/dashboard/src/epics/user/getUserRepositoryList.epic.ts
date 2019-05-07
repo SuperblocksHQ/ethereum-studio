@@ -31,14 +31,14 @@ function getUserRepositories(action$: any) {
             console.log('There was an issue fetching the user repositories: ' + error);
             return of(userActions.getUserRepositoryListFail(error));
         }),
-);
+    );
 }
 
 const getUserRepositoryList: Epic = (action$: any, state$: any) => action$.pipe(
     ofType(userActions.GET_USER_REPOSITORY_LIST),
     withLatestFrom(state$),
     switchMap(([, ]) => {
-        return timer(0, 1000)
+        return timer(0, 5000)
             .pipe(
                 exhaustMap(() => getUserRepositories(action$))
             );

@@ -21,3 +21,4 @@ export * from './auth.model';
 export * from './githubRepository.model';
 export * from './button.model';
 export * from './organization.model';
+export * from './pipeline.model';

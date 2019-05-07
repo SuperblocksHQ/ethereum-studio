@@ -14,8 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export * from './user.service';
-export * from './project.service';
-export * from './auth.service';
-export * from './organization.service';
-export * from './pipeline.service';
+export const pipelinesSelectors = {
+    getProjectPipelinesList: (state: any) => state.pipelines.projectPipelineList,
+    isProjectPipelineListLoading: (state: any) => state.pipelines.loadingProjectPipelineList,
+    getPipeline: (state: any) => state.pipelines.pipeline,
+    isPipelineLoading: (state: any) => state.pipelines.loadingPipeline,
+};

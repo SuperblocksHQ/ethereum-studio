@@ -37,7 +37,7 @@ export default class BuildPage extends Component<IProps> {
         const { project } = this.props;
 
         const build = {
-            status: 1,
+            status: 'queued',
             buildNumber: 3,
             branch: 'fork-branch',
             buildTime: '00:02:56',

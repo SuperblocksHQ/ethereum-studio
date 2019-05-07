@@ -22,17 +22,26 @@ import BuildListItem from './BuildListItem';
 import { BreadCrumbs } from '../../common';
 import { SetupBuild } from './SetupBuild';
 import OnlyIf from '../../common/onlyIf';
-import { IProject } from '../../../models';
+import { IProject, IPipeline } from '../../../models';
 
 interface IProps {
     location: any;
     match: any;
     project: IProject;
+    projectPipelineList: IPipeline[];
+    getProjectPipelineList: (projectId: string) => void;
+    isProjectPipelineListLoading: boolean;
 }
 
 export default class BuildList extends Component<IProps> {
+
+    componentWillMount() {
+        const { projectId } = this.props.match.params;
+        this.props.getProjectPipelineList(projectId);
+    }
+
     render() {
-        const { project } = this.props;
+        const { project, projectPipelineList, isProjectPipelineListLoading } = this.props;
 
         // TODO: Get project from cloud
         const projectA = {
@@ -40,56 +49,58 @@ export default class BuildList extends Component<IProps> {
                 fullName: 'superblocks/ethereum-react',
                 link: 'https://github.com/SuperblocksHQ/superblocks-lab'
             },
-            builds: [
-                {
-                    status: 1,
-                    buildNumber: 1,
-                    branch: 'master',
-                    buildTime: '00:02:56',
-                    commit: {
-                        ownerAvatar: 'https://avatars0.githubusercontent.com/u/17637244?v=4&s=24',
-                        ownerName: 'Krystof Viktora',
-                        description: 'Update contract constructor',
-                        hash: '26ed941',
-                        timestamp: '2019-04-15T12:47:45.090Z',
-                        branchLink: 'https://github.com/SuperblocksHQ/superblocks-lab/commits/master',
-                        commitLink: 'https://github.com/SuperblocksHQ/superblocks-lab/commit/1553091f58d7a5328201b8ad4a94766e1babe80d'
-                    }
-                },
-                {
-                    status: 0,
-                    buildNumber: 2,
-                    branch: 'my-branch',
-                    buildTime: '00:02:56',
-                    commit: {
-                        ownerAvatar: 'https://avatars3.githubusercontent.com/u/7814134?v=4&s=24',
-                        ownerName: 'Javier Taragaza Gomez',
-                        description: 'Mierda',
-                        hash: 'df24adf',
-                        timestamp: '2019-04-15T12:47:45.090Z',
-                        branchLink: 'https://github.com/SuperblocksHQ/superblocks-lab/commits/master',
-                        commitLink: 'https://github.com/SuperblocksHQ/superblocks-lab/commit/1553091f58d7a5328201b8ad4a94766e1babe80d'
-                    }
-                },
-                {
-                    status: -1,
-                    buildNumber: 3,
-                    branch: 'fork-branch',
-                    buildTime: '00:02:56',
-                    commit: {
-                        ownerAvatar: 'https://avatars0.githubusercontent.com/u/17637244?v=4&s=24',
-                        ownerName: 'Krystof Viktora',
-                        description: 'Initial commit',
-                        hash: 'gf245df',
-                        timestamp: '2019-04-15T12:47:45.090Z',
-                        branchLink: 'https://github.com/SuperblocksHQ/superblocks-lab/commits/master',
-                        commitLink: 'https://github.com/SuperblocksHQ/superblocks-lab/commit/1553091f58d7a5328201b8ad4a94766e1babe80d'
-                    }
-                },
-            ]
+            // builds: [
+            //     {
+            //         status: 1,
+            //         buildNumber: 1,
+            //         branch: 'master',
+            //         buildTime: '00:02:56',
+            //         commit: {
+            //             ownerAvatar: 'https://avatars0.githubusercontent.com/u/17637244?v=4&s=24',
+            //             ownerName: 'Krystof Viktora',
+            //             description: 'Update contract constructor',
+            //             hash: '26ed941',
+            //             timestamp: '2019-04-15T12:47:45.090Z',
+            //             branchLink: 'https://github.com/SuperblocksHQ/superblocks-lab/commits/master',
+            //             commitLink: 'https://github.com/SuperblocksHQ/superblocks-lab/commit/1553091f58d7a5328201b8ad4a94766e1babe80d'
+            //         }
+            //     },
+            //     {
+            //         status: 0,
+            //         buildNumber: 2,
+            //         branch: 'my-branch',
+            //         buildTime: '00:02:56',
+            //         commit: {
+            //             ownerAvatar: 'https://avatars3.githubusercontent.com/u/7814134?v=4&s=24',
+            //             ownerName: 'Javier Taragaza Gomez',
+            //             description: 'Mierda',
+            //             hash: 'df24adf',
+            //             timestamp: '2019-04-15T12:47:45.090Z',
+            //             branchLink: 'https://github.com/SuperblocksHQ/superblocks-lab/commits/master',
+            //             commitLink: 'https://github.com/SuperblocksHQ/superblocks-lab/commit/1553091f58d7a5328201b8ad4a94766e1babe80d'
+            //         }
+            //     },
+            //     {
+            //         status: -1,
+            //         buildNumber: 3,
+            //         branch: 'fork-branch',
+            //         buildTime: '00:02:56',
+            //         commit: {
+            //             ownerAvatar: 'https://avatars0.githubusercontent.com/u/17637244?v=4&s=24',
+            //             ownerName: 'Krystof Viktora',
+            //             description: 'Initial commit',
+            //             hash: 'gf245df',
+            //             timestamp: '2019-04-15T12:47:45.090Z',
+            //             branchLink: 'https://github.com/SuperblocksHQ/superblocks-lab/commits/master',
+            //             commitLink: 'https://github.com/SuperblocksHQ/superblocks-lab/commit/1553091f58d7a5328201b8ad4a94766e1babe80d'
+            //         }
+            //     },
+            // ]
         };
 
         const { organizationId, projectId } = this.props.match.params;
+
+        console.log(projectPipelineList);
 
         return (
             <React.Fragment>
@@ -99,7 +110,7 @@ export default class BuildList extends Component<IProps> {
                     <Link to={`/${this.props.match.params.organizationId}/projects/${this.props.match.params.projectId}/builds`}>Builds</Link>
                 </BreadCrumbs>
 
-                <OnlyIf test={projectA.builds.length > 0}>
+                <OnlyIf test={projectPipelineList.length > 0}>
                     <h1>Builds</h1>
                     <a className={style.repoLink} href={projectA.repository.link} target='_blank' rel='noopener noreferrer'>
                         <IconGithub size='xs' className={style.colorGrey} />
@@ -120,16 +131,16 @@ export default class BuildList extends Component<IProps> {
                             </tr>
                         </thead>
                         <tbody>
-                            { projectA.builds.map((build, index) =>
+                            { projectPipelineList.map((pipeline, index) =>
                                 <tr className={style.buildItem} key={index}>
-                                    <BuildListItem build={build} projectId={projectId} organizationId={organizationId} />
+                                    <BuildListItem pipeline={pipeline} projectId={projectId} organizationId={organizationId} />
                                 </tr>
                             )}
                         </tbody>
                     </table>
                 </OnlyIf>
 
-                <OnlyIf test={!projectA.builds.length}>
+                <OnlyIf test={!projectPipelineList.length && !isProjectPipelineListLoading}>
                     <SetupBuild projectId={projectId} organizationId={organizationId} />
                 </OnlyIf>
             </React.Fragment>

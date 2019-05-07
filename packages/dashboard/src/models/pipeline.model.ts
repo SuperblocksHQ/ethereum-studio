@@ -14,8 +14,37 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export * from './user.service';
-export * from './project.service';
-export * from './auth.service';
-export * from './organization.service';
-export * from './pipeline.service';
+export enum PipelineStatus {
+    Queued = 'queued',
+    Running = 'running',
+    Success = 'success',
+    Failed = 'failed',
+}
+
+export interface IJob {
+    id: string;
+    status: string;
+    log: string;
+}
+
+export interface IPipelineCommit {
+    ownerAvatar: string;
+    ownerName: string;
+    repository: string;
+    description: string;
+    hash: string;
+    branch: string;
+    branchUrl: string;
+    commitUrl: string;
+}
+
+export interface IPipeline {
+    id: string;
+    projectId: string;
+    commit: IPipelineCommit;
+    jobs: IJob[];
+    status: PipelineStatus;
+    createdAt: Date;
+    startedAt: Date;
+    finishedAt: Date;
+}

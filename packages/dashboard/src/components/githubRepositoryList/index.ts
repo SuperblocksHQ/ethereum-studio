@@ -17,13 +17,17 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
-import { userActions, organizationActions } from '../../actions';
-import { userSelectors } from '../../selectors';
+import { userActions, organizationActions, projectsActions } from '../../actions';
+import { userSelectors, projectSelectors } from '../../selectors';
 import GithubRepositoryList from './GithubRepositoryList';
+import { IProject } from '../../models';
+
+export { Section } from './GithubRepositoryList';
 
 const mapStateToProps = (state: any) => ({
     repositoryList: userSelectors.getUserRepositoryList(state),
     isRepositoriesLoading: userSelectors.isRepositoriesLoading(state),
+    projectId: projectSelectors.getProjectId(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
@@ -36,6 +40,9 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
         },
         createDefaultOrganization: (organizationName: string, projectName: string) => {
             dispatch(organizationActions.createDefaultOrganization(organizationName, projectName));
+        },
+        updateProjectDetails: (newProjectDetails: Partial<IProject>) => {
+            dispatch(projectsActions.updateProjectDetails(newProjectDetails));
         }
     };
 };

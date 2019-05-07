@@ -16,3 +16,4 @@
 
 export * from './projectState.model';
 export * from './organizationState.model';
+export * from './pipelineState.model';

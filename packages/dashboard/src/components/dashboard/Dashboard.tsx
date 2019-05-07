@@ -47,7 +47,13 @@ export default class Dashboard extends Component<IProps> {
     }
 
     render() {
-        const { projectList, isProjectListLoading, showCreateOrganizationModal, toggleCreateOrganizationModal, organizationList, isOrganizationListLoading } = this.props;
+        const { projectList, isProjectListLoading, showCreateOrganizationModal, toggleCreateOrganizationModal, isOrganizationListLoading } = this.props;
+
+        const organizationList = [
+            {
+                id: 'patata'
+            }
+        ];
 
         return (
             <Fragment>

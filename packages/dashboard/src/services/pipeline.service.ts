@@ -1,4 +1,4 @@
-// Copyright 2018 Superblocks AB
+// Copyright 2019 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -13,9 +13,22 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
+import { fetchJSON } from './utils/fetchJson';
+import { switchMap } from 'rxjs/operators';
 
-export * from './user.service';
-export * from './project.service';
-export * from './auth.service';
-export * from './organization.service';
-export * from './pipeline.service';
+export const pipelineService = {
+
+    getProjectPipelines(projectId: string) {
+        return fetchJSON(process.env.REACT_APP_API_BASE_URL + '/pipeline/v1/projects/' + projectId + '/pipelines', {})
+        .pipe(
+            switchMap(response => response.json())
+        );
+    },
+
+    getPipeline(pipelineId: string) {
+        return fetchJSON(process.env.REACT_APP_API_BASE_URL + '/pipeline/v1/pipelines/' + pipelineId, {})
+            .pipe(
+                switchMap(response => response.json())
+            );
+    },
+};
