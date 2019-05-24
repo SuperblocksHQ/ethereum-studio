@@ -1,9 +1,0 @@
-{
-  "name": "Superblocks",
-  "short_name": "superblocks",
-  "start_url": "/",
-  "display": "standalone",
-  "orientation": "portrait",
-  "icons": [ ],
-  "version": "1.6.1"
-}
