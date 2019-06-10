@@ -15,23 +15,17 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 function getProviderHTML(endpoint, accounts) {
-    const js =
-        `<script type="text/javascript" src="${window.location.origin}/static/js/web3provider.js?ts=${Date.now()}"></script>
-<script type="text/javascript">
-    window.web3={currentProvider:new DevKitProvider.provider("${endpoint}"),eth:{accounts:${JSON.stringify(accounts)}}};
-    console.log("Using Superblocks web3 provider for endpoint: ${endpoint}");
-</script>
-`;
-    return js;
+    return `
+        <script type="text/javascript" src="${window.location.origin}/static/js/web3provider.js?ts=${Date.now()}"></script>
+        <script type="text/javascript">
+            window.web3={currentProvider:new DevKitProvider.provider("${endpoint}"),eth:{accounts:${JSON.stringify(accounts)}}};
+            console.log("Using Superblocks web3 provider for endpoint: ${endpoint}");
+        </script>
+    `;
 }
 
 function getInnerContent(html, style, js, title, endpoint, accounts) {
-    const js2 = (
-        endpoint !== null && accounts !== null
-            ? getProviderHTML(endpoint, accounts)
-            : '') +
-        `<script type="text/javascript">${js}</script>`;
-
+    const js2 = (endpoint && accounts ? getProviderHTML(endpoint, accounts): '') + `<script type="text/javascript">${js}</script>`;
     const style2 = `<style type="text/css">${style}</style>`;
     html = html.replace('<!-- TITLE -->', '<title>' + title + '</title>');
     html = html.replace('<!-- STYLE -->', style2);
