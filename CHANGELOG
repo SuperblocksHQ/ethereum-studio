@@ -1,5 +1,10 @@
 # Superblocks Lab - Change log
 
+## [1.7.1]
+
+* Fix: Downloaded dapp set to external network won't work #391
+
+
 ## [1.7.0]
 
 + Addition: TypeScript support #342
