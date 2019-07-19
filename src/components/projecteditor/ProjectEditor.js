@@ -15,6 +15,7 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { Component } from 'react';
+import classNames from 'classnames';
 import style from './style.less';
 import Control from './control';
 import Panes from './panes';
@@ -23,9 +24,9 @@ import BottomBar from '../bottomBar';
 import ContactContainer from '../contactContainer';
 import SplitterLayoutBase from 'react-splitter-layout';
 import { PreviewSidePanel, TransactionLogPanel } from './sidePanels';
-import { IconTransactions, IconShowPreview, IconFileAlt } from '../icons';
+import { IconTransactions, IconShowPreview, IconFileAlt, IconClose } from '../icons';
 import { SideButton } from './sideButton';
-import classnames from 'classnames';
+import OnlyIf from '../onlyIf';
 
 class SplitterLayout extends SplitterLayoutBase {
     handleResize() {
@@ -116,31 +117,46 @@ export default class ProjectEditor extends Component {
         closeTransactionsHistoryPanel();
     };
 
+    onCloseBannerClick = () => {
+        const { closeBanner } = this.props;
+        closeBanner();
+    }
+
     render() {
         const { displayTransactionsPanel, displayFileSystemPanel, previewSidePanel, toggleTransactionsHistoryPanel, toggleFileSystemPanel,
-                previewSidePanelActions, selectedEnvironment } = this.props;
+                previewSidePanelActions, selectedEnvironment, showBanner } = this.props;
 
         return (
             <div className={style.projecteditor}>
+                <OnlyIf test={showBanner}>
+                    <div className={style.banner}>
+                        <p>Check out our new <a href="https://superblocks.com" target="_blank" rel="noopener noreferrer" title='Superblocks home site'>Superblocks</a> platform for building and releasing smart contracts. <a href="https://superblocks.com/blog/introducing-the-superblocks-platform/" target="_blank" rel="noopener noreferrer" title='Superblocks home site'>Read more about it!</a></p>
+                        <button
+                            className={classNames([ style.icon, 'btnNoBg', ])}
+                            onClick={this.onCloseBannerClick}>
+                            <IconClose />
+                        </button>
+                    </div>
+                </OnlyIf>
                 <TopBar
                     router={this.props.router}
                     functions={this.props.functions}
                     onProjectSelected={this.onProjectSelectedHandle}
                 />
                 <div className={style.mainWrapper}>
-                    <div className={classnames([style.sideButtonsContainer, style.sideButtonsContainerLeft])}>
+                    <div className={classNames([style.sideButtonsContainer, style.sideButtonsContainerLeft])}>
                         <SideButton name="Explorer"
                             icon={<IconFileAlt style={{width: 12}} />}
-                            onClick={() => { 
-                                    toggleFileSystemPanel(); 
+                            onClick={() => {
+                                    toggleFileSystemPanel();
                                     this.onPanesSizeChange();
                                 }
-                            }  
+                            }
                         />
                     </div>
 
                     <div className={style.mainLayout}>
-                        <SplitterLayout 
+                        <SplitterLayout
                             primaryIndex={1}
                             secondaryMinSize={0}
                             secondaryInitialSize={280}
@@ -165,7 +181,7 @@ export default class ProjectEditor extends Component {
                                     onSecondaryPaneSizeChange={() => this.onPanesSizeChange()}>
 
                                     <Panes dragging={this.state.sidePanelDragging} router={this.props.router} functions={this.props.functions} />
-                    
+
                                     { displayTransactionsPanel &&
                                     <TransactionLogPanel
                                         dragging={this.state.sidePanelDragging}
@@ -174,21 +190,21 @@ export default class ProjectEditor extends Component {
                                         selectedEnvironment={selectedEnvironment.name}
                                     /> }
 
-                                    { previewSidePanel.open && 
+                                    { previewSidePanel.open &&
                                     <PreviewSidePanel
                                         dragging={this.state.sidePanelDragging}
                                         {...previewSidePanel}
                                         {...previewSidePanelActions}
                                         selectedEnvironment={selectedEnvironment.name}
                                     /> }
-                                    
+
                                 </SplitterLayout>
                             </div>
                         </SplitterLayout>
                     </div>
                     <BottomBar endpoint={selectedEnvironment.endpoint} />
 
-                    <div className={classnames([style.sideButtonsContainer, style.sideButtonsContainerRight])}>
+                    <div className={classNames([style.sideButtonsContainer, style.sideButtonsContainerRight])}>
                         <SideButton name="Transactions"
                             icon={<IconTransactions />}
                             onClick={toggleTransactionsHistoryPanel}  />

@@ -12,4 +12,11 @@ export const appActions = {
             type: appActions.APP_STARTED,
         }
     },
+
+    CLOSE_BANNER: 'CLOSE_BANNER',
+    closeBanner() {
+        return {
+            type: appActions.CLOSE_BANNER,
+        }
+    },
 };

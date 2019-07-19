@@ -19,8 +19,35 @@ import { appActions } from '../actions';
 
 export const initialState = {
     version: '1.7.1',
-    isEmbeddedMode: false
+    isEmbeddedMode: false,
+    showBanner: getShowBanner()
 };
+
+function getShowBanner() {
+    const count = getCloseBannerCount();
+    return count > 2 ? false : true;
+}
+
+function getCloseBannerCount() {
+    const closeBannerCount = localStorage.getItem('closeBannerCount');
+    if (closeBannerCount !== null) {
+        return parseInt(closeBannerCount, 10);
+    } else {
+        return 0;
+    }
+}
+
+function increaseBannerCount() {
+    const closeBannerCount = localStorage.getItem('closeBannerCount');
+
+    let count = 0;
+    if (closeBannerCount !== null) {
+        count = parseInt(closeBannerCount, 10);
+    }
+
+    count++;
+    localStorage.setItem('closeBannerCount', String(count));
+}
 
 export default function appReducer(state = initialState, action: AnyAction) {
     switch (action.type) {
@@ -28,6 +55,14 @@ export default function appReducer(state = initialState, action: AnyAction) {
             return {
                 ...state,
                 isEmbeddedMode: action.data.isEmbeddedMode
+            };
+        case appActions.CLOSE_BANNER:
+
+            increaseBannerCount();
+
+            return {
+                ...state,
+                showBanner: false
             };
         default:
             return state;

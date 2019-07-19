@@ -17,13 +17,14 @@
 import { connect } from 'react-redux';
 import ProjectEditor from './ProjectEditor';
 import { projectSelectors } from '../../selectors';
-import { sidePanelsActions } from '../../actions';
+import { sidePanelsActions, appActions } from '../../actions';
 
 const mapStateToProps = state => ({
     displayTransactionsPanel: state.sidePanels.showTransactionsHistory,
     displayFileSystemPanel: state.sidePanels.showFileSystem,
     previewSidePanel: state.sidePanels.preview,
-    selectedEnvironment: projectSelectors.getSelectedEnvironment(state)
+    selectedEnvironment: projectSelectors.getSelectedEnvironment(state),
+    showBanner: state.app.showBanner
 });
 
 const mapDispatchToProps = (dispatch) => {
@@ -46,7 +47,10 @@ const mapDispatchToProps = (dispatch) => {
         closeFileSystemPanel() {
             dispatch(sidePanelsActions.closeFileSystemPanel())
         },
-        
+        closeBanner() {
+            dispatch(appActions.closeBanner())
+        },
+
         previewSidePanelActions: {
             onClose() {
                 dispatch(sidePanelsActions.preview.togglePanel());
