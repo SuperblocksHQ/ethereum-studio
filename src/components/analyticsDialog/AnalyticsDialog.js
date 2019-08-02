@@ -53,7 +53,7 @@ export default class AnalyticsDialog extends Component {
                     <h2>Support Superblocks Lab!</h2>
                     <div>By allowing us to track (anonymously) how you use Lab, Superblocks can get valuable insights and better understand what the tool needs in order to make you a happier developer. By leaving the tracking on, you will really help us see what can be improved, iterated or removed.</div>
                     <br/>
-                    <div><b>We do not track any personal data, private keys or addresses.</b> Lab is Open Source, so you can either check out the <a onClick={()=>console.log("hola")} href="https://github.com/SuperblocksHQ/superblocks-lab" target="_blank" rel="noopener noreferrer" title="Lab's Github repository">code</a> for yourself or read more on what we track and why in our <a href="https://help.superblocks.com/hc/en-us/articles/360014689153" target="_blank" rel="noopener noreferrer" title="Tracking article">Help Center.</a></div>
+                    <div><b>We do not track any personal data, private keys or addresses.</b> Lab is Open Source, so you can either check out the <a onClick={()=>console.log("hola")} href="https://github.com/SuperblocksHQ/superblocks-lab" target="_blank" rel="noopener noreferrer" title="Lab's Github repository">code</a> for yourself or read more on what we track and why in our <a href="https://help.superblocks.com/en/articles/3195311-what-and-why-are-we-tracking-in-superblocks-lab" target="_blank" rel="noopener noreferrer" title="Tracking article">Help Center.</a></div>
                     <br/>
                     <div>Thanks for your support and happy buidling!</div>
                     <div className={style.switchContainer}>

@@ -89,20 +89,11 @@ const HelpDropdownDialog = () => (
         <ul>
             <li>
                 <a
-                    href="https://help.superblocks.com/hc/en-us/categories/360000486714-Using-Superblocks-Lab"
+                    href="https://help.superblocks.com/en/collections/1865071-superblocks-lab"
                     target="_blank"
                     rel="noopener noreferrer"
                 >
                     Guide to Superblocks Lab
-                </a>
-            </li>
-            <li>
-                <a
-                    href="https://www.youtube.com/playlist?list=PLjnjthhtIABuzW2MTsPGkihZtvvepy-n4"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Video tutorials
                 </a>
             </li>
             <li>
@@ -116,7 +107,7 @@ const HelpDropdownDialog = () => (
             </li>
             <li>
                 <a
-                    href="https://help.superblocks.com/hc/en-us/requests/new"
+                    href="https://discuss.superblocks.com/c/superblocks-lab"
                     target="_blank"
                     rel="noopener noreferrer"
                 >

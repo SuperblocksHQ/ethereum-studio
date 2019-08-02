@@ -18,7 +18,7 @@ import { AnyAction } from 'redux';
 import { appActions } from '../actions';
 
 export const initialState = {
-    version: '1.8.0',
+    version: '1.8.1',
     isEmbeddedMode: false,
     showBanner: getShowBanner()
 };

@@ -52,10 +52,10 @@ export default class Welcome extends Component {
                        </div>
                        <h2>Getting started</h2>
                        <div className={style.linksContainer}>
-                            <a href="https://help.superblocks.com/hc/en-us/articles/360008277034-Introduction-to-Superblocks-Lab" target="_blank" rel="noopener noreferrer" title="Introduction">Introduction to Superblocks Lab</a>
-                            <a href="https://help.superblocks.com/hc/en-us/articles/360008422273-Creating-a-new-project" target="_blank" rel="noopener noreferrer" title="New project">Creating a new project</a>
-                            <a href="https://help.superblocks.com/hc/en-us/articles/360008423653-Exporting-DApps-to-be-published-on-the-Internet" target="_blank" rel="noopener noreferrer" title="Export">Export your DApp</a>
-                            <a href="https://help.superblocks.com/hc/en-us/categories/360000486714-Using-Superblocks-Lab" target="_blank" rel="noopener noreferrer" title="Documentation">
+                            <a href="https://help.superblocks.com/en/articles/3195297-introduction-to-superblocks-lab" target="_blank" rel="noopener noreferrer" title="Introduction">Introduction to Superblocks Lab</a>
+                            <a href="https://help.superblocks.com/en/articles/3195301-creating-a-new-project" target="_blank" rel="noopener noreferrer" title="New project">Creating a new project</a>
+                            <a href="https://help.superblocks.com/en/articles/3195312-exporting-dapps-to-be-published-on-the-internet" target="_blank" rel="noopener noreferrer" title="Export">Export your DApp</a>
+                            <a href="https://help.superblocks.com/en/collections/1865071-superblocks-lab" target="_blank" rel="noopener noreferrer" title="Documentation">
                                 <IconRight className={style.arrow} />
                                 Check out all the documentation
                             </a>

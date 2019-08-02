@@ -53,30 +53,23 @@ export default class LearnAndResources extends Component {
                                     icon={<IconGuide />}
                                     title={'Guide to Superblocks Lab'}
                                     link={
-                                        'https://help.superblocks.com/hc/en-us/categories/360000486714-Using-Superblocks-Lab'
+                                        'https://help.superblocks.com/en/collections/1865071-superblocks-lab'
                                     }
                                 />
                             </li>
                             <li>
-                                <LinkItem
-                                    icon={<IconVideoTutorials />}
-                                    title={'Video tutorials'}
-                                    link={
-                                        'https://www.youtube.com/playlist?list=PLjnjthhtIABuzW2MTsPGkihZtvvepy-n4'
-                                    }
-                                />
-                            </li>
                                 <LinkItem
                                     icon={<IconHelpCenter />}
                                     title={'Help Center'}
                                     link={'https://help.superblocks.com/'}
                                 />
+                            </li>
                             <li>
                                 <LinkItem
                                     icon={<IconAskQuestion />}
                                     title={'Ask a question'}
                                     link={
-                                        'https://help.superblocks.com/hc/en-us/requests/new'
+                                        'https://discuss.superblocks.com/c/superblocks-lab'
                                     }
                                 />
                             </li>
