@@ -1,4 +1,4 @@
-// Copyright 2018 Superblocks AB
+// Copyright 2019 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -15,25 +15,21 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { connect } from 'react-redux';
-import { appActions } from '../../actions';
-import { getShowAnalyticsTrackingDialog } from '../../selectors/settings';
-import { appSelectors } from '../../selectors';
-import App from './App';
+import { Dispatch } from 'react';
+import { AnyAction } from 'redux';
+import { EventLogPanel } from './eventLogPanel';
+import { eventLogActions } from '../../../../actions';
 
-const mapStateToProps = state => ({
-    showTrackingAnalyticsDialog: getShowAnalyticsTrackingDialog(state),
-    appVersion: appSelectors.getAppVersion(state),
+const mapStateToProps = (state: any) => ({
+    eventLogRows: state.eventLog.rows
 });
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
     return {
-        notifyAppStart: (isEmbeddedMode) => {
-            dispatch(appActions.notifyAppStart(isEmbeddedMode));
+        clearEventLog: () => {
+            dispatch(eventLogActions.clearEventLog());
         }
     };
 };
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(EventLogPanel);

@@ -1,4 +1,4 @@
-// Copyright 2018 Superblocks AB
+// Copyright 2019 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -14,12 +14,14 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { Panels } from "../models/state";
+import { LogLevel } from '../logLevel.model';
 
-export const panelsSelectors = {
-    getShowTransactionsHistory: state => state.panels[Panels.Transactions] && state.panels[Panels.Transactions].open,
-    getShowFileSystem:  state => state.panels[Panels.Explorer] && state.panels[Panels.Explorer].open,
-    getShowPreview: state => state.panels[Panels.Preview] && state.panels[Panels.Preview].open,
-    getShowConsole: state => state.panels[Panels.CompilerOutput] && state.panels[Panels.CompilerOutput].open,
-    getShowEventLog: state => state.panels[Panels.EventLog] && state.panels[Panels.EventLog].open,
+export interface IEventLogRow {
+    timestamp: Date;
+    channel: LogLevel;
+    msg: string;
+}
+
+export interface IEventLogState {
+    rows: IEventLogRow[];
 }

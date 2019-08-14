@@ -27,6 +27,7 @@ import view from './view.reducer';
 import compiler from './compiler.reducer';
 import deployer from './deployer.reducer';
 import console from './console.reducer';
+import eventLog from './eventLog.reducer';
 import modal from './modal.reducer';
 import transactions from './transactions.reducer';
 import { AnyAction } from 'redux';
@@ -55,6 +56,7 @@ export default {
     compiler,
     deployer,
     console,
+    eventLog,
     transactions,
     modal
 };

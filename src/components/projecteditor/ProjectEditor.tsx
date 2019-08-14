@@ -21,14 +21,15 @@ import Panes from './panes';
 import TopBar from '../topbar';
 import BottomBar from './bottomBar';
 import ContactContainer from '../contactContainer';
-import { Preview, TransactionLogPanel, Console, Explorer } from './panels';
-import { IconTransactions, IconShowPreview, IconFileAlt, IconCompile } from '../icons';
+import { Preview, TransactionLogPanel, Console, Explorer, EventLogPanel } from './panels';
+import { IconTransactions, IconShowPreview, IconPanelRun, IconFolderOpen, IconEventLog } from '../icons';
 import { SideButton } from './sideButton';
 import { SplitterLayout } from './splitterLayout';
 import { Panel } from './panel';
 import classnames from 'classnames';
 import { Panels, IPanelsState, IEnvironment } from '../../models/state';
 import { Deployer } from './deployer';
+import OnlyIf from '../onlyIf';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
@@ -84,7 +85,7 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                 <div className={style.mainWrapper}>
                     <div className={classnames([style.sideButtonsContainer, style.sideButtonsContainerLeft])}>
                         <SideButton name='Explorer'
-                            icon={<IconFileAlt />}
+                            icon={<IconFolderOpen color='#fff' />}
                             onClick={() => togglePanel(Panels.Explorer)}
                         />
                     </div>
@@ -98,7 +99,7 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                                 customClassName={!this.isPanelOpen(Panels.Explorer) ? 'hideFileSystemPanel' : undefined}
                                 onSecondaryPaneSizeChange={() => null}>
                                 <div className={style.control}>
-                                    <Panel icon={ <IconFileAlt /> }
+                                    <Panel
                                         name='Explorer'
                                         onClose={() => this.props.closePanel(Panels.Explorer)}
                                         dragging={this.state.sidePanelDragging}>
@@ -123,7 +124,7 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                                         </Panel>}
 
                                         { this.isPanelOpen(Panels.Preview) &&
-                                        <Panel icon={<IconShowPreview />} name='Preview' onClose={() => closePanel(Panels.Preview)} dragging={sidePanelDragging}>
+                                        <Panel name='Preview' onClose={() => closePanel(Panels.Preview)} dragging={sidePanelDragging}>
                                             <Preview
                                                 dragging={sidePanelDragging}
                                                 onClose={() => closePanel(Panels.Preview)}
@@ -136,17 +137,30 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                         </div>
 
                         <div className={style.bottomButtonsContainer}>
-                            { this.isPanelOpen(Panels.CompilerOutput) &&
+                            <OnlyIf test={this.isPanelOpen(Panels.CompilerOutput)}>
                                 <div className={style.bottomPanelContainer}>
-                                    <Panel icon={<IconCompile />} name='Console output' onClose={() => closePanel(Panels.CompilerOutput)} dragging={sidePanelDragging}>
+                                    <Panel name='Run' onClose={() => closePanel(Panels.CompilerOutput)} dragging={sidePanelDragging}>
                                         <Console />
                                     </Panel>
                                 </div>
-                            }
+                            </OnlyIf>
+                            <OnlyIf test={this.isPanelOpen(Panels.EventLog)}>
+                                <div className={style.bottomPanelContainer}>
+                                    <Panel name='Event Log' onClose={() => closePanel(Panels.EventLog)} dragging={sidePanelDragging}>
+                                        <EventLogPanel />
+                                    </Panel>
+                                </div>
+                            </OnlyIf>
 
-                            <SideButton name='Console output'
-                                icon={<IconCompile />}
+                            <SideButton name='Run'
+                                icon={<IconPanelRun />}
                                 onClick={() => togglePanel(Panels.CompilerOutput)}  />
+
+                            <div style={{marginLeft: 'auto'}}>
+                                <SideButton name='Event Log'
+                                    icon={<IconEventLog />}
+                                    onClick={() => togglePanel(Panels.EventLog)}  />
+                            </div>
                         </div>
                     </div>
 

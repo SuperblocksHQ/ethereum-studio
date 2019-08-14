@@ -165,6 +165,10 @@ export const IconCheckThin = ({...props}) => <svg fill="currentColor" preserveAs
 export const IconAlphabetA = ({ ...props }) => (
     <IconImg src={'/static/img/icon-alphabet-a.svg'} {...props} />
 );
+export const IconPanelRun = ({...props}) => <svg fill="currentColor" preserveAspectRatio="xMidYMid meet" height="16px" width="16px" viewBox="0 0 12 12" style={{ verticalAlign: "middle" }} {...props}><g id="Symbols" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd"><g id="Studio-Online" transform="translate(-16.000000, -83.000000)" stroke="#fff" strokeWidth="1"><g id="Group-13"><g id="Group-11" transform="translate(17.000000, 80.000000)"><polygon id="icon-deploy-green" transform="translate(4.000000, 9.000000) rotate(90.000000) translate(-4.000000, -9.000000) " points="4 5 8 13 0 13"></polygon></g></g></g></g></svg>;
+export const IconEventLog = ({...props}) => (
+    <svg fill="#fff" enableBackground="new 0 0 24 24" height="12px" id="Layer_1" version="1.1" viewBox="0 0 24 24" width="12px" xmlns="http://www.w3.org/2000/svg" {...props}><path d="M22.9,0H1.1C0.5,0,0,0.5,0,1.1v15.8C0,17.5,0.5,18,1.1,18H18l6,6V1.1C24,0.5,23.5,0,22.9,0z M22,19.2L18.8,16H2V2h20V19.2z"/></svg>
+);
 
 // File types
 export const IconContract = ({...props}) => <IconImg src={'/static/img/icon-solidity.svg'} {...props} />;
@@ -185,9 +189,6 @@ export const IconVideoTutorials = ({ ...props }) => (
 );
 export const IconHelpCenter = ({ ...props }) => (
     <IconImg src={'/static/img/icon-help-center.svg'} {...props} />
-);
-export const IconAskQuestion = ({ ...props }) => (
-    <IconImg src={'/static/img/icon-ask-question.svg'} {...props} />
 );
 export const IconWhatsNew = ({ ...props }) => (
     <IconImg src={'/static/img/icon-whats-new.svg'} {...props} />
