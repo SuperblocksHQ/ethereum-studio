@@ -20,6 +20,7 @@ import { AnyAction } from 'redux';
 import { IProjectItem } from '../models';
 import { getDappSettings, resolveAccounts } from './dappfileLib';
 import {authActions, userActions} from '../actions';
+import { fetchJSON, getAnonymousToken } from '../services/utils/fetchJson';
 
 export const initialState: IProjectState = {
     project: {
@@ -131,12 +132,9 @@ export default function projectsReducer(state = initialState, action: AnyAction,
             }
 
             // determine if loaded project is own or not
-            if (wholeState.user.profile) {
-                const projectOwnerId = action.data.project.ownerId;
-
-                if (projectOwnerId === wholeState.user.profile.id) {
-                    state.isOwnProject = true;
-                }
+            const projectOwnerId = action.data.project.ownerId;
+            if (projectOwnerId === getAnonymousToken()) {
+                state.isOwnProject = true;
             }
 
             return {

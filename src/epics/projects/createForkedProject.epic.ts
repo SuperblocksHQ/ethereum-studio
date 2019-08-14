@@ -14,10 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { switchMap, catchError, tap, withLatestFrom } from 'rxjs/operators';
+import { switchMap, catchError, withLatestFrom } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
 import { projectsActions } from '../../actions';
-import { projectSelectors } from '../../selectors';
 import { projectService } from '../../services';
 import { of } from 'rxjs';
 import { fetchJSON } from '../../services/utils/fetchJson';

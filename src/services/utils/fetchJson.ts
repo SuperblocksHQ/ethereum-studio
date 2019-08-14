@@ -24,7 +24,7 @@ export function getRefreshToken() {
     return localStorage.getItem('refreshToken') || null;
 }
 
-function getAnonymousToken() {
+export function getAnonymousToken() {
     return localStorage.getItem('anonymousToken') || null;
 }
 
