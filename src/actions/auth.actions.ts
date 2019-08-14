@@ -31,6 +31,29 @@ export const authActions = {
         };
     },
 
+    REFRESH_AUTH_START: 'REFRESH_AUTH_START',
+    refreshAuthStart() {
+        return {
+            type: authActions.REFRESH_AUTH_START,
+        };
+    },
+
+    REFRESH_AUTH_SUCCESS: 'REFRESH_AUTH_SUCCESS',
+    refreshAuthSuccess(token: string) {
+        return {
+            type: authActions.REFRESH_AUTH_SUCCESS,
+            data: { token }
+        };
+    },
+
+    REFRESH_AUTH_FAIL: 'REFRESH_AUTH_FAIL',
+    refreshAuthFail(error: string) {
+        return {
+            type: authActions.REFRESH_AUTH_FAIL,
+            data: error
+        };
+    },
+
     SILENT_LOGIN_FAIL: 'SILENT_LOGIN_FAIL',
     silentLoginFail(error: string) {
         return {

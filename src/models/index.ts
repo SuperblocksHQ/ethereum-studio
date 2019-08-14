@@ -21,5 +21,6 @@ export * from './project';
 export * from './project.model';
 export * from './user.model';
 export * from './account-environment.model';
+export * from './auth.model';
 export * from './dependencies.model';
 export * from './transaction.model';

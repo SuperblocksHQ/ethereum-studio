@@ -19,16 +19,20 @@ import { appActions, authActions, userActions } from '../../actions';
 import { withLatestFrom, tap, catchError, map, switchMap, mergeMap } from 'rxjs/operators';
 import { AnyAction } from 'redux';
 import { userService, authService } from '../../services';
+import { of } from 'rxjs';
 
 export const silentLogin = (action$: AnyAction, state$: any) => action$.pipe(
     ofType(appActions.APP_START),
     withLatestFrom(state$),
-    switchMap(() => userService.credentialsExist()
+    switchMap(() => of(userService.credentialsExist())
         .pipe(
+            tap((value) => {
+              if (!value) { throw new Error('No credentials available!'); }
+            }),
             switchMap(() => userService.getUser()
                 .pipe(
-                    map(authActions.loginSuccess),
                     tap(() => console.log('Silent login success using authToken')),
+                    mergeMap((data) => [authActions.loginSuccess(data), authActions.refreshAuthStart(), userActions.getProjectList()]),
                     catchError((err: any) => {
                             console.log('Unable to login using authToken: ', err.message);
                             return authService.refreshAuth()
@@ -36,8 +40,8 @@ export const silentLogin = (action$: AnyAction, state$: any) => action$.pipe(
                                     tap((e) => console.log(e)),
                                     switchMap(() => userService.getUser()
                                         .pipe(
-                                            mergeMap((data) => [authActions.loginSuccess(data), userActions.getProjectList()]),
                                             tap(() => console.log('Silent login success using refreshToken')),
+                                            mergeMap((data) => [authActions.loginSuccess(data), authActions.refreshAuthStart(), userActions.getProjectList()]),
                                             catchError((error) => [authActions.silentLoginFail(error.message)])
                                         )
                                     )

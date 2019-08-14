@@ -4,36 +4,57 @@
 #
 version: 2
 jobs:
-  build:
+  build-dependencies:
     docker:
       # specify the version you desire here
-      - image: circleci/node:8.12
-
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/mongo:3.4.4
-
-    working_directory: ~/repo
-
+      - image: circleci/node:10
+    working_directory: ~/superblocks-client
     steps:
       - checkout
-
       # Download and cache dependencies
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
-
-      - run: yarn install
-
+            - v2-dependency-cache-{{ .Branch }}-{{ checksum "yarn.lock" }}
+            - v2-dependency-cache-{{ .Branch }}
+            - v2-dependency-cache
+      - run:
+          name: Install Dependencies
+          command: yarn install
       - save_cache:
+          key: v2-dependency-cache-{{ .Branch }}-{{ checksum "yarn.lock" }}
           paths:
             - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
+            - packages/dashboard/node_modules
+      - save_cache:
+          key: v2-repo-{{ .Environment.CIRCLE_SHA1 }}
+          paths: 
+            - ~/superblocks-client
 
-      # run tests!
-      - run: yarn test
+  build-prod:
+    docker:
+      # specify the version you desire here
+      - image: circleci/node:10
+    working_directory: ~/superblocks-client
+    steps:
+      - restore_cache:
+          key: v2-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - run:
+          name: Build Application
+          command: yarn build:prod
+      - save_cache:
+          key: v2-prod-app-build-cache-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - ./packages/dashboard/dist
+      - save_cache:
+          key: v2-prod-build-cache-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - ./www
 
-
+workflows:
+  version: 2
+  build-and-test:
+    jobs:
+      - build-dependencies
+      - build-prod:
+          requires:
+            - build-dependencies
