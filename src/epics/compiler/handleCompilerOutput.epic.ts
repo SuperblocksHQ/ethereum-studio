@@ -1,16 +1,16 @@
 // Copyright 2019 Superblocks AB
-// 
+//
 // This file is part of Superblocks Lab.
-// 
+//
 // Superblocks Lab is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation version 3 of the License.
-// 
+//
 // Superblocks Lab is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -23,6 +23,7 @@ export const handleCompilerOutputEpic: Epic = (action$: any, state$: any) => act
     ofType(compilerActions.HANDLE_COMPILE_OUTPUT),
     switchMap(() => {
         const compilerState = state$.value.compiler;
+        console.log(compilerState);
         if (compilerState.outputFolderPath.length && compilerState.outputFiles.length) {
             return of(
                 // save files
@@ -31,7 +32,10 @@ export const handleCompilerOutputEpic: Epic = (action$: any, state$: any) => act
                 consoleActions.addRows(compilerState.consoleRows)
             );
         } else {
-            return empty();
+            return of(
+                // show output in console
+                consoleActions.addRows(compilerState.consoleRows)
+            );
         }
     })
 );
