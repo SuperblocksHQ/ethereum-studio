@@ -29,6 +29,8 @@ export interface ICheckDeployResult {
 export interface IDeployResult {
     files: { name: string, code: string }[];
     environment: string;
+    receipt: any;
+    contractName: string;
 }
 
 export interface IDeployAccount {

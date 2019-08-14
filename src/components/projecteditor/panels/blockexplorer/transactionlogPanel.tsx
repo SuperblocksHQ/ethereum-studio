@@ -14,25 +14,28 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export enum Panels {
-    Explorer = 'Explorer',
-    Preview = 'Preview',
-    Transactions = 'Transactions',
-    CompilerOutput = 'CompilerOutput',
-    EventLog = 'EventLog'
+import React, { Component } from 'react';
+import style from './style.less';
+import { Transaction } from './transaction';
+
+interface IProps {
+    transactions: any[];
 }
 
-export enum PanelSides {
-    Left = 'Left',
-    Right = 'Right',
-    Bottom = 'Bottom'
-}
+export class TransactionLogPanel extends Component<IProps> {
+    render() {
+        const { transactions } = this.props;
 
-export interface IPanelData {
-    open: boolean;
-    side: PanelSides;
-}
-
-export interface IPanelsState {
-    [key: string]: IPanelData;
+        return (
+            <div className={style.transactionlogPanel}>
+                <div>
+                {
+                    transactions.map((transaction) =>
+                        <Transaction key={transaction.hash} transaction={transaction} />
+                    )
+                }
+                </div>
+            </div>
+        );
+    }
 }

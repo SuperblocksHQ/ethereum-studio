@@ -66,7 +66,7 @@ export const IconDeployGreen = ({...props}) => <IconImg src={'/static/img/icon-d
 export const IconAddFile = ({...props}) => <svg preserveAspectRatio="xMidYMid meet" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="16" height="16" style={{ verticalAlign: "middle" }}><polygon points="12,3 8,3 8,4 11,4 11,7 14,7 14,14 6,14 6,8 5,8 5,15 15,15 15,6"/><path d="M7 3.018h-2v-2.018h-1.981v2.018h-2.019v1.982h2.019v2h1.981v-2h2v-1.982z" {...props}/></svg>;
 export const IconAddFolder = ({...props}) => <svg preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="16" height="16" style={{ verticalAlign: "middle" }}><polygon points="9,3 8,5 8,2 6,2 6,0 2,0 2,2 0,2 0,6 2,6 2,8 2,15 16,15 16,3"/><path d="M14 4h-4.382l-1 2h-2.618v2h-3v6h12v-10h-1zm0 2h-3.882l.5-1h3.382v1z" fill="#fff"/><polygon points="7,3.018 5,3.018 5,1 3.019,1 3.019,3.018 1,3.018 1,5 3.019,5 3.019,7 5,7 5,5 7,5" fill="#fff"/><polygon points="14,5 14,6 10.118,6 10.618,5" {...props}/></svg>;
 export const IconInformation = ({...props}) => <IconImg src={'/static/img/icon-information.svg'} {...props} />;
-export const IconRun = () => <FaIcon icon={iconRun} />;
+export const IconRun = ({ ...props }) => <FaIcon icon={iconRun} {...props}/>;
 export const IconSave = () => <FaIcon icon={iconSave} />;
 export const IconCompile = () => <FaIcon icon={iconCompile} />;
 export const IconDeploy = ({ ...props }) => (
@@ -165,6 +165,10 @@ export const IconCheckThin = ({...props}) => <svg fill="currentColor" preserveAs
 export const IconAlphabetA = ({ ...props }) => (
     <IconImg src={'/static/img/icon-alphabet-a.svg'} {...props} />
 );
+export const IconPanelRun = ({...props}) => <svg fill="currentColor" preserveAspectRatio="xMidYMid meet" height="16px" width="16px" viewBox="0 0 12 12" style={{ verticalAlign: "middle" }} {...props}><g id="Symbols" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd"><g id="Studio-Online" transform="translate(-16.000000, -83.000000)" stroke="#fff" strokeWidth="1"><g id="Group-13"><g id="Group-11" transform="translate(17.000000, 80.000000)"><polygon id="icon-deploy-green" transform="translate(4.000000, 9.000000) rotate(90.000000) translate(-4.000000, -9.000000) " points="4 5 8 13 0 13"></polygon></g></g></g></g></svg>;
+export const IconEventLog = ({...props}) => (
+    <svg fill="#fff" enableBackground="new 0 0 24 24" height="12px" id="Layer_1" version="1.1" viewBox="0 0 24 24" width="12px" xmlns="http://www.w3.org/2000/svg" {...props}><path d="M22.9,0H1.1C0.5,0,0,0.5,0,1.1v15.8C0,17.5,0.5,18,1.1,18H18l6,6V1.1C24,0.5,23.5,0,22.9,0z M22,19.2L18.8,16H2V2h20V19.2z"/></svg>
+);
 
 // File types
 export const IconContract = ({...props}) => <IconImg src={'/static/img/icon-solidity.svg'} {...props} />;
@@ -185,9 +189,6 @@ export const IconVideoTutorials = ({ ...props }) => (
 );
 export const IconHelpCenter = ({ ...props }) => (
     <IconImg src={'/static/img/icon-help-center.svg'} {...props} />
-);
-export const IconAskQuestion = ({ ...props }) => (
-    <IconImg src={'/static/img/icon-ask-question.svg'} {...props} />
 );
 export const IconWhatsNew = ({ ...props }) => (
     <IconImg src={'/static/img/icon-whats-new.svg'} {...props} />

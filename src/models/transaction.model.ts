@@ -14,25 +14,31 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export enum Panels {
-    Explorer = 'Explorer',
-    Preview = 'Preview',
-    Transactions = 'Transactions',
-    CompilerOutput = 'CompilerOutput',
-    EventLog = 'EventLog'
+export enum TransactionType {
+    Deploy = 'Deploy',
+    TransactionInteract = 'Transaction Interact',
+    TransactionPreview = 'Transaction Preview'
 }
 
-export enum PanelSides {
-    Left = 'Left',
-    Right = 'Right',
-    Bottom = 'Bottom'
+export interface ITransaction {
+    hash: string;
+    index: number;
+    type: TransactionType.Deploy;
+    status: number | null;
+    contractName: string | null;
+    constructorArgs: [];
+    createdAt: number;
+    blockNumber: number;
+    from: string | null;
+    to: string | null;
+    network: string;
+    origin: string;
+    value: number;
+    gasUsed: number;
+    gasLimit: number;
+    gasPrice: number;
 }
 
-export interface IPanelData {
-    open: boolean;
-    side: PanelSides;
-}
-
-export interface IPanelsState {
-    [key: string]: IPanelData;
+export interface ITransactionsState {
+    items: ITransaction[];
 }

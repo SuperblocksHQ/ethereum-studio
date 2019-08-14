@@ -89,19 +89,7 @@ export class DeployRunner {
                     reject({ msg: 'Could not deploy contract using external provider.', channel: 2 });
                     return;
                 }
-                // this._stdout('Got receipt: ' + res);
-                // const args = (obj.contract.getArgs() || []).slice(0); // We MUST copy the array since we are shifting out the elements.
-                // add transaction log
-                // this.item.getProject().getTxLog().addTx({
-                //     deployArgs: args,
-                //     contract: this.props.item
-                //         .getParent()
-                //         .getName(),
-                //     hash: res,
-                //     context: 'Contract deployment using external provider',
-                //     network: obj.network,
-                // });
-                resolve({ msg: 'Got receipt: ' + hash, channel: 1, hash });
+                resolve({ msg: 'Got receipt: ' + hash, channel: 1, hash, contractName: this.contractName });
             });
         }));
     }
@@ -118,10 +106,10 @@ export class DeployRunner {
                 observer.next({ channel: 1, msg: `Sending transaction to network ${this.environment.name} on endpoint ${this.environment.endpoint}...` });
                 return tx;
             })
-            .then(tx => this.sendInteralTransaction(tx))
-            .then((hash: string) => {
-                observer.next({ channel: 1, msg: `Got receipt: ${hash}.` });
-                observer.next({ hash });
+            .then(tx => this.sendInternalTransaction(tx))
+            .then((result: any) => {
+                observer.next({ channel: 1, msg: `Got receipt: ${result.hash}.` });
+                observer.next(result);
                 observer.complete();
             })
             .catch(err => observer.error({ msg: err, channel: 2 }));
@@ -175,7 +163,9 @@ export class DeployRunner {
                             { name: `${fileName}.tx`, code: hash },
                             { name: `${fileName}.js`, code: this.buildContractJs(receipt.contractAddress) }
                         ],
-                        environment: this.environment.name
+                        environment: this.environment.name,
+                        receipt,
+                        contractName: this.contractName
                     });
                     observer.complete();
                 });
@@ -227,27 +217,15 @@ export class DeployRunner {
         });
     }
 
-    private sendInteralTransaction(tx: any) {
-        return new Promise<string>((resolve, reject) => {
+    private sendInternalTransaction(tx: any) {
+        return new Promise<any>((resolve, reject) => {
             this.currWeb3.eth.sendRawTransaction(
                 '0x' + tx.serialize().toString('hex'),
                 (err: string, hash: string) => {
                     if (err) {
                         reject(err);
                     } else {
-                        resolve(hash);
-                        // const args = (obj.contract.getArgs() || []).slice(0); // We MUST copy the array since we are shifting out the elements.
-                        // TODO: add TX to log
-                        // this.item
-                        //     .getProject()
-                        //     .getTxLog()
-                        //     .addTx({
-                        //         deployArgs: args,
-                        //         contract: this.item.getParent().getName(),
-                        //         hash: res,
-                        //         context: 'Contract deployment',
-                        //         network: obj.network,
-                        //     });
+                        resolve({hash, tx});
                     }
                 }
             );
