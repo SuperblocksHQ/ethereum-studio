@@ -119,12 +119,7 @@ export class ProjectEditor extends React.Component<IProps, IState> {
 
                                         { this.isPanelOpen(Panels.Transactions) &&
                                         <Panel icon={ <IconTransactions /> } name='Transactions History' onClose={() => closePanel(Panels.Transactions)} dragging={sidePanelDragging}>
-                                            <TransactionLogPanel
-                                                dragging={sidePanelDragging}
-                                                router={router}
-                                                onClose={() => closePanel(Panels.Transactions)}
-                                                selectedEnvironment={selectedEnvironment.name}
-                                            />
+                                            <TransactionLogPanel />
                                         </Panel>}
 
                                         { this.isPanelOpen(Panels.Preview) &&

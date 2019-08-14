@@ -1,26 +1,24 @@
-// Copyright 2018 Superblocks AB
-//
+// Copyright 2019 Superblocks AB
+// 
 // This file is part of Superblocks Lab.
-//
+// 
 // Superblocks Lab is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation version 3 of the License.
-//
+// 
 // Superblocks Lab is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-//
+// 
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export * from './contractAgrumentData';
-export * from './category.model';
-// TODO: fix!
-export * from './project';
-export * from './project.model';
-export * from './user.model';
-export * from './account-environment.model';
-export * from './auth.model';
-export * from './dependencies.model';
-export * from './transaction.model';
+import { connect } from 'react-redux';
+import { TransactionLogPanel } from './transactionlogPanel';
+
+const mapStateToProps = (state: any) => ({
+    transactions: state.transactions.items,
+});
+
+export default connect(mapStateToProps, null)(TransactionLogPanel);
