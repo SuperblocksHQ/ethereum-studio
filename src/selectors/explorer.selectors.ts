@@ -15,5 +15,5 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 export const explorerSelectors = {
-    getRootFolderId: (state: any) => state.explorer.tree.id
+    getRootFolderId: (state: any) => state.explorer.tree ? state.explorer.tree.id : null
 };

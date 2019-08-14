@@ -1,16 +1,16 @@
 // Copyright 2019 Superblocks AB
-// 
+//
 // This file is part of Superblocks Lab.
-// 
+//
 // Superblocks Lab is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation version 3 of the License.
-// 
+//
 // Superblocks Lab is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -84,7 +84,7 @@ export class Preview extends React.Component {
             <OnlyIf test={isProjectOpen}>
                 <div className={style.appview}>
                     <div className={style.toolbar}>
-    
+
                         <button className="btnNoBg" title="Refresh" onClick={() => this.refresh()}>
                             <Tooltip title="Refresh Page"><IconRefresh /></Tooltip>
                         </button>
@@ -94,13 +94,13 @@ export class Preview extends React.Component {
                         </button>
 
                         <div className={style.urlBar}>{getIframeSrc()}</div>
-                        
+
                         <DropdownContainer dropdownContent={this.renderMoreDropdown()}>
                             <button className="btnNoBg" title="Settings">
                                 <Tooltip title="Settings"><IconMore /></Tooltip>
                             </button>
                         </DropdownContainer>
-                        
+
                     </div>
                     <iframe id={IFRAME_ID} src={getIframeSrc()}></iframe>
                 </div>
@@ -112,7 +112,7 @@ export class Preview extends React.Component {
                 <CannotExportModal onClose={this.props.onHideModals} />
                 }
                 {this.props.showDownloadModal &&
-                <DownloadModal 
+                <DownloadModal
                     environment={this.props.selectedEnvironment}
                     onClose={this.props.onHideModals}
                     onDownload={this.props.onDownload} />

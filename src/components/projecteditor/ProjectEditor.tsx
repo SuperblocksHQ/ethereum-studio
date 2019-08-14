@@ -143,13 +143,13 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                         <div className={style.bottomButtonsContainer}>
                             { this.isPanelOpen(Panels.CompilerOutput) &&
                                 <div className={style.bottomPanelContainer}>
-                                    <Panel icon={<IconCompile />} name='Console output' onClose={() => closePanel(Panels.CompilerOutput)} dragging={sidePanelDragging}>
+                                    <Panel icon={<IconCompile />} name='Output' onClose={() => closePanel(Panels.CompilerOutput)} dragging={sidePanelDragging}>
                                         <Console />
                                     </Panel>
                                 </div>
                             }
 
-                            <SideButton name='Console output'
+                            <SideButton name='Output'
                                 icon={<IconCompile />}
                                 onClick={() => togglePanel(Panels.CompilerOutput)}  />
                         </div>
