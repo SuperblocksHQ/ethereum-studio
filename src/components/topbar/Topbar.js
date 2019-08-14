@@ -176,7 +176,6 @@ export default class TopBar extends Component {
                     </div>
                     <HelpAction />
                     <LoginButton
-                        functions={this.props.functions}
                         onSettingsModalClose={this.onSettingsModalClose}
                     />
                 </div>
@@ -186,7 +185,6 @@ export default class TopBar extends Component {
 }
 
 TopBar.propTypes = {
-    functions: PropTypes.object.isRequired,
     selectedProjectName: PropTypes.string,
     selectedProjectId: PropTypes.string,
     showForkButton: PropTypes.bool.isRequired,

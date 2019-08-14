@@ -15,7 +15,7 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { Component } from 'react';
-import ProjectEditor from '../projecteditor';
+import ProjectEditor from '../projectEditor';
 import OnlyIf from '../onlyIf';
 import { GenericLoading } from "../common";
 

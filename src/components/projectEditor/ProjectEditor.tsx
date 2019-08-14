@@ -34,8 +34,6 @@ import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
 interface IProps {
-    router: any;
-    functions: any;
     panels: IPanelsState;
     selectedEnvironment: IEnvironment;
     togglePanel(panel: Panels): void;
@@ -71,9 +69,7 @@ export class ProjectEditor extends React.Component<IProps, IState> {
     isPanelOpen = (panel: Panels) => this.props.panels[panel] && this.props.panels[panel].open;
 
     render() {
-        const { router,
-                functions,
-                togglePanel,
+        const { togglePanel,
                 closePanel,
                 selectedEnvironment } = this.props;
 
@@ -81,7 +77,7 @@ export class ProjectEditor extends React.Component<IProps, IState> {
 
         return (
             <div className={style.projecteditor}>
-                <TopBar functions={functions} />
+                <TopBar />
                 <div className={style.mainWrapper}>
                     <div className={classnames([style.sideButtonsContainer, style.sideButtonsContainerLeft])}>
                         <SideButton name='Explorer'

@@ -21,7 +21,6 @@ import LoggedInButton from './LoggedInButton';
 import {IUser} from '../../models';
 
 interface IProps {
-    functions: any;
     isAuthenticated: boolean;
     logout: () => void;
     githubLogin: () => void;
