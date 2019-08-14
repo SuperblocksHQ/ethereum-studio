@@ -22,7 +22,10 @@ import { getDappSettings, resolveAccounts } from './dappfileLib';
 import {authActions, userActions} from '../actions';
 
 export const initialState: IProjectState = {
-    project: undefined,
+    project: {
+        name: '',
+        id: ''
+    },
     environments: [],
     selectedEnvironment: { name: '', endpoint: '' },
     accounts: [],

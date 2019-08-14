@@ -46,6 +46,11 @@ const ProjectBuild = Loadable({
     loading: EmptyLoading,
 });
 
+const ProjectEditor = Loadable({
+    loader: () => import(/* webpackChunkName: "ProjectEditor" */"../projecteditor"),
+    loading: EmptyLoading,
+});
+
 export default class App extends Component {
 
     constructor(props) {
@@ -120,16 +125,23 @@ export default class App extends Component {
                     <div id="app_content">
                         <div className="maincontent">
                             <Switch>
-                                <Route path="/" exact render={(props) => <Dashboard {...props} functions={this.functions} />} />
+                                <Route path="/" exact render={(props) =>
+                                    <ProjectEditor
+                                        {...props}
+                                        router={this.router}
+                                        functions={this.functions}
+                                        isImportedProject={this.isImportedProject}
+                                    />
+                                }/>
                                 <Route path="/dashboard" exact render={(props) => <Dashboard {...props} functions={this.functions} />} />
-                                <Route exact path="/dashboard/project/:projectId" render={(props) => (  
-                                    <ProjectDashboard content={<ProjectBuild />} {...props} />  
+                                <Route exact path="/dashboard/project/:projectId" render={(props) => (
+                                    <ProjectDashboard content={<ProjectBuild />} {...props} />
                                 )} />
-                                <Route exact path="/dashboard/project/:projectId/build" render={(props) => (  
-                                    <ProjectDashboard content={<ProjectBuild />} {...props} />  
+                                <Route exact path="/dashboard/project/:projectId/build" render={(props) => (
+                                    <ProjectDashboard content={<ProjectBuild />} {...props} />
                                 )} />
-                                <Route exact path="/dashboard/project/:projectId/settings" render={(props) => (  
-                                    <ProjectDashboard content={<ProjectSettings />} {...props} />  
+                                <Route exact path="/dashboard/project/:projectId/settings" render={(props) => (
+                                    <ProjectDashboard content={<ProjectSettings />} {...props} />
                                 )} />
                                 <Route path="/:projectId" exact component={this.renderProject} />
                             </Switch>
