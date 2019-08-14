@@ -19,7 +19,7 @@ import { ofType, Epic } from 'redux-observable';
 import { explorerActions, projectsActions } from '../../actions';
 import { projectSelectors } from '../../selectors';
 import { projectService } from '../../services';
-import { of } from 'rxjs';
+import { empty } from 'rxjs';
 
 export const moveItemEpic: Epic = (action$, state$) => action$.pipe(
     ofType(explorerActions.MOVE_ITEM),
@@ -31,19 +31,23 @@ export const moveItemEpic: Epic = (action$, state$) => action$.pipe(
         const files = explorerState.tree;
         const isOwnProject = state$.value.projects.isOwnProject;
 
-        if (isOwnProject) {
-            return projectService.putProjectById(id, {
-                name,
-                description,
-                files
-            })
+        if (!explorerState.itemNameValidation.isNotDuplicate) {
+            alert('A file or folder with the same name already exists at this location. Please rename the file first.');
+            return empty();
+        } else {
+            if (isOwnProject) {
+                return projectService.putProjectById(id, {
+                    name,
+                    description,
+                    files
+                })
                 .pipe(
                     map(() => explorerActions.moveItemSuccess(data.sourceId)),
                     catchError(() => [ explorerActions.moveItemFail(data.sourceId) ])
                 );
-        } else {
-            // fork with new tree structure
-            return [explorerActions.moveItemSuccess(data.id), projectsActions.createForkedProject(name, description, files)];
+            } else {
+                return [explorerActions.moveItemSuccess(data.id), projectsActions.createForkedProject(name, description, files)];
+            }
         }
     })
 );
