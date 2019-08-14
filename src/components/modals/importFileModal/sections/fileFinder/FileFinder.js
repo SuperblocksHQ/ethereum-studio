@@ -16,19 +16,43 @@
 
 import React from 'react';
 import style from './style.less';
-import data from '../../../../../assets/static/json/openzeppelin.json';
-import FolderTree from "../../../../folderTree/FolderTree";
+import { Loading } from "../../../../common";
+import Loadable from 'react-loadable';
 
-const FileFinder = (props) => {
+const openZeppelinJson = () => import(/* webpackChunkName: "openzeppelin.json" */ "../../../../../assets/static/json/openzeppelin.json");
 
-    const {onFileSelected, selectedTitle} = props;
+const FolderTree = Loadable({
+    loader: () => import(/* webpackChunkName: "FolderTree" */"../../../../folderTree/FolderTree"),
+    loading: Loading,
+});
 
-    return (
-        <div className={style.container}>
-            <FolderTree data={data} onFileSelected={onFileSelected} selectedTitle={selectedTitle}/>
-        </div>
-    );
+export default class FileFinder extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            data: null,
+        };
+    }
 
-};
+    componentDidMount() {
+        openZeppelinJson().then((asyncData) => {
+           this.setState({
+               data: asyncData.default,
+           });
+       });
+    }
 
-export default FileFinder;
+    render() {
+        const {onFileSelected, selectedTitle} = this.props;
+        const { data } = this.state;
+
+        return (
+            <div className={style.container}>
+                {data !== null &&
+                <FolderTree data={data} onFileSelected={onFileSelected} selectedTitle={selectedTitle}/>
+                }
+            </div>
+        );
+    }
+
+}

@@ -15,13 +15,39 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, {Component} from 'react';
-import EditModal from '../../../modals/editModal';
-import ShareModal from '../../../modals/shareModal';
-import PreferencesModal from '../../../modals/preferencesModal';
-import LoginModal from '../../../modals/loginModal';
-import ProjectTemplateModal from '../../../modals/projectTemplateModal';
 import style from './style.less';
-import ImportFileModal from '../../../modals/importFileModal';
+import Loadable from 'react-loadable';
+import { Loading } from '../../loadable';
+
+const LoginModal = Loadable({
+    loader: () => import(/* webpackChunkName: "LoginModal" */'../../../modals/loginModal'),
+    loading: Loading,
+});
+
+const ShareModal = Loadable({
+    loader: () => import(/* webpackChunkName: "ShareModal" */'../../../modals/shareModal'),
+    loading: Loading,
+});
+
+const EditModal = Loadable({
+    loader: () => import(/* webpackChunkName: "EditModal" */'../../../modals/editModal'),
+    loading: Loading,
+});
+
+const ProjectTemplateModal = Loadable({
+    loader: () => import(/* webpackChunkName: "ProjectTemplateModal" */'../../../modals/projectTemplateModal'),
+    loading: Loading,
+});
+
+const PreferencesModal = Loadable({
+    loader: () => import(/* webpackChunkName: "ShareModal" */'../../../modals/preferencesModal'),
+    loading: Loading,
+});
+
+const ImportFileModal = Loadable({
+    loader: () => import(/* webpackChunkName: "ImportFileModal" */'../../../modals/importFileModal'),
+    loading: Loading,
+});
 
 interface IProps {
     modalType: string;

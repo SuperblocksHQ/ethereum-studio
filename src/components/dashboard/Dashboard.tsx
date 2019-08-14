@@ -15,11 +15,28 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { Component } from 'react';
-import ProjectList from './projectList';
-import Topbar from './topbar';
 import { IProject } from '../../models';
 import style from './style.less';
-import { LoginModal } from '../modals';
+import { SideMenu, SideMenuItem, SideMenuHeader, SideMenuFooter } from './sideMenu';
+import { IconConfigure, IconPlusTransparent } from '../icons';
+import { LetterAvatar } from '../common';
+import { Loading } from '../common';
+import Loadable from 'react-loadable';
+import Topbar from './topbar';
+
+const ProjectList = Loadable({
+    loader: () => import(/* webpackChunkName: "ProjectList" */'./projectList'),
+    loading: Loading,
+});
+
+const LoginModal = Loadable({
+    loader: () => import(/* webpackChunkName: "LoginModal" */'../modals'),
+    loading: Loading,
+    render(loaded, props: any) {
+        const Modal = loaded.LoginModal;
+        return <Modal {...props}/>;
+    }
+});
 
 interface IProps {
     getProjectList: () => void;
@@ -44,6 +61,28 @@ export default class Dashboard extends Component<IProps> {
                     <React.Fragment>
                         <Topbar />
                         <div className={style.content}>
+                            <SideMenu>
+                                <SideMenuHeader title='My organizations' />
+                                {/* TODO: Remove placeholder items and fetch organizations instead, add corresponding link */}
+                                <SideMenuItem
+                                    icon={<LetterAvatar title='Placeholder'/>}
+                                    title='Placeholder organization'
+                                    linkTo='TODO'
+                                />
+                                <SideMenuFooter>
+                                    <SideMenuItem
+                                        icon={<IconPlusTransparent />}
+                                        title='New organization'
+                                        linkTo='dashboard/new-organization'
+                                    />
+                                    {/* TODO: Add :organizationId to linkTo */}
+                                    <SideMenuItem
+                                        icon={<IconConfigure width='10px' height='10px' />}
+                                        title='Organization settings'
+                                        linkTo='dashboard/settings'
+                                    />
+                                </SideMenuFooter>
+                            </SideMenu>
                             <ProjectList
                                 listName={'All Your Projects'}
                                 list={projectList}

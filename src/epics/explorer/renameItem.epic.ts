@@ -19,7 +19,7 @@ import { ofType, Epic } from 'redux-observable';
 import { explorerActions, projectsActions } from '../../actions';
 import { projectSelectors } from '../../selectors';
 import { projectService } from '../../services';
-import { EMPTY } from 'rxjs';
+import { empty } from 'rxjs';
 
 export const renameItemEpic: Epic = (action$, state$) => action$.pipe(
     ofType(explorerActions.RENAME_ITEM),
@@ -31,24 +31,26 @@ export const renameItemEpic: Epic = (action$, state$) => action$.pipe(
         const files = explorerState.tree;
         const isOwnProject = state$.value.projects.isOwnProject;
 
-        if (explorerState.itemNameValidation.isValid) {
+        if (!explorerState.itemNameValidation.isNameValid) {
+            alert('Invalid file or folder name.');
+            return empty();
+        } else if (!explorerState.itemNameValidation.isNotDuplicate) {
+            alert('A file or folder with the same name already exists at this location. Please choose a different name.');
+            return empty();
+        } else {
             if (isOwnProject) {
                 return projectService.putProjectById(id, {
                     name,
                     description,
                     files
                 })
-                    .pipe(
-                        map(() => explorerActions.renameItemSuccess(action.data.id, action.data.name)),
-                        catchError(() => [ explorerActions.renameItemFail(explorerState.itemNameValidation.itemId, explorerState.itemNameValidation.oldName) ])
-                    );
+                .pipe(
+                    map(() => explorerActions.renameItemSuccess(action.data.id, action.data.name)),
+                    catchError(() => [ explorerActions.renameItemFail(explorerState.itemNameValidation.itemId, explorerState.itemNameValidation.oldName) ])
+                );
             } else {
-                // fork with new filename
                 return [explorerActions.renameItemSuccess(action.data.id, action.data.name), projectsActions.createForkedProject(name, description, files)];
             }
-        } else {
-            alert('Invalid file or folder name.');
-            return EMPTY;
         }
     })
 );

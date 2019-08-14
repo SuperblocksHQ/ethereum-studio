@@ -21,6 +21,7 @@ import { IProject } from '../models';
 export const initialState = {
     projectList: [],
     isProjectListLoading: false,
+    showForkButton: true,
     isProjectForking: false,
     errorLoadingProjectList: null,
     profile: null

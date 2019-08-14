@@ -20,7 +20,8 @@ export interface IItemNameValidation {
     itemId?: string;
     name?: string;
     oldName?: string;
-    isValid: boolean;
+    isNameValid?: boolean;
+    isNotDuplicate?: boolean;
 }
 
 export interface IExplorerState {

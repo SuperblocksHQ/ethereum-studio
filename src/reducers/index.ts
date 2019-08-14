@@ -20,7 +20,6 @@ import settings from './settings.reducer';
 import panels from './panels.reducer';
 import panes from './panes.reducer';
 import explorer from './explorer.reducer';
-import ipfs from './ipfs.reducer';
 import auth from './auth.reducer';
 import toast from './toast.reducer';
 import user from './user.reducer';
@@ -30,6 +29,7 @@ import deployer from './deployer.reducer';
 import console from './console.reducer';
 import eventLog from './eventLog.reducer';
 import modal from './modal.reducer';
+import transactions from './transactions.reducer';
 import { AnyAction } from 'redux';
 
 const rehydrated = (state = false, action: AnyAction) => {
@@ -47,7 +47,6 @@ export default {
     settings,
     projects,
     panes,
-    ipfs,
     auth,
     toast,
     panels,
@@ -58,5 +57,6 @@ export default {
     deployer,
     console,
     eventLog,
+    transactions,
     modal
 };

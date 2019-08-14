@@ -24,7 +24,6 @@ import Dashboard from '../dashboard';
 import LoadProject from '../loadProject';
 import * as embedUtils from '../../utils/embed';
 import ModalContainer from '../common/modal/modalContainer';
-import { IEventLogRow } from '../../models/state';
 import { LogLevel } from '../../models';
 
 interface IProps {

@@ -19,7 +19,6 @@ import { AnyAction, Dispatch } from 'redux';
 import { appActions, eventLogActions } from '../../actions';
 import { getShowAnalyticsTrackingDialog } from '../../selectors/settings';
 import { appSelectors } from '../../selectors';
-import { IEventLogRow } from '../../models/state';
 import App from './App';
 import { LogLevel } from '../../models';
 

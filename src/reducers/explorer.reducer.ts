@@ -24,12 +24,16 @@ import { updateItemInTree, sortProjectItems, findItemById, addOrReplaceChildItem
 
 export const initialState: IExplorerState = {
     tree: null,
-    itemNameValidation: { isValid: false },
+    itemNameValidation: { isNameValid: false, isNotDuplicate: false },
     lastDeletedId: null
 };
 
 function hasNoChildWithName(parentItem: Nullable<IProjectItem>, name: string) {
     return parentItem && parentItem.children.every(c => c.name.toLowerCase() !== name.toLowerCase());
+}
+
+function hasNoChildWithId(parentItem: Nullable<IProjectItem>, id: string) {
+    return parentItem && parentItem.children.every(c => c.id.toLowerCase() !== id.toLowerCase());
 }
 
 export default function explorerReducer(state = initialState, action: AnyAction) {
@@ -50,13 +54,17 @@ export default function explorerReducer(state = initialState, action: AnyAction)
 
             if (isValidProjectItemName(name)) {
                 const parentItem = findItemById(state.tree, action.data.id).parentItem;
+                itemNameValidation = {
+                    isNameValid: true
+                };
 
                 // do update only in case there is no item with the same name in target directory
                 if (hasNoChildWithName(parentItem, name.toLowerCase())) {
                     const [newTree, replacedTargetItem] = updateItemInTree(state.tree, action.data.id, (i: IProjectItem) => ({ ...i, name }));
                     if (replacedTargetItem) {
                         itemNameValidation = {
-                            isValid: true,
+                            ...itemNameValidation,
+                            isNotDuplicate: true,
                             name,
                             oldName: replacedTargetItem.name,
                             itemId: action.data.id
@@ -93,6 +101,9 @@ export default function explorerReducer(state = initialState, action: AnyAction)
 
             if (isValidProjectItemName(action.data.name)) {
                 const parentItem = findItemById(state.tree, action.data.parentId).item;
+                itemNameValidation = {
+                    isNameValid: true
+                };
 
                 if (hasNoChildWithName(parentItem, name)) {
 
@@ -116,7 +127,9 @@ export default function explorerReducer(state = initialState, action: AnyAction)
                     // parent item was found and child was added
                     if (replacedTargetItem) {
                         itemNameValidation = {
-                            isValid: true,
+                            ...itemNameValidation,
+                            isNameValid: true,
+                            isNotDuplicate: true,
                             name,
                             itemId: newItem.id
                         };
@@ -145,33 +158,48 @@ export default function explorerReducer(state = initialState, action: AnyAction)
             const { sourceId, targetId } = action.data;
             let itemNameValidation: IItemNameValidation = initialState.itemNameValidation;
             let tree: Nullable<IProjectItem> = state.tree;
+            const sourceItemTmp = findItemById(state.tree, sourceId).item;
+            const targetItem = findItemById(state.tree, targetId).item;
 
-            // Add source item to target folder
-            const sourceItem = updateItemInTree(
-                state.tree,
-                sourceId,
-                i => null
-            )[1];
+            // Check if file was moved to the same directory as it was
+            if (sourceItemTmp !== null && !hasNoChildWithId(targetItem, sourceItemTmp.id)) {
+                return {
+                    ...state,
+                    itemNameValidation: {
+                        isNotDuplicate: true
+                    }
+                };
+            }
 
-            let newTree = state.tree;
-            let replacedTargetItem = null;
-
-            // Remove source item
-            if (sourceItem) {
-                [newTree, replacedTargetItem] = updateItemInTree(
+            if (sourceItemTmp !== null && hasNoChildWithName(targetItem, sourceItemTmp.name.trim())) {
+                // Add source item to target folder
+                const sourceItem = updateItemInTree(
                     state.tree,
-                    targetId,
-                    i => ({ ...i, children: sortProjectItems(i.children.concat([sourceItem])) })
-                );
+                    sourceId,
+                    i => null
+                )[1];
 
-                // parent item was found and child was added
-                if (replacedTargetItem) {
-                    itemNameValidation = {
-                        isValid: true,
-                        name,
-                        itemId: sourceItem.id
-                    };
-                    tree = newTree;
+                let newTree = state.tree;
+                let replacedTargetItem = null;
+
+                // Remove source item
+                if (sourceItem) {
+                    [newTree, replacedTargetItem] = updateItemInTree(
+                        state.tree,
+                        targetId,
+                        i => ({ ...i, children: sortProjectItems(i.children.concat([sourceItem])) })
+                    );
+
+                    // parent item was found and child was added
+                    if (replacedTargetItem) {
+                        itemNameValidation = {
+                            isNameValid: true,
+                            isNotDuplicate: true,
+                            name,
+                            itemId: sourceItem.id
+                        };
+                        tree = newTree;
+                    }
                 }
             }
 
@@ -242,7 +270,8 @@ export default function explorerReducer(state = initialState, action: AnyAction)
             // parent item was found and child was added
             if (replacedTargetItem) {
                 itemNameValidation = {
-                    isValid: true,
+                    isNameValid: true,
+                    isNotDuplicate: true,
                     name,
                     itemId: items[0].id
                 };
