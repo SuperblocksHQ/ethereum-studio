@@ -23,3 +23,4 @@ export * from './view.selectors';
 export * from './auth.selectors';
 export * from './panes.selectors';
 export * from './explorer.selectors';
+export * from './interact.selectors';

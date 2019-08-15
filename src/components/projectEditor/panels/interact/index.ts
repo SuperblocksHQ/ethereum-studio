@@ -16,9 +16,11 @@
 
 import { connect } from 'react-redux';
 import { InteractPanel } from './interact';
+import { interactSelectors } from '../../../../selectors';
 import { Dispatch } from 'redux';
 
 const mapStateToProps = (state: any) => ({
+    deployedItems: interactSelectors.getDeployedItems(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => {

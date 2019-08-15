@@ -30,6 +30,7 @@ import console from './console.reducer';
 import eventLog from './eventLog.reducer';
 import modal from './modal.reducer';
 import transactions from './transactions.reducer';
+import interact from './interact.reducer';
 import { AnyAction } from 'redux';
 
 const rehydrated = (state = false, action: AnyAction) => {
@@ -58,5 +59,6 @@ export default {
     console,
     eventLog,
     transactions,
+    interact,
     modal
 };

@@ -16,13 +16,31 @@
 
 import React from 'react';
 import style from './style.less';
+import { IDeployedContract } from '../../../../models';
+import { DeployedContractItem } from './items/deployedContractItem';
 
-export class InteractPanel extends React.Component {
+interface IProps {
+    deployedItems: IDeployedContract[];
+}
+
+export class InteractPanel extends React.Component<IProps> {
 
     render() {
+        const { deployedItems } = this.props;
+
         return (
             <div className={ style.treeContainer }>
-                Contract compiled list
+                {
+                    deployedItems.map((item, index) => (
+                        <DeployedContractItem key={ item.id }
+                            data={item}
+                            depth={0}
+                            onClick={ (i: IDeployedContract) => console.log(i.id) }
+                            onToggle={ () => console.log('toggled')  }>
+                            { <div>Patata</div> }
+                        </DeployedContractItem>
+                    ))
+                }
             </div>
         );
     }

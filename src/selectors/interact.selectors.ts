@@ -14,15 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export * from './contractAgrumentData';
-export * from './category.model';
-// TODO: fix!
-export * from './project';
-export * from './project.model';
-export * from './user.model';
-export * from './account-environment.model';
-export * from './logLevel.model';
-export * from './auth.model';
-export * from './dependencies.model';
-export * from './transaction.model';
-export * from './interact.model';
+export const interactSelectors = {
+    getDeployedItems: (state: any) => state.interact.items,
+};
