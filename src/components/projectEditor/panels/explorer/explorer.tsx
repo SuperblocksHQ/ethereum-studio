@@ -32,7 +32,6 @@ interface IProps {
     onConfigureContract(file: IProjectItem): void;
     onCompileContract(file: IProjectItem): void;
     onDeployContract(file: IProjectItem): void;
-    onInteractContract(file: IProjectItem): void;
 
     showModal(action: any, modalProps: any): void;
     closeModal(): void;
@@ -101,8 +100,7 @@ export class Explorer extends React.Component<IProps> {
 
                         onConfigureClick={ actions.onConfigureContract }
                         onCompileClick={ actions.onCompileContract }
-                        onDeployClick={ actions.onDeployContract }
-                        onInteractClick={ actions.onInteractContract } />
+                        onDeployClick={ actions.onDeployContract } />
                 );
             } else {
                 return (

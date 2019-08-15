@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconContract, IconConfigure, IconCompile, IconDeploy, IconInteract, IconEdit, IconTrash } from '../../../../icons';
+import { IconContract, IconConfigure, IconCompile, IconDeploy, IconEdit, IconTrash } from '../../../../icons';
 import BaseItem from './baseItem';
 import style from './style.less';
 import { getToolbar } from './fileItem';
@@ -15,7 +15,6 @@ interface IProps {
     onConfigureClick(data: IProjectItem): void;
     onCompileClick(data: IProjectItem): void;
     onDeployClick(data: IProjectItem): void;
-    onInteractClick(data: IProjectItem): void;
     onMoveItem(sourceId: string, targetId: string): void;
 }
 
@@ -60,7 +59,6 @@ export function ContractItem(props: IProps) {
             <BaseItem depth={props.depth} icon={ <IconConfigure /> } { ...getActionButtonProps('Configure', props.onConfigureClick) }  />
             <BaseItem depth={props.depth} icon={ <IconCompile /> } { ...getActionButtonProps('Compile', props.onCompileClick) }  />
             <BaseItem depth={props.depth} icon={ <IconDeploy /> } { ...getActionButtonProps('Deploy', props.onDeployClick ) }  />
-            <BaseItem depth={props.depth} icon={ <IconInteract /> } { ...getActionButtonProps('Interact', props.onInteractClick) }  />
         </BaseItem>
     );
 }
