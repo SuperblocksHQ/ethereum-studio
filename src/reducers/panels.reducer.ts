@@ -31,7 +31,7 @@ export default function panelsReducer(state = initialState, action: AnyAction) {
     switch (action.type) {
         case panelsActions.INIT_PANELS:
             return action.data.reduce((acc: any, curr: IPanelSideData) => {
-                acc[curr.panel] = <IPanelData>{ open: false, side: curr.side  };
+                acc[curr.panel] = <IPanelData>{ open: curr.panel === Panels.Preview ? true : false, side: curr.side  };
                 return acc;
             }, {});
 
