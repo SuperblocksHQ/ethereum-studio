@@ -21,8 +21,8 @@ import Panes from './panes';
 import TopBar from '../topbar';
 import BottomBar from './bottomBar';
 import ContactContainer from '../contactContainer';
-import { Preview, TransactionLogPanel, Console, Explorer, EventLogPanel } from './panels';
-import { IconTransactions, IconShowPreview, IconPanelRun, IconFolderOpen, IconEventLog } from '../icons';
+import { Preview, TransactionLogPanel, Console, Explorer, EventLogPanel, InteractPanel } from './panels';
+import { IconTransactions, IconShowPreview, IconPanelRun, IconFolderOpen, IconEventLog, IconInteract } from '../icons';
 import { SideButton } from './sideButton';
 import { SplitterLayout } from './splitterLayout';
 import { Panel } from './panel';
@@ -84,6 +84,10 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                             icon={<IconFolderOpen color='#fff' />}
                             onClick={() => togglePanel(Panels.Explorer)}
                         />
+                        <SideButton name='Interact'
+                            icon={<IconInteract color='#fff' />}
+                            onClick={() => togglePanel(Panels.Interact)}
+                        />
                     </div>
 
                     <div className={style.mainLayout}>
@@ -92,16 +96,32 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                                 primaryIndex={1}
                                 secondaryMinSize={0}
                                 secondaryInitialSize={280}
-                                customClassName={!this.isPanelOpen(Panels.Explorer) ? 'hideFileSystemPanel' : undefined}
+                                customClassName={!this.isPanelOpen(Panels.Explorer) && !this.isPanelOpen(Panels.Interact) ? 'hideFileSystemPanel' : undefined}
                                 onSecondaryPaneSizeChange={() => null}>
                                 <div className={style.control}>
-                                    <Panel
-                                        name='Explorer'
-                                        onClose={() => this.props.closePanel(Panels.Explorer)}
-                                        dragging={this.state.sidePanelDragging}>
-                                        <Explorer />
-                                    </Panel>
-                                    <ContactContainer />
+
+                                    { this.isPanelOpen(Panels.Explorer) &&
+                                        <React.Fragment>
+                                            <Panel
+                                                name='Explorer'
+                                                onClose={() => this.props.closePanel(Panels.Explorer)}
+                                                dragging={this.state.sidePanelDragging}>
+                                                <Explorer />
+                                            </Panel>
+                                            <ContactContainer />
+                                        </React.Fragment>
+                                    }
+                                    { this.isPanelOpen(Panels.Interact) &&
+                                        <React.Fragment>
+                                            <Panel
+                                                name='Interact'
+                                                onClose={() => this.props.closePanel(Panels.Interact)}
+                                                dragging={this.state.sidePanelDragging}>
+                                                <InteractPanel />
+                                            </Panel>
+                                            <ContactContainer />
+                                        </React.Fragment>
+                                    }
                                 </div>
                                 <div>
                                     <SplitterLayout
@@ -115,17 +135,19 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                                         <Panes dragging={sidePanelDragging} />
 
                                         { this.isPanelOpen(Panels.Transactions) &&
-                                        <Panel icon={ <IconTransactions /> } name='Transactions History' onClose={() => closePanel(Panels.Transactions)} dragging={sidePanelDragging}>
-                                            <TransactionLogPanel />
-                                        </Panel>}
+                                            <Panel icon={ <IconTransactions /> } name='Transactions History' onClose={() => closePanel(Panels.Transactions)} dragging={sidePanelDragging}>
+                                                <TransactionLogPanel />
+                                            </Panel>
+                                        }
 
                                         { this.isPanelOpen(Panels.Preview) &&
-                                        <Panel name='Preview' onClose={() => closePanel(Panels.Preview)} dragging={sidePanelDragging}>
-                                            <Preview
-                                                dragging={sidePanelDragging}
-                                                onClose={() => closePanel(Panels.Preview)}
-                                            />
-                                        </Panel>}
+                                            <Panel name='Preview' onClose={() => closePanel(Panels.Preview)} dragging={sidePanelDragging}>
+                                                <Preview
+                                                    dragging={sidePanelDragging}
+                                                    onClose={() => closePanel(Panels.Preview)}
+                                                />
+                                            </Panel>
+                                        }
 
                                     </SplitterLayout>
                                 </div>

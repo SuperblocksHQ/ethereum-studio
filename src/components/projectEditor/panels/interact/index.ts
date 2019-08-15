@@ -14,26 +14,16 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export enum Panels {
-    Explorer = 'Explorer',
-    Preview = 'Preview',
-    Transactions = 'Transactions',
-    CompilerOutput = 'CompilerOutput',
-    EventLog = 'EventLog',
-    Interact = 'Interact'
-}
+import { connect } from 'react-redux';
+import { InteractPanel } from './interact';
+import { Dispatch } from 'redux';
 
-export enum PanelSides {
-    Left = 'Left',
-    Right = 'Right',
-    Bottom = 'Bottom'
-}
+const mapStateToProps = (state: any) => ({
+});
 
-export interface IPanelData {
-    open: boolean;
-    side: PanelSides;
-}
+const mapDispatchToProps = (dispatch: Dispatch) => {
+    return {
+    };
+};
 
-export interface IPanelsState {
-    [key: string]: IPanelData;
-}
+export default connect<any, any, any, any>(mapStateToProps, mapDispatchToProps)(InteractPanel);

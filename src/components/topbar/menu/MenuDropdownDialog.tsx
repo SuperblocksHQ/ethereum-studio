@@ -91,6 +91,7 @@ export default class MenuDropdownDialog extends React.Component<IProps> {
                 </SubMenu>
                 <SubMenu title='View'>
                     <MenuItem onClick={() => togglePanel(Panels.Explorer)} isActive={showFileSystem} title='Explorer' />
+                    <MenuItem onClick={() => togglePanel(Panels.Interact)} isActive={showFileSystem} title='Interact' />
                     <MenuItem onClick={() => togglePanel(Panels.Transactions)} isActive={showTransactionsHistory} title='Transactions' />
                     <MenuItem onClick={() => togglePanel(Panels.Preview)} isActive={showPreview} title='Preview' />
                     <MenuItem onClick={() => togglePanel(Panels.CompilerOutput)} isActive={showConsole} title='Run' />
