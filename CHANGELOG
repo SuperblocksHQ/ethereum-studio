@@ -1,5 +1,12 @@
 # Superblocks Lab - Change log
 
+## [1.9.0]
+
++ Breaking change: update Solidity compiler to version 0.5.10 #430
+* Change: OpenZeppelin to version 2.3.0 #430
+* Fix: all example templates to work with latest compiler version #430
+
+
 ## [1.8.1]
 
 * Change: Help center links #428
