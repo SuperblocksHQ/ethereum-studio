@@ -26,6 +26,7 @@ interface IProps {
 }
 
 export function NetworksList(props: IProps) {
+    console.log(props.networks);
     const renderedNetworks = props.networks.map(network => {
         const cls = {
             [style.networkLinkChosen]: network.name === props.selectedNetwork
