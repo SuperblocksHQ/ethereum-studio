@@ -1,5 +1,25 @@
 # Superblocks Lab - Change log
 
+## [1.7.0]
+
++ Addition: TypeScript support #342
++ Addition: Enable arrays as constructor input #185
++ Addition: Left panel #362
++ Addition: Add social media tags #382
+* Improvement: Pane's tab style #361
+* Improvement: Improve responsiveness to work on smaller devices #255
+* Improvement: Better UX for users with smaller device #300
+* Improvement: Better UX when Lab is embedded into iframe #300
+* Change: SEO tags #363
+* Change: Upcoming features #370
+* Change: Infura endpoints #395
+* Fix: Fix all less files import and classname typings #357
+* Fix: Access to undefined object when selecting external network without MetaMask #366
+* Fix: Fix EVM sendRawTransaction error in case of execution failure #150
+* Fix: Overflow hashes of Transaction History while decreasing size #188
+- Removal: Titles for Preferences and Help actions #359
+
+
 ## [1.6.1]
 
 * Fix: Suppress right click on some filesystem items #353
@@ -27,8 +47,8 @@
 * Fix: Dropdown buttons won't toggle on click #61
 * Fix: Unable to run newly rebuilt EVM due to uncaught type error #343
 * Fix: getTransactionCount return value to comply with the specification #341
-* Removal: Unused sass package #222
-* Removal: Initial splash screen is no more #332
+- Removal: Unused sass package #222
+- Removal: Initial splash screen is no more #332
 
 
 ## [1.4.3]
