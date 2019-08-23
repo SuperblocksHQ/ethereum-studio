@@ -1,16 +1,16 @@
 // Copyright 2019 Superblocks AB
-// 
+//
 // This file is part of Superblocks Lab.
-// 
+//
 // Superblocks Lab is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation version 3 of the License.
-// 
+//
 // Superblocks Lab is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -73,8 +73,8 @@ function finalizeDeploy(state: any, deployRunner: DeployRunner, hash: string, ou
 
 /**
  * Actually does external deployment
- * @param state 
- * @param deployRunner 
+ * @param state
+ * @param deployRunner
  */
 export function doDeployExternally(state: any, deployRunner: DeployRunner) {
     return deployRunner.deployExternally(state.settings.preferences.network).pipe(
@@ -91,9 +91,10 @@ export function doDeployExternally(state: any, deployRunner: DeployRunner) {
 }
 
 /**
- * Prechecks for possible external deployment
- * @param state 
- * @param deployRunner 
+ * Pre-checks for possible external deployment
+ *
+ * @param state
+ * @param deployRunner
  */
 export function tryExternalDeploy(state: any, deployRunner: DeployRunner) {
     const environment = projectSelectors.getSelectedEnvironment(state);
@@ -102,7 +103,7 @@ export function tryExternalDeploy(state: any, deployRunner: DeployRunner) {
         return throwError('The Metamask network does not match the Superblocks Lab network. Check so that you have the same network chosen in Metamask as in Superblocks Lab, then try again.');
     }
 
-    const isMainnetDeployment = window.web3.version.network === Networks.mainnet.chainId.toString();
+    const isMainnetDeployment = window.web3.version.network === (Networks.mainnet.chainId && Networks.mainnet.chainId.toString());
 
     return concat(
         of(consoleActions.addRows([{ channel: 1, msg: 'External account detected. Opening external account provider...' }])),
