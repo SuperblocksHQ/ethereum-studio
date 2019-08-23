@@ -14,22 +14,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { connect } from 'react-redux';
-import { InteractPanel } from './interact';
-import { interactSelectors } from '../../../../selectors';
-import { Dispatch } from 'redux';
-import { interactActions } from '../../../../actions';
+export const interactActions = {
 
-const mapStateToProps = (state: any) => ({
-    deployedItems: interactSelectors.getDeployedItems(state)
-});
-
-const mapDispatchToProps = (dispatch: Dispatch) => {
-    return {
-        onToggleTreeItem: (id: string) => {
-            dispatch(interactActions.toggleInteractTreeItem(id));
-        },
-    };
+    TOGGLE_INTERACT_TREE_ITEM: 'TOGGLE_INTERACT_TREE_ITEM',
+    toggleInteractTreeItem(id: string) {
+        return {
+            type: interactActions.TOGGLE_INTERACT_TREE_ITEM,
+            data: { id }
+        };
+    },
 };
-
-export default connect<any, any, any, any>(mapStateToProps, mapDispatchToProps)(InteractPanel);

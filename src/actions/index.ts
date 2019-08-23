@@ -14,3 +14,4 @@ export * from './eventLog.actions';
 export * from './deployer.actions';
 export * from './modal.actions';
 export * from './transactions.actions';
+export * from './interact.actions';

@@ -21,22 +21,23 @@ import { DeployedContractItem } from './items/deployedContractItem';
 
 interface IProps {
     deployedItems: IDeployedContract[];
+    onToggleTreeItem(id: string): void;
 }
 
 export class InteractPanel extends React.Component<IProps> {
 
     render() {
-        const { deployedItems } = this.props;
+        const { deployedItems, onToggleTreeItem } = this.props;
 
         return (
             <div className={ style.treeContainer }>
                 {
-                    deployedItems.map((item, index) => (
+                    deployedItems.map((item) => (
                         <DeployedContractItem key={ item.id }
                             data={item}
                             depth={0}
                             onClick={ (i: IDeployedContract) => console.log(i.id) }
-                            onToggle={ () => console.log('toggled')  }>
+                            onToggle={ onToggleTreeItem }>
                             { <div>Patata</div> }
                         </DeployedContractItem>
                     ))

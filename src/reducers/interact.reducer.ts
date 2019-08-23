@@ -15,8 +15,9 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { AnyAction } from 'redux';
-import { transactionsActions } from '../actions';
+import { transactionsActions, interactActions } from '../actions';
 import { IInteractState, ITransaction, IDeployedContract, TransactionType } from '../models';
+// import { updateItemInTree } from './interactLib';
 
 const initialState: IInteractState = {
     items: []
@@ -24,6 +25,11 @@ const initialState: IInteractState = {
 
 export default function interactReducer(state = initialState, action: AnyAction) {
     switch (action.type) {
+        // case interactActions.TOGGLE_INTERACT_TREE_ITEM:
+        //     return {
+        //         ...state,
+        //         tree: updateItemInTree(state.tree, action.data.id, (i: IProjectItem) => ({ ...i, opened: !i.opened }))[0]
+        //     };
         case transactionsActions.ADD_TRANSACTION:
             const transaction = <ITransaction> action.data.transaction;
 

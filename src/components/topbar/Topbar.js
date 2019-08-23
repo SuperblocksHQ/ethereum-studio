@@ -23,7 +23,6 @@ import { Tooltip, HelpAction, NewProjectAction } from '../common';
 import {
     IconPreferences,
     IconProjectSelector,
-    IconUpload,
     IconFork,
     IconShare,
     IconMenu,
@@ -33,7 +32,6 @@ import {
 import OnlyIf from '../onlyIf';
 import NetworkAccountSelector from '../networkAccountSelector';
 import MenuDropdownDialog from './menu';
-import LoginButton from "../login";
 import ProjectTitle from './projectTitle';
 
 const MenuAction = () => (
@@ -44,16 +42,6 @@ const MenuAction = () => (
     </div>
 );
 
-const DashboardAction = () => (
-    <a href="/dashboard" className={classNames([style.action, style.actionRight])}>
-        <Tooltip title="Dashboard">
-            <div className={classNames([style.actionMenu, style.actionDashboard, style.container, "btnNoBg"])}>
-                <IconProjectSelector />
-            </div>
-        </Tooltip>
-    </a>
-);
-
 const PreferencesAction = () => (
     <div className={classNames([style.action, style.actionRight])}>
         <Tooltip title="Preferences">
@@ -61,15 +49,6 @@ const PreferencesAction = () => (
                 <IconPreferences />
             </button>
         </Tooltip>
-    </div>
-);
-
-const UploadDrowdownAction = () => (
-    <div className={style.action}>
-        <button className={classNames([style.container, 'btnNoBg'])}>
-            <IconUpload />
-            <span>Upload</span>
-        </button>
     </div>
 );
 
@@ -163,6 +142,7 @@ export default class TopBar extends Component {
                                 isProjectForking={this.props.isProjectForking}
                             />
                         </OnlyIf>
+                        <ShareDropdownAction />
                     </div>
                 </div>
                 <ProjectTitle
@@ -170,14 +150,10 @@ export default class TopBar extends Component {
                 />
                 <div className={style.actionsRight}>
                     <NewProjectAction redirect={false} />
-                    <DashboardAction />
                     <div onClick={() => this.showModal('preferences')}>
                         <PreferencesAction />
                     </div>
                     <HelpAction />
-                    <LoginButton
-                        onSettingsModalClose={this.onSettingsModalClose}
-                    />
                 </div>
             </div>
         );
