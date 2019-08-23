@@ -27,7 +27,7 @@ jobs:
             - packages/dashboard/node_modules
       - save_cache:
           key: v2-repo-{{ .Environment.CIRCLE_SHA1 }}
-          paths: 
+          paths:
             - ~/superblocks-client
 
   build-prod:
@@ -40,7 +40,7 @@ jobs:
           key: v2-repo-{{ .Environment.CIRCLE_SHA1 }}
       - run:
           name: Build Application
-          command: yarn build:prod
+          command: yarn build
       - save_cache:
           key: v2-prod-app-build-cache-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
           paths:
