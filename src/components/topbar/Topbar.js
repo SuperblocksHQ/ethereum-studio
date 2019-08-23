@@ -148,7 +148,7 @@ export default class TopBar extends Component {
                     projectName={project.name}
                 />
                 <div className={style.actionsRight}>
-                    <NewProjectAction redirect={false} />
+                    <NewProjectAction redirect={true} />
                     <div onClick={() => this.showModal('preferences')}>
                         <PreferencesAction />
                     </div>

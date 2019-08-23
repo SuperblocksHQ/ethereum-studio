@@ -66,8 +66,6 @@ export function resolveAccounts(dappfileData: any, environment: string, openWall
 export function getDappSettings(dappfileCode: string, openWallets: any, metamaskAccounts: string[]) {
     const dappfileData: any = JSON.parse(dappfileCode);
 
-    console.log(dappfileData.environments);
-
     // environments
     const environments = dappfileData.environments.map((e: any) => {
         if (Networks[e.name]) {
@@ -78,8 +76,6 @@ export function getDappSettings(dappfileCode: string, openWallets: any, metamask
         }
     });
     const selectedEnvironment = environments[0];
-
-    console.log('here');
 
     // accounts
     const accounts = resolveAccounts(dappfileData, selectedEnvironment.name, openWallets, metamaskAccounts);
