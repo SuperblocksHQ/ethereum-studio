@@ -25,7 +25,7 @@ import { IconCubeTransparent } from '../icons';
 interface IProps {
     selectedNetwork: any;
     networks: any;
-    onNetworkSelected: () => void;
+    onNetworkSelected: (name: string) => void;
 }
 // Note: We display networks, which really are environments, which map to networks.
 // This is due to a simplification where we do not show environments, only networks, but technically it's environments which we work with.

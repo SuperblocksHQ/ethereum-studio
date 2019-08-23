@@ -14,19 +14,46 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { Component } from 'react';
+import React, { Component, Dispatch } from 'react';
 import { connect } from 'react-redux';
-
 import style from './style.less';
 import OnlyIf from '../onlyIf';
-import { NetworkSelector } from './networkSelector';
 import { AccountSelector } from './accountSelector';
 import { projectsActions } from '../../actions';
 import { projectSelectors } from '../../selectors';
+import { IProject, INetwork } from '../../models';
+import { IAccount } from '../../models/state';
+import { AnyAction } from 'redux';
+import { NetworkSelector } from './networkSelector';
 
-class NetworkAccountSelector extends Component {
+interface IProps {
+    project: IProject;
+    selectedEnvironment: INetwork;
+    onNetworkSelected: (environmentName: string) => void;
+    environments: [INetwork];
+    onAccountSelected: (name: string) => void;
+    onAccountCreate: () => void;
+    onAccountDelete: (name: string) => void;
+    onAccountEdit: (name: string) => void;
+    accounts: [IAccount];
+    selectedAccount: IAccount;
+}
+
+class NetworkAccountSelector extends Component<IProps> {
     render() {
-        const { project, selectedEnvironment, onNetworkSelected, environments, onAccountSelected, accounts, selectedAccount } = this.props;
+        const {
+            project,
+            selectedEnvironment,
+            onNetworkSelected,
+            environments,
+            onAccountSelected,
+            onAccountCreate,
+            onAccountDelete,
+            onAccountEdit,
+            accounts,
+            selectedAccount
+        } = this.props;
+
         return (
             <OnlyIf test={Boolean(project.id)}>
                 <div className={style.container}>
@@ -40,7 +67,10 @@ class NetworkAccountSelector extends Component {
                         <AccountSelector
                             accounts={accounts}
                             selectedAccount={selectedAccount}
-                            onAccountSelected={onAccountSelected} />
+                            onAccountSelected={onAccountSelected}
+                            onAccountCreate={onAccountCreate}
+                            onAccountDelete={onAccountDelete}
+                            onAccountEdit={onAccountEdit} />
                     </div>
                 </div>
             </OnlyIf>
@@ -48,7 +78,7 @@ class NetworkAccountSelector extends Component {
     }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state: any) => ({
     project: projectSelectors.getProject(state),
     selectedEnvironment: projectSelectors.getSelectedEnvironment(state),
     environments: projectSelectors.getEnvironments(state),
@@ -56,22 +86,22 @@ const mapStateToProps = state => ({
     accounts: state.projects.accounts
 });
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
     return {
-        onNetworkSelected(environment) {
-            dispatch(projectsActions.setEnvironment(environment));
+        onNetworkSelected(environmentName: string) {
+            dispatch(projectsActions.setEnvironment(environmentName));
         },
-        onAccountSelected(name) {
-            dispatch(projectsActions.selectAccount(name))
+        onAccountSelected(name: string) {
+            dispatch(projectsActions.selectAccount(name));
         },
-        onAccountEdit(name) {
-
+        onAccountEdit(name: string) {
+            // TODO
         },
-        onAccountDelete(name) {
-
+        onAccountDelete(name: string) {
+            // TODO
         },
         onAccountCreate() {
-
+            // TODO
         }
     };
 };

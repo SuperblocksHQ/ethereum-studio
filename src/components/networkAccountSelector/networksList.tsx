@@ -15,11 +15,17 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import style from './style.less';
+import { INetwork } from '../../models';
 
-export function NetworksList(props) {
+interface IProps {
+    selectedNetwork: string;
+    networks: [INetwork];
+    onNetworkSelected: (name: string) => void;
+}
+
+export function NetworksList(props: IProps) {
     const renderedNetworks = props.networks.map(network => {
         const cls = {
             [style.networkLinkChosen]: network.name === props.selectedNetwork
@@ -45,9 +51,3 @@ export function NetworksList(props) {
         </div>
     );
 }
-
-NetworksList.propTypes = {
-    selectedNetwork: PropTypes.string,
-    networks: PropTypes.array.isRequired,
-    onNetworkSelected: PropTypes.func.isRequired,
-};

@@ -22,7 +22,6 @@ import { DropdownContainer } from '../common/dropdown';
 import { Tooltip, HelpAction, NewProjectAction } from '../common';
 import {
     IconPreferences,
-    IconProjectSelector,
     IconFork,
     IconShare,
     IconMenu,
