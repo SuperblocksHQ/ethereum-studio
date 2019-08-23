@@ -1,3 +1,5 @@
+const INFURA_API_KEY = process.env.REACT_APP_INFURA_API_KEY;
+
 interface INetwork {
     endpoint: string;
     interval: number;
