@@ -1,16 +1,16 @@
 // Copyright 2019 Superblocks AB
-// 
+//
 // This file is part of Superblocks Lab.
-// 
+//
 // Superblocks Lab is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation version 3 of the License.
-// 
+//
 // Superblocks Lab is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -66,12 +66,20 @@ export function resolveAccounts(dappfileData: any, environment: string, openWall
 export function getDappSettings(dappfileCode: string, openWallets: any, metamaskAccounts: string[]) {
     const dappfileData: any = JSON.parse(dappfileCode);
 
+    console.log(dappfileData.environments);
+
     // environments
-    const environments = dappfileData.environments.map((e: any) => ({
-        name: e.name,
-        endpoint: Networks[e.name].endpoint
-    }));
+    const environments = dappfileData.environments.map((e: any) => {
+        if (Networks[e.name]) {
+            return {
+                name: e.name,
+                endpoint: Networks[e.name].endpoint
+            };
+        }
+    });
     const selectedEnvironment = environments[0];
+
+    console.log('here');
 
     // accounts
     const accounts = resolveAccounts(dappfileData, selectedEnvironment.name, openWallets, metamaskAccounts);
