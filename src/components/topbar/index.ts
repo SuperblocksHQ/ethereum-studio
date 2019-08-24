@@ -18,8 +18,10 @@ import { connect } from 'react-redux';
 import TopBar from './Topbar';
 import { viewSelectors, projectSelectors, userSelectors } from '../../selectors';
 import { projectsActions, modalActions } from '../../actions';
+import { Dispatch } from 'react';
+import { AnyAction } from 'redux';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state: any) => ({
     selectedProjectName: projectSelectors.getProjectName(state),
     selectedProjectId: projectSelectors.getProjectId(state),
     showForkButton: userSelectors.getShowForkButton(state),
@@ -30,12 +32,12 @@ const mapStateToProps = state => ({
     isProjectForking: userSelectors.isProjectForking(state),
 });
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch: Dispatch<AnyAction>) {
     return {
-        forkProject: (projectId, redirect) => {
-            dispatch(projectsActions.forkProject(projectId, redirect))
+        forkProject: (projectId: string, redirect: boolean) => {
+            dispatch(projectsActions.forkProject(projectId, redirect));
         },
-        showModal: (modalType, modalProps) => {
+        showModal: (modalType: string, modalProps: any) => {
             dispatch(modalActions.showModal(modalType, modalProps));
         }
     };

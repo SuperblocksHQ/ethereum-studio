@@ -15,7 +15,6 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import style from './style.less';
 import { DropdownContainer } from '../common/dropdown';
@@ -32,10 +31,11 @@ import OnlyIf from '../onlyIf';
 import NetworkAccountSelector from '../networkAccountSelector';
 import MenuDropdownDialog from './menu';
 import ProjectTitle from './projectTitle';
+import { IProject } from '../../models';
 
 const MenuAction = () => (
     <div className={style.action}>
-        <button className={classNames([style.container, "btnNoBg"])}>
+        <button className={classNames([style.container, 'btnNoBg'])}>
             <IconMenu />
         </button>
     </div>
@@ -43,15 +43,19 @@ const MenuAction = () => (
 
 const PreferencesAction = () => (
     <div className={classNames([style.action, style.actionRight])}>
-        <Tooltip title="Preferences">
-            <button className={classNames([style.container, "btnNoBg"])}>
+        <Tooltip title='Preferences'>
+            <button className={classNames([style.container, 'btnNoBg'])}>
                 <IconPreferences />
             </button>
         </Tooltip>
     </div>
 );
 
-const ForkDropdownAction = (props) => {
+interface IForkDropdownActionProps {
+    onForkClicked: () => void;
+    isProjectForking: boolean;
+}
+const ForkDropdownAction = (props: IForkDropdownActionProps) => {
     const { onForkClicked, isProjectForking } = props;
     return(
         <div className={style.action}>
@@ -63,7 +67,7 @@ const ForkDropdownAction = (props) => {
                 <span>Fork</span>
             </button>
         </div>
-    )
+    );
 };
 
 const ShareDropdownAction = () => (
@@ -73,14 +77,28 @@ const ShareDropdownAction = () => (
     </button>
 );
 
-export default class TopBar extends Component {
+interface IView {
+    showOpenInLab: boolean;
+    project: IProject;
+}
+
+interface IProps {
+    selectedProjectName: string;
+    selectedProjectId: string;
+    showForkButton: boolean;
+    isProjectForking: boolean;
+    view: IView;
+    forkProject: (projectId: string, redirect: boolean) => void;
+    showModal: (modalType: string, modalProps: any) => void;
+}
+export default class TopBar extends Component<IProps> {
 
     state = {
         selectedProjectName: this.props.selectedProjectName,
         showForkButton: this.props.showForkButton,
-    }
+    };
 
-    componentDidUpdate(prevProps) {
+    componentDidUpdate(prevProps: IProps) {
 
         if (prevProps.selectedProjectName !== this.props.selectedProjectName) {
             this.setState({
@@ -89,7 +107,7 @@ export default class TopBar extends Component {
         }
     }
 
-    showModal = (modalType) => {
+    showModal = (modalType: string) => {
         const { showModal } = this.props;
 
         switch (modalType) {
@@ -98,10 +116,12 @@ export default class TopBar extends Component {
                 break;
             case 'share':
                 const defaultUrl = String(window.location);
-                showModal('SHARE_MODAL', {defaultUrl});
+                showModal('SHARE_MODAL', { defaultUrl });
+                break;
+            default:
                 break;
         }
-    };
+    }
 
     onForkClicked = () => {
         const { forkProject, selectedProjectId } = this.props;
@@ -112,6 +132,7 @@ export default class TopBar extends Component {
 
         const { showForkButton } = this.state;
         const { project, showOpenInLab } = this.props.view;
+        const { isProjectForking } = this.props;
 
         return (
             <div className={style.topbar}>
@@ -124,10 +145,10 @@ export default class TopBar extends Component {
                     <OnlyIf test={showOpenInLab}>
                         <a
                             className={style.openLab}
-                            href={window.location}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            title="Open in Lab"
+                            href={window.location.href}
+                            target='_blank'
+                            rel='noopener noreferrer'
+                            title='Open in Lab'
                         >
                             <IconAlphabetA style={{width: 17, height: 17}} />
                             <span>Open in Lab</span>
@@ -138,7 +159,7 @@ export default class TopBar extends Component {
                         <OnlyIf test={showForkButton}>
                             <ForkDropdownAction
                                 onForkClicked={this.onForkClicked}
-                                isProjectForking={this.props.isProjectForking}
+                                isProjectForking={isProjectForking}
                             />
                         </OnlyIf>
                         <ShareDropdownAction />
@@ -158,15 +179,3 @@ export default class TopBar extends Component {
         );
     }
 }
-
-TopBar.propTypes = {
-    selectedProjectName: PropTypes.string,
-    selectedProjectId: PropTypes.string,
-    showForkButton: PropTypes.bool.isRequired,
-    view: PropTypes.shape({
-        showSelectedProjectName: PropTypes.bool,
-        showOpenInLab: PropTypes.bool,
-    }),
-    hideUploadDialog: PropTypes.func.isRequired,
-    forkProject: PropTypes.func.isRequired
-};
