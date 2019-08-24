@@ -21,32 +21,9 @@ export default class Templates {
             id: 0,
             name: 'All',
         },
-        {
-            id: 1,
-            name: 'Crowdfunding',
-        },
-        {
-            id: 2,
-            name: 'Generic',
-        },
-        {
-            id: 3,
-            name: 'Introduction',
-        },
-        {
-            id: 4,
-            name: 'Math',
-        },
     ];
 
     static templates = [
-        {
-            id: 0,
-            name: 'Empty Project',
-            description: 'Empty project',
-            image: '/static/img/templates/img-empty.png',
-            categories: [0, 2],
-        },
         {
             id: 1,
             name: 'Hello World',
@@ -69,32 +46,11 @@ export default class Templates {
             categories: [0, 2],
         },
         {
-            id: 4,
-            name: 'Raise to Summon',
-            description: 'Raise Funds to summon a V.I.P. to a meetup/conference/hackathon',
-            image: '/static/img/templates/img-raise-to-summon.png',
-            categories: [0, 1],
-        },
-        {
-            id: 5,
-            name: 'Uncensorable News Feed',
-            description: 'Publish news that nobody can censor',
-            image: '/static/img/templates/img-news-feed.png',
+            id: 0,
+            name: 'Vanilla Project',
+            description: 'The simples form of project in order to get started from a clean slate',
+            image: '/static/img/templates/img-empty.png',
             categories: [0, 2],
-        },
-        {
-            id: 6,
-            name: 'Voting System',
-            description: 'Simple voting system that you can tweak according to your needs',
-            image: '/static/img/templates/img-voting-system.png',
-            categories: [0, 2],
-        },
-        {
-            id: 7,
-            name: 'SafeMath',
-            description: 'Math operations with safety checks',
-            image: '/static/img/templates/img-safemath.png',
-            categories: [0, 4],
         },
     ];
 }
