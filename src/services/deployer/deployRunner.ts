@@ -89,7 +89,7 @@ export class DeployRunner {
                     reject({ msg: 'Could not deploy contract using external provider.', channel: 2 });
                     return;
                 }
-                resolve({ msg: 'Got receipt: ' + hash, channel: 1, hash, contractName: this.contractName });
+                resolve({ msg: 'Got receipt: ' + hash, channel: 4, hash, contractName: this.contractName });
             });
         }));
     }
@@ -108,7 +108,7 @@ export class DeployRunner {
             })
             .then(tx => this.sendInternalTransaction(tx))
             .then((result: any) => {
-                observer.next({ channel: 1, msg: `Got receipt: ${result.hash}.` });
+                observer.next({ channel: 4, msg: `Got receipt: ${result.hash}.` });
                 observer.next(result);
                 observer.complete();
             })
@@ -152,7 +152,7 @@ export class DeployRunner {
                         setTimeout(getCode, 2000);
                         return;
                     }
-                    observer.next({ msg: 'Contract deployed at address ' + receipt.contractAddress + '.\nDone.', channel: 1 });
+                    observer.next({ msg: 'Contract deployed at address ' + receipt.contractAddress + '.\nDone.', channel: 4 });
 
                     // emit final deployer output
                     const fileName = this.contractName + '.' + this.environment.name;

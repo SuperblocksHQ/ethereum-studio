@@ -41,7 +41,13 @@ export function OutputPanel(props: IProps) {
                     { props.outputRows.map((row, index) => {
                         return row.msg.split('\n').map((line: string, lineIndex: number) => {
                             let cl = style.std1;
-                            if (row.channel === 2) { cl = style.std2; } else if (row.channel === 3) { cl = style.std3; }
+                            if (row.channel === 2) {
+                                cl = style.std2;
+                            } else if (row.channel === 3) {
+                                cl = style.std3;
+                            } else if (row.channel === 4) {
+                                cl = style.std4;
+                            }
                             return <div key={index + lineIndex} className={cl}>{line}</div>;
                         });
                     })}
