@@ -14,22 +14,17 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
+import { OutputPanel } from './OutputPanel';
 import { connect } from 'react-redux';
 import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
-import { EventLogPanel } from './eventLogPanel';
-import { eventLogActions } from '../../../../actions';
 
 const mapStateToProps = (state: any) => ({
-    eventLogRows: state.eventLog.rows
+    consoleRows: state.console.rows
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
-    return {
-        clearEventLog: () => {
-            dispatch(eventLogActions.clearEventLog());
-        }
-    };
+    return {};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(EventLogPanel);
+export default connect(mapStateToProps, mapDispatchToProps)(OutputPanel);

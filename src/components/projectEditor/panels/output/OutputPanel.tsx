@@ -15,38 +15,23 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from 'react';
-import classNames from 'classnames';
 import style from '../../style-console.less';
-import { IEventLogRow } from '../../../../models/state';
-import { IconTrash } from '../../../icons';
-import { Tooltip } from '../../../common';
+import { IConsoleRow } from '../../../../models/state';
 
 interface IProps {
-    eventLogRows: IEventLogRow[];
-    clearEventLog: () => void;
+    consoleRows: IConsoleRow[];
 }
 
-function getTime(row: IEventLogRow) {
-    return row.timestamp.getHours() + ':' + row.timestamp.getMinutes();
-}
-
-export function EventLogPanel(props: IProps) {
+export function OutputPanel(props: IProps) {
     return (
         <div className='scrollable-y'>
             <div className={style.console}>
-                <div className={style.actionMenu}>
-                    <button className={classNames([style.icon, 'btnNoBg'])} onClick={props.clearEventLog}>
-                        <Tooltip title='Clear All'>
-                            <IconTrash />
-                        </Tooltip>
-                    </button>
-                </div>
                 <div className={style.terminal}>
-                    { props.eventLogRows.map((row, index) => {
+                    { props.consoleRows.map((row, index) => {
                         return row.msg.split('\n').map((line: string, lineIndex: number) => {
                             let cl = style.std1;
                             if (row.channel === 2) { cl = style.std2; } else if (row.channel === 3) { cl = style.std3; }
-                            return <div key={index + lineIndex} className={cl}>{getTime(row)}<span>&nbsp;&nbsp;&nbsp;&nbsp;</span>{line}</div>;
+                            return <div key={index + lineIndex} className={cl}>{line}</div>;
                         });
                     })}
                 </div>

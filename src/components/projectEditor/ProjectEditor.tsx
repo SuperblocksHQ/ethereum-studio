@@ -21,7 +21,7 @@ import Panes from './panes';
 import TopBar from '../topbar';
 import BottomBar from './bottomBar';
 import ContactContainer from '../contactContainer';
-import { Preview, TransactionLogPanel, Console, Explorer, EventLogPanel, InteractPanel } from './panels';
+import { Preview, TransactionLogPanel, OutputPanel, Explorer, MessagesPanel, InteractPanel } from './panels';
 import { IconTransactions, IconShowPreview, IconPanelOutput, IconFolderOpen, IconEventLog, IconInteract } from '../icons';
 import { SideButton } from './sideButton';
 import { SplitterLayout } from './splitterLayout';
@@ -158,14 +158,14 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                             <OnlyIf test={this.isPanelOpen(Panels.CompilerOutput)}>
                                 <div className={style.bottomPanelContainer}>
                                     <Panel name='Output' onClose={() => closePanel(Panels.CompilerOutput)} dragging={sidePanelDragging}>
-                                        <Console />
+                                        <OutputPanel />
                                     </Panel>
                                 </div>
                             </OnlyIf>
                             <OnlyIf test={this.isPanelOpen(Panels.EventLog)}>
                                 <div className={style.bottomPanelContainer}>
                                     <Panel name='Messages' onClose={() => closePanel(Panels.EventLog)} dragging={sidePanelDragging}>
-                                        <EventLogPanel />
+                                        <MessagesPanel />
                                     </Panel>
                                 </div>
                             </OnlyIf>
