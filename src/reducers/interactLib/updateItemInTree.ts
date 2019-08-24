@@ -14,8 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { IProjectItem, IDeployedContract } from '../../models';
-import { replaceOrRemoveInArray, replaceInArray } from '../utils';
+import { IDeployedContract } from '../../models';
 
 function updateItemInTreeImpl(item: IDeployedContract, id: string, modify: (i: IDeployedContract) => Nullable<IDeployedContract>): Nullable<IDeployedContract> {
     // TODO - Fix this

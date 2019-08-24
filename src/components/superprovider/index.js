@@ -91,7 +91,7 @@ export default class SuperProvider {
         const send = (payload, endpoint, callback) => {
             // Send request on given endpoint
             // TODO: possibly set from and gasLimit.
-            if (endpoint.toLowerCase() == 'http://superblocks-browser') {
+            if (endpoint.toLowerCase() === 'http://superblocks-browser') {
                 this.projectItem.functions.EVM.getProvider().sendAsync(
                     payload,
                     callback
@@ -270,7 +270,7 @@ export default class SuperProvider {
     _getNonce = (obj, cb) => {
         var web3 = this._getWeb3(obj.endpoint);
         web3.eth.getTransactionCount(obj.account.address, (err, res) => {
-            if (err == null) {
+            if (err === null) {
                 obj.account.nonce = res;
                 cb(0);
                 return;
