@@ -19,9 +19,7 @@ import { previewEpics } from './preview';
 import { projectsEpics } from './projects';
 import { appEpics } from './app';
 import { explorerEpics } from './explorer';
-import { userEpics } from './user';
 import { urlParametersEpics } from './urlParameters';
-import { loginEpics } from './login';
 import { panesEpics } from './panes';
 import { compilerEpics } from './compiler';
 import { deployerEpics } from './deployer';
@@ -33,9 +31,10 @@ export const epics = [
     ...appEpics,
     ...explorerEpics,
     ...urlParametersEpics,
-    ...userEpics,
-    ...loginEpics,
     ...panesEpics,
     ...compilerEpics,
     ...deployerEpics
+    // Disable this 2 categories for now
+    // ...userEpics,
+    // ...loginEpics,
 ];
