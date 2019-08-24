@@ -22,7 +22,7 @@ import TopBar from '../topbar';
 import BottomBar from './bottomBar';
 import ContactContainer from '../contactContainer';
 import { Preview, TransactionLogPanel, Console, Explorer, EventLogPanel, InteractPanel } from './panels';
-import { IconTransactions, IconShowPreview, IconPanelRun, IconFolderOpen, IconEventLog, IconInteract } from '../icons';
+import { IconTransactions, IconShowPreview, IconPanelOutput, IconFolderOpen, IconEventLog, IconInteract } from '../icons';
 import { SideButton } from './sideButton';
 import { SplitterLayout } from './splitterLayout';
 import { Panel } from './panel';
@@ -157,25 +157,25 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                         <div className={style.bottomButtonsContainer}>
                             <OnlyIf test={this.isPanelOpen(Panels.CompilerOutput)}>
                                 <div className={style.bottomPanelContainer}>
-                                    <Panel name='Run' onClose={() => closePanel(Panels.CompilerOutput)} dragging={sidePanelDragging}>
+                                    <Panel name='Output' onClose={() => closePanel(Panels.CompilerOutput)} dragging={sidePanelDragging}>
                                         <Console />
                                     </Panel>
                                 </div>
                             </OnlyIf>
                             <OnlyIf test={this.isPanelOpen(Panels.EventLog)}>
                                 <div className={style.bottomPanelContainer}>
-                                    <Panel name='Event Log' onClose={() => closePanel(Panels.EventLog)} dragging={sidePanelDragging}>
+                                    <Panel name='Messages' onClose={() => closePanel(Panels.EventLog)} dragging={sidePanelDragging}>
                                         <EventLogPanel />
                                     </Panel>
                                 </div>
                             </OnlyIf>
 
-                            <SideButton name='Run'
-                                icon={<IconPanelRun />}
+                            <SideButton name='Output'
+                                icon={<IconPanelOutput />}
                                 onClick={() => togglePanel(Panels.CompilerOutput)}  />
 
                             <div style={{marginLeft: 'auto'}}>
-                                <SideButton name='Event Log'
+                                <SideButton name='Messages'
                                     icon={<IconEventLog />}
                                     onClick={() => togglePanel(Panels.EventLog)}  />
                             </div>
