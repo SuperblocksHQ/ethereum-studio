@@ -15,7 +15,7 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { Component } from 'react';
-import Topbar from '../topbar';
+import DashboardTopBar from '../dashboardTopbar';
 import style from './style.less';
 import { SideMenu, SideMenuItem, SideMenuFooter } from '../sideMenu';
 import { LoginModal } from '../../modals';
@@ -40,7 +40,7 @@ export default class ProjectDashboard extends Component<IProps> {
             <div className={style.projectDashboard}>
                 { isAuthenticated ?
                     <React.Fragment>
-                        <Topbar />
+                        <DashboardTopBar />
                         <div className={style.content}>
                             <SideMenu>
                                 <SideMenuItem

@@ -22,7 +22,7 @@ import { IconConfigure, IconPlusTransparent } from '../icons';
 import { LetterAvatar } from '../common';
 import { Loading } from '../common';
 import Loadable from 'react-loadable';
-import Topbar from './topbar';
+import DashboardTopBar from './dashboardTopbar';
 
 const ProjectList = Loadable({
     loader: () => import(/* webpackChunkName: "ProjectList" */'./projectList'),
@@ -59,7 +59,7 @@ export default class Dashboard extends Component<IProps> {
             <div className={style.dashboard}>
                 { isAuthenticated ?
                     <React.Fragment>
-                        <Topbar />
+                        <DashboardTopBar />
                         <div className={style.content}>
                             <SideMenu>
                                 <SideMenuHeader title='My organizations' />

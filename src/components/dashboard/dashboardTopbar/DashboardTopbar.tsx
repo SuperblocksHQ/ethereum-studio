@@ -17,8 +17,8 @@
 import React, { Component } from 'react';
 import style from './style.less';
 import { HelpAction, NewProjectAction } from '../../common';
-import LoggedInButton from './../../login/LoggedInButton';
-import { IUser } from './../../../models/user.model';
+import LoggedInButton from '../../login/LoggedInButton';
+import { IUser } from '../../../models/user.model';
 import { Link } from 'react-router-dom';
 
 interface IProps {
@@ -27,7 +27,7 @@ interface IProps {
     isAuthenticated: boolean;
 }
 
-export default class Topbar extends Component<IProps> {
+export default class DashboardTopBar extends Component<IProps> {
 
     render() {
         const { userProfile, logout, isAuthenticated } = this.props;

@@ -17,7 +17,7 @@
 import { connect } from 'react-redux';
 import { authActions } from '../../../actions';
 import { userSelectors, authSelectors } from '../../../selectors';
-import Topbar from './Topbar';
+import DashboardTopBar from './DashboardTopBar';
 import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
 
@@ -34,4 +34,4 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Topbar);
+export default connect(mapStateToProps, mapDispatchToProps)(DashboardTopBar);
