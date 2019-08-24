@@ -1,10 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { SimpleModal } from './../../../modals/simpleModal';
+import { SimpleModal } from '../../../modals/simpleModal';
 
-export function CannotExportModal(props) {
+interface IProps {
+    onClose: () => void;
+}
+
+export function CannotExportModal(props: IProps) {
     return (
-        <SimpleModal onClose={props.hideModal}>
+        <SimpleModal onClose={props.onClose}>
             <h2>Cannot export DApp for the Browser network</h2>
             <div style={{ textAlign: 'center' }}>
                 <p>Computer says no.</p>
@@ -17,7 +20,7 @@ export function CannotExportModal(props) {
                     choose any other network than Browser.
                 </p>
                 <div style={{marginTop: 15}}>
-                    <a className="btn2" onClick={props.onClose}>
+                    <a className='btn2' onClick={props.onClose}>
                         Thanks, but I already knew that
                     </a>
                 </div>
@@ -25,7 +28,3 @@ export function CannotExportModal(props) {
         </SimpleModal>
     );
 }
-
-CannotExportModal.propTypes = {
-    onClose: PropTypes.func.isRequired
-};

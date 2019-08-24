@@ -32,6 +32,7 @@ import outputLog from './outputLog.reducer';
 import modal from './modal.reducer';
 import transactions from './transactions.reducer';
 import interact from './interact.reducer';
+import preview from './preview.reducer';
 import { AnyAction } from 'redux';
 
 const rehydrated = (state = false, action: AnyAction) => {
@@ -62,5 +63,6 @@ export default {
     outputLog,
     transactions,
     interact,
-    modal
+    modal,
+    preview
 };

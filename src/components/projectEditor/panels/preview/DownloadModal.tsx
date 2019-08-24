@@ -1,14 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { SimpleModal } from './../../../modals/simpleModal';
+import { SimpleModal } from '../../../modals/simpleModal';
+import { IEnvironment } from '../../../../models/state';
 
-export function DownloadModal(props) {
+interface IProps {
+    onDownload: () => void;
+    onClose: () => void;
+    environment: IEnvironment;
+}
+
+export function DownloadModal(props: IProps) {
     return (
         <SimpleModal onClose={props.onClose}>
             <h2>Download DApp for the {props.environment} network</h2>
-            <div style={{ 'textAlign': 'center' }}>
+            <div style={{ textAlign: 'center' }}>
                 <p>
-                    You are downloading this DApp preconfigured for the{' '}
+                    You are downloading this DApp pre-configured for the{' '}
                     {props.environment} network.
                 </p>
                 <p>
@@ -21,12 +28,12 @@ export function DownloadModal(props) {
                     (decentralized) web host of choice.
                 </p>
                 <div style={{marginTop: 15}}>
-                    <a  className="btn2"
+                    <a  className='btn2'
                         style={{marginRight: 30}}
                         onClick={props.onClose}>
                         Cancel
                     </a>
-                    <a className="btn2 filled" onClick={props.onDownload}>
+                    <a className='btn2 filled' onClick={props.onDownload}>
                         Download
                     </a>
                 </div>

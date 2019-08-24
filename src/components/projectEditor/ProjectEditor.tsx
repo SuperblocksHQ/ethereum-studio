@@ -21,7 +21,7 @@ import Panes from './panes';
 import TopBar from '../topbar';
 import BottomBar from './bottomBar';
 import ContactContainer from '../contactContainer';
-import { Preview, TransactionLogPanel, OutputPanel, Explorer, MessagesPanel, InteractPanel } from './panels';
+import { PreviewPanel, TransactionLogPanel, OutputPanel, Explorer, MessagesPanel, InteractPanel } from './panels';
 import { IconTransactions, IconShowPreview, IconPanelOutput, IconFolderOpen, IconEventLog, IconInteract } from '../icons';
 import { SideButton } from './sideButton';
 import { SplitterLayout } from './splitterLayout';
@@ -142,10 +142,7 @@ export class ProjectEditor extends React.Component<IProps, IState> {
 
                                         { this.isPanelOpen(Panels.Preview) &&
                                             <Panel name='Preview' onClose={() => closePanel(Panels.Preview)} dragging={sidePanelDragging}>
-                                                <Preview
-                                                    dragging={sidePanelDragging}
-                                                    onClose={() => closePanel(Panels.Preview)}
-                                                />
+                                                <PreviewPanel />
                                             </Panel>
                                         }
 

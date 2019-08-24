@@ -1,8 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { SimpleModal } from './../../../modals/simpleModal';
+import { SimpleModal } from '../../../modals/simpleModal';
 
-export function NoExportableContentModal(props) {
+interface IProps {
+    onClose: () => void;
+}
+
+export function NoExportableContentModal(props: IProps) {
     return (
         <SimpleModal onClose={props.onClose}>
             <h2>Error: Cannot download DApp.</h2>
@@ -10,7 +13,3 @@ export function NoExportableContentModal(props) {
         </SimpleModal>
     );
 }
-
-NoExportableContentModal.propTypes = {
-    onClose: PropTypes.func.isRequired
-};
