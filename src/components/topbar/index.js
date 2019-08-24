@@ -16,32 +16,28 @@
 
 import { connect } from 'react-redux';
 import TopBar from './Topbar';
-import { ipfsSelectors, viewSelectors } from '../../selectors';
-import { projectSelectors } from '../../selectors';
-import { ipfsActions } from '../../actions';
-import * as embedUtils from '../../utils/embed';
+import { viewSelectors, projectSelectors, userSelectors } from '../../selectors';
+import { projectsActions, modalActions } from '../../actions';
 
 const mapStateToProps = state => ({
-    selectedProjectName: projectSelectors.getSelectedProjectName(state),
-    ipfsActions: {
-        showUploadDialog: ipfsSelectors.getShowUploadDialog(state),
-        showUploadButton: ipfsSelectors.getShowUploadButton(state),
-        showForkButton: ipfsSelectors.getShowForkButton(state),
-    },
+    selectedProjectName: projectSelectors.getProjectName(state),
+    selectedProjectId: projectSelectors.getProjectId(state),
+    showForkButton: userSelectors.getShowForkButton(state),
     view: {
-        showSelectedProjectName: viewSelectors.getShowTopBarSelectedProjectName(state),
+        project: projectSelectors.getProject(state),
         showOpenInLab: viewSelectors.getShowTopBarOpenInLab(state),
-    }
+    },
+    isProjectForking: userSelectors.isProjectForking(state),
 });
 
 function mapDispatchToProps(dispatch) {
     return {
-        hideUploadDialog: () => {
-            dispatch(ipfsActions.hideUploadDialog())
+        forkProject: (projectId, redirect) => {
+            dispatch(projectsActions.forkProject(projectId, redirect))
         },
-        forkProject: () => {
-            dispatch(ipfsActions.forkProject())
-        },
+        showModal: (modalType, modalProps) => {
+            dispatch(modalActions.showModal(modalType, modalProps));
+        }
     };
 }
 

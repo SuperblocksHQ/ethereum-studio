@@ -20,7 +20,7 @@ import { Provider } from 'react-redux';
 import App from './components/app';
 import configureStore from './store';
 import { PersistGate } from 'redux-persist/es/integration/react';
-import { AnalyticsProvider, Analytics, LogOnMount } from './utils/analytics';
+import { AnalyticsProvider, LogOnMount } from './utils/analytics';
 
 // Load generic CSS
 import './style/index.less';

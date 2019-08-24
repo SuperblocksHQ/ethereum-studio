@@ -15,7 +15,6 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 export const viewSelectors = {
-    getShowBottomBarNote: state => state.view.showBottomBarNote,
     getShowTopBarSelectedProjectName: state => state.view.showTopBarSelectedProjectName,
     getShowTopBarOpenInLab: state => state.view.showTopBarOpenInLab,
 }

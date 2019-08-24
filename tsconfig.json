@@ -14,7 +14,9 @@
         "noEmit": true,
         "noEmitOnError": true,
         "allowSyntheticDefaultImports": true,
-        "lib": ["es2015", "dom", "esnext"]
+        "lib": ["es2015", "dom", "esnext"],
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true
     },
     "include": [
         "./src/**/*.ts",

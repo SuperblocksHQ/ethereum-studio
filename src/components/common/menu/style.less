@@ -1,0 +1,91 @@
+// Copyright 2019 Superblocks AB
+//
+// This file is part of Superblocks Lab.
+//
+// Superblocks Lab is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation version 3 of the License.
+//
+// Superblocks Lab is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
+
+.parentMenu {
+	position: relative;
+	color: white;
+
+	&>.title {
+		padding-left: 20px;
+	}
+
+	&.active {
+		background-color: rgba(128, 46, 255, 0.1);
+		color: #fff;
+		border-color: transparent;	
+	}
+
+	&>.childrenMenu {
+		position: absolute;
+		top: 0;
+		left: 100%;
+		background: #141414;
+		width: 100%;
+		box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+		padding: 4px 0px;
+	}
+
+	&:first-of-type>.childrenMenu {
+		margin-top: -4px;
+	}
+}
+.title {
+	position: relative;
+	padding: 2.7px 10px;
+	padding-left: 0px;
+	display: flex;
+	color: white;
+	transition: background-color .15s, border-color;
+
+	&:hover,
+	&.active {
+		background-color: rgba(128, 46, 255, 0.1);
+		cursor: pointer;
+	}
+
+	&.disabled {
+		color: #8a8a8a;
+
+		&:hover {
+			cursor: default;
+			border-color: transparent;
+			background-color: transparent;
+		}
+	}
+}
+
+.description {
+	margin-left: auto;
+	font-size: 12px;
+}
+
+.arrowIcon {
+	transform: rotate(90deg);
+}
+
+.activeContainer {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 26px;
+}
+
+.divider {
+	height: 1px;
+	width: 100%;
+	background: #3c3c3c;
+	margin: 5px 0px;
+}

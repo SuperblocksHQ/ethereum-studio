@@ -27,7 +27,6 @@
     line-height: 190%;
     color: #fff;
     border-bottom: 1px solid rgb(18, 21, 22);
-    padding-left: 35px;
     .container {
         display: flex;
         align-content: center;
@@ -49,7 +48,7 @@
         margin-left: auto;
     }
     .logo {
-        margin-left: 30px;
+        margin-left: 10px;
     }
     .openLab {
         display: flex;
@@ -58,8 +57,9 @@
         border-radius: 4px;
         padding: 0px 10px;
         transition: .2s background;
-        margin-right: 15px;
         border: 1px solid #8641f2;
+        min-width: 130px;
+        margin: 8px 15px 8px 4px;
         span {
             margin-left: 10px;
         }
@@ -67,37 +67,78 @@
             background-color: #7237CF;
         }
     }
-    .projectName {
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-    }
     .tools {
         margin-left: 45px;
         height: 100%;
     }
+    .actionsLeft,
     .actionsRight {
         display: flex;
-        margin-right: 14px;
-        margin-left: auto;
+        flex: 1;
         height: 100%;
     }
-    .actionHelp {
+    .actionsRight {
+        justify-content: flex-end;
+    }
+    .actionDialogMenu {
         display: flex;
-        margin-left: 10px;
+        .action {
+            padding: 0px 5px;
+        }
+    }
+    .actionHelp,
+    .actionUpload,
+    .actionFork,
+    .actionShare {
+        position: relative;
+        display: flex;
         height: 100%;
+    }
+    .actionDashboard {
+        padding: 0px 8px;
+    }
+    .actionMenu {
+        display: flex;
+        height: 100%;
+        .action {
+            border-color: none;
+            padding: 0px 5px;
+        }
+        .actionFork {
+            padding-right: 10px;
+            padding-left: 10px;
+        }
+        .actionShare {
+            padding-left: 0px;
+            padding-right: 0px;
+        }
+        &:hover {
+            border-color: @primary-color;
+        }
+    }
+    .actionUpload {
+        margin-left: 10px;
     }
     .action {
         display: flex;
         align-items: center;
         align-content: center;
-        border-bottom: 2px solid transparent;
-        transition: all 0.3s ease;
+        transition: background .15s, border-color .15s;
         height: 100%;
         cursor: pointer;
+        border-bottom: 2px solid transparent;
         &:hover {
-            color: #E0E0E0;
             border-color: @primary-color;
+            background-color: @action-color-hover;
+        }
+        a {
+            padding: 0 5px;
+        }
+    }
+    .actionRight {
+        padding: 0 5px;
+        &.noBorder:hover {
+            border-color: transparent;
         }
     }
     .icon {
@@ -106,32 +147,6 @@
         height: 15px;
         right: 7px;
     }
-    .projectButton {
-        display: flex;
-        height: 50px;
-        padding: 0;
-        border-radius: 3px;
-        max-width: none;
-        border: none;
-        color: #fff;
-        z-index: 2;
-        margin-left: auto;
-        margin-right: auto;
-        &.projectButtonCenter {
-            flex-grow: 2;
-            justify-content: center;
-        }
-        .projectText {
-            margin-left: 3px;
-            font-size: 1.2em;
-            font-weight: 700;
-        }
-        .dropDown {
-            padding: 4px;
-            margin-left: 12px;
-        }
-    }
-
     .projectMenu {
         display: block;
         position: fixed;
@@ -243,45 +258,6 @@
             }
         }
     }
-
-    .helpMenu {
-        display: block;
-        position: absolute;
-        right: 40px;
-        top: 45px;
-        border-radius: 4px;
-        background-color: #fff;
-        min-width: 200px;
-        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-        z-index: 2;
-        color: #262E33;
-        padding: 10px 0;
-        transition: visibility 0s, opacity 0.2s ease;
-        .title {
-            font-weight: 600;
-            margin-bottom: 5px;
-            padding-left: 24px;
-        }
-        ul {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-            >li {
-
-                &:hover {
-                    background: @white-color-hover;
-                }
-            }
-        }
-        a {
-            display: flex;
-            padding: 2px 24px;
-            color: #262E33;
-        }
-        .communityIcon {
-            margin-left: 10px;
-        }
-    }
     .show {
         visibility: visible;
         opacity: 1;
@@ -292,6 +268,50 @@
         overflow: hidden;
         text-overflow: ellipsis;
     }
+
+    .projectActions {
+        display: flex;
+        align-items: center;
+        margin-left: 20px;
+        height: 100%;
+    }
 }
 
-
+.helpMenu {
+    display: block;
+    position: absolute;
+    right: 40px;
+    top: 45px;
+    border-radius: 4px;
+    background-color: #141414;
+    min-width: 200px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 2;
+    color: #fff;
+    padding: 10px 0;
+    transition: visibility 0s, opacity 0.2s ease;
+    .title {
+        font-weight: 600;
+        margin-bottom: 5px;
+        padding-left: 24px;
+    }
+    ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        >li {
+            transition: background .15s;
+            &:hover {
+                background: rgba(128, 46, 255, 0.1);
+            }
+        }
+    }
+    a {
+        display: flex;
+        padding: 2px 24px;
+        color: #262E33;
+    }
+    .communityIcon {
+        margin-left: 10px;
+    }
+}

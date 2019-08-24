@@ -18,7 +18,6 @@ const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin-alt');
 
-
 // Webpack uses `publicPath` to determine where the app is being served from.
 // In development, we always serve from the root. This makes config easier.
 const publicPath = '/';
@@ -77,7 +76,7 @@ module.exports = {
   mode: 'development',
   // You may want 'eval' instead if you prefer to see the compiled output in DevTools.
   // See the discussion in https://github.com/facebook/create-react-app/issues/343
-  devtool: 'cheap-module-source-map',
+  devtool: 'cheap-module-eval-source-map',
   // These are the "entry points" to our application.
   // This means they will be the "root" imports that are included in JS bundle.
   entry: [
@@ -106,25 +105,34 @@ module.exports = {
     // containing code from all our entry points, and the Webpack runtime.
     filename: 'static/js/bundle.js',
     // There are also additional JS chunk files if you use code splitting.
-    chunkFilename: 'static/js/[name].chunk.js',
+    chunkFilename: 'static/js/[name].[contentHash:4].js',
     // This is the URL that app is served from. We use "/" in development.
     publicPath: publicPath,
     // Point sourcemap entries to original disk location (format as URL on Windows)
     devtoolModuleFilenameTemplate: info =>
       path.resolve(info.absoluteResourcePath).replace(/\\/g, '/'),
   },
-  optimization: {
-    // Automatically split vendor and commons
-    // https://twitter.com/wSokra/status/969633336732905474
-    // https://medium.com/webpack/webpack-4-code-splitting-chunk-graph-and-the-splitchunks-optimization-be739a861366
-    splitChunks: {
-      chunks: 'all',
-      name: false,
+    optimization: {
+        runtimeChunk: 'multiple',
+        splitChunks: {
+            chunks: 'all',
+            maxInitialRequests: 20,
+            minSize: 70000,
+            cacheGroups: {
+                vendor: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name(module) {
+                        // get the name. E.g. node_modules/packageName/not/this/part.js
+                        // or node_modules/packageName
+                        const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
+
+                        // npm package names are URL-safe, but some servers don't like @ symbols
+                        return `npm.${packageName.replace('@', '')}`;
+                    },
+                },
+            },
+        },
     },
-    // Keep the runtime chunk seperated to enable long term caching
-    // https://twitter.com/wSokra/status/969679223278505985
-    runtimeChunk: true,
-  },
   resolve: {
     // This allows you to set a fallback for where Webpack should look for modules.
     // We placed these paths second because we want `node_modules` to "win"
@@ -177,7 +185,7 @@ module.exports = {
         use: [
             {
                 loader: 'tslint-loader',
-                options: { emitErrors: true, failOnHint: true, typeCheck: true, configFile: paths.appTsLint, tsConfigFile: paths.appTsConfig }
+                options: { emitErrors: true, failOnHint: true, typeCheck: false, configFile: paths.appTsLint, tsConfigFile: paths.appTsConfig }
             }
         ],
         include: paths.appSrc,
@@ -378,7 +386,7 @@ module.exports = {
         module: 'esnext',
         moduleResolution: 'node',
         resolveJsonModule: true,
-        isolatedModules: true,
+        isolatedModules: false,
         noEmit: true,
         jsx: 'preserve',
       },
@@ -396,8 +404,8 @@ module.exports = {
     }),
     new CopyWebpackPlugin([{ context: `src/assets`, from: `**/*` }]),
     new CopyWebpackPlugin([ { from: 'node_modules/monaco-editor/min/vs', to: 'vs', } ]),
-    new CopyWebpackPlugin([ { context: `src/components/solc/dist`, from: '**/*', to: 'solc', } ]),
-    new CopyWebpackPlugin([ { context: `src/components/evm/dist`, from: '**/*', to: 'evm', } ]),
+    new CopyWebpackPlugin([ { context: `src/services/solc/dist`, from: '**/*', to: 'solc', } ]),
+    new CopyWebpackPlugin([ { context: `src/services/evm/dist`, from: '**/*', to: 'evm', } ]),
     new CopyWebpackPlugin([ { context: `src/components/superprovider/dist`, from: 'web3provider.js', to: 'static/js', } ])
   ],
 
