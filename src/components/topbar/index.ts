@@ -17,7 +17,7 @@
 import { connect } from 'react-redux';
 import TopBar from './Topbar';
 import { viewSelectors, projectSelectors, userSelectors } from '../../selectors';
-import { projectsActions, modalActions } from '../../actions';
+import { projectsActions, modalActions, viewActions } from '../../actions';
 import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
 
@@ -30,6 +30,7 @@ const mapStateToProps = (state: any) => ({
         showOpenInLab: viewSelectors.getShowTopBarOpenInLab(state),
     },
     isProjectForking: userSelectors.isProjectForking(state),
+    showShareModal: viewSelectors.getShowShareModal(state)
 });
 
 function mapDispatchToProps(dispatch: Dispatch<AnyAction>) {
@@ -39,6 +40,9 @@ function mapDispatchToProps(dispatch: Dispatch<AnyAction>) {
         },
         showModal: (modalType: string, modalProps: any) => {
             dispatch(modalActions.showModal(modalType, modalProps));
+        },
+        toggleShareModal: () => {
+            dispatch(viewActions.toggleShareModal());
         }
     };
 }

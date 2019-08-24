@@ -1,4 +1,4 @@
-// Copyright 2018 Superblocks AB
+// Copyright 2019 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -14,11 +14,17 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export const viewSelectors = {
-    getShowTopBarSelectedProjectName: state => state.view.showTopBarSelectedProjectName,
-    getShowTopBarOpenInLab: state => state.view.showTopBarOpenInLab,
-    getShowShareModal: state => state.view.showShareModal,
-}
+import React from 'react';
+import classNames from 'classnames';
+import {
+    IconMenu,
+} from '../../icons';
+import style from '../style.less';
 
-
-
+export const MenuAction = () => (
+    <div className={style.action}>
+        <button className={classNames([style.container, 'btnNoBg'])}>
+            <IconMenu />
+        </button>
+    </div>
+);

@@ -1,4 +1,4 @@
-// Copyright 2018 Superblocks AB
+// Copyright 2019 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -14,11 +14,11 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export const viewSelectors = {
-    getShowTopBarSelectedProjectName: state => state.view.showTopBarSelectedProjectName,
-    getShowTopBarOpenInLab: state => state.view.showTopBarOpenInLab,
-    getShowShareModal: state => state.view.showShareModal,
-}
-
-
-
+export const viewActions = {
+    TOGGLE_SHARE_MODAL: 'TOGGLE_SHARE_MODAL',
+    toggleShareModal() {
+        return {
+            type: viewActions.TOGGLE_SHARE_MODAL,
+        };
+    },
+};

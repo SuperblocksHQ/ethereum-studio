@@ -14,11 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export const viewSelectors = {
-    getShowTopBarSelectedProjectName: state => state.view.showTopBarSelectedProjectName,
-    getShowTopBarOpenInLab: state => state.view.showTopBarOpenInLab,
-    getShowShareModal: state => state.view.showShareModal,
-}
-
-
-
+export * from './ForkDropdownAction';
+export * from './MenuAction';
+export * from './PreferencesAction';
+export * from './ShareDropdownAction';

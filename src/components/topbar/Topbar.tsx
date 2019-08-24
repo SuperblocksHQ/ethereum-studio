@@ -15,67 +15,19 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { Component } from 'react';
-import classNames from 'classnames';
 import style from './style.less';
 import { DropdownContainer } from '../common/dropdown';
-import { Tooltip, HelpAction, NewProjectAction } from '../common';
+import { HelpAction, NewProjectAction } from '../common';
 import {
-    IconPreferences,
-    IconFork,
-    IconShare,
-    IconMenu,
     IconAlphabetA,
-    IconLoader,
 } from '../icons';
 import OnlyIf from '../onlyIf';
 import NetworkAccountSelector from '../networkAccountSelector';
 import MenuDropdownDialog from './menu';
 import ProjectTitle from './projectTitle';
 import { IProject } from '../../models';
-
-const MenuAction = () => (
-    <div className={style.action}>
-        <button className={classNames([style.container, 'btnNoBg'])}>
-            <IconMenu />
-        </button>
-    </div>
-);
-
-const PreferencesAction = () => (
-    <div className={classNames([style.action, style.actionRight])}>
-        <Tooltip title='Preferences'>
-            <button className={classNames([style.container, 'btnNoBg'])}>
-                <IconPreferences />
-            </button>
-        </Tooltip>
-    </div>
-);
-
-interface IForkDropdownActionProps {
-    onForkClicked: () => void;
-    isProjectForking: boolean;
-}
-const ForkDropdownAction = (props: IForkDropdownActionProps) => {
-    const { onForkClicked, isProjectForking } = props;
-    return(
-        <div className={style.action}>
-            <button className={classNames([style.actionFork, style.container, 'btnNoBg'])} onClick={onForkClicked} disabled={isProjectForking}>
-                { isProjectForking
-                    ? <IconLoader />
-                    : <IconFork />
-                }
-                <span>Fork</span>
-            </button>
-        </div>
-    );
-};
-
-const ShareDropdownAction = () => (
-    <button className={classNames([style.container, 'btnNoBg'])}>
-        <IconShare />
-        <span>Share</span>
-    </button>
-);
+import ShareModal from '../modals/shareModal';
+import { ForkDropdownAction, MenuAction, PreferencesAction, ShareDropdownAction } from './actions';
 
 interface IView {
     showOpenInLab: boolean;
@@ -88,8 +40,10 @@ interface IProps {
     showForkButton: boolean;
     isProjectForking: boolean;
     view: IView;
+    showShareModal: boolean;
     forkProject: (projectId: string, redirect: boolean) => void;
     showModal: (modalType: string, modalProps: any) => void;
+    toggleShareModal: () => void;
 }
 export default class TopBar extends Component<IProps> {
 
@@ -132,7 +86,7 @@ export default class TopBar extends Component<IProps> {
 
         const { showForkButton } = this.state;
         const { project, showOpenInLab } = this.props.view;
-        const { isProjectForking } = this.props;
+        const { isProjectForking, toggleShareModal, showShareModal } = this.props;
 
         return (
             <div className={style.topbar}>
@@ -145,7 +99,7 @@ export default class TopBar extends Component<IProps> {
                     <OnlyIf test={showOpenInLab}>
                         <a
                             className={style.openLab}
-                            href={window.location.href}
+                            href={String(window.location)}
                             target='_blank'
                             rel='noopener noreferrer'
                             title='Open in Lab'
@@ -162,7 +116,9 @@ export default class TopBar extends Component<IProps> {
                                 isProjectForking={isProjectForking}
                             />
                         </OnlyIf>
-                        <ShareDropdownAction />
+                        <ShareDropdownAction
+                            toggleShareModal={toggleShareModal}
+                        />
                     </div>
                 </div>
                 <ProjectTitle
@@ -175,6 +131,12 @@ export default class TopBar extends Component<IProps> {
                     </div>
                     <HelpAction />
                 </div>
+                <OnlyIf test={showShareModal}>
+                    <ShareModal
+                        defaultUrl={String(window.location)}
+                        hideModal={toggleShareModal}
+                    />
+                </OnlyIf>
             </div>
         );
     }
