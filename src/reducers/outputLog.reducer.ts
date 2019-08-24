@@ -14,22 +14,31 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { connect } from 'react-redux';
-import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
-import { MessagesPanel } from './MessagesPanel';
-import { messageLogActions } from '../../../../actions';
+import { outputLogActions } from '../actions';
+import { IOutputLogState } from '../models/state';
 
-const mapStateToProps = (state: any) => ({
-    messageLogRows: state.messageLog.rows
-});
-
-const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
-    return {
-        clearMessageLog: () => {
-            dispatch(messageLogActions.clearMessageLog());
-        }
-    };
+const initialState: IOutputLogState = {
+    rows: [],
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(MessagesPanel);
+export default function consoleReducer(state = initialState, action: AnyAction) {
+    switch (action.type) {
+        case outputLogActions.ADD_ROWS: {
+            return {
+                ...state,
+                rows: state.rows.concat(action.data).slice(0, 5000) // limit total number or rows
+            };
+        }
+        case outputLogActions.CLEAR_OUTPUT_LOG: {
+            return {
+                ...state,
+                rows: initialState.rows
+            };
+        }
+
+        default:
+            return state;
+    }
+}
+

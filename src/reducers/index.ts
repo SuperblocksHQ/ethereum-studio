@@ -26,8 +26,9 @@ import user from './user.reducer';
 import view from './view.reducer';
 import compiler from './compiler.reducer';
 import deployer from './deployer.reducer';
-import console from './console.reducer';
-import eventLog from './eventLog.reducer';
+import console from './outputLog.reducer';
+import messageLog from './messageLog.reducer';
+import outputLog from './outputLog.reducer';
 import modal from './modal.reducer';
 import transactions from './transactions.reducer';
 import interact from './interact.reducer';
@@ -57,7 +58,8 @@ export default {
     compiler,
     deployer,
     console,
-    eventLog,
+    messageLog,
+    outputLog,
     transactions,
     interact,
     modal

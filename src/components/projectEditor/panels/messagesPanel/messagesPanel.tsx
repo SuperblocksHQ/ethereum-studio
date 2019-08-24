@@ -17,16 +17,16 @@
 import React from 'react';
 import classNames from 'classnames';
 import style from '../../style-console.less';
-import { IEventLogRow } from '../../../../models/state';
+import { IMessageLogRow } from '../../../../models/state';
 import { IconTrash } from '../../../icons';
 import { Tooltip } from '../../../common';
 
 interface IProps {
-    eventLogRows: IEventLogRow[];
-    clearEventLog: () => void;
+    messageLogRows: IMessageLogRow[];
+    clearMessageLog: () => void;
 }
 
-function getTime(row: IEventLogRow) {
+function getTime(row: IMessageLogRow) {
     return row.timestamp.getHours() + ':' + row.timestamp.getMinutes();
 }
 
@@ -35,14 +35,14 @@ export function MessagesPanel(props: IProps) {
         <div className='scrollable-y'>
             <div className={style.console}>
                 <div className={style.actionMenu}>
-                    <button className={classNames([style.icon, 'btnNoBg'])} onClick={props.clearEventLog}>
+                    <button className={classNames([style.icon, 'btnNoBg'])} onClick={props.clearMessageLog}>
                         <Tooltip title='Clear All'>
                             <IconTrash />
                         </Tooltip>
                     </button>
                 </div>
                 <div className={style.terminal}>
-                    { props.eventLogRows.map((row, index) => {
+                    { props.messageLogRows.map((row, index) => {
                         return row.msg.split('\n').map((line: string, lineIndex: number) => {
                             let cl = style.std1;
                             if (row.channel === 2) { cl = style.std2; } else if (row.channel === 3) { cl = style.std3; }

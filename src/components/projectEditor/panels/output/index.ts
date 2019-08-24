@@ -18,13 +18,18 @@ import { OutputPanel } from './OutputPanel';
 import { connect } from 'react-redux';
 import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
+import { outputLogActions } from '../../../../actions';
 
 const mapStateToProps = (state: any) => ({
-    consoleRows: state.console.rows
+    outputRows: state.outputLog.rows
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
-    return {};
+    return {
+        clearOutputLog: () => {
+            dispatch(outputLogActions.clearOutputLog());
+        }
+    };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(OutputPanel);

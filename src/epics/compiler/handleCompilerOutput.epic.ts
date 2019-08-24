@@ -17,7 +17,7 @@
 import { of, empty } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
-import { compilerActions, explorerActions, consoleActions } from '../../actions';
+import { compilerActions, explorerActions, outputLogActions } from '../../actions';
 
 export const handleCompilerOutputEpic: Epic = (action$: any, state$: any) => action$.pipe(
     ofType(compilerActions.HANDLE_COMPILE_OUTPUT),
@@ -29,12 +29,12 @@ export const handleCompilerOutputEpic: Epic = (action$: any, state$: any) => act
                 // save files
                 explorerActions.createPathWithContent(compilerState.outputFolderPath, compilerState.outputFiles),
                 // show output in console
-                consoleActions.addRows(compilerState.consoleRows)
+                outputLogActions.addRows(compilerState.consoleRows)
             );
         } else {
             return of(
                 // show output in console
-                consoleActions.addRows(compilerState.consoleRows)
+                outputLogActions.addRows(compilerState.consoleRows)
             );
         }
     })

@@ -20,6 +20,6 @@ export const panelsSelectors = {
     getShowTransactionsHistory: state => state.panels[Panels.Transactions] && state.panels[Panels.Transactions].open,
     getShowFileSystem:  state => state.panels[Panels.Explorer] && state.panels[Panels.Explorer].open,
     getShowPreview: state => state.panels[Panels.Preview] && state.panels[Panels.Preview].open,
-    getShowConsole: state => state.panels[Panels.CompilerOutput] && state.panels[Panels.CompilerOutput].open,
-    getShowEventLog: state => state.panels[Panels.EventLog] && state.panels[Panels.EventLog].open,
+    getShowConsole: state => state.panels[Panels.OutputLog] && state.panels[Panels.OutputLog].open,
+    getShowMessageLog: state => state.panels[Panels.MessageLog] && state.panels[Panels.MessageLog].open,
 }

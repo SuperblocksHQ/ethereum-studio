@@ -155,16 +155,16 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                         </div>
 
                         <div className={style.bottomButtonsContainer}>
-                            <OnlyIf test={this.isPanelOpen(Panels.CompilerOutput)}>
+                            <OnlyIf test={this.isPanelOpen(Panels.OutputLog)}>
                                 <div className={style.bottomPanelContainer}>
-                                    <Panel name='Output' onClose={() => closePanel(Panels.CompilerOutput)} dragging={sidePanelDragging}>
+                                    <Panel name='Output' onClose={() => closePanel(Panels.OutputLog)} dragging={sidePanelDragging}>
                                         <OutputPanel />
                                     </Panel>
                                 </div>
                             </OnlyIf>
-                            <OnlyIf test={this.isPanelOpen(Panels.EventLog)}>
+                            <OnlyIf test={this.isPanelOpen(Panels.MessageLog)}>
                                 <div className={style.bottomPanelContainer}>
-                                    <Panel name='Messages' onClose={() => closePanel(Panels.EventLog)} dragging={sidePanelDragging}>
+                                    <Panel name='Messages' onClose={() => closePanel(Panels.MessageLog)} dragging={sidePanelDragging}>
                                         <MessagesPanel />
                                     </Panel>
                                 </div>
@@ -172,12 +172,12 @@ export class ProjectEditor extends React.Component<IProps, IState> {
 
                             <SideButton name='Output'
                                 icon={<IconPanelOutput />}
-                                onClick={() => togglePanel(Panels.CompilerOutput)}  />
+                                onClick={() => togglePanel(Panels.OutputLog)}  />
 
                             <div style={{marginLeft: 'auto'}}>
                                 <SideButton name='Messages'
                                     icon={<IconEventLog />}
-                                    onClick={() => togglePanel(Panels.EventLog)}  />
+                                    onClick={() => togglePanel(Panels.MessageLog)}  />
                             </div>
                         </div>
                     </div>

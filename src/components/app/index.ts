@@ -16,7 +16,7 @@
 
 import { connect } from 'react-redux';
 import { AnyAction, Dispatch } from 'redux';
-import { appActions, eventLogActions } from '../../actions';
+import { appActions, messageLogActions } from '../../actions';
 import { getShowAnalyticsTrackingDialog } from '../../selectors/settings';
 import { appSelectors } from '../../selectors';
 import App from './App';
@@ -32,8 +32,8 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
         notifyAppStart: (isEmbeddedMode: boolean) => {
             dispatch(appActions.notifyAppStart(isEmbeddedMode));
         },
-        addEventLogRow: (channel: LogLevel, msg: string) => {
-            dispatch(eventLogActions.addEventLogRow(channel, msg));
+        addMessageLogRow: (channel: LogLevel, msg: string) => {
+            dispatch(messageLogActions.addMessageLogRow(channel, msg));
         },
     };
 };

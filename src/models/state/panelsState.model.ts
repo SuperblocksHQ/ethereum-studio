@@ -18,8 +18,8 @@ export enum Panels {
     Explorer = 'Explorer',
     Preview = 'Preview',
     Transactions = 'Transactions',
-    CompilerOutput = 'CompilerOutput',
-    EventLog = 'EventLog',
+    OutputLog = 'OutputLog',
+    MessageLog = 'MessageLog',
     Interact = 'Interact'
 }
 

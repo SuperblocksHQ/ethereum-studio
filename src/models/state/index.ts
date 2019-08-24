@@ -19,5 +19,5 @@ export * from './project-state.model';
 export * from './panes-state.model';
 export * from './compilerState.model';
 export * from './panelsState.model';
-export * from './consoleState.model';
-export * from './eventLogState.model';
+export * from './outputLogState.model';
+export * from './messageLogState.model';

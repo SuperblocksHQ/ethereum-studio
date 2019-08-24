@@ -16,7 +16,7 @@
 
 import { concat, of, throwError, empty } from 'rxjs';
 import { switchMap, catchError, mergeMap } from 'rxjs/operators';
-import { consoleActions, explorerActions, transactionsActions } from '../../actions';
+import { outputLogActions, explorerActions, transactionsActions } from '../../actions';
 import { deployerActions } from '../../actions/deployer.actions';
 import { DeployRunner, IDeployResult, walletService } from '../../services';
 import * as analytics from '../../utils/analytics';
@@ -54,7 +54,7 @@ function finalizeDeploy(state: any, deployRunner: DeployRunner, hash: string, ou
     return deployRunner.waitForContract(hash).pipe(
         mergeMap((o: any) => {
             if (o.msg) {
-                return of(consoleActions.addRows([o]));
+                return of(outputLogActions.addRows([o]));
             } else {
                 const res = <IDeployResult>o;
                 analytics.logEvent('CONTRACT_DEPLOYED', res.environment);
@@ -67,7 +67,7 @@ function finalizeDeploy(state: any, deployRunner: DeployRunner, hash: string, ou
                 );
             }
         }),
-        catchError(e => [ consoleActions.addRows([ e ]), deployerActions.deployFail() ])
+        catchError(e => [ outputLogActions.addRows([ e ]), deployerActions.deployFail() ])
     );
 }
 
@@ -80,13 +80,13 @@ export function doDeployExternally(state: any, deployRunner: DeployRunner) {
     return deployRunner.deployExternally(state.settings.preferences.network).pipe(
         switchMap((result: any) =>
             concat(
-                of(consoleActions.addRows([ result ])),
+                of(outputLogActions.addRows([ result ])),
                 of(deployerActions.hideExternalProviderInfo()),
                 of(transactionsActions.addTransaction(formatTransaction(state, result.hash, null, result.contractName))),
                 finalizeDeploy(state, deployRunner, result.hash, state.deployer.outputPath, false)
             )
         ),
-        catchError(e => [ consoleActions.addRows([ e ]), deployerActions.deployFail() ])
+        catchError(e => [ outputLogActions.addRows([ e ]), deployerActions.deployFail() ])
     );
 }
 
@@ -106,7 +106,7 @@ export function tryExternalDeploy(state: any, deployRunner: DeployRunner) {
     const isMainnetDeployment = window.web3.version.network === (Networks.mainnet.chainId && Networks.mainnet.chainId.toString());
 
     return concat(
-        of(consoleActions.addRows([{ channel: 1, msg: 'External account detected. Opening external account provider...' }])),
+        of(outputLogActions.addRows([{ channel: 1, msg: 'External account detected. Opening external account provider...' }])),
         of(isMainnetDeployment
             ? deployerActions.showMainNetWarning()
             : deployerActions.showExternalProviderInfo()),
@@ -127,13 +127,13 @@ export function browserDeploy(state: any, deployRunner: DeployRunner) {
     return deployRunner.deployToBrowser(networkSettings, key).pipe(
         mergeMap(output => {
             if (output.msg) { // intermediate messages comming
-                return of(consoleActions.addRows([ output ]));
+                return of(outputLogActions.addRows([ output ]));
             } else if (output.hash && output.tx) { // result
                 return finalizeDeploy(state, deployRunner, output.hash, state.deployer.outputPath, true, output.tx);
             } else { // unexpected error
-                return of(consoleActions.addRows([{ msg: 'Unexpected error occured. Please try again!', channel: 3 }]));
+                return of(outputLogActions.addRows([{ msg: 'Unexpected error occured. Please try again!', channel: 3 }]));
             }
         }),
-        catchError((e) => [ consoleActions.addRows([e]), deployerActions.deployFail()])
+        catchError((e) => [ outputLogActions.addRows([e]), deployerActions.deployFail()])
     );
 }

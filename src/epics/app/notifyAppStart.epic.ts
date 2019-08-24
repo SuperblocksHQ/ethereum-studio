@@ -29,8 +29,8 @@ export const notifyAppStart: Epic = (action$: any, state$: any) => action$.pipe(
             { panel: Panels.Interact, side: PanelSides.Left },
             { panel: Panels.Transactions, side: PanelSides.Right },
             { panel: Panels.Preview, side: PanelSides.Right },
-            { panel: Panels.CompilerOutput, side: PanelSides.Bottom },
-            { panel: Panels.EventLog, side: PanelSides.Bottom },
+            { panel: Panels.OutputLog, side: PanelSides.Bottom },
+            { panel: Panels.MessageLog, side: PanelSides.Bottom },
         ])
     ))
 );

@@ -31,7 +31,7 @@ interface IProps {
     router: any;
     appVersion: string;
     notifyAppStart: (isIframe: boolean) => void;
-    addEventLogRow: (logLevel: LogLevel, msg: string) => void;
+    addMessageLogRow: (logLevel: LogLevel, msg: string) => void;
 }
 
 export default class App extends Component<IProps> {
@@ -62,7 +62,7 @@ export default class App extends Component<IProps> {
 
         // The development wallets seed is well known and the first few addresses are seeded
         // with ether in the genesis block.
-        props.addEventLogRow(LogLevel.LOG, 'Known development Ethereum seed is: ' + this.knownWalletSeed);
+        props.addMessageLogRow(LogLevel.LOG, 'Known development Ethereum seed is: ' + this.knownWalletSeed);
     }
 
     componentDidMount() {

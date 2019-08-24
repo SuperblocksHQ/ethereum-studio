@@ -17,11 +17,11 @@
 import { concat, of, empty, throwError } from 'rxjs';
 import { switchMap, catchError, filter, mergeMap } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
-import { consoleActions, panelsActions } from '../../actions';
+import { outputLogActions, panelsActions } from '../../actions';
 import { deployerActions } from '../../actions/deployer.actions';
 import { projectSelectors } from '../../selectors';
 import { DeployRunner, CheckDeployResult } from '../../services';
-import { IConsoleRow, Panels } from '../../models/state';
+import { IOutputLogRow, Panels } from '../../models/state';
 import { tryExternalDeploy, browserDeploy, doDeployExternally } from './deployContract.epicLib';
 
 export let lastDeployRunner: Nullable<DeployRunner> = null;
@@ -43,7 +43,7 @@ export const deployContractEpic: Epic = (action$: any, state$: any) => action$.p
         lastDeployRunner = new DeployRunner(selectedAccount, environment, contractName);
 
         return concat(
-            of(panelsActions.openPanel(Panels.CompilerOutput)),
+            of(panelsActions.openPanel(Panels.OutputLog)),
             lastDeployRunner.checkExistingDeployment(deployerState.buildFiles, deployerState.contractArgs)
                 .pipe(
                     mergeMap(result => {
@@ -53,12 +53,12 @@ export const deployContractEpic: Epic = (action$: any, state$: any) => action$.p
 
                         const obs$ = selectedAccount.type === 'metamask' ? tryExternalDeploy(state$.value, lastDeployRunner) : browserDeploy(state$.value, lastDeployRunner);
                         return concat(
-                            result.msg ? of(consoleActions.addRows([ <IConsoleRow>result ])) : empty(),
+                            result.msg ? of(outputLogActions.addRows([ <IOutputLogRow>result ])) : empty(),
                             result.result === CheckDeployResult.CanDeploy ? obs$ : empty(),
                             result.result === CheckDeployResult.AlreadyDeployed ? of(deployerActions.deploySuccess()) : empty()
                         );
                     }),
-                    catchError(e => [ consoleActions.addRows([ { channel: 2, msg: e } ]), deployerActions.deployFail() ])
+                    catchError(e => [ outputLogActions.addRows([ { channel: 2, msg: e } ]), deployerActions.deployFail() ])
                 )
         );
     })
@@ -68,7 +68,7 @@ export const deployToMainnetEpic: Epic = (action$: any, state$: any) => action$.
     ofType(deployerActions.DEPLOY_TO_MAINNET),
     switchMap(() => {
         if (!lastDeployRunner) {
-            return of(consoleActions.addRows([{ msg: 'Smth went wrong. Please delete build folder and try again.', channel: 2 }]));
+            return of(outputLogActions.addRows([{ msg: 'Something went wrong. Please delete build folder and try again.', channel: 2 }]));
         }
 
         return doDeployExternally(state$.value, lastDeployRunner);

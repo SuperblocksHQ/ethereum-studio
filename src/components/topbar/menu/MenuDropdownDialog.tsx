@@ -25,7 +25,7 @@ interface IProps {
   showFileSystem: boolean;
   showPreview: boolean;
   showConsole: boolean;
-  showEventLog: boolean;
+  showMessageLog: boolean;
   activePaneId: string;
   rootFolderId: string;
   togglePanel: (panel: any) => void;
@@ -69,7 +69,7 @@ export default class MenuDropdownDialog extends React.Component<IProps> {
     }
 
     render() {
-        const { showTransactionsHistory, showFileSystem, showPreview, showConsole, showEventLog,
+        const { showTransactionsHistory, showFileSystem, showPreview, showConsole, showMessageLog,
                 togglePanel, closeAllPanels, closeAllPanes, closePane, activePaneId, rootFolderId } = this.props;
 
         return (
@@ -94,8 +94,8 @@ export default class MenuDropdownDialog extends React.Component<IProps> {
                     <MenuItem onClick={() => togglePanel(Panels.Interact)} isActive={showFileSystem} title='Interact' />
                     <MenuItem onClick={() => togglePanel(Panels.Transactions)} isActive={showTransactionsHistory} title='Transactions' />
                     <MenuItem onClick={() => togglePanel(Panels.Preview)} isActive={showPreview} title='Preview' />
-                    <MenuItem onClick={() => togglePanel(Panels.CompilerOutput)} isActive={showConsole} title='Run' />
-                    <MenuItem onClick={() => togglePanel(Panels.EventLog)} isActive={showEventLog} title='Event Log' />
+                    <MenuItem onClick={() => togglePanel(Panels.OutputLog)} isActive={showConsole} title='Run' />
+                    <MenuItem onClick={() => togglePanel(Panels.MessageLog)} isActive={showMessageLog} title='Event Log' />
                     <MenuItem onClick={() => closeAllPanels()} title='Close All Panels' />
                     <Divider />
                     <MenuItem onClick={() => this.toggleFullScreen()} title='Toggle Full Screen' />

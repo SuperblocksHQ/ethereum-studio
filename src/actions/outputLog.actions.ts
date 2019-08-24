@@ -14,31 +14,21 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { AnyAction } from 'redux';
-import { eventLogActions } from '../actions';
-import { IEventLogState } from '../models/state';
+import { IOutputLogRow } from '../models/state';
 
-const initialState: IEventLogState = {
-    rows: [],
-};
+export const outputLogActions = {
+    ADD_ROWS: 'ADD_ROWS',
+    addRows(rows: IOutputLogRow[]) {
+        return {
+            type: outputLogActions.ADD_ROWS,
+            data: rows
+        };
+    },
 
-export default function eventLogReducer(state = initialState, action: AnyAction) {
-    switch (action.type) {
-        case eventLogActions.ADD_EVENT_LOG_ROW: {
-            return {
-                ...state,
-                rows: [...state.rows, action.data]
-            };
-        }
-        case eventLogActions.CLEAR_EVENT_LOG: {
-            return {
-                ...state,
-                rows: initialState.rows
-            };
-        }
-
-        default:
-            return state;
+    CLEAR_OUTPUT_LOG: 'CLEAR_OUTPUT_LOG',
+    clearOutputLog() {
+        return {
+            type: outputLogActions.CLEAR_OUTPUT_LOG
+        };
     }
-}
-
+};
