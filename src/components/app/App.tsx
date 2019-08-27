@@ -71,13 +71,7 @@ export default class App extends Component<IProps> {
         // Make sure we fire this event in order to let other parst of the app configure depending
         // on the initial state (per example turning on/off analytics)
         notifyAppStart(embedUtils.isIframe());
-
-        // TODO - Make sure all this is working correctly
-        this._init();
-    }
-
-    _init = () => {
-        previewService.init(null);
+        previewService.init();
     }
 
     redraw = (all: any) => {
@@ -86,11 +80,8 @@ export default class App extends Component<IProps> {
 
     renderProject = ({ match }: any) => (
         <LoadProject
-            projectId={match.params.projectId}
-            router={this.router}
-            functions={this.functions}
+            projectIdToLoad={match.params.projectId}
             knownWalletSeed={this.knownWalletSeed}
-            isImportedProject={this.isImportedProject}
         />
     )
 

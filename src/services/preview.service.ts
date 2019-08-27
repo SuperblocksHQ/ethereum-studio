@@ -15,23 +15,24 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { buildProjectHtml } from './utils/buildProjectHtml';
-import SuperProvider from '../components/superprovider';
+import SuperProvider from '../components/superProvider';
 import Networks from '../networks';
-import { IEnvironment } from '../models/state';
+import { IEnvironment, IAccount } from '../models/state';
 
-const exportableDappHtml: string | null = null;
+// let exportableDappHtml: string;
 let iframeId: string;
 let disableAccounts = false;
-let environment: IEnvironment;
 
 export const previewService = {
-    superProvider: null,
+    superProvider: <any>null,
+    selectedEnvironment: <IEnvironment | null>null,
+    selectedAccount: <IAccount | null>null,
 
-    init(wallet: any) {
-        window.addEventListener('message', async (e) => {
+    init() {
+        window.addEventListener('message', async (e: any) => {
             if (e.data.type === 'window-ready') {
-                // const builtProject = await buildProjectHtml(this.projectItem, wallet, this.disableAccounts, environment);
-                // exportableDappHtml = builtProject.exportableContent;
+                // const builtProject = await buildProjectHtml(null, wallet, this.disableAccounts, this.selectedEnvironment);
+                // // exportableDappHtml = builtProject.exportableContent;
                 // if (e.source) {
                 //     e.source.postMessage({ type: 'set-content', payload: builtProject.content }, '*');
                 //     this.superProvider.initIframe(document.getElementById(iframeId));
@@ -40,31 +41,42 @@ export const previewService = {
         });
     },
 
-    initSuperProvider(_iframeId: string) {
+    initSuperProvider(_iframeId: string, environment: IEnvironment, account: IAccount) {
         iframeId = _iframeId;
-        // this.superProvider = new SuperProvider(iframeId, previewService.projectItem, (hash, endpoint) => {
-        //     const network = Object.keys(Networks).find(key => Networks[key].endpoint === endpoint);
-        //     // this.projectItem.getTxLog().addTx({
-        //     //     hash: hash,
-        //     //     context: 'Contract interaction',
-        //     //     network
-        //     // });
-        // }, () => environment.name);
+        this.superProvider = new SuperProvider(iframeId, environment, account, (hash: string, endpoint: string) => {
+            const network = Object.keys(Networks).find(key => Networks[key].endpoint === endpoint);
+            // TODO - Send Tx to reducer to render it in the UI
+            // this.projectItem.getTxLog().addTx({
+            //     hash: hash,
+            //     context: 'Contract interaction',
+            //     network
+            // });
+        });
     },
 
-    setEnvironment(value: IEnvironment) {
-        environment = value;
+    setAccount(account: IAccount) {
+        this.selectedAccount = account;
+        if (this.superProvider) {
+            this.superProvider.setAccount(account);
+        }
+    },
+
+    setEnvironment(environment: IEnvironment) {
+        this.selectedEnvironment = environment;
+        if (this.superProvider) {
+            this.superProvider.setEnvironment(environment);
+        }
     },
 
     get disableAccounts() { return disableAccounts; },
     set disableAccounts(value) { disableAccounts = value; },
 
-    get hasExportableContent() { return Boolean(exportableDappHtml); },
+    // get hasExportableContent() { return Boolean(exportableDappHtml); },
 
     downloadDapp() {
-        if (!exportableDappHtml) {
-            return;
-        }
+        // if (!exportableDappHtml) {
+        //     return;
+        // }
 
         // TODO
         // const exportName = 'superblocks_dapp_' + this.projectItem.getName() + '.html';

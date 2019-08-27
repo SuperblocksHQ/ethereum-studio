@@ -17,40 +17,35 @@
 import React, { Component } from 'react';
 import ProjectEditor from '../projectEditor';
 import OnlyIf from '../onlyIf';
-import { GenericLoading } from "../common";
+import { GenericLoading } from '../common';
+import { IProject } from '../../models';
 
-// interface IProps {
-//     loadProject: (projectId: string) => void;
-//     match: any;
-//     project: IProject;
-//     router: any;
-//     functions: any;
-//     knownWalletSeed: string;
-//     isImportedProject: boolean;
-// }
+interface IProps {
+    loadProject: (projectId: string) => void;
+    openDevWallet: (knownWalletSeed: string) => void;
+    initEvm: () => void;
+    project: IProject;
+    knownWalletSeed: string;
+    projectIdToLoad: string;
+    isEvmReady: boolean;
+}
 
-// TODO: rename this component.
-export default class LoadProject extends Component {
+export default class LoadProject extends Component<IProps> {
 
     componentDidMount() {
-        const { loadProject, projectId, openDevWallet, knownWalletSeed, initEvm } = this.props;
-        loadProject(projectId);
+        const { loadProject, projectIdToLoad, openDevWallet, knownWalletSeed, initEvm } = this.props;
+        loadProject(projectIdToLoad);
         openDevWallet(knownWalletSeed);
         initEvm();
     }
 
     render() {
-        const { project, router, functions, isImportedProject, isEvmReady } = this.props;
+        const { project, isEvmReady } = this.props;
 
         return (
             <React.Fragment>
                 <OnlyIf test={project}>
-                    <ProjectEditor
-                        project={project}
-                        router={router}
-                        functions={functions}
-                        isImportedProject={isImportedProject}
-                    />
+                    <ProjectEditor/>
                 </OnlyIf>
                 <OnlyIf test={!isEvmReady || !project}>
                     <GenericLoading />

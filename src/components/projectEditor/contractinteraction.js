@@ -21,7 +21,7 @@ import { IconRun } from '../icons';
 import { projectSelectors } from '../../selectors';
 
 var Generator = require('../contractinteraction');
-import SuperProvider from '../superprovider';
+import SuperProvider from '../superProvider';
 import Web3 from 'web3';
 
 class ContractInteraction extends Component {
@@ -627,13 +627,13 @@ class ContractInteraction extends Component {
 
         this.accountTimer = setInterval(this.updateAccount, 3000);
         this.timer = setInterval(this.updateBalance, 3000);
-        this.provider._attachListener();
+        this.provider.attachListener();
         // We need to do a first redraw to get the height right, since toolbar didn't exist in the first sweep.
         this.redraw();
     }
 
     componentWillUnmount() {
-        this.provider._detachListener();
+        this.provider.detachListener();
         clearInterval(this.timer);
         clearInterval(this.accountTimer);
     }

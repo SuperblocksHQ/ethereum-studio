@@ -23,7 +23,7 @@ import { previewService } from '../../../../services';
 import { CannotExportModal } from './CannotExportModal';
 import { DownloadModal } from './DownloadModal';
 import { NoExportableContentModal } from './NoExportableContentModal';
-import { IEnvironment } from '../../../../models/state';
+import { IEnvironment, IAccount } from '../../../../models/state';
 import { IProject } from '../../../../models';
 
 function getIframeSrc() {
@@ -46,21 +46,26 @@ interface IProps {
     showCannotExportModal: boolean;
     showDownloadModal: boolean;
     selectedEnvironment: IEnvironment;
+    selectedAccount: IAccount;
     project: IProject;
 }
 
 export class Preview extends React.Component<IProps> {
-    constructor(props: IProps) {
-        super(props);
-        previewService.initSuperProvider(IFRAME_ID);
+
+    componentWillUpdate(props: IProps) {
+        const { selectedAccount, selectedEnvironment } = props;
+        previewService.setAccount(selectedAccount);
+        previewService.setEnvironment(selectedEnvironment);
     }
 
     componentDidMount() {
-        // previewService.superProvider._attachListener();
+        const { selectedAccount, selectedEnvironment } = this.props;
+        previewService.initSuperProvider(IFRAME_ID, selectedEnvironment, selectedAccount);
+        previewService.superProvider.attachListener();
     }
 
     componentWillUnmount() {
-        // previewService.superProvider._detachListener();
+        previewService.superProvider.detachListener();
     }
 
     refresh() {

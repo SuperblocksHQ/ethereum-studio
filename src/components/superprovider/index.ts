@@ -17,38 +17,86 @@
 import Web3 from 'web3';
 import Tx from 'ethereumjs-tx';
 import Buffer from 'buffer';
-import { evmService } from '../../services';
+import { evmService, walletService } from '../../services';
+import { IEnvironment, IAccount } from '../../models/state';
 
 export default class SuperProvider {
     private readonly channelId: string;
     private readonly notifyTx: (hash: string, endpoint: string) => void;
-    private readonly getCurrentEnv: () => void;
+    private selectedAccount: IAccount;
+    private selectedEnvironment: IEnvironment;
     private iframe: any;
     private iframeStatus: number;
 
-    constructor(channelId: string, notifyTx: (hash: string, endpoint: string) => void, getCurrentEnv: () => void) {
+    constructor(channelId: string, environment: IEnvironment, account: IAccount, notifyTx: (hash: string, endpoint: string) => void) {
         this.channelId = channelId;
+        this.selectedEnvironment = environment;
+        this.selectedAccount = account;
         this.notifyTx = notifyTx;
         this.iframe = null;
         this.iframeStatus = -1;
-        this.getCurrentEnv = getCurrentEnv;
     }
 
-    initIframe = (iframe: any) => {
+    initIframe(iframe: any) {
         this.iframe = iframe;
         this.iframeStatus = -1;
         this.initializeIFrame();
     }
 
-    attachListener = () => {
+    attachListener() {
         window.addEventListener('message', this.onMessage);
     }
 
-    detachListener = () => {
+    detachListener() {
         window.removeEventListener('message', this.onMessage);
     }
 
-    private onMessage = (event: any) => {
+    setEnvironment(environment: IEnvironment) {
+        this.selectedEnvironment = environment;
+    }
+
+    setAccount(account: IAccount) {
+        this.selectedAccount = account;
+    }
+
+    private send = (payload: any, endpoint: string) => {
+        // Send request on given endpoint
+        // TODO: possibly set from and gasLimit.
+        return new Promise(async (resolve, reject) => {
+            if (endpoint.toLowerCase() === 'http://superblocks-browser') {
+                try {
+                    const result = await evmService.getProvider().sendAsync(payload);
+                    resolve(result);
+                } catch (e) {
+                    console.log(e);
+                    reject('Problem calling the provider async call');
+                }
+
+            } else {
+                fetch(endpoint, {
+                    body: JSON.stringify(payload),
+                    headers: {
+                        'content-type': 'application/json',
+                    },
+                    method: 'POST',
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        if (response.status === 405) {
+                            reject('Method not supported by remote endpoint.');
+                        }
+                        reject('Could not communicate with remote endpoint.');
+                    }
+                    resolve(response.json());
+                })
+                .catch(() => {
+                    reject('Error running method remotely.');
+                });
+            }
+        });
+    }
+
+    private onMessage = async (event: any) => {
         // There's no point checking origin here since the iframe is running it's own code already,
         // we need to treat it as a suspect.
         // if (event.origin !== "null") {
@@ -63,11 +111,11 @@ export default class SuperProvider {
             return;
         }
 
-        const callback = (err, res) => {
+        const sendIframeMessage = (err: any, res: any) => {
             // console.log(err,res);
             if (
-                (payload.method === 'eth_sendTransaction' ||
-                    payload.method === 'eth_sendRawTransaction') &&
+                (data.payload.method === 'eth_sendTransaction' ||
+                    data.payload.method === 'eth_sendRawTransaction') &&
                 !err &&
                 res &&
                 res.result &&
@@ -76,61 +124,21 @@ export default class SuperProvider {
                 this.notifyTx(res.result, data.endpoint);
             }
             try {
-                this.iframe.contentWindow.postMessage(
-                    {
-                        type: 'reply',
-                        channel: this.channelId,
-                        id: data.id,
-                        payload: { err, res },
-                    },
-                    '*'
-                );
-            } catch (e) {}
-        };
-
-        const send = (payload, endpoint, callback) => {
-            // Send request on given endpoint
-            // TODO: possibly set from and gasLimit.
-            if (endpoint.toLowerCase() === 'http://superblocks-browser') {
-                this.projectItem.functions.EVM.getProvider().sendAsync(
-                    payload,
-                    callback
-                );
-            } else {
-                fetch(endpoint, {
-                    body: JSON.stringify(payload),
-                    headers: {
-                        'content-type': 'application/json',
-                    },
-                    method: 'POST',
-                })
-                    .then(response => {
-                        if (!response.ok) {
-                            if (response.status === 405) {
-                                callback(
-                                    'Method not supported by remote endpoint.'
-                                );
-                                return;
-                            }
-                            callback(
-                                'Could not communicate with remote endpoint.'
-                            );
-                            return;
-                        }
-                        return response.json();
-                    })
-                    .catch(error => {
-                        callback('Error running method remotely.');
-                    })
-                    .then(response => {
-                        if (response) { callback(null, response); }
-                    });
+                this.iframe.contentWindow.postMessage({
+                    type: 'reply',
+                    channel: this.channelId,
+                    id: data.id,
+                    payload: { err, res },
+                }, '*');
+            } catch (e) {
+                console.log(e);
             }
         };
+
         const payload = data.payload;
         if (payload.method === 'eth_sendTransaction') {
             // Needs signing
-            const accountName = this.projectItem.getAccount();
+            const accountName = this.selectedAccount.name;
             if (
                 !accountName ||
                 accountName === '(absent)' ||
@@ -138,34 +146,30 @@ export default class SuperProvider {
             ) {
                 const err = 'No account provided.';
                 alert(err);
-                callback(err, null);
+                sendIframeMessage(err, null);
                 return;
             }
-            const accounts = this.projectItem.getHiddenItem('accounts');
-            const account = accounts.getByName(accountName);
+            // const accounts = this.projectItem.getHiddenItem('accounts');
+            // const account = accounts.getByName(accountName);
 
-            const env = this.getCurrentEnv();
-            const walletName = account.getWallet(env);
+            // const env = this.getCurrentEnv();
+            // const walletName = account.getWallet(env);
 
-            const wallets = this.projectItem.getHiddenItem('wallets');
-            const wallet = wallets.getByName(walletName);
+            // const wallets = this.projectItem.getHiddenItem('wallets');
+            // const wallet = wallets.getByName(walletName);
 
-            if (!wallet) {
-                const err = 'Wallet not found.';
-                alert(err);
-                callback(err, null);
-                return;
-            }
+            // if (!wallet) {
+            //     const err = 'Wallet not found.';
+            //     alert(err);
+            //     callback(err, null);
+            //     return;
+            // }
 
-            const walletType = wallet.getWalletType();
-            if (walletType === 'external') {
-                if (
-                    data.endpoint.toLowerCase() === 'http://superblocks-browser'
-                ) {
-                    const err =
-                        'External/Metamask account cannot be used for the in-browser blockchain.';
+            if (this.selectedAccount.type === 'external') {
+                if (data.endpoint.toLowerCase() === 'http://superblocks-browser') {
+                    const err = 'External/Metamask account cannot be used for the in-browser blockchain.';
                     alert(err);
-                    callback(err, null);
+                    sendIframeMessage(err, null);
                     return;
                 }
                 // Pass to External/Metamask
@@ -173,10 +177,9 @@ export default class SuperProvider {
                     // TODO is there any way to check what endpoint Metamask is configured for
                     // and verify that it matches out expected endpoint?
                     if ((window.web3.eth.accounts || []).length === 0) {
-                        const err =
-                            "External/Metamask provider is locked. Can't proceed.";
+                        const err = 'External/Metamask provider is locked. Cannot proceed.';
                         alert(err);
-                        callback(err, null);
+                        sendIframeMessage(err, null);
                         return;
                     }
                     // const modalData = {
@@ -197,63 +200,50 @@ export default class SuperProvider {
                     //         return modal;
                     //     },
                     // });
-                    window.web3.currentProvider.sendAsync(
-                        data.payload,
-                        (err, res) => {
-                            this.projectItem.functions.modal.close();
-                            callback(err, res);
-                        }
-                    );
+
+                    // TODO - Fix this
+                    // window.web3.currentProvider.sendAsync(data.payload,(err, res) => {
+                    //         this.projectItem.functions.modal.close();
+                    //         callback(err, res);
+                    //     }
+                    // );
                     return;
                 } else {
-                    const err =
-                        "Metamask plugin is not installed, can't proceed.";
+                    const err = "Metamask plugin is not installed, can't proceed.";
                     alert(err);
-                    callback(err, null);
+                    sendIframeMessage(err, null);
                     return;
                 }
             } else {
                 const obj = payload.params[payload.params.length - 1];
-                const obj2 = {
-                    env,
-                    endpoint: data.endpoint,
-                };
+                const wallet = await walletService.openWallet(this.selectedAccount.name, null, null);
+                // if (status !== 0) {
+                //     const err = 'Could not open wallet.';
+                //     callback(err, null);
+                //     return;
+                // }
 
-                this.openWallet(obj2, accountName, status => {
-                    if (status !== 0) {
-                        const err = 'Could not open wallet.';
-                        callback(err, null);
-                        return;
-                    }
-                    this.getNonce(obj2, async status => {
-                        if (status !== 0) {
-                            const err = 'Could not get nonce.';
-                            callback(err, null);
-                            return;
-                        }
-                        const tx = new Tx({
-                            from: obj2.account.address,
-                            to: obj.to,
-                            value: obj.value,
-                            nonce: obj2.account.nonce,
-                            gasPrice: obj.gasPrice,
-                            gasLimit: obj.gas,
-                            data: obj.data,
-                        });
-                        tx.sign(Buffer.Buffer.from(obj2.account.key, 'hex'));
-                        const obj3 = {
-                            jsonrpc: '2.0',
-                            method: 'eth_sendRawTransaction',
-                            params: ['0x' + tx.serialize().toString('hex')],
-                            id: payload.id,
-                        };
-                        send(obj3, data.endpoint, callback);
-                    });
+                const nonce = await this.getNonce(this.selectedEnvironment.endpoint, this.selectedAccount.address);
+                const tx = new Tx({
+                    from: this.selectedAccount.address,
+                    to: obj.to,
+                    value: obj.value,
+                    nonce,
+                    gasPrice: obj.gasPrice,
+                    gasLimit: obj.gas,
+                    data: obj.data,
                 });
-                return;
+                tx.sign(Buffer.Buffer.from(wallet.secret.key.toString(), 'hex'));
+                const obj3 = {
+                    jsonrpc: '2.0',
+                    method: 'eth_sendRawTransaction',
+                    params: ['0x' + tx.serialize().toString('hex')],
+                    id: payload.id,
+                };
+                this.send(obj3, data.endpoint);
             }
         } else {
-            send(data.payload, data.endpoint, callback);
+            this.send(data.payload, data.endpoint);
         }
     }
 
@@ -267,65 +257,12 @@ export default class SuperProvider {
         return new Web3(provider);
     }
 
-    private getNonce = async (endpoint: string, address: string) => {
+    private getNonce = async (endpoint: string, address: Nullable<string>) => {
+        if (address === null) {
+            throw Error('The address cannot be empty');
+        }
         const web3 = this.getWeb3(endpoint);
         return await web3.eth.getTransactionCount(address);
-    }
-
-    private openWallet = (obj, accountName) => {
-        const accounts = this.projectItem.getHiddenItem('accounts');
-        const account = accounts.getByName(accountName);
-
-        const accountIndex = account.getAccountIndex(obj.env);
-        const walletName = account.getWallet(obj.env);
-
-        const getKey = () => {
-            this.projectItem.functions.wallet.getKey(
-                walletName,
-                accountIndex,
-                (status, key) => {
-                    if (status === 0) {
-                        const address = this.projectItem.functions.wallet.getAddress(
-                            walletName,
-                            accountIndex
-                        );
-                        obj.account = {
-                            address,
-                            key,
-                        };
-                        // TODO - Work with a promise - cb(0);
-                        return;
-                    } else {
-                        const msg = 'Could not get key from wallet for address.';
-                        alert(msg);
-                        // TODO - Work with a promise - cb(1);
-                        return;
-                    }
-                }
-            );
-        };
-
-        if (this.projectItem.functions.wallet.isOpen(walletName)) {
-            getKey();
-        } else {
-            this.projectItem.functions.wallet.openWallet(
-                walletName,
-                null,
-                status => {
-                    if (status === 0) {
-                        getKey();
-                    } else if (status === 2) {
-                        alert('Bad seed entered.');
-                        cb(1);
-                        return;
-                    } else {
-                        alert('Could not open wallet.');
-                        cb(1);
-                        return;
-                    }
-                }
-            );
-        }
     }
 
     private initializeIFrame = () => {

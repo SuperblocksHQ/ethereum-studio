@@ -26,7 +26,8 @@ const mapStateToProps = (state: any) => ({
     showNoExportableContentModal: state.preview.showNoExportableContentModal,
     showCannotExportModal: state.preview.showCannotExportModal,
     showDownloadModal: state.preview.showDownloadModal,
-    selectedEnvironment: projectSelectors.getSelectedEnvironment(state)
+    selectedEnvironment: projectSelectors.getSelectedEnvironment(state),
+    selectedAccount: projectSelectors.getSelectedAccount(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {

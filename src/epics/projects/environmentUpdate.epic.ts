@@ -34,7 +34,6 @@ export const environmentUpdateEpic: Epic = (action$, state$) => action$.pipe(
         }
 
         const selectedEnvironment = projectSelectors.getSelectedEnvironment(state$.value);
-        // update preview service
         previewService.setEnvironment(selectedEnvironment);
 
         // enable metamask

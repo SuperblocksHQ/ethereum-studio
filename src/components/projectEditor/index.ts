@@ -18,21 +18,25 @@ import { connect } from 'react-redux';
 import { ProjectEditor } from './ProjectEditor';
 import { projectSelectors } from '../../selectors';
 import { panelsActions } from '../../actions';
+import { AnyAction } from 'redux';
+import { Dispatch } from 'react';
+import { Panels } from '../../models/state';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state: any) => ({
     panels: state.panels,
     selectedEnvironment: projectSelectors.getSelectedEnvironment(state)
 });
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
     return {
-        togglePanel(panel) {
+        togglePanel(panel: Panels) {
             dispatch(panelsActions.togglePanel(panel));
         },
-        closePanel(panel) {
+        closePanel(panel: Panels) {
             dispatch(panelsActions.closePanel(panel));
         }
-    }
-}
+    };
+};
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProjectEditor);

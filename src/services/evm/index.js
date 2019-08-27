@@ -48,7 +48,7 @@ class EVM {
             document.getElementById('evm')
         );
 
-        // This is temmporarily that we share an object with the iframe.
+        // This is temporarily that we share an object with the iframe.
         // We should pass messages to it so that the interface can be "webworked" in the future.
         this.queue({}, result => {
             this.devkitVm = result.devkitVm;
