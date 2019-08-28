@@ -60,9 +60,9 @@ function finalizeDeploy(state: any, deployRunner: DeployRunner, hash: string, ou
                 analytics.logEvent('CONTRACT_DEPLOYED', res.environment);
                 const files = res.files.map(f => createFile(f.name, f.code));
                 const transaction: ITransaction = formatTransaction(state, hash, res, res.contractName, tx);
-                return of(
+                return of<any>(
                     explorerActions.createPathWithContent(outputPath, files),
-                    deployerActions.deploySuccess(),
+                    deployerActions.deploySuccess(files),
                     isNewTransaction ? transactionsActions.addTransaction(transaction) : transactionsActions.updateTransaction(transaction)
                 );
             }

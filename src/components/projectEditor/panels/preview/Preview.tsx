@@ -48,6 +48,7 @@ interface IProps {
     selectedEnvironment: IEnvironment;
     selectedAccount: IAccount;
     project: IProject;
+    htmlToRender: string;
 }
 
 export class Preview extends React.Component<IProps> {
@@ -59,13 +60,15 @@ export class Preview extends React.Component<IProps> {
     }
 
     componentDidMount() {
-        const { selectedAccount, selectedEnvironment } = this.props;
+        const { selectedAccount, selectedEnvironment, htmlToRender } = this.props;
+        previewService.init(htmlToRender);
         previewService.initSuperProvider(IFRAME_ID, selectedEnvironment, selectedAccount);
         previewService.superProvider.attachListener();
     }
 
     componentWillUnmount() {
         previewService.superProvider.detachListener();
+        previewService.clear();
     }
 
     refresh() {
@@ -106,7 +109,8 @@ export class Preview extends React.Component<IProps> {
             showDownloadModal,
             selectedEnvironment,
             onHideModals,
-            onDownload
+            onDownload,
+            htmlToRender
         } = this.props;
         const isProjectOpen = Boolean(project);
 

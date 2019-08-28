@@ -71,7 +71,6 @@ export default class App extends Component<IProps> {
         // Make sure we fire this event in order to let other parst of the app configure depending
         // on the initial state (per example turning on/off analytics)
         notifyAppStart(embedUtils.isIframe());
-        previewService.init();
     }
 
     redraw = (all: any) => {

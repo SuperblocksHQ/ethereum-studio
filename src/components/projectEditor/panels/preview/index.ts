@@ -18,16 +18,17 @@ import { Preview } from './Preview';
 import { connect } from 'react-redux';
 import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
-import { projectSelectors } from '../../../../selectors';
+import { projectSelectors, previewSelectors } from '../../../../selectors';
 
 const mapStateToProps = (state: any) => ({
     project: projectSelectors.getProject(state),
-    disableAccounts: state.preview.disableAccounts,
-    showNoExportableContentModal: state.preview.showNoExportableContentModal,
-    showCannotExportModal: state.preview.showCannotExportModal,
-    showDownloadModal: state.preview.showDownloadModal,
+    disableAccounts: previewSelectors.getDisableAccounts(state),
+    showNoExportableContentModal: previewSelectors.getShowNoExportableContentModal(state),
+    showCannotExportModal: previewSelectors.getShowCannotExportModal(state),
+    showDownloadModal: previewSelectors.getShowDownloadModal(state),
     selectedEnvironment: projectSelectors.getSelectedEnvironment(state),
     selectedAccount: projectSelectors.getSelectedAccount(state),
+    htmlToRender: previewSelectors.getHtmlToRender(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {

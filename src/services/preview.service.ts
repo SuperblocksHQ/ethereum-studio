@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { buildProjectHtml } from './utils/buildProjectHtml';
+// import { buildProjectHtml } from './utils/buildProjectHtml';
 import SuperProvider from '../components/superProvider';
 import Networks from '../networks';
 import { IEnvironment, IAccount } from '../models/state';
@@ -27,18 +27,26 @@ export const previewService = {
     superProvider: <any>null,
     selectedEnvironment: <IEnvironment | null>null,
     selectedAccount: <IAccount | null>null,
+    htmlToRender: <string | null>null,
 
-    init() {
-        window.addEventListener('message', async (e: any) => {
-            if (e.data.type === 'window-ready') {
-                // const builtProject = await buildProjectHtml(null, wallet, this.disableAccounts, this.selectedEnvironment);
-                // // exportableDappHtml = builtProject.exportableContent;
-                // if (e.source) {
-                //     e.source.postMessage({ type: 'set-content', payload: builtProject.content }, '*');
-                //     this.superProvider.initIframe(document.getElementById(iframeId));
-                // }
+    handleMessage: (e: any) => {
+        if (e.data.type === 'window-ready') {
+            // // exportableDappHtml = builtProject.exportableContent;
+            console.log(previewService.htmlToRender);
+            if (e.source) {
+                e.source.postMessage({ type: 'set-content', payload: previewService.htmlToRender }, '*');
+                previewService.superProvider.initIframe(document.getElementById(iframeId));
             }
-        });
+        }
+    },
+
+    init(htmlToRender: string) {
+        this.htmlToRender = htmlToRender;
+        window.addEventListener('message', this.handleMessage);
+    },
+
+    clear() {
+        window.removeEventListener('message', this.handleMessage);
     },
 
     initSuperProvider(_iframeId: string, environment: IEnvironment, account: IAccount) {

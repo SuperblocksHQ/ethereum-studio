@@ -139,11 +139,7 @@ export default class SuperProvider {
         if (payload.method === 'eth_sendTransaction') {
             // Needs signing
             const accountName = this.selectedAccount.name;
-            if (
-                !accountName ||
-                accountName === '(absent)' ||
-                accountName === '(locked)'
-            ) {
+            if (!accountName || accountName === '(absent)' || accountName === '(locked)') {
                 const err = 'No account provided.';
                 alert(err);
                 sendIframeMessage(err, null);

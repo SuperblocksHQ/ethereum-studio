@@ -55,7 +55,7 @@ export const deployContractEpic: Epic = (action$: any, state$: any) => action$.p
                         return concat(
                             result.msg ? of(outputLogActions.addRows([ <IOutputLogRow>result ])) : empty(),
                             result.result === CheckDeployResult.CanDeploy ? obs$ : empty(),
-                            result.result === CheckDeployResult.AlreadyDeployed ? of(deployerActions.deploySuccess()) : empty()
+                            result.result === CheckDeployResult.AlreadyDeployed ? of(deployerActions.deploySuccess(null)) : empty()
                         );
                     }),
                     catchError(e => [ outputLogActions.addRows([ { channel: 2, msg: e } ]), deployerActions.deployFail() ])

@@ -14,14 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export * from './app.selectors';
-export * from './toast.selectors';
-export * from './project.selectors';
-export * from './user.selectors';
-export * from './panels.selectors';
-export * from './view.selectors';
-export * from './auth.selectors';
-export * from './panes.selectors';
-export * from './explorer.selectors';
-export * from './interact.selectors';
-export * from './preview.selectors';
+export const previewSelectors = {
+    getDisableAccounts: (state: any) => state.preview.disableAccounts,
+    getShowNoExportableContentModal: (state: any) => state.preview.showNoExportableContentModal,
+    getShowCannotExportModal: (state: any) => state.preview.showCannotExportModal,
+    getShowDownloadModal: (state: any) => state.preview.showDownloadModal,
+    getHtmlToRender: (state: any) => state.preview.htmlToRender
+};
