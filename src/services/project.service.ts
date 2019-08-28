@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 import { fetchJSON } from './utils/fetchJson';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, map, tap } from 'rxjs/operators';
 import { IProject } from '../models';
 import { Observable, throwError } from 'rxjs';
 
@@ -26,7 +26,12 @@ export const projectService = {
             body: data
         })
         .pipe(
-            switchMap(response => response.json())
+            switchMap<any, IProject>(response => response.json()),
+            tap((project: IProject) => {
+                if (project.anonymousToken) {
+                    fetchJSON.setAnonymousToken(project.anonymousToken);
+                }
+            })
         );
     },
 

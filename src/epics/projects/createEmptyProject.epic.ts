@@ -28,7 +28,6 @@ export const createEmptyProject: Epic = (action$: any, state$: any) => action$.p
         return from(projectService.createProject(data))
             .pipe(
                 switchMap((newProject) => {
-                    // TODO
                     if (action.data.redirect) {
                         window.location.href = `${window.location.origin}/${newProject.id}`;
                     }

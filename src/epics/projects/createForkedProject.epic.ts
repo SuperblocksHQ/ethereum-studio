@@ -31,10 +31,6 @@ export const createForkedProject: Epic = (action$, state$) => action$.pipe(
             files: action.data.tree
         }).pipe(
                 switchMap((newProject) =>  {
-                    if (newProject.anonymousToken) {
-                        fetchJSON.setAnonymousToken(newProject.anonymousToken);
-                    }
-
                     // redirect
                     window.location.href = `${window.location.origin}/${newProject.id}`;
 
