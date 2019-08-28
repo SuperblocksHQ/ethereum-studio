@@ -26,6 +26,8 @@ export const initialState: IProjectState = {
         name: '',
         id: ''
     },
+    isProjectLoading: false,
+    loadProjectError: undefined,
     environments: [],
     selectedEnvironment: { name: '', endpoint: '' },
     accounts: [],
@@ -112,6 +114,12 @@ export default function projectsReducer(state = initialState, action: AnyAction,
                     [action.data.name]: action.data.addresses
                 }
             };
+        case projectsActions.LOAD_PROJECT: {
+            return {
+                ...state,
+                isProjectLoading: true
+            };
+        }
         case projectsActions.LOAD_PROJECT_SUCCESS: {
             const files: IProjectItem = action.data.project.files;
             let stateChange = {
@@ -136,7 +144,16 @@ export default function projectsReducer(state = initialState, action: AnyAction,
             return {
                 ...state,
                 project: { ...action.data.project, files: undefined },
+                isProjectLoading: false,
+                loadProjectError: undefined,
                 ...stateChange
+            };
+        }
+        case projectsActions.LOAD_PROJECT_FAIL: {
+            return {
+                ...state,
+                isProjectLoading: false,
+                loadProjectError: action.data
             };
         }
         case authActions.LOGIN_SUCCESS: {

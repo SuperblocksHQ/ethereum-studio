@@ -15,8 +15,8 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 export * from './contractAgrumentData';
+export * from './apiError.model';
 export * from './category.model';
-// TODO: fix!
 export * from './project';
 export * from './project.model';
 export * from './user.model';

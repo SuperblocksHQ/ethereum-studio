@@ -32,7 +32,6 @@ export const previewService = {
     handleMessage: (e: any) => {
         if (e.data.type === 'window-ready') {
             // // exportableDappHtml = builtProject.exportableContent;
-            console.log(previewService.htmlToRender);
             if (e.source) {
                 e.source.postMessage({ type: 'set-content', payload: previewService.htmlToRender }, '*');
                 previewService.superProvider.initIframe(document.getElementById(iframeId));
@@ -43,6 +42,10 @@ export const previewService = {
     init(htmlToRender: string) {
         this.htmlToRender = htmlToRender;
         window.addEventListener('message', this.handleMessage);
+    },
+
+    updateHtmlToRender(htmlToRender: string) {
+        this.htmlToRender = htmlToRender;
     },
 
     clear() {

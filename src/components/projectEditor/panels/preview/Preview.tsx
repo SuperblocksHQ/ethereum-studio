@@ -41,6 +41,7 @@ interface IProps {
     onHideModals: () => void;
     onTryDownload: (hasExportableContent: boolean, selectedEnvironment: IEnvironment) => void;
     onDownload: () => void;
+    refreshContent: () => void;
     disableAccounts: boolean;
     showNoExportableContentModal: boolean;
     showCannotExportModal: boolean;
@@ -59,6 +60,10 @@ export class Preview extends React.Component<IProps> {
         previewService.setEnvironment(selectedEnvironment);
     }
 
+    componentDidUpdate() {
+        this.refreshIframe();
+    }
+
     componentDidMount() {
         const { selectedAccount, selectedEnvironment, htmlToRender } = this.props;
         previewService.init(htmlToRender);
@@ -71,7 +76,9 @@ export class Preview extends React.Component<IProps> {
         previewService.clear();
     }
 
-    refresh() {
+    refreshIframe() {
+        const { htmlToRender } = this.props;
+        previewService.updateHtmlToRender(htmlToRender);
         const iframe = document.getElementById(IFRAME_ID) as any;
         iframe.contentWindow.location.replace(getIframeSrc());
     }
@@ -83,8 +90,9 @@ export class Preview extends React.Component<IProps> {
     }
 
     toggleWeb3Accounts() {
-        this.props.onToggleWeb3Accounts();
-        this.refresh();
+        const { onToggleWeb3Accounts, refreshContent } = this.props;
+        onToggleWeb3Accounts();
+        refreshContent();
     }
 
     renderMoreDropdown() {
@@ -110,7 +118,7 @@ export class Preview extends React.Component<IProps> {
             selectedEnvironment,
             onHideModals,
             onDownload,
-            htmlToRender
+            refreshContent
         } = this.props;
         const isProjectOpen = Boolean(project);
 
@@ -119,7 +127,7 @@ export class Preview extends React.Component<IProps> {
                 <div className={style.appview}>
                     <div className={style.toolbar}>
 
-                        <button className='btnNoBg' title='Refresh' onClick={() => this.refresh()}>
+                        <button className='btnNoBg' title='Refresh' onClick={() => refreshContent()}>
                             <Tooltip title='Refresh Page'><IconRefresh /></Tooltip>
                         </button>
 

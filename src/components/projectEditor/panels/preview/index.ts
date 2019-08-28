@@ -19,6 +19,7 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
 import { projectSelectors, previewSelectors } from '../../../../selectors';
+import { previewActions } from '../../../../actions';
 
 const mapStateToProps = (state: any) => ({
     project: projectSelectors.getProject(state),
@@ -44,6 +45,9 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
         },
         onHideModals: () => {
             // dispatch(outputLogActions.clearOutputLog());
+        },
+        refreshContent: () => {
+            dispatch(previewActions.refreshContent());
         }
     };
 };

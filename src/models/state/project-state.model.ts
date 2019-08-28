@@ -1,4 +1,5 @@
 import { IProjectItem } from '../project';
+import { IApiError } from '../';
 
 export interface IEnvironment {
     name: string;
@@ -16,6 +17,8 @@ export interface IAccount {
 
 export interface IProjectState {
     project?: Partial<IProjectItem>;
+    isProjectLoading: boolean;
+    loadProjectError?: IApiError;
     environments: IEnvironment[];
     selectedEnvironment: IEnvironment;
     accounts: IAccount[];
