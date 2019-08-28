@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { previewActions, panelsActions, projectsActions } from '../actions';
+import { previewActions, panelsActions, projectsActions, explorerActions } from '../actions';
 import Networks from '../networks';
 import { AnyAction } from 'redux';
 import { Panels } from '../models/state';
@@ -69,14 +69,8 @@ function errorHtml(message: string) {
 
 export default function previewReducer(state = initialState, action: AnyAction, rootState: any) {
     switch (action.type) {
-        case projectsActions.LOAD_PROJECT_SUCCESS:
+        case explorerActions.INIT_EXPLORER_SUCCESS:
         case previewActions.REFRESH_CONTENT:
-
-            // Make sure wait to render only once the project has been loaded
-            if (rootState.projects.project.isProjectLoading) {
-                return state;
-            }
-
             let htmlToRender;
             const tree = rootState.explorer.tree;
 
@@ -85,6 +79,8 @@ export default function previewReducer(state = initialState, action: AnyAction, 
             const html = findItemByPath(tree, [ 'app', 'app.html' ], ProjectItemTypes.File);
             const css = findItemByPath(tree, [ 'app', 'app.css' ], ProjectItemTypes.File);
             const js = findItemByPath(tree, [ 'app', 'app.js' ], ProjectItemTypes.File);
+
+            console.log(html);
 
             // TODO - Improve all this to make sure we can render
             if ((html === null || css === null || js === null || !html.code || !css.code || !js.code)) {

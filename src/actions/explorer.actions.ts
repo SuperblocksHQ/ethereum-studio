@@ -25,6 +25,13 @@ export const explorerActions = {
         };
     },
 
+    INIT_EXPLORER_SUCCESS: 'INIT_EXPLORER_SUCCESS',
+    initExplorerSuccess() {
+        return {
+            type: explorerActions.INIT_EXPLORER_SUCCESS,
+        };
+    },
+
     // TODO: remove this action
     RENAME_FILE: 'RENAME_FILE',
     renameFile(id: string, name: string) { // maybe should use filepath instead

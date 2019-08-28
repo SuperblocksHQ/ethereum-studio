@@ -33,7 +33,9 @@ export const updateViewOnParameters: Epic = (action$: any, state$: any) => actio
         if (url.includes('showTransactions=1')) {
             actions.push(panelsActions.openPanel(Panels.Transactions));
         }
-        if (url.includes('showPreview=1')) {
+        if (url.includes('hidePreview=1')) {
+            actions.push(panelsActions.closePanel(Panels.Preview));
+        } else {
             actions.push(panelsActions.openPanel(Panels.Preview));
         }
 
