@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { previewActions, panelsActions, projectsActions, explorerActions } from '../actions';
+import { previewActions, panelsActions, projectsActions, explorerActions, panesActions } from '../actions';
 import Networks from '../networks';
 import { AnyAction } from 'redux';
 import { Panels } from '../models/state';
@@ -70,6 +70,7 @@ function errorHtml(message: string) {
 export default function previewReducer(state = initialState, action: AnyAction, rootState: any) {
     switch (action.type) {
         case explorerActions.INIT_EXPLORER_SUCCESS:
+        case panesActions.SAVE_FILE_SUCCESS:
         case previewActions.REFRESH_CONTENT:
             let htmlToRender;
             const tree = rootState.explorer.tree;
