@@ -14,10 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { previewActions, panelsActions, projectsActions, explorerActions, panesActions } from '../actions';
+import { previewActions, explorerActions, panesActions } from '../actions';
 import Networks from '../networks';
 import { AnyAction } from 'redux';
-import { Panels } from '../models/state';
 import { findItemByPath } from './explorerLib';
 import { ProjectItemTypes } from '../models';
 
