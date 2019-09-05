@@ -27,7 +27,7 @@ export const authService = {
         const code = data.code;
         const userDevice = this.getUserDeviceInfo();
 
-        return fetchJSON(process.env.REACT_APP_API_BASE_URL + '/auth/github', {
+        return fetchJSON(process.env.REACT_APP_API_BASE_URL + '/v1/auth/github', {
             method: 'POST',
             body: {code, userDevice},
         }).pipe(
@@ -44,7 +44,7 @@ export const authService = {
         if (refreshToken === null) {
             throw Error('RefreshToken is not available');
         }
-        return fetchJSON(process.env.REACT_APP_API_BASE_URL + '/auth/refreshToken', {
+        return fetchJSON(process.env.REACT_APP_API_BASE_URL + '/v1/auth/refreshToken', {
             method: 'POST',
             body: { refreshToken }
         }).pipe(
@@ -63,7 +63,7 @@ export const authService = {
         if (refreshToken === null) {
             return EMPTY;
         }
-        return fetchJSON(process.env.REACT_APP_API_BASE_URL + '/auth/refreshToken', {
+        return fetchJSON(process.env.REACT_APP_API_BASE_URL + '/v1/auth/refreshToken', {
             method: 'DELETE',
             body: { refreshToken }
         }).pipe(

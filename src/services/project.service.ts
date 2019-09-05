@@ -21,7 +21,7 @@ import { Observable, throwError } from 'rxjs';
 export const projectService = {
 
     createProject(data: Partial<IProject>): Observable<IProject> {
-        return fetchJSON(process.env.REACT_APP_PROJECT_API_BASE_URL + '/projects', {
+        return fetchJSON(process.env.REACT_APP_API_BASE_URL + '/v1/projects', {
             method: 'POST',
             body: data
         })
@@ -36,21 +36,21 @@ export const projectService = {
     },
 
     getProjectById(id: string) {
-        return fetchJSON(process.env.REACT_APP_PROJECT_API_BASE_URL + '/projects/' + id, {})
+        return fetchJSON(process.env.REACT_APP_API_BASE_URL + '/v1/projects/' + id, {})
             .pipe(
                 switchMap(response => response.json())
             );
     },
 
     getProjectsInfo() {
-        return fetchJSON(process.env.REACT_APP_PROJECT_API_BASE_URL + '/projectsInfo', {})
+        return fetchJSON(process.env.REACT_APP_API_BASE_URL + '/v1/projectsInfo', {})
             .pipe(
                 switchMap(response => response.json())
             );
     },
 
     putProjectById(id: string, data: any) {
-        return fetchJSON(process.env.REACT_APP_PROJECT_API_BASE_URL + '/projects/' + id, {
+        return fetchJSON(process.env.REACT_APP_API_BASE_URL + '/v1/projects/' + id, {
             method: 'PUT',
             body: data
         }).pipe(
@@ -59,7 +59,7 @@ export const projectService = {
     },
 
     deleteProjectById(id: string) {
-        return fetchJSON(process.env.REACT_APP_PROJECT_API_BASE_URL + '/projects/' + id, {
+        return fetchJSON(process.env.REACT_APP_API_BASE_URL + '/v1/projects/' + id, {
             method: 'DELETE'
         });
     },
