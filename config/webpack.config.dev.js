@@ -406,7 +406,7 @@ module.exports = {
     new CopyWebpackPlugin([ { from: 'node_modules/monaco-editor/min/vs', to: 'vs', } ]),
     new CopyWebpackPlugin([ { context: `src/services/solc/dist`, from: '**/*', to: 'solc', } ]),
     new CopyWebpackPlugin([ { context: `src/services/evm/dist`, from: '**/*', to: 'evm', } ]),
-    new CopyWebpackPlugin([ { context: `src/components/superprovider/dist`, from: 'web3provider.js', to: 'static/js', } ])
+    new CopyWebpackPlugin([ { context: `src/components/superProvider/dist`, from: 'web3provider.js', to: 'static/js', } ])
   ],
 
   // Some libraries import Node modules but don't use them in the browser.

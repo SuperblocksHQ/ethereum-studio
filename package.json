@@ -18,7 +18,7 @@
     "ethereumjs-tx-*.js",
     "src/services/evm/dist/*",
     "src/services/solc/dist/*",
-    "src/components/superprovider/dist/*"
+    "src/components/superProvider/dist/*"
   ],
   "devDependencies": {
     "@babel/core": "7.1.0",
