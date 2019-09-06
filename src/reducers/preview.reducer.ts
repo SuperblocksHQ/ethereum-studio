@@ -14,11 +14,11 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { previewActions, explorerActions, panesActions } from '../actions';
+import { previewActions, explorerActions, panesActions, deployerActions } from '../actions';
 import Networks from '../networks';
 import { AnyAction } from 'redux';
 import { findItemByPath } from './explorerLib';
-import { ProjectItemTypes } from '../models';
+import { ProjectItemTypes, IProjectItem } from '../models';
 
 const initialState = {
     showNoExportableContentModal: false,
@@ -68,6 +68,7 @@ function errorHtml(message: string) {
 
 export default function previewReducer(state = initialState, action: AnyAction, rootState: any) {
     switch (action.type) {
+        case deployerActions.DEPLOY_SUCCESS:
         case explorerActions.INIT_EXPLORER_SUCCESS:
         case panesActions.SAVE_FILE_SUCCESS:
         case previewActions.REFRESH_CONTENT:
@@ -80,13 +81,17 @@ export default function previewReducer(state = initialState, action: AnyAction, 
             const css = findItemByPath(tree, [ 'app', 'app.css' ], ProjectItemTypes.File);
             const js = findItemByPath(tree, [ 'app', 'app.js' ], ProjectItemTypes.File);
 
-            console.log(html);
+            const contractFiles: [IProjectItem] = rootState.deployer.deployFiles.filter(((file: IProjectItem) => file.name.includes(`${rootState.projects.selectedEnvironment.name}.js`)));
+            let contractJs = '';
+            for (const file of contractFiles) {
+                contractJs += file.code + '\n';
+            }
 
             // TODO - Improve all this to make sure we can render
             if ((html === null || css === null || js === null || !html.code || !css.code || !js.code)) {
                 htmlToRender = errorHtml('There was an error rendering your project');
             } else {
-                htmlToRender = getInnerContent(html.code, css.code, js.code, rootState.projects.selectedEnvironment.endpoint, addresses);
+                htmlToRender = getInnerContent(html.code, css.code, contractJs + '\n' + js.code, rootState.projects.selectedEnvironment.endpoint, addresses);
             }
 
             return {
