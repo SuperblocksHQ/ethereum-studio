@@ -14,7 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-// import { buildProjectHtml } from './utils/buildProjectHtml';
 import SuperProvider from '../components/superProvider';
 import Networks from '../networks';
 import { IEnvironment, IAccount } from '../models/state';

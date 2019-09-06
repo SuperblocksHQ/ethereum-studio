@@ -41,7 +41,6 @@
         "no-switch-case-fall-through": true,
         "no-trailing-whitespace": [true, "ignore-comments"],
         "no-unused-expression": true,
-        "no-use-before-declare": true,
         "no-var-keyword": true,
         "no-var-requires": false,
         "prefer-object-spread": true,

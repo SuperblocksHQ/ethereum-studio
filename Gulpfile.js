@@ -3,7 +3,7 @@ const { series } = require('gulp');
 
 function copyDashboard() {
     return gulp
-        .src('packages/dashboard/dist/**/*')
+        .src('packages/editor/dist/**/*')
         .pipe(
             gulp.dest('www')
         );
