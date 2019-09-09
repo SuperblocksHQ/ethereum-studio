@@ -260,7 +260,7 @@ export default function explorerReducer(state = initialState, action: AnyAction)
             let itemNameValidation: IItemNameValidation = initialState.itemNameValidation;
             const tree: Nullable<IProjectItem> = state.tree;
 
-            const resultFolder = ensurePath(tree, ['contracts']);
+            const resultFolder = ensurePath(tree, ['node_modules', 'openzeppelin-solidity', 'contracts']);
             resultFolder.children = addOrReplaceChildItems(resultFolder, items).children;
 
             itemNameValidation = {
