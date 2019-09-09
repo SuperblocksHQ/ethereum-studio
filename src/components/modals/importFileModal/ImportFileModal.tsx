@@ -139,7 +139,7 @@ export default class ImportFileModal extends Component<IProps, IState> {
         const objectArray: IProjectItem[] = importPathArray
             .map((path: string) => path.startsWith('/') ? path : '/' + path)
             .map((path: any) => path.split('/').slice(1))
-            .reduce((children: any, path: any, idx: any) => insert(children, path, importSourceArray[idx]), []);
+            .reduce((children: any, path: any, idx: any) => insert(children, path, importSourceArray[idx], false), []);
 
         importFiles(parentId, objectArray);
 
