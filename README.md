@@ -30,21 +30,20 @@ To try it out, go to [lab.superblocks.com](https://lab.superblocks.com).
 Below is described how to get the **Superblocks Lab** _PreactJS_ project setup and running locally.
 
 ### Install node modules
-Use `yarn` [Yarn](https://yarnpkg.com/).
 ```sh
-yarn install
+npx lerna bootstrap --hoist
 ```
 
 ### Run in development mode
 ```sh
-yarn start
+npm start
 ```
 
 Browse to `http://localhost:3000`. Note that if you use any other hostname/IP than `localhost`, then instead run update 'ORIGIN' value in 'env.development', this is important so that the iframes can communicate with the main window.
 
 ### Make a production build
 ```sh
-yarn build
+npm build
 ```
 
 The dist files will be inside `./dist`. Note that the this command uses production version of ".env" file, so in order to test it locally please create a ".env.local" with proper ORIGIN variable value prior to build.
@@ -61,7 +60,7 @@ Run this script to fix that for you:
 Consider double-checking and updating the `CHANGELOG` to reflect the changes. Tag the new version.
 
 ## Issues
-Bug reports and suggestions can be filed at the project [Issues](https://github.com/SuperblocksHQ/superblocks-lab/issues) page.  
+Bug reports and suggestions can be filed at the project [Issues](https://github.com/SuperblocksHQ/superblocks-lab/issues) page.
 For more information about the process involved, please refer to the Wiki: [Submitting Bugs and Suggestions](https://github.com/SuperblocksHQ/superblocks-lab/wiki/Submitting-Bugs-and-Suggestions).
 
 ## Contributing

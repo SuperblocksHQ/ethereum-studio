@@ -1,9 +1,20 @@
+# dependencies
 node_modules
-build
-dist
-*.log
-.idea
-*.iml
-*/**/openzeppelin.json
+
+# env  variables
 .env.local
+
+# production
+build
+www
+.deliver
+
+# misc
+*.iml
+*.log
+.DS_Store
+npm-debug.log
+yarn-error.log
 .vscode
+.idea
+lerna-debug.log
