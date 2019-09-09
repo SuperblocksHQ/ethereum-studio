@@ -1,26 +1,26 @@
 // Copyright 2019 Superblocks AB
-// 
+//
 // This file is part of Superblocks Lab.
-// 
+//
 // Superblocks Lab is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation version 3 of the License.
-// 
+//
 // Superblocks Lab is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { explorerActions, panesActions } from '../actions';
-import { isValidProjectItemName, appendWithoutDuplicate } from './utils';
+import { isValidProjectItemName } from './utils';
 import { IExplorerState, IItemNameValidation } from '../models/state';
 import { IProjectItem } from '../models';
 import { AnyAction } from 'redux';
 import { generateUniqueId } from '../services/utils';
-import { updateItemInTree, sortProjectItems, findItemById, addOrReplaceChildItems, ensurePath } from './explorerLib';
+import { addOrReplaceChildItems, ensurePath, findItemById, sortProjectItems, updateItemInTree } from './explorerLib';
 
 export const initialState: IExplorerState = {
     tree: null,
@@ -251,32 +251,25 @@ export default function explorerReducer(state = initialState, action: AnyAction)
         }
 
         case explorerActions.IMPORT_FILES: {
-            const {parentId, items} = action.data;
+            const { items } = action.data;
 
             if (!state.tree) {
                 return state;
             }
 
             let itemNameValidation: IItemNameValidation = initialState.itemNameValidation;
-            let tree: Nullable<IProjectItem> = state.tree;
+            const tree: Nullable<IProjectItem> = state.tree;
 
-            // add new item to the tree
-            const [newTree, replacedTargetItem] = updateItemInTree(
-                state.tree,
-                parentId,
-                i => ({ ...i, children: appendWithoutDuplicate(i.children, items) })
-            );
+            const resultFolder = ensurePath(tree, ['contracts']);
+            resultFolder.children = addOrReplaceChildItems(resultFolder, items).children;
 
-            // parent item was found and child was added
-            if (replacedTargetItem) {
-                itemNameValidation = {
-                    isNameValid: true,
-                    isNotDuplicate: true,
-                    name,
-                    itemId: items[0].id
-                };
-                tree = newTree;
-            }
+            itemNameValidation = {
+                ...itemNameValidation,
+                isNameValid: true,
+                isNotDuplicate: true,
+                name,
+                itemId: resultFolder.id
+            };
 
             return {
                 ...state,
