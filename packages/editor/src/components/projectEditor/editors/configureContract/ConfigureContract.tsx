@@ -17,7 +17,7 @@
 import React, { Component } from 'react';
 import style from '../style-editor-contract.less';
 
-import { ConstructorArgumentsList } from './constuctorArgumentsList';
+import { ConstructorArgumentsList } from './constructorArgumentsList';
 import { ConstructorArgumentsHeader } from './constructorArgumentsHeader';
 import { ContractArgTypes } from '../../../../models';
 
@@ -32,21 +32,32 @@ function convertArgsToInternalModel(externalArgs) {
     });
 }
 
-export default class ContractEditor extends Component {
+interface IProps {
+
+}
+
+interface IArg {
+    type: ContractArgTypes;
+}
+
+interface IState {
+    args: [IArg];
+    name: string;
+    isDirty: boolean;
+}
+
+export default class ConfigureContract extends Component {
 
     state = {
-        args: [],
-        name: "",
+        args: [{
+            name: '',
+            type: undefined
+        }],
+        name: '',
         isDirty: false,
-    }
+    };
 
-    constructor(props) {
-        super(props);
-        this.id = props.id + '_editor';
-        this.props.parent.childComponent = this;
-    }
-
-    componentWillReceiveProps(props) {
+    componentDidUpdate() {
         this._updateProps();
     }
 
@@ -62,24 +73,20 @@ export default class ContractEditor extends Component {
                 args: convertArgsToInternalModel(this.props.item.getParent().getArgs() || []) // Get the args of the ContractItem.
             });
         }
-    };
+    }
 
-    redraw = () => {
-        this.forceUpdate();
-    };
+    // canClose = (cb, silent) => {
+    //     if (this.state.isDirty && !silent) {
+    //         const flag = window.confirm(
+    //             'There is unsaved data. Do you want to close the tab and loose the changes?'
+    //         );
+    //         cb(flag ? 0 : 1);
+    //         return;
+    //     }
+    //     cb(0);
+    // }
 
-    canClose = (cb, silent) => {
-        if (this.state.isDirty && !silent) {
-            const flag = window.confirm(
-                'There is unsaved data. Do you want to close tab and loose the changes?'
-            );
-            cb(flag ? 0 : 1);
-            return;
-        }
-        cb(0);
-    };
-
-    save = e => {
+    save = (e: React.ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
 
         if (this.state.name.length === 0) {
@@ -103,7 +110,7 @@ export default class ContractEditor extends Component {
             }
         }
 
-        // Update dappfile, reset dirty flag and redraw to have everything synked.
+        // Update dappfile, reset dirty flag and redraw to have everything synced.
         this.props.item.getParent().setName(this.state.name);
         const argsToSave = convertArgsToExternalModel(this.state.args);
         this.props.item.getParent().setArgs(argsToSave);
@@ -127,7 +134,7 @@ export default class ContractEditor extends Component {
                         );
                 }
             );
-    };
+    }
 
     getOtherContracts = () => {
         // Get all contracts registered in the dappfile.
@@ -136,7 +143,7 @@ export default class ContractEditor extends Component {
             .getHiddenItem('contracts')
             .getChildren();
         const contracts = [];
-        for (var index = 0; index < list.length; index++) {
+        for (let index = 0; index < list.length; index++) {
             const contract = list[index];
             if (contract.getName() === this.props.item.getParent().getName()) {
                 continue;
@@ -144,7 +151,7 @@ export default class ContractEditor extends Component {
             contracts.push(contract.getSource());
         }
         return contracts;
-    };
+    }
 
     getAccounts = () => {
         return this.props.item
@@ -152,18 +159,18 @@ export default class ContractEditor extends Component {
             .getHiddenItem('accounts')
             .getChildren()
             .map(account => account.getName());
-    };
+    }
 
-    onNameChange = (e) => {
+    onNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
         this.setState({
             name: value,
             isDirty: true,
         });
-    };
+    }
 
     onArgumentChange = (change, index) => {
-        this.setState(prevState => {
+        this.setState((prevState: IState) => {
             return {
                 isDirty: true,
                 args: prevState.args.map((arg, i) => {
@@ -174,20 +181,20 @@ export default class ContractEditor extends Component {
     }
 
     addArgument = () => {
-        this.setState(prevState => ({
+        this.setState((prevState: IState) => ({
             isDirty: true,
             args: [...prevState.args, { type: ContractArgTypes.value, value: '' }]
         }));
-    };
+    }
 
-    removeArgument = (index) => {
+    removeArgument = (index: number) => {
         if (index > -1) {
-            this.setState(prevState => ({
+            this.setState((prevState: IState) => ({
                 args: prevState.args.filter((_, i) => i !== index),
                 isDirty: true
             }));
         }
-    };
+    }
 
     render() {
         if (!this.props.item) {
@@ -198,15 +205,15 @@ export default class ContractEditor extends Component {
 
         return (
             <div id={this.id} className={style.main}>
-                <div className="scrollable-y" id={this.id + '_scrollable'}>
+                <div className='scrollable-y' id={this.id + '_scrollable'}>
                     <div className={style.inner}>
                         <h1 className={style.title}>Edit Contract {contractPath}</h1>
                         <div className={style.form}>
-                            <div className="superInputDark">
-                                <label htmlFor="name">Name</label>
+                            <div className='superInputDark'>
+                                <label htmlFor='name'>Name</label>
                                 <input
-                                    id="name"
-                                    type="text"
+                                    id='name'
+                                    type='text'
                                     onKeyUp={this.onNameChange}
                                     value={name}
                                     onChange={this.onNameChange}
@@ -224,7 +231,7 @@ export default class ContractEditor extends Component {
                                     />
                             </div>
                             <div>
-                                <button href="#" className="btn2" disabled={!isDirty} onClick={this.save}>
+                                <button href='#' className='btn2' disabled={!isDirty} onClick={this.save}>
                                     Save
                                 </button>
                             </div>
