@@ -20,6 +20,7 @@ import style from '../style-editor-contract.less';
 import { ConstructorArgumentsList } from './constructorArgumentsList';
 import { ConstructorArgumentsHeader } from './constructorArgumentsHeader';
 import { ContractArgTypes, IProjectItem, IContractArgData, IContractConfiguration } from '../../../../models';
+import { IAccount } from '../../../../models/state';
 
 // function convertArgsToExternalModel(internalArgs) {
 //     return internalArgs.map(a => ({ [a.type]: a.value }));
@@ -37,6 +38,7 @@ interface IProps {
     key: string;
     visible: boolean;
     contractConfiguration: IContractConfiguration;
+    accounts: IAccount[];
     saveContractConfig: (contractConfig: IContractConfiguration) => void;
 }
 
@@ -114,17 +116,6 @@ export default class ConfigureContract extends Component<IProps, IState> {
         // return contracts;
     }
 
-    getAccounts = () => {
-        // TODO - Get this from state
-
-        return [''];
-        // return this.props.item
-        //     .getProject()
-        //     .getHiddenItem('accounts')
-        //     .getChildren()
-        //     .map(account => account.getName());
-    }
-
     onNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
         this.setState({
@@ -174,7 +165,7 @@ export default class ConfigureContract extends Component<IProps, IState> {
     }
 
     render() {
-        const { file, key, contractConfiguration } = this.props;
+        const { file, key, contractConfiguration, accounts } = this.props;
         const { newContractConfig, isDirty } = this.state;
 
         console.log(newContractConfig);
@@ -204,7 +195,7 @@ export default class ConfigureContract extends Component<IProps, IState> {
                                 <ConstructorArgumentsHeader />
                                 <ConstructorArgumentsList
                                     args={newContractConfig.arguments}
-                                    accounts={this.getAccounts()}
+                                    accounts={accounts.map(account => account.name)}
                                     otherContracts={this.getOtherContracts()}
                                     onArgChange={this.onArgumentChange}
                                     onArgRemove={this.removeArgument}
