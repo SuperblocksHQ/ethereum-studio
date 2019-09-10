@@ -27,13 +27,13 @@ export const importFilesEpic: Epic = (action$, state$) => action$.pipe(
         const project = projectSelectors.getProject(state$.value);
         const explorerState = state$.value.explorer;
 
-        if (explorerState.itemNameValidation.isValid) {
+        if (explorerState.itemNameValidation.isNameValid) {
             return projectService.putProjectById(project.id, {
                 name: project.name,
                 description: project.description,
                 files: state$.value.explorer.tree
             }).pipe(
-                switchMap(() => EMPTY),
+                switchMap(() => [explorerActions.importFilesSuccess()]),
                 catchError(() => [explorerActions.importFilesFail(explorerState.itemNameValidation.itemId) ])
             );
         } else {

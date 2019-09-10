@@ -30,19 +30,19 @@ export function isValidProjectItemName(name: string): boolean {
 }
 
 // Insert path into directory tree structure:
-export function insert(children: any[], [head, ...tail]: any, code: string): IProjectItem[] {
+export function insert(children: any[], [head, ...tail]: any, code: string, mutable?: boolean): IProjectItem[] {
     let child = children.find((item: IProjectItem)  => item.name === head);
     if (!child) {
         if (head.endsWith('.sol')) {
             // file
-            children.push(child = createFile(head, code));
+            children.push(child = createFile(head, code, mutable));
         } else {
             // folder
             children.push(child = createFolder(head));
         }
     }
     if (tail.length > 0) {
-        insert(child.children, tail, code);
+        insert(child.children, tail, code, mutable);
     }
     return children;
 }
