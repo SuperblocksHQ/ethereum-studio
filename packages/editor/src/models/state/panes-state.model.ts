@@ -15,14 +15,31 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { IProjectItem } from '../project';
+import { IContractConfiguration } from '../contractConfiguration.model';
+
+export enum PaneType {
+    FILE,
+    CONFIGURATION
+}
+
+export interface IFilePane extends IPane {
+    file: IProjectItem;
+}
+
+export interface IContractConfigPane extends IPane {
+    file: IProjectItem;
+    contractConfiguration: IContractConfiguration;
+}
 
 export interface IPane {
-    file: IProjectItem;
     active: boolean;
     hasUnsavedChanges: boolean;
+    type: PaneType;
 }
+
+export type Pane = IFilePane | IContractConfigPane;
 
 export interface IPanesState {
     activePane: string | null;
-    items: IPane[];
+    items: Pane[];
 }

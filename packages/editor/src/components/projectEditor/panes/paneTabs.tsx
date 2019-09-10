@@ -19,7 +19,7 @@ import classnames from 'classnames';
 import style from './style.less';
 import { IconClose } from '../../icons';
 import { DropdownContainer, FileIcon } from '../../common';
-import { IPane } from '../../../models/state';
+import { Pane } from '../../../models/state';
 import { IProjectItem } from '../../../models';
 import PaneDraggable from './paneDraggable';
 
@@ -28,7 +28,7 @@ interface IState {
 }
 
 interface IProps {
-    panes: IPane[];
+    panes: Pane[];
     onCloseAllTabs: () => void;
     onCloseAllOtherTabs: (fileId: string) => void;
     onTabClick: (file: IProjectItem) => void;

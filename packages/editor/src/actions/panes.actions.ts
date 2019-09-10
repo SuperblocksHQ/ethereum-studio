@@ -9,6 +9,14 @@ export const panesActions = {
         };
     },
 
+    OPEN_CONTRACT_CONFIGURATION: 'OPEN_CONTRACT_CONFIGURATION',
+    openContractConfiguration(file: IProjectItem) {
+        return {
+            type: panesActions.OPEN_CONTRACT_CONFIGURATION,
+            data: file
+        };
+    },
+
     CLOSE_PANE: 'CLOSE_PANE',
     closePane(fileId: string) {
         return {

@@ -92,15 +92,6 @@ export const explorerActions = {
     },
 
     // --------- Contract specific
-
-    CONFIGURE_CONTRACT: 'CONFIGURE_CONTRACT',
-    configureContract(item: IProjectItem) {
-        return {
-            type: explorerActions.CONFIGURE_CONTRACT,
-            data: item
-        };
-    },
-
     COMPILE_CONTRACT: 'COMPILE_CONTRACT',
     compileContract(item: IProjectItem) {
         return {

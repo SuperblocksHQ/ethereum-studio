@@ -19,41 +19,37 @@ import style from '../style-editor-contract.less';
 
 import { ConstructorArgumentsList } from './constructorArgumentsList';
 import { ConstructorArgumentsHeader } from './constructorArgumentsHeader';
-import { ContractArgTypes } from '../../../../models';
+import { ContractArgTypes, IProjectItem, IContractArgData, IContractConfiguration } from '../../../../models';
 
-function convertArgsToExternalModel(internalArgs) {
-    return internalArgs.map(a => ({ [a.type]: a.value }));
-}
+// function convertArgsToExternalModel(internalArgs) {
+//     return internalArgs.map(a => ({ [a.type]: a.value }));
+// }
 
-function convertArgsToInternalModel(externalArgs) {
-    return externalArgs.map(a => {
-        const type = Object.keys(a)[0];
-        return { type, value: a[type] };
-    });
-}
+// function convertArgsToInternalModel(externalArgs) {
+//     return externalArgs.map(a => {
+//         const type = Object.keys(a)[0];
+//         return { type, value: a[type] };
+//     });
+// }
 
 interface IProps {
-
-}
-
-interface IArg {
-    type: ContractArgTypes;
+    file: IProjectItem;
+    key: string;
+    visible: boolean;
+    contractConfiguration: IContractConfiguration;
 }
 
 interface IState {
-    args: [IArg];
+    args: IContractArgData[];
     name: string;
     isDirty: boolean;
 }
 
-export default class ConfigureContract extends Component {
+export default class ConfigureContract extends Component<IProps, IState> {
 
     state = {
-        args: [{
-            name: '',
-            type: undefined
-        }],
-        name: '',
+        args: this.props.contractConfiguration.arguments,
+        name: this.props.contractConfiguration.name,
         isDirty: false,
     };
 
@@ -66,13 +62,15 @@ export default class ConfigureContract extends Component {
     }
 
     _updateProps = () => {
-        // Only update internal props if we are clean.
-        if (!this.state.isDirty) {
-            this.setState({
-                name: this.props.item.getParent().getName() || '', // Get the name of the ContractItem.
-                args: convertArgsToInternalModel(this.props.item.getParent().getArgs() || []) // Get the args of the ContractItem.
-            });
-        }
+        const { file } = this.props;
+
+        // // Only update internal props if we are clean.
+        // if (!this.state.isDirty) {
+        //     this.setState({
+        //         name: file.name, // Get the name of the ContractItem.
+        //         args: convertArgsToInternalModel(this.props.item.getParent().getArgs() || []) // Get the args of the ContractItem.
+        //     });
+        // }
     }
 
     // canClose = (cb, silent) => {
@@ -86,7 +84,7 @@ export default class ConfigureContract extends Component {
     //     cb(0);
     // }
 
-    save = (e: React.ChangeEvent<HTMLInputElement>) => {
+    save = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
 
         if (this.state.name.length === 0) {
@@ -99,66 +97,74 @@ export default class ConfigureContract extends Component {
             return;
         }
 
-        // Check all arguments so that they are valid.
-        for (const arg of this.state.args) {
-            if (arg.type === ContractArgTypes.contract) {
-                // Check so that the contract actually exists.
-                if (this.getOtherContracts().indexOf(arg.value) === -1) {
-                    alert(`Error: Contract arguments are not valid, missing: "${arg.value}".`);
-                    return;
-                }
-            }
-        }
+        // // Check all arguments so that they are valid.
+        // for (const arg of this.state.args) {
+        //     if (arg.type === ContractArgTypes.contract) {
+        //         // Check so that the contract actually exists.
+        //         if (this.getOtherContracts().indexOf(arg.value) === -1) {
+        //             alert(`Error: Contract arguments are not valid, missing: "${arg.value}".`);
+        //             return;
+        //         }
+        //     }
+        // }
 
-        // Update dappfile, reset dirty flag and redraw to have everything synced.
-        this.props.item.getParent().setName(this.state.name);
-        const argsToSave = convertArgsToExternalModel(this.state.args);
-        this.props.item.getParent().setArgs(argsToSave);
-        this.props.item
-            .getProject()
-            .setContractName(
-                this.props.item.getParent().getSource(),
-                this.state.name,
-                () => {
-                    this.props.item
-                        .getProject()
-                        .setContractArgs(
-                            this.props.item.getParent().getSource(),
-                            argsToSave,
-                            () => {
-                                this.setState({
-                                    isDirty: false,
-                                });
-                                this.props.router.control.redrawMain(); // It's important we redraw main so that the file items get updated from the dappfile.
-                            }
-                        );
-                }
-            );
+        // TODO - Send event to update the dappfile
+
+        // // Update dappfile, reset dirty flag and redraw to have everything synced.
+        // this.props.item.getParent().setName(this.state.name);
+        // const argsToSave = convertArgsToExternalModel(this.state.args);
+        // this.props.item.getParent().setArgs(argsToSave);
+        // this.props.item
+        //     .getProject()
+        //     .setContractName(
+        //         this.props.item.getParent().getSource(),
+        //         this.state.name,
+        //         () => {
+        //             this.props.item
+        //                 .getProject()
+        //                 .setContractArgs(
+        //                     this.props.item.getParent().getSource(),
+        //                     argsToSave,
+        //                     () => {
+        //                         this.setState({
+        //                             isDirty: false,
+        //                         });
+        //                         this.props.router.control.redrawMain(); // It's important we redraw main so that the file items get updated from the dappfile.
+        //                     }
+        //                 );
+        //         }
+        //     );
     }
 
     getOtherContracts = () => {
+        return [''];
+        // TODO - Get this from state
+
         // Get all contracts registered in the dappfile.
-        const list = this.props.item
-            .getProject()
-            .getHiddenItem('contracts')
-            .getChildren();
-        const contracts = [];
-        for (let index = 0; index < list.length; index++) {
-            const contract = list[index];
-            if (contract.getName() === this.props.item.getParent().getName()) {
-                continue;
-            }
-            contracts.push(contract.getSource());
-        }
-        return contracts;
+        // const list = this.props.item
+        //     .getProject()
+        //     .getHiddenItem('contracts')
+        //     .getChildren();
+        // const contracts = [];
+        // for (let index = 0; index < list.length; index++) {
+        //     const contract = list[index];
+        //     if (contract.getName() === this.props.item.getParent().getName()) {
+        //         continue;
+        //     }
+        //     contracts.push(contract.getSource());
+        // }
+        // return contracts;
     }
 
     getAccounts = () => {
-        return this.props.item
-            .getProject()
-            .getHiddenItem('accounts')
-            .getChildren()
-            .map(account => account.getName());
+        // TODO - Get this from state
+
+        return [''];
+        // return this.props.item
+        //     .getProject()
+        //     .getHiddenItem('accounts')
+        //     .getChildren()
+        //     .map(account => account.getName());
     }
 
     onNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -169,12 +175,12 @@ export default class ConfigureContract extends Component {
         });
     }
 
-    onArgumentChange = (change, index) => {
+    onArgumentChange = (argumentChanged: IContractArgData, index: number) => {
         this.setState((prevState: IState) => {
             return {
                 isDirty: true,
                 args: prevState.args.map((arg, i) => {
-                    return (index !== i) ? arg : { ...arg, ...change };
+                    return (index !== i) ? arg : { ...arg, ...argumentChanged };
                 })
             };
         });
@@ -197,24 +203,26 @@ export default class ConfigureContract extends Component {
     }
 
     render() {
-        if (!this.props.item) {
+        const { file, key, contractConfiguration } = this.props;
+        const { name, args, isDirty } = this.state;
+
+        // TODO - Instead of checking the file, get the item from the dappfile
+        if (!file) {
             return <div>Could not find contract in dappfile.json</div>;
         }
-        const { name, args, isDirty } = this.state;
-        const contractPath = this.props.item.getParent().getSource();
 
         return (
-            <div id={this.id} className={style.main}>
-                <div className='scrollable-y' id={this.id + '_scrollable'}>
+            <div id={key} className={style.main}>
+                <div className='scrollable-y' id={key + '_scrollable'}>
                     <div className={style.inner}>
-                        <h1 className={style.title}>Edit Contract {contractPath}</h1>
+                        <h1 className={style.title}>Edit Contract {contractConfiguration.path}</h1>
                         <div className={style.form}>
                             <div className='superInputDark'>
                                 <label htmlFor='name'>Name</label>
                                 <input
                                     id='name'
                                     type='text'
-                                    onKeyUp={this.onNameChange}
+                                    // onKeyUp={this.onNameChange}
                                     value={name}
                                     onChange={this.onNameChange}
                                 />
@@ -231,7 +239,7 @@ export default class ConfigureContract extends Component {
                                     />
                             </div>
                             <div>
-                                <button href='#' className='btn2' disabled={!isDirty} onClick={this.save}>
+                                <button className='btn2' disabled={!isDirty} onClick={this.save}>
                                     Save
                                 </button>
                             </div>

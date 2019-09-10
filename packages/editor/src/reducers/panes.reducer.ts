@@ -17,15 +17,71 @@
 import { panesActions, explorerActions } from '../actions';
 import { replaceInArray, moveInArray } from './utils';
 import { AnyAction } from 'redux';
-import { IPanesState } from '../models/state';
+import { IPanesState, PaneType } from '../models/state';
+import { findItemByPath, traverseTree } from './explorerLib';
+import { ProjectItemTypes } from '../models';
+
+function pathToString(path: string[]) {
+    return '/' + path.join('/');
+}
 
 export const initialState: IPanesState = {
     activePane: null,
     items: []
 };
 
-export default function panesReducer(state = initialState, action: AnyAction) {
+export default function panesReducer(state = initialState, action: AnyAction, rootState: any) {
     switch (action.type) {
+
+        case panesActions.OPEN_CONTRACT_CONFIGURATION: {
+
+            const file = action.data;
+            const tree = rootState.explorer.tree;
+
+            // TODO
+            const dappFileItem = findItemByPath(tree, [ 'dappfile.json' ], ProjectItemTypes.File);
+
+            if (dappFileItem !== null && dappFileItem.code) {
+                const dappFileContent = JSON.parse(dappFileItem.code);
+                let contractPath = '';
+
+                // find target solidity file and all others
+                traverseTree(tree, (item, path) => {
+                    if (item.id === file.id) {
+                        contractPath = pathToString(path());
+                    }
+                });
+
+                const contractConfiguration = dappFileContent.contracts.find((contract: any) => contract.source === contractPath);
+                const items = replaceInArray(state.items.slice(), p => p.active, p => ({ ...p, active: false }));
+                const itemIndex = items.findIndex(i => i.file.id === action.data.id);
+                const activePane = action.data.id;
+                if (itemIndex >= 0) {
+                    items[itemIndex] = { ...items[itemIndex], active: true };
+                } else {
+                    items.unshift({
+                        file: action.data,
+                        active: true,
+                        hasUnsavedChanges: false,
+                        type: PaneType.CONFIGURATION,
+                        contractConfiguration: {
+                            arguments: contractConfiguration.args,
+                            name: contractConfiguration.name,
+                            otherContracts: [''],
+                            path: contractPath
+                    } });
+                }
+                return {
+                    ...state,
+                    activePane,
+                    items
+                };
+            } else {
+                return {
+                    ...state
+                };
+            }
+        }
 
         case panesActions.OPEN_FILE: {
             const items = replaceInArray(state.items.slice(), p => p.active, p => ({ ...p, active: false }));
@@ -34,7 +90,7 @@ export default function panesReducer(state = initialState, action: AnyAction) {
             if (itemIndex >= 0) {
                 items[itemIndex] = { ...items[itemIndex], active: true };
             } else {
-                items.unshift({ file: action.data, active: true, hasUnsavedChanges: false });
+                items.unshift({ file: action.data, active: true, hasUnsavedChanges: false, type: PaneType.FILE });
             }
             return {
                 ...state,

@@ -18,13 +18,14 @@ import React from 'react';
 import classnames from 'classnames';
 import style from './style.less';
 import { PaneTabs } from './paneTabs';
-import { IPane } from '../../../models/state';
+import { PaneType, Pane, IContractConfigPane, IFilePane } from '../../../models/state';
 import { FileEditor } from './editor';
 import { IProjectItem } from '../../../models';
 import PaneDraggable from './paneDraggable';
+import ConfigureContract from '../editors/configureContract';
 
 interface IProps {
-    panes: IPane[];
+    panes: Pane[];
     dragging: boolean;
     onSaveFile: (fileId: string, code: string) => void;
     onOpenFile: (fileItem: IProjectItem) => void;
@@ -56,17 +57,30 @@ export function Panes(props: IProps) {
             </PaneDraggable>
             <div className={style.panes}>
             {
-                props.panes.map((pane) =>
-                    <FileEditor key={pane.file.id}
-                        file={pane.file}
-                        visible={pane.active}
-                        hasUnsavedChanges={pane.hasUnsavedChanges}
-                        onSave={props.onSaveFile}
-                        onConfigure={props.onConfigureContract}
-                        onCompile={props.onCompileContract}
-                        onDeploy={props.onDeployContract}
-                        onUnsavedChange={props.onUnsavedChange} />
-                )
+                props.panes.map((p) => {
+                    if (p.type === PaneType.FILE) {
+                        const pane = p as IFilePane;
+                        return <FileEditor
+                                    key={pane.file.id}
+                                    file={pane.file}
+                                    visible={pane.active}
+                                    hasUnsavedChanges={pane.hasUnsavedChanges}
+                                    onSave={props.onSaveFile}
+                                    onConfigure={props.onConfigureContract}
+                                    onCompile={props.onCompileContract}
+                                    onDeploy={props.onDeployContract}
+                                    onUnsavedChange={props.onUnsavedChange}
+                                />;
+                    } else if (p.type === PaneType.CONFIGURATION) {
+                        const pane = p as IContractConfigPane;
+                        return <ConfigureContract
+                                    key={pane.file.id}
+                                    file={pane.file}
+                                    visible={pane.active}
+                                    contractConfiguration={pane.contractConfiguration}
+                                />;
+                    }
+                })
             }
             </div>
         </div>

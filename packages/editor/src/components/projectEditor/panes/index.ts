@@ -51,7 +51,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
 
         // contract related
         onConfigureContract: (file: IProjectItem) => {
-            dispatch(explorerActions.configureContract(file));
+            dispatch(panesActions.openContractConfiguration(file));
         },
         onCompileContract: (file: IProjectItem) => {
             dispatch(explorerActions.compileContract(file));
