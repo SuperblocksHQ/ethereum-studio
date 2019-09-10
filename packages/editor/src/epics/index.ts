@@ -23,6 +23,7 @@ import { urlParametersEpics } from './urlParameters';
 import { panesEpics } from './panes';
 import { compilerEpics } from './compiler';
 import { deployerEpics } from './deployer';
+import { contractConfigurationEpics } from './contractConfiguration';
 
 export const epics = [
     ...settingsEpics,
@@ -33,7 +34,8 @@ export const epics = [
     ...urlParametersEpics,
     ...panesEpics,
     ...compilerEpics,
-    ...deployerEpics
+    ...deployerEpics,
+    ...contractConfigurationEpics
     // Disable this 2 categories for now
     // ...userEpics,
     // ...loginEpics,

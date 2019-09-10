@@ -37,19 +37,18 @@ interface IProps {
     key: string;
     visible: boolean;
     contractConfiguration: IContractConfiguration;
+    saveContractConfig: (contractConfig: IContractConfiguration) => void;
 }
 
 interface IState {
-    args: IContractArgData[];
-    name: string;
+    newContractConfig: IContractConfiguration;
     isDirty: boolean;
 }
 
 export default class ConfigureContract extends Component<IProps, IState> {
 
     state = {
-        args: this.props.contractConfiguration.arguments,
-        name: this.props.contractConfiguration.name,
+        newContractConfig: this.props.contractConfiguration,
         isDirty: false,
     };
 
@@ -85,55 +84,14 @@ export default class ConfigureContract extends Component<IProps, IState> {
     // }
 
     save = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        const { saveContractConfig } = this.props;
+        const { newContractConfig } = this.state;
+
         e.preventDefault();
-
-        if (this.state.name.length === 0) {
-            alert('Error: Missing name.');
-            return;
-        }
-
-        if (!this.state.name.match(/^([a-zA-Z0-9-_]+)$/) || this.state.name.length > 255) {
-            alert('Illegal contract name. Only A-Za-z0-9, dash (-) and underscore (_) allowed. Max 255 characters.');
-            return;
-        }
-
-        // // Check all arguments so that they are valid.
-        // for (const arg of this.state.args) {
-        //     if (arg.type === ContractArgTypes.contract) {
-        //         // Check so that the contract actually exists.
-        //         if (this.getOtherContracts().indexOf(arg.value) === -1) {
-        //             alert(`Error: Contract arguments are not valid, missing: "${arg.value}".`);
-        //             return;
-        //         }
-        //     }
-        // }
-
-        // TODO - Send event to update the dappfile
-
-        // // Update dappfile, reset dirty flag and redraw to have everything synced.
-        // this.props.item.getParent().setName(this.state.name);
-        // const argsToSave = convertArgsToExternalModel(this.state.args);
-        // this.props.item.getParent().setArgs(argsToSave);
-        // this.props.item
-        //     .getProject()
-        //     .setContractName(
-        //         this.props.item.getParent().getSource(),
-        //         this.state.name,
-        //         () => {
-        //             this.props.item
-        //                 .getProject()
-        //                 .setContractArgs(
-        //                     this.props.item.getParent().getSource(),
-        //                     argsToSave,
-        //                     () => {
-        //                         this.setState({
-        //                             isDirty: false,
-        //                         });
-        //                         this.props.router.control.redrawMain(); // It's important we redraw main so that the file items get updated from the dappfile.
-        //                     }
-        //                 );
-        //         }
-        //     );
+        saveContractConfig(newContractConfig);
+        this.setState({
+            isDirty: false
+        });
     }
 
     getOtherContracts = () => {
@@ -170,7 +128,10 @@ export default class ConfigureContract extends Component<IProps, IState> {
     onNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
         this.setState({
-            name: value,
+            newContractConfig: {
+                name: value,
+                ...this.state.newContractConfig
+            },
             isDirty: true,
         });
     }
@@ -179,9 +140,12 @@ export default class ConfigureContract extends Component<IProps, IState> {
         this.setState((prevState: IState) => {
             return {
                 isDirty: true,
-                args: prevState.args.map((arg, i) => {
-                    return (index !== i) ? arg : { ...arg, ...argumentChanged };
-                })
+                newContractConfig: {
+                    ...this.state.newContractConfig,
+                    arguments: prevState.newContractConfig.arguments.map((arg, i) => {
+                        return (index !== i) ? arg : { ...arg, ...argumentChanged };
+                    }),
+                },
             };
         });
     }
@@ -189,22 +153,31 @@ export default class ConfigureContract extends Component<IProps, IState> {
     addArgument = () => {
         this.setState((prevState: IState) => ({
             isDirty: true,
-            args: [...prevState.args, { type: ContractArgTypes.value, value: '' }]
+            newContractConfig: {
+                ...this.state.newContractConfig,
+                arguments: [...prevState.newContractConfig.arguments, { type: ContractArgTypes.value, value: '' }],
+
+            }
         }));
     }
 
     removeArgument = (index: number) => {
         if (index > -1) {
             this.setState((prevState: IState) => ({
-                args: prevState.args.filter((_, i) => i !== index),
-                isDirty: true
+                isDirty: true,
+                newContractConfig: {
+                    ...this.state.newContractConfig,
+                    arguments: prevState.newContractConfig.arguments.filter((_, i) => i !== index),
+                }
             }));
         }
     }
 
     render() {
         const { file, key, contractConfiguration } = this.props;
-        const { name, args, isDirty } = this.state;
+        const { newContractConfig, isDirty } = this.state;
+
+        console.log(newContractConfig);
 
         // TODO - Instead of checking the file, get the item from the dappfile
         if (!file) {
@@ -223,14 +196,14 @@ export default class ConfigureContract extends Component<IProps, IState> {
                                     id='name'
                                     type='text'
                                     // onKeyUp={this.onNameChange}
-                                    value={name}
+                                    value={newContractConfig.name}
                                     onChange={this.onNameChange}
                                 />
                             </div>
                             <div className={style.constructorContainer}>
                                 <ConstructorArgumentsHeader />
                                 <ConstructorArgumentsList
-                                    args={args}
+                                    args={newContractConfig.arguments}
                                     accounts={this.getAccounts()}
                                     otherContracts={this.getOtherContracts()}
                                     onArgChange={this.onArgumentChange}

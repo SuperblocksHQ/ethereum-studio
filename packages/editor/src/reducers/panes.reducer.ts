@@ -34,18 +34,15 @@ export default function panesReducer(state = initialState, action: AnyAction, ro
     switch (action.type) {
 
         case panesActions.OPEN_CONTRACT_CONFIGURATION: {
-
             const file = action.data;
             const tree = rootState.explorer.tree;
 
-            // TODO
             const dappFileItem = findItemByPath(tree, [ 'dappfile.json' ], ProjectItemTypes.File);
-
             if (dappFileItem !== null && dappFileItem.code) {
                 const dappFileContent = JSON.parse(dappFileItem.code);
                 let contractPath = '';
 
-                // find target solidity file and all others
+                // Find the contract path
                 traverseTree(tree, (item, path) => {
                     if (item.id === file.id) {
                         contractPath = pathToString(path());
