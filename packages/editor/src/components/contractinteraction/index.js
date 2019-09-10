@@ -218,7 +218,7 @@ var render_item = function(item, item_index, handler, prefix) {
     return { html: html, js: js };
 };
 
-var render = function(abi, contract) {
+var render = function(abi, contractName) {
     var intro = `
 <div class="item">
     <h1>Interact directly with the deployed contract</h1>
@@ -240,7 +240,7 @@ var render = function(abi, contract) {
     </div>
 </div>
 `;
-    var prefix = contract + '_';
+    var prefix = contractName + '_';
     var renderings = [];
     var html_snippets = [intro];
     var js_snippets = [];
@@ -283,17 +283,17 @@ var render = function(abi, contract) {
             // Check if input string is Array, remove [] and convert it to Array
             if(input.type.includes("[")) {
                 value = value.replace(`+/[[\]]/g+`, '').split(",");
-            } 
+            }
             // If it's array of Booleans, convert them to bool as js thinks of all strings > 0 as true value
             if(input.type == "bool[]") {
                 for (var i = 0; i < value.length; i++) {
                     value[i] = value[i] === 'false' || value[i] == 0 ? false : value[i];
-                    value[i] = value[i] === 'true' || value[i] == 1 ? true : value[i];        
+                    value[i] = value[i] === 'true' || value[i] == 1 ? true : value[i];
                 }
             }
             else if(input.type == "bool") {
                 value = value === 'false' || value == 0 ? false : value;
-                value = value === 'true' || value == 1 ? true : value;      
+                value = value === 'true' || value == 1 ? true : value;
             }
             args.push(value);
         }
@@ -391,15 +391,15 @@ var render = function(abi, contract) {
     };
     module.handler=handler;
 })(module, Contracts['` +
-        contract +
+        contractName +
         `'].abi, Contracts['` +
-        contract +
+        contractName +
         `'].address,
     (function(endpoint) {
         if(typeof(web3)!="undefined" && web3.currentProvider) return web3.currentProvider;
         return new Web3.providers.HttpProvider(endpoint);
 })(Contracts['` +
-        contract +
+        contractName +
         `'].endpoint));
 var ` +
         prefix +

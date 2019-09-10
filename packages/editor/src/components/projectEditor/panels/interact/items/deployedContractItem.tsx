@@ -22,7 +22,8 @@ export function DeployedContractItem(props: IProps) {
                 togglable={true}
                 icon={ <IconContract /> }
                 iconOpen={ <IconFolderOpen /> }
-            />
+            >
+            </BaseItem>
         </div>
     );
 }

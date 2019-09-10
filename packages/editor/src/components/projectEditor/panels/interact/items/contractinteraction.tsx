@@ -17,11 +17,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import style from './style-appview.less';
-import { IconRun } from '../icons';
-import { projectSelectors } from '../../selectors';
+import { IconRun } from '../../../../icons';
+import { projectSelectors } from '../../../../../selectors';
 
 var Generator = require('../contractinteraction');
-import SuperProvider from '../superProvider';
+import SuperProvider from '../../../../superProvider';
 import Web3 from 'web3';
 
 class ContractInteraction extends Component {
@@ -35,7 +35,21 @@ class ContractInteraction extends Component {
         this.contract_balance_wei = '';
     }
 
-    componentDidMount() {}
+    componentDidMount() {
+        if (window.web3) {
+            this.lastAccountRead = window.web3.eth.accounts[0];
+        }
+
+        this.accountTimer = setInterval(this.updateAccount, 3000);
+        this.timer = setInterval(this.updateBalance, 3000);
+        this.provider.attachListener();
+    }
+
+    componentWillUnmount() {
+        this.provider.detachListener();
+        clearInterval(this.timer);
+        clearInterval(this.accountTimer);
+    }
 
     notifyTx = (hash, endpoint) => {
         var network;
@@ -51,15 +65,7 @@ class ContractInteraction extends Component {
                 context: 'Contract interaction',
                 network: network,
             });
-    };
-
-    redraw = props => {
-        if ((props || {}).all) this.lastContent = null; // To force a render.
-        this.forceUpdate();
-        this.render2();
-    };
-
-    componentWillReceiveProps(props) {}
+    }
 
     writeContent = (status, content) => {
         if (!this.iframeDiv) return;
@@ -83,7 +89,7 @@ class ContractInteraction extends Component {
         this.iframe = iframe;
         this.provider.initIframe(iframe);
         this.forceUpdate(); // To update data outside of iframe.
-    };
+    }
 
     _makeFileName = (path, tag, suffix) => {
         const a = path.match(/^(.*\/)([^/]+)$/);
@@ -107,7 +113,7 @@ class ContractInteraction extends Component {
         return (
             '/build' + dir + contractName + '/' + contractName + '.' + suffix
         );
-    };
+    }
 
     render2 = () => {
         const project = this.props.item.getProject();
@@ -600,14 +606,7 @@ class ContractInteraction extends Component {
                 this.forceUpdate();
             }
         });
-    };
-
-    getHeight = () => {
-        const a = document.getElementById(this.id);
-        const b = document.getElementById(this.id + '_header');
-        if (!a) return 99;
-        return a.offsetHeight - b.offsetHeight;
-    };
+    }
 
     updateAccount = () => {
         if (window.web3) {
@@ -618,42 +617,19 @@ class ContractInteraction extends Component {
                 this.render2();
             }
         }
-    };
-
-    componentDidMount() {
-        if (window.web3) {
-            this.lastAccountRead = window.web3.eth.accounts[0];
-        }
-
-        this.accountTimer = setInterval(this.updateAccount, 3000);
-        this.timer = setInterval(this.updateBalance, 3000);
-        this.provider.attachListener();
-        // We need to do a first redraw to get the height right, since toolbar didn't exist in the first sweep.
-        this.redraw();
-    }
-
-    componentWillUnmount() {
-        this.provider.detachListener();
-        clearInterval(this.timer);
-        clearInterval(this.accountTimer);
     }
 
     _firstRender = ref => {
         this.iframeDiv = ref;
         this.render2();
-    };
+    }
 
     render() {
         const toolbar = this.renderToolbar();
-        const maxHeight = {
-            height: this.getHeight() + 'px',
-        };
         return (
             <div id={this.id} key={this.id} className={style.appview}>
-                {toolbar}
                 <div
                     className="full"
-                    style={maxHeight}
                     id={this.id + '_iframe'}
                     key={this.id + '_iframe'}
                     ref={this._firstRender}
