@@ -17,11 +17,11 @@
 import { generateUniqueId } from '../../services/utils';
 import { ProjectItemTypes, IProjectItem } from '../../models';
 
-export function createFile(name: string, code: string): IProjectItem {
+export function createFile(name: string, code: string, mutable: boolean = true): IProjectItem {
     return {
         id: generateUniqueId(),
         name,
-        mutable: true,
+        mutable,
         type: ProjectItemTypes.File,
         opened: false,
         code,

@@ -142,6 +142,13 @@ export const explorerActions = {
         };
     },
 
+    IMPORT_FILES_SUCCESS: 'IMPORT_FILES_SUCCESS',
+    importFilesSuccess() {
+        return {
+            type: explorerActions.IMPORT_FILES_SUCCESS,
+        };
+    },
+
     IMPORT_FILES_FAIL: 'IMPORT_FILES_FAIL',
     importFilesFail(id: string) {
         return {
