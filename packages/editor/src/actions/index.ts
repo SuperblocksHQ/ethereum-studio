@@ -17,3 +17,4 @@ export * from './transactions.actions';
 export * from './interact.actions';
 export * from './view.actions';
 export * from './contractConfig.actions';
+export * from './account.actions';

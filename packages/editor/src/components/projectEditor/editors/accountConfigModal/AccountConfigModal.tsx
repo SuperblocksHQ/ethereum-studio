@@ -17,58 +17,54 @@
 import React, { Component } from 'react';
 import classnames from 'classnames';
 import Web3 from 'web3';
-import style from './style-editor-account.less';
+import style from './style.less';
 
-export default class AccountEditor extends Component {
+interface IProps {
+
+}
+
+interface IState {
+    accountBalanceDirty: boolean;
+    accountAddressDirty: boolean;
+    accountNameDirty: boolean;
+}
+
+export default class AccountConfigModal extends Component<IProps, IState> {
 
     state = {
         accountBalanceDirty: false,
         accountAddressDirty: false,
         accountNameDirty: false
-    }
-
-    constructor(props) {
-        super(props);
-        this.id = props.id + '_editor';
-        this.props.parent.childComponent = this;
-    }
+    };
 
     componentDidMount() {
         this.setEnv('browser');
     }
 
-    redraw = () => {
-        this.forceUpdate();
-    };
 
-    canClose = (cb, silent) => {
-        if (
-            (this.state.accountBalanceDirty ||
-                this.state.accountAddressDirty ||
-                this.state.accountNameDirty) &&
-            !silent
-        ) {
-            const flag = confirm(
-                'There is unsaved data. Do you want to close tab and loose the changes?'
-            );
-            cb(flag ? 0 : 1);
-            return;
-        }
-        cb(0);
-    };
-
-    environments = () => {
-        const project = this.props.item.getProject();
-        const items = project.getHiddenItem('environments');
-        return items.getChildren();
-    };
+    // TODO
+    // canClose = (cb, silent) => {
+    //     if (
+    //         (this.state.accountBalanceDirty ||
+    //             this.state.accountAddressDirty ||
+    //             this.state.accountNameDirty) &&
+    //         !silent
+    //     ) {
+    //         const flag = confirm(
+    //             'There is unsaved data. Do you want to close tab and loose the changes?'
+    //         );
+    //         cb(flag ? 0 : 1);
+    //         return;
+    //     }
+    //     cb(0);
+    // }
 
     setEnv = env => {
         // Set all initial values of the account.
-        var isLocked = false;
-        var walletType = null;
-        var address;
-        var walletItem = null;
+        let isLocked = false;
+        let walletType = null;
+        let address;
+        let walletItem = null;
         const walletName = this.props.item.getWallet(env);
         const accountIndex = this.props.item.getAccountIndex(env);
         if (walletName) {
@@ -79,7 +75,7 @@ export default class AccountEditor extends Component {
         }
         if (walletItem) {
             walletType = walletItem.getWalletType();
-            if (walletType == 'external') {
+            if (walletType === 'external') {
                 if (!window.web3) {
                     if (this.props.functions.wallet.isOpen(walletName)) {
                         address = this.props.functions.wallet.getAddress(
@@ -108,40 +104,39 @@ export default class AccountEditor extends Component {
         } else {
             address = this.props.item.getAddress(env);
         }
-        address = address || "";  // To not have the input component be uncontrolled.
+        address = address || '';  // To not have the input component be uncontrolled.
 
         const network = env;
         // Initial (editable) values
         this.form = {
-            env: env,
+            env,
             name: this.props.item.getName(),
-            walletName: walletName,
+            walletName,
             wallet: walletItem,
-            walletType: walletType,
-            address: address,
+            walletType,
+            address,
             balance: 0,
             balanceFormatted: '0',
             balanceError: '',
-            isLocked: isLocked,
+            isLocked,
             web3: this._getWeb3(
                 (this.props.functions.networks.endpoints[network] || {})
                     .endpoint
             ),
         };
         this._fetchBalance(address);
-        this.redraw();
-    };
+    }
 
     _getWeb3 = endpoint => {
-        var provider;
+        let provider;
         if (endpoint.toLowerCase() == 'http://superblocks-browser') {
             provider = this.props.functions.EVM.getProvider();
         } else {
             provider = new Web3.providers.HttpProvider(endpoint);
         }
-        var web3 = new Web3(provider);
+        let web3 = new Web3(provider);
         return web3;
-    };
+    }
 
     _fetchBalance = address => {
         // Get balance and update this.form.balance
@@ -165,7 +160,7 @@ export default class AccountEditor extends Component {
             }
             this.redraw();
         });
-    };
+    }
 
     _save = cb => {
         const project = this.props.item.getProject();
@@ -192,12 +187,12 @@ export default class AccountEditor extends Component {
             this.props.router.main.redraw(true);
             cb(0);
         });
-    };
+    }
 
     onEnvChange = (e, value) => {
         e.preventDefault();
         this.setEnv(value);
-    };
+    }
 
     unlockWallet = name => {
         this.props.functions.wallet.openWallet(name, null, status => {
@@ -213,13 +208,13 @@ export default class AccountEditor extends Component {
                 );
             }
         });
-    };
+    }
 
     onNameChange = e => {
-        var value = e.target.value;
+        let value = e.target.value;
         this.form.name = value;
         this.setState({ accountNameDirty: true });
-    };
+    }
 
     _nameSave = e => {
         e.preventDefault();
@@ -237,14 +232,14 @@ export default class AccountEditor extends Component {
                     this.setState({ accountNameDirty: false });
                 }
             })
-        );
-    };
+        ) {; }
+    }
 
     onAddressChange = e => {
-        var value = e.target.value;
+        let value = e.target.value;
         this.form.address = value;
         this.setState({ accountAddressDirty: true });
-    };
+    }
 
     _staticAddressSave = e => {
         e.preventDefault();
@@ -274,17 +269,17 @@ export default class AccountEditor extends Component {
                                 this.setState({ accountAddressDirty: false });
                             }
                         })
-                    );
+                    ) {; }
                 }
             );
-    };
+    }
 
     onBalanceChange = e => {
-        var value = e.target.value;
+        let value = e.target.value;
         this.form.balance = value;
         this.form.balanceFormatted = this.form.web3.fromWei(this.form.balance);
         this.setState({ accountBalanceDirty: true });
-    };
+    }
 
     _balanceSave = e => {
         e.preventDefault();
@@ -298,18 +293,18 @@ export default class AccountEditor extends Component {
         }
 
         // TODO burn/fund account...
-    };
+    }
 
     _renderAccountContent = () => {
         if (this.form.wallet == null) {
             // Static address
             return (
                 <div>
-                    <div className="superInputDarkInline">
-                        <label htmlFor="address">Address</label>
+                    <div className='superInputDarkInline'>
+                        <label htmlFor='address'>Address</label>
                         <input
-                            type="text"
-                            id="address"
+                            type='text'
+                            id='address'
                             onKeyUp={e => {
                                 this.onAddressChange(e);
                             }}
@@ -320,7 +315,7 @@ export default class AccountEditor extends Component {
                         />
 
                         <button
-                            className="btn2"
+                            className='btn2'
                             disabled={!this.state.accountAddressDirty}
                             onClick={this._staticAddressSave}
                         >
@@ -371,7 +366,7 @@ export default class AccountEditor extends Component {
                                 the address and the balance.
                             </p>
                             <button
-                                className="btn2"
+                                className='btn2'
                                 onClick={e => {
                                     e.preventDefault();
                                     this.unlockWallet(this.form.walletName);
@@ -382,14 +377,14 @@ export default class AccountEditor extends Component {
                         </div>
                     );
                 } else {
-                    var unlockDifferentAccountButton;
+                    let unlockDifferentAccountButton;
                     if (
                         this.form.walletName === 'private' ||
                         (this.form.walletName === 'external' && !window.web3)
                     ) {
                         unlockDifferentAccountButton = (
                             <button
-                                className="btn2"
+                                className='btn2'
                                 onClick={e => {
                                     e.preventDefault();
                                     this.unlockWallet(this.form.walletName);
@@ -416,23 +411,23 @@ export default class AccountEditor extends Component {
                 }
             }
         }
-    };
+    }
 
     render() {
         const accountContent = this._renderAccountContent();
         return (
             <div id={this.id} className={style.main}>
-                <div className="scrollable-y" id={this.id + '_scrollable'}>
+                <div className='scrollable-y' id={this.id + '_scrollable'}>
                     <div className={style.inner}>
                         <h1 className={style.title}>Edit Account</h1>
                         <div className={style.form}>
-                            <form action="">
+                            <form action=''>
                                 <div className={style.field}>
-                                    <div className="superInputDarkInline">
-                                        <label htmlFor="name">Name</label>
+                                    <div className='superInputDarkInline'>
+                                        <label htmlFor='name'>Name</label>
                                         <input
-                                            type="text"
-                                            id="name"
+                                            type='text'
+                                            id='name'
                                             value={this.form.name}
                                             onKeyUp={e => {
                                                 this.onNameChange(e);
@@ -443,7 +438,7 @@ export default class AccountEditor extends Component {
                                         />
 
                                         <button
-                                            className="btn2"
+                                            className='btn2'
                                             disabled={
                                                 !this.state.accountNameDirty
                                             }
@@ -465,9 +460,9 @@ export default class AccountEditor extends Component {
                                                 for each of the networks
                                                 available.
                                                 <a
-                                                    href="https://help.superblocks.com/"
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
+                                                    href='https://help.superblocks.com/'
+                                                    target='_blank'
+                                                    rel='noopener noreferrer'
                                                 >
                                                     {' '}
                                                     Click here
@@ -480,39 +475,27 @@ export default class AccountEditor extends Component {
                                         <div className={style.networkSelector}>
                                             <div className={style.networks}>
                                                 <ul>
-                                                    {this.environments().map(
-                                                        env => {
-                                                            const cls = {};
-                                                            if (
-                                                                env.getName() ==
-                                                                this.form.env
-                                                            ) {
-                                                                cls[
-                                                                    style.active
-                                                                ] = true;
-                                                            }
-                                                            return (
-                                                                <li
-                                                                    key={env.getName()}
-                                                                    className={classnames(
-                                                                        [cls]
-                                                                    )}
-                                                                >
-                                                                    <div
-                                                                        className={
-                                                                            style.networkName
-                                                                        }
-                                                                        onClick={e => {
-                                                                            this.onEnvChange(
-                                                                                e,
-                                                                                env.getName()
-                                                                            );
-                                                                        }}
+                                                    {
+                                                        this.environments().map(env => {
+                                                                const cls = {};
+                                                                if (env.getName() === this.form.env) {
+                                                                    cls[style.active] = true;
+                                                                }
+                                                                return (
+                                                                    <li
+                                                                        key={env.getName()}
+                                                                        className={classnames(
+                                                                            [cls]
+                                                                        )}
                                                                     >
-                                                                        {env.getName()}
-                                                                    </div>
-                                                                </li>
-                                                            );
+                                                                        <div
+                                                                            className={style.networkName}
+                                                                            onClick={e => { this.onEnvChange(e, env.getName()); }}
+                                                                        >
+                                                                            {env.getName()}
+                                                                        </div>
+                                                                    </li>
+                                                                );
                                                         }
                                                     )}
                                                 </ul>
