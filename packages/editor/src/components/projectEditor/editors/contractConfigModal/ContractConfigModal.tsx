@@ -39,7 +39,7 @@ interface IState {
     isDirty: boolean;
 }
 
-export default class ConfigureContract extends Component<IProps, IState> {
+export default class ContractConfigModal extends Component<IProps, IState> {
 
     state = {
         newContractConfig: this.props.selectedContract.config,

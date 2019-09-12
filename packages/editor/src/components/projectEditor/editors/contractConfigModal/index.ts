@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { contractConfigActions } from '../../../../actions';
-import ConfigureContract from './ConfigureContract';
+import ContractConfigModal from './ContractConfigModal';
 import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
 import { IContractConfiguration } from '../../../../models';
@@ -20,4 +20,4 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ConfigureContract);
+export default connect(mapStateToProps, mapDispatchToProps)(ContractConfigModal);

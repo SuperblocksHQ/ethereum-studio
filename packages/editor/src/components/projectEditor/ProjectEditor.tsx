@@ -32,8 +32,7 @@ import { Deployer } from './deployer';
 import OnlyIf from '../onlyIf';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
-import ConfigureContract from './editors/configureContract';
-import { ModalHeader, Modal } from '../common';
+import ContractConfigModal from './editors/contractConfigModal';
 
 interface IProps {
     panels: IPanelsState;
@@ -41,6 +40,7 @@ interface IProps {
     showContractConfig: boolean;
     togglePanel(panel: Panels): void;
     closePanel(panel: Panels): void;
+    closeContractConfigModal(): void;
 }
 
 interface IState {
@@ -75,7 +75,8 @@ export class ProjectEditor extends React.Component<IProps, IState> {
         const { togglePanel,
                 closePanel,
                 selectedEnvironment,
-                showContractConfig } = this.props;
+                showContractConfig,
+                closeContractConfigModal } = this.props;
 
         const { sidePanelDragging } = this.state;
 
@@ -195,8 +196,8 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                 </div>
 
                 <OnlyIf test={showContractConfig}>
-                    <ConfigureContract
-                        hideModal={() => null}
+                    <ContractConfigModal
+                        hideModal={closeContractConfigModal}
                     />
                 </OnlyIf>
 

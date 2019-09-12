@@ -72,7 +72,7 @@ export default function panesReducer(state = initialState, action: AnyAction, ro
             }
         }
 
-        case contractConfigActions.OPEN_CONTRACT_CONFIGURATION: {
+        case contractConfigActions.CLOSE_CONTRACT_CONFIG: {
             return {
                 ...state,
                 showContractConfig: false
