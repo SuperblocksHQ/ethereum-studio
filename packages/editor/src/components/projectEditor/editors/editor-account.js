@@ -33,7 +33,7 @@ export default class AccountEditor extends Component {
         this.props.parent.childComponent = this;
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.setEnv('browser');
     }
 

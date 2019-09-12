@@ -64,7 +64,7 @@ export default class ImportFileModal extends Component<IProps, IState> {
         super(props);
     }
 
-    componentWillMount() {
+    componentDidMount() {
         // set default
         const {description, logo} = this.state.categories[0];
 
