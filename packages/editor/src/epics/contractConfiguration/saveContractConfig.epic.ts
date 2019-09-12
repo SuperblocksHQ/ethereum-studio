@@ -16,9 +16,11 @@
 
 import { of, empty } from 'rxjs';
 import { ofType } from 'redux-observable';
-import { authActions, contractConfigurationActions } from '../../actions';
+import { authActions, contractConfigurationActions, explorerActions, panesActions } from '../../actions';
 import { withLatestFrom, switchMap, catchError } from 'rxjs/operators';
 import { AnyAction } from 'redux';
+import { ProjectItemTypes, IContractConfiguration, IProjectItem } from '../../models';
+import { findItemByPath, traverseTree } from '../../reducers/explorerLib';
 
 // if (this.state.name.length === 0) {
 //     alert('Error: Missing name.');
@@ -45,11 +47,23 @@ export const saveContractConfig = (action$: AnyAction, state$: any) => action$.p
     ofType(contractConfigurationActions.SAVE_CONTRACT_CONFIGURATION),
     withLatestFrom(state$),
     switchMap(([action, state]) => {
-        const contractConfig = action.data.contractConfig;
-        return empty();
+        const newContractConfig: IContractConfiguration = action.data.contractConfig;
+        const dappFileData = state.projects.dappfileData;
+        const dappFileItem: Nullable<IProjectItem> = findItemByPath(state.explorer.tree, [ 'dappfile.json' ], ProjectItemTypes.File);
+
+        if (dappFileItem != null) {
+            const contractConfig = dappFileData.contracts.find((contract: any) => contract.source === newContractConfig.source);
+            const index = dappFileData.contracts.indexOf(contractConfig);
+
+            dappFileData.contracts[index] = newContractConfig;
+
+            return [panesActions.saveFile(dappFileItem.id, JSON.stringify(dappFileData, null, 4))];
+        } else {
+            return empty();
+        }
     }),
     catchError((err: any) => {
-        console.log('Error while logging in via GitHub: ', err);
-        return of(authActions.loginFail(err));
+        console.log('Error while updating the contract configuration: ', err);
+        return of(contractConfigurationActions.SAVE_CONTRACT_CONFIGURATION_FAIL);
     })
 );

@@ -22,22 +22,14 @@ import { ConstructorArgumentsHeader } from './constructorArgumentsHeader';
 import { ContractArgTypes, IProjectItem, IContractArgData, IContractConfiguration } from '../../../../models';
 import { IAccount } from '../../../../models/state';
 
-// function convertArgsToExternalModel(internalArgs) {
-//     return internalArgs.map(a => ({ [a.type]: a.value }));
-// }
-
-// function convertArgsToInternalModel(externalArgs) {
-//     return externalArgs.map(a => {
-//         const type = Object.keys(a)[0];
-//         return { type, value: a[type] };
-//     });
-// }
-
 interface IProps {
     file: IProjectItem;
     key: string;
     visible: boolean;
-    contractConfiguration: IContractConfiguration;
+    config: {
+        otherContracts: string[],
+        contract: IContractConfiguration
+    };
     accounts: IAccount[];
     saveContractConfig: (contractConfig: IContractConfiguration) => void;
 }
@@ -50,7 +42,7 @@ interface IState {
 export default class ConfigureContract extends Component<IProps, IState> {
 
     state = {
-        newContractConfig: this.props.contractConfiguration,
+        newContractConfig: this.props.config.contract,
         isDirty: false,
     };
 
@@ -96,32 +88,13 @@ export default class ConfigureContract extends Component<IProps, IState> {
         });
     }
 
-    getOtherContracts = () => {
-        return [''];
-        // TODO - Get this from state
-
-        // Get all contracts registered in the dappfile.
-        // const list = this.props.item
-        //     .getProject()
-        //     .getHiddenItem('contracts')
-        //     .getChildren();
-        // const contracts = [];
-        // for (let index = 0; index < list.length; index++) {
-        //     const contract = list[index];
-        //     if (contract.getName() === this.props.item.getParent().getName()) {
-        //         continue;
-        //     }
-        //     contracts.push(contract.getSource());
-        // }
-        // return contracts;
-    }
-
     onNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
+        console.log(value);
         this.setState({
             newContractConfig: {
+                ...this.state.newContractConfig,
                 name: value,
-                ...this.state.newContractConfig
             },
             isDirty: true,
         });
@@ -133,7 +106,7 @@ export default class ConfigureContract extends Component<IProps, IState> {
                 isDirty: true,
                 newContractConfig: {
                     ...this.state.newContractConfig,
-                    arguments: prevState.newContractConfig.arguments.map((arg, i) => {
+                    args: prevState.newContractConfig.args.map((arg, i) => {
                         return (index !== i) ? arg : { ...arg, ...argumentChanged };
                     }),
                 },
@@ -146,7 +119,7 @@ export default class ConfigureContract extends Component<IProps, IState> {
             isDirty: true,
             newContractConfig: {
                 ...this.state.newContractConfig,
-                arguments: [...prevState.newContractConfig.arguments, { type: ContractArgTypes.value, value: '' }],
+                args: [...prevState.newContractConfig.args, { type: ContractArgTypes.value, value: '' }],
 
             }
         }));
@@ -158,17 +131,15 @@ export default class ConfigureContract extends Component<IProps, IState> {
                 isDirty: true,
                 newContractConfig: {
                     ...this.state.newContractConfig,
-                    arguments: prevState.newContractConfig.arguments.filter((_, i) => i !== index),
+                    args: prevState.newContractConfig.args.filter((_, i) => i !== index),
                 }
             }));
         }
     }
 
     render() {
-        const { file, key, contractConfiguration, accounts } = this.props;
+        const { file, key, config, accounts } = this.props;
         const { newContractConfig, isDirty } = this.state;
-
-        console.log(newContractConfig);
 
         // TODO - Instead of checking the file, get the item from the dappfile
         if (!file) {
@@ -179,7 +150,7 @@ export default class ConfigureContract extends Component<IProps, IState> {
             <div id={key} className={style.main}>
                 <div className='scrollable-y' id={key + '_scrollable'}>
                     <div className={style.inner}>
-                        <h1 className={style.title}>Edit Contract {contractConfiguration.path}</h1>
+                        <h1 className={style.title}>Edit Contract {config.contract.source}</h1>
                         <div className={style.form}>
                             <div className='superInputDark'>
                                 <label htmlFor='name'>Name</label>
@@ -194,9 +165,9 @@ export default class ConfigureContract extends Component<IProps, IState> {
                             <div className={style.constructorContainer}>
                                 <ConstructorArgumentsHeader />
                                 <ConstructorArgumentsList
-                                    args={newContractConfig.arguments}
+                                    args={newContractConfig.args}
                                     accounts={accounts.map(account => account.name)}
-                                    otherContracts={this.getOtherContracts()}
+                                    otherContracts={config.otherContracts}
                                     onArgChange={this.onArgumentChange}
                                     onArgRemove={this.removeArgument}
                                     onArgAdd={this.addArgument}

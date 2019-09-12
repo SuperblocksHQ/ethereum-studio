@@ -18,8 +18,7 @@
 import { IContractArgData } from './contractAgrumentData';
 
 export interface IContractConfiguration {
-    otherContracts: string[];
     name: string;
-    arguments: IContractArgData[];
-    path: string;
+    args: IContractArgData[];
+    source: string;
 }

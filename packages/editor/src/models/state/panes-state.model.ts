@@ -28,7 +28,10 @@ export interface IFilePane extends IPane {
 
 export interface IContractConfigPane extends IPane {
     file: IProjectItem;
-    contractConfiguration: IContractConfiguration;
+    config: {
+        contract: IContractConfiguration,
+        otherContracts: string[]
+    };
 }
 
 export interface IPane {

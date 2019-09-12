@@ -41,9 +41,3 @@ export function DownloadModal(props: IProps) {
         </SimpleModal>
     );
 }
-
-DownloadModal.propTypes = {
-    onClose: PropTypes.func.isRequired,
-    onDownload: PropTypes.func.isRequired,
-    environment: PropTypes.string.isRequired
-};

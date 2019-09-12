@@ -19,7 +19,7 @@ import { replaceInArray, moveInArray } from './utils';
 import { AnyAction } from 'redux';
 import { IPanesState, PaneType } from '../models/state';
 import { findItemByPath, traverseTree } from './explorerLib';
-import { ProjectItemTypes } from '../models';
+import { ProjectItemTypes, IContractConfiguration } from '../models';
 
 function pathToString(path: string[]) {
     return '/' + path.join('/');
@@ -40,16 +40,17 @@ export default function panesReducer(state = initialState, action: AnyAction, ro
             const dappFileItem = findItemByPath(tree, [ 'dappfile.json' ], ProjectItemTypes.File);
             if (dappFileItem !== null && dappFileItem.code) {
                 const dappFileContent = JSON.parse(dappFileItem.code);
-                let contractPath = '';
+                let contractSource = '';
 
                 // Find the contract path
                 traverseTree(tree, (item, path) => {
                     if (item.id === file.id) {
-                        contractPath = pathToString(path());
+                        contractSource = pathToString(path());
                     }
                 });
 
-                const contractConfiguration = dappFileContent.contracts.find((contract: any) => contract.source === contractPath);
+                const contractConfiguration = dappFileContent.contracts.find((contract: any) => contract.source === contractSource);
+                const otherContracts = dappFileContent.contracts.find((contract: any) => contract.source !== contractSource);
                 const items = replaceInArray(state.items.slice(), p => p.active, p => ({ ...p, active: false }));
                 const itemIndex = items.findIndex(i => i.file.id === action.data.id);
                 const activePane = action.data.id;
@@ -61,11 +62,13 @@ export default function panesReducer(state = initialState, action: AnyAction, ro
                         active: true,
                         hasUnsavedChanges: false,
                         type: PaneType.CONFIGURATION,
-                        contractConfiguration: {
-                            arguments: contractConfiguration.args,
-                            name: contractConfiguration.name,
-                            otherContracts: [''],
-                            path: contractPath
+                        config: {
+                            contract: {
+                                args: contractConfiguration.args,
+                                name: contractConfiguration.name,
+                                source: contractSource
+                            },
+                            otherContracts: otherContracts ? otherContracts.map((contract: IContractConfiguration) => contract.source) : [''],
                     } });
                 }
                 return {

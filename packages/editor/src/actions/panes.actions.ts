@@ -65,10 +65,9 @@ export const panesActions = {
     },
 
     SAVE_FILE_FAIL: 'SAVE_FILE_FAIL',
-    saveFileFail(fileId: string, code: string) {
+    saveFileFail() {
         return {
-            type: panesActions.SAVE_FILE_FAIL,
-            data: { fileId, code }
+            type: panesActions.SAVE_FILE_FAIL
         };
     },
 

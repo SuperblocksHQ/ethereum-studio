@@ -77,7 +77,7 @@ export function Panes(props: IProps) {
                                     key={pane.file.id}
                                     file={pane.file}
                                     visible={pane.active}
-                                    contractConfiguration={pane.contractConfiguration}
+                                    config={pane.config}
                                 />;
                     }
                 })
