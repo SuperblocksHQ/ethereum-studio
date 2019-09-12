@@ -21,3 +21,4 @@ export * from './compilerState.model';
 export * from './panelsState.model';
 export * from './outputLogState.model';
 export * from './messageLogState.model';
+export * from './contractConfigState.model';

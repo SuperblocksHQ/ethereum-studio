@@ -23,13 +23,11 @@ import { ContractArgTypes, IProjectItem, IContractArgData, IContractConfiguratio
 import { IAccount } from '../../../../models/state';
 
 interface IProps {
-    file: IProjectItem;
-    key: string;
-    visible: boolean;
-    config: {
-        otherContracts: string[],
-        contract: IContractConfiguration
+    selectedContract: {
+        file: IProjectItem
+        config: IContractConfiguration;
     };
+    otherContracts: string[];
     accounts: IAccount[];
     saveContractConfig: (contractConfig: IContractConfiguration) => void;
 }
@@ -42,7 +40,7 @@ interface IState {
 export default class ConfigureContract extends Component<IProps, IState> {
 
     state = {
-        newContractConfig: this.props.config.contract,
+        newContractConfig: this.props.selectedContract.config,
         isDirty: false,
     };
 
@@ -55,7 +53,7 @@ export default class ConfigureContract extends Component<IProps, IState> {
     }
 
     _updateProps = () => {
-        const { file } = this.props;
+        // const { file } = this.props;
 
         // // Only update internal props if we are clean.
         // if (!this.state.isDirty) {
@@ -138,19 +136,19 @@ export default class ConfigureContract extends Component<IProps, IState> {
     }
 
     render() {
-        const { file, key, config, accounts } = this.props;
+        const { selectedContract, accounts, otherContracts } = this.props;
         const { newContractConfig, isDirty } = this.state;
 
-        // TODO - Instead of checking the file, get the item from the dappfile
-        if (!file) {
+        // Make sure the item actually exists in the Dappfile.json
+        if (!selectedContract.config) {
             return <div>Could not find contract in dappfile.json</div>;
         }
 
         return (
-            <div id={key} className={style.main}>
-                <div className='scrollable-y' id={key + '_scrollable'}>
+            <div className={style.main}>
+                <div className='scrollable-y' id={'_scrollable'}>
                     <div className={style.inner}>
-                        <h1 className={style.title}>Edit Contract {config.contract.source}</h1>
+                        <h1 className={style.title}>Edit Contract {selectedContract.config.source}</h1>
                         <div className={style.form}>
                             <div className='superInputDark'>
                                 <label htmlFor='name'>Name</label>
@@ -167,7 +165,7 @@ export default class ConfigureContract extends Component<IProps, IState> {
                                 <ConstructorArgumentsList
                                     args={newContractConfig.args}
                                     accounts={accounts.map(account => account.name)}
-                                    otherContracts={config.otherContracts}
+                                    otherContracts={otherContracts}
                                     onArgChange={this.onArgumentChange}
                                     onArgRemove={this.removeArgument}
                                     onArgAdd={this.addArgument}

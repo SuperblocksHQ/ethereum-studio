@@ -18,11 +18,10 @@ import React from 'react';
 import classnames from 'classnames';
 import style from './style.less';
 import { PaneTabs } from './paneTabs';
-import { PaneType, Pane, IContractConfigPane, IFilePane } from '../../../models/state';
+import { PaneType, Pane, IFilePane } from '../../../models/state';
 import { FileEditor } from './editor';
 import { IProjectItem } from '../../../models';
 import PaneDraggable from './paneDraggable';
-import ConfigureContract from '../editors/configureContract';
 
 interface IProps {
     panes: Pane[];
@@ -70,14 +69,6 @@ export function Panes(props: IProps) {
                                     onCompile={props.onCompileContract}
                                     onDeploy={props.onDeployContract}
                                     onUnsavedChange={props.onUnsavedChange}
-                                />;
-                    } else if (p.type === PaneType.CONFIGURATION) {
-                        const pane = p as IContractConfigPane;
-                        return <ConfigureContract
-                                    key={pane.file.id}
-                                    file={pane.file}
-                                    visible={pane.active}
-                                    config={pane.config}
                                 />;
                     }
                 })

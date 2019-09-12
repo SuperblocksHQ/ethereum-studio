@@ -1,4 +1,4 @@
-// Copyright 2018 Superblocks AB
+// Copyright 2019 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -14,22 +14,15 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import style from './style.less';
+import { IProjectItem } from '../project';
+import { IContractConfiguration } from '../contractConfiguration.model';
 
-interface IProps {
-    onClose: () => void;
-    children: JSX.Element[] | JSX.Element;
+export interface IContractConfigState {
+    showContractConfig: boolean;
+    selectedContract?: {
+        file: IProjectItem
+        config: IContractConfiguration
+    };
+    otherContracts: string[];
+    errorLoadingContractConfig?: string;
 }
-export function Modal({ onClose, children }: IProps) {
-    return (
-        <div className={style.modalContainer} onClick={onClose}>
-            <div className={style.modal}>{children}</div>
-        </div>
-    );
-}
-
-Modal.propTypes = {
-    onClose: PropTypes.func.isRequired
-};

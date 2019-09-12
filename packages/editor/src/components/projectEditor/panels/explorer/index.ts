@@ -15,7 +15,7 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { connect } from 'react-redux';
-import { explorerActions, modalActions, panesActions } from '../../../../actions';
+import { explorerActions, modalActions, panesActions, contractConfigActions } from '../../../../actions';
 import { Explorer } from './explorer';
 import { Dispatch } from 'redux';
 import { ProjectItemTypes, IProjectItem } from '../../../../models';
@@ -51,7 +51,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
 
         // smart contract specific
         onConfigureContract: (file: IProjectItem) => {
-            dispatch(panesActions.openContractConfiguration(file));
+            dispatch(contractConfigActions.openContractConfig(file));
         },
         onCompileContract: (file: IProjectItem) => {
             dispatch(explorerActions.compileContract(file));

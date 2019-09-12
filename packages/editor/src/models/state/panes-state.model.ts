@@ -19,19 +19,10 @@ import { IContractConfiguration } from '../contractConfiguration.model';
 
 export enum PaneType {
     FILE,
-    CONFIGURATION
 }
 
 export interface IFilePane extends IPane {
     file: IProjectItem;
-}
-
-export interface IContractConfigPane extends IPane {
-    file: IProjectItem;
-    config: {
-        contract: IContractConfiguration,
-        otherContracts: string[]
-    };
 }
 
 export interface IPane {
@@ -40,7 +31,7 @@ export interface IPane {
     type: PaneType;
 }
 
-export type Pane = IFilePane | IContractConfigPane;
+export type Pane = IFilePane;
 
 export interface IPanesState {
     activePane: string | null;

@@ -33,6 +33,7 @@ import modal from './modal.reducer';
 import transactions from './transactions.reducer';
 import interact from './interact.reducer';
 import preview from './preview.reducer';
+import contractConfig from './contractConfig.reducer';
 import { AnyAction } from 'redux';
 
 const rehydrated = (state = false, action: AnyAction) => {
@@ -64,5 +65,6 @@ export default {
     transactions,
     interact,
     modal,
-    preview
+    preview,
+    contractConfig
 };

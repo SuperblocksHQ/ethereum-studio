@@ -16,4 +16,4 @@ export * from './modal.actions';
 export * from './transactions.actions';
 export * from './interact.actions';
 export * from './view.actions';
-export * from './contractConfiguration.actions';
+export * from './contractConfig.actions';

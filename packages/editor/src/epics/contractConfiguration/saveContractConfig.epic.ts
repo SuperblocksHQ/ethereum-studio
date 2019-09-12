@@ -16,7 +16,7 @@
 
 import { of, empty } from 'rxjs';
 import { ofType } from 'redux-observable';
-import { authActions, contractConfigurationActions, explorerActions, panesActions } from '../../actions';
+import { authActions, contractConfigActions, explorerActions, panesActions } from '../../actions';
 import { withLatestFrom, switchMap, catchError } from 'rxjs/operators';
 import { AnyAction } from 'redux';
 import { ProjectItemTypes, IContractConfiguration, IProjectItem } from '../../models';
@@ -44,7 +44,7 @@ import { findItemByPath, traverseTree } from '../../reducers/explorerLib';
 // }
 
 export const saveContractConfig = (action$: AnyAction, state$: any) => action$.pipe(
-    ofType(contractConfigurationActions.SAVE_CONTRACT_CONFIGURATION),
+    ofType(contractConfigActions.SAVE_CONTRACT_CONFIGURATION),
     withLatestFrom(state$),
     switchMap(([action, state]) => {
         const newContractConfig: IContractConfiguration = action.data.contractConfig;
@@ -64,6 +64,6 @@ export const saveContractConfig = (action$: AnyAction, state$: any) => action$.p
     }),
     catchError((err: any) => {
         console.log('Error while updating the contract configuration: ', err);
-        return of(contractConfigurationActions.SAVE_CONTRACT_CONFIGURATION_FAIL);
+        return of(contractConfigActions.SAVE_CONTRACT_CONFIGURATION_FAIL);
     })
 );

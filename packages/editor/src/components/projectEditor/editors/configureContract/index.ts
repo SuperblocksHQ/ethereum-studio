@@ -1,19 +1,21 @@
 import { connect } from 'react-redux';
-import { projectsActions, contractConfigurationActions } from '../../../../actions';
+import { contractConfigActions } from '../../../../actions';
 import ConfigureContract from './ConfigureContract';
 import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
 import { IContractConfiguration } from '../../../../models';
-import { projectSelectors } from '../../../../selectors';
+import { projectSelectors, contractConfigSelectors } from '../../../../selectors';
 
 const mapStateToProps = (state: any) => ({
-    accounts: projectSelectors.getAccounts(state)
+    accounts: projectSelectors.getAccounts(state),
+    selectedContract: contractConfigSelectors.getSelectedContract(state),
+    otherContracts: contractConfigSelectors.getOtherContracts(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
     return {
         saveContractConfig(contractConfig: IContractConfiguration) {
-            dispatch(contractConfigurationActions.saveContractConfiguration(contractConfig));
+            dispatch(contractConfigActions.saveContractConfig(contractConfig));
         }
     };
 };

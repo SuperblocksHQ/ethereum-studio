@@ -14,27 +14,42 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { IContractConfiguration } from '../models';
+import { IContractConfiguration, IProjectItem } from '../models';
 
-export const contractConfigurationActions = {
+export const contractConfigActions = {
+
+    OPEN_CONTRACT_CONFIGURATION: 'OPEN_CONTRACT_CONFIGURATION',
+    openContractConfig(file: IProjectItem) {
+        return {
+            type: contractConfigActions.OPEN_CONTRACT_CONFIGURATION,
+            data: { file }
+        };
+    },
+
+    CLOSE_CONTRACT_CONFIG: 'CLOSE_CONTRACT_CONFIG',
+    closeContractConfig() {
+        return {
+            type: contractConfigActions.CLOSE_CONTRACT_CONFIG
+        };
+    },
 
     SAVE_CONTRACT_CONFIGURATION: 'SAVE_CONTRACT_CONFIGURATION',
-    saveContractConfiguration(contractConfig: IContractConfiguration) {
+    saveContractConfig(contractConfig: IContractConfiguration) {
         return {
-            type: contractConfigurationActions.SAVE_CONTRACT_CONFIGURATION,
+            type: contractConfigActions.SAVE_CONTRACT_CONFIGURATION,
             data: { contractConfig }
         };
     },
     SAVE_CONTRACT_CONFIGURATION_SUCCESS: 'SAVE_CONTRACT_CONFIGURATION_SUCCESS',
-    saveContractConfigurationSuccess() {
+    saveContractConfigSuccess() {
         return {
-            type: contractConfigurationActions.SAVE_CONTRACT_CONFIGURATION_SUCCESS,
+            type: contractConfigActions.SAVE_CONTRACT_CONFIGURATION_SUCCESS,
         };
     },
     SAVE_CONTRACT_CONFIGURATION_FAIL: 'SAVE_CONTRACT_CONFIGURATION_FAIL',
-    saveContractConfigurationFail(error: any) {
+    saveContractConfigFail(error: any) {
         return {
-            type: contractConfigurationActions.SAVE_CONTRACT_CONFIGURATION_FAIL,
+            type: contractConfigActions.SAVE_CONTRACT_CONFIGURATION_FAIL,
             data: error
         };
     },

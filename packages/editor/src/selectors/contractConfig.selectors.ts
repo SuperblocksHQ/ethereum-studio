@@ -14,22 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import style from './style.less';
-
-interface IProps {
-    onClose: () => void;
-    children: JSX.Element[] | JSX.Element;
-}
-export function Modal({ onClose, children }: IProps) {
-    return (
-        <div className={style.modalContainer} onClick={onClose}>
-            <div className={style.modal}>{children}</div>
-        </div>
-    );
-}
-
-Modal.propTypes = {
-    onClose: PropTypes.func.isRequired
+export const contractConfigSelectors = {
+    showContractConfig: (state: any) => state.contractConfig.showContractConfig,
+    getSelectedContract: (state: any) => state.contractConfig.selectedContract,
+    getOtherContracts: (state: any) => state.contractConfig.otherContracts,
 };

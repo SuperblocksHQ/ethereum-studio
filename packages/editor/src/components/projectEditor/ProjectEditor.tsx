@@ -32,10 +32,13 @@ import { Deployer } from './deployer';
 import OnlyIf from '../onlyIf';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
+import { Modal } from '../modal/new';
+import ConfigureContract from './editors/configureContract';
 
 interface IProps {
     panels: IPanelsState;
     selectedEnvironment: IEnvironment;
+    showContractConfig: boolean;
     togglePanel(panel: Panels): void;
     closePanel(panel: Panels): void;
 }
@@ -71,7 +74,8 @@ export class ProjectEditor extends React.Component<IProps, IState> {
     render() {
         const { togglePanel,
                 closePanel,
-                selectedEnvironment } = this.props;
+                selectedEnvironment,
+                showContractConfig } = this.props;
 
         const { sidePanelDragging } = this.state;
 
@@ -189,6 +193,13 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                             onClick={() => togglePanel(Panels.Preview)}  />
                     </div>
                 </div>
+
+                <OnlyIf test={showContractConfig}>
+                    <Modal onClose={() => null}>
+                        <ConfigureContract />
+                    </Modal>
+                </OnlyIf>
+
 
                 <BottomBar endpoint={selectedEnvironment.endpoint} />
                 <Deployer />
