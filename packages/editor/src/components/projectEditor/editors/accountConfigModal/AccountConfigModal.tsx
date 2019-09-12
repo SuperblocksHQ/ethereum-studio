@@ -18,9 +18,12 @@ import React, { Component } from 'react';
 import classnames from 'classnames';
 import Web3 from 'web3';
 import style from './style.less';
+import { IAccount } from '../../../../models/state';
+import { IAccountConfig } from '../../../../models';
 
 interface IProps {
-
+    account: IAccount;
+    accountConfig: IAccountConfig;
 }
 
 interface IState {
@@ -32,6 +35,7 @@ interface IState {
 export default class AccountConfigModal extends Component<IProps, IState> {
 
     state = {
+        newAccountConfig: this.props.account,
         accountBalanceDirty: false,
         accountAddressDirty: false,
         accountNameDirty: false
@@ -210,10 +214,12 @@ export default class AccountConfigModal extends Component<IProps, IState> {
         });
     }
 
-    onNameChange = e => {
-        let value = e.target.value;
-        this.form.name = value;
-        this.setState({ accountNameDirty: true });
+    onNameChange = (e: any) => {
+        const value = e.target.value;
+        this.form.nme = value;
+        this.setState({
+            accountNameDirty: true
+        });
     }
 
     _nameSave = e => {
@@ -414,10 +420,12 @@ export default class AccountConfigModal extends Component<IProps, IState> {
     }
 
     render() {
+        const { account } = this.props;
+
         const accountContent = this._renderAccountContent();
         return (
-            <div id={this.id} className={style.main}>
-                <div className='scrollable-y' id={this.id + '_scrollable'}>
+            <div className={style.main}>
+                <div className='scrollable-y' id={'_scrollable'}>
                     <div className={style.inner}>
                         <h1 className={style.title}>Edit Account</h1>
                         <div className={style.form}>
@@ -428,13 +436,9 @@ export default class AccountConfigModal extends Component<IProps, IState> {
                                         <input
                                             type='text'
                                             id='name'
-                                            value={this.form.name}
-                                            onKeyUp={e => {
-                                                this.onNameChange(e);
-                                            }}
-                                            onChange={e => {
-                                                this.onNameChange(e);
-                                            }}
+                                            value={account.name}
+                                            onKeyUp={this.onNameChange}
+                                            onChange={this.onNameChange}
                                         />
 
                                         <button
