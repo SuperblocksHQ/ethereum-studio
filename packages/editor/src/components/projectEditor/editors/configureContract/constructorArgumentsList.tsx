@@ -41,7 +41,6 @@ export function ConstructorArgumentsList(props: IProps) {
                 onChange={c => props.onArgChange(c, index)}
                 onRemoveClick={() => props.onArgRemove(index)}
             />
-            <span> ,</span>
         </div>
     );
 
@@ -49,7 +48,6 @@ export function ConstructorArgumentsList(props: IProps) {
         <React.Fragment>
             <p><b>No. args: </b>{props.args.length}</p>
             <div className={style.arguments}>
-                <b>{name} (</b>
                 {argumentsNodes}
                 <button
                     className={classNames([ 'btnNoBg', style.iconAdd ])}
@@ -57,7 +55,6 @@ export function ConstructorArgumentsList(props: IProps) {
                 >
                     <IconAdd />
                 </button>
-                <b>)</b>
             </div>
         </React.Fragment>
     );

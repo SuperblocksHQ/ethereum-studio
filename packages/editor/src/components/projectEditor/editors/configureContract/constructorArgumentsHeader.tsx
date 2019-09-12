@@ -33,7 +33,6 @@ export function ConstructorArgumentsHeader() {
                 </a>
                 <br />
                 <br />
-                <b>IMPORTANT:</b> The number of arguments must match the number of arguments on the contract constructor.
             </p>
         </React.Fragment>
     );
