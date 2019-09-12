@@ -18,7 +18,7 @@ import React from 'react';
 import { ConstructorArgument } from './constructorArgument';
 import { IconAdd } from '../../../icons';
 import classNames from 'classnames';
-import style from '../style-editor-contract.less';
+import style from './style.less';
 import { IContractArgData } from '../../../../models';
 
 interface IProps {

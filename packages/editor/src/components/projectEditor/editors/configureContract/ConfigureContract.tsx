@@ -15,12 +15,13 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { Component } from 'react';
-import style from '../style-editor-contract.less';
-
+import classNames from 'classnames';
+import style from './style.less';
 import { ConstructorArgumentsList } from './constructorArgumentsList';
 import { ConstructorArgumentsHeader } from './constructorArgumentsHeader';
 import { ContractArgTypes, IProjectItem, IContractArgData, IContractConfiguration } from '../../../../models';
 import { IAccount } from '../../../../models/state';
+import { Modal, ModalHeader } from '../../../common';
 
 interface IProps {
     selectedContract: {
@@ -30,6 +31,7 @@ interface IProps {
     otherContracts: string[];
     accounts: IAccount[];
     saveContractConfig: (contractConfig: IContractConfiguration) => void;
+    hideModal: () => void;
 }
 
 interface IState {
@@ -136,7 +138,7 @@ export default class ConfigureContract extends Component<IProps, IState> {
     }
 
     render() {
-        const { selectedContract, accounts, otherContracts } = this.props;
+        const { selectedContract, accounts, otherContracts, hideModal } = this.props;
         const { newContractConfig, isDirty } = this.state;
 
         // Make sure the item actually exists in the Dappfile.json
@@ -145,41 +147,48 @@ export default class ConfigureContract extends Component<IProps, IState> {
         }
 
         return (
-            <div className={style.main}>
-                <div className='scrollable-y' id={'_scrollable'}>
-                    <div className={style.inner}>
-                        <h1 className={style.title}>Edit Contract {selectedContract.config.source}</h1>
-                        <div className={style.form}>
-                            <div className='superInputDark'>
-                                <label htmlFor='name'>Name</label>
-                                <input
-                                    id='name'
-                                    type='text'
-                                    // onKeyUp={this.onNameChange}
-                                    value={newContractConfig.name}
-                                    onChange={this.onNameChange}
-                                />
-                            </div>
-                            <div className={style.constructorContainer}>
-                                <ConstructorArgumentsHeader />
-                                <ConstructorArgumentsList
-                                    args={newContractConfig.args}
-                                    accounts={accounts.map(account => account.name)}
-                                    otherContracts={otherContracts}
-                                    onArgChange={this.onArgumentChange}
-                                    onArgRemove={this.removeArgument}
-                                    onArgAdd={this.addArgument}
+            <Modal hideModal={hideModal}>
+                <div className={classNames([style.configureContractModal, 'modal'])}>
+                    <ModalHeader
+                        title='Configure Contract'
+                        onCloseClick={hideModal}
+                    />
+                    <div className={classNames([style.content, 'scrollable-y'])}>
+                        <div className={style.inner}>
+                            <h3 className={style.title}>Edit Contract {selectedContract.config.source}</h3>
+                            <div className={style.form}>
+                                <div className='superInputDark'>
+                                    <label htmlFor='name'>Name</label>
+                                    <input
+                                        id='name'
+                                        type='text'
+                                        // onKeyUp={this.onNameChange}
+                                        value={newContractConfig.name}
+                                        onChange={this.onNameChange}
                                     />
+                                </div>
+                                <div className={style.constructorContainer}>
+                                    <ConstructorArgumentsHeader />
+                                    <ConstructorArgumentsList
+                                        args={newContractConfig.args}
+                                        accounts={accounts.map(account => account.name)}
+                                        otherContracts={otherContracts}
+                                        onArgChange={this.onArgumentChange}
+                                        onArgRemove={this.removeArgument}
+                                        onArgAdd={this.addArgument}
+                                        />
+                                </div>
                             </div>
-                            <div>
-                                <button className='btn2' disabled={!isDirty} onClick={this.save}>
-                                    Save
-                                </button>
-                            </div>
+                        </div>
+                        <div className={style.footer}>
+                            <div className={style.cancelBtn} onClick={(hideModal)}>Cancel</div>
+                            <button className='btn2' disabled={!isDirty} onClick={this.save}>
+                                Save
+                            </button>
                         </div>
                     </div>
                 </div>
-            </div>
+            </Modal>
         );
     }
 }

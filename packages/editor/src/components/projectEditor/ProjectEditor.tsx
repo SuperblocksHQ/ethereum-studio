@@ -32,8 +32,8 @@ import { Deployer } from './deployer';
 import OnlyIf from '../onlyIf';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
-import { Modal } from '../modal/new';
 import ConfigureContract from './editors/configureContract';
+import { ModalHeader, Modal } from '../common';
 
 interface IProps {
     panels: IPanelsState;
@@ -195,9 +195,9 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                 </div>
 
                 <OnlyIf test={showContractConfig}>
-                    <Modal onClose={() => null}>
-                        <ConfigureContract />
-                    </Modal>
+                    <ConfigureContract
+                        hideModal={() => null}
+                    />
                 </OnlyIf>
 
 
