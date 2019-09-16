@@ -19,7 +19,7 @@ import classNames from 'classnames';
 import style from './style.less';
 import { IAccount, IEnvironment } from '../../../../models/state';
 import { Modal, ModalHeader } from '../../../common';
-// import AccountEnvironmentList from './AccountEnvironmentList';
+import AccountEnvironmentList from './AccountEnvironmentList';
 
 interface IProps {
     account: IAccount;
@@ -112,9 +112,9 @@ export default class AccountConfigModal extends Component<IProps, IState> {
                                             Save name
                                         </button>
                                     </div>
-                                    {/* <AccountEnvironmentList
+                                    <AccountEnvironmentList
                                         environments={environments}
-                                    /> */}
+                                    />
                                 </div>
                             </div>
                         </div>
