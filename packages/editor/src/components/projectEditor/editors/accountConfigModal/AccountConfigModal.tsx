@@ -70,9 +70,6 @@ export default class AccountConfigModal extends Component<IProps, IState> {
         const { newAccountName } = this.state;
         e.preventDefault();
 
-        console.log(account);
-        console.log(newAccountName);
-
         updateAccountName(account, newAccountName);
         this.setState({
             accountNameDirty: false
@@ -82,6 +79,8 @@ export default class AccountConfigModal extends Component<IProps, IState> {
     render() {
         const { account, environments, hideModal } = this.props;
         const { accountNameDirty, newAccountName } = this.state;
+
+        console.log(accountNameDirty);
 
         return (
             <Modal hideModal={hideModal}>
@@ -94,31 +93,29 @@ export default class AccountConfigModal extends Component<IProps, IState> {
                         <div className={style.inner}>
                             <h1 className={style.title}>Edit Account</h1>
                             <div className={style.form}>
-                                <form action=''>
-                                    <div className={style.field}>
-                                        <div className='superInputDarkInline'>
-                                            <label htmlFor='name'>Name</label>
-                                            <input
-                                                type='text'
-                                                id='name'
-                                                value={newAccountName}
-                                                onKeyUp={this.onNameChange}
-                                                onChange={this.onNameChange}
-                                            />
+                                <div className={style.field}>
+                                    <div className='superInputDarkInline'>
+                                        <label htmlFor='name'>Name</label>
+                                        <input
+                                            type='text'
+                                            id='name'
+                                            value={newAccountName}
+                                            onKeyUp={this.onNameChange}
+                                            onChange={this.onNameChange}
+                                        />
 
-                                            <button
-                                                className='btn2'
-                                                disabled={!accountNameDirty}
-                                                onClick={this.saveName}
-                                            >
-                                                Save name
-                                            </button>
-                                        </div>
-                                        {/* <AccountEnvironmentList
-                                            environments={environments}
-                                        /> */}
+                                        <button
+                                            className='btn2'
+                                            disabled={!accountNameDirty}
+                                            onClick={this.saveName}
+                                        >
+                                            Save name
+                                        </button>
                                     </div>
-                                </form>
+                                    {/* <AccountEnvironmentList
+                                        environments={environments}
+                                    /> */}
+                                </div>
                             </div>
                         </div>
                     </div>
