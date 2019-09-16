@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { of, empty } from 'rxjs';
+import { of, empty, Observable } from 'rxjs';
 import { ofType } from 'redux-observable';
 import { panesActions, accountActions } from '../../actions';
 import { withLatestFrom, switchMap, catchError } from 'rxjs/operators';
@@ -56,11 +56,10 @@ export const updateAccountName = (action$: AnyAction, state$: any) => action$.pi
             const dappFileAccount = dappFileData.accounts.find((a: any) => a.name === account.name);
             const index = dappFileData.accounts.indexOf(dappFileAccount);
 
-            account.name = newAccountName;
+            dappFileAccount.name = newAccountName;
+            dappFileData.accounts[index] = dappFileAccount;
 
-            dappFileData.accounts[index] = account;
-
-            return [panesActions.saveFile(dappFileItem.id, JSON.stringify(dappFileData, null, 4))];
+            return [panesActions.saveFile(dappFileItem.id, JSON.stringify(dappFileData, null, 4)), accountActions.updateAccountNameSuccess(account.name, newAccountName)];
         } else {
             return empty();
         }

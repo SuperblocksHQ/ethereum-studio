@@ -7,7 +7,7 @@ import { accountSelectors, projectSelectors } from '../../../../selectors';
 import { IAccount } from '../../../../models/state';
 
 const mapStateToProps = (state: any) => ({
-    account: projectSelectors.getSelectedAccount(state),
+    account: accountSelectors.getSelectedAccount(state),
     environments: projectSelectors.getEnvironments(state),
 });
 

@@ -16,19 +16,20 @@
 
 import { accountActions } from '../actions';
 import { AnyAction } from 'redux';
+import { IAccountConfigState } from '../models/state';
 
-export const initialState = {
+export const initialState: IAccountConfigState =  {
     showAccountConfig: false,
+    selectedAccount: undefined
 };
 
 export default function accountsReducer(state = initialState, action: AnyAction, rootState: any) {
     switch (action.type) {
 
         case accountActions.OPEN_ACCOUNT_CONFIGURATION: {
-            const selectedAccount = action.data.account;
-
             return {
                 ...state,
+                selectedAccount: action.data.account,
                 showAccountConfig: true
             };
         }
@@ -36,7 +37,8 @@ export default function accountsReducer(state = initialState, action: AnyAction,
         case accountActions.CLOSE_ACCOUNT_CONFIGURATION: {
             return {
                 ...state,
-                showAccountConfig: false
+                showAccountConfig: false,
+                selectedAccount: undefined
             };
         }
 

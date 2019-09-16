@@ -19,7 +19,7 @@ import { IProjectState, IEnvironment } from '../models/state';
 import { AnyAction } from 'redux';
 import { IProjectItem } from '../models';
 import { getDappSettings, resolveAccounts } from './dappfileLib';
-import { authActions } from '../actions';
+import { authActions, accountActions } from '../actions';
 
 export const initialState: IProjectState = {
     project: {
@@ -196,6 +196,25 @@ export default function projectsReducer(state = initialState, action: AnyAction,
             return {
                 ...state,
                 project: { ...action.data.project, files: undefined }
+            };
+        }
+        case accountActions.UPDATE_ACCOUNT_NAME_SUCCESS: {
+            const { oldName, newName } = action.data;
+            const account = state.accounts.find(a => a.name === oldName);
+            const accounts = state.accounts;
+            if (account) {
+                const index = accounts.indexOf(account);
+                account.name = newName;
+                accounts[index] = account;
+            }
+
+            return {
+                ...state,
+                accounts,
+                selectedAccount: {
+                    ...state.selectedAccount,
+                    name: action.data.newName,
+                }
             };
         }
         default:

@@ -43,9 +43,10 @@ export const accountActions = {
 
 
     UPDATE_ACCOUNT_NAME_SUCCESS: 'UPDATE_ACCOUNT_NAME_SUCCESS',
-    updateAccountNameSuccess() {
+    updateAccountNameSuccess(oldName: string, newName: string) {
         return {
             type: accountActions.UPDATE_ACCOUNT_NAME_SUCCESS,
+            data: { oldName, newName },
         };
     },
 
@@ -58,7 +59,7 @@ export const accountActions = {
     },
 
     SAVE_ACCOUNT_CONFIGURATION: 'SAVE_ACCOUNT_CONFIGURATION',
-    saveContractConfig(contractConfig: IAccount) {
+    saveAccountConfig(contractConfig: IAccount) {
         return {
             type: accountActions.SAVE_ACCOUNT_CONFIGURATION,
             data: { contractConfig }
@@ -68,7 +69,7 @@ export const accountActions = {
     SAVE_ACCOUNT_CONFIGURATION_SUCCESS: 'SAVE_ACCOUNT_CONFIGURATION_SUCCESS',
     saveAccountConfigSuccess() {
         return {
-            type: accountActions.SAVE_ACCOUNT_CONFIGURATION_SUCCESS,
+            type: accountActions.SAVE_ACCOUNT_CONFIGURATION_SUCCESS
         };
     },
 

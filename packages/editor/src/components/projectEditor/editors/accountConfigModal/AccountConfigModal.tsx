@@ -70,11 +70,18 @@ export default class AccountConfigModal extends Component<IProps, IState> {
         const { newAccountName } = this.state;
         e.preventDefault();
 
+        console.log(account);
+        console.log(newAccountName);
+
         updateAccountName(account, newAccountName);
+        this.setState({
+            accountNameDirty: false
+        });
     }
 
     render() {
         const { account, environments, hideModal } = this.props;
+        const { accountNameDirty, newAccountName } = this.state;
 
         return (
             <Modal hideModal={hideModal}>
@@ -94,16 +101,14 @@ export default class AccountConfigModal extends Component<IProps, IState> {
                                             <input
                                                 type='text'
                                                 id='name'
-                                                value={account.name}
+                                                value={newAccountName}
                                                 onKeyUp={this.onNameChange}
                                                 onChange={this.onNameChange}
                                             />
 
                                             <button
                                                 className='btn2'
-                                                disabled={
-                                                    !this.state.accountNameDirty
-                                                }
+                                                disabled={!accountNameDirty}
                                                 onClick={this.saveName}
                                             >
                                                 Save name

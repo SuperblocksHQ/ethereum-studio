@@ -14,12 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export * from './explorer.model';
-export * from './project-state.model';
-export * from './panes-state.model';
-export * from './compilerState.model';
-export * from './panelsState.model';
-export * from './outputLogState.model';
-export * from './messageLogState.model';
-export * from './contractConfigState.model';
-export * from './accountsState.model';
+import { IAccount } from './project-state.model';
+
+export interface IAccountConfigState {
+    showAccountConfig: boolean;
+    selectedAccount?: IAccount;
+}
