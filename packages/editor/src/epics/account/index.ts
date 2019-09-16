@@ -1,5 +1,7 @@
-import { updateAccountName } from './updateAccountName.epic';
+import { updateAccountNameEpic } from './updateAccountName.epic';
+import { createNewAccountEpic } from './createNewAccount.epic';
 
 export const accountEpics = [
-    updateAccountName,
+    updateAccountNameEpic,
+    createNewAccountEpic,
 ];

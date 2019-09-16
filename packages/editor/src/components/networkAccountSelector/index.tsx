@@ -102,7 +102,7 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
             // TODO
         },
         onAccountCreate() {
-            // TODO
+            dispatch(accountActions.createNewAccount());
         }
     };
 };

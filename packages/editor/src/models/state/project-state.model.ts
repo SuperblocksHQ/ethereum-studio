@@ -15,6 +15,10 @@ export interface IAccount {
     isLocked: boolean;
 }
 
+export interface IOpenWallet {
+    [key: string]: string[];
+}
+
 export interface IProjectState {
     project?: Partial<IProjectItem>;
     isProjectLoading: boolean;
@@ -23,9 +27,7 @@ export interface IProjectState {
     selectedEnvironment: IEnvironment;
     accounts: IAccount[];
     selectedAccount: IAccount;
-    openWallets: {
-        [key: string]: string[]
-    };
+    openWallets: IOpenWallet;
     metamaskAccounts: string[];
     dappfileData: any;
     isOwnProject: boolean;

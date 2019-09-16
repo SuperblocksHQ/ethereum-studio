@@ -80,4 +80,18 @@ export const accountActions = {
             data: error
         };
     },
+
+    CREATE_NEW_ACCOUNT: 'CREATE_NEW_ACCOUNT',
+    createNewAccount() {
+        return {
+            type: accountActions.CREATE_NEW_ACCOUNT,
+        };
+    },
+
+    CREATE_NEW_ACCOUNT_SUCCESS: 'CREATE_NEW_ACCOUNT_SUCCESS',
+    createNewAccountSuccess() {
+        return {
+            type: accountActions.CREATE_NEW_ACCOUNT_SUCCESS,
+        };
+    },
 };

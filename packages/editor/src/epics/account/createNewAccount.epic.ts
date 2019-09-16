@@ -14,58 +14,50 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { of, empty, Observable } from 'rxjs';
+import { of, empty } from 'rxjs';
 import { ofType } from 'redux-observable';
 import { panesActions, accountActions } from '../../actions';
 import { withLatestFrom, switchMap, catchError } from 'rxjs/operators';
 import { AnyAction } from 'redux';
 import { ProjectItemTypes, IProjectItem } from '../../models';
 import { findItemByPath } from '../../reducers/explorerLib';
-import { IAccount } from '../../models/state';
+import { IAccount, IOpenWallet } from '../../models/state';
 
-// if (!this.form.name.match(/^([a-zA-Z0-9-_]+)$/)) {
-//     alert(
-//         'Illegal account name. Only A-Za-z0-9, dash (-) and underscore (_) allowed.'
-//     );
-//     return;
-// }
-
-// if (this.props.item.getName() != this.form.name) {
-//     // Name is changing, check for clash.
-//     if (
-//         project
-//             .getHiddenItem('accounts')
-//             .getByName(this.form.name)
-//     ) {
-//         alert('Error: An account with that name already exists.');
-//         cb(1);
-//         return;
-//     }
-// }
-
-export const updateAccountNameEpic = (action$: AnyAction, state$: any) => action$.pipe(
-    ofType(accountActions.UPDATE_ACCOUNT_NAME),
+export const createNewAccountEpic = (action$: AnyAction, state$: any) => action$.pipe(
+    ofType(accountActions.CREATE_NEW_ACCOUNT),
     withLatestFrom(state$),
     switchMap(([action, state]) => {
-        const newAccountName: string = action.data.newName;
-        const account: IAccount = action.data.account;
+
         const dappFileData = state.projects.dappfileData;
         const dappFileItem: Nullable<IProjectItem> = findItemByPath(state.explorer.tree, [ 'dappfile.json' ], ProjectItemTypes.File);
-
         if (dappFileItem != null) {
-            const dappFileAccount = dappFileData.accounts.find((a: any) => a.name === account.name);
-            const index = dappFileData.accounts.indexOf(dappFileAccount);
+            const { accounts } = state.projects;
+            const newAccount = {
+                name: `Account${accounts.length + 1}`,
+                address: '0x0',
+                _environments: [{
+                    name: 'browser',
+                    data: {
+                        wallet: 'development',
+                        index: accounts.length + 1
+                    }
+                }, {
+                    name: 'custom',
+                    data: {
+                        wallet: 'private',
+                        index: accounts.length + 1
+                    }
+                }]
+            };
 
-            dappFileAccount.name = newAccountName;
-            dappFileData.accounts[index] = dappFileAccount;
-
-            return [panesActions.saveFile(dappFileItem.id, JSON.stringify(dappFileData, null, 4)), accountActions.updateAccountNameSuccess(account.name, newAccountName)];
+            dappFileData.accounts.push(newAccount);
+            return [panesActions.saveFile(dappFileItem.id, JSON.stringify(dappFileData, null, 4)), accountActions.createNewAccountSuccess()];
         } else {
             return empty();
         }
     }),
     catchError((err: any) => {
-        console.log('Error while updating the account name: ', err);
+        console.log('Error while creating the new account: ', err);
         return of(accountActions.UPDATE_ACCOUNT_NAME_FAIL);
     })
 );

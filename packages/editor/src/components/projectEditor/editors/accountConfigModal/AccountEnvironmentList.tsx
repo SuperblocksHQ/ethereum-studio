@@ -18,11 +18,12 @@ import React, { Component } from 'react';
 import classnames from 'classnames';
 import Web3 from 'web3';
 import style from './style.less';
-import { IEnvironment } from '../../../../models/state';
+import { IEnvironment, IAccount } from '../../../../models/state';
 import Networks from '../../../../networks';
 
 interface IProps {
     environments: IEnvironment[];
+    // selectedAccount: IAccount;
 }
 
 interface IState {
@@ -36,7 +37,8 @@ export default class AccountEnvironmentList extends Component<IProps, IState> {
     state = {
         accountBalanceDirty: false,
         accountAddressDirty: false,
-        selectedEnvironment: this.props.environments.find(env => env.name === Networks.browser.name)
+        selectedEnvironment: this.props.environments.find(env => env.name === Networks.browser.name),
+        // wallet: this.props.openWallets.
     };
 
     // TODO
@@ -269,7 +271,9 @@ export default class AccountEnvironmentList extends Component<IProps, IState> {
     //     // TODO burn/fund account...
     // }
 
-    // _renderAccountContent = () => {
+    // renderAccountContent = () => {
+    //     const { selectedEnvironment } = this.state;
+
     //     if (this.form.wallet == null) {
     //         // Static address
     //         return (
@@ -307,7 +311,7 @@ export default class AccountEnvironmentList extends Component<IProps, IState> {
     //         );
     //     } else {
     //         // Check for external web3 provider
-    //         if (this.form.walletType == 'external') {
+    //         if (this.form.walletType === 'external') {
     //             if (this.form.isLocked) {
     //                 return (
     //                     <p>
@@ -352,10 +356,7 @@ export default class AccountEnvironmentList extends Component<IProps, IState> {
     //                 );
     //             } else {
     //                 let unlockDifferentAccountButton;
-    //                 if (
-    //                     this.form.walletName === 'private' ||
-    //                     (this.form.walletName === 'external' && !window.web3)
-    //                 ) {
+    //                 if (this.form.walletName === 'private' || (this.form.walletName === 'external' && !window.web3)) {
     //                     unlockDifferentAccountButton = (
     //                         <button
     //                             className='btn2'
