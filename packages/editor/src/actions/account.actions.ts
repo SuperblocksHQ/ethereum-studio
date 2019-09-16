@@ -17,6 +17,7 @@
 import { IAccount } from '../models/state';
 
 export const accountActions = {
+
     OPEN_ACCOUNT_CONFIGURATION: 'OPEN_ACCOUNT_CONFIGURATION',
     openAccountConfig(account: IAccount) {
         return {
@@ -29,6 +30,30 @@ export const accountActions = {
     closeAccountConfig() {
         return {
             type: accountActions.CLOSE_ACCOUNT_CONFIGURATION
+        };
+    },
+
+    UPDATE_ACCOUNT_NAME: 'UPDATE_ACCOUNT_NAME',
+    updateAccountName(account: IAccount, newName: string) {
+        return {
+            type: accountActions.UPDATE_ACCOUNT_NAME,
+            data: { account, newName }
+        };
+    },
+
+
+    UPDATE_ACCOUNT_NAME_SUCCESS: 'UPDATE_ACCOUNT_NAME_SUCCESS',
+    updateAccountNameSuccess() {
+        return {
+            type: accountActions.UPDATE_ACCOUNT_NAME_SUCCESS,
+        };
+    },
+
+    UPDATE_ACCOUNT_NAME_FAIL: 'UPDATE_ACCOUNT_NAME_FAIL',
+    updateAccountNameFail(error: any) {
+        return {
+            type: accountActions.UPDATE_ACCOUNT_NAME_FAIL,
+            data: error
         };
     },
 

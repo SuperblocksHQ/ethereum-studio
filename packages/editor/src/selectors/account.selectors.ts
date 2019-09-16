@@ -14,31 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { accountActions } from '../actions';
-import { AnyAction } from 'redux';
-
-export const initialState = {
+export const accountSelectors = {
+    getSelectedAccount: (state: any) => state.accounts.selectedAccount,
+    getShowAccountConfig: (state: any) => state.accounts.showAccountConfig
 };
-
-export default function panesReducer(state = initialState, action: AnyAction, rootState: any) {
-    switch (action.type) {
-
-        case accountActions.OPEN_ACCOUNT_CONFIGURATION: {
-            const selectedAccount = action.data.account;
-
-            return {
-                state
-            };
-        }
-
-        case accountActions.CLOSE_ACCOUNT_CONFIGURATION: {
-            return {
-                ...state,
-                showContractConfig: false
-            };
-        }
-
-        default:
-            return state;
-    }
-}

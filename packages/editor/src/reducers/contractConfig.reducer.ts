@@ -31,7 +31,7 @@ export const initialState: IContractConfigState = {
     errorLoadingContractConfig: undefined,
 };
 
-export default function panesReducer(state = initialState, action: AnyAction, rootState: any) {
+export default function contractConfigReducer(state = initialState, action: AnyAction, rootState: any) {
     switch (action.type) {
 
         case contractConfigActions.OPEN_CONTRACT_CONFIGURATION: {

@@ -25,9 +25,9 @@ import { IAccount } from '../../models/state';
 interface IProps {
     selectedAccount: IAccount;
     accounts: IAccount[];
-    onAccountSelected(name: string): void;
-    onAccountEdit(name: string): void;
-    onAccountDelete(name: string): void;
+    onAccountSelected(account: IAccount): void;
+    onAccountEdit(account: IAccount): void;
+    onAccountDelete(account: IAccount): void;
     onAccountCreate(): void;
 }
 
@@ -61,9 +61,9 @@ function getAccountIcon(accountType: string, isLocked: boolean) {
 
 export class AccountSelector extends React.Component<IProps> {
 
-    onDeleteAccountClick = (name: string) => {
+    onDeleteAccountClick = (account: IAccount) => {
         if (!confirm('Are you sure to delete account?')) { return; }
-        this.props.onAccountDelete(name);
+        this.props.onAccountDelete(account);
     }
 
     render() {

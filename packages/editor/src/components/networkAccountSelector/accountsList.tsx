@@ -26,9 +26,9 @@ import { IAccount } from '../../models/state';
 interface IProps {
     accounts: IAccount[];
     selectedAccountName: string;
-    onSelect(name: string): void;
-    onEdit(name: string): void;
-    onDelete(name: string): void;
+    onSelect(account: IAccount): void;
+    onEdit(account: IAccount): void;
+    onDelete(account: IAccount): void;
     onCreate(): void;
 }
 
@@ -41,14 +41,14 @@ export class AccountsList extends React.Component<IProps> {
         }
     }
 
-    onEditClick = (e: React.MouseEvent, name: string) => {
+    onEditClick = (e: React.MouseEvent, account: IAccount) => {
         e.stopPropagation();
-        this.props.onEdit(name);
+        this.props.onEdit(account);
     }
 
-    onDeleteClick = (e: React.MouseEvent, name: string) => {
+    onDeleteClick = (e: React.MouseEvent, account: IAccount) => {
         e.stopPropagation();
-        this.props.onDelete(name);
+        this.props.onDelete(account);
     }
 
     render() {
@@ -58,7 +58,7 @@ export class AccountsList extends React.Component<IProps> {
                 deleteButton = (
                     <button
                         className='btnNoBg'
-                        onClick={e => this.onDeleteClick(e, account.name)}
+                        onClick={e => this.onDeleteClick(e, account)}
                     >
                         <Tooltip title='Delete'>
                             <IconTrash />
@@ -76,14 +76,14 @@ export class AccountsList extends React.Component<IProps> {
             return (
                 <div key={index}>
                     <div className={classnames(style.accountLink, { [style.accountLinkChosen]: account.name === this.props.selectedAccountName })}
-                        onClick={() => this.props.onSelect(account.name)}>
+                        onClick={() => this.props.onSelect(account)}>
 
                         <div className={style.nameContainer}>
                             <div className={style.accountName}>{account.name}</div>
                             <div className={style.address}>{accountUtils.shortenAddres(account.address || '')}</div>
                         </div>
                         <div className={style.actionsContainer}>
-                            <button className='btnNoBg' onClick={(e) => this.onEditClick(e, account.name)}>
+                            <button className='btnNoBg' onClick={(e) => this.onEditClick(e, account)}>
                                 <Tooltip title='Edit Account'>
                                     <IconEdit />
                                 </Tooltip>

@@ -24,6 +24,7 @@ import { panesEpics } from './panes';
 import { compilerEpics } from './compiler';
 import { deployerEpics } from './deployer';
 import { contractConfigurationEpics } from './contractConfiguration';
+import { accountEpics } from './account';
 
 export const epics = [
     ...settingsEpics,
@@ -35,7 +36,8 @@ export const epics = [
     ...panesEpics,
     ...compilerEpics,
     ...deployerEpics,
-    ...contractConfigurationEpics
+    ...contractConfigurationEpics,
+    ...accountEpics
     // Disable this 2 categories for now
     // ...userEpics,
     // ...loginEpics,

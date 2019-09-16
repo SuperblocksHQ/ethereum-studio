@@ -28,6 +28,7 @@ import ProjectTitle from './projectTitle';
 import { IProject } from '../../models';
 import ShareModal from '../modals/shareModal';
 import { ForkDropdownAction, MenuAction, PreferencesAction, ShareDropdownAction } from './actions';
+import AccountConfigModal from '../projectEditor/editors/accountConfigModal';
 
 interface IView {
     showOpenInLab: boolean;
@@ -41,6 +42,7 @@ interface IProps {
     isProjectForking: boolean;
     view: IView;
     showShareModal: boolean;
+    showAccountConfig: boolean;
     forkProject: (projectId: string, redirect: boolean) => void;
     showModal: (modalType: string, modalProps: any) => void;
     toggleShareModal: () => void;
@@ -86,7 +88,7 @@ export default class TopBar extends Component<IProps> {
 
         const { showForkButton } = this.state;
         const { project, showOpenInLab } = this.props.view;
-        const { isProjectForking, toggleShareModal, showShareModal } = this.props;
+        const { isProjectForking, toggleShareModal, showShareModal, showAccountConfig } = this.props;
 
         return (
             <div className={style.topbar}>
@@ -136,6 +138,9 @@ export default class TopBar extends Component<IProps> {
                         defaultUrl={String(window.location)}
                         hideModal={toggleShareModal}
                     />
+                </OnlyIf>
+                <OnlyIf test={showAccountConfig}>
+                    <AccountConfigModal />
                 </OnlyIf>
             </div>
         );

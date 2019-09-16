@@ -25,16 +25,17 @@ import { IProject, INetwork } from '../../models';
 import { IAccount } from '../../models/state';
 import { AnyAction } from 'redux';
 import { NetworkSelector } from './networkSelector';
+import { accountActions } from '../../actions/account.actions';
 
 interface IProps {
     project: IProject;
     selectedEnvironment: INetwork;
     onNetworkSelected: (environmentName: string) => void;
     environments: [INetwork];
-    onAccountSelected: (name: string) => void;
+    onAccountSelected: (account: IAccount) => void;
     onAccountCreate: () => void;
-    onAccountDelete: (name: string) => void;
-    onAccountEdit: (name: string) => void;
+    onAccountDelete: (account: IAccount) => void;
+    onAccountEdit: (account: IAccount) => void;
     accounts: [IAccount];
     selectedAccount: IAccount;
 }
@@ -91,13 +92,13 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
         onNetworkSelected(environmentName: string) {
             dispatch(projectsActions.setEnvironment(environmentName));
         },
-        onAccountSelected(name: string) {
-            dispatch(projectsActions.selectAccount(name));
+        onAccountSelected(account: IAccount) {
+            dispatch(projectsActions.selectAccount(account.name));
         },
-        onAccountEdit(name: string) {
-            // TODO
+        onAccountEdit(account: IAccount) {
+            dispatch(accountActions.openAccountConfig(account));
         },
-        onAccountDelete(name: string) {
+        onAccountDelete(account: IAccount) {
             // TODO
         },
         onAccountCreate() {
