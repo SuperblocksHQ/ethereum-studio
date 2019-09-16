@@ -15,14 +15,17 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { Component } from 'react';
+import classNames from 'classnames';
 import style from './style.less';
 import { IAccount, IEnvironment } from '../../../../models/state';
+import { Modal, ModalHeader } from '../../../common';
 // import AccountEnvironmentList from './AccountEnvironmentList';
 
 interface IProps {
     account: IAccount;
     environments: IEnvironment[];
     updateAccountName: (account: IAccount, neName: string) => void;
+    hideModal: () => void;
 }
 
 interface IState {
@@ -71,45 +74,51 @@ export default class AccountConfigModal extends Component<IProps, IState> {
     }
 
     render() {
-        const { account, environments } = this.props;
+        const { account, environments, hideModal } = this.props;
 
         return (
-            <div className={style.main}>
-                <div className='scrollable-y' id={'_scrollable'}>
-                    <div className={style.inner}>
-                        <h1 className={style.title}>Edit Account</h1>
-                        <div className={style.form}>
-                            <form action=''>
-                                <div className={style.field}>
-                                    <div className='superInputDarkInline'>
-                                        <label htmlFor='name'>Name</label>
-                                        <input
-                                            type='text'
-                                            id='name'
-                                            value={account.name}
-                                            onKeyUp={this.onNameChange}
-                                            onChange={this.onNameChange}
-                                        />
+            <Modal hideModal={hideModal}>
+                <div className={classNames([style.accountConfigModal, 'modal'])}>
+                    <ModalHeader
+                        title='Configure Account'
+                        onCloseClick={hideModal}
+                    />
+                    <div className={classNames([style.content, 'scrollable-y'])}>
+                        <div className={style.inner}>
+                            <h1 className={style.title}>Edit Account</h1>
+                            <div className={style.form}>
+                                <form action=''>
+                                    <div className={style.field}>
+                                        <div className='superInputDarkInline'>
+                                            <label htmlFor='name'>Name</label>
+                                            <input
+                                                type='text'
+                                                id='name'
+                                                value={account.name}
+                                                onKeyUp={this.onNameChange}
+                                                onChange={this.onNameChange}
+                                            />
 
-                                        <button
-                                            className='btn2'
-                                            disabled={
-                                                !this.state.accountNameDirty
-                                            }
-                                            onClick={this.saveName}
-                                        >
-                                            Save name
-                                        </button>
+                                            <button
+                                                className='btn2'
+                                                disabled={
+                                                    !this.state.accountNameDirty
+                                                }
+                                                onClick={this.saveName}
+                                            >
+                                                Save name
+                                            </button>
+                                        </div>
+                                        {/* <AccountEnvironmentList
+                                            environments={environments}
+                                        /> */}
                                     </div>
-                                    {/* <AccountEnvironmentList
-                                        environments={environments}
-                                    /> */}
-                                </div>
-                            </form>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </Modal>
         );
     }
 }

@@ -46,6 +46,7 @@ interface IProps {
     forkProject: (projectId: string, redirect: boolean) => void;
     showModal: (modalType: string, modalProps: any) => void;
     toggleShareModal: () => void;
+    closeAccountConfigModal(): void;
 }
 export default class TopBar extends Component<IProps> {
 
@@ -88,7 +89,7 @@ export default class TopBar extends Component<IProps> {
 
         const { showForkButton } = this.state;
         const { project, showOpenInLab } = this.props.view;
-        const { isProjectForking, toggleShareModal, showShareModal, showAccountConfig } = this.props;
+        const { isProjectForking, toggleShareModal, showShareModal, showAccountConfig, closeAccountConfigModal } = this.props;
 
         return (
             <div className={style.topbar}>
@@ -140,7 +141,9 @@ export default class TopBar extends Component<IProps> {
                     />
                 </OnlyIf>
                 <OnlyIf test={showAccountConfig}>
-                    <AccountConfigModal />
+                    <AccountConfigModal
+                        hideModal={closeAccountConfigModal}
+                    />
                 </OnlyIf>
             </div>
         );

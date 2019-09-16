@@ -17,7 +17,7 @@
 import { connect } from 'react-redux';
 import TopBar from './Topbar';
 import { viewSelectors, projectSelectors, userSelectors, accountSelectors } from '../../selectors';
-import { projectsActions, modalActions, viewActions } from '../../actions';
+import { projectsActions, modalActions, viewActions, accountActions } from '../../actions';
 import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
 
@@ -44,6 +44,9 @@ function mapDispatchToProps(dispatch: Dispatch<AnyAction>) {
         },
         toggleShareModal: () => {
             dispatch(viewActions.toggleShareModal());
+        },
+        closeAccountConfigModal: () => {
+            dispatch(accountActions.closeAccountConfig());
         }
     };
 }
