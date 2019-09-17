@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: _APP_NAME_
+  labels:
+    app: _APP_NAME_
+spec:
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      name: http
+  selector:
+    app: _APP_NAME_
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: _APP_NAME_-deployment
+  labels:
+    app: _APP_NAME_
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: _APP_NAME_
+  template:
+    metadata:
+      labels:
+        app: _APP_NAME_
+    spec:
+      containers:
+        - name: _APP_NAME_
+          image: _CONTAINER_IMAGE_
+          imagePullPolicy: Always
+          envFrom:
+          - secretRef:
+              name: _APP_NAME_-secret
+          ports:
+            - containerPort: 80
+      imagePullSecrets:
+        - name: _APP_NAME_-gitlab-registry
+

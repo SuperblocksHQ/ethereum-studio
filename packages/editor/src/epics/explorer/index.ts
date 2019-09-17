@@ -17,7 +17,7 @@
 import { renameItemEpic } from './renameItem.epic';
 import { createItemEpic } from './createItem.epic';
 import { deleteItemEpic } from './deleteItem.epic';
-import { importFilesEpic } from './importFilesEpic';
+import { importFilesEpic } from './importFiles.epic';
 import { moveItemEpic } from './moveItem.epic';
 
 export const explorerEpics = [

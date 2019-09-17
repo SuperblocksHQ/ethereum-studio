@@ -98,7 +98,7 @@ export default class ImportFileModal extends Component<IProps, IState> {
     getSourceFromAbsolutePath = async (absolutePath: any): Promise<string> => {
         // remove first element from array
         const pathParts = absolutePath.split('/');
-        let currentNode: any = await data;
+        let currentNode: any = await data();
         let source: string = '';
 
         pathParts.map((part: any) => {
@@ -124,22 +124,29 @@ export default class ImportFileModal extends Component<IProps, IState> {
         importSourceArray.push(selectedSource);
 
         // Import dependencies if any
-        selectedDependencies.forEach(async (dependency: IDependenciesModel) => {
+        const promises = selectedDependencies.map(async (dependency: IDependenciesModel) => {
+            return new Promise(async (resolve) => {
+                const path = dependency.absolutePath;
 
-            const path = dependency.absolutePath;
+                importPathArray.push(path);
 
-            importPathArray.push(path);
+                // get source code for given dependency
+                const source = await this.getSourceFromAbsolutePath(path);
 
-            // get source code for given dependency
-            const source = await this.getSourceFromAbsolutePath(path);
-            importSourceArray.push(source);
+                importSourceArray.push(source);
+                resolve();
+            });
+        });
+
+        await Promise.all(promises).catch((e) => {
+            console.log('An error has occurred: ', e);
         });
 
         // create array to be inserted into state
         const objectArray: IProjectItem[] = importPathArray
             .map((path: string) => path.startsWith('/') ? path : '/' + path)
             .map((path: any) => path.split('/').slice(1))
-            .reduce((children: any, path: any, idx: any) => insert(children, path, importSourceArray[idx]), []);
+            .reduce((children: any, path: any, idx: any) => insert(children, path, importSourceArray[idx], false), []);
 
         importFiles(parentId, objectArray);
 
