@@ -51,6 +51,11 @@ export class AccountsList extends React.Component<IProps> {
         this.props.onDelete(account);
     }
 
+    onCreateAccountClick = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        this.props.onCreate();
+    }
+
     render() {
         const renderedAccounts = this.props.accounts.map((account, index) => {
             let deleteButton;
@@ -107,7 +112,7 @@ export class AccountsList extends React.Component<IProps> {
             <div className={classnames([style.accounts])}>
                 <div className={style.title}>Select an Account</div>
                 {renderedAccounts}
-                <div className={style.newAccount} onClick={this.props.onCreate}>
+                <div className={style.newAccount} onClick={this.onCreateAccountClick}>
                     <button className='btnNoBg'>
                         + New Account
                     </button>

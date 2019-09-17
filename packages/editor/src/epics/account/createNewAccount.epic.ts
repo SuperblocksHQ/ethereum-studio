@@ -33,19 +33,19 @@ export const createNewAccountEpic = (action$: AnyAction, state$: any) => action$
         if (dappFileItem != null) {
             const { accounts } = state.projects;
             const newAccount = {
-                name: `Account${accounts.length + 1}`,
+                name: `Account${accounts.length}`,
                 address: '0x0',
                 _environments: [{
                     name: 'browser',
                     data: {
                         wallet: 'development',
-                        index: accounts.length + 1
+                        index: accounts.length
                     }
                 }, {
                     name: 'custom',
                     data: {
                         wallet: 'private',
-                        index: accounts.length + 1
+                        index: accounts.length
                     }
                 }]
             };
