@@ -21,37 +21,20 @@ import { withLatestFrom, switchMap, catchError } from 'rxjs/operators';
 import { AnyAction } from 'redux';
 import { ProjectItemTypes, IProjectItem } from '../../models';
 import { findItemByPath } from '../../reducers/explorerLib';
-import { IAccount, IOpenWallet } from '../../models/state';
 
-export const createNewAccountEpic = (action$: AnyAction, state$: any) => action$.pipe(
-    ofType(accountActions.CREATE_NEW_ACCOUNT),
+export const deleteAccountEpic = (action$: AnyAction, state$: any) => action$.pipe(
+    ofType(accountActions.DELETE_ACCOUNT),
     withLatestFrom(state$),
-    switchMap(([, state]) => {
-
+    switchMap(([action, state]) => {
+        const accountName = action.data.accountName;
         const dappFileData = state.projects.dappfileData;
         const dappFileItem: Nullable<IProjectItem> = findItemByPath(state.explorer.tree, [ 'dappfile.json' ], ProjectItemTypes.File);
-        if (dappFileItem != null) {
-            const { accounts } = state.projects;
-            const newAccount = {
-                name: `Account${accounts.length + 1}`,
-                address: '0x0',
-                _environments: [{
-                    name: 'browser',
-                    data: {
-                        wallet: 'development',
-                        index: accounts.length + 1
-                    }
-                }, {
-                    name: 'custom',
-                    data: {
-                        wallet: 'private',
-                        index: accounts.length + 1
-                    }
-                }]
-            };
 
-            dappFileData.accounts.push(newAccount);
-            return [panesActions.saveFile(dappFileItem.id, JSON.stringify(dappFileData, null, 4)), accountActions.createNewAccountSuccess(dappFileData)];
+        if (dappFileItem != null) {
+            const dappFileAccounts = dappFileData.accounts.filter((a: any) => a.name !== accountName);
+            dappFileData.accounts = dappFileAccounts;
+
+            return [panesActions.saveFile(dappFileItem.id, JSON.stringify(dappFileData, null, 4)), accountActions.deleteAccountSuccess(dappFileData)];
         } else {
             return empty();
         }

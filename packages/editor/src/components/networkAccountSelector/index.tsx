@@ -99,7 +99,7 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
             dispatch(accountActions.openAccountConfig(account));
         },
         onAccountDelete(account: IAccount) {
-            // TODO
+            dispatch(accountActions.deleteAccount(account.name));
         },
         onAccountCreate() {
             dispatch(accountActions.createNewAccount());

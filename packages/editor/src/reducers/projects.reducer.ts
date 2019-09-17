@@ -15,11 +15,12 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { projectsActions } from '../actions/projects.actions';
-import { IProjectState, IEnvironment } from '../models/state';
+import { IProjectState, IEnvironment, IAccount } from '../models/state';
 import { AnyAction } from 'redux';
-import { IProjectItem } from '../models';
+import { IProjectItem, ProjectItemTypes } from '../models';
 import { getDappSettings, resolveAccounts } from './dappfileLib';
 import { authActions, accountActions } from '../actions';
+import { findItemByPath } from './explorerLib';
 
 export const initialState: IProjectState = {
     project: {
@@ -215,6 +216,26 @@ export default function projectsReducer(state = initialState, action: AnyAction,
                     ...state.selectedAccount,
                     name: action.data.newName,
                 }
+            };
+        }
+        case accountActions.DELETE_ACCOUNT_SUCCESS:
+        case accountActions.CREATE_NEW_ACCOUNT_SUCCESS: {
+            const { updatedDappFileData } = action.data;
+            let stateChange = {
+                accounts: state.accounts,
+                dappfileData: state.dappfileData
+            };
+
+            // parse dappjson file to get environment
+            try {
+                stateChange = getDappSettings(JSON.stringify(updatedDappFileData) || '', state.openWallets, state.metamaskAccounts);
+            } catch (e) {
+                console.log(e);
+            }
+
+            return {
+                ...state,
+                ...stateChange
             };
         }
         default:

@@ -89,9 +89,26 @@ export const accountActions = {
     },
 
     CREATE_NEW_ACCOUNT_SUCCESS: 'CREATE_NEW_ACCOUNT_SUCCESS',
-    createNewAccountSuccess() {
+    createNewAccountSuccess(dappFileData: any) {
         return {
             type: accountActions.CREATE_NEW_ACCOUNT_SUCCESS,
+            data: { updatedDappFileData: dappFileData }
+        };
+    },
+
+    DELETE_ACCOUNT: 'DELETE_ACCOUNT',
+    deleteAccount(accountName: string) {
+        return {
+            type: accountActions.DELETE_ACCOUNT,
+            data: { accountName }
+        };
+    },
+
+    DELETE_ACCOUNT_SUCCESS: 'DELETE_ACCOUNT_SUCCESS',
+    deleteAccountSuccess(dappFileData: any) {
+        return {
+            type: accountActions.DELETE_ACCOUNT_SUCCESS,
+            data: { updatedDappFileData: dappFileData }
         };
     },
 };
