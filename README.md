@@ -1,17 +1,17 @@
-# [Superblocks Lab](https://superblocks.com/lab)
+# [Ethereum Studio](https://superblocks.com/ethereum-studio)
 
 [![Join the community](https://img.shields.io/badge/chat-on%20discord-7289da.svg?logo=discord)](https://discord.gg/6Cgg2Dw) [![CircleCI](https://circleci.com/gh/SuperblocksHQ/superblocks-lab.svg?style=shield)](https://circleci.com/gh/SuperblocksHQ/superblocks-lab) [![Follow in Twitter](https://img.shields.io/twitter/follow/getSuperblocks.svg?style=social&logo=twitter)](https://twitter.com/intent/follow?screen_name=GetSuperblocks)
 
 
-[Superblocks](https://superblocks.com) **Lab** is an integrated development environment (IDE) to learn, build and deploy decentralized apps (DApps) for _Ethereum_. It's a full browser experience which requires no installations to run.
+[Ethereum Studio](https://superblocks.com/ethereum-studio) is an integrated development environment (IDE) to learn, build and deploy decentralized apps (DApps) for _Ethereum_. It's a full browser experience which requires no installations to run.
 
 <p align="center">
-  <img alt="Superblocks Lab in action" src="https://user-images.githubusercontent.com/7814134/45118436-d135c300-b158-11e8-8271-648495d35d29.png">
+  <img alt="Ethereum Studio in action" src="https://user-images.githubusercontent.com/7814134/45118436-d135c300-b158-11e8-8271-648495d35d29.png">
 </p>
 
-**Superblocks Lab** has a built in _Solidity_ compiler and _Ethereum Virtual Machine_. It also works with local and public networks.
+**Ethereum Studio** has a built in _Solidity_ compiler and _Ethereum Virtual Machine_. It also works with local and public networks.
 
-To try it out, go to [lab.superblocks.com](https://lab.superblocks.com).
+To try it out, go to [studio.superblocks.com](https://studio.superblocks.com).
 
 ## Features
 * In-browser Blockchain
@@ -27,7 +27,7 @@ To try it out, go to [lab.superblocks.com](https://lab.superblocks.com).
 
 
 ## Quick start
-Below is described how to get the **Superblocks Lab** _PreactJS_ project setup and running locally.
+Below is described how to get the **Ethereum Studio** _PreactJS_ project setup and running locally.
 
 ### Install node modules
 ```sh
@@ -60,11 +60,11 @@ Run this script to fix that for you:
 Consider double-checking and updating the `CHANGELOG` to reflect the changes. Tag the new version.
 
 ## Issues
-Bug reports and suggestions can be filed at the project [Issues](https://github.com/SuperblocksHQ/superblocks-lab/issues) page.
-For more information about the process involved, please refer to the Wiki: [Submitting Bugs and Suggestions](https://github.com/SuperblocksHQ/superblocks-lab/wiki/Submitting-Bugs-and-Suggestions).
+Bug reports and suggestions can be filed at the project [Issues](https://github.com/SuperblocksHQ/ethereum-studio/issues) page.
+For more information about the process involved, please refer to the Wiki: [Submitting Bugs and Suggestions](https://github.com/SuperblocksHQ/ethereum-studio/wiki/Submitting-Bugs-and-Suggestions).
 
 ## Contributing
-Contributions are welcome. Please, visit the Wiki for a guide on [How to Contribute](https://github.com/SuperblocksHQ/superblocks-lab/wiki/How-to-Contribute).
+Contributions are welcome. Please, visit the Wiki for a guide on [How to Contribute](https://github.com/SuperblocksHQ/ethereum-studio/wiki/How-to-Contribute).
 
 ## License
-**Superblocks Lab** is free software and GPLv3 licensed. See the COPYING file for details.
+**Ethereum Studio** is free software and GPLv3 licensed. See the COPYING file for details.
