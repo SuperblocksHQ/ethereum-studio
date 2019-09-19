@@ -18,7 +18,7 @@ import React from 'react';
 import classNames from 'classnames';
 import {
     IconHelp,
-    IconDiscord
+    IconGitter
 } from '../../../icons';
 import { DropdownContainer } from '../../';
 import { Tooltip } from '../../';
@@ -66,10 +66,10 @@ const HelpDropdownDialog = () => (
                 </a>
             </li>
             <li>
-                <a className={style.container} href='https://discord.gg/6Cgg2Dw' target='_blank' rel='noopener noreferrer' title="Superblocks' community">
+                <a className={style.container} href='https://gitter.im/ethereum/documentation' target='_blank' rel='noopener noreferrer' title="Ethereum' community">
                     Join our Community!
                     <span className={style.communityIcon}>
-                        <IconDiscord color='#7289DA'/>
+                        <IconGitter color='#7289DA'/>
                     </span>
                 </a>
             </li>
@@ -91,6 +91,3 @@ export const HelpAction = () => (
         </div>
     </DropdownContainer>
 );
-
-
-
