@@ -16,41 +16,30 @@
 
 // TODO: Create projects in cloud and replace id's with proper ones
 export default class Templates {
-    static categories = [
-        {
-            id: 0,
-            name: 'All',
-        },
-    ];
-
     static templates = [
         {
-            id: 1,
+            id: 0,
             name: 'Hello World',
             description: 'Simple Hello World starter project',
             image: '/static/img/templates/img-hello-world.png',
-            categories: [0, 3],
+        },
+        {
+            id: 1,
+            name: 'Coin',
+            description: 'Example DApp which uses ERC-20 standard',
+            image: '/static/img/templates/img-erc20-token.png',
         },
         {
             id: 2,
-            name: 'ERC-20 Token',
-            description: 'Example DApp which uses ERC-20 standard',
-            image: '/static/img/templates/img-erc20-token.png',
-            categories: [0, 1],
+            name: 'CryptoPizza NFT',
+            description: 'Crypto-collectible game built on top of ERC-721 standard',
+            image: '/static/img/templates/img-cryptopizza.png',
         },
         {
             id: 3,
-            name: 'ERC-721 CryptoPizza',
-            description: 'Crypto-collectible game built on top of ERC-721 standard',
-            image: '/static/img/templates/img-cryptopizza.png',
-            categories: [0, 2],
-        },
-        {
-            id: 0,
-            name: 'Vanilla Project',
+            name: 'Empty Project',
             description: 'The simples form of project in order to get started from a clean slate',
             image: '/static/img/templates/img-empty.png',
-            categories: [0, 2],
         },
     ];
 }

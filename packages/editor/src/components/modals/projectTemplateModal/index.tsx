@@ -23,7 +23,6 @@ import style from './style.less';
 
 interface ITemplate {
     id: number;
-    categories: number[];
     description: string;
     image: string;
     name: string;
@@ -34,7 +33,7 @@ interface IProps {
 }
 
 interface IState {
-    categorySelectedId: number | null;
+    templateIdSelected: number | null;
     selectedTemplate: ITemplate;
 }
 
@@ -48,29 +47,29 @@ const TemplateLayout = (props: any) => (
     </div>
 );
 
-const GridLayout = (props: any) => (
-    <div className={style.gridLayout}>
-        <div id='mainContent' className='container' style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 0fr)', gridGap: '10px', gridAutoRows: 'minMax(100px, auto)' }}>
-            { props.templates
-                .filter((template: ITemplate) => template.categories.indexOf(props.categorySelectedId) > -1)
-                .map((template: ITemplate) => (
-                    <TemplateLayout
-                        key={template.id}
-                        image={template.image}
-                        name={template.name}
-                        description={template.description}
-                        selected={template.id === props.templateSelectedId}
-                        onTemplateSelected={() => props.onTemplateSelected(template)} />
-                    )
-                )
-            }
-        </div>
-    </div>
-);
+// const GridLayout = (props: any) => (
+//     <div className={style.gridLayout}>
+//         <div id='mainContent' className='container' style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 0fr)', gridGap: '10px', gridAutoRows: 'minMax(100px, auto)' }}>
+//             { props.templates
+//                 .filter((template: ITemplate) => template.categories.indexOf(props.categorySelectedId) > -1)
+//                 .map((template: ITemplate) => (
+//                     <TemplateLayout
+//                         key={template.id}
+//                         image={template.image}
+//                         name={template.name}
+//                         description={template.description}
+//                         selected={template.id === props.templateSelectedId}
+//                         onTemplateSelected={() => props.onTemplateSelected(template)} />
+//                     )
+//                 )
+//             }
+//         </div>
+//     </div>
+// );
 
 export default class ProjectTemplateModal extends Component<IProps, IState> {
     state: IState = {
-        categorySelectedId: 0,
+        templateIdSelected: 0,
         selectedTemplate: {} as ITemplate
     };
 
@@ -84,20 +83,14 @@ export default class ProjectTemplateModal extends Component<IProps, IState> {
         });
     }
 
-    onCategorySelected(id: number) {
-        this.setState({
-            categorySelectedId: id
-        });
-    }
-
     onCreateProjectHandle = () => {
         logEvent('PROJECT_CREATED', { template: this.state.selectedTemplate.name});
         window.location.href = `${window.location.origin}/${this.state.selectedTemplate.id}`;
     }
 
     render() {
-        const { categories, templates } = Templates;
-        const { categorySelectedId, selectedTemplate } = this.state;
+        const { templates } = Templates;
+        const { templateIdSelected, selectedTemplate } = this.state;
 
         return (
             <div className={classNames([style.projectTemplateModal, 'modal'])}>
@@ -111,25 +104,18 @@ export default class ProjectTemplateModal extends Component<IProps, IState> {
                         <div className={style.categoriesArea}>
                             <div className={style.categoriesTitle}>Categories</div>
                                 <ul>
-                                <ul>
-                                    { categories.map((category: any) => (
-                                            <li key={category.id}
-                                                className={categorySelectedId === category.id ? style.selected : null}>
-                                                <div onClick={() => this.onCategorySelected(category.id)}>{category.name}</div>
+                                    {  templates.map((template: ITemplate) => (
+                                            <li key={template.id}
+                                                className={templateIdSelected === template.id ? style.selected : null}>
+                                                <div onClick={() => this.onTemplateSelected(template)}>{template.name}</div>
                                             </li>
-                                        )
-                                     )
+                                        ))
                                     }
-                                </ul>
                                 </ul>
                             </div>
                         <div className={style.templateListContainer}>
                             <div className={style.templateListArea}>
-                                <GridLayout
-                                    templates={templates}
-                                    onTemplateSelected={this.onTemplateSelected}
-                                    templateSelectedId={selectedTemplate ? selectedTemplate.id : null}
-                                    categorySelectedId={categorySelectedId}/>
+                                    {/* TODO  */}
                             </div>
                         </div>
                     </div>
