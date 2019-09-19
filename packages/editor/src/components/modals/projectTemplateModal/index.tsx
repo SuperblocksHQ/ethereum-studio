@@ -33,7 +33,6 @@ interface IProps {
 }
 
 interface IState {
-    templateIdSelected: number | null;
     selectedTemplate: ITemplate;
 }
 
@@ -69,8 +68,7 @@ const TemplateLayout = (props: any) => (
 
 export default class ProjectTemplateModal extends Component<IProps, IState> {
     state: IState = {
-        templateIdSelected: 0,
-        selectedTemplate: {} as ITemplate
+        selectedTemplate: Templates.templates[0] as ITemplate
     };
 
     onCloseClickHandle = () => {
@@ -90,7 +88,7 @@ export default class ProjectTemplateModal extends Component<IProps, IState> {
 
     render() {
         const { templates } = Templates;
-        const { templateIdSelected, selectedTemplate } = this.state;
+        const { selectedTemplate } = this.state;
 
         return (
             <div className={classNames([style.projectTemplateModal, 'modal'])}>
@@ -102,11 +100,11 @@ export default class ProjectTemplateModal extends Component<IProps, IState> {
                     />
                     <div className={classNames([style.area, style.container])}>
                         <div className={style.categoriesArea}>
-                            <div className={style.categoriesTitle}>Categories</div>
+                            <div className={style.categoriesTitle}>Templates</div>
                                 <ul>
                                     {  templates.map((template: ITemplate) => (
                                             <li key={template.id}
-                                                className={templateIdSelected === template.id ? style.selected : null}>
+                                                className={selectedTemplate.id === template.id ? style.selected : null}>
                                                 <div onClick={() => this.onTemplateSelected(template)}>{template.name}</div>
                                             </li>
                                         ))
@@ -115,13 +113,13 @@ export default class ProjectTemplateModal extends Component<IProps, IState> {
                             </div>
                         <div className={style.templateListContainer}>
                             <div className={style.templateListArea}>
-                                    {/* TODO  */}
+                                { selectedTemplate.description }
                             </div>
                         </div>
                     </div>
                     <div className={style.footer}>
                         <button onClick={this.onCloseClickHandle} className='btn2 noBg mr-2'>Cancel</button>
-                        <button onClick={this.onCreateProjectHandle} disabled={Object.entries(selectedTemplate).length === 0} className='btn2'>Select Template</button>
+                        <button onClick={this.onCreateProjectHandle} disabled={Object.entries(selectedTemplate).length === 0} className='btn2'>Create Project</button>
                     </div>
                 </div>
             </div>
