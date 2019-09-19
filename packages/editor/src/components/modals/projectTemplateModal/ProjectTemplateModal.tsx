@@ -16,7 +16,7 @@
 
 import React, { Component } from 'react';
 import Templates from './templates';
-import { logEvent, LogOnMount } from '../../../utils/analytics';
+import { LogOnMount } from '../../../utils/analytics';
 import { ModalHeader } from '../../common';
 import classNames from 'classnames';
 import style from './style.less';
@@ -25,9 +25,11 @@ interface ITemplate {
     id: number;
     description: string;
     name: string;
+    projectId: string;
 }
 
 interface IProps {
+    loadAndForkProject: (projectId: string) => void;
     hideModal: () => void;
 }
 
@@ -51,8 +53,10 @@ export default class ProjectTemplateModal extends Component<IProps, IState> {
     }
 
     onCreateProjectHandle = () => {
-        logEvent('PROJECT_CREATED', { template: this.state.selectedTemplate.name});
-        window.location.href = `${window.location.origin}/${this.state.selectedTemplate.id}`;
+        const { loadAndForkProject } = this.props;
+        const { selectedTemplate } = this.state;
+
+        loadAndForkProject(selectedTemplate.projectId);
     }
 
     render() {

@@ -16,7 +16,6 @@
 
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { previewService } from '../../services';
 import AnalyticsDialog from '../analyticsDialog';
 import OnlyIf from '../onlyIf';
 import ToastContainer from '../toasts/toastcontainer';
@@ -92,7 +91,7 @@ export default class App extends Component<IProps> {
                 <div id='app'>
                     <div id='app_content'>
                         <div className='maincontent'>
-                            <Route path='/' exact render={(props) => <ProjectEditor {...props} />} />
+                            <Route path='/' exact render={(props) => <ProjectEditor showTemplateModal={true} {...props} />} />
                             <Switch>
                                 <Route path='/:projectId' exact component={this.renderProject} />
                             </Switch>

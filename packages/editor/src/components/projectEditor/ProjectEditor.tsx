@@ -38,6 +38,8 @@ interface IProps {
     panels: IPanelsState;
     selectedEnvironment: IEnvironment;
     showContractConfig: boolean;
+    showTemplateModal?: boolean;
+    showModal: (modalType: string, modalProps: any) => void;
     togglePanel(panel: Panels): void;
     closePanel(panel: Panels): void;
     closeContractConfigModal(): void;
@@ -63,6 +65,14 @@ export class ProjectEditor extends React.Component<IProps, IState> {
             },
             false
         );
+    }
+
+    componentDidMount() {
+        const { showTemplateModal, showModal } = this.props;
+
+        if (showTemplateModal) {
+            showModal('PROJECT_TEMPLATE_MODAL', null);
+        }
     }
 
     toggleSidePanelDragging() {

@@ -16,7 +16,6 @@
 
 import { IEnvironment } from '../models/state';
 import { IProject } from '../models';
-import {AnyAction} from 'redux';
 
 export const projectsActions = {
     SET_ALL_ENVIRONMENTS: 'SET_ALL_ENVIRONMENTS',

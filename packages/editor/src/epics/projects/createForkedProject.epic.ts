@@ -19,7 +19,6 @@ import { ofType, Epic } from 'redux-observable';
 import { projectsActions } from '../../actions';
 import { projectService } from '../../services';
 import { of } from 'rxjs';
-import { fetchJSON } from '../../services/utils/fetchJson';
 
 export const createForkedProject: Epic = (action$, state$) => action$.pipe(
     ofType(projectsActions.CREATE_FORKED_PROJECT),

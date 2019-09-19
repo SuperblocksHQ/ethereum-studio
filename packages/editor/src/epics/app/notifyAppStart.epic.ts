@@ -16,7 +16,7 @@
 
 import { switchMap } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
-import { appActions, panelsActions } from '../../actions';
+import { appActions, panelsActions, modalActions } from '../../actions';
 import { of } from 'rxjs';
 import { Panels, PanelSides } from '../../models/state';
 
