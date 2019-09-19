@@ -68,8 +68,8 @@ export default class ProjectTemplateModal extends Component<IProps, IState> {
                         onCloseClick={this.onCloseClickHandle}
                     />
                     <div className={classNames([style.area, style.container])}>
-                        <div className={style.categoriesArea}>
-                            <div className={style.categoriesTitle}>Templates</div>
+                        <div className={style.templateListPanel}>
+                            <div className={style.templateListTitle}>Templates</div>
                                 <ul>
                                     {  templates.map((template: ITemplate) => (
                                             <li key={template.id}
