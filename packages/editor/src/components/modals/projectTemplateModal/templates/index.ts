@@ -20,26 +20,22 @@ export default class Templates {
         {
             id: 0,
             name: 'Hello World',
-            description: 'Simple Hello World starter project',
-            image: '/static/img/templates/img-hello-world.png',
+            description: '<div><h2>Hello World</h2><p>A simple Hello World starter project. Deploy a smart contract with a message nad render it in the front-end. Don\'t forget to update the message using the interact panel!</p></div>',
         },
         {
             id: 1,
             name: 'Coin',
-            description: 'Example DApp which uses ERC-20 standard',
-            image: '/static/img/templates/img-erc20-token.png',
+            description: '<div><h2>Coin Contract</h2><p>Example DApp which uses ERC-20 standard</p></div>',
         },
         {
             id: 2,
             name: 'CryptoPizza NFT',
-            description: 'Crypto-collectible game built on top of ERC-721 standard',
-            image: '/static/img/templates/img-cryptopizza.png',
+            description: '<div><h2>CryptoPizza NFT</h2><p>Crypto-collectible game built on top of ERC-721 standard</p></div>',
         },
         {
             id: 3,
             name: 'Empty Project',
-            description: 'The simples form of project in order to get started from a clean slate',
-            image: '/static/img/templates/img-empty.png',
+            description: '<div><h2>Empty Project</h2><p>The simples form of project in order to get started from a clean slate</p></div>',
         },
     ];
 }

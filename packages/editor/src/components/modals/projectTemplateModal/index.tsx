@@ -24,7 +24,6 @@ import style from './style.less';
 interface ITemplate {
     id: number;
     description: string;
-    image: string;
     name: string;
 }
 
@@ -35,36 +34,6 @@ interface IProps {
 interface IState {
     selectedTemplate: ITemplate;
 }
-
-const TemplateLayout = (props: any) => (
-    <div onClick={props.onTemplateSelected} className={classNames([style.templateLayout], { [style.selected]: props.selected }, style.alignContentCenter)}>
-        <img src={props.image} width='300'/>
-        <div style={{height: '90px'}}>
-            <div className={style.title}>{props.name}</div>
-            <div className={style.description}>{props.description}</div>
-        </div>
-    </div>
-);
-
-// const GridLayout = (props: any) => (
-//     <div className={style.gridLayout}>
-//         <div id='mainContent' className='container' style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 0fr)', gridGap: '10px', gridAutoRows: 'minMax(100px, auto)' }}>
-//             { props.templates
-//                 .filter((template: ITemplate) => template.categories.indexOf(props.categorySelectedId) > -1)
-//                 .map((template: ITemplate) => (
-//                     <TemplateLayout
-//                         key={template.id}
-//                         image={template.image}
-//                         name={template.name}
-//                         description={template.description}
-//                         selected={template.id === props.templateSelectedId}
-//                         onTemplateSelected={() => props.onTemplateSelected(template)} />
-//                     )
-//                 )
-//             }
-//         </div>
-//     </div>
-// );
 
 export default class ProjectTemplateModal extends Component<IProps, IState> {
     state: IState = {
@@ -113,7 +82,7 @@ export default class ProjectTemplateModal extends Component<IProps, IState> {
                             </div>
                         <div className={style.templateListContainer}>
                             <div className={style.templateListArea}>
-                                { selectedTemplate.description }
+                                <div dangerouslySetInnerHTML={{__html: selectedTemplate.description}} />
                             </div>
                         </div>
                     </div>
