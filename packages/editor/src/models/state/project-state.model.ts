@@ -29,6 +29,6 @@ export interface IProjectState {
     selectedAccount: IAccount;
     openWallets: IOpenWallet;
     metamaskAccounts: string[];
-    dappfileData: any;
+    dappFileData: any;
     isOwnProject: boolean;
 }

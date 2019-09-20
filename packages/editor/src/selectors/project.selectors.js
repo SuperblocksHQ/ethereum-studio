@@ -23,5 +23,6 @@ export const projectSelectors = {
     getProjectId: state => state.projects.project.id,
     getProjectName: state => state.projects.project.name,
     getLoadingProject: state => state.projects.loadingProject,
-    getIsOwnProject: state => state.projects.isOwnProject
+    getIsOwnProject: state => state.projects.isOwnProject,
+    getDappFileData: state => state.projects.dappFileData
 }

@@ -34,7 +34,7 @@ export const initialState: IProjectState = {
     selectedAccount: { name: '', balance: null, address: null, walletName: null, isLocked: false, type: '' },
     openWallets: {},
     metamaskAccounts: [],
-    dappfileData: null,
+    dappFileData: null,
     isOwnProject: false
 };
 
@@ -60,7 +60,7 @@ export default function projectsReducer(state = initialState, action: AnyAction,
             let selectedAccount = state.selectedAccount;
 
             if (selectedEnvironment.name) {
-                accounts = resolveAccounts(state.dappfileData, selectedEnvironment.name, state.openWallets, state.metamaskAccounts);
+                accounts = resolveAccounts(state.dappFileData, selectedEnvironment.name, state.openWallets, state.metamaskAccounts);
                 selectedAccount = accounts.find(a => a.name === state.selectedAccount.name) || initialState.selectedAccount;
             }
             return {
@@ -76,7 +76,7 @@ export default function projectsReducer(state = initialState, action: AnyAction,
             const metamaskAccounts = action.data;
 
             if (state.selectedEnvironment.name) {
-                accounts = resolveAccounts(state.dappfileData, state.selectedEnvironment.name, state.openWallets, metamaskAccounts);
+                accounts = resolveAccounts(state.dappFileData, state.selectedEnvironment.name, state.openWallets, metamaskAccounts);
                 selectedAccount = accounts.find(a => a.name === state.selectedAccount.name) || initialState.selectedAccount;
             }
             return {
@@ -125,10 +125,8 @@ export default function projectsReducer(state = initialState, action: AnyAction,
             let stateChange = {
                 environments: initialState.environments,
                 selectedEnvironment: initialState.selectedEnvironment,
-                dappfileData: null
+                dappFileData: null
             };
-
-            console.log('hola');
 
             // parse dappjson file to get environment
             try {
@@ -224,7 +222,7 @@ export default function projectsReducer(state = initialState, action: AnyAction,
             const { updatedDappFileData } = action.data;
             let stateChange = {
                 accounts: state.accounts,
-                dappfileData: state.dappfileData
+                dappFileData: state.dappFileData
             };
 
             // parse dappjson file to get environment
