@@ -15,12 +15,11 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { projectsActions } from '../actions/projects.actions';
-import { IProjectState, IEnvironment, IAccount } from '../models/state';
+import { IProjectState, IEnvironment } from '../models/state';
 import { AnyAction } from 'redux';
-import { IProjectItem, ProjectItemTypes } from '../models';
+import { IProjectItem } from '../models';
 import { getDappSettings, resolveAccounts } from './dappfileLib';
 import { authActions, accountActions } from '../actions';
-import { findItemByPath } from './explorerLib';
 
 export const initialState: IProjectState = {
     project: {
@@ -128,6 +127,8 @@ export default function projectsReducer(state = initialState, action: AnyAction,
                 selectedEnvironment: initialState.selectedEnvironment,
                 dappfileData: null
             };
+
+            console.log('hola');
 
             // parse dappjson file to get environment
             try {
