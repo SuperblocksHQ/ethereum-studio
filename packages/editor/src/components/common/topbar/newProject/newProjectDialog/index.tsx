@@ -53,15 +53,6 @@ class NewProjectDialog extends Component<IProps> {
                             Start with a template
                         </div>
                     </li>
-                    <li>
-                        <a
-                            href='https://help.superblocks.com'
-                            target='_blank'
-                            rel='noopener noreferrer'
-                        >
-                            Import a project
-                        </a>
-                    </li>
                 </ul>
             </div>
         );

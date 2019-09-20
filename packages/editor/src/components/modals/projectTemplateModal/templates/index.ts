@@ -37,8 +37,8 @@ export default class Templates {
         },
         {
             id: 3,
-            name: 'Empty Project',
-            description: '<div><h2>Empty Project</h2><p>The simples form of project in order to get started from a clean slate</p></div>',
+            name: 'Counter',
+            description: '<div><h2>Counter Project</h2><p>Learn, through a simple counter, how to properly import other contracts and use <a href="https://openzeppelin.com" target="_blank" rel="noopener noreferrer" title="Open Zeppelin">OpenZeppelin\'s</a> SafeMath contract to perform simple arithmetic operations.</p></div>',
             projectId: '5d837679875da96cb4432b76'
         },
     ];
