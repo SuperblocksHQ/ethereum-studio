@@ -26,7 +26,7 @@ const mapStateToProps = (_state: any) => ({
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
     return {
         loadAndForkProject(projectId: string) {
-            dispatch(projectsActions.loadProject(projectId));
+            dispatch(projectsActions.loadProjectAndFork(projectId));
         },
     };
 };

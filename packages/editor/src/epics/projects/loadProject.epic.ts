@@ -23,7 +23,6 @@ import { projectService} from '../../services/project.service';
 export function loadProjectById(projectId: string) {
     return projectService.getProjectById(projectId)
         .pipe(
-            tap(() => console.log('hola')),
             map(projectsActions.loadProjectSuccess),
             catchError((error) => {
                 console.log('There was an issue loading the project: ' + error);

@@ -134,6 +134,14 @@ export const projectsActions = {
             data: error
        };
     },
+
+    LOAD_PROJECT_AND_FORK: 'LOAD_PROJECT_AND_FORK',
+    loadProjectAndFork(projectId: string) {
+        return {
+            type: projectsActions.LOAD_PROJECT_AND_FORK,
+            data: { projectId }
+        };
+    },
     RENAME_PROJECT: 'RENAME_PROJECT',
     renameProject(newName: string) {
        return {
