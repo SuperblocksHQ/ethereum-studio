@@ -22,10 +22,38 @@
     background-color: #2d2d2d;
 }
 
+.splitter-layout.splitter-layout-vertical>.layout-splitter {
+    box-sizing: border-box;
+    z-index: 1;
+    background-clip: padding-box;
+    width: 11px;
+    margin: -5px 0px;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    cursor: col-resize;
+    background-color: #3C3C3C;
+}
+
+.splitter-layout.splitter-layout-vertical>.layout-splitter:hover {
+    -webkit-transition: all .15s ease;
+    transition: all .15s ease;
+    border-left: 5px solid rgba(35, 35, 35, 0.7);
+    border-right: 5px solid rgba(35, 35, 35, 0.7);
+    background-color: #2d2d2d;
+}
+
 .hideFileSystemPanel > div:nth-child(1) {
     display: none;
 }
 
 .hideFileSystemPanel >.layout-splitter {
+    display: none;
+}
+
+.hideBottomSystemPanel > div:nth-child(3) {
+    display: none;
+}
+
+.hideBottomSystemPanel >.layout-splitter {
     display: none;
 }

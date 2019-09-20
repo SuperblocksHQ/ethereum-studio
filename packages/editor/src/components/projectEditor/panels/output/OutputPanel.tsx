@@ -30,7 +30,7 @@ export function OutputPanel(props: IProps) {
     return (
         <div className='scrollable-y'>
             <div className={style.console}>
-            <div className={style.actionMenu}>
+                <div className={style.actionMenu}>
                     <button className={classNames([style.icon, 'btnNoBg'])} onClick={props.clearOutputLog}>
                         <Tooltip title='Clear All'>
                             <IconTrash />

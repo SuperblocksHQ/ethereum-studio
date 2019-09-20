@@ -47,11 +47,15 @@ interface IProps {
 
 interface IState {
     sidePanelDragging: boolean;
+    verticalPanelDragging: boolean;
 }
 
 @DragDropContext(HTML5Backend)
 export class ProjectEditor extends React.Component<IProps, IState> {
-    state: IState = { sidePanelDragging: false };
+    state: IState = {
+        sidePanelDragging: false,
+        verticalPanelDragging: false
+    };
 
     constructor(props: IProps) {
         super(props);
@@ -79,6 +83,10 @@ export class ProjectEditor extends React.Component<IProps, IState> {
         this.setState({ sidePanelDragging: !this.state.sidePanelDragging });
     }
 
+    toggleVerticalPanelDragging() {
+        this.setState({ verticalPanelDragging: !this.state.verticalPanelDragging });
+    }
+
     isPanelOpen = (panel: Panels) => this.props.panels[panel] && this.props.panels[panel].open;
 
     render() {
@@ -88,7 +96,7 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                 showContractConfig,
                 closeContractConfigModal } = this.props;
 
-        const { sidePanelDragging } = this.state;
+        const { sidePanelDragging, verticalPanelDragging } = this.state;
 
         return (
             <div className={style.projecteditor}>
@@ -108,80 +116,83 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                     <div className={style.mainLayout}>
                         <div className={style.splitterContainer}>
                             <SplitterLayout
-                                primaryIndex={1}
-                                secondaryMinSize={0}
-                                secondaryInitialSize={280}
-                                customClassName={!this.isPanelOpen(Panels.Explorer) && !this.isPanelOpen(Panels.Interact) ? 'hideFileSystemPanel' : undefined}
-                                onSecondaryPaneSizeChange={() => null}>
-                                <div className={style.control}>
-
-                                    { this.isPanelOpen(Panels.Explorer) &&
-                                        <React.Fragment>
-                                            <Panel
-                                                name='Explorer'
-                                                onClose={() => this.props.closePanel(Panels.Explorer)}
-                                                dragging={this.state.sidePanelDragging}>
-                                                <Explorer />
-                                            </Panel>
-                                            <ContactContainer />
-                                        </React.Fragment>
-                                    }
-                                    { this.isPanelOpen(Panels.Interact) &&
-                                        <React.Fragment>
-                                            <Panel
-                                                name='Interact'
-                                                onClose={() => this.props.closePanel(Panels.Interact)}
-                                                dragging={this.state.sidePanelDragging}>
-                                                <InteractPanel />
-                                            </Panel>
-                                            <ContactContainer />
-                                        </React.Fragment>
-                                    }
-                                </div>
-                                <div>
+                                vertical
+                                secondaryInitialSize={250}
+                                customClassName={!this.isPanelOpen(Panels.OutputLog) && !this.isPanelOpen(Panels.MessageLog) ? 'hideBottomSystemPanel' : undefined}
+                                onDragStart={() => this.toggleVerticalPanelDragging()}
+                                onDragEnd={() => this.toggleVerticalPanelDragging()}>
                                     <SplitterLayout
-                                        primaryIndex={0}
-                                        secondaryMinSize={232}
-                                        secondaryInitialSize={500}
-                                        onDragStart={() => this.toggleSidePanelDragging()}
-                                        onDragEnd={() => this.toggleSidePanelDragging()}
+                                        primaryIndex={1}
+                                        secondaryMinSize={0}
+                                        secondaryInitialSize={280}
+                                        customClassName={!this.isPanelOpen(Panels.Explorer) && !this.isPanelOpen(Panels.Interact) ? 'hideFileSystemPanel' : undefined}
                                         onSecondaryPaneSizeChange={() => null}>
+                                            <div className={style.control}>
+                                                { this.isPanelOpen(Panels.Explorer) &&
+                                                    <React.Fragment>
+                                                        <Panel
+                                                            name='Explorer'
+                                                            onClose={() => this.props.closePanel(Panels.Explorer)}
+                                                            dragging={this.state.sidePanelDragging}>
+                                                            <Explorer />
+                                                        </Panel>
+                                                        <ContactContainer />
+                                                    </React.Fragment>
+                                                }
+                                                { this.isPanelOpen(Panels.Interact) &&
+                                                    <React.Fragment>
+                                                        <Panel
+                                                            name='Interact'
+                                                            onClose={() => this.props.closePanel(Panels.Interact)}
+                                                            dragging={this.state.sidePanelDragging}>
+                                                            <InteractPanel />
+                                                        </Panel>
+                                                        <ContactContainer />
+                                                    </React.Fragment>
+                                                }
+                                            </div>
+                                            <div>
+                                                <SplitterLayout
+                                                    primaryIndex={0}
+                                                    secondaryMinSize={232}
+                                                    secondaryInitialSize={500}
+                                                    onDragStart={() => this.toggleSidePanelDragging()}
+                                                    onDragEnd={() => this.toggleSidePanelDragging()}
+                                                    onSecondaryPaneSizeChange={() => null}>
 
-                                        <Panes dragging={sidePanelDragging} />
+                                                    <Panes dragging={sidePanelDragging} />
 
-                                        { this.isPanelOpen(Panels.Transactions) &&
-                                            <Panel icon={ <IconTransactions /> } name='Transactions History' onClose={() => closePanel(Panels.Transactions)} dragging={sidePanelDragging}>
-                                                <TransactionLogPanel />
-                                            </Panel>
-                                        }
+                                                    { this.isPanelOpen(Panels.Transactions) &&
+                                                        <Panel icon={ <IconTransactions /> } name='Transactions History' onClose={() => closePanel(Panels.Transactions)} dragging={sidePanelDragging}>
+                                                            <TransactionLogPanel />
+                                                        </Panel>
+                                                    }
 
-                                        { this.isPanelOpen(Panels.Preview) &&
-                                            <Panel name='Preview' onClose={() => closePanel(Panels.Preview)} dragging={sidePanelDragging}>
-                                                <PreviewPanel />
-                                            </Panel>
-                                        }
+                                                    { this.isPanelOpen(Panels.Preview) &&
+                                                        <Panel name='Preview' onClose={() => closePanel(Panels.Preview)} dragging={sidePanelDragging}>
+                                                            <PreviewPanel />
+                                                        </Panel>
+                                                    }
 
-                                    </SplitterLayout>
-                                </div>
+                                                </SplitterLayout>
+                                            </div>
+                                        </SplitterLayout>
+                                        <React.Fragment>
+                                            <OnlyIf test={this.isPanelOpen(Panels.MessageLog)}>
+                                                <Panel name='Message' onClose={() => closePanel(Panels.MessageLog)} dragging={verticalPanelDragging}>
+                                                    <MessagesPanel />
+                                                </Panel>
+                                            </OnlyIf>
+                                            <OnlyIf test={this.isPanelOpen(Panels.OutputLog)}>
+                                                <Panel name='Output' onClose={() => closePanel(Panels.OutputLog)} dragging={verticalPanelDragging}>
+                                                    <OutputPanel />
+                                                </Panel>
+                                            </OnlyIf>
+                                        </React.Fragment>
                             </SplitterLayout>
                         </div>
 
                         <div className={style.bottomButtonsContainer}>
-                            <OnlyIf test={this.isPanelOpen(Panels.OutputLog)}>
-                                <div className={style.bottomPanelContainer}>
-                                    <Panel name='Output' onClose={() => closePanel(Panels.OutputLog)} dragging={sidePanelDragging}>
-                                        <OutputPanel />
-                                    </Panel>
-                                </div>
-                            </OnlyIf>
-                            <OnlyIf test={this.isPanelOpen(Panels.MessageLog)}>
-                                <div className={style.bottomPanelContainer}>
-                                    <Panel name='Messages' onClose={() => closePanel(Panels.MessageLog)} dragging={sidePanelDragging}>
-                                        <MessagesPanel />
-                                    </Panel>
-                                </div>
-                            </OnlyIf>
-
                             <SideButton name='Output'
                                 icon={<IconPanelOutput />}
                                 onClick={() => togglePanel(Panels.OutputLog)}  />
