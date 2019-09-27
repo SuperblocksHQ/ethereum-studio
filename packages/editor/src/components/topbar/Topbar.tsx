@@ -26,7 +26,6 @@ import NetworkAccountSelector from '../networkAccountSelector';
 import MenuDropdownDialog from './menu';
 import ProjectTitle from './projectTitle';
 import { IProject } from '../../models';
-import ShareModal from '../modals/shareModal';
 import { ForkDropdownAction, MenuAction, PreferencesAction, ShareDropdownAction } from './actions';
 import AccountConfigModal from '../projectEditor/editors/accountConfigModal';
 
@@ -41,11 +40,9 @@ interface IProps {
     showForkButton: boolean;
     isProjectForking: boolean;
     view: IView;
-    showShareModal: boolean;
     showAccountConfig: boolean;
     forkProject: (projectId: string, redirect: boolean) => void;
     showModal: (modalType: string, modalProps: any) => void;
-    toggleShareModal: () => void;
     closeAccountConfigModal(): void;
 }
 export default class TopBar extends Component<IProps> {
@@ -89,7 +86,7 @@ export default class TopBar extends Component<IProps> {
 
         const { showForkButton } = this.state;
         const { project, showOpenInLab } = this.props.view;
-        const { isProjectForking, toggleShareModal, showShareModal, showAccountConfig, closeAccountConfigModal } = this.props;
+        const { isProjectForking, showAccountConfig, closeAccountConfigModal } = this.props;
 
         return (
             <div className={style.topbar}>
@@ -120,7 +117,7 @@ export default class TopBar extends Component<IProps> {
                             />
                         </OnlyIf>
                         <ShareDropdownAction
-                            toggleShareModal={toggleShareModal}
+                            toggleShareModal={() => this.showModal('share')}
                         />
                     </div>
                 </div>
@@ -134,12 +131,6 @@ export default class TopBar extends Component<IProps> {
                     </div>
                     <HelpAction />
                 </div>
-                <OnlyIf test={showShareModal}>
-                    <ShareModal
-                        defaultUrl={String(window.location)}
-                        hideModal={toggleShareModal}
-                    />
-                </OnlyIf>
                 <OnlyIf test={showAccountConfig}>
                     <AccountConfigModal
                         hideModal={closeAccountConfigModal}

@@ -30,7 +30,6 @@ const mapStateToProps = (state: any) => ({
         showOpenInLab: viewSelectors.getShowTopBarOpenInLab(state),
     },
     isProjectForking: userSelectors.isProjectForking(state),
-    showShareModal: viewSelectors.getShowShareModal(state),
     showAccountConfig: accountSelectors.getShowAccountConfig(state)
 });
 
@@ -41,9 +40,6 @@ function mapDispatchToProps(dispatch: Dispatch<AnyAction>) {
         },
         showModal: (modalType: string, modalProps: any) => {
             dispatch(modalActions.showModal(modalType, modalProps));
-        },
-        toggleShareModal: () => {
-            dispatch(viewActions.toggleShareModal());
         },
         closeAccountConfigModal: () => {
             dispatch(accountActions.closeAccountConfig());
