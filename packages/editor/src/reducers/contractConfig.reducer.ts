@@ -17,12 +17,9 @@
 import { contractConfigActions } from '../actions';
 import { AnyAction } from 'redux';
 import { IContractConfigState } from '../models/state';
-import { findItemByPath, traverseTree } from './explorerLib';
-import { ProjectItemTypes, IContractConfiguration } from '../models';
-
-function pathToString(path: string[]) {
-    return '/' + path.join('/');
-}
+import { getItemPath } from './explorerLib';
+import { IContractConfiguration } from '../models';
+import { findContractConfiguration } from './dappfileLib';
 
 export const initialState: IContractConfigState = {
     showContractConfig: false,
@@ -37,39 +34,24 @@ export default function contractConfigReducer(state = initialState, action: AnyA
         case contractConfigActions.OPEN_CONTRACT_CONFIGURATION: {
             const file = action.data.file;
             const tree = rootState.explorer.tree;
+            const dappFileData = rootState.projects.dappFileData;
 
-            const dappFileItem = findItemByPath(tree, [ 'dappfile.json' ], ProjectItemTypes.File);
-            if (dappFileItem !== null && dappFileItem.code) {
-                const dappFileContent = JSON.parse(dappFileItem.code);
-                let contractSource = '';
+            const contractSource = getItemPath(tree, file);
+            const contractConfiguration = findContractConfiguration(dappFileData, contractSource);
+            const otherContracts = dappFileData.contracts.find((contract: any) => contract.source !== contractSource);
 
-                // Find the contract path
-                traverseTree(tree, (item, path) => {
-                    if (item.id === file.id) {
-                        contractSource = pathToString(path());
-                    }
-                });
-
-                const contractConfiguration = dappFileContent.contracts.find((contract: any) => contract.source === contractSource);
-                const otherContracts = dappFileContent.contracts.find((contract: any) => contract.source !== contractSource);
-
-                return {
-                    ...state,
-                    showContractConfig: true,
-                    selectedContract: {
-                        config: {
-                            args: contractConfiguration.args,
-                            name: contractConfiguration.name,
-                            source: contractSource
-                        },
+            return {
+                ...state,
+                showContractConfig: true,
+                selectedContract: {
+                    config: {
+                        args: contractConfiguration.args,
+                        name: contractConfiguration.name,
+                        source: contractSource
                     },
-                    otherContracts: otherContracts ? otherContracts.map((contract: IContractConfiguration) => contract.source) : [''],
-                };
-            } else {
-                return {
-                    ...state
-                };
-            }
+                },
+                otherContracts: otherContracts ? otherContracts.map((contract: IContractConfiguration) => contract.source) : [''],
+            };
         }
 
         case contractConfigActions.CLOSE_CONTRACT_CONFIG: {

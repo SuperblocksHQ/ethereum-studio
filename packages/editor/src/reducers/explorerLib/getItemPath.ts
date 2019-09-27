@@ -14,11 +14,21 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export * from './sortProjectItems';
-export * from './updateItemInTree';
-export * from './findItem';
-export * from './traverseTree';
-export * from './createProjectItem';
-export * from './addOrReplaceChildItems';
-export * from './ensurePath';
-export * from './getItemPath';
+import { IProjectItem } from '../../models';
+import { traverseTree } from './traverseTree';
+
+function pathToString(path: string[]) {
+    return '/' + path.join('/');
+}
+
+export function getItemPath(tree: IProjectItem, item: IProjectItem) {
+    let contractSource = '';
+    // Find the contract path
+    traverseTree(tree, (i, path) => {
+        if (i.id === item.id) {
+            contractSource = pathToString(path());
+        }
+    });
+
+    return contractSource;
+}

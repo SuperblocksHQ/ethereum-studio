@@ -15,7 +15,7 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import Networks from '../../networks';
-import { IAccountEnvironment } from '../../models';
+import { IAccountEnvironment, IContractConfiguration } from '../../models';
 import { IAccount } from '../../models/state';
 
 function getAccountInfo(dappfileAccount: any, dappfileWallets: any[], environmentName: string, openWallets: any, metamaskAccounts: string[]): IAccount {
@@ -61,6 +61,10 @@ function getAccountInfo(dappfileAccount: any, dappfileWallets: any[], environmen
 
 export function resolveAccounts(dappFileData: any, environment: string, openWallets: any, metamaskAccounts: string[]) {
     return dappFileData.accounts.map((a: any) => getAccountInfo(a, dappFileData.wallets, environment, openWallets, metamaskAccounts));
+}
+
+export function findContractConfiguration(dappFileData: any, contractSource: string): IContractConfiguration {
+    return dappFileData.contracts.find((contract: any) => contract.source === contractSource);
 }
 
 export function getDappSettings(dappfileCode: string, openWallets: any, metamaskAccounts: string[]) {

@@ -44,8 +44,9 @@ export function createDeployFile(buildFiles: IProjectItem[], contractArgs: any[]
         throw new Error('Cannot parse .abi file');
     }
 
-    const binFileCode = getFileCode(buildFiles, '.bin');
+    console.log(contractArgs);
 
+    const binFileCode = getFileCode(buildFiles, '.bin');
     const contract = window.web3.eth.contract(parsedABI);
     const args = contractArgs.concat([{ data: binFileCode }]);
 
@@ -59,7 +60,6 @@ export function createDeployFile(buildFiles: IProjectItem[], contractArgs: any[]
     }
 
     if (deployFileCode == null || (deployFileCode === binFileCode && contractArgs.length > 0)) {
-        // Error
         throw new Error('Constructor arguments given are not valid. Too many/few or wrong types. ' + error);
     }
 

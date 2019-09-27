@@ -14,11 +14,5 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export * from './sortProjectItems';
-export * from './updateItemInTree';
-export * from './findItem';
-export * from './traverseTree';
-export * from './createProjectItem';
-export * from './addOrReplaceChildItems';
-export * from './ensurePath';
-export * from './getItemPath';
+export * from './normalizeContractArgs';
+export * from './getContractArguments';
