@@ -182,7 +182,7 @@ export class DeployRunner {
                     address: "${contractAddress}",
                     network: "${this.environment.name}",
                     endpoint: "${this.environment.endpoint}",
-                    abi: "${this.abiFile}"
+                    abi: ${this.abiFile}
                 };
                 Contracts["${this.contractName}"] = data;
                 console.log(data);

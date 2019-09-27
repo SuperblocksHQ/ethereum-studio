@@ -75,8 +75,8 @@ export default function previewReducer(state = initialState, action: AnyAction, 
             let htmlToRender;
             const tree = rootState.explorer.tree;
 
-            // TODO
-            const addresses = [''];
+            // TODO - Get the right address here
+            const addresses = ['0xa48f2e0be8ab5a04a5eb1f86ead1923f03a207fd'];
             const html = findItemByPath(tree, [ 'app', 'app.html' ], ProjectItemTypes.File);
             const css = findItemByPath(tree, [ 'app', 'app.css' ], ProjectItemTypes.File);
             const js = findItemByPath(tree, [ 'app', 'app.js' ], ProjectItemTypes.File);
