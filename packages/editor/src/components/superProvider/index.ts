@@ -65,8 +65,7 @@ export default class SuperProvider {
         return new Promise(async (resolve, reject) => {
             if (endpoint.toLowerCase() === 'http://superblocks-browser') {
                 try {
-                    const result = await evmService.getProvider().sendAsync(payload);
-                    resolve(result);
+                    evmService.getProvider().sendAsync(payload, ((err: any, result: any) => resolve(result)));
                 } catch (e) {
                     console.log(e);
                     reject('Problem calling the provider async call');
@@ -112,7 +111,6 @@ export default class SuperProvider {
         }
 
         const sendIframeMessage = (err: any, res: any) => {
-            // console.log(err,res);
             if (
                 (data.payload.method === 'eth_sendTransaction' ||
                     data.payload.method === 'eth_sendRawTransaction') &&
@@ -236,10 +234,12 @@ export default class SuperProvider {
                     params: ['0x' + tx.serialize().toString('hex')],
                     id: payload.id,
                 };
-                this.send(obj3, data.endpoint);
+                const result = await this.send(obj3, data.endpoint);
+                sendIframeMessage(null, result);
             }
         } else {
-            this.send(data.payload, data.endpoint);
+            const result = await this.send(data.payload, data.endpoint);
+            sendIframeMessage(null, result);
         }
     }
 
