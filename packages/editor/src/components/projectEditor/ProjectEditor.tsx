@@ -15,6 +15,7 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from 'react';
+import LoadingBar from 'react-redux-loading-bar';
 import style from './style.less';
 import './react-splitter-layout.css';
 import Panes from './panes';
@@ -101,6 +102,7 @@ export class ProjectEditor extends React.Component<IProps, IState> {
         return (
             <div className={style.projecteditor}>
                 <TopBar />
+                <LoadingBar className='loading' />
                 <div className={style.mainWrapper}>
                     <div className={classnames([style.sideButtonsContainer, style.sideButtonsContainerLeft])}>
                         <SideButton name='Explorer'

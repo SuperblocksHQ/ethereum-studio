@@ -124,7 +124,7 @@ export class Explorer extends React.Component<IProps> {
                         onToggle={ actions.onToggleTreeItem }
 
                         onCreateItemClick={ this.onCreateItem }
-                        onImportFileClick={(parentId) => this.showModal('import', parentId)}
+                        onImportFileClick={(parentId: string) => this.showModal('import', parentId)}
                         onRenameClick={ (id: string) => this.onRenameItem(id, itemData.name) }
                         onDeleteClick={ (id: string) => this.onDeleteItem(id, itemData.name) }
                         onMoveItem={this.onMoveItem}>
