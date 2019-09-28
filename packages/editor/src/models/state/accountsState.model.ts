@@ -16,7 +16,8 @@
 
 import { IAccount } from './project-state.model';
 
-export interface IAccountConfigState {
+export interface IAccountState {
     showAccountConfig: boolean;
     selectedAccount?: IAccount;
+    knownWalletSeed: string;
 }

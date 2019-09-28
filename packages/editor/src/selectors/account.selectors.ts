@@ -16,5 +16,6 @@
 
 export const accountSelectors = {
     getSelectedAccount: (state: any) => state.accounts.selectedAccount,
-    getShowAccountConfig: (state: any) => state.accounts.showAccountConfig
+    getShowAccountConfig: (state: any) => state.accounts.showAccountConfig,
+    getKnownWalletSeed: (state: any) => state.accounts.knownWalletSeed
 };

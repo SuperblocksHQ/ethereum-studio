@@ -29,6 +29,7 @@ interface IProps {
     showTrackingAnalyticsDialog: boolean;
     router: any;
     appVersion: string;
+    knownWalletSeed: string;
     notifyAppStart: (isIframe: boolean) => void;
     addMessageLogRow: (logLevel: LogLevel, msg: string) => void;
 }
@@ -41,8 +42,6 @@ export default class App extends Component<IProps> {
             start_time: number;
         }
     };
-    knownWalletSeed: string;
-
 
     constructor(props: IProps) {
         super(props);
@@ -56,32 +55,29 @@ export default class App extends Component<IProps> {
                 start_time: Date.now(),
             }
         };
-
-        this.knownWalletSeed = 'butter toward celery cupboard blind morning item night fatal theme display toy';
-
-        // The development wallets seed is well known and the first few addresses are seeded
-        // with ether in the genesis block.
-        props.addMessageLogRow(LogLevel.LOG, 'Known development Ethereum seed is: ' + this.knownWalletSeed);
     }
 
     componentDidMount() {
-        const { notifyAppStart }  = this.props;
+        const { notifyAppStart, knownWalletSeed, addMessageLogRow }  = this.props;
+
+        // The development wallets seed is well known and the first few addresses are seeded
+        // with ether in the genesis block.
+        addMessageLogRow(LogLevel.LOG, 'Known development Ethereum seed is: ' + knownWalletSeed);
 
         // Make sure we fire this event in order to let other parst of the app configure depending
         // on the initial state (per example turning on/off analytics)
         notifyAppStart(embedUtils.isIframe());
     }
 
-    redraw = (all: any) => {
-        console.error('YOoo, someone calls redraw!!!');
+    renderProject = ({ match }: any) => {
+        const { knownWalletSeed } = this.props;
+        return (
+            <LoadProject
+                projectIdToLoad={match.params.projectId}
+                knownWalletSeed={knownWalletSeed}
+            />
+        );
     }
-
-    renderProject = ({ match }: any) => (
-        <LoadProject
-            projectIdToLoad={match.params.projectId}
-            knownWalletSeed={this.knownWalletSeed}
-        />
-    )
 
     render() {
         const { showTrackingAnalyticsDialog } = this.props;
