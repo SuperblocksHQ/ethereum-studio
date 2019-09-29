@@ -18,19 +18,19 @@ import { IProjectItem } from '../../models';
 import { Observable, throwError, of, from, Observer } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { getWeb3, convertGas } from '../utils';
-import { IEnvironment } from '../../models/state';
-import { IDeployAccount, ICheckDeployResult, IDeployResult, CheckDeployResult } from './deploy.models';
+import { IAccount, IEnvironment } from '../../models/state';
+import { ICheckDeployResult, IDeployResult, CheckDeployResult } from './deploy.models';
 import { createDeployFile, getFileCode, signTransaction } from './deploy.utils';
 
 export class DeployRunner {
     private readonly currWeb3: any;
-    private readonly account: IDeployAccount;
+    private readonly account: IAccount;
     private readonly environment: IEnvironment;
     private readonly contractName: string;
     private deployFile: string = '';
     private abiFile: string = '';
 
-    constructor(account: IDeployAccount, environment: IEnvironment, contractName: string) {
+    constructor(account: IAccount, environment: IEnvironment, contractName: string) {
         this.account = account;
         this.environment = environment;
         this.contractName = contractName;

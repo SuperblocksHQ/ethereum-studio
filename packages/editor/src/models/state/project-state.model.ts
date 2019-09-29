@@ -9,7 +9,7 @@ export interface IEnvironment {
 export interface IAccount {
     name: string;
     balance: Nullable<string>;
-    address: Nullable<string>;
+    address: string;
     type: string;
     walletName: Nullable<string>;
     isLocked: boolean;
