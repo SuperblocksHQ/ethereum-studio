@@ -15,7 +15,7 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { of } from 'rxjs';
-import { switchMap, withLatestFrom, catchError } from 'rxjs/operators';
+import { switchMap, withLatestFrom, catchError, tap } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
 import { explorerActions } from '../../actions';
 import { projectService } from '../../services/project.service';

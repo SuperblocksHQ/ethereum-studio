@@ -125,13 +125,10 @@ export default class SuperProvider {
         }
 
         const sendIframeMessage = (err: any, res: any) => {
-            if (
-                (data.payload.method === 'eth_sendTransaction' ||
-                    data.payload.method === 'eth_sendRawTransaction') &&
+            if ((data.payload.method === 'eth_sendTransaction' || data.payload.method === 'eth_sendRawTransaction') &&
                 !err &&
                 res &&
-                res.result &&
-                this.notifyTx
+                res.result
             ) {
                 this.notifyTx(res.result, data.endpoint);
             }
@@ -148,7 +145,6 @@ export default class SuperProvider {
         };
 
         const payload = data.payload;
-        console.log(payload.method);
         if (payload.method === 'eth_sendTransaction') {
             // Needs signing
             const accountName = this.selectedAccount.name;
@@ -193,7 +189,8 @@ export default class SuperProvider {
                     //         return modal;
                     //     },
                     // });
-                    await this.sendAsyncThroughExternalProvider(data);
+                    const result = await this.sendAsyncThroughExternalProvider(data);
+                    sendIframeMessage(null, result);
                     return;
                 } else {
                     const err = "Metamask plugin is not installed, can't proceed.";
