@@ -23,7 +23,6 @@ export const handleCompilerOutputEpic: Epic = (action$: any, state$: any) => act
     ofType(compilerActions.HANDLE_COMPILE_OUTPUT),
     switchMap(() => {
         const compilerState = state$.value.compiler;
-        console.log(compilerState);
         if (compilerState.outputFolderPath.length && compilerState.outputFiles.length) {
             return of(
                 // save files

@@ -136,6 +136,7 @@ export default class SuperProvider {
         };
 
         const payload = data.payload;
+        console.log(payload.method);
         if (payload.method === 'eth_sendTransaction') {
             // Needs signing
             const accountName = this.selectedAccount.name;
@@ -160,8 +161,11 @@ export default class SuperProvider {
             //     callback(err, null);
             //     return;
             // }
-
+            console.log('here1');
+            console.log(this.selectedAccount);
             if (this.selectedAccount.type === 'external') {
+                console.log('here');
+                console.log(this.selectedAccount);
                 if (data.endpoint.toLowerCase() === 'http://superblocks-browser') {
                     const err = 'External/Metamask account cannot be used for the in-browser blockchain.';
                     alert(err);
