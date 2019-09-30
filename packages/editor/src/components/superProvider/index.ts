@@ -97,6 +97,18 @@ export default class SuperProvider {
         });
     }
 
+    private sendAsyncThroughExternalProvider(data: any) {
+        return new Promise((resolve, reject) => {
+            window.web3.currentProvider.sendAsync(data.payload, ((err: any, result: any) => {
+                if (err) {
+                    console.log(err);
+                    reject('Problem calling the provider async call');
+                }
+                resolve(result);
+            }));
+        });
+    }
+
     private onMessage = async (event: any) => {
         // There's no point checking origin here since the iframe is running it's own code already,
         // we need to treat it as a suspect.
@@ -161,11 +173,7 @@ export default class SuperProvider {
             //     callback(err, null);
             //     return;
             // }
-            console.log('here1');
-            console.log(this.selectedAccount);
-            if (this.selectedAccount.type === 'external') {
-                console.log('here');
-                console.log(this.selectedAccount);
+            if (this.selectedAccount.type === 'metamask') {
                 if (data.endpoint.toLowerCase() === 'http://superblocks-browser') {
                     const err = 'External/Metamask account cannot be used for the in-browser blockchain.';
                     alert(err);
@@ -200,13 +208,7 @@ export default class SuperProvider {
                     //         return modal;
                     //     },
                     // });
-
-                    // TODO - Fix this
-                    // window.web3.currentProvider.sendAsync(data.payload,(err, res) => {
-                    //         this.projectItem.functions.modal.close();
-                    //         callback(err, res);
-                    //     }
-                    // );
+                    await this.sendAsyncThroughExternalProvider(data);
                     return;
                 } else {
                     const err = "Metamask plugin is not installed, can't proceed.";

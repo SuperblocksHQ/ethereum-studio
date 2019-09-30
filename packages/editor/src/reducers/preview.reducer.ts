@@ -81,7 +81,6 @@ export default function previewReducer(state = initialState, action: AnyAction, 
             const css = findItemByPath(tree, [ 'app', 'app.css' ], ProjectItemTypes.File);
             const js = findItemByPath(tree, [ 'app', 'app.js' ], ProjectItemTypes.File);
 
-            // const contractFiles: [IProjectItem] = rootState.deployer.deployFiles.filter(((file: IProjectItem) => file.name.includes(`${rootState.projects.selectedEnvironment.name}.js`)));
             let contractJs = '';
             const contractListFolder = findItemByPath(tree, [ 'build', 'contracts' ], ProjectItemTypes.Folder);
             if (contractListFolder && contractListFolder.children.length > 0) {
