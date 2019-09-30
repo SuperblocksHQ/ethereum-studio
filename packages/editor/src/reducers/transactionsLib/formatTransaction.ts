@@ -22,8 +22,6 @@ export function formatTransaction(state: any, transactionType: TransactionType, 
     const account: IAccount = projectSelectors.getSelectedAccount(state);
     const networkSettings = state.settings.preferences.network;
 
-    console.log('Environment: ' + environment);
-
     return  {
         hash: hash || '',
         index: receipt ? receipt.transactionIndex : 'n/a',

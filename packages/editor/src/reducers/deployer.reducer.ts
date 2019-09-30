@@ -97,7 +97,8 @@ export default function deployerReducer(state = initialState, action: AnyAction,
         case deployerActions.DEPLOY_SUCCESS:
             return {
                 ...state,
-                deployFiles: action.data.items !== null ? action.data.items : state.deployFiles
+                deployFiles: action.data.items !== null ? action.data.items : state.deployFiles,
+                isRunning: false
             };
         case deployerActions.DEPLOY_FAIL:
             return { ...initialState };

@@ -37,6 +37,7 @@ export const deployContractEpic: Epic = (action$: any, state$: any) => action$.p
         if (deployerState.needsCompilation) {
             return empty();
         }
+
         const environment = projectSelectors.getSelectedEnvironment(state);
         const selectedAccount = projectSelectors.getSelectedAccount(state);
         const contractTargetName = deployerState.outputPath[deployerState.outputPath.length - 1]; // TODO: this would be taken from contract settings
