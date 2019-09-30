@@ -42,6 +42,11 @@ export default class BottomBar extends Component<IProps> {
         }
         return (
             <div className={style.bottomStatusBar}>
+                <div className={style.left}>
+                    <a href='https://superblocks.com' target='_blank' rel='noopener noreferrer'>
+                        <img src='/static/img/img-logo.svg' alt='Superblocks' />
+                    </a>
+                </div>
                 <div className={style.right}>
                     <span>Account balance: {accountBalance}</span>
                     <span>Gas Limit: {networkPreferences.gasLimit}</span>
