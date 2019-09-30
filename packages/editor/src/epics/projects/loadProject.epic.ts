@@ -33,7 +33,7 @@ export function loadProjectById(projectId: string) {
 
 // TODO - Make sure that we render correctly the 404 screen say
 export const loadProject: Epic = (action$: any, state$: any) => action$.pipe(
-    ofType(projectsActions.LOAD_PROJECT),
+    ofType(projectsActions.LOAD_PROJECT_REQUEST),
     withLatestFrom(state$),
     switchMap(([action, _state]) => {
         const projectId = action.data.projectId;

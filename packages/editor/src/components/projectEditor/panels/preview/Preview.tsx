@@ -50,6 +50,7 @@ interface IProps {
     selectedAccount: IAccount;
     project: IProject;
     htmlToRender: string;
+    knownWalletSeed: string;
 }
 
 export class Preview extends React.Component<IProps> {
@@ -62,9 +63,9 @@ export class Preview extends React.Component<IProps> {
     }
 
     componentDidMount() {
-        const { selectedAccount, selectedEnvironment, htmlToRender } = this.props;
+        const { selectedAccount, selectedEnvironment, htmlToRender, knownWalletSeed } = this.props;
         previewService.init(htmlToRender);
-        previewService.initSuperProvider(IFRAME_ID, selectedEnvironment, selectedAccount);
+        previewService.initSuperProvider(IFRAME_ID, selectedEnvironment, selectedAccount, knownWalletSeed);
         previewService.superProvider.attachListener();
     }
 

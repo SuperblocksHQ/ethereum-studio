@@ -18,13 +18,14 @@ import { connect } from 'react-redux';
 import { AnyAction, Dispatch } from 'redux';
 import { appActions, messageLogActions } from '../../actions';
 import { getShowAnalyticsTrackingDialog } from '../../selectors/settings';
-import { appSelectors } from '../../selectors';
+import { appSelectors, accountSelectors } from '../../selectors';
 import App from './App';
 import { LogLevel } from '../../models';
 
 const mapStateToProps = (state: any) => ({
     showTrackingAnalyticsDialog: getShowAnalyticsTrackingDialog(state),
     appVersion: appSelectors.getAppVersion(state),
+    knownWalletSeed: accountSelectors.getKnownWalletSeed(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {

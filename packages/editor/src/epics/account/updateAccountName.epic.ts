@@ -49,7 +49,7 @@ export const updateAccountNameEpic = (action$: AnyAction, state$: any) => action
     switchMap(([action, state]) => {
         const newAccountName: string = action.data.newName;
         const account: IAccount = action.data.account;
-        const dappFileData = state.projects.dappfileData;
+        const dappFileData = state.projects.dappFileData;
         const dappFileItem: Nullable<IProjectItem> = findItemByPath(state.explorer.tree, [ 'dappfile.json' ], ProjectItemTypes.File);
 
         if (dappFileItem != null) {

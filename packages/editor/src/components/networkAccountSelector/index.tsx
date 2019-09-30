@@ -22,16 +22,16 @@ import { AccountSelector } from './accountSelector';
 import { projectsActions } from '../../actions';
 import { projectSelectors } from '../../selectors';
 import { IProject, INetwork } from '../../models';
-import { IAccount } from '../../models/state';
+import { IAccount, IEnvironment } from '../../models/state';
 import { AnyAction } from 'redux';
 import { NetworkSelector } from './networkSelector';
 import { accountActions } from '../../actions/account.actions';
 
 interface IProps {
     project: IProject;
-    selectedEnvironment: INetwork;
+    selectedEnvironment: IEnvironment;
     onNetworkSelected: (environmentName: string) => void;
-    environments: [INetwork];
+    environments: [IEnvironment];
     onAccountSelected: (account: IAccount) => void;
     onAccountCreate: () => void;
     onAccountDelete: (account: IAccount) => void;
@@ -60,8 +60,8 @@ class NetworkAccountSelector extends Component<IProps> {
                 <div className={style.container}>
                     <div className={style.actionWrapper}>
                         <NetworkSelector
-                            selectedNetwork={selectedEnvironment}
-                            networks={environments}
+                            selectedEnvironment={selectedEnvironment}
+                            environments={environments}
                             onNetworkSelected={onNetworkSelected} />
                     </div>
                     <div className={style.actionWrapper}>

@@ -20,6 +20,7 @@ import { deleteItemEpic } from './deleteItem.epic';
 import { importFilesEpic } from './importFiles.epic';
 import { moveItemEpic } from './moveItem.epic';
 import { updateDappfileEpic } from './updateDappfile.epic';
+import { updateEntireTreeEpic } from './updateEntireTree.epic';
 
 export const explorerEpics = [
     renameItemEpic,
@@ -27,5 +28,6 @@ export const explorerEpics = [
     deleteItemEpic,
     importFilesEpic,
     updateDappfileEpic,
-    moveItemEpic
+    moveItemEpic,
+    updateEntireTreeEpic
 ];

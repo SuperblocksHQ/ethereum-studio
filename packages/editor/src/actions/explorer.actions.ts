@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { ProjectItemTypes, IProjectItem } from '../models';
+import { ProjectItemTypes, IProjectItem, IApiError } from '../models';
 
 export const explorerActions = {
     INIT_EXPLORER: 'INIT_EXPLORER',
@@ -60,10 +60,18 @@ export const explorerActions = {
         };
     },
 
-    FAIL_SAVING_FILES: 'FAIL_SAVING_FILES',
-    failSavingFiles() {
+    UPDATE_TREE_SUCCESS: 'UPDATE_TREE_SUCCESS',
+    updateTreeSuccess() {
         return {
-            type: explorerActions.FAIL_SAVING_FILES
+            type: explorerActions.UPDATE_TREE_SUCCESS
+        };
+    },
+
+    UPDATE_TREE_FAIL: 'UPDATE_TREE_FAIL',
+    updateTreeFail(error: IApiError) {
+        return {
+            type: explorerActions.UPDATE_TREE_FAIL,
+            data: error
         };
     },
 
