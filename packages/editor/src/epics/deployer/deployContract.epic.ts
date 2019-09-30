@@ -37,6 +37,7 @@ export const deployContractEpic: Epic = (action$: any, state$: any) => action$.p
         if (deployerState.needsCompilation) {
             return empty();
         }
+
         const environment = projectSelectors.getSelectedEnvironment(state);
         const selectedAccount = projectSelectors.getSelectedAccount(state);
         const contractTargetName = deployerState.outputPath[deployerState.outputPath.length - 1]; // TODO: this would be taken from contract settings
@@ -61,13 +62,17 @@ export const deployContractEpic: Epic = (action$: any, state$: any) => action$.p
                     mergeMap(result => {
                         if (!lastDeployRunner) {
                             return throwError('Unexpected error during deployment process. Please try again.');
+                        } else if (result.result === CheckDeployResult.AlreadyDeployed) {
+                            return concat(
+                                result.msg ? of(outputLogActions.addRows([ <IOutputLogRow>result ])) : empty(),
+                                result.result === CheckDeployResult.AlreadyDeployed ? of(deployerActions.deploySuccess(null)) : empty()
+                            );
                         }
 
                         const obs$ = selectedAccount.type === 'metamask' ? tryExternalDeploy(state, lastDeployRunner) : browserDeploy(state, lastDeployRunner);
                         return concat(
                             result.msg ? of(outputLogActions.addRows([ <IOutputLogRow>result ])) : empty(),
                             result.result === CheckDeployResult.CanDeploy ? obs$ : empty(),
-                            result.result === CheckDeployResult.AlreadyDeployed ? of(deployerActions.deploySuccess(null)) : empty()
                         );
                     }),
                     catchError(e => [ outputLogActions.addRows([ e ]), deployerActions.deployFail() ])

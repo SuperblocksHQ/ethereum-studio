@@ -1,4 +1,4 @@
-// Copyright 2019 Superblocks AB
+// Copyright 2018 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -14,31 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export enum TransactionType {
-    Deploy = 'Deploy',
-    Interact = 'Interact',
-    Preview = 'Preview'
-}
+import { updateTransactionStateEpic } from './updateTransactionState.epic';
 
-export interface ITransaction {
-    hash: string;
-    index: number;
-    type: TransactionType;
-    status: number | null;
-    contractName: string | null;
-    constructorArgs: [];
-    createdAt: number;
-    blockNumber: number;
-    from: string | null;
-    to: string | null;
-    network: string;
-    origin: string;
-    value: number;
-    gasUsed: number;
-    gasLimit: number;
-    gasPrice: number;
-}
-
-export interface ITransactionsState {
-    items: ITransaction[];
-}
+export const transactionEpics = [
+    updateTransactionStateEpic
+];

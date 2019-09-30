@@ -97,6 +97,19 @@ export default class SuperProvider {
         });
     }
 
+    private sendAsyncThroughExternalProvider(data: any) {
+        return new Promise((resolve, reject) => {
+            window.web3.currentProvider.sendAsync(data.payload, ((err: any, result: any) => {
+                if (err) {
+                    console.log(err);
+                    reject('Problem calling the provider async call');
+                }
+                console.log(result);
+                resolve(result);
+            }));
+        });
+    }
+
     private onMessage = async (event: any) => {
         // There's no point checking origin here since the iframe is running it's own code already,
         // we need to treat it as a suspect.
@@ -113,13 +126,10 @@ export default class SuperProvider {
         }
 
         const sendIframeMessage = (err: any, res: any) => {
-            if (
-                (data.payload.method === 'eth_sendTransaction' ||
-                    data.payload.method === 'eth_sendRawTransaction') &&
+            if ((data.payload.method === 'eth_sendTransaction' || data.payload.method === 'eth_sendRawTransaction') &&
                 !err &&
                 res &&
-                res.result &&
-                this.notifyTx
+                res.result
             ) {
                 this.notifyTx(res.result, data.endpoint);
             }
@@ -136,7 +146,6 @@ export default class SuperProvider {
         };
 
         const payload = data.payload;
-        console.log(payload.method);
         if (payload.method === 'eth_sendTransaction') {
             // Needs signing
             const accountName = this.selectedAccount.name;
@@ -146,26 +155,7 @@ export default class SuperProvider {
                 sendIframeMessage(err, null);
                 return;
             }
-            // const accounts = this.projectItem.getHiddenItem('accounts');
-            // const account = accounts.getByName(accountName);
-
-            // const env = this.getCurrentEnv();
-            // const walletName = account.getWallet(env);
-
-            // const wallets = this.projectItem.getHiddenItem('wallets');
-            // const wallet = wallets.getByName(walletName);
-
-            // if (!wallet) {
-            //     const err = 'Wallet not found.';
-            //     alert(err);
-            //     callback(err, null);
-            //     return;
-            // }
-            console.log('here1');
-            console.log(this.selectedAccount);
-            if (this.selectedAccount.type === 'external') {
-                console.log('here');
-                console.log(this.selectedAccount);
+            if (this.selectedAccount.type === 'metamask') {
                 if (data.endpoint.toLowerCase() === 'http://superblocks-browser') {
                     const err = 'External/Metamask account cannot be used for the in-browser blockchain.';
                     alert(err);
@@ -200,13 +190,8 @@ export default class SuperProvider {
                     //         return modal;
                     //     },
                     // });
-
-                    // TODO - Fix this
-                    // window.web3.currentProvider.sendAsync(data.payload,(err, res) => {
-                    //         this.projectItem.functions.modal.close();
-                    //         callback(err, res);
-                    //     }
-                    // );
+                    const result = await this.sendAsyncThroughExternalProvider(data);
+                    sendIframeMessage(null, result);
                     return;
                 } else {
                     const err = "Metamask plugin is not installed, can't proceed.";

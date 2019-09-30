@@ -24,7 +24,7 @@ import { CannotExportModal } from './CannotExportModal';
 import { DownloadModal } from './DownloadModal';
 import { NoExportableContentModal } from './NoExportableContentModal';
 import { IEnvironment, IAccount } from '../../../../models/state';
-import { IProject } from '../../../../models';
+import { IProject, TransactionType } from '../../../../models';
 
 function getIframeSrc() {
     if (window.location.hostname === 'localhost') {
@@ -40,6 +40,7 @@ interface IProps {
     onToggleWeb3Accounts: () => void;
     onHideModals: () => void;
     onTryDownload: (hasExportableContent: boolean, selectedEnvironment: IEnvironment) => void;
+    notifyTx: (transactionType: TransactionType, hash: string) => void;
     onDownload: () => void;
     refreshContent: () => void;
     disableAccounts: boolean;
@@ -63,9 +64,9 @@ export class Preview extends React.Component<IProps> {
     }
 
     componentDidMount() {
-        const { selectedAccount, selectedEnvironment, htmlToRender, knownWalletSeed } = this.props;
+        const { selectedAccount, selectedEnvironment, htmlToRender, knownWalletSeed, notifyTx } = this.props;
         previewService.init(htmlToRender);
-        previewService.initSuperProvider(IFRAME_ID, selectedEnvironment, selectedAccount, knownWalletSeed);
+        previewService.initSuperProvider(IFRAME_ID, selectedEnvironment, selectedAccount, knownWalletSeed, notifyTx);
         previewService.superProvider.attachListener();
     }
 

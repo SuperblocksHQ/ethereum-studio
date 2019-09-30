@@ -44,8 +44,6 @@ export function createDeployFile(buildFiles: IProjectItem[], contractArgs: any[]
         throw new Error('Cannot parse .abi file');
     }
 
-    console.log(contractArgs);
-
     const binFileCode = getFileCode(buildFiles, '.bin');
     const contract = window.web3.eth.contract(parsedABI);
     const args = contractArgs.concat([{ data: binFileCode }]);
