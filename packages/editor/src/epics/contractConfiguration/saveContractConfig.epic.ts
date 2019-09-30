@@ -48,7 +48,7 @@ export const saveContractConfig = (action$: AnyAction, state$: any) => action$.p
     withLatestFrom(state$),
     switchMap(([action, state]) => {
         const newContractConfig: IContractConfiguration = action.data.contractConfig;
-        const dappFileData = state.projects.dappfileData;
+        const dappFileData = state.projects.dappFileData;
         const dappFileItem: Nullable<IProjectItem> = findItemByPath(state.explorer.tree, [ 'dappfile.json' ], ProjectItemTypes.File);
 
         if (dappFileItem != null) {

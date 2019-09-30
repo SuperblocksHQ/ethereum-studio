@@ -90,7 +90,6 @@ export default class ContractConfigModal extends Component<IProps, IState> {
 
     onNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
-        console.log(value);
         this.setState({
             newContractConfig: {
                 ...this.state.newContractConfig,

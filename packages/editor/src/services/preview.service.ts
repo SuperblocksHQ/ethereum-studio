@@ -51,9 +51,9 @@ export const previewService = {
         window.removeEventListener('message', this.handleMessage);
     },
 
-    initSuperProvider(_iframeId: string, environment: IEnvironment, account: IAccount) {
+    initSuperProvider(_iframeId: string, environment: IEnvironment, account: IAccount, knownWalletSeed: string) {
         iframeId = _iframeId;
-        this.superProvider = new SuperProvider(iframeId, environment, account, (hash: string, endpoint: string) => {
+        this.superProvider = new SuperProvider(iframeId, environment, account, knownWalletSeed, (hash: string, endpoint: string) => {
             const network = Object.keys(Networks).find(key => Networks[key].endpoint === endpoint);
             // TODO - Send Tx to reducer to render it in the UI
             // this.projectItem.getTxLog().addTx({

@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
+import { loadingBarReducer as loadingBar } from 'react-redux-loading-bar';
 import app from './app.reducer';
 import projects from './projects.reducer';
 import settings from './settings.reducer';
@@ -47,6 +48,7 @@ const rehydrated = (state = false, action: AnyAction) => {
 };
 
 export default {
+    loadingBar,
     rehydrated,
     app,
     settings,

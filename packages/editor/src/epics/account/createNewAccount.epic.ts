@@ -28,7 +28,7 @@ export const createNewAccountEpic = (action$: AnyAction, state$: any) => action$
     withLatestFrom(state$),
     switchMap(([, state]) => {
 
-        const dappFileData = state.projects.dappfileData;
+        const dappFileData = state.projects.dappFileData;
         const dappFileItem: Nullable<IProjectItem> = findItemByPath(state.explorer.tree, [ 'dappfile.json' ], ProjectItemTypes.File);
         if (dappFileItem != null) {
             const { accounts } = state.projects;

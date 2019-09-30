@@ -15,12 +15,11 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { projectsActions } from '../actions/projects.actions';
-import { IProjectState, IEnvironment, IAccount } from '../models/state';
+import { IProjectState, IEnvironment } from '../models/state';
 import { AnyAction } from 'redux';
-import { IProjectItem, ProjectItemTypes } from '../models';
+import { IProjectItem } from '../models';
 import { getDappSettings, resolveAccounts } from './dappfileLib';
 import { authActions, accountActions } from '../actions';
-import { findItemByPath } from './explorerLib';
 
 export const initialState: IProjectState = {
     project: {
@@ -32,10 +31,10 @@ export const initialState: IProjectState = {
     environments: [],
     selectedEnvironment: { name: '', endpoint: '' },
     accounts: [],
-    selectedAccount: { name: '', balance: null, address: null, walletName: null, isLocked: false, type: '' },
+    selectedAccount: { name: '', balance: null, address: '0x0', walletName: null, isLocked: false, type: '' },
     openWallets: {},
     metamaskAccounts: [],
-    dappfileData: null,
+    dappFileData: null,
     isOwnProject: false
 };
 
@@ -61,7 +60,7 @@ export default function projectsReducer(state = initialState, action: AnyAction,
             let selectedAccount = state.selectedAccount;
 
             if (selectedEnvironment.name) {
-                accounts = resolveAccounts(state.dappfileData, selectedEnvironment.name, state.openWallets, state.metamaskAccounts);
+                accounts = resolveAccounts(state.dappFileData, selectedEnvironment.name, state.openWallets, state.metamaskAccounts);
                 selectedAccount = accounts.find(a => a.name === state.selectedAccount.name) || initialState.selectedAccount;
             }
             return {
@@ -77,7 +76,7 @@ export default function projectsReducer(state = initialState, action: AnyAction,
             const metamaskAccounts = action.data;
 
             if (state.selectedEnvironment.name) {
-                accounts = resolveAccounts(state.dappfileData, state.selectedEnvironment.name, state.openWallets, metamaskAccounts);
+                accounts = resolveAccounts(state.dappFileData, state.selectedEnvironment.name, state.openWallets, metamaskAccounts);
                 selectedAccount = accounts.find(a => a.name === state.selectedAccount.name) || initialState.selectedAccount;
             }
             return {
@@ -115,7 +114,7 @@ export default function projectsReducer(state = initialState, action: AnyAction,
                     [action.data.name]: action.data.addresses
                 }
             };
-        case projectsActions.LOAD_PROJECT: {
+        case projectsActions.LOAD_PROJECT_REQUEST: {
             return {
                 ...state,
                 isProjectLoading: true
@@ -126,7 +125,7 @@ export default function projectsReducer(state = initialState, action: AnyAction,
             let stateChange = {
                 environments: initialState.environments,
                 selectedEnvironment: initialState.selectedEnvironment,
-                dappfileData: null
+                dappFileData: null
             };
 
             // parse dappjson file to get environment
@@ -223,7 +222,7 @@ export default function projectsReducer(state = initialState, action: AnyAction,
             const { updatedDappFileData } = action.data;
             let stateChange = {
                 accounts: state.accounts,
-                dappfileData: state.dappfileData
+                dappFileData: state.dappFileData
             };
 
             // parse dappjson file to get environment

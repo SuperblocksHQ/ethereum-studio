@@ -27,7 +27,7 @@ export const deleteAccountEpic = (action$: AnyAction, state$: any) => action$.pi
     withLatestFrom(state$),
     switchMap(([action, state]) => {
         const accountName = action.data.accountName;
-        const dappFileData = state.projects.dappfileData;
+        const dappFileData = state.projects.dappFileData;
         const dappFileItem: Nullable<IProjectItem> = findItemByPath(state.explorer.tree, [ 'dappfile.json' ], ProjectItemTypes.File);
 
         if (dappFileItem != null) {
