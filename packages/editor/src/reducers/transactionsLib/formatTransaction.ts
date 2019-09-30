@@ -1,0 +1,43 @@
+// Copyright 2019 Superblocks AB
+
+// This file is part of Superblocks Lab.
+
+// Superblocks Lab is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation version 3 of the License.
+
+// Superblocks Lab is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+
+// You should have received a copy of the GNU General Public License
+// along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
+
+import { ITransaction, TransactionType } from '../../models';
+import { IAccount } from '../../models/state';
+import { projectSelectors } from '../../selectors';
+
+export function formatTransaction(state: any, transactionType: TransactionType, hash?: string, res?: any, contractName?: string, tx?: any): ITransaction {
+    const account: IAccount = projectSelectors.getSelectedAccount(state);
+    const networkSettings = state.settings.preferences.network;
+
+    return  {
+        hash: hash || '',
+        index: res ? res.receipt.transactionIndex : 'n/a',
+        type: transactionType,
+        contractName: contractName || '',
+        constructorArgs: [], // TODO: Add args
+        createdAt: Date.now(),
+        blockNumber: res ? res.receipt.blockNumber : 'n/a',
+        from: account.address,
+        to: res ? res.receipt.contractAddress : '',
+        network: res ? res.environment : '',
+        origin: 'Superblocks',
+        value: 0,
+        gasUsed: res ? res.receipt.gasUsed : 0,
+        status: res ? Number(res.receipt.status) : null,
+        gasLimit: networkSettings.gasLimit,
+        gasPrice: networkSettings.gasPrice
+    };
+}

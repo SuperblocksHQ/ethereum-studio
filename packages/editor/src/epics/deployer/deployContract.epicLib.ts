@@ -26,30 +26,6 @@ import Networks from '../../networks';
 import { IAccount } from '../../models/state';
 import { TransactionType, ITransaction } from '../../models';
 
-function formatTransaction(state: any, hash?: string, res?: any, contractName?: string, tx?: any): ITransaction {
-    const account: IAccount = projectSelectors.getSelectedAccount(state);
-    const networkSettings = state.settings.preferences.network;
-
-    return  {
-        hash: hash || '',
-        index: res ? res.receipt.transactionIndex : 'n/a',
-        type: TransactionType.Deploy,
-        contractName: contractName || '',
-        constructorArgs: [], // TODO: Add args
-        createdAt: Date.now(),
-        blockNumber: res ? res.receipt.blockNumber : 'n/a',
-        from: account.address,
-        to: res ? res.receipt.contractAddress : '',
-        network: res ? res.environment : '',
-        origin: 'Superblocks',
-        value: 0,
-        gasUsed: res ? res.receipt.gasUsed : 0,
-        status: res ? Number(res.receipt.status) : null,
-        gasLimit: networkSettings.gasLimit,
-        gasPrice: networkSettings.gasPrice
-    };
-}
-
 function finalizeDeploy(state: any, deployRunner: DeployRunner, hash: string, outputPath: string[], isNewTransaction: boolean, tx?: any) {
     return deployRunner.waitForContract(hash).pipe(
         mergeMap((o: any) => {
@@ -59,11 +35,10 @@ function finalizeDeploy(state: any, deployRunner: DeployRunner, hash: string, ou
                 const res = <IDeployResult>o;
                 analytics.logEvent('CONTRACT_DEPLOYED', res.environment);
                 const files = res.files.map(f => createFile(f.name, f.code));
-                const transaction: ITransaction = formatTransaction(state, hash, res, res.contractName, tx);
                 return of<any>(
                     explorerActions.createPathWithContent(outputPath, files),
                     deployerActions.deploySuccess(files),
-                    isNewTransaction ? transactionsActions.addTransaction(transaction) : transactionsActions.updateTransaction(transaction)
+                    isNewTransaction ? transactionsActions.addTransaction(TransactionType.Deploy, hash, res, res.contractName, tx) : transactionsActions.updateTransaction(TransactionType.Deploy, hash, res, res.contractName, tx)
                 );
             }
         }),
@@ -82,7 +57,7 @@ export function doDeployExternally(state: any, deployRunner: DeployRunner) {
             concat(
                 of(outputLogActions.addRows([ result ])),
                 of(deployerActions.hideExternalProviderInfo()),
-                of(transactionsActions.addTransaction(formatTransaction(state, result.hash, null, result.contractName))),
+                of(transactionsActions.addTransaction(TransactionType.Deploy, result.hash, null, result.contractName)),
                 finalizeDeploy(state, deployRunner, result.hash, state.deployer.outputPath, false)
             )
         ),

@@ -158,21 +158,6 @@ export default class SuperProvider {
                 sendIframeMessage(err, null);
                 return;
             }
-            // const accounts = this.projectItem.getHiddenItem('accounts');
-            // const account = accounts.getByName(accountName);
-
-            // const env = this.getCurrentEnv();
-            // const walletName = account.getWallet(env);
-
-            // const wallets = this.projectItem.getHiddenItem('wallets');
-            // const wallet = wallets.getByName(walletName);
-
-            // if (!wallet) {
-            //     const err = 'Wallet not found.';
-            //     alert(err);
-            //     callback(err, null);
-            //     return;
-            // }
             if (this.selectedAccount.type === 'metamask') {
                 if (data.endpoint.toLowerCase() === 'http://superblocks-browser') {
                     const err = 'External/Metamask account cannot be used for the in-browser blockchain.';

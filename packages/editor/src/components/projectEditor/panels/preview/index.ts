@@ -19,7 +19,8 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
 import { projectSelectors, previewSelectors, accountSelectors } from '../../../../selectors';
-import { previewActions } from '../../../../actions';
+import { previewActions, transactionsActions } from '../../../../actions';
+import { TransactionType } from '../../../../models';
 
 const mapStateToProps = (state: any) => ({
     project: projectSelectors.getProject(state),
@@ -46,6 +47,9 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
         },
         onHideModals: () => {
             // dispatch(outputLogActions.clearOutputLog());
+        },
+        notifyTx: (transactionType: TransactionType, hash: string) => {
+            dispatch(transactionsActions.addTransaction(transactionType, hash));
         },
         refreshContent: () => {
             dispatch(previewActions.refreshContent());

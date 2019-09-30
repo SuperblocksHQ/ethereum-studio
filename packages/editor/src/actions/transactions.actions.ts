@@ -14,21 +14,25 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { ITransaction } from '../models';
+import { TransactionType } from '../models';
 
 export const transactionsActions = {
     ADD_TRANSACTION: 'ADD_TRANSACTION',
-    addTransaction(transaction: ITransaction) {
+    addTransaction(transactionType: TransactionType, hash?: string, res?: any, contractName?: string, tx?: any) {
         return {
             type: transactionsActions.ADD_TRANSACTION,
-            data: { transaction }
+            data: {
+                transactionType, hash, res, contractName, tx
+            }
         };
     },
     UPDATE_TRANSACTION: 'UPDATE_TRANSACTION',
-    updateTransaction(transaction: ITransaction) {
+    updateTransaction(transactionType: TransactionType, hash?: string, res?: any, contractName?: string, tx?: any) {
         return {
             type: transactionsActions.UPDATE_TRANSACTION,
-            data: { transaction }
+            data: {
+                transactionType, hash, res, contractName, tx
+            }
         };
     },
 };

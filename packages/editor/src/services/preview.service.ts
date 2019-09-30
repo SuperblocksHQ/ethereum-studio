@@ -17,6 +17,7 @@
 import SuperProvider from '../components/superProvider';
 import Networks from '../networks';
 import { IEnvironment, IAccount } from '../models/state';
+import { TransactionType } from '../models';
 
 // let exportableDappHtml: string;
 let iframeId: string;
@@ -51,16 +52,11 @@ export const previewService = {
         window.removeEventListener('message', this.handleMessage);
     },
 
-    initSuperProvider(_iframeId: string, environment: IEnvironment, account: IAccount, knownWalletSeed: string) {
+    initSuperProvider(_iframeId: string, environment: IEnvironment, account: IAccount, knownWalletSeed: string, notifyTx: (transactionType: TransactionType, hash: string) => void) {
         iframeId = _iframeId;
         this.superProvider = new SuperProvider(iframeId, environment, account, knownWalletSeed, (hash: string, endpoint: string) => {
-            const network = Object.keys(Networks).find(key => Networks[key].endpoint === endpoint);
-            // TODO - Send Tx to reducer to render it in the UI
-            // this.projectItem.getTxLog().addTx({
-            //     hash: hash,
-            //     context: 'Contract interaction',
-            //     network
-            // });
+            // TODO - const network = Object.keys(Networks).find(key => Networks[key].endpoint === endpoint);
+            notifyTx(TransactionType.Preview, hash);
         });
     },
 
