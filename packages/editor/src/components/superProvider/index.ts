@@ -104,6 +104,7 @@ export default class SuperProvider {
                     console.log(err);
                     reject('Problem calling the provider async call');
                 }
+                console.log(result);
                 resolve(result);
             }));
         });

@@ -18,25 +18,27 @@ import { ITransaction, TransactionType } from '../../models';
 import { IAccount } from '../../models/state';
 import { projectSelectors } from '../../selectors';
 
-export function formatTransaction(state: any, transactionType: TransactionType, hash?: string, res?: any, contractName?: string, tx?: any): ITransaction {
+export function formatTransaction(state: any, transactionType: TransactionType, hash?: string, environment?: string, receipt?: any, contractName?: string, tx?: any): ITransaction {
     const account: IAccount = projectSelectors.getSelectedAccount(state);
     const networkSettings = state.settings.preferences.network;
 
+    console.log('Environment: ' + environment);
+
     return  {
         hash: hash || '',
-        index: res ? res.receipt.transactionIndex : 'n/a',
+        index: receipt ? receipt.transactionIndex : 'n/a',
         type: transactionType,
         contractName: contractName || '',
         constructorArgs: [], // TODO: Add args
         createdAt: Date.now(),
-        blockNumber: res ? res.receipt.blockNumber : 'n/a',
+        blockNumber: receipt ? receipt.blockNumber : 'n/a',
         from: account.address,
-        to: res ? res.receipt.contractAddress : '',
-        network: res ? res.environment : '',
+        to: (receipt && receipt.contractAddress) ? receipt.contractAddress : (tx && tx.to) ? tx.to : '',
+        network: environment ? environment : '',
         origin: 'Superblocks',
         value: 0,
-        gasUsed: res ? res.receipt.gasUsed : 0,
-        status: res ? Number(res.receipt.status) : null,
+        gasUsed: receipt ? receipt.gasUsed : 0,
+        status: receipt ? Number(receipt.status) : null,
         gasLimit: networkSettings.gasLimit,
         gasPrice: networkSettings.gasPrice
     };

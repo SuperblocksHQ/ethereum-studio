@@ -18,21 +18,28 @@ import { TransactionType } from '../models';
 
 export const transactionsActions = {
     ADD_TRANSACTION: 'ADD_TRANSACTION',
-    addTransaction(transactionType: TransactionType, hash?: string, res?: any, contractName?: string, tx?: any) {
+    addTransaction(transactionType: TransactionType, hash?: string, environment?: string, receipt?: any, contractName?: string, tx?: any) {
         return {
             type: transactionsActions.ADD_TRANSACTION,
             data: {
-                transactionType, hash, res, contractName, tx
+                transactionType, hash, environment, receipt, contractName, tx
             }
         };
     },
     UPDATE_TRANSACTION: 'UPDATE_TRANSACTION',
-    updateTransaction(transactionType: TransactionType, hash?: string, res?: any, contractName?: string, tx?: any) {
+    updateTransaction(transactionType: TransactionType, hash?: string, environment?: string, receipt?: any, contractName?: string, tx?: any) {
         return {
             type: transactionsActions.UPDATE_TRANSACTION,
             data: {
-                transactionType, hash, res, contractName, tx
+                transactionType, hash, environment, receipt, contractName, tx
             }
+        };
+    },
+    UPDATE_TRANSACTION_FAIL: 'UPDATE_TRANSACTION_FAIL',
+    updateTransactionFail(error: any) {
+        return {
+            type: transactionsActions.UPDATE_TRANSACTION_FAIL,
+            data: error
         };
     },
 };
