@@ -32,14 +32,14 @@ export const updateDappfileEpic = (action$: AnyAction, state$: any) => action$.p
     withLatestFrom(state$),
     switchMap(([, state]) => {
         const files = state.explorer.tree;
-        const dappFileData: any = {...state.projects.dappfileData};
+        const dappFileData = state.projects.dappFileData;
         const dappFileItem: Nullable<IProjectItem> = findItemByPath(files, [ 'dappfile.json' ], ProjectItemTypes.File);
 
         if (dappFileItem !== null) {
             const newContracts: IContractConfiguration[] = [];
             traverseTree(files, (item, path) => {
                 if (isSolitidyFile(item)) {
-                    if (!newContracts.find((contract: IContractConfiguration) => contract.name === item.name.replace('.sol', ''))) {
+                    if (!newContracts.find((contract: IContractConfiguration) => (contract.name === item.name.replace('.sol', '') && contract.source === pathToString(path())) )) {
                         const newContract = {
                             source: pathToString(path()),
                             name: item.name.replace('.sol', ''),
