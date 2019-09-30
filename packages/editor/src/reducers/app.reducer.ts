@@ -20,7 +20,7 @@ import { appActions } from '../actions';
 export const initialState = {
     version: '1.7.0',
     isEmbeddedMode: false,
-    isEvmReady: false
+    isEvmReady: false,
 };
 
 export default function appReducer(state = initialState, action: AnyAction) {

@@ -34,7 +34,7 @@ interface IState {
     options: {
         hideExplorer: boolean;
         showTransactions: boolean;
-        showPreview: boolean;
+        hidePreview: boolean;
         [key: string]: boolean;
     };
 }
@@ -46,7 +46,7 @@ export default class ShareModal extends React.Component<IProps, IState> {
         options: {
             hideExplorer: false,
             showTransactions: false,
-            showPreview: false,
+            hidePreview: false
         }
     };
 
@@ -80,7 +80,7 @@ export default class ShareModal extends React.Component<IProps, IState> {
     }
 
     RenderOptions = () => {
-        const { hideExplorer, showTransactions, showPreview } = this.state.options;
+        const { hideExplorer, showTransactions, hidePreview } = this.state.options;
 
         return(
             <div className={style.innerContent}>
@@ -129,9 +129,9 @@ export default class ShareModal extends React.Component<IProps, IState> {
                 <div className={classNames([style.inputContainer, style.optionInput])}>
                     <p>Show Preview</p>
                     <Switch
-                        checked={showPreview}
+                        checked={!hidePreview}
                         onChange={() => {
-                                this.setState({options: { ...this.state.options, showPreview: !showPreview, showTransactions: false }}, () => {
+                                this.setState({options: { ...this.state.options, hidePreview: !hidePreview, showTransactions: false }}, () => {
                                         this.updateUrl();
                                     }
                                 );
