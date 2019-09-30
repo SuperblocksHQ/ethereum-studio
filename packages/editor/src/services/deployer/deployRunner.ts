@@ -57,7 +57,7 @@ export class DeployRunner {
             if (existingDeployFile === this.deployFile) {
                 return from(this.getInputByTx(txhash)).pipe(
                     map((input) => (input === this.deployFile)
-                        ? { msg: 'Contract on chain is the same, not redeploying.\nDone.', channel: 1, result: CheckDeployResult.AlreadyDeployed }
+                        ? { msg: 'Contract on chain is the same, not redeploying.\nDone.', channel: 3, result: CheckDeployResult.AlreadyDeployed }
                         : { msg:  'Contract on chain is different, redeploying.', channel: 1, result: CheckDeployResult.CanDeploy }
                     ),
                     catchError(() => of({ msg: 'Contract not found at address, redeploying..', result: CheckDeployResult.CanDeploy }))

@@ -66,9 +66,6 @@ const getTxObject$ = (currWeb3: any, hash: string) => {
 function waitForContract(hash: string, selectedAccount: IAccount, environment: IEnvironment) {
     const currWeb3 = selectedAccount.type === 'metamask' ? window.web3 : getWeb3(environment.endpoint);
     return zip(getTxObject$(currWeb3, hash), getReceipt$(currWeb3, hash));
-        // .pipe(
-        //     tap(([txObject, receipt]) => console.log('Hola + ' + JSON.stringify(txObject) + '\n' + JSON.stringify(receipt))),
-        // );
 }
 
 export const updateTransactionStateEpic: Epic = (action$: any, state$: any) => action$.pipe(
