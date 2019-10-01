@@ -18,7 +18,7 @@ import React from 'react';
 // import style from './style.less';
 import { IRawAbiDefinition, Type } from '../../../../../../models';
 import { Constant } from './types/Constant';
-import { Function } from './types/Function';
+import { Transaction } from './types/Transaction';
 
 interface IProps {
     abi: IRawAbiDefinition[];
@@ -32,7 +32,7 @@ export class AbiItemList extends React.Component<IProps> {
                         data={rawAbiDefinition}
                     />;
         } else if (rawAbiDefinition.type === Type.Function) {
-            return <Function
+            return <Transaction
                         data={rawAbiDefinition}
                     />;
         } else {
@@ -47,7 +47,6 @@ export class AbiItemList extends React.Component<IProps> {
                 { abi.map((rawAbiDefinition) => {
                     return (
                             <div key={rawAbiDefinition.name}>
-                                <div>{rawAbiDefinition.name}</div>
                                 { this.renderAbiDefinition(rawAbiDefinition) }
                             </div>
                         );

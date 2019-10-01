@@ -30,7 +30,7 @@ export class Constant extends React.Component<IProps> {
         const { data } = this.props;
         return (
             <div className={style.container}>
-                <StyledButton type={StyledButtonType.Primary} text={data.name} />
+                <StyledButton type={StyledButtonType.Constant} text={data.name} />
             </div>
         );
     }

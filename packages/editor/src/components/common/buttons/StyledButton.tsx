@@ -48,6 +48,15 @@ export const StyledButton = (props: IProps) => {
         case StyledButtonType.Danger:
             clsBtn = style.dangerButton;
             break;
+        case StyledButtonType.Constant:
+            clsBtn = style.constantButton;
+            break;
+        case StyledButtonType.Transaction:
+            clsBtn = style.transactionButton;
+            break;
+        case StyledButtonType.Payable:
+            clsBtn = style.payableButton;
+            break;
         default:
             break;
     }

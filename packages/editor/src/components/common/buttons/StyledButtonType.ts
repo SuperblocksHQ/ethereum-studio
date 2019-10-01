@@ -18,4 +18,7 @@ export enum StyledButtonType {
     Primary,
     Secondary,
     Danger,
+    Constant,
+    Transaction,
+    Payable
 }

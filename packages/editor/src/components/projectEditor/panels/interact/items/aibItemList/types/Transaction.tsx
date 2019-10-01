@@ -24,7 +24,7 @@ interface IProps {
     data: IRawAbiDefinition;
 }
 
-export class Function extends React.Component<IProps> {
+export class Transaction extends React.Component<IProps> {
 
     renderPlaceHolder(inputs: IRawAbiParameter[]) {
         const placeholder: string[] = [];
@@ -35,7 +35,7 @@ export class Function extends React.Component<IProps> {
         const { data } = this.props;
         return (
             <div className={style.container}>
-                <StyledButton type={StyledButtonType.Primary} text={data.name} />
+                <StyledButton type={StyledButtonType.Transaction} text={data.name} />
                 <TextInput
                     id='name'
                     // onChangeText={this.onNameChange}
