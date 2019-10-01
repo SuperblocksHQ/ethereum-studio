@@ -38,7 +38,7 @@ export default function contractConfigReducer(state = initialState, action: AnyA
 
             const contractSource = getItemPath(tree, file);
             const contractConfiguration = findContractConfiguration(dappFileData, contractSource);
-            const otherContracts = dappFileData.contracts.find((contract: any) => contract.source !== contractSource);
+            const otherContracts = dappFileData.contracts.map((contract: any) => contract.source !== contractSource);
 
             return {
                 ...state,
