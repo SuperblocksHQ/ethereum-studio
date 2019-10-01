@@ -14,10 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export const viewSelectors = {
-    getShowTopBarSelectedProjectName: state => state.view.showTopBarSelectedProjectName,
-    getShowTopBarOpenInLab: state => state.view.showTopBarOpenInLab,
-}
+import { updateTransactionStateEpic } from './updateTransactionState.epic';
 
-
-
+export const transactionEpics = [
+    updateTransactionStateEpic
+];

@@ -19,6 +19,7 @@ import Networks from '../networks';
 import { AnyAction } from 'redux';
 import { findItemByPath } from './explorerLib';
 import { ProjectItemTypes, IProjectItem } from '../models';
+import { projectSelectors } from '../selectors';
 
 const initialState = {
     showNoExportableContentModal: false,
@@ -74,20 +75,23 @@ export default function previewReducer(state = initialState, action: AnyAction, 
         case previewActions.REFRESH_CONTENT:
             let htmlToRender;
             const tree = rootState.explorer.tree;
+            const addresses = [projectSelectors.getSelectedAccount(rootState).address];
 
-            // TODO
-            const addresses = [''];
             const html = findItemByPath(tree, [ 'app', 'app.html' ], ProjectItemTypes.File);
             const css = findItemByPath(tree, [ 'app', 'app.css' ], ProjectItemTypes.File);
             const js = findItemByPath(tree, [ 'app', 'app.js' ], ProjectItemTypes.File);
 
-            const contractFiles: [IProjectItem] = rootState.deployer.deployFiles.filter(((file: IProjectItem) => file.name.includes(`${rootState.projects.selectedEnvironment.name}.js`)));
             let contractJs = '';
-            for (const file of contractFiles) {
-                contractJs += file.code + '\n';
+            const contractListFolder = findItemByPath(tree, [ 'build', 'contracts' ], ProjectItemTypes.Folder);
+            if (contractListFolder && contractListFolder.children.length > 0) {
+                for (const contractFolder of contractListFolder.children) {
+                    const contractFiles = contractFolder.children.filter((file) => file.name.includes(`${rootState.projects.selectedEnvironment.name}.js`));
+                    for (const file of contractFiles) {
+                        contractJs += file.code + '\n';
+                    }
+                }
             }
 
-            // TODO - Improve all this to make sure we can render
             if ((html === null || css === null || js === null || !html.code || !css.code || !js.code)) {
                 htmlToRender = errorHtml('There was an error rendering your project');
             } else {

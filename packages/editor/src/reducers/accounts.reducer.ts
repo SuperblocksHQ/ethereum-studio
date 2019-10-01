@@ -16,11 +16,12 @@
 
 import { accountActions } from '../actions';
 import { AnyAction } from 'redux';
-import { IAccountConfigState } from '../models/state';
+import { IAccountState } from '../models/state';
 
-export const initialState: IAccountConfigState =  {
+export const initialState: IAccountState =  {
     showAccountConfig: false,
-    selectedAccount: undefined
+    selectedAccount: undefined,
+    knownWalletSeed: 'butter toward celery cupboard blind morning item night fatal theme display toy'
 };
 
 export default function accountsReducer(state = initialState, action: AnyAction, rootState: any) {

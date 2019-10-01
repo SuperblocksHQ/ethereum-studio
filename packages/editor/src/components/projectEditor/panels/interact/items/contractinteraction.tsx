@@ -648,3 +648,5 @@
 // };
 
 // export default connect(mapStateToProps, mapDispatchToProps)(ContractInteraction);
+
+export const foo = 'foo';

@@ -16,14 +16,14 @@
 
 export enum TransactionType {
     Deploy = 'Deploy',
-    TransactionInteract = 'Transaction Interact',
-    TransactionPreview = 'Transaction Preview'
+    Interact = 'Interact',
+    Preview = 'Preview'
 }
 
 export interface ITransaction {
     hash: string;
     index: number;
-    type: TransactionType.Deploy;
+    type: TransactionType;
     status: number | null;
     contractName: string | null;
     constructorArgs: [];

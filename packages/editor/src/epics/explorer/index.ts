@@ -19,11 +19,13 @@ import { createItemEpic } from './createItem.epic';
 import { deleteItemEpic } from './deleteItem.epic';
 import { importFilesEpic } from './importFiles.epic';
 import { moveItemEpic } from './moveItem.epic';
+import { updateEntireTreeEpic } from './updateEntireTree.epic';
 
 export const explorerEpics = [
     renameItemEpic,
     createItemEpic,
     deleteItemEpic,
     importFilesEpic,
-    moveItemEpic
+    moveItemEpic,
+    updateEntireTreeEpic
 ];

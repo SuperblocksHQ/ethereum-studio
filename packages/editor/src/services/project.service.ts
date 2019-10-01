@@ -14,9 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 import { fetchJSON } from './utils/fetchJson';
-import { switchMap, map, tap } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs/operators';
 import { IProject } from '../models';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, of } from 'rxjs';
 
 export const projectService = {
 
@@ -54,7 +54,7 @@ export const projectService = {
             method: 'PUT',
             body: data
         }).pipe(
-            switchMap(r => (r.ok ? r.statusText : throwError(r.statusText)))
+            switchMap(r => of((r.ok ? r.statusText : throwError(r.statusText))))
         );
     },
 

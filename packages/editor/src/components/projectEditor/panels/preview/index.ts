@@ -18,8 +18,9 @@ import { Preview } from './Preview';
 import { connect } from 'react-redux';
 import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
-import { projectSelectors, previewSelectors } from '../../../../selectors';
-import { previewActions } from '../../../../actions';
+import { projectSelectors, previewSelectors, accountSelectors } from '../../../../selectors';
+import { previewActions, transactionsActions } from '../../../../actions';
+import { TransactionType } from '../../../../models';
 
 const mapStateToProps = (state: any) => ({
     project: projectSelectors.getProject(state),
@@ -30,6 +31,7 @@ const mapStateToProps = (state: any) => ({
     selectedEnvironment: projectSelectors.getSelectedEnvironment(state),
     selectedAccount: projectSelectors.getSelectedAccount(state),
     htmlToRender: previewSelectors.getHtmlToRender(state),
+    knownWalletSeed: accountSelectors.getKnownWalletSeed(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
@@ -45,6 +47,9 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
         },
         onHideModals: () => {
             // dispatch(outputLogActions.clearOutputLog());
+        },
+        notifyTx: (transactionType: TransactionType, hash: string) => {
+            dispatch(transactionsActions.addTransaction(transactionType, hash));
         },
         refreshContent: () => {
             dispatch(previewActions.refreshContent());

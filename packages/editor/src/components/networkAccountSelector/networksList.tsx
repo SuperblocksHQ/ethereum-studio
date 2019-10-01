@@ -17,31 +17,30 @@
 import React from 'react';
 import classnames from 'classnames';
 import style from './style.less';
-import { INetwork } from '../../models';
+import { IEnvironment } from '../../models/state';
 
 interface IProps {
-    selectedNetwork: string;
-    networks: [INetwork];
+    selectedEnvName: string;
+    environments: [IEnvironment];
     onNetworkSelected: (name: string) => void;
 }
 
 export function NetworksList(props: IProps) {
-    console.log(props.networks);
-    const renderedNetworks = props.networks.map(network => {
+    const renderedNetworks = props.environments.map(env => {
         const cls = {
-            [style.networkLinkChosen]: network.name === props.selectedNetwork
+            [style.networkLinkChosen]: env.name === props.selectedEnvName
         };
 
         return (
             <div
-                key={network.name}
+                key={env.name}
                 onClick={e => {
                     e.preventDefault();
-                    props.onNetworkSelected(network.name);
+                    props.onNetworkSelected(env.name);
                 }}
                 className={classnames(style.networkLink, style.capitalize, cls)}
             >
-                {network.name}
+                {env.name}
             </div>
         );
     });

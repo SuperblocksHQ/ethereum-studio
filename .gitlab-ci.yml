@@ -8,9 +8,9 @@ variables:
 
 push to docker registry dev:
     stage: build_dev
-    image: docker:latest
+    image: docker:18.09.7
     services:
-      - docker:dind
+      - docker:18.09.7-dind
     script:
       - echo $CI_REGISTRY
       - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY

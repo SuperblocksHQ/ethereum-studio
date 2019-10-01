@@ -21,7 +21,7 @@ export const deployerActions = {
     deployContract(item: IProjectItem) {
         return {
             type: deployerActions.DEPLOY_CONTRACT,
-            data: item
+            data: { item }
         };
     },
 

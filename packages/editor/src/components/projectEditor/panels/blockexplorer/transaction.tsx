@@ -105,7 +105,7 @@ export class Transaction extends Component<IProps, IState> {
         } else {
             return (
                 <div className={style.header}>
-                    <div className={style.title}>Transaction</div>
+                    <div className={style.title}>{type}</div>
                     {this._renderStatus()}
                 </div>
             );

@@ -1,16 +1,16 @@
 // Copyright 2019 Superblocks AB
-// 
+//
 // This file is part of Superblocks Lab.
-// 
+//
 // Superblocks Lab is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation version 3 of the License.
-// 
+//
 // Superblocks Lab is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -26,6 +26,15 @@ export function getFileCode(files: IProjectItem[], name: string) {
     return file.code as string;
 }
 
+// TODO - Make sure the above function is actually functional
+// export function getFileCode(files: IProjectItem[], name: string) {
+//     const file = files.find(f => f.name.toLowerCase() === name.toLowerCase());
+//     if (!file) {
+//         return '';
+//     }
+//     return file.code as string;
+// }
+
 export function createDeployFile(buildFiles: IProjectItem[], contractArgs: any[]): string {
     let parsedABI;
     try {
@@ -36,7 +45,6 @@ export function createDeployFile(buildFiles: IProjectItem[], contractArgs: any[]
     }
 
     const binFileCode = getFileCode(buildFiles, '.bin');
-
     const contract = window.web3.eth.contract(parsedABI);
     const args = contractArgs.concat([{ data: binFileCode }]);
 
@@ -50,7 +58,6 @@ export function createDeployFile(buildFiles: IProjectItem[], contractArgs: any[]
     }
 
     if (deployFileCode == null || (deployFileCode === binFileCode && contractArgs.length > 0)) {
-        // Error
         throw new Error('Constructor arguments given are not valid. Too many/few or wrong types. ' + error);
     }
 

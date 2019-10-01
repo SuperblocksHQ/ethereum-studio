@@ -18,19 +18,19 @@ import { IProjectItem } from '../../models';
 import { Observable, throwError, of, from, Observer } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { getWeb3, convertGas } from '../utils';
-import { IEnvironment } from '../../models/state';
-import { IDeployAccount, ICheckDeployResult, IDeployResult, CheckDeployResult } from './deploy.models';
+import { IAccount, IEnvironment } from '../../models/state';
+import { ICheckDeployResult, IDeployResult, CheckDeployResult } from './deploy.models';
 import { createDeployFile, getFileCode, signTransaction } from './deploy.utils';
 
 export class DeployRunner {
     private readonly currWeb3: any;
-    private readonly account: IDeployAccount;
+    private readonly account: IAccount;
     private readonly environment: IEnvironment;
     private readonly contractName: string;
     private deployFile: string = '';
     private abiFile: string = '';
 
-    constructor(account: IDeployAccount, environment: IEnvironment, contractName: string) {
+    constructor(account: IAccount, environment: IEnvironment, contractName: string) {
         this.account = account;
         this.environment = environment;
         this.contractName = contractName;
@@ -57,7 +57,7 @@ export class DeployRunner {
             if (existingDeployFile === this.deployFile) {
                 return from(this.getInputByTx(txhash)).pipe(
                     map((input) => (input === this.deployFile)
-                        ? { msg: 'Contract on chain is the same, not redeploying.\nDone.', channel: 1, result: CheckDeployResult.AlreadyDeployed }
+                        ? { msg: 'Contract on chain is the same, not redeploying.\nDone.', channel: 3, result: CheckDeployResult.AlreadyDeployed }
                         : { msg:  'Contract on chain is different, redeploying.', channel: 1, result: CheckDeployResult.CanDeploy }
                     ),
                     catchError(() => of({ msg: 'Contract not found at address, redeploying..', result: CheckDeployResult.CanDeploy }))
@@ -182,7 +182,7 @@ export class DeployRunner {
                     address: "${contractAddress}",
                     network: "${this.environment.name}",
                     endpoint: "${this.environment.endpoint}",
-                    abi: "${this.abiFile}"
+                    abi: ${this.abiFile}
                 };
                 Contracts["${this.contractName}"] = data;
                 console.log(data);

@@ -15,12 +15,13 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { AnyAction } from 'redux';
-import { IExplorerState } from '../models/state';
+import { IExplorerState, IProjectState } from '../models/state';
 import { findItemById, findItemByPath } from './explorerLib';
 import { getCompilerOutputPath as getContractBuildPath } from './compilerLib';
 import { ProjectItemTypes, IProjectItem } from '../models';
 import sha256 from 'crypto-js/sha256';
 import { deployerActions } from '../actions';
+import { normalizeContractArgs, getContractArguments } from './deployerLib';
 
 const initialState = {
     isRunning: false,
@@ -47,7 +48,7 @@ function isCompilationFresh(buildFiles: IProjectItem[], contractItem: IProjectIt
     return sha256(contractItem.code || '').toString() === hashFile.code;
 }
 
-export default function deployerReducer(state = initialState, action: AnyAction, { explorer }: { explorer: IExplorerState }) {
+export default function deployerReducer(state = initialState, action: AnyAction, { explorer, projects }: { explorer: IExplorerState, projects: IProjectState }) {
     switch (action.type) {
         case deployerActions.DEPLOY_CONTRACT: {
             if (!explorer.tree) {
@@ -57,11 +58,15 @@ export default function deployerReducer(state = initialState, action: AnyAction,
                 return { ...state, allowLastDeploy: false };
             }
 
+            const tree = explorer.tree;
+            const item = action.data.item;
+            const dappFileData = projects.dappFileData;
+
             // 1. build arguments
-            // const contractArgs = [];
+            const contractArgs = normalizeContractArgs(getContractArguments(tree, item, dappFileData));
 
             // 2. check if compilation is fresh
-            const findItemResult = findItemById(explorer.tree, action.data.id);
+            const findItemResult = findItemById(explorer.tree, item.id);
             if (!findItemResult.item) {
                 return state;
             }
@@ -83,7 +88,8 @@ export default function deployerReducer(state = initialState, action: AnyAction,
                     allowLastDeploy: true,
                     // we know here that file already exists
                     buildFiles: contractBuildFolder.children,
-                    outputPath
+                    outputPath,
+                    contractArgs
                 };
             }
         }
@@ -91,7 +97,8 @@ export default function deployerReducer(state = initialState, action: AnyAction,
         case deployerActions.DEPLOY_SUCCESS:
             return {
                 ...state,
-                deployFiles: action.data.items !== null ? action.data.items : state.deployFiles
+                deployFiles: action.data.items !== null ? action.data.items : state.deployFiles,
+                isRunning: false
             };
         case deployerActions.DEPLOY_FAIL:
             return { ...initialState };

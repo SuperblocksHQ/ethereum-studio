@@ -1,4 +1,4 @@
-// Copyright 2018 Superblocks AB
+// Copyright 2019 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -14,14 +14,4 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export const projectSelectors = {
-    getEnvironments: state => state.projects.environments,
-    getAccounts: state => state.projects.accounts,
-    getSelectedEnvironment: state => state.projects.selectedEnvironment,
-    getSelectedAccount: state => state.projects.selectedAccount,
-    getProject: state => state.projects.project,
-    getProjectId: state => state.projects.project.id,
-    getProjectName: state => state.projects.project.name,
-    getLoadingProject: state => state.projects.loadingProject,
-    getIsOwnProject: state => state.projects.isOwnProject
-}
+export * from './formatTransaction';

@@ -148,14 +148,9 @@ a:active,a:focus {
 }
 
 .modal {
-    overflow: hidden;
-    position: absolute;
-    display: block;
-    position: absolute;
-    left: 50%;
-    -webkit-transform: translateX(-50%);
-    transform: translate(-50%);
-    top: 100px;
+    max-height: 100%;
+    max-width: 100%;
+    overflow: auto;
 }
 
 .dropDown {
@@ -408,4 +403,9 @@ a:active,a:focus {
             font-style: italic;
         }
     }
+}
+
+.loading {
+    background-color: @primary-color;
+    height: 2px;
 }

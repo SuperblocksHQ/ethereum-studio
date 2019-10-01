@@ -30,27 +30,27 @@ export default function interactReducer(state = initialState, action: AnyAction)
         //         ...state,
         //         tree: updateItemInTree(state.tree, action.data.id, (i: IProjectItem) => ({ ...i, opened: !i.opened }))[0]
         //     };
-        case transactionsActions.ADD_TRANSACTION:
-            const transaction = <ITransaction> action.data.transaction;
+        // case transactionsActions.ADD_TRANSACTION:
+        //     const transaction = <ITransaction> action.data.transaction;
 
-            if (transaction.type !== TransactionType.Deploy) {
-                return { ...state };
-            }
+        //     if (transaction.type !== TransactionType.Deploy) {
+        //         return { ...state };
+        //     }
 
-            const item = <IDeployedContract> {
-                contractAddress: transaction.to,
-                contractName: transaction.contractName
-            };
+        //     const item = <IDeployedContract> {
+        //         contractAddress: transaction.to,
+        //         contractName: transaction.contractName
+        //     };
 
-            return {
-                ...state,
-                items: [
-                    {...item},
-                    ...state.items,
-                ]
-            };
+        //     return {
+        //         ...state,
+        //         items: [
+        //             {...item},
+        //             ...state.items,
+        //         ]
+        //     };
 
-            // TODO - We would need to update the info in certain cases, per example when re-deploying the same contract to a different address
+        // TODO - We would need to update the info in certain cases, per example when re-deploying the same contract to a different address
         // case transactionsActions.UPDATE_TRANSACTION:
         //     return {
         //         ...state,
