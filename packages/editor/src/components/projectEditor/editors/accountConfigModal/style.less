@@ -18,7 +18,7 @@
 
 .accountConfigModal {
 	display: block;
-	border-radius: 4px;
+	border-radius: 2px;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
     background-color: @modal-background-color;
 	z-index: 2;
@@ -70,7 +70,7 @@
                 }
                 .subtitle {
                     a {
-                        color: #8641F2;
+                        color: @primary-color;
                     }
                 }
                 .networkHeader {
@@ -102,19 +102,19 @@
                                 border-left: 2px solid;
                                 border-color: transparent;
                                 &:hover {
-                                    background-color: rgba(128, 46, 255, 0.22);
+                                    background-color: @primary-color-light-hover;
                                     cursor: pointer;
                                     color: #fff;
-                                    border-color: #7237CF;
+                                    border-color: @primary-color;
                                 }
                                 .networkName {
                                     padding: 0 16px;
                                 }
                             }
                             .active {
-                                background-color: rgba(128, 46, 255, 0.32);
-                                color: #fff;
-                                border-color: #8641F2;
+                                background-color: @primary-color;
+                                color: black;
+                                border-color: @primary-color;
                             }
                         }
                     }

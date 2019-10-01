@@ -68,7 +68,7 @@ export default class ShareModal extends React.Component<IProps, IState> {
     }
 
     getEmbedUrl = () => {
-        return `<iframe src="${this.state.shareUrl}" style="width:960px;height:500px;border:0;border-radius:4px;overflow:hidden;" allowfullscreen="allowfullscreen"></iframe>`;
+        return `<iframe src="${this.state.shareUrl}" style="width:960px;height:500px;border:0;overflow:hidden;" allowfullscreen="allowfullscreen"></iframe>`;
     }
 
     getBtnMdUrl = () => {
@@ -98,7 +98,7 @@ export default class ShareModal extends React.Component<IProps, IState> {
                                 );
                             }
                         }
-                        onColor='#8641F2'
+                        onColor='#6CFFB8'
                         className={style.switch}
                         checkedIcon={false}
                         uncheckedIcon={false}
@@ -118,7 +118,7 @@ export default class ShareModal extends React.Component<IProps, IState> {
                                this.updateUrl();
                            }
                         }
-                        onColor='#8641F2'
+                        onColor='#6CFFB8'
                         className={style.switch}
                         checkedIcon={false}
                         uncheckedIcon={false}
@@ -137,7 +137,7 @@ export default class ShareModal extends React.Component<IProps, IState> {
                                 );
                             }
                         }
-                        onColor='#8641F2'
+                        onColor='#6CFFB8'
                         className={style.switch}
                         checkedIcon={false}
                         uncheckedIcon={false}

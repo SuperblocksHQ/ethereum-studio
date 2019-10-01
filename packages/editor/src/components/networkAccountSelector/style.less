@@ -22,9 +22,9 @@
     color: white;
     margin-left: 4px;
     border: 1px solid #595959;
-    border-radius: 4px;
     margin-top: 8px;
     margin-bottom: 8px;
+    z-index: 3;
     .selector {
         display: flex;
         align-items: center;
@@ -38,7 +38,7 @@
         transition: background .2s;
         height: 100%;
         &:hover {
-            background: @action-color-hover;
+            background: @primary-color-light-hover;
             cursor: pointer;
         }
         &:first-of-type {
@@ -91,16 +91,16 @@
             border-color: transparent;
             margin: 0;
             &:hover {
-                background-color: rgba(128, 46, 255, 0.10);
+                background-color: @primary-color-light-hover;
                 cursor: pointer;
                 color: #fff;
-                border-color: #7237CF;
+                border-color: @primary-color;
             }
         }
         .networkLinkChosen {
-            background-color: rgba(128, 46, 255, 0.32);
-            color: #fff;
-            border-color: #8641F2;
+            background-color: @primary-color !important;
+            color: black !important;
+            border-color: @primary-color;
         }
     }
     .accounts {
@@ -130,19 +130,23 @@
                 max-width: 99%;
             }
             &:hover {
-                background-color: rgba(128, 46, 255, 0.10);
+                background-color: @primary-color-light-hover;
                 cursor: pointer;
                 color: #fff;
-                border-color: #7237CF;
+                border-color: @primary-color;
+                .nameContainer .address {
+                    color: white;
+                }
             }
             .actionsContainer {
                 display: flex;
                 margin-left: auto;
                 button {
-                    color: #c7c7c7;
+                    color: white;
                     font-size: 0.8em;
+                    transition: opacity .15s;
                     &:hover {
-                        color: #fff;
+                        opacity: .6;
                     }
                 }
             }
@@ -159,9 +163,17 @@
 
         }
         .accountLinkChosen {
-            background-color: rgba(128, 46, 255, 0.32);
-            color: #fff;
-            border-color: #8641F2;
+            background-color: @primary-color !important;
+            color: black !important;
+            border-color: @primary-color;
+            .nameContainer .address {
+                color: black !important;
+            }
+            .actionsContainer {
+                button {
+                    color: black;
+                }
+            }
         }
         .newAccount {
             margin-top: 8px;
@@ -169,10 +181,10 @@
             color: #fff;
             display: flex;
             &:hover {
-                background-color: rgba(128, 46, 255, 0.10);
+                background-color: @primary-color-light-hover;
                 cursor: pointer;
                 color: #fff;
-                border-color: #7237CF;
+                border-color: @primary-color;
             }
         }
     }

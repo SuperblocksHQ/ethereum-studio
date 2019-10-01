@@ -26,7 +26,7 @@ interface IProps {
 }
 
 export const ShareDropdownAction = ({ toggleShareModal }: IProps) => (
-    <button className={classNames([style.container, 'btnNoBg'])} onClick={() => toggleShareModal()}>
+    <button className={classNames([style.container, 'btnNoBg', style.action])} onClick={() => toggleShareModal()}>
         <IconShare />
         <span>Share</span>
     </button>

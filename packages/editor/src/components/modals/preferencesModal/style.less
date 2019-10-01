@@ -18,9 +18,9 @@
 
 .preferencesModal {
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
-    -webkit-border-radius: 4;
-    -moz-border-radius: 4;
-    border-radius: 4px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
     background-color: @modal-background-color;
     color: #fff;
 
@@ -50,17 +50,16 @@
                     li {
                         line-height: 40px;
                         padding: 0 20px;
-                        border-radius: 2px;
                         border-left: 2px solid transparent;
                         &:hover {
-                            background-color: @modal-color-hover-purple;
+                            background-color: @primary-color-light-hover;
+                            border-color: @primary-color;
                             cursor: pointer;
-                            color: #fff;
                         }
                     }
                     .selected {
                         background-color: @modal-selected-color;
-                        color: #fff;
+                        color: black;
                         &:hover {
                             background-color: @modal-selected-color;
                             border-color: transparent;
