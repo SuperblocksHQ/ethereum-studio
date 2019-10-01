@@ -42,6 +42,14 @@ export class InteractPanel extends React.Component<IProps> {
     render() {
         const { deployedItems, onToggleTreeItem } = this.props;
 
+        if (deployedItems.length === 0) {
+            return (
+                <div className={style.noContracts}>
+                    <p>No contracts deployed in this network</p>
+                </div>
+            );
+        }
+
         return (
             <div className={ style.treeContainer }>
                 {
