@@ -203,4 +203,25 @@ export const explorerActions = {
             data: { id }
         };
     },
+
+    // ----- DappFile update
+    UPDATE_DAPPFILE: 'UPDATE_DAPPFILE',
+    updateDappfile() {
+        return {
+            type: explorerActions.UPDATE_DAPPFILE
+        };
+    },
+    UPDATE_DAPPFILE_SUCCESS: 'UPDATE_DAPPFILE_SUCCESS',
+    updateDappfileSuccess() {
+        return {
+            type: explorerActions.UPDATE_DAPPFILE_SUCCESS
+        };
+    },
+    UPDATE_DAPPFILE_FAIL: 'UPDATE_DAPPFILE_FAIL',
+    updateDappfileFail(error: any) {
+        return {
+            type: explorerActions.UPDATE_DAPPFILE_FAIL,
+            data: error
+        };
+    },
 };

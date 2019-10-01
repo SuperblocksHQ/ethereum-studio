@@ -45,7 +45,7 @@ export const createItemEpic: Epic = (action$, state$) => action$.pipe(
                     files
                 })
                 .pipe(
-                    switchMap(() => [explorerActions.createItemSuccess()]),
+                    switchMap(() => [explorerActions.createItemSuccess(), explorerActions.updateDappfile()]),
                     catchError(() => [ explorerActions.createItemFail(explorerState.itemNameValidation.itemId) ])
                 );
             } else {

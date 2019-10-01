@@ -20,8 +20,6 @@ import { explorerActions, panesActions, projectsActions } from '../../actions';
 import { projectSelectors } from '../../selectors';
 import { projectService } from '../../services';
 import { updateItemInTree } from '../../reducers/explorerLib';
-import { of } from 'rxjs';
-import {fetchJSON} from '../../services/utils/fetchJson';
 
 export const deleteItemEpic: Epic = (action$, state$) => action$.pipe(
     ofType(explorerActions.DELETE_ITEM),
@@ -42,7 +40,10 @@ export const deleteItemEpic: Epic = (action$, state$) => action$.pipe(
             })
                 .pipe(
                     switchMap(() => {
-                        return [panesActions.closePane(action.data.id), explorerActions.deleteItemSuccess(action.data.id)];
+                        return [
+                            panesActions.closePane(action.data.id),
+                            explorerActions.deleteItemSuccess(action.data.id), explorerActions.updateDappfile()
+                        ];
                     }),
                     catchError(() => [explorerActions.deleteItemFail(action.data.id)])
                 );

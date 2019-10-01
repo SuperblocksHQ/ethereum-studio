@@ -45,7 +45,7 @@ export const renameItemEpic: Epic = (action$, state$) => action$.pipe(
                     files
                 })
                 .pipe(
-                    map(() => explorerActions.renameItemSuccess(action.data.id, action.data.name)),
+                    switchMap(() => [explorerActions.renameItemSuccess(action.data.id, action.data.name), explorerActions.updateDappfile()]),
                     catchError(() => [ explorerActions.renameItemFail(explorerState.itemNameValidation.itemId, explorerState.itemNameValidation.oldName) ])
                 );
             } else {
