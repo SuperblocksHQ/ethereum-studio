@@ -66,6 +66,8 @@ export default class ProjectTemplateModal extends Component<IProps, IState> {
         const { isProjectLoading } = this.props;
         const { selectedTemplate } = this.state;
 
+        console.log('Is Project loaindg: ' + isProjectLoading);
+
         return (
             <div className={classNames([style.projectTemplateModal, 'modal'])}>
                 <LogOnMount eventType='NEW_PROJECT_SELECT_TEMPLATE'/>

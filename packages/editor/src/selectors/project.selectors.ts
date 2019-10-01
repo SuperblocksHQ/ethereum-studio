@@ -24,7 +24,7 @@ export const projectSelectors = {
     getProject: (state: any): IProject => state.projects.project,
     getProjectId: (state: any): string => state.projects.project.id,
     getProjectName: (state: any): string => state.projects.project.name,
-    getLoadingProject: (state: any): boolean => state.projects.loadingProject,
+    getLoadingProject: (state: any): boolean => state.projects.isProjectLoading,
     getIsOwnProject: (state: any): boolean => state.projects.isOwnProject,
     getDappFileData: (state: any): any => state.projects.dappFileData
 };
