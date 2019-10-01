@@ -119,6 +119,7 @@ export class FileEditor extends React.Component<IProps> {
                     language={this.language}
                     theme='vs-dark'
                     defaultValue={file.code}
+                    value={file.code}
                     options={this.options}
                     onChange={this.onFileChange}
                     editorDidMount={this.editorDidMount}
