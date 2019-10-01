@@ -44,7 +44,6 @@ export function BaseItem(props: IProps) {
         );
     }
 
-    console.log(props.data);
     return (
         <div className={ classNames(style.item)}>
             <div className={style.header} style={{paddingLeft: (depth * 20)}} onClick={ onCaretClick }>
