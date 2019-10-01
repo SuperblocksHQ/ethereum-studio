@@ -78,7 +78,7 @@ export const projectsActions = {
 
     // ----------- Wallet ---------------
     OPEN_WALLET: 'OPEN_WALLET',
-    openWallet(name: string, seed: string) {
+    openWallet(name: string, seed?: string) {
         return {
             type: projectsActions.OPEN_WALLET,
             data: { name, seed }

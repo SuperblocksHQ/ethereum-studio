@@ -59,13 +59,9 @@ export const updateAccountNameEpic = (action$: AnyAction, state$: any) => action
             dappFileAccount.name = newAccountName;
             dappFileData.accounts[index] = dappFileAccount;
 
-            return [panesActions.saveFile(dappFileItem.id, JSON.stringify(dappFileData, null, 4)), accountActions.updateAccountNameSuccess(account.name, newAccountName)];
+            return [panesActions.saveFile(dappFileItem.id, JSON.stringify(dappFileData, null, 4))];
         } else {
             return empty();
         }
-    }),
-    catchError((err: any) => {
-        console.log('Error while updating the account name: ', err);
-        return of(accountActions.UPDATE_ACCOUNT_NAME_FAIL);
     })
 );

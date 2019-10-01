@@ -14,12 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { projectsActions } from '../actions/projects.actions';
-import { IProjectState, IEnvironment } from '../models/state';
+import { IProjectState, IEnvironment, IAccount, IExplorerState } from '../models/state';
 import { AnyAction } from 'redux';
 import { IProjectItem } from '../models';
 import { getDappSettings, resolveAccounts } from './dappfileLib';
-import { authActions, accountActions } from '../actions';
+import { authActions, accountActions, panesActions, projectsActions } from '../actions';
+import { findItemById } from './explorerLib';
 
 export const initialState: IProjectState = {
     project: {
@@ -44,7 +44,7 @@ function getEnvOrNull(environment: IEnvironment) {
         : null;
 }
 
-export default function projectsReducer(state = initialState, action: AnyAction, wholeState: any) {
+export default function projectsReducer(state = initialState, action: AnyAction, { explorer }: { explorer: IExplorerState }) {
     switch (action.type) {
         case projectsActions.SET_ALL_ENVIRONMENTS:
             return {
@@ -199,25 +199,36 @@ export default function projectsReducer(state = initialState, action: AnyAction,
                 project: { ...action.data.project, files: undefined }
             };
         }
-        case accountActions.UPDATE_ACCOUNT_NAME_SUCCESS: {
-            const { oldName, newName } = action.data;
-            const account = state.accounts.find(a => a.name === oldName);
-            const accounts = state.accounts;
-            if (account) {
-                const index = accounts.indexOf(account);
-                account.name = newName;
-                accounts[index] = account;
+
+        case panesActions.SAVE_FILE_SUCCESS: {
+            if (!explorer.tree) {
+                return state;
             }
 
-            return {
-                ...state,
-                accounts,
-                selectedAccount: {
-                    ...state.selectedAccount,
-                    name: action.data.newName,
+            const result = findItemById(explorer.tree, action.data.fileId);
+            // reload dapp file data if the file was updated
+            if (result.item && result.path.length === 1 && result.path[0] === 'dappfile.json') {
+                try {
+                    const stateChange = getDappSettings(result.item.code || '', state.openWallets, state.metamaskAccounts);
+                    const selectedAccount = stateChange.accounts.find((a: any) => a.name === state.selectedAccount.name) || stateChange.selectedAccount;
+                    const selectedEnvironment = stateChange.environments.find((e: any) => e.name === state.selectedEnvironment.name) || stateChange.selectedEnvironment;
+
+                    return {
+                        ...state,
+                        ...stateChange,
+                        selectedAccount,
+                        selectedEnvironment
+                    };
+                } catch (e) {
+                    console.log(e);
+                    return state;
                 }
-            };
+
+            } else {
+                return state;
+            }
         }
+
         case accountActions.DELETE_ACCOUNT_SUCCESS:
         case accountActions.CREATE_NEW_ACCOUNT_SUCCESS: {
             const { updatedDappFileData } = action.data;

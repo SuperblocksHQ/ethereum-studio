@@ -41,43 +41,11 @@ export const accountActions = {
         };
     },
 
-
-    UPDATE_ACCOUNT_NAME_SUCCESS: 'UPDATE_ACCOUNT_NAME_SUCCESS',
-    updateAccountNameSuccess(oldName: string, newName: string) {
+    UPDATE_ACCOUNT_BALANCE: 'ACCOUNT_ACTIONS.UPDATE_ACCOUNT_BALANCE',
+    updateAccountBalance(accountName: string, balance: Nullable<string>) {
         return {
-            type: accountActions.UPDATE_ACCOUNT_NAME_SUCCESS,
-            data: { oldName, newName },
-        };
-    },
-
-    UPDATE_ACCOUNT_NAME_FAIL: 'UPDATE_ACCOUNT_NAME_FAIL',
-    updateAccountNameFail(error: any) {
-        return {
-            type: accountActions.UPDATE_ACCOUNT_NAME_FAIL,
-            data: error
-        };
-    },
-
-    SAVE_ACCOUNT_CONFIGURATION: 'SAVE_ACCOUNT_CONFIGURATION',
-    saveAccountConfig(contractConfig: IAccount) {
-        return {
-            type: accountActions.SAVE_ACCOUNT_CONFIGURATION,
-            data: { contractConfig }
-        };
-    },
-
-    SAVE_ACCOUNT_CONFIGURATION_SUCCESS: 'SAVE_ACCOUNT_CONFIGURATION_SUCCESS',
-    saveAccountConfigSuccess() {
-        return {
-            type: accountActions.SAVE_ACCOUNT_CONFIGURATION_SUCCESS
-        };
-    },
-
-    SAVE_ACCOUNT_CONFIGURATION_FAIL: 'SAVE_ACCOUNT_CONFIGURATION_FAIL',
-    saveAccountConfigFail(error: any) {
-        return {
-            type: accountActions.SAVE_ACCOUNT_CONFIGURATION_FAIL,
-            data: error
+            type: accountActions.UPDATE_ACCOUNT_BALANCE,
+            data: { accountName, balance }
         };
     },
 
@@ -96,6 +64,13 @@ export const accountActions = {
         };
     },
 
+    CREATE_NEW_ACCOUNT_FAIL: 'CREATE_NEW_ACCOUNT_FAIL',
+    createNewAccountFail() {
+        return {
+            type: accountActions.CREATE_NEW_ACCOUNT_FAIL
+        };
+    },
+
     DELETE_ACCOUNT: 'DELETE_ACCOUNT',
     deleteAccount(accountName: string) {
         return {
@@ -111,4 +86,20 @@ export const accountActions = {
             data: { updatedDappFileData: dappFileData }
         };
     },
+
+    CHANGE_ENVIRONMENT: 'CHANGE_ENVIRONMENT',
+    changeEnvironment(environmentName: string) {
+        return {
+            type: accountActions.CHANGE_ENVIRONMENT,
+            data: { environmentName }
+        };
+    },
+
+    UPDATE_ADDRESS: 'ACCOUNT_ACTIONS.UPDATE_ADDRESS',
+    updateAddress(address: string) {
+        return {
+            type: accountActions.UPDATE_ADDRESS,
+            data: { address }
+        };
+    }
 };

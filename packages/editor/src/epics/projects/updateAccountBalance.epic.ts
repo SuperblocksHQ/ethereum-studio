@@ -19,6 +19,7 @@ import { switchMap,  takeUntil, catchError } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
 import { projectsActions } from '../../actions';
 import { walletService } from '../../services';
+import { IProjectState } from '../../models/state';
 
 export const updateAccountBalanceEpic: Epic = (action$: any, state$: any) => action$.pipe(
     ofType(projectsActions.LOAD_PROJECT_SUCCESS),
@@ -26,8 +27,9 @@ export const updateAccountBalanceEpic: Epic = (action$: any, state$: any) => act
         return interval(3000).pipe(
             takeUntil(action$.ofType(projectsActions.LOAD_PROJECT_REQUEST)),
             switchMap(() => {
-                const endpoint = state$.value.projects.selectedEnvironment.endpoint;
-                const selectedAccount = state$.value.projects.selectedAccount;
+                const projectsState: IProjectState = state$.value.projects;
+                const endpoint = projectsState.selectedEnvironment.endpoint;
+                const selectedAccount = projectsState.selectedAccount;
 
                 if (selectedAccount.name && selectedAccount.address) {
                     return walletService.fetchBalance(endpoint, selectedAccount.address).pipe(
