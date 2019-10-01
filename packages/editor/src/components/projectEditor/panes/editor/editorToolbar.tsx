@@ -16,9 +16,8 @@
 
 import React from 'react';
 import style from './style-editor.less';
-import { Tooltip } from '../../../common';
+import { Tooltip, OnlyIf } from '../../../common';
 import { IconSave, IconCompile, IconConfigure, IconDeploy } from '../../../icons';
-import OnlyIf from '../../../onlyIf';
 import classNames from 'classnames';
 
 export interface IProps {

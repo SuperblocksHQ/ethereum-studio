@@ -17,11 +17,8 @@
 import React, { Component } from 'react';
 import style from './style.less';
 import { DropdownContainer } from '../common/dropdown';
-import { HelpAction, NewProjectAction } from '../common';
-import {
-    IconAlphabetA,
-} from '../icons';
-import OnlyIf from '../onlyIf';
+import { HelpAction, NewProjectAction, OnlyIf } from '../common';
+import { IconAlphabetA } from '../icons';
 import NetworkAccountSelector from '../networkAccountSelector';
 import MenuDropdownDialog from './menu';
 import ProjectTitle from './projectTitle';

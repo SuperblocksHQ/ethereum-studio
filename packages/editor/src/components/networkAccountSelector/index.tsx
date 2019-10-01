@@ -17,7 +17,7 @@
 import React, { Component, Dispatch } from 'react';
 import { connect } from 'react-redux';
 import style from './style.less';
-import OnlyIf from '../onlyIf';
+import OnlyIf from '../common/onlyIf';
 import { AccountSelector } from './accountSelector';
 import { projectsActions } from '../../actions';
 import { projectSelectors } from '../../selectors';

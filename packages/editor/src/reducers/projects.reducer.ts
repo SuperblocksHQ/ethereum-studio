@@ -114,6 +114,7 @@ export default function projectsReducer(state = initialState, action: AnyAction,
                     [action.data.name]: action.data.addresses
                 }
             };
+        case projectsActions.LOAD_PROJECT_AND_FORK_REQUEST:
         case projectsActions.LOAD_PROJECT_REQUEST: {
             return {
                 ...state,

@@ -22,7 +22,7 @@ import { projectService} from '../../services/project.service';
 import { IProject } from '../../models';
 
 export const loadProjectAndForkEpic: Epic = (action$: any, state$: any) => action$.pipe(
-    ofType(projectsActions.LOAD_PROJECT_AND_FORK),
+    ofType(projectsActions.LOAD_PROJECT_AND_FORK_REQUEST),
     withLatestFrom(state$),
     switchMap(([action, _state]) => {
         const projectId = action.data.projectId;

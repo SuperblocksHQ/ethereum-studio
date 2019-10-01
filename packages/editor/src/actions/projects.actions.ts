@@ -135,10 +135,10 @@ export const projectsActions = {
        };
     },
 
-    LOAD_PROJECT_AND_FORK: 'LOAD_PROJECT_AND_FORK',
+    LOAD_PROJECT_AND_FORK_REQUEST: 'LOAD_PROJECT_AND_FORK_REQUEST',
     loadProjectAndFork(projectId: string) {
         return {
-            type: projectsActions.LOAD_PROJECT_AND_FORK,
+            type: projectsActions.LOAD_PROJECT_AND_FORK_REQUEST,
             data: { projectId }
         };
     },

@@ -2,7 +2,7 @@ import React from 'react';
 import style from './style.less';
 import classNames from 'classnames';
 import { IconClose } from '../icons';
-import OnlyIf from '../onlyIf';
+import { OnlyIf } from '../common';
 
 interface IProps {
     dragging: boolean;

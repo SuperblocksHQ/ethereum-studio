@@ -14,20 +14,15 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export * from './dropdown';
-export * from './select';
-export * from './tooltip';
-export * from './menu';
-export * from './topbar';
-export * from './buttons';
-export * from './fileIcon';
-export * from './switch';
-export * from './textInput';
-export * from './note';
-export * from './textAreaInput';
-export * from './caret';
-export * from './modal';
-export * from './letterAvatar';
-export * from './breadcrumbs';
-export * from './loadable';
-export * from './onlyIf';
+import { PureComponent } from 'react';
+
+interface IProps {
+    test: object | string | boolean | symbol | number | undefined | null;
+}
+export class OnlyIf extends PureComponent<IProps> {
+  render() {
+    return (this.props.test ? this.props.children : null);
+  }
+}
+
+export default OnlyIf;

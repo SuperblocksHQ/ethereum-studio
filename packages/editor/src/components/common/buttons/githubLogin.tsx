@@ -19,7 +19,7 @@ import style from './style.less';
 import { IconGithub } from '../../icons';
 import classNames from 'classnames';
 
-const GithubLoginButton = (props: any) => (
+export const GithubLoginButton = (props: any) => (
     <button onClick={props.githubLogin} className={classNames(['btn2', style.githubLoginButton])}>
         <IconGithub />
         <span>
@@ -27,7 +27,5 @@ const GithubLoginButton = (props: any) => (
         </span>
     </button>
 );
-
-export default GithubLoginButton;
 
 

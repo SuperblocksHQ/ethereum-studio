@@ -1,4 +1,4 @@
-// Copyright 2018 Superblocks AB
+// Copyright 2019 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -12,14 +12,10 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
+// along with Superblocks.  If not, see <http://www.gnu.org/licenses/>.
 
-import { PureComponent } from 'react'
-
-class OnlyIf extends PureComponent {
-  render () {
-    return (this.props.test ? this.props.children : null)
-  }
+export enum StyledButtonType {
+    Primary,
+    Secondary,
+    Danger,
 }
-
-export default OnlyIf

@@ -16,8 +16,7 @@
 
 import React, { Component } from 'react';
 import ProjectEditor from '../projectEditor';
-import OnlyIf from '../onlyIf';
-import { GenericLoading } from '../common';
+import { GenericLoading, OnlyIf } from '../common';
 import { IProject } from '../../models';
 
 interface IProps {

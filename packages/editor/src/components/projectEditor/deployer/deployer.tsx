@@ -16,7 +16,7 @@
 
 import React from 'react';
 import { MainnetWarning } from './mainnetWarning';
-import OnlyIf from '../../onlyIf';
+import { OnlyIf } from '../../common';
 import { SimpleModal } from '../../modals';
 
 interface IProps {

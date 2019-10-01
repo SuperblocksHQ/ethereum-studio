@@ -16,11 +16,8 @@
 
 import React, { Component } from 'react';
 import style from './style.less';
-import OnlyIf from '../../onlyIf';
-import { DropdownContainer, TextInput } from '../../common';
-import {
-    IconDropdown
-} from '../../icons';
+import { DropdownContainer, OnlyIf } from '../../common';
+import { IconDropdown } from '../../icons';
 import ProjectMenuDropdownDialog from '../projectMenu';
 import classNames from 'classnames';
 

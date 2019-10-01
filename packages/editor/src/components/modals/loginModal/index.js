@@ -18,10 +18,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from "classnames";
 import style from "./style.less";
-import OnlyIf from '../../onlyIf';
 import { authService, userService } from '../../../services';
 import {IconClose, IconSuperblocks, PictureVargavintern} from "../../icons";
-import GithubLoginButton from "../../common/buttons/githubLogin";
+import { GithubLoginButton, OnlyIf } from '../../common';
 
 export const LoginModal = (props) => {
 

@@ -17,8 +17,7 @@
 import React from 'react';
 import style from './style.less';
 import { IconRefresh, IconDownloadDApp, IconMore } from '../../../icons';
-import { DropdownContainer, Tooltip } from '../../../common';
-import OnlyIf from '../../../onlyIf';
+import { DropdownContainer, Tooltip, OnlyIf } from '../../../common';
 import { previewService } from '../../../../services';
 import { CannotExportModal } from './CannotExportModal';
 import { DownloadModal } from './DownloadModal';

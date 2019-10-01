@@ -19,8 +19,10 @@ import ProjectTemplateModal from './ProjectTemplateModal';
 import { AnyAction } from 'redux';
 import { Dispatch } from 'react';
 import { projectsActions } from '../../../actions';
+import { projectSelectors } from '../../../selectors';
 
-const mapStateToProps = (_state: any) => ({
+const mapStateToProps = (state: any) => ({
+    isProjectLoading: projectSelectors.getLoadingProject(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {

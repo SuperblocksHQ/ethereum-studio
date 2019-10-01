@@ -17,9 +17,10 @@
 import React, { Component } from 'react';
 import Templates from './templates';
 import { LogOnMount } from '../../../utils/analytics';
-import { ModalHeader } from '../../common';
+import { ModalHeader, StyledButton } from '../../common';
 import classNames from 'classnames';
 import style from './style.less';
+import { StyledButtonType } from '../../common/buttons/StyledButtonType';
 
 interface ITemplate {
     id: number;
@@ -29,6 +30,7 @@ interface ITemplate {
 }
 
 interface IProps {
+    isProjectLoading: boolean;
     loadAndForkProject: (projectId: string) => void;
     hideModal: () => void;
 }
@@ -61,6 +63,7 @@ export default class ProjectTemplateModal extends Component<IProps, IState> {
 
     render() {
         const { templates } = Templates;
+        const { isProjectLoading } = this.props;
         const { selectedTemplate } = this.state;
 
         return (
@@ -92,7 +95,14 @@ export default class ProjectTemplateModal extends Component<IProps, IState> {
                     </div>
                     <div className={style.footer}>
                         <button onClick={this.onCloseClickHandle} className='btn2 noBg mr-2'>Cancel</button>
-                        <button onClick={this.onCreateProjectHandle} disabled={Object.entries(selectedTemplate).length === 0} className='btn2'>Create Project</button>
+                        <StyledButton
+                            type={StyledButtonType.Primary}
+                            isDisabled={Object.entries(selectedTemplate).length === 0}
+                            text='Create Project'
+                            onClick={this.onCreateProjectHandle}
+                            loadingText='Creating...'
+                            loading={isProjectLoading}
+                        />
                     </div>
                 </div>
             </div>

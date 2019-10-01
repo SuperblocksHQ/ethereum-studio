@@ -17,7 +17,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import AnalyticsDialog from '../analyticsDialog';
-import OnlyIf from '../onlyIf';
+import { OnlyIf } from '../common';
 import ToastContainer from '../toasts/toastcontainer';
 import LoadProject from '../loadProject';
 import * as embedUtils from '../../utils/embed';

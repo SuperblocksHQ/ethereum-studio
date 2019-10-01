@@ -20,8 +20,7 @@ import React from 'react';
 import classNames from 'classnames';
 import style from './style.less';
 import { IconAngleDown } from '../icons';
-import OnlyIf from '../onlyIf';
-import { MenuItem } from '../common';
+import { MenuItem, OnlyIf } from '../common';
 import { DropdownContainer } from '../common/dropdown';
 import { IUser } from '../../models';
 
