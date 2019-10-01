@@ -22,3 +22,5 @@ export * from './createProjectItem';
 export * from './addOrReplaceChildItems';
 export * from './ensurePath';
 export * from './getItemPath';
+export * from './addAndMergeChildItems';
+
