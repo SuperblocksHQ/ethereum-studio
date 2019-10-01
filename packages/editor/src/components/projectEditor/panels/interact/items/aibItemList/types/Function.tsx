@@ -17,7 +17,7 @@
 import React from 'react';
 import style from './style.less';
 import { IRawAbiDefinition, IRawAbiParameter } from '../../../../../../../models';
-import { StyledButton } from '../../../../../../common';
+import { StyledButton, TextInput } from '../../../../../../common';
 import { StyledButtonType } from '../../../../../../common/buttons/StyledButtonType';
 
 interface IProps {
@@ -36,7 +36,13 @@ export class Function extends React.Component<IProps> {
         return (
             <div className={style.container}>
                 <StyledButton type={StyledButtonType.Primary} text={data.name} />
-                { <input placeholder={this.renderPlaceHolder(data.inputs)} /> }
+                <TextInput
+                    id='name'
+                    // onChangeText={this.onNameChange}
+                    // defaultValue={project.name}
+                    placeholder={this.renderPlaceHolder(data.inputs)}
+                    className={style.input}
+                />
             </div>
         );
     }
