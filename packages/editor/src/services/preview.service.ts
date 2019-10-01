@@ -55,7 +55,6 @@ export const previewService = {
     initSuperProvider(_iframeId: string, environment: IEnvironment, account: IAccount, knownWalletSeed: string, notifyTx: (transactionType: TransactionType, hash: string) => void) {
         iframeId = _iframeId;
         this.superProvider = new SuperProvider(iframeId, environment, account, knownWalletSeed, (hash: string, endpoint: string) => {
-            // TODO - const network = Object.keys(Networks).find(key => Networks[key].endpoint === endpoint);
             notifyTx(TransactionType.Preview, hash);
         });
     },

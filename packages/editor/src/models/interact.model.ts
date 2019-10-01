@@ -16,7 +16,7 @@
 
 export interface IDeployedContract {
     id: string;
-    api: string;
+    abi: string;
     address: string;
     tx: string;
     deploy: string;

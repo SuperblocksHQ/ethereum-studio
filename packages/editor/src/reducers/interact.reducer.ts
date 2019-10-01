@@ -15,51 +15,61 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { AnyAction } from 'redux';
-import { transactionsActions, interactActions } from '../actions';
-import { IInteractState, ITransaction, IDeployedContract, TransactionType } from '../models';
-// import { updateItemInTree } from './interactLib';
+import { interactActions, deployerActions, explorerActions } from '../actions';
+import { IInteractState, ProjectItemTypes, IDeployedContract } from '../models';
+import { findItemByPath } from './explorerLib';
+import { IExplorerState, IProjectState } from '../models/state';
 
 const initialState: IInteractState = {
     items: []
 };
 
-export default function interactReducer(state = initialState, action: AnyAction) {
+export default function interactReducer(state = initialState, action: AnyAction, { explorer, projects }: { explorer: IExplorerState, projects: IProjectState }) {
     switch (action.type) {
-        // case interactActions.TOGGLE_INTERACT_TREE_ITEM:
-        //     return {
-        //         ...state,
-        //         tree: updateItemInTree(state.tree, action.data.id, (i: IProjectItem) => ({ ...i, opened: !i.opened }))[0]
-        //     };
-        // case transactionsActions.ADD_TRANSACTION:
-        //     const transaction = <ITransaction> action.data.transaction;
+        case interactActions.TOGGLE_INTERACT_TREE_ITEM:
+            return {
+                ...state
+            };
+        case explorerActions.INIT_EXPLORER_SUCCESS:
+        case deployerActions.DEPLOY_SUCCESS:
+            const tree: any = explorer.tree;
+            const newItems = [];
 
-        //     if (transaction.type !== TransactionType.Deploy) {
-        //         return { ...state };
-        //     }
+            // Things that we need here:
+            // 1. ABI
+            // 2. Contract deploy address (got from here)
+            // 3. Contract name which already have an Abi
 
-        //     const item = <IDeployedContract> {
-        //         contractAddress: transaction.to,
-        //         contractName: transaction.contractName
-        //     };
+            // Go through all the contracts folder and extract each contract info
+            // let contractJs = '';
+            const contractListFolder = findItemByPath(tree, [ 'build', 'contracts' ], ProjectItemTypes.Folder);
+            if (contractListFolder && contractListFolder.children.length > 0) {
+                for (const contractFolder of contractListFolder.children) {
+                    const item: IDeployedContract = {
+                        contractName: contractFolder.name,
+                        id: contractFolder.id,
+                        abi: '',
+                        address: '0x0',
+                        contractAddress: '0x0',
+                        deploy: '',
+                        js: '',
+                        opened: false,
+                        tx: ''
+                    };
 
-        //     return {
-        //         ...state,
-        //         items: [
-        //             {...item},
-        //             ...state.items,
-        //         ]
-        //     };
+                    newItems.push(item);
 
-        // TODO - We would need to update the info in certain cases, per example when re-deploying the same contract to a different address
-        // case transactionsActions.UPDATE_TRANSACTION:
-        //     return {
-        //         ...state,
-        //         items: replaceInArray(
-        //             state.items,
-        //             item => item.hash === action.data.transaction.hash,
-        //             item => ({...item, ...action.data.transaction, createdAt: item.createdAt})
-        //         )
-        //     };
+                    // const contractFiles = contractFolder.children.filter((file) => file.name.includes(`${projects.selectedEnvironment.name}.js`));
+                    // for (const file of contractFiles) {
+                    //     contractJs += file.code + '\n';
+                    // }
+                }
+            }
+
+            return {
+                ...state,
+                items: [...state.items, ...newItems]
+            };
         default:
             return state;
     }
