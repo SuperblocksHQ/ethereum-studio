@@ -14,19 +14,24 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { IRawAbiDefinition } from './abi.model';
+import React from 'react';
+import style from './style.less';
+import { IRawAbiDefinition } from '../../../../../../../models';
+import { StyledButton } from '../../../../../../common';
+import { StyledButtonType } from '../../../../../../common/buttons/StyledButtonType';
 
-export interface IDeployedContract {
-    id: string;
-    abi: IRawAbiDefinition[];
-    address: string;
-    tx: string;
-    deploy: string;
-    js: string;
-    contractName: string;
-    opened: boolean;
+interface IProps {
+    data: IRawAbiDefinition;
 }
 
-export interface IInteractState {
-    items: IDeployedContract[];
+export class Constant extends React.Component<IProps> {
+
+    render() {
+        const { data } = this.props;
+        return (
+            <div className={style.container}>
+                <StyledButton type={StyledButtonType.Primary} text={data.name} />
+            </div>
+        );
+    }
 }

@@ -14,19 +14,28 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { IRawAbiDefinition } from './abi.model';
-
-export interface IDeployedContract {
-    id: string;
-    abi: IRawAbiDefinition[];
-    address: string;
-    tx: string;
-    deploy: string;
-    js: string;
-    contractName: string;
-    opened: boolean;
+export enum Type {
+    Function = 'function',
+    Constructor = 'constructor'
 }
 
-export interface IInteractState {
-    items: IDeployedContract[];
+export enum StateMutability {
+    NonePayable = 'nonpayable',
+    View = 'view'
+}
+
+export interface IRawAbiParameter {
+    name: string;
+    type: string;
+    components?: IRawAbiParameter[];
+  }
+
+export interface IRawAbiDefinition {
+    constant: boolean;
+    inputs: IRawAbiParameter[];
+    name: string;
+    outputs: IRawAbiParameter[];
+    payable: boolean;
+    stageMutability: StateMutability;
+    type: Type;
 }
