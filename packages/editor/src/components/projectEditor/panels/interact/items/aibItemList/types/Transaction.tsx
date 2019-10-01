@@ -17,7 +17,7 @@
 import React from 'react';
 import style from './style.less';
 import { IRawAbiDefinition, IRawAbiParameter } from '../../../../../../../models';
-import { StyledButton, TextInput } from '../../../../../../common';
+import { StyledButton, TextInput, OnlyIf } from '../../../../../../common';
 import { StyledButtonType } from '../../../../../../common/buttons/StyledButtonType';
 
 interface IProps {
@@ -36,13 +36,16 @@ export class Transaction extends React.Component<IProps> {
         return (
             <div className={style.container}>
                 <StyledButton type={StyledButtonType.Transaction} text={data.name} />
-                <TextInput
-                    id='name'
-                    // onChangeText={this.onNameChange}
-                    // defaultValue={project.name}
-                    placeholder={this.renderPlaceHolder(data.inputs)}
-                    className={style.input}
-                />
+                <OnlyIf test={data.inputs.length > 0}>
+                    <TextInput
+                        id='name'
+                        // onChangeText={this.onNameChange}
+                        // defaultValue={project.name}
+                        placeholder={this.renderPlaceHolder(data.inputs)}
+                        className={style.input}
+                    />
+                </OnlyIf>
+
             </div>
         );
     }
