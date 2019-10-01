@@ -36,7 +36,6 @@ export function BaseItem(props: IProps) {
         caret = (
             <Caret
                 expanded={ opened || false }
-                onClick={ onCaretClick }
             />
         );
     } else {
@@ -47,8 +46,8 @@ export function BaseItem(props: IProps) {
 
     console.log(props.data);
     return (
-        <div className={ classNames(style.item) }>
-            <div className={style.header} style={{paddingLeft: (depth * 20)}}>
+        <div className={ classNames(style.item)}>
+            <div className={style.header} style={{paddingLeft: (depth * 20)}} onClick={ onCaretClick }>
                 <div className={ style.icons }>
                     { caret }
                     <div className={style.icon}>{ icon }</div>

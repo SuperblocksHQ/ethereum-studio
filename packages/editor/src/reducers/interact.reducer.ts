@@ -16,7 +16,7 @@
 
 import { AnyAction } from 'redux';
 import { interactActions, deployerActions, explorerActions } from '../actions';
-import { IInteractState, ProjectItemTypes, IDeployedContract } from '../models';
+import { IInteractState, ProjectItemTypes, IDeployedContract, IProjectItem } from '../models';
 import { findItemByPath } from './explorerLib';
 import { IExplorerState, IProjectState } from '../models/state';
 
@@ -28,41 +28,41 @@ export default function interactReducer(state = initialState, action: AnyAction,
     switch (action.type) {
         case interactActions.TOGGLE_INTERACT_TREE_ITEM:
             return {
-                ...state
+                ...state,
+                items: state.items.map((item) => item.id !== item.id ? item : { ...item, opened: !item.opened })
             };
         case explorerActions.INIT_EXPLORER_SUCCESS:
         case deployerActions.DEPLOY_SUCCESS:
             const tree: any = explorer.tree;
             const newItems = [];
 
-            // Things that we need here:
-            // 1. ABI
-            // 2. Contract deploy address (got from here)
-            // 3. Contract name which already have an Abi
-
             // Go through all the contracts folder and extract each contract info
-            // let contractJs = '';
             const contractListFolder = findItemByPath(tree, [ 'build', 'contracts' ], ProjectItemTypes.Folder);
             if (contractListFolder && contractListFolder.children.length > 0) {
                 for (const contractFolder of contractListFolder.children) {
+                    const jsFile = contractFolder.children.find((file) => file.name.includes(`${projects.selectedEnvironment.name}.js`));
+                    const addressFile = contractFolder.children.find((file) => file.name.includes(`${projects.selectedEnvironment.name}.address`));
+                    const deployFile = contractFolder.children.find((file) => file.name.includes(`${projects.selectedEnvironment.name}.deploy`));
+                    const txFile = contractFolder.children.find((file) => file.name.includes(`${projects.selectedEnvironment.name}.tx`));
+                    const abiFile = contractFolder.children.find((file) => file.name.includes(`.abi`));
+
+                    if ((!jsFile || !jsFile.code) || (!addressFile || !addressFile.code) || (!deployFile || !deployFile.code) || (!txFile || !txFile.code) || (!abiFile || !abiFile.code)) {
+                        // TODO - Throw some issue saying that one of the required files is not available and it should be re-deployed
+                        return state;
+                    }
+
                     const item: IDeployedContract = {
                         contractName: contractFolder.name,
                         id: contractFolder.id,
-                        abi: '',
-                        address: '0x0',
-                        contractAddress: '0x0',
-                        deploy: '',
-                        js: '',
+                        abi: JSON.parse(abiFile.code),
+                        address: addressFile.code,
+                        deploy: deployFile.code,
+                        js: jsFile.code,
                         opened: false,
-                        tx: ''
+                        tx: txFile.code
                     };
 
                     newItems.push(item);
-
-                    // const contractFiles = contractFolder.children.filter((file) => file.name.includes(`${projects.selectedEnvironment.name}.js`));
-                    // for (const file of contractFiles) {
-                    //     contractJs += file.code + '\n';
-                    // }
                 }
             }
 

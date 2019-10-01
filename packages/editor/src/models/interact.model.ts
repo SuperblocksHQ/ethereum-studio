@@ -21,7 +21,6 @@ export interface IDeployedContract {
     tx: string;
     deploy: string;
     js: string;
-    contractAddress: string;
     contractName: string;
     opened: boolean;
 }

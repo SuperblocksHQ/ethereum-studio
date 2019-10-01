@@ -21,7 +21,7 @@ export function DeployedContractItem(props: IProps) {
                 depth={depth}
                 togglable={true}
                 icon={ <IconContract /> }
-                iconOpen={ <IconFolderOpen /> }
+                iconOpen={ <IconContract /> }
             >
             </BaseItem>
         </div>
