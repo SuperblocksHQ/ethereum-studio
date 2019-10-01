@@ -20,7 +20,14 @@ import { IExplorerState, IItemNameValidation } from '../models/state';
 import { IProjectItem } from '../models';
 import { AnyAction } from 'redux';
 import { generateUniqueId } from '../services/utils';
-import { addOrReplaceChildItems, ensurePath, findItemById, sortProjectItems, updateItemInTree } from './explorerLib';
+import {
+    addAndMergeChildItems,
+    addOrReplaceChildItems,
+    ensurePath,
+    findItemById,
+    sortProjectItems,
+    updateItemInTree
+} from './explorerLib';
 
 export const initialState: IExplorerState = {
     tree: null,
@@ -260,7 +267,7 @@ export default function explorerReducer(state = initialState, action: AnyAction)
             const tree: Nullable<IProjectItem> = state.tree;
 
             const resultFolder = ensurePath(tree, ['node_modules', 'openzeppelin-solidity', 'contracts']);
-            resultFolder.children = addOrReplaceChildItems(resultFolder, items).children;
+            resultFolder.children = addAndMergeChildItems(resultFolder, items).children;
 
             itemNameValidation = {
                 ...itemNameValidation,
