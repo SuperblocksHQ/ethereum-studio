@@ -19,6 +19,7 @@ import React from 'react';
 import { IRawAbiDefinition, Type } from '../../../../../../models';
 import { Constant } from './types/Constant';
 import { Transaction } from './types/Transaction';
+import { Payable } from './types/Payable';
 
 interface IProps {
     abi: IRawAbiDefinition[];
@@ -31,12 +32,14 @@ export class AbiItemList extends React.Component<IProps> {
             return <Constant
                         data={rawAbiDefinition}
                     />;
-        } else if (rawAbiDefinition.type === Type.Function) {
+        } else if (rawAbiDefinition.type === Type.Function && !rawAbiDefinition.payable) {
             return <Transaction
                         data={rawAbiDefinition}
                     />;
-        } else {
-            return null;
+        } else if (rawAbiDefinition.type === Type.Function && rawAbiDefinition.payable) {
+            return <Payable
+                        data={rawAbiDefinition}
+                    />;
         }
     }
 

@@ -32,6 +32,12 @@ export const projectsActions = {
             data: environmentName
        };
     },
+    SET_ENVIRONMENT_SUCCESS: 'SET_ENVIRONMENT_SUCCESS',
+    setEnvironmentSuccess() {
+       return {
+            type: projectsActions.SET_ENVIRONMENT_SUCCESS,
+       };
+    },
     SELECT_ACCOUNT: 'SELECT_ACCOUNT',
     selectAccount(name: string) {
         return {

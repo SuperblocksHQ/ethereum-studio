@@ -15,7 +15,7 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { AnyAction } from 'redux';
-import { interactActions, deployerActions, explorerActions } from '../actions';
+import { interactActions, deployerActions, explorerActions, projectsActions } from '../actions';
 import { IInteractState, ProjectItemTypes, IDeployedContract, IProjectItem } from '../models';
 import { findItemByPath } from './explorerLib';
 import { IExplorerState, IProjectState } from '../models/state';
@@ -31,6 +31,7 @@ export default function interactReducer(state = initialState, action: AnyAction,
                 ...state,
                 items: state.items.map((item) => item.id !== item.id ? item : { ...item, opened: !item.opened })
             };
+        case projectsActions.SET_ENVIRONMENT_SUCCESS:
         case explorerActions.INIT_EXPLORER_SUCCESS:
         case deployerActions.DEPLOY_SUCCESS:
             const tree: any = explorer.tree;
@@ -48,7 +49,7 @@ export default function interactReducer(state = initialState, action: AnyAction,
 
                     if ((!jsFile || !jsFile.code) || (!addressFile || !addressFile.code) || (!deployFile || !deployFile.code) || (!txFile || !txFile.code) || (!abiFile || !abiFile.code)) {
                         // TODO - Throw some issue saying that one of the required files is not available and it should be re-deployed
-                        return state;
+                        return initialState;
                     }
 
                     const item: IDeployedContract = {
@@ -68,7 +69,7 @@ export default function interactReducer(state = initialState, action: AnyAction,
 
             return {
                 ...state,
-                items: [...state.items, ...newItems]
+                items: newItems
             };
         default:
             return state;
