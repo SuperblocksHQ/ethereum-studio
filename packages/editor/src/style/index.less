@@ -23,16 +23,17 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Generic
-@primary-color: #8641F2;
+@primary-color: #6CFFB8;
+@primary-color-light-hover: rgba(108, 255, 184, 0.05);
 @white-color-hover: #ecebeb;
 @action-color-hover: #333;
 
 // modal
 @modal-background-color: #2b2b2b;
 @modal-color-hover: #353535;
-@modal-color-hover-purple: rgba(128, 46, 255, 0.1);
+@modal-color-hover-green: lighten(@primary-color, 15%);
 @modal-separator-color: #3C3C3C;
-@modal-selected-color: rgba(128, 46, 255, 0.5);
+@modal-selected-color: @primary-color;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////// Generic //////////////////
@@ -277,26 +278,10 @@ a:active,a:focus {
     }
 }
 
-.btn1 {
-    -webkit-border-radius: 17;
-    -moz-border-radius: 17;
-    border-radius: 17px;
-    border-color: #8641f2;
-    font-size: 20px;
-    background-color: #ffffff;
-    padding: 15px 25px;
-    text-decoration: none;
-    cursor: pointer;
-    &:hover {
-        background-color: #8641f2;
-        color: #fff;
-        text-decoration: none;
-    }
-}
 .btn2 {
-    background-color: #8641f2;
+    background-color: @primary-color;
     border-radius: 4px;
-    color: #fff;
+    color: black;
     padding: 7px 20px;
     text-decoration: none;
     font-weight: 600;
@@ -306,7 +291,7 @@ a:active,a:focus {
     cursor: pointer;
     transition: background-color .15s, color .15s;
     &:hover {
-        background-color: #7237CF;
+        background-color: lighten(@primary-color, 15%);
     }
     &.noBg {
         color: #c7c7c7;

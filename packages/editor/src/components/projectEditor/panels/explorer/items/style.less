@@ -14,6 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
+@import '../../../../../style/index.less';
+
 select {
     width: 100%;
     color: #fff;
@@ -88,9 +90,9 @@ select {
         border-color: transparent;
 
         &:hover {
-            border-color: #7237CF;
+            border-color: @primary-color;
             color: #fff;
-            background-color: rgba(128, 46, 255, 0.10);
+            background-color: @primary-color-light-hover;
 
             .buttonsWrapper {
                 display: flex;
@@ -168,10 +170,10 @@ select {
         border-color: transparent;
         margin: 0;
         &:hover {
-            background-color: rgba(128, 46, 255, 0.10);
+            background-color: @primary-color-light-hover;
             cursor: pointer;
             color: #ffffff;
-            border-color: #7237CF;
+            border-color: @primary-color;
             .icon {
                 border-color: transparent;
                 background: transparent;

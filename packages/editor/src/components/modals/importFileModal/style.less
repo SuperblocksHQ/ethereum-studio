@@ -32,6 +32,9 @@
         .header {
             padding: 18px 20px;
         }
+        a {
+            color: white;
+        }
         .area {
             height: 470px;
             .draggableImport{
@@ -54,18 +57,15 @@
                         li {
                             padding-left: 20px;
                             line-height: 40px;
-                            border-radius: 2px;
                             border-left: 2px solid transparent;
                             &:hover {
-                                background-color: @modal-color-hover-purple;
-                                border-color: #7237CF;
+                                background-color: @primary-color-light-hover;
                                 cursor: pointer;
-                                color: #fff;
                             }
                         }
                         .selected {
                             background-color: @modal-selected-color;
-                            color: #fff;
+                            color: black;
                             &:hover {
                                 background-color: @modal-selected-color;
                                 border-color: transparent;

@@ -11,14 +11,16 @@
             align-items: center;
             border-left: 2px solid transparent;
             &:hover {
-                background-color: rgba(128, 46, 255, 0.1);
+                background-color: @primary-color-light-hover;
                 cursor: pointer;
                 color: #fff;
-                border-color: #7237CF;
+                border-color: @primary-color;
             }
             &.selected {
                 background-color: @modal-selected-color;
-                color: #fff;
+                a {
+                    color: black;
+                }
                 &:hover {
                     background-color: @modal-selected-color;
                     border-color: transparent;

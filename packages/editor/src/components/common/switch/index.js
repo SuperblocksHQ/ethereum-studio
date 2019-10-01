@@ -23,7 +23,7 @@ export const Switch = ({checked, onChange, className}) => {
         <ReactSwitch
             checked={checked}
             onChange={onChange}
-            onColor="#8641F2"
+            onColor="#6CFFB8"
             className={className}
             checkedIcon={false}
             uncheckedIcon={false}

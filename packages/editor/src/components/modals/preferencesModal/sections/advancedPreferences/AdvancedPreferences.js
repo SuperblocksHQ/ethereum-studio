@@ -50,7 +50,7 @@ export default class AdvancedPreferences extends Component {
                             checked={trackAnalytics}
                             onChange={this.onTrackAnalyticsChange}
                             id="control-analytics"
-                            onColor="#8641F2"
+                            onColor="#6CFFB8"
                             className={style.switch}
                             checkedIcon={false}
                             uncheckedIcon={false}
