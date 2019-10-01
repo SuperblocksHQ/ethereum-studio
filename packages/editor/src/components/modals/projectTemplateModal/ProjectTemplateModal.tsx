@@ -94,7 +94,12 @@ export default class ProjectTemplateModal extends Component<IProps, IState> {
                         </div>
                     </div>
                     <div className={style.footer}>
-                        <button onClick={this.onCloseClickHandle} className='btn2 noBg mr-2'>Cancel</button>
+                        <StyledButton
+                            type={StyledButtonType.Secondary}
+                            text='Cancel'
+                            onClick={this.onCloseClickHandle}
+                            className='mr-2'
+                        />
                         <StyledButton
                             type={StyledButtonType.Primary}
                             isDisabled={Object.entries(selectedTemplate).length === 0}
