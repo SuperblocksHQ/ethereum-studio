@@ -14,21 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export const interactActions = {
+import { interactWithContractEpic } from './interactWithContract.epic';
 
-    TOGGLE_INTERACT_TREE_ITEM: 'TOGGLE_INTERACT_TREE_ITEM',
-    toggleInteractTreeItem(id: string) {
-        return {
-            type: interactActions.TOGGLE_INTERACT_TREE_ITEM,
-            data: { id }
-        };
-    },
-
-    INTERACT_WITH_CONTRACT: 'INTERACT_WITH_CONTRACT',
-    interactWithContract(name: string) {
-        return {
-            type: interactActions.INTERACT_WITH_CONTRACT,
-            data: { name }
-        };
-    },
-};
+export const interactEpics = [
+    interactWithContractEpic
+];

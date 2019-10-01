@@ -14,21 +14,14 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export const interactActions = {
+import { switchMap } from 'rxjs/operators';
+import { ofType, Epic } from 'redux-observable';
+import { interactActions } from '../../actions';
+import { empty } from 'rxjs';
 
-    TOGGLE_INTERACT_TREE_ITEM: 'TOGGLE_INTERACT_TREE_ITEM',
-    toggleInteractTreeItem(id: string) {
-        return {
-            type: interactActions.TOGGLE_INTERACT_TREE_ITEM,
-            data: { id }
-        };
-    },
-
-    INTERACT_WITH_CONTRACT: 'INTERACT_WITH_CONTRACT',
-    interactWithContract(name: string) {
-        return {
-            type: interactActions.INTERACT_WITH_CONTRACT,
-            data: { name }
-        };
-    },
-};
+export const interactWithContractEpic: Epic = (action$, state$) => action$.pipe(
+    ofType(interactActions.INTERACT_WITH_CONTRACT),
+    switchMap((action, state) => {
+        return empty();
+    })
+);

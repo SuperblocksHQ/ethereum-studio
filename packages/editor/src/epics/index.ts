@@ -26,6 +26,7 @@ import { deployerEpics } from './deployer';
 import { contractConfigurationEpics } from './contractConfiguration';
 import { accountEpics } from './account';
 import { transactionEpics } from './transactions';
+import { interactEpics } from './interact';
 
 export const epics = [
     ...settingsEpics,
@@ -39,7 +40,8 @@ export const epics = [
     ...deployerEpics,
     ...contractConfigurationEpics,
     ...accountEpics,
-    ...transactionEpics
+    ...transactionEpics,
+    ...interactEpics
     // Disable this 2 categories for now
     // ...userEpics,
     // ...loginEpics,
