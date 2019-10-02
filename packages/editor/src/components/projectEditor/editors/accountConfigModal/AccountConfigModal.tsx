@@ -75,7 +75,6 @@ export default class AccountConfigModal extends Component<IProps, IState> {
 
                     <div className={classNames([style.content, 'scrollable-y'])}>
                         <div className={style.inner}>
-                            <h1 className={style.title}>Edit Account</h1>
                             <div className={style.form}>
                                 <div className={style.field}>
 

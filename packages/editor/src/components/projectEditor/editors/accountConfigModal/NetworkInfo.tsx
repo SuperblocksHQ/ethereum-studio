@@ -15,6 +15,7 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { Component } from 'react';
+import style from './account-env-list.less';
 import { IAccount } from '../../../../models/state';
 import { getWeb3 } from '../../../../services/utils';
 import Networks from '../../../../networks';
@@ -90,7 +91,7 @@ export default class NetworkInfo extends Component<IProps, IState> {
                 } else {
                     const web3 = getWeb3(Networks[environment].endpoint);
                     return (
-                        <div>
+                        <div className={style.accountInfo}>
                             <h3>Metamask account</h3>
                             <p>
                                 <b>Address:</b> {accountInfo.address}
@@ -100,7 +101,7 @@ export default class NetworkInfo extends Component<IProps, IState> {
                                 ? <React.Fragment>
                                         <b>Balance:</b> {web3.toWei(accountInfo.balance)} wei ({accountInfo.balance} Ether){' '}
                                 </React.Fragment>
-                                : <span>{'<could not get balance>'}</span>
+                                : <span><b>Balance:</b> {'<could not get balance>'}</span>
                                 }
                             </p>
                         </div>
@@ -127,14 +128,14 @@ export default class NetworkInfo extends Component<IProps, IState> {
                     const web3 = getWeb3(Networks[environment].endpoint);
 
                     return (
-                        <div>
+                        <div className={style.accountInfo}>
                             <p><b>Address:</b> {accountInfo.address}</p>
                             <p>{
                                 accountInfo.balance
                                 ? <React.Fragment>
                                         <b>Balance:</b> {web3.toWei(accountInfo.balance)} wei ({accountInfo.balance} Ether){' '}
                                 </React.Fragment>
-                                : <span>{'<could not get balance>'}</span>
+                                : <span><b>Balance:</b> {'<could not get balance>'}</span>
                                 }
                             </p>
                             {unlockDifferentAccountButton}
