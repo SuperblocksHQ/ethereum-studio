@@ -25,7 +25,7 @@ class Solc {
         this.ref = null;
         this._counter = 0;
         this._cbMap = {};
-        this._version = "0.4.25";
+        this._version = "0.5.10";
     }
 
     init() {
@@ -44,7 +44,7 @@ class Solc {
 
         ReactDOM.render((
             <div style={{display: 'none'}} id={this.id}>
-                <iframe ref={setRef} src="/solc/index-v0.4.25b.html" frameBorder="0"></iframe>
+                <iframe ref={setRef} src="/solc/index-v0.5.10.html" frameBorder="0"></iframe>
             </div>
         ), document.getElementById('solc'));
 

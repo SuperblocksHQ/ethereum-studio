@@ -29,9 +29,11 @@ describe('solc', function() {
     const raiseToSummonTemplatePath = "./src/templates/raisetosummon.zip";
 
     // Compiler settings
-    const compilerPath = "../src/services/solc/dist/soljson-v0.4.25+commit.59dbf8f1.js"
+    const compilerPath = "../src/components/solc/dist/soljson-v0.5.10.js"
     const compiler = require(compilerPath);
-    const compile = compiler.cwrap("compileStandard", "string", ["string", "number"]);
+    const wrapper = require("solc/wrapper");
+    const compileWrapper = wrapper(compiler);
+    const compile = compileWrapper.compileStandardWrapper;
 
     // Reference example
     const referenceDummyContract = read_file("./reference/dummy/Dummy.sol").toString();
@@ -75,7 +77,7 @@ describe('solc', function() {
         };
 
         input.sources[expectedContractFileName] = { content: fileContents };
-        const output = JSON.parse(compile(JSON.stringify(input), 0));
+        const output = JSON.parse(compile(JSON.stringify(input)));
 
         //
         // Check data length settings
@@ -241,7 +243,7 @@ describe('solc', function() {
         // Expected data length settings
         const expectedContractsLength = 1;
         const expectedSourcesLength = 1;
-        const expectedErrorsLength = 3;
+        const expectedErrorsLength = 0;
 
         // Expected contract and file name settings
         const expectedContractFileName = "RaiseToSummon.sol";
