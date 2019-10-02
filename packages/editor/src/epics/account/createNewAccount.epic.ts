@@ -14,14 +14,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { of, empty } from 'rxjs';
+import { empty } from 'rxjs';
 import { ofType } from 'redux-observable';
 import { panesActions, accountActions } from '../../actions';
-import { withLatestFrom, switchMap, catchError } from 'rxjs/operators';
+import { withLatestFrom, switchMap } from 'rxjs/operators';
 import { AnyAction } from 'redux';
 import { ProjectItemTypes, IProjectItem } from '../../models';
 import { findItemByPath } from '../../reducers/explorerLib';
-import { IAccount, IOpenWallet } from '../../models/state';
 
 export const createNewAccountEpic = (action$: AnyAction, state$: any) => action$.pipe(
     ofType(accountActions.CREATE_NEW_ACCOUNT),
@@ -55,9 +54,5 @@ export const createNewAccountEpic = (action$: AnyAction, state$: any) => action$
         } else {
             return empty();
         }
-    }),
-    catchError((err: any) => {
-        console.log('Error while creating the new account: ', err);
-        return of(accountActions.UPDATE_ACCOUNT_NAME_FAIL);
     })
 );

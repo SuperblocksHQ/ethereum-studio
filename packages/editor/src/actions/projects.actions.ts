@@ -84,7 +84,7 @@ export const projectsActions = {
 
     // ----------- Wallet ---------------
     OPEN_WALLET: 'OPEN_WALLET',
-    openWallet(name: string, seed: string) {
+    openWallet(name: string, seed?: string) {
         return {
             type: projectsActions.OPEN_WALLET,
             data: { name, seed }
@@ -130,7 +130,7 @@ export const projectsActions = {
     loadProjectSuccess(project: IProject) {
        return {
             type: projectsActions.LOAD_PROJECT_SUCCESS,
-            data: { project }
+            data: { project, metamaskAccounts: window.web3.eth.accounts }
        };
     },
     LOAD_PROJECT_FAIL: 'LOAD_PROJECT_FAIL',

@@ -14,8 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export const accountSelectors = {
-    getSelectedAccount: (state: any) => state.accounts.selectedAccount,
-    getShowAccountConfig: (state: any) => state.accounts.showAccountConfig,
-    getKnownWalletSeed: (state: any) => state.accounts.knownWalletSeed
+export const accountsConfigSelectors = {
+    getAccountInfo: (state: any) => state.accountsConfig.accountInfo,
+    getEnvironment: (state: any) => state.accountsConfig.environment,
+    getShowAccountConfig: (state: any) => state.accountsConfig.showAccountConfig,
+    getKnownWalletSeed: (state: any) => state.accountsConfig.knownWalletSeed
 };

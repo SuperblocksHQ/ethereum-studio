@@ -16,9 +16,10 @@
 
 import Networks from '../../networks';
 import { IAccountEnvironment, IContractConfiguration } from '../../models';
-import { IAccount } from '../../models/state';
+import { IAccount, IEnvironment } from '../../models/state';
+import { replaceInArray } from '../utils';
 
-function getAccountInfo(dappfileAccount: any, dappfileWallets: any[], environmentName: string, openWallets: any, metamaskAccounts: string[]): IAccount {
+export function getAccountInfo(dappfileAccount: any, dappfileWallets: any[], environmentName: string, openWallets: any, metamaskAccounts: string[]): IAccount {
     const accountEnvironment = dappfileAccount._environments.find((e: IAccountEnvironment) => e.name === environmentName);
     const walletName = accountEnvironment ? accountEnvironment.data.wallet : null;
 
@@ -79,10 +80,42 @@ export function getDappSettings(dappfileCode: string, openWallets: any, metamask
             };
         }
     });
-    const selectedEnvironment = environments[0];
+    const selectedEnvironment: IEnvironment = environments[0];
 
     // accounts
     const accounts = resolveAccounts(dappFileData, selectedEnvironment.name, openWallets, metamaskAccounts);
 
     return { environments, selectedEnvironment, accounts, selectedAccount: accounts[0], dappFileData };
+}
+
+export function updateAccountAddress(dappfileData: any, accountName: string, environment: string, address: string) {
+    return {
+        ...dappfileData,
+        accounts: replaceInArray(
+            dappfileData.accounts,
+            (a: any) => a.name === accountName,
+            (a: any) => {
+                const _environments = replaceInArray(
+                    a._environments,
+                    (e: any) => e.name === environment,
+                    (item) => ({
+                        ...item,
+                        data: { address }
+                    })
+                );
+
+                // if no change - then item was not found and should be created
+                if (_environments === a._environments) {
+                    _environments.push({
+                        name: environment,
+                        data: { address }
+                    });
+                }
+
+                return {
+                    ...a,
+                    _environments
+                };
+            })
+    };
 }
