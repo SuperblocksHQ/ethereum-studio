@@ -24,16 +24,20 @@ import { projectService } from '../../services/project.service';
 export const deleteProject: Epic = (action$: any, state$: any) => action$.pipe(
     ofType(projectsActions.DELETE_PROJECT),
     withLatestFrom(state$),
-    switchMap(([action, state]) => {
+    switchMap(([action]) => {
         if (confirm('Are you sure you want to delete the project?')) {
             return projectService.deleteProjectById(action.data.projectId)
                 .pipe(
-                    switchMap(() => [projectsActions.deleteProjectSuccess()]),
-                    tap(() => action.data.redirect ? document.location.href = '/' : null),
+                    switchMap(() => {
+                        if (action.data.redirect) {
+                            document.location.href = '/';
+                        }
 
+                        return [projectsActions.deleteProjectSuccess()];
+                    }),
                     catchError((error) => {
                         console.log('There was an issue deleting the project: ' + error);
-                        return [userActions.getProjectList(), of(projectsActions.deleteProjectFail(error))];
+                        return [projectsActions.deleteProjectFail(error)];
                     })
                 );
         } else {

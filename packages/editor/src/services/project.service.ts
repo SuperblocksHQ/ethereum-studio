@@ -54,13 +54,15 @@ export const projectService = {
             method: 'PUT',
             body: data
         }).pipe(
-            switchMap(r => of((r.ok ? r.statusText : throwError(r.statusText))))
+            switchMap(r => r.ok ? of(r.statusText) : throwError(r.statusText))
         );
     },
 
     deleteProjectById(id: string) {
         return fetchJSON(process.env.REACT_APP_API_BASE_URL + '/v1/projects/' + id, {
             method: 'DELETE'
-        });
+        }).pipe(
+            switchMap(r => r.ok ? of(r.statusText) : throwError(r.statusText))
+        );
     },
 };

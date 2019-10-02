@@ -20,16 +20,28 @@ import { projectsActions } from '../../actions';
 import {
     IconInformation,
     IconWarning,
-    IconClose
+    IconClose,
+    IconCheckCircle
 } from '../icons';
 
-export const CloseButton = ({ closeToast }) => (
+export const CloseButton = ({ closeToast }: any) => (
     <button className={classNames(['closeIcon', 'btnNoBg'])} onClick={closeToast}>
         <IconClose className={'icon'}/>
     </button>
 );
 
-const info = (text) => ({
+const success = (text: string) => ({
+    ToastComponent: () =>
+    (
+        <div className={'messageContainer'}>
+            <IconCheckCircle/>
+            {text}
+        </div>
+    ),
+    className: classNames(['body', 'success'])
+});
+
+const info = (text: string) => ({
     ToastComponent: () =>
     (
         <div className={'messageContainer'}>
@@ -40,7 +52,7 @@ const info = (text) => ({
     className: classNames(['body', 'info'])
 });
 
-const error = (text) => ({
+const error = (text: string) => ({
     ToastComponent: () =>
     (
         <div className={'messageContainer'}>
@@ -51,19 +63,19 @@ const error = (text) => ({
     className: classNames(['body', 'error'])
 });
 
-export const getToastComponent = (type) => {
-    switch(type) {
+export const getToastComponent = (type: string) => {
+    switch (type) {
         case projectsActions.FORK_PROJECT:
             return info('Forking project...');
         case projectsActions.FORK_PROJECT_FAIL:
-            return error('Error while forking!');
+            return error('Ups. Error while forking. Please try again');
         case projectsActions.UPDATE_PROJECT_SETTINGS_FAIL:
-            return error('Error updating project settings');
+            return error('Ups. Error updating project settings');
         case projectsActions.CREATE_PROJECT_SUCCESS:
-            return info('Project created!');
+            return success('Project created!');
         case projectsActions.DELETE_PROJECT_FAIL:
-            return error('Error deleting project!');
+            return error('Ups. Error deleting project. Please try again');
         default:
             return null;
     }
-}
+};

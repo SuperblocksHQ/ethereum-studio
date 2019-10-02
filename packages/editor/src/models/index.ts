@@ -30,3 +30,4 @@ export * from './interact.model';
 export * from './network.model';
 export * from './accountConfig.model';
 export * from './abi.model';
+export * from './toast.model';
