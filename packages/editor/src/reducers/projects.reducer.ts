@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { IProjectState, IEnvironment, IAccount, IExplorerState } from '../models/state';
+import { IProjectState, IEnvironment, IExplorerState } from '../models/state';
 import { AnyAction } from 'redux';
 import { IProjectItem } from '../models';
 import { getDappSettings, resolveAccounts } from './dappfileLib';
@@ -123,6 +123,7 @@ export default function projectsReducer(state = initialState, action: AnyAction,
         }
         case projectsActions.LOAD_PROJECT_SUCCESS: {
             const files: IProjectItem = action.data.project.files;
+            const metamaskAccounts = action.data.metamaskAccounts || [];
             let stateChange = {
                 environments: initialState.environments,
                 selectedEnvironment: initialState.selectedEnvironment,
@@ -133,7 +134,7 @@ export default function projectsReducer(state = initialState, action: AnyAction,
             try {
                 const dappfile = files.children.find(f => f.name === 'dappfile.json');
                 if (dappfile) {
-                    stateChange = getDappSettings(dappfile.code || '', state.openWallets, state.metamaskAccounts);
+                    stateChange = getDappSettings(dappfile.code || '', state.openWallets, metamaskAccounts);
                 }
             } catch (e) {
                 console.log(e);
@@ -147,6 +148,7 @@ export default function projectsReducer(state = initialState, action: AnyAction,
                 project: { ...action.data.project, files: undefined },
                 isProjectLoading: false,
                 loadProjectError: undefined,
+                metamaskAccounts,
                 ...stateChange
             };
         }

@@ -124,7 +124,7 @@ export const projectsActions = {
     loadProjectSuccess(project: IProject) {
        return {
             type: projectsActions.LOAD_PROJECT_SUCCESS,
-            data: { project }
+            data: { project, metamaskAccounts: window.web3.eth.accounts }
        };
     },
     LOAD_PROJECT_FAIL: 'LOAD_PROJECT_FAIL',
