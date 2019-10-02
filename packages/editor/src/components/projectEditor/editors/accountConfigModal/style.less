@@ -56,8 +56,9 @@
                 }
 
             }
-            .networkContainer {
-                margin-top: 40px;
+            .infoText {
+                margin-top: 32px;
+                margin-bottom: 20px;
 
                 .titleContainer {
                     display: flex;
@@ -71,56 +72,6 @@
                 .subtitle {
                     a {
                         color: @primary-color;
-                    }
-                }
-                .networkHeader {
-                    margin-top: 50px;
-                    margin-bottom: 20px;
-                }
-                .networkSelector {
-                    display: flex;
-                    margin-top: 40px;
-                    .networks {
-                        width: 20%;
-                        border-right: 1px solid #565656;
-                        max-width: 300px;
-                        p {
-                            display: block;
-
-                        }
-                        a {
-                            color: #333;
-                            font-size: 1.2em;
-                        }
-                        ul {
-                            list-style: none;
-                            margin: 0;
-                            padding: 0;
-                            color: #b1b1b1;
-                            li {
-                                line-height: 40px;
-                                border-left: 2px solid;
-                                border-color: transparent;
-                                &:hover {
-                                    background-color: @primary-color-light-hover;
-                                    cursor: pointer;
-                                    color: #fff;
-                                    border-color: @primary-color;
-                                }
-                                .networkName {
-                                    padding: 0 16px;
-                                }
-                            }
-                            .active {
-                                background-color: @primary-color;
-                                color: black;
-                                border-color: @primary-color;
-                            }
-                        }
-                    }
-                    .networkInfo {
-                        width: 80%;
-                        margin-left: 40px;
                     }
                 }
             }

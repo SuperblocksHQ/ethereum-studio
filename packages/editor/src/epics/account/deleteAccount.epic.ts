@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { of, empty } from 'rxjs';
+import { empty } from 'rxjs';
 import { ofType } from 'redux-observable';
 import { panesActions, accountActions } from '../../actions';
 import { withLatestFrom, switchMap, catchError } from 'rxjs/operators';
@@ -30,17 +30,13 @@ export const deleteAccountEpic = (action$: AnyAction, state$: any) => action$.pi
         const dappFileData = state.projects.dappFileData;
         const dappFileItem: Nullable<IProjectItem> = findItemByPath(state.explorer.tree, [ 'dappfile.json' ], ProjectItemTypes.File);
 
-        if (dappFileItem != null) {
+        if (dappFileItem !== null) {
             const dappFileAccounts = dappFileData.accounts.filter((a: any) => a.name !== accountName);
             dappFileData.accounts = dappFileAccounts;
 
-            return [panesActions.saveFile(dappFileItem.id, JSON.stringify(dappFileData, null, 4)), accountActions.deleteAccountSuccess(dappFileData)];
+            return [panesActions.saveFile((<IProjectItem>dappFileItem).id, JSON.stringify(dappFileData, null, 4)), accountActions.deleteAccountSuccess(dappFileData)];
         } else {
             return empty();
         }
-    }),
-    catchError((err: any) => {
-        console.log('Error while creating the new account: ', err);
-        return of(accountActions.UPDATE_ACCOUNT_NAME_FAIL);
     })
 );

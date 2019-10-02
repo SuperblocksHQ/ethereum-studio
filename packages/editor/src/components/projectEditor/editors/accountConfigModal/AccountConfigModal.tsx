@@ -22,10 +22,15 @@ import { Modal, ModalHeader } from '../../../common';
 import AccountEnvironmentList from './AccountEnvironmentList';
 
 interface IProps {
-    account: IAccount;
+    accountInfo: IAccount;
     environments: IEnvironment[];
-    updateAccountName: (account: IAccount, neName: string) => void;
-    hideModal: () => void;
+    environment: string;
+    updateAccountName(account: IAccount, newName: string): void;
+    hideModal(): void;
+
+    changeEnvironment(environmentName: string): void;
+    updateAddress(address: string): void;
+    openWallet(walletName: string): void;
 }
 
 interface IState {
@@ -36,26 +41,9 @@ interface IState {
 export default class AccountConfigModal extends Component<IProps, IState> {
 
     state = {
-        newAccountName: this.props.account.name,
+        newAccountName: this.props.accountInfo.name,
         accountNameDirty: false
     };
-
-    // TODO
-    // canClose = (cb, silent) => {
-    //     if (
-    //         (this.state.accountBalanceDirty ||
-    //             this.state.accountAddressDirty ||
-    //             this.state.accountNameDirty) &&
-    //         !silent
-    //     ) {
-    //         const flag = confirm(
-    //             'There is unsaved data. Do you want to close tab and loose the changes?'
-    //         );
-    //         cb(flag ? 0 : 1);
-    //         return;
-    //     }
-    //     cb(0);
-    // }
 
     onNameChange = (e: any) => {
         const value = e.target.value;
@@ -66,7 +54,7 @@ export default class AccountConfigModal extends Component<IProps, IState> {
     }
 
     saveName = (e: any) => {
-        const { account, updateAccountName } = this.props;
+        const { accountInfo: account, updateAccountName } = this.props;
         const { newAccountName } = this.state;
         e.preventDefault();
 
@@ -77,23 +65,20 @@ export default class AccountConfigModal extends Component<IProps, IState> {
     }
 
     render() {
-        const { account, environments, hideModal } = this.props;
+        const { accountInfo, environments, environment, hideModal, changeEnvironment, updateAddress, openWallet } = this.props;
         const { accountNameDirty, newAccountName } = this.state;
-
-        console.log(accountNameDirty);
 
         return (
             <Modal hideModal={hideModal}>
                 <div className={classNames([style.accountConfigModal, 'modal'])}>
-                    <ModalHeader
-                        title='Configure Account'
-                        onCloseClick={hideModal}
-                    />
+                    <ModalHeader title='Configure Account' onCloseClick={hideModal} />
+
                     <div className={classNames([style.content, 'scrollable-y'])}>
                         <div className={style.inner}>
                             <h1 className={style.title}>Edit Account</h1>
                             <div className={style.form}>
                                 <div className={style.field}>
+
                                     <div className='superInputDarkInline'>
                                         <label htmlFor='name'>Name</label>
                                         <input
@@ -103,22 +88,37 @@ export default class AccountConfigModal extends Component<IProps, IState> {
                                             onKeyUp={this.onNameChange}
                                             onChange={this.onNameChange}
                                         />
-
-                                        <button
-                                            className='btn2'
-                                            disabled={!accountNameDirty}
-                                            onClick={this.saveName}
-                                        >
+                                        <button className='btn2' disabled={!accountNameDirty} onClick={this.saveName}>
                                             Save name
                                         </button>
                                     </div>
+
+                                    <div className={style.infoText}>
+                                        <div className={style.titleContainer}>
+                                            <h3 className={style.title}>Configure the account foreach network</h3>
+                                        </div>
+                                        <div className={style.subtitle}>Each account must be configured for each of the networks available.
+                                            <a href='https://help.superblocks.com/' target='_blank' rel='noopener noreferrer'>
+                                                {' '}
+                                                Click here
+                                            </a>{' '}
+                                            to access our Help Center and find more information about this.
+                                        </div>
+                                    </div>
+
                                     <AccountEnvironmentList
+                                        accountInfo={accountInfo}
                                         environments={environments}
+                                        environment={environment}
+                                        changeEnvironment={changeEnvironment}
+                                        updateAddress={updateAddress}
+                                        openWallet={openWallet}
                                     />
                                 </div>
                             </div>
                         </div>
                     </div>
+
                 </div>
             </Modal>
         );

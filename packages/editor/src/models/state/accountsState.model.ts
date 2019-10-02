@@ -16,8 +16,17 @@
 
 import { IAccount } from './project-state.model';
 
-export interface IAccountState {
+export enum UpdateAccountResults {
+    OK,
+    IllegalAddress
+}
+
+export interface IAccountConfigState {
     showAccountConfig: boolean;
-    selectedAccount?: IAccount;
+    accountInfo?: IAccount;
     knownWalletSeed: string;
+    environment: string;
+    dappFileCodeToSave?: string;
+    dappFileId: string;
+    updateAccountResult: UpdateAccountResults;
 }

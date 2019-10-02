@@ -18,7 +18,7 @@ import { Preview } from './Preview';
 import { connect } from 'react-redux';
 import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
-import { projectSelectors, previewSelectors, accountSelectors } from '../../../../selectors';
+import { projectSelectors, previewSelectors, accountsConfigSelectors } from '../../../../selectors';
 import { previewActions, transactionsActions } from '../../../../actions';
 import { TransactionType } from '../../../../models';
 
@@ -31,7 +31,7 @@ const mapStateToProps = (state: any) => ({
     selectedEnvironment: projectSelectors.getSelectedEnvironment(state),
     selectedAccount: projectSelectors.getSelectedAccount(state),
     htmlToRender: previewSelectors.getHtmlToRender(state),
-    knownWalletSeed: accountSelectors.getKnownWalletSeed(state)
+    knownWalletSeed: accountsConfigSelectors.getKnownWalletSeed(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {

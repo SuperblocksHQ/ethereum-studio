@@ -1,14 +1,15 @@
 import { connect } from 'react-redux';
-import { accountActions } from '../../../../actions';
+import { accountActions, projectsActions } from '../../../../actions';
 import AccountConfigModal from './AccountConfigModal';
 import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
-import { accountSelectors, projectSelectors } from '../../../../selectors';
+import { accountsConfigSelectors, projectSelectors } from '../../../../selectors';
 import { IAccount } from '../../../../models/state';
 
 const mapStateToProps = (state: any) => ({
-    account: accountSelectors.getSelectedAccount(state),
+    accountInfo: accountsConfigSelectors.getAccountInfo(state),
     environments: projectSelectors.getEnvironments(state),
+    environment: accountsConfigSelectors.getEnvironment(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
@@ -16,9 +17,15 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
         updateAccountName(account: IAccount, newName: string) {
             dispatch(accountActions.updateAccountName(account, newName));
         },
-        // saveAccountConfig(accountConfig: IAccount) {
-        //     dispatch(accountActions.saveContractConfig(accountConfig));
-        // }
+        changeEnvironment(environmentName: string) {
+           dispatch(accountActions.changeEnvironment(environmentName));
+        },
+        updateAddress(address: string) {
+            dispatch(accountActions.updateAddress(address));
+        },
+        openWallet(walletName: string) {
+            dispatch(projectsActions.openWallet(walletName));
+        }
     };
 };
 

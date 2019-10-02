@@ -25,10 +25,6 @@ export const openWalletEpic: Epic = (action$: any, state$: any) => action$.pipe(
     withLatestFrom(state$),
     switchMap(([action, state]) => {
         const walletName = action.data.name;
-        if (state.projects.openWallets[walletName]) {
-            return empty();
-        }
-
         return from(walletService.openWallet(walletName, action.data.seed, null))
             .pipe(
                 map((wallet: any) => projectsActions.openWalletSuccess(walletName, wallet.addresses))
