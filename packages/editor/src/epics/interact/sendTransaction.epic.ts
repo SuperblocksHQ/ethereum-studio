@@ -98,7 +98,7 @@ function tryExternalSend$(environment: IEnvironment, selectedAccount: IAccount, 
 
     return concat(
         of(outputLogActions.addRows([{ channel: 1, msg: 'External account detected. Opening external account provider...' }])),
-        // of(deployerActions.showExternalProviderInfo()),
+        of(deployerActions.showExternalProviderInfo()),
         // here we need to wait for confirmation for mainnet deploy
         doSendExternally$(environment, selectedAccount, networkSettings, contractName, data, to, value)
     );

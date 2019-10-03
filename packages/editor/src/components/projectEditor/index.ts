@@ -26,6 +26,7 @@ const mapStateToProps = (state: any) => ({
     panels: state.panels,
     selectedEnvironment: projectSelectors.getSelectedEnvironment(state),
     showContractConfig: contractConfigSelectors.showContractConfig(state),
+    showExternalProviderInfo: state.deployer.showExternalProviderInfo
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {

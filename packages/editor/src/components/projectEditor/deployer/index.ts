@@ -25,7 +25,6 @@ import { deployerActions } from '../../../actions';
 const mapStateToProps = (state: any) => ({
     projectName: projectSelectors.getProjectName(state),
     showMainnetWarning: state.deployer.showMainnetWarning,
-    showExternalProviderInfo: state.deployer.showExternalProviderInfo
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
