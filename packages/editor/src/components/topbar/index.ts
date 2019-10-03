@@ -24,10 +24,11 @@ import { AnyAction } from 'redux';
 const mapStateToProps = (state: any) => ({
     selectedProjectName: projectSelectors.getProjectName(state),
     selectedProjectId: projectSelectors.getProjectId(state),
-    showForkButton: userSelectors.getShowForkButton(state),
     view: {
         project: projectSelectors.getProject(state),
         showOpenInLab: viewSelectors.getShowTopBarOpenInLab(state),
+        showForkButton: viewSelectors.getShowTopBarForkButton(state),
+        showShareButton: viewSelectors.getShowTopBarShareButton(state),
     },
     isProjectForking: userSelectors.isProjectForking(state),
     showAccountConfig: accountsConfigSelectors.getShowAccountConfig(state)

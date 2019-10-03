@@ -29,12 +29,13 @@ import AccountConfigModal from '../projectEditor/editors/accountConfigModal';
 interface IView {
     showOpenInLab: boolean;
     project: IProject;
+    showForkButton: boolean;
+    showShareButton: boolean;
 }
 
 interface IProps {
     selectedProjectName: string;
     selectedProjectId: string;
-    showForkButton: boolean;
     isProjectForking: boolean;
     view: IView;
     showAccountConfig: boolean;
@@ -46,7 +47,6 @@ export default class TopBar extends Component<IProps> {
 
     state = {
         selectedProjectName: this.props.selectedProjectName,
-        showForkButton: this.props.showForkButton,
     };
 
     componentDidUpdate(prevProps: IProps) {
@@ -80,9 +80,7 @@ export default class TopBar extends Component<IProps> {
     }
 
     render() {
-
-        const { showForkButton } = this.state;
-        const { project, showOpenInLab } = this.props.view;
+        const { project, showOpenInLab, showForkButton, showShareButton } = this.props.view;
         const { isProjectForking, showAccountConfig, closeAccountConfigModal } = this.props;
 
         return (
@@ -113,9 +111,11 @@ export default class TopBar extends Component<IProps> {
                                 isProjectForking={isProjectForking}
                             />
                         </OnlyIf>
-                        <ShareDropdownAction
-                            toggleShareModal={() => this.showModal('share')}
-                        />
+                        <OnlyIf test={showShareButton}>
+                            <ShareDropdownAction
+                                toggleShareModal={() => this.showModal('share')}
+                            />
+                        </OnlyIf>
                     </div>
                 </div>
                 <ProjectTitle
