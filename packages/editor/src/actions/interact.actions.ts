@@ -59,7 +59,7 @@ export const interactActions = {
     },
 
     SEND_TRANSACTION_SUCCESS: 'SEND_TRANSACTION_SUCCESS',
-    sendTransactionSuccess(result: string) {
+    sendTransactionSuccess(result: any) {
         return {
             type: interactActions.SEND_TRANSACTION_SUCCESS,
             data: { result }

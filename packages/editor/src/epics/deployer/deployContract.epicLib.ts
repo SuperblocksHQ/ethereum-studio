@@ -107,7 +107,7 @@ export function browserDeploy(state: any, deployRunner: DeployRunner) {
             } else if (output.hash && output.tx) { // result
                 return finalizeDeploy(state, deployRunner, output.hash, state.deployer.outputPath, true, output.tx);
             } else { // unexpected error
-                return of(outputLogActions.addRows([{ msg: 'Unexpected error occured. Please try again!', channel: 3 }]));
+                return of(outputLogActions.addRows([{ msg: 'Unexpected error occurred. Please try again!', channel: 3 }]));
             }
         }),
         catchError((e) => [ outputLogActions.addRows([e]), deployerActions.deployFail()])
