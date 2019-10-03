@@ -9,7 +9,7 @@ interface INetworkRecord {
 // Map network to endpoint.
 const Networks: INetworkRecord = {
     browser: {
-        endpoint: 'http://superblocks-browser',
+        endpoint: 'http://ethereum-studio-browser',
         chainId: undefined,
         interval: 1000,
         name: 'browser'

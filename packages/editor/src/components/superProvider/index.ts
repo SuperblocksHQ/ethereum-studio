@@ -19,6 +19,7 @@ import Tx from 'ethereumjs-tx';
 import Buffer from 'buffer';
 import { evmService, walletService } from '../../services';
 import { IEnvironment, IAccount } from '../../models/state';
+import Networks from '../../networks';
 
 export default class SuperProvider {
     private readonly channelId: string;
@@ -65,7 +66,7 @@ export default class SuperProvider {
         // Send request on given endpoint
         // TODO: possibly set from and gasLimit.
         return new Promise(async (resolve, reject) => {
-            if (endpoint.toLowerCase() === 'http://superblocks-browser') {
+            if (endpoint.toLowerCase() === Networks.browser.endpoint) {
                 evmService.getProvider().sendAsync(payload, ((err: any, result: any) => {
                     if (err) {
                         console.log(err);
@@ -156,7 +157,7 @@ export default class SuperProvider {
                 return;
             }
             if (this.selectedAccount.type === 'metamask') {
-                if (data.endpoint.toLowerCase() === 'http://superblocks-browser') {
+                if (data.endpoint.toLowerCase() === Networks.browser.endpoint) {
                     const err = 'External/Metamask account cannot be used for the in-browser blockchain.';
                     alert(err);
                     sendIframeMessage(err, null);
@@ -248,7 +249,7 @@ export default class SuperProvider {
 
     private getWeb3 = (endpoint: string) => {
         let provider;
-        if (endpoint.toLowerCase() === 'http://superblocks-browser') {
+        if (endpoint.toLowerCase() === Networks.browser.endpoint) {
             provider = evmService.getProvider();
         } else {
             provider = new Web3.providers.HttpProvider(endpoint);
