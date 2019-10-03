@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconFolderOpen, IconContract } from '../../../../icons';
+import { IconContract } from '../../../../icons';
 import BaseItem from './baseItem';
 import { IDeployedContract } from '../../../../../models';
 

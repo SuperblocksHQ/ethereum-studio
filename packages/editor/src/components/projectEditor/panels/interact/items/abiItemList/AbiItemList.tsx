@@ -16,21 +16,28 @@
 
 import React from 'react';
 // import style from './style.less';
-import { IRawAbiDefinition, Type } from '../../../../../../models';
+import { IRawAbiDefinition, Type, IDeployedContract } from '../../../../../../models';
 import { Constant } from './types/Constant';
 import { Transaction } from './types/Transaction';
 import { Payable } from './types/Payable';
 
 interface IProps {
-    abi: IRawAbiDefinition[];
+    deployedContract: IDeployedContract;
+    call: (deployedContract: IDeployedContract, rawAbiDefinition: IRawAbiDefinition) => void;
 }
 
-export class AbiItemList extends React.Component<IProps> {
+export default class AbiItemList extends React.Component<IProps> {
+
+    call = (rawAbiDefinition: IRawAbiDefinition) => {
+        const { call, deployedContract } = this.props;
+        call(deployedContract, rawAbiDefinition);
+    }
 
     renderAbiDefinition(rawAbiDefinition: IRawAbiDefinition) {
         if (rawAbiDefinition.constant) {
             return <Constant
-                        data={rawAbiDefinition}
+                        call={this.call}
+                        rawAbiDefinition={rawAbiDefinition}
                     />;
         } else if (rawAbiDefinition.type === Type.Function && !rawAbiDefinition.payable) {
             return <Transaction
@@ -44,10 +51,10 @@ export class AbiItemList extends React.Component<IProps> {
     }
 
     render() {
-        const { abi } = this.props;
+        const { deployedContract } = this.props;
         return (
             <div>
-                { abi.map((rawAbiDefinition) => {
+                { deployedContract.abi.map((rawAbiDefinition) => {
                     return (
                             <div key={rawAbiDefinition.name}>
                                 { this.renderAbiDefinition(rawAbiDefinition) }

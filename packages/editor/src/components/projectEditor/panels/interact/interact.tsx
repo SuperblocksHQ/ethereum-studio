@@ -18,7 +18,7 @@ import React from 'react';
 import style from './style.less';
 import { IDeployedContract } from '../../../../models';
 import { DeployedContractItem } from './items/deployedContractItem';
-import { AbiItemList } from './items/aibItemList';
+import AbiItemList from './items/abiItemList';
 
 interface IProps {
     deployedItems: IDeployedContract[];
@@ -33,7 +33,7 @@ export class InteractPanel extends React.Component<IProps> {
                 <div>{item.address}</div>
                 <div className={style.title}>Interact:</div>
                     <AbiItemList
-                        abi={item.abi}
+                        deployedContract={item}
                     />
             </div>
         );

@@ -21,16 +21,22 @@ import { StyledButton } from '../../../../../../common';
 import { StyledButtonType } from '../../../../../../common/buttons/StyledButtonType';
 
 interface IProps {
-    data: IRawAbiDefinition;
+    rawAbiDefinition: IRawAbiDefinition;
+    call: (rawAbiDefinition: IRawAbiDefinition) => void;
 }
 
 export class Constant extends React.Component<IProps> {
 
+    call = () => {
+        const { call, rawAbiDefinition } = this.props;
+        call(rawAbiDefinition);
+    }
+
     render() {
-        const { data } = this.props;
+        const { rawAbiDefinition } = this.props;
         return (
             <div className={style.container}>
-                <StyledButton type={StyledButtonType.Constant} text={data.name} />
+                <StyledButton type={StyledButtonType.Constant} text={rawAbiDefinition.name} onClick={this.call}/>
             </div>
         );
     }
