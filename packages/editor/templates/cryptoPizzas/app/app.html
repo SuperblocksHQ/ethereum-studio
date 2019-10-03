@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <script type="text/javascript" src="https://unpkg.com/jquery@3.3.1/dist/jquery.js"></script>
+        <script type="text/javascript" src="https://unpkg.com/web3@0.20.5/dist/web3.min.js"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+        <!-- The generated javascript and app.js will be substituted in below -->
+        <!-- JAVASCRIPT -->
+
+        <!-- The app.css contents will be substituted in below -->
+        <!-- STYLE -->
+
+        <script>
+            /* Functionality for tabs - navigation */
+            function openTab(evt, tabName) {
+                var i, tabcontent, tablinks;
+                tabcontent = document.getElementsByClassName("tabcontent");
+                for (i = 0; i < tabcontent.length; i++) {
+                    tabcontent[i].style.display = "none";
+                }
+                tablinks = document.getElementsByClassName("tablinks");
+                for (i = 0; i < tablinks.length; i++) {
+                    tablinks[i].className = tablinks[i].className.replace(" active", "");
+                }
+                document.getElementById(tabName).style.display = "block";
+                evt.currentTarget.className += " active";
+            }
+        </script>
+    </head>
+    <body>
+        <div id="status"></div>
+
+        <div class="container">
+            <!-- Header -->
+            <header>
+                <h1>CryptoPizza</h1>
+                <hr>
+            </header>
+
+            <!-- Navigation -->
+            <div class="tab">
+                <button class="tablinks" onclick="openTab(event, 'create-tab')">Create new</button>
+                <button class="tablinks" onclick="openTab(event, 'inventory-tab')">Inventory</button>
+            </div>
+
+            <!-- Create section -->
+            <div id="create-tab" class="tabcontent">
+                <h2>Create new CryptoPizza</h2>
+
+                <div class="pizza-container" id="pizza-create-container">
+                    <img class="pizza-frame" src="http://digitalpromotion.cz/test/container.jpg"/>
+                    <img src="http://digitalpromotion.cz/test/corpus.png"/>
+                    <!-- Ingredients images will be appended to this div -->
+                    <div class="ingredients"></div>
+                </div>
+
+                <div class="input-container">
+                    <input type="text" id="create-name" placeholder="Enter name..." maxlength="20" />
+                    <button class="btn" id="button-create">Create</button>
+                </div>
+            </div>
+
+            <!-- Inventory section -->
+            <div id="inventory-tab" class="tabcontent">
+                <h2>Your inventory</h2>
+                <!-- Pizza containers will be appended to this div -->
+                <div class="row inventory-list"></div>
+            </div>
+        </div>
+    </body>
+</html>
