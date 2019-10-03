@@ -27,7 +27,7 @@ export default class ContactContainer extends Component {
                     <a href="https://twitter.com/ethereum" target="_blank" rel="noopener noreferrer" className={style.contactIcon} title="Ethereum' Twitter">
                         <IconTwitter />
                     </a>
-                    <a href="https://github.com/SuperblocksHQ/ethereum-studio" target="_blank" rel="noopener noreferrer" className={style.contactIcon} title="Superblocks Lab Github">
+                    <a href="https://github.com/SuperblocksHQ/ethereum-studio" target="_blank" rel="noopener noreferrer" className={style.contactIcon} title="Ethereum Studio Github">
                         <IconGithub />
                     </a>
                     <a href="https://gitter.im/ethereum/documentation" target="_blank" rel="noopener noreferrer" className={style.contactIcon} title="Documentation' Community (Gitter)">

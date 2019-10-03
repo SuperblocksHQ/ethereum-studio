@@ -85,7 +85,7 @@ export const IconFolderOpen = ({ ...props }) => (
 )
 
 export const IconSuperblocks = ({ ...props }) => (
-    <IconImg src={'/static/img/img-logo.svg'} {...props} />
+    <IconImg src={'/static/img/img-logo-superblocks.svg'} {...props} />
 );
 
 export const PictureVargavintern = ({ ...props }) => (

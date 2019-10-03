@@ -40,6 +40,6 @@ deploy to dev:
       - kubectl apply -f kubernetes.yml
     environment:
       name: dev
-      url: https://dashboard-dev.superblocks.com
+      url: https://studio.superblocks.com
     only:
       - master

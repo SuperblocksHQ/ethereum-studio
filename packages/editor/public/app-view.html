@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Superblocks App View</title>
+    <title>Ethereum Studio App View</title>
     <style>
         body, html, #iframe {
             height: 100%;
@@ -18,7 +18,7 @@
     <script>
         window.onload = function() {
             var iframe = document.getElementById('iframe');
-            
+
             window.addEventListener('message', function(e) {
                 if (e.data.type === 'set-content') {
                     iframe.srcdoc = e.data.payload;

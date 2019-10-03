@@ -1,8 +1,8 @@
 ---
 name: Question
-about: The issue tracker is not for questions. Please ask questions on https://stackoverflow.com/questions/tagged/superblocks.
+about: The issue tracker is not for questions. Please ask questions on https://stackoverflow.com/questions/tagged/ethereum-studio.
 ---
 
 🚨 The issue tracker is not for questions 🚨
 
-If you have a question, please ask it on https://stackoverflow.com/questions/tagged/superblocks.
+If you have a question, please ask it on https://stackoverflow.com/questions/tagged/ethereum-studio.

@@ -35,7 +35,7 @@ const HelpDropdownDialog = () => (
                     target='_blank'
                     rel='noopener noreferrer'
                 >
-                    Guide to Superblocks
+                    Guide to Ethereum Studio
                 </a>
             </li>
             <li>

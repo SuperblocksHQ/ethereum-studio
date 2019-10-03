@@ -45,7 +45,7 @@ export default class BottomBar extends Component<IProps> {
                 <div className={style.left}>
                     <a href='https://superblocks.com' target='_blank' rel='noopener noreferrer'>
                         <span>Powered by</span>
-                        <img src='/static/img/img-logo.svg' alt='Superblocks' />
+                        <img src='/static/img/img-logo-superblocks.svg' alt='Superblocks' />
                     </a>
                 </div>
                 <div className={style.right}>

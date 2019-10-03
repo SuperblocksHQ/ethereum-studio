@@ -1,7 +1,7 @@
-Superblocks.com Web server
+Ethereum Studio Web server
 ============================
 
-Simple _NodeJS Express_ server used to serve the Superblocks dashboard in a production environment.
+Simple _NodeJS Express_ server used to serve the Ethereum Studio editor in a production environment.
 
 ## Testing locally (unit tests)
 
@@ -90,8 +90,8 @@ npm run test:integration
 
 Example output:
 ```
-Superblocks Dashboard is listening on port 8080
-Public directory path set to [...]/superblocks-client/packages/dashboard/public
+Ethereum Studio is listening on port 8080
+Public directory path set to [...]/ethereum-studio/packages/dashboard/public
   Test /:organizationName/projects/:projectName.svg
 getBuildStatus for organization badge-feature-test(5d480a8f765142cbc2743cba) project badge-feature-test-local-project-success(5d480aa5418f9938ef2040ab) branch master: success
     ✓ Should successfully retrieve a success badge: GET /badge-feature-test/projects/badge-feature-test-local-project-success.svg (73ms)

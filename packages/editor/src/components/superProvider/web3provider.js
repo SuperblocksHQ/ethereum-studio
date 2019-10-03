@@ -101,7 +101,7 @@ window.DevKitProvider = {};
             );
             return { id: a.id, jsonrpc: a.jsonrpc, result: true };
         } else {
-            throw 'Synchronous tx posting is not supported by Superblocks Lab EVM: ' +
+            throw 'Synchronous tx posting is not supported by Ethereum Studio EVM: ' +
                 a.method;
         }
     };
