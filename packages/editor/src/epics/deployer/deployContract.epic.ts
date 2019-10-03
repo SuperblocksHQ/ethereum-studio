@@ -18,7 +18,6 @@ import { concat, of, empty, throwError } from 'rxjs';
 import { switchMap, catchError, filter, mergeMap, withLatestFrom } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
 import { outputLogActions, panelsActions } from '../../actions';
-import { IContractConfiguration, IProjectItem } from '../../models';
 import { deployerActions } from '../../actions/deployer.actions';
 import { projectSelectors } from '../../selectors';
 import { DeployRunner, CheckDeployResult } from '../../services';

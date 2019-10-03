@@ -76,7 +76,7 @@ export function tryExternalDeploy(state: any, deployRunner: DeployRunner) {
     const environment = projectSelectors.getSelectedEnvironment(state);
     const chainId = (Networks[environment.name] || {}).chainId;
     if (chainId && window.web3.version.network !== chainId.toString()) {
-        return throwError('The Metamask network does not match the Superblocks Lab network. Check so that you have the same network chosen in Metamask as in Superblocks Lab, then try again.');
+        return throwError('The Metamask network does not match the Ethereum Studio network. Check so that you have the same network chosen in Metamask as in Superblocks Lab, then try again.');
     }
 
     const isMainnetDeployment = window.web3.version.network === (Networks.mainnet.chainId && Networks.mainnet.chainId.toString());

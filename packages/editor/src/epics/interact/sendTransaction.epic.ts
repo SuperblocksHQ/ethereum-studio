@@ -14,23 +14,24 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { switchMap, catchError, withLatestFrom, map } from 'rxjs/operators';
+import { switchMap, catchError, withLatestFrom, map, concat } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
-import { interactActions } from '../../actions';
+import { interactActions, outputLogActions, deployerActions, transactionsActions } from '../../actions';
 import { of, from, Observable, Observer, throwError } from 'rxjs';
 import { getWeb3, convertGas } from '../../services/utils';
 import { projectSelectors } from '../../selectors';
-import { IDeployedContract, IRawAbiDefinition } from '../../models';
+import { IDeployedContract, IRawAbiDefinition, TransactionType } from '../../models';
 import { signTransaction } from '../../services/deployer/deploy.utils';
-import { IEnvironment } from '../../models/state';
+import { IEnvironment, IAccount } from '../../models/state';
 import { walletService } from '../../services';
+import Networks from '../../networks';
 
-const getData = (instance: any, name: string, args: any[]) => {
+function getData(instance: any, name: string, args: any[]) {
     console.log(...args);
     return instance[name].getData(...args);
-};
+}
 
-const sendInternalTransaction = (endpoint: string, tx: any) => {
+function sendInternalTransaction(endpoint: string, tx: any) {
     return new Promise<any>((resolve, reject) => {
         getWeb3(endpoint).eth.sendRawTransaction(
             '0x' + tx.serialize().toString('hex'),
@@ -43,10 +44,32 @@ const sendInternalTransaction = (endpoint: string, tx: any) => {
             }
         );
     });
-};
+}
 
-const deployToBrowser$ = (environment: IEnvironment, accountAddress: string, gasSettings: any, key: string, data: string, to?: string, value?: string) => {
-    gasSettings = { gasPrice: convertGas(gasSettings.gasPrice), gasLimit: convertGas(gasSettings.gasLimit) };
+function getNonce(endpoint: string, address: string) {
+    return new Promise((resolve, reject) => {
+        getWeb3(endpoint).eth.getTransactionCount(address, (err: any, res: any) => {
+            if (err == null) {
+                resolve(res);
+            } else {
+                reject(`Could not get nonce for address ${address}.`);
+            }
+        });
+    });
+}
+
+function getContractInstance$(endpoint: string, deployedContract: IDeployedContract) {
+    const web3 = getWeb3(endpoint);
+
+    // Create the contract interface using the ABI provided in the configuration.
+    const contractInterface = web3.eth.contract(deployedContract.abi);
+
+    // Create the contract instance for the specific address provided in the configuration.
+    return of(contractInterface.at(deployedContract.address));
+}
+
+function deployToBrowser$(environment: IEnvironment, accountAddress: string, networkSettings: any, key: string, data: string, to?: string, value?: string) {
+    const gasSettings: any = { gasPrice: convertGas(networkSettings.gasPrice), gasLimit: convertGas(networkSettings.gasLimit) };
 
     return Observable.create((observer: Observer<any>) => {
         getNonce(environment.endpoint, accountAddress).then(nonce => {
@@ -65,29 +88,65 @@ const deployToBrowser$ = (environment: IEnvironment, accountAddress: string, gas
         })
         .catch(err => observer.error({ msg: err, channel: 2 }));
     });
-};
+}
 
-const getNonce = (endpoint: string, address: string) => {
-    return new Promise((resolve, reject) => {
-        getWeb3(endpoint).eth.getTransactionCount(address, (err: any, res: any) => {
-            if (err == null) {
-                resolve(res);
-            } else {
-                reject(`Could not get nonce for address ${address}.`);
+function tryExternalDeploy$(environment: IEnvironment, selectedAccount: IAccount, networkSettings: any, contractName: string, data: string, to?: string, value?: string) {
+    const chainId = (Networks[environment.name] || {}).chainId;
+    if (chainId && window.web3.version.network !== chainId.toString()) {
+        return throwError('The Metamask network does not match the Ethereum Studio network. Check so that you have the same network chosen in Metamask as in Superblocks Lab, then try again.');
+    }
+
+    return concat(
+        of(outputLogActions.addRows([{ channel: 1, msg: 'External account detected. Opening external account provider...' }])),
+        // of(deployerActions.showExternalProviderInfo()),
+        // here we need to wait for confirmation for mainnet deploy
+        doDeployExternally$(environment, selectedAccount, networkSettings, contractName, data, to, value)
+    );
+}
+
+/**
+ * Actually does external deployment
+ * @param state
+ * @param deployRunner
+ */
+function doDeployExternally$(environment: IEnvironment, selectedAccount: IAccount, networkSettings: any, contractName: string, data: string, to?: string, value?: string) {
+    return deployExternally$(environment, selectedAccount, networkSettings, contractName, data, to, value).pipe(
+        switchMap((result: any) =>
+            concat(
+                of(outputLogActions.addRows([ result ])),
+                of(deployerActions.hideExternalProviderInfo()),
+                of(transactionsActions.addTransaction(TransactionType.Interact, result.hash, undefined, result.contractName)),
+                // finalizeDeploy(state, deployRunner, result.hash, state.deployer.outputPath, false)
+            )
+        ),
+        catchError(e => [ outputLogActions.addRows([ e ]), deployerActions.deployFail() ])
+    );
+}
+
+function deployExternally$(environment: IEnvironment, selectedAccount: IAccount, networkSettings: any, contractName: string, data: string, to?: string, value?: string) {
+    const gasSettings = { gasPrice: convertGas(networkSettings.gasPrice), gasLimit: convertGas(networkSettings.gasLimit) };
+
+    const params = {
+        from: selectedAccount.address,
+        to: to ? to : '',
+        value: value ? value : '0x0',
+        gasPrice: gasSettings.gasPrice,
+        gasLimit: gasSettings.gasLimit,
+        data
+    };
+
+    return from(new Promise<any>((resolve, reject) => {
+        const web3 = selectedAccount.type === 'metamask' ? window.web3 : getWeb3(environment.endpoint);
+        web3.eth.sendTransaction(params, (err: any, hash: string) => {
+            if (err) {
+                console.log(err);
+                reject({ msg: 'Could not interact with contract using external provider.', channel: 2 });
+                return;
             }
+            resolve({ msg: 'Got receipt: ' + hash, channel: 4, hash, contractName });
         });
-    });
-};
-
-const getContractInstance$ = (endpoint: string, deployedContract: IDeployedContract) => {
-    const web3 = getWeb3(endpoint);
-
-    // Create the contract interface using the ABI provided in the configuration.
-    const contractInterface = web3.eth.contract(deployedContract.abi);
-
-    // Create the contract instance for the specific address provided in the configuration.
-    return of(contractInterface.at(deployedContract.address));
-};
+    }));
+}
 
 export const sendTransactionEpic: Epic = (action$, state$) => action$.pipe(
     ofType(interactActions.SEND_TRANSACTION),
@@ -102,15 +161,20 @@ export const sendTransactionEpic: Epic = (action$, state$) => action$.pipe(
         const selectedAccount = projectSelectors.getSelectedAccount(state);
         const networkSettings = state.settings.preferences.network;
 
-        if (!selectedAccount.walletName || !selectedAccount.address) {
-            return throwError('walletName and address property should be set on the account');
-        }
-        const key = walletService.getKey(selectedAccount.walletName, selectedAccount.address);
-
         return getContractInstance$(selectedEnv.endpoint, deployedContract)
             .pipe(
                 map((contractInstance) => getData(contractInstance, rawAbiDefinition.name, args)),
-                switchMap((data) => deployToBrowser$(selectedEnv, selectedAccount.address, networkSettings, key, data, deployedContract.address)),
+                switchMap((data) => {
+                    if (selectedAccount.type === 'metamask') {
+                        return tryExternalDeploy$(selectedEnv, selectedAccount, networkSettings, deployedContract.contractName, data, deployedContract.address);
+                    } else {
+                        if (!selectedAccount.walletName || !selectedAccount.address) {
+                            return throwError('walletName and address property should be set on the account');
+                        }
+                        const key = walletService.getKey(selectedAccount.walletName, selectedAccount.address);
+                        return deployToBrowser$(selectedEnv, selectedAccount.address, networkSettings, key, data, deployedContract.address);
+                    }
+                }),
                 switchMap((result) => [interactActions.getConstantSuccess(result)]),
                 catchError((error) => {
                     console.log('There was an issue sending the transaction: ' + error);

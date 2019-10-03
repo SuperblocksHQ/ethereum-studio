@@ -29,7 +29,6 @@ function hasEnvironments(state: any) {
 export const environmentUpdateEpic: Epic = (action$, state$) => action$.pipe(
     ofType(projectsActions.SET_ENVIRONMENT, projectsActions.SET_ALL_ENVIRONMENTS),
     switchMap(() => {
-        console.log('here');
         if (!hasEnvironments(state$.value)) {
             return empty();
         }
