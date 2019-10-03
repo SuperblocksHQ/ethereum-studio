@@ -15,7 +15,9 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { getConstantEpic } from './getConstant.epic';
+import { sendTransactionEpic } from './sendTransaction.epic';
 
 export const interactEpics = [
-    getConstantEpic
+    getConstantEpic,
+    sendTransactionEpic
 ];

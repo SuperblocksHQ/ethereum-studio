@@ -22,7 +22,7 @@ import { StyledButtonType } from '../../../../../../common/buttons/StyledButtonT
 
 interface IProps {
     rawAbiDefinition: IRawAbiDefinition;
-    call: (rawAbiDefinition: IRawAbiDefinition, args: any[]) => void;
+    call: (rawAbiDefinition: IRawAbiDefinition, args?: any[]) => void;
 }
 
 interface IState {

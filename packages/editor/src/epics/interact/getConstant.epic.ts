@@ -61,7 +61,7 @@ export const getConstantEpic: Epic = (action$, state$) => action$.pipe(
                 switchMap((contractInstance) => call$(contractInstance, rawAbiDefinition.name)),
                 switchMap((result) => [interactActions.getConstantSuccess(result)]),
                 catchError((error) => {
-                    console.log('There was an issue getting the constant: ' + error);
+                    console.log('There was an issue getting the value: ' + error);
                     return of(interactActions.getConstantFail(error));
                 })
             );

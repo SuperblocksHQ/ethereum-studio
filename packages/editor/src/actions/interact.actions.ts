@@ -49,5 +49,29 @@ export const interactActions = {
             data: error
         };
     },
+
+    SEND_TRANSACTION: 'SEND_TRANSACTION',
+    sendTransaction(deployedContract: IDeployedContract, rawAbiDefinition: IRawAbiDefinition, args?: any[]) {
+        return {
+            type: interactActions.SEND_TRANSACTION,
+            data: { deployedContract, rawAbiDefinition, args }
+        };
+    },
+
+    SEND_TRANSACTION_SUCCESS: 'SEND_TRANSACTION_SUCCESS',
+    sendTransactionSuccess(result: string) {
+        return {
+            type: interactActions.SEND_TRANSACTION_SUCCESS,
+            data: { result }
+        };
+    },
+
+    SEND_TRANSACTION_FAIL: 'SEND_TRANSACTION_FAIL',
+    sendTransactionFail(error: any) {
+        return {
+            type: interactActions.SEND_TRANSACTION_FAIL,
+            data: error
+        };
+    },
 };
 

@@ -30,7 +30,7 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
             dispatch(interactActions.getConstant(deployedContract, rawAbiDefinition));
         },
         sendTransaction: (deployedContract: IDeployedContract, rawAbiDefinition: IRawAbiDefinition, args?: any[]) => {
-            // dispatch(interactActions.getConstant(deployedContract, rawAbiDefinition));
+            dispatch(interactActions.sendTransaction(deployedContract, rawAbiDefinition, args));
         }
     };
 };
