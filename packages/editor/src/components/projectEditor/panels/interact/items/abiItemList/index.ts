@@ -26,8 +26,11 @@ const mapStateToProps = (_state: any) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
     return {
-        call: (deployedContract: IDeployedContract, rawAbiDefinition: IRawAbiDefinition) => {
-            dispatch(interactActions.interactWithContract(deployedContract, rawAbiDefinition));
+        getConstant: (deployedContract: IDeployedContract, rawAbiDefinition: IRawAbiDefinition) => {
+            dispatch(interactActions.getConstant(deployedContract, rawAbiDefinition));
+        },
+        sendTransaction: (deployedContract: IDeployedContract, rawAbiDefinition: IRawAbiDefinition, args?: any[]) => {
+            // dispatch(interactActions.getConstant(deployedContract, rawAbiDefinition));
         }
     };
 };

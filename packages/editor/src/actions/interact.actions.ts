@@ -26,26 +26,26 @@ export const interactActions = {
         };
     },
 
-    INTERACT_WITH_CONTRACT: 'INTERACT_WITH_CONTRACT',
-    interactWithContract(deployedContract: IDeployedContract, rawAbiDefinition: IRawAbiDefinition) {
+    GET_CONSTANT: 'GET_CONSTANT',
+    getConstant(deployedContract: IDeployedContract, rawAbiDefinition: IRawAbiDefinition) {
         return {
-            type: interactActions.INTERACT_WITH_CONTRACT,
+            type: interactActions.GET_CONSTANT,
             data: { deployedContract, rawAbiDefinition }
         };
     },
 
-    INTERACT_WITH_CONTRACT_SUCCESS: 'INTERACT_WITH_CONTRACT_SUCCESS',
-    interactWithContractSuccess(result: any) {
+    GET_CONSTANT_SUCCESS: 'GET_CONSTANT_SUCCESS',
+    getConstantSuccess(result: any) {
         return {
-            type: interactActions.INTERACT_WITH_CONTRACT_SUCCESS,
+            type: interactActions.GET_CONSTANT_SUCCESS,
             data: { result }
         };
     },
 
-    INTERACT_WITH_CONTRACT_FAIL: 'INTERACT_WITH_CONTRACT_FAIL',
-    interactWithContractFail(error: any) {
+    GET_CONSTANT_FAIL: 'GET_CONSTANT_FAIL',
+    getConstantFail(error: any) {
         return {
-            type: interactActions.INTERACT_WITH_CONTRACT_FAIL,
+            type: interactActions.GET_CONSTANT_FAIL,
             data: error
         };
     },

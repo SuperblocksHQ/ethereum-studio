@@ -23,7 +23,8 @@ import { Payable } from './types/Payable';
 
 interface IProps {
     deployedContract: IDeployedContract;
-    call: (deployedContract: IDeployedContract, rawAbiDefinition: IRawAbiDefinition) => void;
+    getConstant: (deployedContract: IDeployedContract, rawAbiDefinition: IRawAbiDefinition) => void;
+    sendTransaction: (deployedContract: IDeployedContract, rawAbiDefinition: IRawAbiDefinition, args?: any[]) => void;
 }
 
 interface IState {
@@ -42,21 +43,26 @@ export default class AbiItemList extends React.Component<IProps, IState> {
         return (isConstantA === isConstantB) ? 0 : isConstantA ? -1 : 1;
     }
 
-    call = (rawAbiDefinition: IRawAbiDefinition) => {
-        const { call, deployedContract } = this.props;
-        call(deployedContract, rawAbiDefinition);
+    getConstant = (rawAbiDefinition: IRawAbiDefinition) => {
+        const { getConstant, deployedContract } = this.props;
+        getConstant(deployedContract, rawAbiDefinition);
+    }
+
+    sendTransaction = (rawAbiDefinition: IRawAbiDefinition, args?: any[]) => {
+        const { sendTransaction, deployedContract } = this.props;
+        sendTransaction(deployedContract, rawAbiDefinition, args);
     }
 
     renderAbiDefinition(rawAbiDefinition: IRawAbiDefinition) {
         if (rawAbiDefinition.constant) {
             return <Constant
-                        call={this.call}
+                        call={this.getConstant}
                         rawAbiDefinition={rawAbiDefinition}
                     />;
         } else if (rawAbiDefinition.type === Type.Function && !rawAbiDefinition.payable) {
             return <Transaction
-                        call={this.call}
-                        data={rawAbiDefinition}
+                        call={this.sendTransaction}
+                        rawAbiDefinition={rawAbiDefinition}
                     />;
         } else if (rawAbiDefinition.type === Type.Function && rawAbiDefinition.payable) {
             return <Payable

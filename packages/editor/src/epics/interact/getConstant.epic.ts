@@ -30,6 +30,7 @@ const call$ = (instance: any, name: string) => {
                     console.log(err);
                     reject(`Problem calling to get the ${name}`);
                 }
+                console.log(result);
                 resolve(result);
             });
         })
@@ -46,8 +47,8 @@ const getContractInstance$ = (endpoint: string, deployedContract: IDeployedContr
     return of(contractInterface.at(deployedContract.address));
 };
 
-export const interactWithContractEpic: Epic = (action$, state$) => action$.pipe(
-    ofType(interactActions.INTERACT_WITH_CONTRACT),
+export const getConstantEpic: Epic = (action$, state$) => action$.pipe(
+    ofType(interactActions.GET_CONSTANT),
     withLatestFrom(state$),
     switchMap(([action, state]) => {
 
@@ -58,10 +59,10 @@ export const interactWithContractEpic: Epic = (action$, state$) => action$.pipe(
         return getContractInstance$(selectedEnv.endpoint, deployedContract)
             .pipe(
                 switchMap((contractInstance) => call$(contractInstance, rawAbiDefinition.name)),
-                switchMap((result) => [interactActions.interactWithContractSuccess(result)]),
+                switchMap((result) => [interactActions.getConstantSuccess(result)]),
                 catchError((error) => {
-                    console.log('There was an issue interacting with the contract: ' + error);
-                    return of(interactActions.interactWithContractFail(error));
+                    console.log('There was an issue getting the constant: ' + error);
+                    return of(interactActions.getConstantFail(error));
                 })
             );
     })

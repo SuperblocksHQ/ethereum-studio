@@ -21,11 +21,36 @@ import { StyledButton, TextInput, OnlyIf } from '../../../../../../common';
 import { StyledButtonType } from '../../../../../../common/buttons/StyledButtonType';
 
 interface IProps {
-    data: IRawAbiDefinition;
-    call: (rawAbiDefinition: IRawAbiDefinition, args: any) => void;
+    rawAbiDefinition: IRawAbiDefinition;
+    call: (rawAbiDefinition: IRawAbiDefinition, args: any[]) => void;
+}
+
+interface IState {
+    args: string;
 }
 
 export class Transaction extends React.Component<IProps> {
+
+    state: IState = {
+        args: '',
+    };
+
+    onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const args: string = e.target.value || ' ';
+        // const errorName = newName ? validateProjectName(newName) : null;
+
+        this.setState({
+            args,
+        });
+    }
+
+    call = () => {
+        const { call, rawAbiDefinition } = this.props;
+        const { args } = this.state;
+        const a = [];
+        a.push(args);
+        call(rawAbiDefinition, a);
+    }
 
     renderPlaceHolder(inputs: IRawAbiParameter[]) {
         const placeholder: string[] = [];
@@ -33,17 +58,19 @@ export class Transaction extends React.Component<IProps> {
         return placeholder.join(', ');
     }
     render() {
-        const { data } = this.props;
+        const { rawAbiDefinition } = this.props;
+        const { args } = this.state;
+
         return (
             <div className={style.container}>
-                <StyledButton type={StyledButtonType.Transaction} text={data.name} />
-                <OnlyIf test={data.inputs.length > 0}>
+                <StyledButton type={StyledButtonType.Transaction} text={rawAbiDefinition.name} onClick={this.call}/>
+                <OnlyIf test={rawAbiDefinition.inputs.length > 0}>
                     <TextInput
                         id='name'
-                        // onChangeText={this.onNameChange}
-                        // defaultValue={project.name}
-                        placeholder={this.renderPlaceHolder(data.inputs)}
+                        onChangeText={this.onInputChange}
+                        placeholder={this.renderPlaceHolder(rawAbiDefinition.inputs)}
                         className={style.input}
+                        defaultValue={args}
                     />
                 </OnlyIf>
 
