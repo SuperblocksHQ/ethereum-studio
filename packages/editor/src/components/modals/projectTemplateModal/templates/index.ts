@@ -27,7 +27,7 @@ export default class Templates {
             id: 1,
             name: 'Coin',
             description: '<div><h2>Coin Contract</h2><p>Example DApp which uses ERC-20 standard</p></div>',
-            projectId: '5d837679875da96cb4432b76'
+            projectId: '5d95abae3725a262a1f05c7c'
         },
         {
             id: 2,
