@@ -26,7 +26,21 @@ interface IProps {
     call: (deployedContract: IDeployedContract, rawAbiDefinition: IRawAbiDefinition) => void;
 }
 
-export default class AbiItemList extends React.Component<IProps> {
+interface IState {
+    abiRawDefinitions: IRawAbiDefinition[];
+}
+
+export default class AbiItemList extends React.Component<IProps, IState> {
+
+    state = {
+        abiRawDefinitions: this.props.deployedContract.abi.sort(this.compare)
+    };
+
+    compare(a: IRawAbiDefinition, b: IRawAbiDefinition) {
+        const isConstantA = a.constant;
+        const isConstantB = b.constant;
+        return (isConstantA === isConstantB) ? 0 : isConstantA ? -1 : 1;
+    }
 
     call = (rawAbiDefinition: IRawAbiDefinition) => {
         const { call, deployedContract } = this.props;
@@ -51,12 +65,14 @@ export default class AbiItemList extends React.Component<IProps> {
     }
 
     render() {
-        const { deployedContract } = this.props;
+        const { abiRawDefinitions } = this.state;
+
         return (
             <div>
-                { deployedContract.abi.map((rawAbiDefinition) => {
+                {
+                    abiRawDefinitions.map((rawAbiDefinition, index) => {
                     return (
-                            <div key={rawAbiDefinition.name}>
+                            <div key={index}>
                                 { this.renderAbiDefinition(rawAbiDefinition) }
                             </div>
                         );
