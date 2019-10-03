@@ -22,6 +22,7 @@ import { StyledButtonType } from '../../../../../../common/buttons/StyledButtonT
 
 interface IProps {
     data: IRawAbiDefinition;
+    call: (rawAbiDefinition: IRawAbiDefinition, args: any) => void;
 }
 
 export class Transaction extends React.Component<IProps> {

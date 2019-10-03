@@ -55,6 +55,7 @@ export default class AbiItemList extends React.Component<IProps, IState> {
                     />;
         } else if (rawAbiDefinition.type === Type.Function && !rawAbiDefinition.payable) {
             return <Transaction
+                        call={this.call}
                         data={rawAbiDefinition}
                     />;
         } else if (rawAbiDefinition.type === Type.Function && rawAbiDefinition.payable) {
