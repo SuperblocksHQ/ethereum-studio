@@ -14,10 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { switchMap, catchError, withLatestFrom, map, concat } from 'rxjs/operators';
+import { switchMap, catchError, withLatestFrom, map, mergeMap } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
 import { interactActions, outputLogActions, deployerActions, transactionsActions } from '../../actions';
-import { of, from, Observable, Observer, throwError } from 'rxjs';
+import { of, from, Observable, Observer, throwError, concat } from 'rxjs';
 import { getWeb3, convertGas } from '../../services/utils';
 import { projectSelectors } from '../../selectors';
 import { IDeployedContract, IRawAbiDefinition, TransactionType } from '../../models';
@@ -68,7 +68,7 @@ function getContractInstance$(endpoint: string, deployedContract: IDeployedContr
     return of(contractInterface.at(deployedContract.address));
 }
 
-function deployToBrowser$(environment: IEnvironment, accountAddress: string, networkSettings: any, key: string, data: string, to?: string, value?: string) {
+function sendToBrowser$(environment: IEnvironment, accountAddress: string, networkSettings: any, key: string, data: string, to?: string, value?: string): Observable<any> {
     const gasSettings: any = { gasPrice: convertGas(networkSettings.gasPrice), gasLimit: convertGas(networkSettings.gasLimit) };
 
     return Observable.create((observer: Observer<any>) => {
@@ -90,7 +90,7 @@ function deployToBrowser$(environment: IEnvironment, accountAddress: string, net
     });
 }
 
-function tryExternalDeploy$(environment: IEnvironment, selectedAccount: IAccount, networkSettings: any, contractName: string, data: string, to?: string, value?: string) {
+function tryExternalSend$(environment: IEnvironment, selectedAccount: IAccount, networkSettings: any, contractName: string, data: string, to?: string, value?: string) {
     const chainId = (Networks[environment.name] || {}).chainId;
     if (chainId && window.web3.version.network !== chainId.toString()) {
         return throwError('The Metamask network does not match the Ethereum Studio network. Check so that you have the same network chosen in Metamask as in Superblocks Lab, then try again.');
@@ -100,7 +100,7 @@ function tryExternalDeploy$(environment: IEnvironment, selectedAccount: IAccount
         of(outputLogActions.addRows([{ channel: 1, msg: 'External account detected. Opening external account provider...' }])),
         // of(deployerActions.showExternalProviderInfo()),
         // here we need to wait for confirmation for mainnet deploy
-        doDeployExternally$(environment, selectedAccount, networkSettings, contractName, data, to, value)
+        doSendExternally$(environment, selectedAccount, networkSettings, contractName, data, to, value)
     );
 }
 
@@ -109,7 +109,7 @@ function tryExternalDeploy$(environment: IEnvironment, selectedAccount: IAccount
  * @param state
  * @param deployRunner
  */
-function doDeployExternally$(environment: IEnvironment, selectedAccount: IAccount, networkSettings: any, contractName: string, data: string, to?: string, value?: string) {
+function doSendExternally$(environment: IEnvironment, selectedAccount: IAccount, networkSettings: any, contractName: string, data: string, to?: string, value?: string) {
     return deployExternally$(environment, selectedAccount, networkSettings, contractName, data, to, value).pipe(
         switchMap((result: any) =>
             concat(
@@ -166,20 +166,28 @@ export const sendTransactionEpic: Epic = (action$, state$) => action$.pipe(
                 map((contractInstance) => getData(contractInstance, rawAbiDefinition.name, args)),
                 switchMap((data) => {
                     if (selectedAccount.type === 'metamask') {
-                        return tryExternalDeploy$(selectedEnv, selectedAccount, networkSettings, deployedContract.contractName, data, deployedContract.address);
+                        return tryExternalSend$(selectedEnv, selectedAccount, networkSettings, deployedContract.contractName, data, deployedContract.address);
                     } else {
                         if (!selectedAccount.walletName || !selectedAccount.address) {
                             return throwError('walletName and address property should be set on the account');
                         }
                         const key = walletService.getKey(selectedAccount.walletName, selectedAccount.address);
-                        return deployToBrowser$(selectedEnv, selectedAccount.address, networkSettings, key, data, deployedContract.address);
+                        return sendToBrowser$(selectedEnv, selectedAccount.address, networkSettings, key, data, deployedContract.address).pipe(
+                            mergeMap(output => {
+                                if (output.msg) { // intermediate messages coming
+                                    return of(outputLogActions.addRows([ output ]));
+                                } else if (output.hash && output.tx) { // result
+                                    return of(interactActions.sendTransactionSuccess('hola'));
+                                    // return finalizeDeploy(state, deployRunner, output.hash, state.deployer.outputPath, true, output.tx);
+                                } else { // unexpected error
+                                    return of(outputLogActions.addRows([{ msg: 'Unexpected error occurred. Please try again!', channel: 3 }]));
+                                }
+                            }),
+                            catchError((e) => [ outputLogActions.addRows([e]), deployerActions.deployFail()])
+                        );
                     }
                 }),
-                switchMap((result) => [interactActions.getConstantSuccess(result)]),
-                catchError((error) => {
-                    console.log('There was an issue sending the transaction: ' + error);
-                    return of(interactActions.getConstantFail(error));
-                })
+                catchError(e => [ outputLogActions.addRows([ e ]), deployerActions.deployFail() ])
             );
     })
 );

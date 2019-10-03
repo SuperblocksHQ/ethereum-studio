@@ -19,6 +19,7 @@ import { IOutputLogRow } from '../models/state';
 export const outputLogActions = {
     ADD_ROWS: 'ADD_ROWS',
     addRows(rows: IOutputLogRow[]) {
+        console.log(rows);
         return {
             type: outputLogActions.ADD_ROWS,
             data: rows
