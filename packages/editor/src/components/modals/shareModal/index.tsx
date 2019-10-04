@@ -226,7 +226,7 @@ export default class ShareModal extends React.Component<IProps, IState> {
                             </Tooltip>
                         </button>
                     </div>
-                    <img className={style.openStudioBtn} alt='Superblocks button' src={'/static/img/open-studio.svg'}/>
+                    <img className={style.openStudioBtn} alt='Studio button' src={'/static/img/open-studio.svg'}/>
                 </div>
             </React.Fragment>
         );
