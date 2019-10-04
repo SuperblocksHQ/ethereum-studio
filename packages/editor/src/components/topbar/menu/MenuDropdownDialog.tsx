@@ -18,9 +18,11 @@ import React from 'react';
 import { SubMenu, MenuItem, Divider } from '../../common/menu';
 import { Panels } from '../../../models/state';
 import style from './style.less';
-import { ProjectItemTypes } from '../../../models';
+import { ProjectItemTypes, IProject } from '../../../models';
+import { OnlyIf } from '../../common';
 
 interface IProps {
+  project: IProject;
   showTransactionsHistory: boolean;
   showFileSystem: boolean;
   showPreview: boolean;
@@ -70,25 +72,25 @@ export default class MenuDropdownDialog extends React.Component<IProps> {
 
     render() {
         const { showTransactionsHistory, showFileSystem, showPreview, showConsole, showMessageLog,
-                togglePanel, closeAllPanels, closeAllPanes, closePane, activePaneId, rootFolderId } = this.props;
+                togglePanel, closeAllPanels, closeAllPanes, closePane, activePaneId, rootFolderId, project } = this.props;
 
         return (
             <div className={style.menuDialog}>
-
-                <SubMenu title='File'>
-                    <MenuItem title='New File' onClick={() => this.onCreateItem(rootFolderId, ProjectItemTypes.File)} />
-                    <MenuItem title='New Folder' onClick={() => this.onCreateItem(rootFolderId, ProjectItemTypes.Folder)}  />
-                    <Divider />
-                    <MenuItem title='Save' onClick={() => console.log('TODO')} />
-                    <MenuItem title='Save All' onClick={() => console.log('TODO')} />
-                    <Divider />
-                    <MenuItem onClick={() => closePane(activePaneId)} disabled={!activePaneId} title='Close File' />
-                    <MenuItem onClick={() => closeAllPanes()} disabled={!activePaneId} title='Close All Files' />
-                    <Divider />
-                    <MenuItem title='Configure Project' onClick={() => console.log('TODO')} />
-                    <MenuItem title='Export Project' onClick={() => console.log('TODO')} />
-                    <MenuItem title='Download Project' onClick={() => console.log('TODO')} />
-                </SubMenu>
+                <OnlyIf test={project.id}>
+                  <SubMenu title='File'>
+                      <MenuItem title='New File' onClick={() => this.onCreateItem(rootFolderId, ProjectItemTypes.File)} />
+                      <MenuItem title='New Folder' onClick={() => this.onCreateItem(rootFolderId, ProjectItemTypes.Folder)}  />
+                      <Divider />
+                      <MenuItem title='Save' onClick={() => console.log('TODO')} />
+                      <MenuItem title='Save All' onClick={() => console.log('TODO')} />
+                      <Divider />
+                      <MenuItem onClick={() => closePane(activePaneId)} disabled={!activePaneId} title='Close File' />
+                      <MenuItem onClick={() => closeAllPanes()} disabled={!activePaneId} title='Close All Files' />
+                      <Divider />
+                      <MenuItem title='Export Project' onClick={() => console.log('TODO')} />
+                      <MenuItem title='Download Project' onClick={() => console.log('TODO')} />
+                  </SubMenu>
+                </OnlyIf>
                 <SubMenu title='View'>
                     <MenuItem onClick={() => togglePanel(Panels.Explorer)} isActive={showFileSystem} title='Explorer' />
                     <MenuItem onClick={() => togglePanel(Panels.Interact)} isActive={showFileSystem} title='Interact' />

@@ -17,11 +17,12 @@
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import MenuDropdownDialog from './MenuDropdownDialog';
-import { panelsSelectors, panesSelectors, explorerSelectors } from '../../../selectors';
+import { panelsSelectors, panesSelectors, explorerSelectors, projectSelectors } from '../../../selectors';
 import { panelsActions, panesActions, explorerActions } from '../../../actions';
 import { ProjectItemTypes } from '../../../models';
 
 const mapStateToProps = (state: any) => ({
+    project: projectSelectors.getProject(state),
     showTransactionsHistory: panelsSelectors.getShowTransactionsHistory(state),
     showFileSystem: panelsSelectors.getShowFileSystem(state),
     showPreview: panelsSelectors.getShowPreview(state),
