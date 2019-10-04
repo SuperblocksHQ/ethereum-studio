@@ -18,7 +18,7 @@ import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import MenuDropdownDialog from './MenuDropdownDialog';
 import { panelsSelectors, panesSelectors, explorerSelectors, projectSelectors } from '../../../selectors';
-import { panelsActions, panesActions, explorerActions } from '../../../actions';
+import { panelsActions, panesActions, explorerActions, projectsActions } from '../../../actions';
 import { ProjectItemTypes } from '../../../models';
 
 const mapStateToProps = (state: any) => ({
@@ -49,6 +49,9 @@ function mapDispatchToProps(dispatch: Dispatch) {
         closePane(fileId: string) {
             dispatch(panesActions.closePane(fileId));
         },
+        exportProject() {
+            dispatch(projectsActions.exportProject());
+        }
     };
 }
 

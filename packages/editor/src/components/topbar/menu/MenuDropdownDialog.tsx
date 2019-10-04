@@ -35,6 +35,7 @@ interface IProps {
   closeAllPanes: () => void;
   closePane: (fileId: string) => void;
   onCreateItem: (parentId: string, type: ProjectItemTypes, name: string) => void;
+  exportProject: () => void;
 }
 
 export default class MenuDropdownDialog extends React.Component<IProps> {
@@ -72,7 +73,7 @@ export default class MenuDropdownDialog extends React.Component<IProps> {
 
     render() {
         const { showTransactionsHistory, showFileSystem, showPreview, showConsole, showMessageLog,
-                togglePanel, closeAllPanels, closeAllPanes, closePane, activePaneId, rootFolderId, project } = this.props;
+                togglePanel, closeAllPanels, closeAllPanes, closePane, activePaneId, rootFolderId, project, exportProject } = this.props;
 
         return (
             <div className={style.menuDialog}>
@@ -87,7 +88,7 @@ export default class MenuDropdownDialog extends React.Component<IProps> {
                       <MenuItem onClick={() => closePane(activePaneId)} disabled={!activePaneId} title='Close File' />
                       <MenuItem onClick={() => closeAllPanes()} disabled={!activePaneId} title='Close All Files' />
                       <Divider />
-                      <MenuItem title='Export Project' onClick={() => console.log('TODO')} />
+                      <MenuItem title='Export Project' onClick={() => exportProject()} />
                       <MenuItem title='Download Project' onClick={() => console.log('TODO')} />
                   </SubMenu>
                 </OnlyIf>

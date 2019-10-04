@@ -34,6 +34,7 @@ import { openWalletEpic } from './openWallet.epic';
 import { updateAccountBalanceEpic } from './updateAccountBalance.epic';
 import { createForkedProject } from './createForkedProject.epic';
 import { notifyInitExplorerSuccessEpic } from './notifyInitExplorerSuccess.epic';
+import { exportProject } from './exportProject.epic';
 
 export const projectsEpics = [
     environmentUpdateEpic,
@@ -49,5 +50,6 @@ export const projectsEpics = [
     updateAccountBalanceEpic,
     updateProject,
     createForkedProject,
+    exportProject,
     notifyInitExplorerSuccessEpic
 ];
