@@ -3,10 +3,8 @@
 # http://superblocks.com/docs/configuration/configuration-introduction/#section=configuration
 
 version: 1
-
 jobs:
   push_to_docker_registry:
-    stage: build_dev
     image: docker:18.09.7
     services:
       - docker:18.09.7-dind
