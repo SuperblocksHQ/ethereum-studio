@@ -39,5 +39,5 @@ spec:
           ports:
             - containerPort: 80
       imagePullSecrets:
-        - name: _APP_NAME_-gitlab-registry
+        - name: _APP_NAME_-github-registry
 

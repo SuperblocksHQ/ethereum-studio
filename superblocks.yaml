@@ -20,14 +20,14 @@ jobs:
       - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
       - chmod +x ./kubectl
       - mv ./kubectl /usr/local/bin/kubectl
-      - kubectl config set-cluster $K8S_CLUSTER_NAME_DEV --server=$K8S_SERVER_DEV --insecure-skip-tls-verify=true
-      - kubectl config set clusters.k8s.certificate-authority-data $K8S_CERTIFICATE_AUTHORITY_DATA_DEV
-      - kubectl config set-credentials $K8S_USER_NAME_DEV --token=$K8S_USER_TOKEN_DEV
-      - kubectl config set-context $K8S_CLUSTER_NAME_DEV --cluster=$K8S_CLUSTER_NAME_DEV --user=$K8S_USER_NAME_DEV
-      - kubectl config use-context $K8S_CLUSTER_NAME_DEV
-      - 'printf "apiVersion: v1\nkind: Secret\n$(kubectl create secret docker-registry $CI_PROJECT_NAME-gitlab-registry --docker-server=$CI_REGISTRY --docker-username=$CI_DEPLOY_USER --docker-password=$CI_DEPLOY_PASSWORD --docker-email=$GITLAB_USER_EMAIL -o yaml --dry-run)" | kubectl apply -f -'
+      - kubectl config set-cluster $K8S_CLUSTER_NAME --server=$K8S_SERVER --insecure-skip-tls-verify=true
+      - kubectl config set clusters.k8s.certificate-authority-data $K8S_CERTIFICATE_AUTHORITY_DATA
+      - kubectl config set-credentials $K8S_USER_NAME --token=$K8S_USER_TOKEN
+      - kubectl config set-context $K8S_CLUSTER_NAME --cluster=$K8S_CLUSTER_NAME --user=$K8S_USER_NAME
+      - kubectl config use-context $K8S_CLUSTER_NAME
+      - 'printf "apiVersion: v1\nkind: Secret\n$(kubectl create secret docker-registry $CI_PROJECT_NAME-gitlab-registry --docker-server=$CI_REGISTRY --docker-username=SuperblocksHQ --docker-password=$GITHUB_REGISTRY_TOKEN --docker-email=develop@superblocks.com -o yaml --dry-run)" | kubectl apply -f -'
       - 'printf "apiVersion: v1\nkind: Secret\n$(kubectl create secret generic $CI_PROJECT_NAME-secret -o yaml --dry-run)" | kubectl apply -f -'
-      - sed 's _APP_NAME_ '"$CI_PROJECT_NAME"' g; s _CONTAINER_IMAGE_ '"$GITHUB_COMMIT"' g' kubernetes.tpl.yml > kubernetes.yml;
+      - sed 's _APP_NAME_ '"$CI_PROJECT_NAME"' g; s _CONTAINER_IMAGE_ '"$SUPER_COMMIT_SHA1"' g' kubernetes.tpl.yml > kubernetes.yml;
       - kubectl apply -f kubernetes.yml
 
 stages:
@@ -37,9 +37,9 @@ stages:
           # filters:
           #   only:
           #     - master
-  # - deploy_dev:
-  #     jobs:
-  #       - deploy_to_prod:
-  #         filters:
-  #             only:
-  #               -master
+  - deploy:
+      jobs:
+        - deploy_to_prod
+          # filters:
+          #     only:
+          #       -master
