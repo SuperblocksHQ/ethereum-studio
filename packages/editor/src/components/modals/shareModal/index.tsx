@@ -72,11 +72,11 @@ export default class ShareModal extends React.Component<IProps, IState> {
     }
 
     getBtnMdUrl = () => {
-        return `[![Edit Project](https://superblocks.com/static/img/open-superblocks.svg)](${this.state.shareUrl})`;
+        return `[![Edit Project](https://studio.ethereum.org/static/img/open-studio.svg)](${this.state.shareUrl})`;
     }
 
     getBtnHtmlUrl = () => {
-        return `<a href="${this.state.shareUrl}"><img alt="Edit Project" src="https://superblocks.com/static/img/open-superblocks.svg"></a>`;
+        return `<a href="${this.state.shareUrl}"><img alt="Edit Project" src="https://studio.ethereum.org/static/img/open-studio.svg"></a>`;
     }
 
     RenderOptions = () => {
@@ -226,7 +226,7 @@ export default class ShareModal extends React.Component<IProps, IState> {
                             </Tooltip>
                         </button>
                     </div>
-                    <img className={style.openLabBtn} alt='Superblocks button' src={'/static/img/open-superblocks.svg'}/>
+                    <img className={style.openStudioBtn} alt='Superblocks button' src={'/static/img/open-studio.svg'}/>
                 </div>
             </React.Fragment>
         );
