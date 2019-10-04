@@ -17,17 +17,17 @@
 import React, { Component } from 'react';
 import style from './style.less';
 import { DropdownContainer } from '../common/dropdown';
-import { HelpAction, NewProjectAction, OnlyIf } from '../common';
-import { IconAlphabetA } from '../icons';
+import { HelpAction, NewProjectAction, OnlyIf, StyledButton } from '../common';
 import NetworkAccountSelector from '../networkAccountSelector';
 import MenuDropdownDialog from './menu';
 import ProjectTitle from './projectTitle';
 import { IProject } from '../../models';
 import { ForkDropdownAction, MenuAction, PreferencesAction, ShareDropdownAction } from './actions';
 import AccountConfigModal from '../projectEditor/editors/accountConfigModal';
+import { StyledButtonType } from '../common/buttons/StyledButtonType';
 
 interface IView {
-    showOpenInLab: boolean;
+    showOpenStudio: boolean;
     project: IProject;
     showForkButton: boolean;
     showShareButton: boolean;
@@ -80,7 +80,7 @@ export default class TopBar extends Component<IProps> {
     }
 
     render() {
-        const { project, showOpenInLab, showForkButton, showShareButton } = this.props.view;
+        const { project, showOpenStudio, showForkButton, showShareButton } = this.props.view;
         const { isProjectForking, showAccountConfig, closeAccountConfigModal } = this.props;
 
         return (
@@ -91,16 +91,18 @@ export default class TopBar extends Component<IProps> {
                         dropdownContent={<MenuDropdownDialog />} >
                         <MenuAction />
                     </DropdownContainer>
-                    <OnlyIf test={showOpenInLab}>
+                    <OnlyIf test={showOpenStudio}>
                         <a
-                            className={style.openLab}
+                            className={style.openStudio}
                             href={String(window.location)}
                             target='_blank'
                             rel='noopener noreferrer'
-                            title='Open in Lab'
+                            title='Open Studio'
                         >
-                            <IconAlphabetA style={{width: 17, height: 17}} />
-                            <span>Open in Lab</span>
+                            <StyledButton
+                                type={StyledButtonType.Primary}
+                                text='Open Studio'
+                            />
                         </a>
                     </OnlyIf>
                     <NetworkAccountSelector />
