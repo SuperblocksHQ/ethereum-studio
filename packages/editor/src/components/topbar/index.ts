@@ -26,7 +26,7 @@ const mapStateToProps = (state: any) => ({
     selectedProjectId: projectSelectors.getProjectId(state),
     view: {
         project: projectSelectors.getProject(state),
-        showOpenInLab: viewSelectors.getShowTopBarOpenInLab(state),
+        showOpenStudio: viewSelectors.getShowTopBarOpenInLab(state),
         showForkButton: viewSelectors.getShowTopBarForkButton(state),
         showShareButton: viewSelectors.getShowTopBarShareButton(state),
     },

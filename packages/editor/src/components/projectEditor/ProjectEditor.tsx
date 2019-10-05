@@ -101,6 +101,7 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                 showExternalProviderInfo } = this.props;
 
         const { sidePanelDragging, verticalPanelDragging } = this.state;
+        const rightPanelSize = window.innerWidth < 1000 ? 280 : 500;
 
         return (
             <div className={style.projecteditor}>
@@ -159,8 +160,7 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                                             <div>
                                                 <SplitterLayout
                                                     primaryIndex={0}
-                                                    secondaryMinSize={232}
-                                                    secondaryInitialSize={500}
+                                                    secondaryInitialSize={rightPanelSize}
                                                     onDragStart={() => this.toggleSidePanelDragging()}
                                                     onDragEnd={() => this.toggleSidePanelDragging()}
                                                     onSecondaryPaneSizeChange={() => null}>

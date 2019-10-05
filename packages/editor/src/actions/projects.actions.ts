@@ -227,5 +227,26 @@ export const projectsActions = {
          return {
              type: projectsActions.CREATE_PROJECT_SUCCESS,
          };
-     }
+     },
+
+    // ---------- EXPORT PROJECT ----------
+    EXPORT_PROJECT: 'EXPORT_PROJECT',
+    exportProject() {
+        return {
+            type: projectsActions.EXPORT_PROJECT
+        };
+    },
+    EXPORT_PROJECT_SUCCESS: 'EXPORT_PROJECT_SUCCESS',
+    exportProjectSuccess() {
+        return {
+            type: projectsActions.EXPORT_PROJECT_SUCCESS
+        };
+    },
+    EXPORT_PROJECT_ERROR: 'EXPORT_PROJECT_ERROR',
+    exportProjectError(error: any) {
+        return {
+            type: projectsActions.EXPORT_PROJECT_ERROR,
+            data: error
+        };
+    },
 };

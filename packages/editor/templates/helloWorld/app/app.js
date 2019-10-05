@@ -1,4 +1,4 @@
-// The object 'Contracts' will be injected here, which contains all data for all contracts, keyed on contract name:
+// The object 'Contracts' is injected here, which contains all data for all contracts, keyed on contract name:
 // Contracts['HelloWorld'] = {
 //  abi: [],
 //  address: "0x..",
@@ -10,9 +10,9 @@ function HelloWorld(Contract) {
     this.Contract = Contract;
 }
 
-HelloWorld.prototype.init = function() {
-    // We create a new Web3 instance using either the Metamask provider
-    // or an independent provider created towards the endpoint configured for the contract.
+HelloWorld.prototype.init = function () {
+    // Create a new Web3 instance using either the Metamask provider
+    // or an independent provider created as the endpoint configured for the contract.
     this.web3 = new Web3(
         (window.web3 && window.web3.currentProvider) ||
         new Web3.providers.HttpProvider(this.Contract.endpoint));
@@ -25,52 +25,52 @@ HelloWorld.prototype.init = function() {
 };
 
 // Get the hello message from the contract.
-HelloWorld.prototype.getMessage = function(cb) {
+HelloWorld.prototype.getMessage = function (cb) {
     this.instance.message(function (error, result) {
         cb(error, result);
     });
 };
 
 // Get the current block number and show it.
-HelloWorld.prototype.getBlockNumber = function(cb) {
-    this.web3.eth.getBlockNumber(function(error, result) {
+HelloWorld.prototype.getBlockNumber = function (cb) {
+    this.web3.eth.getBlockNumber(function (error, result) {
         cb(error, result);
     });
 };
 
-HelloWorld.prototype.update = function() {
+HelloWorld.prototype.update = function () {
     var that = this;
-    this.getMessage(function(error, result) {
-        if(error) {
+    this.getMessage(function (error, result) {
+        if (error) {
             $(".error").show();
             return;
         }
         $("#message").text(result);
 
-        that.getBlockNumber(function(error, result) {
-            if(error) {
+        that.getBlockNumber(function (error, result) {
+            if (error) {
                 $(".error").show();
                 return;
             }
             $("#blocknumber").text(result);
-            setTimeout(function() {that.update()}, 1000);
+            setTimeout(function () { that.update() }, 1000);
         });
     });
 }
 
-HelloWorld.prototype.main = function() {
+HelloWorld.prototype.main = function () {
     $(".blocknumber").show();
     $(".message").show();
     this.update();
 }
 
-HelloWorld.prototype.onReady = function() {
+HelloWorld.prototype.onReady = function () {
     this.init();
     this.main();
 };
 
 var helloWorld = new HelloWorld(Contracts['HelloWorld']);
 
-$(document).ready(function() {
+$(document).ready(function () {
     helloWorld.onReady();
 });

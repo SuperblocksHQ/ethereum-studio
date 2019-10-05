@@ -20,19 +20,19 @@ export default class Templates {
         {
             id: 0,
             name: 'Hello World',
-            description: '<div><h2>Hello World</h2><p>A simple Hello World starter project. Deploy a smart contract with a message nad render it in the front-end. Don\'t forget to update the message using the interact panel!</p></div>',
+            description: '<div><h2>Hello World</h2><p>A Hello World style starter project. Deploys a smart contract with a message, and renders it in the front-end. You can change the message using the interact panel!</p></div>',
             projectId: '5d9453375634771a056d25d5'
         },
         {
             id: 1,
             name: 'Coin',
-            description: '<div><h2>Coin Contract</h2><p>Example DApp which uses ERC-20 standard</p></div>',
+            description: '<div><h2>Coin Contract</h2><p>A starter dapp that uses the ERC-20 standard to define a token you can create and send to others.</p></div>',
             projectId: '5d95abae3725a262a1f05c7c'
         },
         {
             id: 2,
             name: 'CryptoPizza NFT',
-            description: '<div><h2>CryptoPizza NFT</h2><p>Crypto-collectible game built on top of ERC-721 standard</p></div>',
+            description: '<div><h2>CryptoPizza NFT</h2><p>A Crypto-collectible game built on top of the ERC-721 standard for creating unique tokens.</p></div>',
             projectId: '5d93b3ec5634771a056d25d3'
         },
         {

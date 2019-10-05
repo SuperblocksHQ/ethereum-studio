@@ -32,7 +32,7 @@ export default function viewReducer(state = initialState, action: AnyAction, roo
                 showTopBarSelectedProjectName: !root.app.isEmbeddedMode,
                 showTopBarOpenInLab: root.app.isEmbeddedMode,
             };
-        case projectsActions.LOAD_PROJECT_REQUEST:
+        case projectsActions.LOAD_PROJECT_SUCCESS:
                 return {
                     ...state,
                     showTopBarForkProject: !root.app.isEmbeddedMode && true,
