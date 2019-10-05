@@ -56,6 +56,7 @@ export function FileItem(props: IProps) {
     return (
         <BaseItem
             { ...props }
+            disableDrag={!props.data.mutable}
             depth={props.depth}
             togglable={false}
             toolbar={ toolbar }
