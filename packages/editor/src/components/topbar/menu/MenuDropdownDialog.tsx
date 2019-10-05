@@ -28,6 +28,7 @@ interface IProps {
   showPreview: boolean;
   showConsole: boolean;
   showMessageLog: boolean;
+  showInteract: boolean;
   activePaneId: string;
   rootFolderId: string;
   togglePanel: (panel: any) => void;
@@ -73,7 +74,8 @@ export default class MenuDropdownDialog extends React.Component<IProps> {
 
     render() {
         const { showTransactionsHistory, showFileSystem, showPreview, showConsole, showMessageLog,
-                togglePanel, closeAllPanels, closeAllPanes, closePane, activePaneId, rootFolderId, project, exportProject } = this.props;
+                togglePanel, closeAllPanels, closeAllPanes, closePane, activePaneId, rootFolderId, project, exportProject,
+                showInteract } = this.props;
 
         return (
             <div className={style.menuDialog}>
@@ -94,7 +96,7 @@ export default class MenuDropdownDialog extends React.Component<IProps> {
                 </OnlyIf>
                 <SubMenu title='View'>
                     <MenuItem onClick={() => togglePanel(Panels.Explorer)} isActive={showFileSystem} title='Explorer' />
-                    <MenuItem onClick={() => togglePanel(Panels.Interact)} isActive={showFileSystem} title='Interact' />
+                    <MenuItem onClick={() => togglePanel(Panels.Interact)} isActive={showInteract} title='Interact' />
                     <MenuItem onClick={() => togglePanel(Panels.Transactions)} isActive={showTransactionsHistory} title='Transactions' />
                     <MenuItem onClick={() => togglePanel(Panels.Preview)} isActive={showPreview} title='Preview' />
                     <MenuItem onClick={() => togglePanel(Panels.OutputLog)} isActive={showConsole} title='Run' />

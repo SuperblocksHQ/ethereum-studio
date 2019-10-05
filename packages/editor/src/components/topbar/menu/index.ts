@@ -28,6 +28,7 @@ const mapStateToProps = (state: any) => ({
     showPreview: panelsSelectors.getShowPreview(state),
     showConsole: panelsSelectors.getShowConsole(state),
     showMessageLog: panelsSelectors.getShowMessageLog(state),
+    showInteract: panelsSelectors.getShowInteract(state),
     activePaneId: panesSelectors.getActivePane(state),
     rootFolderId: explorerSelectors.getRootFolderId(state),
 });
