@@ -21,7 +21,8 @@ import { findItemByPath } from './explorerLib';
 import { IExplorerState, IProjectState } from '../models/state';
 
 const initialState: IInteractState = {
-    items: []
+    items: [],
+    result: undefined
 };
 
 export default function interactReducer(state = initialState, action: AnyAction, { explorer, projects }: { explorer: IExplorerState, projects: IProjectState }) {
@@ -66,10 +67,14 @@ export default function interactReducer(state = initialState, action: AnyAction,
                     newItems.push(item);
                 }
             }
-
             return {
                 ...state,
                 items: newItems
+            };
+        case interactActions.GET_CONSTANT_SUCCESS:
+            return {
+                ...state,
+                result: action.data.result
             };
         default:
             return state;

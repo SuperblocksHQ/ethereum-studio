@@ -20,14 +20,16 @@ import { AnyAction } from 'redux';
 import AbiItemList from './AbiItemList';
 import { interactActions } from '../../../../../../actions';
 import { IRawAbiDefinition, IDeployedContract } from '../../../../../../models';
+import { interactSelectors } from '../../../../../../selectors';
 
-const mapStateToProps = (_state: any) => ({
+const mapStateToProps = (state: any) => ({
+    result: interactSelectors.getResult(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
     return {
-        getConstant: (deployedContract: IDeployedContract, rawAbiDefinition: IRawAbiDefinition) => {
-            dispatch(interactActions.getConstant(deployedContract, rawAbiDefinition));
+        getConstant: (id: number, deployedContract: IDeployedContract, rawAbiDefinition: IRawAbiDefinition) => {
+            dispatch(interactActions.getConstant(id, deployedContract, rawAbiDefinition));
         },
         sendTransaction: (deployedContract: IDeployedContract, rawAbiDefinition: IRawAbiDefinition, args?: any[]) => {
             dispatch(interactActions.sendTransaction(deployedContract, rawAbiDefinition, args));

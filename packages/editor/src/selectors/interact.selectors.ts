@@ -14,6 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
+import { IAbiCallResult } from '../models';
+
 export const interactSelectors = {
     getDeployedItems: (state: any) => state.interact.items,
+    getResult: (state: any): IAbiCallResult => state.interact.result,
 };

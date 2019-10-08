@@ -16,14 +16,15 @@
 
 import React from 'react';
 // import style from './style.less';
-import { IRawAbiDefinition, Type, IDeployedContract } from '../../../../../../models';
+import { IRawAbiDefinition, Type, IDeployedContract, IAbiCallResult } from '../../../../../../models';
 import { Constant } from './types/Constant';
 import { Transaction } from './types/Transaction';
 import { Payable } from './types/Payable';
 
 interface IProps {
     deployedContract: IDeployedContract;
-    getConstant: (deployedContract: IDeployedContract, rawAbiDefinition: IRawAbiDefinition) => void;
+    result: IAbiCallResult;
+    getConstant: (id: number, deployedContract: IDeployedContract, rawAbiDefinition: IRawAbiDefinition) => void;
     sendTransaction: (deployedContract: IDeployedContract, rawAbiDefinition: IRawAbiDefinition, args?: any[]) => void;
 }
 
@@ -43,9 +44,9 @@ export default class AbiItemList extends React.Component<IProps, IState> {
         return (isConstantA === isConstantB) ? 0 : isConstantA ? -1 : 1;
     }
 
-    getConstant = (rawAbiDefinition: IRawAbiDefinition) => {
+    getConstant = (id: number, rawAbiDefinition: IRawAbiDefinition) => {
         const { getConstant, deployedContract } = this.props;
-        getConstant(deployedContract, rawAbiDefinition);
+        getConstant(id, deployedContract, rawAbiDefinition);
     }
 
     sendTransaction = (rawAbiDefinition: IRawAbiDefinition, args?: any[]) => {
@@ -53,11 +54,13 @@ export default class AbiItemList extends React.Component<IProps, IState> {
         sendTransaction(deployedContract, rawAbiDefinition, args);
     }
 
-    renderAbiDefinition(rawAbiDefinition: IRawAbiDefinition) {
+    renderAbiDefinition(rawAbiDefinition: IRawAbiDefinition, index: number) {
         if (rawAbiDefinition.constant) {
             return <Constant
+                        id={index}
                         call={this.getConstant}
                         rawAbiDefinition={rawAbiDefinition}
+                        result={this.props.result}
                     />;
         } else if (rawAbiDefinition.type === Type.Function && !rawAbiDefinition.payable) {
             return <Transaction
@@ -80,7 +83,7 @@ export default class AbiItemList extends React.Component<IProps, IState> {
                     abiRawDefinitions.map((rawAbiDefinition, index) => {
                     return (
                             <div key={index}>
-                                { this.renderAbiDefinition(rawAbiDefinition) }
+                                { this.renderAbiDefinition(rawAbiDefinition, index) }
                             </div>
                         );
                     })

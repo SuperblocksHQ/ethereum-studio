@@ -237,12 +237,23 @@ export default class SuperProvider {
                     params: ['0x' + tx.serialize().toString('hex')],
                     id: payload.id,
                 };
-                const result = await this.send(obj3, data.endpoint);
-                sendIframeMessage(null, result);
+
+                try {
+                    const result = await this.send(obj3, data.endpoint);
+                    sendIframeMessage(null, result);
+                } catch (error) {
+                    console.log(error);
+                    sendIframeMessage(error, null);
+                }
             }
         } else {
-            const result = await this.send(data.payload, data.endpoint);
-            sendIframeMessage(null, result);
+            try {
+                const result = await this.send(data.payload, data.endpoint);
+                sendIframeMessage(null, result);
+            } catch (error) {
+                console.log(error);
+                sendIframeMessage(error, null);
+            }
         }
     }
 

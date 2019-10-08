@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { IRawAbiDefinition } from './abi.model';
+import { IRawAbiDefinition, IAbiCallResult } from './abi.model';
 
 export interface IDeployedContract {
     id: string;
@@ -29,4 +29,5 @@ export interface IDeployedContract {
 
 export interface IInteractState {
     items: IDeployedContract[];
+    result?: IAbiCallResult;
 }

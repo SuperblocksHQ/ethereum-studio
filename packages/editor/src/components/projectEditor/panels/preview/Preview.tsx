@@ -38,9 +38,9 @@ const IFRAME_ID = 'appViewIframe';
 interface IProps {
     onToggleWeb3Accounts: () => void;
     onHideModals: () => void;
-    onTryDownload: (hasExportableContent: boolean, selectedEnvironment: IEnvironment) => void;
+    tryToDownload: () => void;
     notifyTx: (transactionType: TransactionType, hash: string) => void;
-    onDownload: () => void;
+    download: () => void;
     refreshContent: () => void;
     disableAccounts: boolean;
     showNoExportableContentModal: boolean;
@@ -82,9 +82,8 @@ export class Preview extends React.Component<IProps> {
     }
 
     tryDownload() {
-        const { selectedEnvironment } = this.props;
-        // TODO: parameters should not be passed here, but obtained from redux app state
-        // this.props.onTryDownload(previewService.hasExportableContent, selectedEnvironment);
+        const { tryToDownload: tryDownload } = this.props;
+        tryDownload();
     }
 
     toggleWeb3Accounts() {
@@ -115,7 +114,7 @@ export class Preview extends React.Component<IProps> {
             showDownloadModal,
             selectedEnvironment,
             onHideModals,
-            onDownload,
+            download,
             refreshContent
         } = this.props;
         const isProjectOpen = Boolean(project);
@@ -155,7 +154,7 @@ export class Preview extends React.Component<IProps> {
                     <DownloadModal
                         environment={selectedEnvironment}
                         onClose={onHideModals}
-                        onDownload={onDownload} />
+                        onDownload={download} />
                 </OnlyIf>
             </OnlyIf>
         );

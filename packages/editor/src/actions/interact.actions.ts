@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { IDeployedContract, IRawAbiDefinition } from '../models';
+import { IDeployedContract, IRawAbiDefinition, IAbiCallResult } from '../models';
 
 export const interactActions = {
 
@@ -27,15 +27,15 @@ export const interactActions = {
     },
 
     GET_CONSTANT: 'GET_CONSTANT',
-    getConstant(deployedContract: IDeployedContract, rawAbiDefinition: IRawAbiDefinition) {
+    getConstant(id: number, deployedContract: IDeployedContract, rawAbiDefinition: IRawAbiDefinition) {
         return {
             type: interactActions.GET_CONSTANT,
-            data: { deployedContract, rawAbiDefinition }
+            data: { id, deployedContract, rawAbiDefinition }
         };
     },
 
     GET_CONSTANT_SUCCESS: 'GET_CONSTANT_SUCCESS',
-    getConstantSuccess(result: any) {
+    getConstantSuccess(result: IAbiCallResult) {
         return {
             type: interactActions.GET_CONSTANT_SUCCESS,
             data: { result }

@@ -16,27 +16,32 @@
 
 import React from 'react';
 import style from './style.less';
-import { IRawAbiDefinition } from '../../../../../../../models';
-import { StyledButton } from '../../../../../../common';
+import { IRawAbiDefinition, IAbiCallResult } from '../../../../../../../models';
+import { StyledButton, OnlyIf } from '../../../../../../common';
 import { StyledButtonType } from '../../../../../../common/buttons/StyledButtonType';
 
 interface IProps {
+    id: number;
     rawAbiDefinition: IRawAbiDefinition;
-    call: (rawAbiDefinition: IRawAbiDefinition) => void;
+    call: (id: number, rawAbiDefinition: IRawAbiDefinition) => void;
+    result: IAbiCallResult;
 }
 
 export class Constant extends React.Component<IProps> {
 
     call = () => {
-        const { call, rawAbiDefinition } = this.props;
-        call(rawAbiDefinition);
+        const { id, call, rawAbiDefinition } = this.props;
+        call(id, rawAbiDefinition);
     }
 
     render() {
-        const { rawAbiDefinition } = this.props;
+        const { rawAbiDefinition, result, id } = this.props;
         return (
             <div className={style.container}>
                 <StyledButton type={StyledButtonType.Constant} text={rawAbiDefinition.name} onClick={this.call}/>
+                {
+                    result && result.id === id ? <div>{result.data}</div> : null
+                }
             </div>
         );
     }

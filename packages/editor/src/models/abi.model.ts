@@ -24,6 +24,11 @@ export enum StateMutability {
     View = 'view'
 }
 
+export interface IAbiCallResult {
+    id: number;
+    data: any;
+}
+
 export interface IRawAbiParameter {
     name: string;
     type: string;

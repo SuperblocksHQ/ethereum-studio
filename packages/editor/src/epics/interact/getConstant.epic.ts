@@ -25,7 +25,7 @@ import { IDeployedContract, IRawAbiDefinition } from '../../models';
 const call$ = (instance: any, name: string) => {
     return from(
         new Promise((resolve, reject) => {
-            instance[name]((err: any, result: any) => {
+            instance[name].call(null, (err: any, result: any) => {
                 if (err) {
                     console.log(err);
                     reject(`Problem calling to get the ${name}`);
@@ -52,6 +52,7 @@ export const getConstantEpic: Epic = (action$, state$) => action$.pipe(
     withLatestFrom(state$),
     switchMap(([action, state]) => {
 
+        const id: number = action.data.id;
         const deployedContract: IDeployedContract = action.data.deployedContract;
         const rawAbiDefinition: IRawAbiDefinition = action.data.rawAbiDefinition;
         const selectedEnv = projectSelectors.getSelectedEnvironment(state);
@@ -59,7 +60,10 @@ export const getConstantEpic: Epic = (action$, state$) => action$.pipe(
         return getContractInstance$(selectedEnv.endpoint, deployedContract)
             .pipe(
                 switchMap((contractInstance) => call$(contractInstance, rawAbiDefinition.name)),
-                switchMap((result) => [interactActions.getConstantSuccess(result)]),
+                switchMap((result) => [interactActions.getConstantSuccess({
+                    id,
+                    data: result
+                })]),
                 catchError((error) => {
                     console.log('There was an issue getting the value: ' + error);
                     return of(interactActions.getConstantFail(error));

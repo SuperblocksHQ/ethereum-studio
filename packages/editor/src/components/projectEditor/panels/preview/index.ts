@@ -36,17 +36,17 @@ const mapStateToProps = (state: any) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
     return {
-        onDownload: () => {
-            // dispatch(outputLogActions.clearOutputLog());
+        download: () => {
+            dispatch(previewActions.download());
         },
-        onTryDownload: () => {
-            // dispatch(outputLogActions.clearOutputLog());
+        tryToDownload: () => {
+            dispatch(previewActions.tryDownload());
         },
         onToggleWeb3Accounts: () => {
             // dispatch(outputLogActions.clearOutputLog());
         },
         onHideModals: () => {
-            // dispatch(outputLogActions.clearOutputLog());
+            dispatch(previewActions.hideModals());
         },
         notifyTx: (transactionType: TransactionType, hash: string) => {
             dispatch(transactionsActions.addTransaction(transactionType, hash));

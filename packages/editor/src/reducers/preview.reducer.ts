@@ -18,7 +18,7 @@ import { previewActions, explorerActions, panesActions, deployerActions } from '
 import Networks from '../networks';
 import { AnyAction } from 'redux';
 import { findItemByPath } from './explorerLib';
-import { ProjectItemTypes, IProjectItem } from '../models';
+import { ProjectItemTypes } from '../models';
 import { projectSelectors } from '../selectors';
 
 const initialState = {
@@ -26,7 +26,8 @@ const initialState = {
     showCannotExportModal: false,
     showDownloadModal: false,
     disableAccounts: false,
-    htmlToRender: ''
+    htmlToRender: '',
+    exportableHtml: undefined
 };
 
 function getProviderHTML(endpoint: string, accounts: string[]) {
@@ -39,8 +40,8 @@ function getProviderHTML(endpoint: string, accounts: string[]) {
     return js;
 }
 
-function getInnerContent(html: string, style: string, js: string, endpoint: string, accounts: string[]) {
-    const js2 = (endpoint !== null && accounts !== null ? getProviderHTML(endpoint, accounts) : '') + `<script type="text/javascript">${js}</script>`;
+function getInnerContent(html: string, style: string, js: string, endpoint?: string, accounts?: string[]) {
+    const js2 = ((endpoint && endpoint !== null) && (accounts && accounts !== null) ? getProviderHTML(endpoint, accounts) : '') + `<script type="text/javascript">${js}</script>`;
 
     const style2 = `<style type="text/css">${style}</style>`;
     html = html.replace('<!-- STYLE -->', style2);
@@ -71,9 +72,9 @@ export default function previewReducer(state = initialState, action: AnyAction, 
     switch (action.type) {
         case deployerActions.DEPLOY_SUCCESS:
         case explorerActions.INIT_EXPLORER_SUCCESS:
-        case panesActions.SAVE_FILE_SUCCESS:
         case previewActions.REFRESH_CONTENT:
             let htmlToRender;
+            let exportableHtml;
             const tree = rootState.explorer.tree;
             const addresses = [projectSelectors.getSelectedAccount(rootState).address];
 
@@ -96,31 +97,29 @@ export default function previewReducer(state = initialState, action: AnyAction, 
                 htmlToRender = errorHtml('There was an error rendering your project');
             } else {
                 htmlToRender = getInnerContent(html.code, css.code, contractJs + '\n' + js.code, rootState.projects.selectedEnvironment.endpoint, addresses);
+                exportableHtml = getInnerContent(html.code, css.code, contractJs + '\n' + js.code);
             }
 
             return {
                 ...state,
-                htmlToRender
+                htmlToRender,
+                exportableHtml
             };
         case previewActions.HIDE_MODALS:
             return {
                 ...state,
-                showTransactionsHistory: false,
-                preview: {
-                    ...state,
-                    showCannotExportModal: false,
-                    showNoExportableContentModal: false,
-                    showDownloadModal: false
-                }
+                showCannotExportModal: false,
+                showNoExportableContentModal: false,
+                showDownloadModal: false
             };
         case previewActions.TRY_DOWNLOAD: {
             let showNoExportableContentModal = false;
             let showCannotExportModal = false;
             let showDownloadModal = false;
 
-            if (!action.data.hasExportableContent) {
+            if (!state.exportableHtml) {
                 showNoExportableContentModal = true;
-            } else if (action.data.currentEnvironment === Networks.browser.name) {
+            } else if (rootState.projects.selectedEnvironment.name === Networks.browser.name) {
                 showCannotExportModal = true;
             } else {
                 showDownloadModal = true;
@@ -128,13 +127,15 @@ export default function previewReducer(state = initialState, action: AnyAction, 
 
             return {
                 ...state,
-                preview: { ...state, showNoExportableContentModal, showCannotExportModal, showDownloadModal }
+                showNoExportableContentModal,
+                showCannotExportModal,
+                showDownloadModal
             };
         }
         case previewActions.TOGGLE_WEB3_ACCOUNTS:
             return {
                 ...state,
-                preview: { ...state, disableAccounts: !state.disableAccounts }
+                disableAccounts: !state.disableAccounts
             };
         default:
             return state;
