@@ -25,10 +25,10 @@ export const downloadEpic: Epic = (action$: any, state$: any) => action$.pipe(
         if (state.preview.showDownloadModal) {
 
             const projectName = state.projects.project.name;
-            const htmlToRender = state.preview.htmlToRender;
+            const exportableHtml = state.preview.exportableHtml;
 
             const exportName = 'superblocks_dapp_' + projectName + '.html';
-            const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(htmlToRender);
+            const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(exportableHtml);
             const downloadAnchorNode = document.createElement('a');
             downloadAnchorNode.setAttribute('href', dataStr);
             downloadAnchorNode.setAttribute('download', exportName);
