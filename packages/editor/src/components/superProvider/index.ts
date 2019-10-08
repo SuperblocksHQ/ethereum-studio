@@ -111,12 +111,6 @@ export default class SuperProvider {
     }
 
     private onMessage = async (event: any) => {
-        // There's no point checking origin here since the iframe is running it's own code already,
-        // we need to treat it as a suspect.
-        // if (event.origin !== "null") {
-        // console.log("Origin diff", event.origin);
-        // return;
-        // }
         const data = event.data;
         if (typeof data !== 'object') { return; }
         if (data.channel !== this.channelId) { return; }
@@ -172,6 +166,7 @@ export default class SuperProvider {
                         sendIframeMessage(err, null);
                         return;
                     }
+                    // TODO - All this SuperProvider could actually be changed to be using Epics instead
                     // const modalData = {
                     //     title: 'WARNING: Invoking external account provider',
                     //     body:
@@ -205,7 +200,7 @@ export default class SuperProvider {
                 const wallet = await walletService.openWallet(this.selectedAccount.name, this.knownWalletSeed, null)
                     .catch((err) => console.log(err));
                 if (!wallet) {
-                    alert('Could not open wallet.');
+                    alert('Could not open the wallet.');
                     return;
                 }
 
