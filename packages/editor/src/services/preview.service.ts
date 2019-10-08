@@ -15,11 +15,9 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import SuperProvider from '../components/superProvider';
-import Networks from '../networks';
 import { IEnvironment, IAccount } from '../models/state';
 import { TransactionType } from '../models';
 
-// let exportableDappHtml: string;
 let iframeId: string;
 let disableAccounts = false;
 
