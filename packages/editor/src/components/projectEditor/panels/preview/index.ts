@@ -23,7 +23,7 @@ import { previewActions, transactionsActions } from '../../../../actions';
 import { TransactionType } from '../../../../models';
 
 const mapStateToProps = (state: any) => ({
-    project: projectSelectors.getProject(state),
+    isProjectLoaded: !!projectSelectors.getProject(state),
     disableAccounts: previewSelectors.getDisableAccounts(state),
     showNoExportableContentModal: previewSelectors.getShowNoExportableContentModal(state),
     showCannotExportModal: previewSelectors.getShowCannotExportModal(state),

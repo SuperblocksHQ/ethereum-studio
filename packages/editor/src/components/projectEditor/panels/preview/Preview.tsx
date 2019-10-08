@@ -23,13 +23,13 @@ import { CannotExportModal } from './CannotExportModal';
 import { DownloadModal } from './DownloadModal';
 import { NoExportableContentModal } from './NoExportableContentModal';
 import { IEnvironment, IAccount } from '../../../../models/state';
-import { IProject, TransactionType } from '../../../../models';
+import { TransactionType } from '../../../../models';
 
 function getIframeSrc() {
     if (window.location.hostname === 'localhost') {
         return `${window.location.protocol}//${window.location.host}/app-view.html`;
     } else {
-        return `${window.location.protocol}//${window.location.host.replace('lab', 'lab-dapp')}/app-view.html`;
+        return `${window.location.protocol}//${window.location.host.replace('studio', 'studio-dapp')}/app-view.html`;
     }
 }
 
@@ -48,18 +48,29 @@ interface IProps {
     showDownloadModal: boolean;
     selectedEnvironment: IEnvironment;
     selectedAccount: IAccount;
-    project: IProject;
+    isProjectLoaded: boolean;
     htmlToRender: string;
     knownWalletSeed: string;
 }
 
 export class Preview extends React.Component<IProps> {
 
-    componentDidUpdate(newProps: IProps) {
-        const { selectedAccount, selectedEnvironment } = newProps;
-        previewService.setAccount(selectedAccount);
-        previewService.setEnvironment(selectedEnvironment);
-        this.refreshIframe();
+    componentDidUpdate(prevProps: IProps) {
+        const { selectedAccount, selectedEnvironment, htmlToRender } = prevProps;
+
+        if (selectedAccount.name !== this.props.selectedAccount.name) {
+            previewService.setAccount(selectedAccount);
+            this.refreshIframe();
+        }
+
+        if (selectedEnvironment.name !== this.props.selectedEnvironment.name) {
+            previewService.setEnvironment(selectedEnvironment);
+            this.refreshIframe();
+        }
+
+        if (htmlToRender !== this.props.htmlToRender) {
+            this.refreshIframe();
+        }
     }
 
     componentDidMount() {
@@ -67,6 +78,7 @@ export class Preview extends React.Component<IProps> {
         previewService.init(htmlToRender);
         previewService.initSuperProvider(IFRAME_ID, selectedEnvironment, selectedAccount, knownWalletSeed, notifyTx);
         previewService.superProvider.attachListener();
+        this.refreshIframe();
     }
 
     componentWillUnmount() {
@@ -108,7 +120,7 @@ export class Preview extends React.Component<IProps> {
 
     render() {
         const {
-            project,
+            isProjectLoaded,
             showCannotExportModal,
             showNoExportableContentModal,
             showDownloadModal,
@@ -117,10 +129,9 @@ export class Preview extends React.Component<IProps> {
             download,
             refreshContent
         } = this.props;
-        const isProjectOpen = Boolean(project);
 
         return (
-            <OnlyIf test={isProjectOpen}>
+            <OnlyIf test={isProjectLoaded}>
                 <div className={style.appview}>
                     <div className={style.toolbar}>
 
