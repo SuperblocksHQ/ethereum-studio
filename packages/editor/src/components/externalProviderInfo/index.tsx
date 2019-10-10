@@ -19,7 +19,6 @@ import { SimpleModal } from '../modals';
 
 const ExternalProviderInfo = () => (
     <SimpleModal onClose={() => null}>
-        { console.log('puta') }
         <h2>WARNING: Invoking external account provider</h2>
         <div style={{textAlign: 'center'}}>Please understand that Ethereum Studio has no power over which network is targeted
         when using an external provider. It is your responsibility that the network is the same as it is expected to be.</div>

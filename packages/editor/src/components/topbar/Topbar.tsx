@@ -25,6 +25,7 @@ import { IProject } from '../../models';
 import { ForkDropdownAction, MenuAction, PreferencesAction, ShareDropdownAction } from './actions';
 import AccountConfigModal from '../projectEditor/editors/accountConfigModal';
 import { StyledButtonType } from '../common/buttons/StyledButtonType';
+import { SimpleModal } from '../modals';
 
 interface IView {
     showOpenStudio: boolean;
@@ -39,6 +40,8 @@ interface IProps {
     isProjectForking: boolean;
     view: IView;
     showAccountConfig: boolean;
+    showAboutModal: boolean;
+    toggleAboutModal: () => void;
     forkProject: (projectId: string, redirect: boolean) => void;
     showModal: (modalType: string, modalProps: any) => void;
     closeAccountConfigModal(): void;
@@ -81,7 +84,7 @@ export default class TopBar extends Component<IProps> {
 
     render() {
         const { project, showOpenStudio, showForkButton, showShareButton } = this.props.view;
-        const { isProjectForking, showAccountConfig, closeAccountConfigModal } = this.props;
+        const { isProjectForking, showAccountConfig, closeAccountConfigModal, showAboutModal, toggleAboutModal } = this.props;
 
         return (
             <div className={style.topbar}>
@@ -128,8 +131,17 @@ export default class TopBar extends Component<IProps> {
                     <div onClick={() => this.showModal('preferences')}>
                         <PreferencesAction />
                     </div>
-                    <HelpAction />
+                    <HelpAction openAboutModal={toggleAboutModal}/>
                 </div>
+                <OnlyIf test={showAboutModal}>
+                    <SimpleModal onClose={toggleAboutModal}>
+                        <h2>About Ethereum Studio</h2>
+                        <p style={{textAlign: 'center'}}>Ethereum Studio was built by <b>Superblocks</b>, and is now an open-source tool maintained in collaboration with <b>Ethereum.org</b>. You can learn more about Superblocks
+                            <a> here</a>. Do you want to contribute to improving this tool?
+                            Find the Github <a href='https://github.com/SuperblocksHQ/ethereum-studio' target='_blank' rel='noopener noreferrer' title='Ethereum Studio Github'>here</a>
+                        </p>
+                    </SimpleModal>
+                </OnlyIf>
                 <OnlyIf test={showAccountConfig}>
                     <AccountConfigModal
                         hideModal={closeAccountConfigModal}

@@ -21,4 +21,10 @@ export const viewActions = {
             type: viewActions.TOGGLE_SHARE_MODAL,
         };
     },
+    TOGGLE_ABOUT_MODAL: 'TOGGLE_ABOUT_MODAL',
+    toggleAboutModal() {
+        return {
+            type: viewActions.TOGGLE_ABOUT_MODAL,
+        };
+    },
 };

@@ -31,7 +31,8 @@ const mapStateToProps = (state: any) => ({
         showShareButton: viewSelectors.getShowTopBarShareButton(state),
     },
     isProjectForking: userSelectors.isProjectForking(state),
-    showAccountConfig: accountsConfigSelectors.getShowAccountConfig(state)
+    showAccountConfig: accountsConfigSelectors.getShowAccountConfig(state),
+    showAboutModal: viewSelectors.getShowAboutModal(state)
 });
 
 function mapDispatchToProps(dispatch: Dispatch<AnyAction>) {
@@ -44,6 +45,9 @@ function mapDispatchToProps(dispatch: Dispatch<AnyAction>) {
         },
         closeAccountConfigModal: () => {
             dispatch(accountActions.closeAccountConfig());
+        },
+        toggleAboutModal: () => {
+            dispatch(viewActions.toggleAboutModal());
         }
     };
 }

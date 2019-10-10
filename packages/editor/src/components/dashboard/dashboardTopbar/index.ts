@@ -15,21 +15,25 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { connect } from 'react-redux';
-import { authActions } from '../../../actions';
-import { userSelectors, authSelectors } from '../../../selectors';
+import { authActions, viewActions } from '../../../actions';
+import { userSelectors, authSelectors, viewSelectors } from '../../../selectors';
 import DashboardTopBar from './DashboardTopBar';
 import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
 
 const mapStateToProps = (state: any) => ({
     isAuthenticated: authSelectors.getIsAuthenticated(state),
-    userProfile: userSelectors.getUserProfile(state)
+    userProfile: userSelectors.getUserProfile(state),
+    showAboutModal: viewSelectors.getShowAboutModal(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
     return {
         logout: () => {
             dispatch(authActions.logout());
+        },
+        openAboutModal: () => {
+            dispatch(viewActions.toggleAboutModal());
         }
     };
 };

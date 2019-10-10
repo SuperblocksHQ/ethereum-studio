@@ -53,6 +53,9 @@ export default class BottomBar extends Component<IProps> {
                     <span>Gas Limit: {networkPreferences.gasLimit}</span>
                     <span>Gas Price: {gasPrice} Gwei</span>
                     <span>{endpoint}</span>
+                    <a href='https://ethereum.org' target='_blank' rel='noopener noreferrer'>
+                        <img src='/static/img/img-ethereum-logo.png' alt='Ethereum' height='20px' />
+                    </a>
                 </div>
             </div>
         );

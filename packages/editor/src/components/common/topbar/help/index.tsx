@@ -24,27 +24,17 @@ import { DropdownContainer } from '../../';
 import { Tooltip } from '../../';
 import style from './style.less';
 
-
-const HelpDropdownDialog = () => (
+const HelpDropdownDialog = ({openAboutModal}: IProps) => (
     <div className={style.helpMenu}>
         <div className={style.title}>General</div>
         <ul>
             <li>
                 <a
-                    href='https://help.superblocks.com/hc/en-us/categories/360000486714-Using-Superblocks-Lab'
+                    href='https://help.superblocks.com/en/collections/1865071-ethereum-studio'
                     target='_blank'
                     rel='noopener noreferrer'
                 >
                     Guide to Ethereum Studio
-                </a>
-            </li>
-            <li>
-                <a
-                    href='https://www.youtube.com/playlist?list=PLjnjthhtIABuzW2MTsPGkihZtvvepy-n4'
-                    target='_blank'
-                    rel='noopener noreferrer'
-                >
-                    Video tutorials
                 </a>
             </li>
             <li>
@@ -73,14 +63,23 @@ const HelpDropdownDialog = () => (
                     </span>
                 </a>
             </li>
+            <li>
+                <a href='' onClick={(e) => { e.preventDefault(); openAboutModal(); }}>
+                    About
+                </a>
+            </li>
         </ul>
     </div>
 );
 
-export const HelpAction = () => (
+interface IProps {
+    openAboutModal: () => void;
+}
+
+export const HelpAction = ({ openAboutModal }: IProps) => (
     <DropdownContainer
             className={classNames([style.actionMenu, style.actionRight])}
-            dropdownContent={<HelpDropdownDialog />}
+            dropdownContent={<HelpDropdownDialog openAboutModal={openAboutModal} />}
     >
         <div className={style.action}>
             <Tooltip title='Help'>
