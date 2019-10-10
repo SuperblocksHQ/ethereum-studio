@@ -59,7 +59,7 @@
                 "type": "FILE",
                 "opened": false,
                 "children": [],
-                "code": "pragma solidity ^0.4.25;\r\n\r\ncontract MyContract {\r\n    constructor() public {\r\n    }\r\n}"
+                "code": "pragma solidity ^0.5.10;\r\n\r\ncontract MyContract {\r\n    constructor() public {\r\n    }\r\n}"
                 }
             ]
             },
