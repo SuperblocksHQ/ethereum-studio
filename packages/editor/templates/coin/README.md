@@ -8,6 +8,8 @@ This project is an example application that teaches you how to:
 -   Emit events that clients can subscribe to.
 -   Provide arguments to a contract constructor using the _Configure contract_ modal.
 
+> Tutorial content supplied by [kauri.io](https://kauri.io).
+
 ## Explanation of the template
 
 ### The smart contract

@@ -6,6 +6,8 @@ This template is a "Hello World" example that teaches you how to:
 -   Store state in a contract and to update it.
 -   Fetch your newly created contract's information from the blockchain and render it to a front end.
 
+> Tutorial content supplied by [kauri.io](https://kauri.io).
+
 ## Explanation of the template
 
 ### The smart contract
