@@ -21,15 +21,18 @@ import { from } from 'rxjs';
 import { IProjectItem, ProjectItemTypes } from '../../models';
 import { findItemByPath } from '../../reducers/explorerLib';
 
-export const openReadmeEpic: Epic = (action$: any, state$: any) => action$.pipe(
+export const openFileEpic: Epic = (action$: any, state$: any) => action$.pipe(
     ofType(explorerActions.INIT_EXPLORER_SUCCESS),
     withLatestFrom(state$),
     switchMap(([_action, state]) => {
         const actions = [];
         const url = String(window.location);
 
-        if (url.includes('openReadme=1')) {
-            const readmeItem: Nullable<IProjectItem> = findItemByPath(state.explorer.tree, [ 'README.md' ], ProjectItemTypes.File);
+        const params = new URLSearchParams(location.search);
+        const openFile = params && params.get('openFile');
+        if (openFile) {
+            const path = openFile.split('/');
+            const readmeItem: Nullable<IProjectItem> = findItemByPath(state.explorer.tree, path, ProjectItemTypes.File);
             if (readmeItem && readmeItem !== null) {
                 actions.push(panesActions.openFile(readmeItem));
             }

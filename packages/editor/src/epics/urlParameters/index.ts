@@ -15,9 +15,9 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { updateViewOnParameters } from './updateViewOnParameters.epic';
-import { openReadmeEpic } from './openReadme.epic';
+import { openFileEpic } from './openFile.epic';
 
 export const urlParametersEpics = [
     updateViewOnParameters,
-    openReadmeEpic
+    openFileEpic
 ];
