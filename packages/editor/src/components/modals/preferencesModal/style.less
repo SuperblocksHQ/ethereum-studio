@@ -23,6 +23,7 @@
     border-radius: 2px;
     background-color: @modal-background-color;
     color: #fff;
+    max-width: 100%;
 
     h2 {
         margin-top: 0;
@@ -30,15 +31,17 @@
 
     .area {
         display: flex;
+        overflow: auto;
     }
     .container {
-        width: 100%;
+        max-width: 100%;
+        width: 750px;
         display: flex;
         flex-direction: column;
-        min-width: 750px;
-        max-width: 750px;
+        overflow: hidden;
         .categoriesArea {
             width: 25%;
+            min-width: 170px;
             border-right: 1px solid @modal-separator-color;
             .categoriesContainer {
                 margin-top: 15px;

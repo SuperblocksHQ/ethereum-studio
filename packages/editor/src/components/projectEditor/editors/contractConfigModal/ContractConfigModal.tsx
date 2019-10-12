@@ -179,12 +179,12 @@ export default class ContractConfigModal extends Component<IProps, IState> {
                                 </div>
                             </div>
                         </div>
-                        <div className={style.footer}>
-                            <div className={style.cancelBtn} onClick={(hideModal)}>Cancel</div>
-                            <button className='btn2' disabled={!isDirty} onClick={this.save}>
-                                Save
-                            </button>
-                        </div>
+                    </div>
+                    <div className={style.footer}>
+                        <div className={style.cancelBtn} onClick={(hideModal)}>Cancel</div>
+                        <button className='btn2' disabled={!isDirty} onClick={this.save}>
+                            Save
+                        </button>
                     </div>
                 </div>
             </Modal>
