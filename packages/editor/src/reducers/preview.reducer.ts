@@ -60,14 +60,6 @@ function errorHtml(message: string) {
     </html>`;
 }
 
-// function makeFileName(path: string, networkName: string, suffix: string) {
-//     const a = path.match(/^(.*\/)([^/]+)$/);
-//     const dir = a[1];
-//     const filename = a[2];
-//     const contractName = filename.match(/^(.+)[.][Ss][Oo][Ll]$/)[1];
-//     return `/build${dir}${contractName}/${contractName}.${networkName}.${suffix}`;
-// }
-
 export default function previewReducer(state = initialState, action: AnyAction, rootState: any) {
     switch (action.type) {
         case deployerActions.DEPLOY_SUCCESS:
