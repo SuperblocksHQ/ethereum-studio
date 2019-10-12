@@ -15,7 +15,7 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { IEnvironment } from '../models/state';
-import { IProject } from '../models';
+import { IProject, ITemplate } from '../models';
 
 export const projectsActions = {
     SET_ALL_ENVIRONMENTS: 'SET_ALL_ENVIRONMENTS',
@@ -141,11 +141,11 @@ export const projectsActions = {
        };
     },
 
-    LOAD_PROJECT_AND_FORK_REQUEST: 'LOAD_PROJECT_AND_FORK_REQUEST',
-    loadProjectAndFork(projectId: string) {
+    CREATE_PROJECT_FROM_TEMPLATE_REQUEST: 'CREATE_PROJECT_FROM_TEMPLATE_REQUEST',
+    createProjectFromTemplate(template: ITemplate) {
         return {
-            type: projectsActions.LOAD_PROJECT_AND_FORK_REQUEST,
-            data: { projectId }
+            type: projectsActions.CREATE_PROJECT_FROM_TEMPLATE_REQUEST,
+            data: { template }
         };
     },
     RENAME_PROJECT: 'RENAME_PROJECT',

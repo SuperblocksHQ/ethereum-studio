@@ -27,7 +27,7 @@ import { updateProject } from './updateProject.epic';
 // import { importProject } from './importProject.epic';
 
 import { loadProject } from './loadProject.epic';
-import { loadProjectAndForkEpic } from './loadProjectAndFork.epic';
+import { createProjectFromTemplateEpic } from './createProjectFromTemplate.epic';
 import { renameProjectEpic } from './renameProject.epic';
 import { createEmptyProject } from './createEmptyProject.epic';
 import { openWalletEpic } from './openWallet.epic';
@@ -41,7 +41,7 @@ export const projectsEpics = [
     updateProjectSettings,
     initExplorerEpic,
     loadProject,
-    loadProjectAndForkEpic,
+    createProjectFromTemplateEpic,
     deleteProject,
     renameProjectEpic,
     forkProject,

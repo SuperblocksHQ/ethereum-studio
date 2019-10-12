@@ -15,19 +15,21 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { of } from 'rxjs';
-import { switchMap, withLatestFrom, catchError } from 'rxjs/operators';
+import { switchMap, withLatestFrom, catchError, tap } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
 import { projectsActions } from '../../actions';
 import { projectService} from '../../services/project.service';
-import { IProject } from '../../models';
+import { IProject, ITemplate } from '../../models';
+import * as analytics from '../../utils/analytics';
 
-export const loadProjectAndForkEpic: Epic = (action$: any, state$: any) => action$.pipe(
-    ofType(projectsActions.LOAD_PROJECT_AND_FORK_REQUEST),
+export const createProjectFromTemplateEpic: Epic = (action$: any, state$: any) => action$.pipe(
+    ofType(projectsActions.CREATE_PROJECT_FROM_TEMPLATE_REQUEST),
     withLatestFrom(state$),
     switchMap(([action, _state]) => {
-        const projectId = action.data.projectId;
-        return projectService.getProjectById(projectId)
+        const template: ITemplate = action.data.template;
+        return projectService.getProjectById(template.projectId)
             .pipe(
+                tap(() => analytics.logEvent('CREATE_PROJECT_FROM_TEMPLATE', { template: template.name } )),
                 switchMap((project: IProject) => projectService.createProject({
                     name: project.name,
                     description: project.description,

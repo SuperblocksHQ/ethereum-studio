@@ -15,11 +15,12 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { of, from } from 'rxjs';
-import { switchMap, withLatestFrom, catchError } from 'rxjs/operators';
+import { switchMap, withLatestFrom, catchError, tap } from 'rxjs/operators';
 import data from '../../assets/static/json/emptyProject.json';
 import { ofType, Epic } from 'redux-observable';
 import { projectsActions } from '../../actions';
 import { projectService} from '../../services/project.service';
+import * as analytics from '../../utils/analytics';
 
 export const createEmptyProject: Epic = (action$: any, state$: any) => action$.pipe(
     ofType(projectsActions.CREATE_EMPTY_PROJECT),
@@ -27,6 +28,7 @@ export const createEmptyProject: Epic = (action$: any, state$: any) => action$.p
     switchMap(([action, ]) => {
         return from(projectService.createProject(data))
             .pipe(
+                tap(() => analytics.logEvent('CREATE_EMPTY_PROJECT', {})),
                 switchMap((newProject) => {
                     if (action.data.redirect) {
                         window.location.href = `${window.location.origin}/${newProject.id}`;

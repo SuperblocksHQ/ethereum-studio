@@ -21,17 +21,11 @@ import { ModalHeader, StyledButton } from '../../common';
 import classNames from 'classnames';
 import style from './style.less';
 import { StyledButtonType } from '../../common/buttons/StyledButtonType';
-
-interface ITemplate {
-    id: number;
-    description: string;
-    name: string;
-    projectId: string;
-}
+import { ITemplate } from '../../../models';
 
 interface IProps {
     isProjectLoading: boolean;
-    loadAndForkProject: (projectId: string) => void;
+    createProjectFromTemplate: (template: ITemplate) => void;
     hideModal: () => void;
 }
 
@@ -55,10 +49,10 @@ export default class ProjectTemplateModal extends Component<IProps, IState> {
     }
 
     onCreateProjectHandle = () => {
-        const { loadAndForkProject } = this.props;
+        const { createProjectFromTemplate } = this.props;
         const { selectedTemplate } = this.state;
 
-        loadAndForkProject(selectedTemplate.projectId);
+        createProjectFromTemplate(selectedTemplate);
     }
 
     render() {

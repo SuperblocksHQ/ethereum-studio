@@ -24,7 +24,7 @@ import { createFile } from '../../reducers/explorerLib';
 import { projectSelectors } from '../../selectors';
 import Networks from '../../networks';
 import { IAccount } from '../../models/state';
-import { TransactionType, ITransaction } from '../../models';
+import { TransactionType } from '../../models';
 
 function finalizeDeploy(state: any, deployRunner: DeployRunner, hash: string, outputPath: string[], isNewTransaction: boolean, tx?: any) {
     return deployRunner.waitForContract(hash).pipe(
@@ -33,7 +33,7 @@ function finalizeDeploy(state: any, deployRunner: DeployRunner, hash: string, ou
                 return of(outputLogActions.addRows([o]));
             } else {
                 const res = <IDeployResult>o;
-                analytics.logEvent('CONTRACT_DEPLOYED', res.environment);
+                analytics.logEvent('CONTRACT_DEPLOYED', { environment: res.environment });
                 const files = res.files.map(f => createFile(f.name, f.code));
                 return of<any>(
                     explorerActions.createPathWithContent(outputPath, files),
