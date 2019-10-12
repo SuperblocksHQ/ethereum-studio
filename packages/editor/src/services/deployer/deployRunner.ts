@@ -40,7 +40,7 @@ export class DeployRunner {
     checkExistingDeployment(buildFiles: IProjectItem[], contractArgs: any[]): Observable<ICheckDeployResult> {
         // 1. create ".deploy" file
         try {
-            this.deployFile = createDeployFile(buildFiles, contractArgs);
+            this.deployFile = createDeployFile(this.currWeb3, buildFiles, contractArgs);
         } catch (e) {
             return throwError({ msg: e.message, channel: 2, result: CheckDeployResult.CanNotDeploy });
         }
