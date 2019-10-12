@@ -14,7 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-// TODO: Create projects in cloud and replace id's with proper ones
 export default class Templates {
     static templates = [
         {
@@ -34,12 +33,6 @@ export default class Templates {
             name: 'CryptoPizza NFT',
             description: '<div><h2>CryptoPizza NFT</h2><p>A Crypto-collectible game built on top of the ERC-721 standard for creating unique tokens.</p></div>',
             projectId: '5d93b3ec5634771a056d25d3'
-        },
-        {
-            id: 3,
-            name: 'Counter',
-            description: '<div><h2>Counter Project</h2><p>Learn, through a simple counter, how to properly import other contracts and use <a href="https://openzeppelin.com" target="_blank" rel="noopener noreferrer" title="Open Zeppelin">OpenZeppelin\'s</a> SafeMath contract to perform simple arithmetic operations.</p></div>',
-            projectId: '5d837679875da96cb4432b76'
-        },
+        }
     ];
 }
