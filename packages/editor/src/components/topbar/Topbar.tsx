@@ -26,6 +26,7 @@ import { ForkDropdownAction, MenuAction, PreferencesAction, ShareDropdownAction 
 import AccountConfigModal from '../projectEditor/editors/accountConfigModal';
 import { StyledButtonType } from '../common/buttons/StyledButtonType';
 import { SimpleModal } from '../modals';
+import AboutModal from '../modals/aboutModal';
 
 interface IView {
     showOpenStudio: boolean;
@@ -134,13 +135,9 @@ export default class TopBar extends Component<IProps> {
                     <HelpAction openAboutModal={toggleAboutModal}/>
                 </div>
                 <OnlyIf test={showAboutModal}>
-                    <SimpleModal onClose={toggleAboutModal}>
-                        <h2>About Ethereum Studio</h2>
-                        <p style={{textAlign: 'center'}}>Ethereum Studio was built by <b>Superblocks</b>, and is now an open-source tool maintained in collaboration with <b>Ethereum.org</b>. You can learn more about Superblocks
-                            <a> here</a>. Do you want to contribute to improving this tool?
-                            Find the Github <a href='https://github.com/SuperblocksHQ/ethereum-studio' target='_blank' rel='noopener noreferrer' title='Ethereum Studio Github'>here</a>
-                        </p>
-                    </SimpleModal>
+                    <AboutModal
+                        hideModal={toggleAboutModal}
+                    />
                 </OnlyIf>
                 <OnlyIf test={showAccountConfig}>
                     <AccountConfigModal

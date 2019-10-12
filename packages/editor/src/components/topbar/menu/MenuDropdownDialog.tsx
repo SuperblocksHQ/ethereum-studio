@@ -105,6 +105,10 @@ export default class MenuDropdownDialog extends React.Component<IProps> {
                     <Divider />
                     <MenuItem onClick={() => this.toggleFullScreen()} title='Toggle Full Screen' />
                 </SubMenu>
+                <Divider />
+                <a href='https://ethereum.org/developers' target='_blank' rel='noopener noreferrer'>
+                    <MenuItem onClick={() => ''} title='Go to Ethereum.org' />
+                </a>
             </div>
         );
     }

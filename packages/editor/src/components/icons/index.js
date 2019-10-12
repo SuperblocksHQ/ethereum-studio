@@ -74,6 +74,9 @@ export const IconConfigure = ({ ...props }) => <FaIcon {...props} icon={iconConf
 export const IconInteract = ({ ...props }) => (
     <IconImg src={'/static/img/icon-interact.svg'} {...props} />
 );
+export const IconEthereum = ({ ...props }) => (
+    <IconImg src={'/static/img/img-ethereum-logo.svg'} {...props} />
+);
 export const IconTrash = () => <FaIcon icon={iconTrash} />;
 export const IconGem = () => <FaIcon icon={iconGem} />;
 export const IconFile = () => <FaIcon icon={iconFile} />;
