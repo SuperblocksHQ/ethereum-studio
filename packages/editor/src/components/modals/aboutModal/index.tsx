@@ -41,7 +41,7 @@ export default class AboutModal extends Component<IProps> {
                                 <a href='https://superblocks.com' target='_blank' rel='noopener noreferrer' title='Superblocks home page'> here</a>.
                                 <br />
                                 <br />
-                                Do you want to contribute to improving this tool? Check out the Github repository <a href='https://github.com/SuperblocksHQ/ethereum-studio' target='_blank' rel='noopener noreferrer' title='Ethereum Studio Github'>here</a>
+                                Do you want to contribute to improving this tool? Check out the project's Github repository <a href='https://github.com/SuperblocksHQ/ethereum-studio' target='_blank' rel='noopener noreferrer' title='Ethereum Studio Github'>here</a>
                             </p>
                         </div>
                     </div>
