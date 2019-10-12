@@ -35,7 +35,7 @@ export const loadProjectAndForkEpic: Epic = (action$: any, state$: any) => actio
                 })),
                 switchMap((newProject: IProject) =>  {
                     // redirect
-                    window.location.href = `${window.location.origin}/${newProject.id}`;
+                    window.location.href = `${window.location.origin}/${newProject.id}?openReadme=1`;
 
                     return [projectsActions.loadProjectSuccess(newProject)];
                 }),
