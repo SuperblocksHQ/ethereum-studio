@@ -37,7 +37,7 @@ export default class AboutModal extends Component<IProps> {
                     />
                     <div className={classNames([style.content, 'scrollable-y'])}>
                         <div className={style.inner}>
-                            <p>Ethereum Studio was built by <b>Superblocks</b>, and is now an open-source tool maintained in collaboration with <b>Ethereum.org</b>. You can learn more about Superblocks
+                            <p>Ethereum Studio was built by <b>Superblocks</b>, and it is now an open-source tool maintained in collaboration with <b>Ethereum.org</b>. You can learn more about Superblocks
                                 <a href='https://superblocks.com' target='_blank' rel='noopener noreferrer' title='Superblocks home page'> here</a>.
                                 <br />
                                 <br />
