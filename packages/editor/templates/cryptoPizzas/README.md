@@ -34,4 +34,20 @@ First is the `internal` visibility [keyword](https://solidity.readthedocs.io/en/
 
 Second it uses a [function modifier](https://solidity.readthedocs.io/en/v0.5.12/contracts.html#function-modifiers) that accepts the input variables passed to the function, and passes them to another function, that checks a condition is correct before executing the function. The `isUnique` modifier checks to see if the Pizza created exists yet by checking its `_dna` and `_name` using a standard Solidity method for string comparison that compares the byte data.
 
-Once the modifier confirms the Pizza is unique the function adds it to the array and maps it to the owner (creator in this case), using [the `assert` function](https://solidity.readthedocs.io/en/v0.5.12/control-structures.html#id4) to check that the owner address is the same as the address of the current user.
+Once the modifier confirms the Pizza is unique the function adds it to the array and maps it to the owner (creator in this case), using [the `assert` error handling function](https://solidity.readthedocs.io/en/v0.5.12/control-structures.html#id4) to check that the owner address is the same as the address of the current user.
+
+The `createRandomPizza` function is the public function called in JavaScript that assigns the string the user sets in the front end as the name of the pizza and calls the `generateRandomDna` function, passing the name, and the owner.
+
+The `generateRandomDna` introduces another new function modifier, [`pure`](https://solidity.readthedocs.io/en/v0.5.12/contracts.html#pure-functions). Pure functions promise not to read from or modify the state, instead they generally return values to another function that does.
+
+The `getPizzasByOwner` function is another public function called by JavaScript to return all pizzas created by the owner of a specified address. The function introduces another modifier, [`view`](https://solidity.readthedocs.io/en/v0.5.12/contracts.html#view-functions) which promise not to modify the state.
+
+The `transferFrom` contract function is called by JavaScript when a user clicks the _Gift_ button for an individual pizza, and transfers ownership to the address specified. The function uses another form of [error handling function](https://solidity.readthedocs.io/en/v0.5.12/control-structures.html#id4), `require` that checks for valid conditions at run time. If all these conditions are correct the function transfers ownership and emits an event to the blockchain recording the ownership transfer.
+
+When the user clicks the _Eat_ button for an individual pizza, JavaScript calls the `burn` contract function that destroys the pizza at the specified id. The `burn` function uses the [`external`](https://solidity.readthedocs.io/en/v0.5.12/contracts.html#visibility-and-getters) function modifier, which makes the function part of the contract interface and can be called from other contracts.
+
+And that's all the code relevant to this dapp, there are other functions for glue code not included here. To see the dapp in action, click _Compile_, then _Deploy_ found under the disclosure triangle of the contract file, then open the _Preview_ tab to see the frontend of the dapp. Try creating one or more pizzas, then gifting them to other accounts (create new accounts from the _Default_ drop down), and eating them 😋.
+
+### Find out more
+
+You can read a full tutorial that accompanies this example dapp, plus many more tutorials, on [kauri.io](https://kauri.io/article/bdd65d6155a74b8aa52672b46b7230a8/v1/a-fullstack-dapp-for-creating-tokens).
