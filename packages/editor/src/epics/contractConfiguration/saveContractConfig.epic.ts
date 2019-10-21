@@ -57,7 +57,7 @@ export const saveContractConfig = (action$: AnyAction, state$: any) => action$.p
 
             dappFileData.contracts[index] = newContractConfig;
 
-            return [panesActions.saveFile(dappFileItem.id, JSON.stringify(dappFileData, null, 4))];
+            return [panesActions.saveFile(dappFileItem.id, JSON.stringify(dappFileData, null, 4)), contractConfigActions.closeContractConfig()];
         } else {
             return empty();
         }
