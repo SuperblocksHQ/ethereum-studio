@@ -28,7 +28,6 @@ import ProjectEditor from '../projectEditor';
 interface IProps {
     showTrackingAnalyticsDialog: boolean;
     router: any;
-    appVersion: string;
     knownWalletSeed: string;
     notifyAppStart: (isIframe: boolean) => void;
     addMessageLogRow: (logLevel: LogLevel, msg: string) => void;
