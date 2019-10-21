@@ -38,6 +38,7 @@ interface IProps {
   onCreateItem: (parentId: string, type: ProjectItemTypes, name: string) => void;
   exportProject: () => void;
   saveProject: () => void;
+  tryToDownload: () => void;
 }
 
 export default class MenuDropdownDialog extends React.Component<IProps> {
@@ -76,7 +77,7 @@ export default class MenuDropdownDialog extends React.Component<IProps> {
     render() {
         const { showTransactionsHistory, showFileSystem, showPreview, showConsole, showMessageLog,
                 togglePanel, closeAllPanels, closeAllPanes, closePane, activePaneId, rootFolderId, project, exportProject,
-                showInteract, saveProject } = this.props;
+                showInteract, saveProject, tryToDownload } = this.props;
 
         return (
             <div className={style.menuDialog}>
@@ -91,7 +92,7 @@ export default class MenuDropdownDialog extends React.Component<IProps> {
                       <MenuItem onClick={() => closeAllPanes()} disabled={!activePaneId} title='Close All Files' />
                       <Divider />
                       <MenuItem title='Export Project' onClick={() => exportProject()} />
-                      <MenuItem title='Download Project' onClick={() => console.log('TODO')} />
+                      <MenuItem title='Download Project' onClick={() => tryToDownload()} />
                   </SubMenu>
                 </OnlyIf>
                 <SubMenu title='View'>
