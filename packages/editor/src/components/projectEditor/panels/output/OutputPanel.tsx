@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import classNames from 'classnames';
 import style from '../../style-console.less';
 import { IOutputLogRow } from '../../../../models/state';
@@ -26,7 +26,19 @@ interface IProps {
     clearOutputLog: () => void;
 }
 
-export function OutputPanel(props: IProps) {
+export const OutputPanel = (props: IProps) => {
+    const messagesAnchor: any = useRef(null);
+
+    const scrollToBottom = () => {
+        if (messagesAnchor !== null && messagesAnchor.current !== null) {
+            messagesAnchor.current.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+
+    useEffect(() => {
+        scrollToBottom();
+    });
+
     return (
         <div className='scrollable-y'>
             <div className={style.console}>
@@ -51,8 +63,9 @@ export function OutputPanel(props: IProps) {
                             return <div key={index + lineIndex} className={cl}>{line}</div>;
                         });
                     })}
+                    <div ref={messagesAnchor} />
                 </div>
             </div>
         </div>
     );
-}
+};
