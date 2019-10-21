@@ -26,7 +26,7 @@ const WINDOWS_RESERVED_CHARS_REGEX = /^(con|prn|aux|nul|com[0-9]|lpt[0-9])$/i;
 
 export function isValidProjectItemName(name: string): boolean {
     name = name.trim();
-    return name.length > 0 && name.length < 255 && !UNIX_RESERVED_CHARS_REGEX.test(name) && !WINDOWS_RESERVED_CHARS_REGEX.test(name);
+    return name.length > 0 && name.length < 255 && !UNIX_RESERVED_CHARS_REGEX.test(name) && !WINDOWS_RESERVED_CHARS_REGEX.test(name) && name.indexOf('/') === -1;
 }
 
 // Insert path into directory tree structure:
