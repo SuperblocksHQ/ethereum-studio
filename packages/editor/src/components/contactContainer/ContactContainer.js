@@ -24,7 +24,7 @@ export default class ContactContainer extends Component {
         return (
             <div className={style.container}>
                 <div style={{ display: "inline-block" }}>
-                    <a href="https://twitter.com/ethereum" target="_blank" rel="noopener noreferrer" className={style.contactIcon} title="Ethereum' Twitter">
+                    <a href="https://twitter.com/ethdotorg" target="_blank" rel="noopener noreferrer" className={style.contactIcon} title="Ethereum' Twitter">
                         <IconTwitter />
                     </a>
                     <a href="https://github.com/SuperblocksHQ/ethereum-studio" target="_blank" rel="noopener noreferrer" className={style.contactIcon} title="Ethereum Studio Github">
