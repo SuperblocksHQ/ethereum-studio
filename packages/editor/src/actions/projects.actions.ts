@@ -184,6 +184,26 @@ export const projectsActions = {
        };
     },
 
+    SAVE_PROJECT: 'SAVE_PROJECT',
+    saveProject() {
+        return {
+            type: projectsActions.SAVE_PROJECT,
+        };
+    },
+    SAVE_PROJECT_SUCCESS: 'SAVE_PROJECT_SUCCESS',
+    saveProjectSuccess() {
+        return {
+            type: projectsActions.SAVE_PROJECT_SUCCESS,
+        };
+    },
+    SAVE_PROJECT_FAIL: 'SAVE_PROJECT_FAIL',
+    saveProjectFail(error: string) {
+        return {
+            type: projectsActions.SAVE_PROJECT_FAIL,
+            data: error
+        };
+    },
+
     // ---------- FORK ----------
     FORK_PROJECT: 'FORK_PROJECT',
     forkProject(projectId: string, redirect: boolean) {
