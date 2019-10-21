@@ -52,6 +52,9 @@ function mapDispatchToProps(dispatch: Dispatch) {
         },
         exportProject() {
             dispatch(projectsActions.exportProject());
+        },
+        saveProject() {
+            dispatch(projectsActions.saveProject());
         }
     };
 }
