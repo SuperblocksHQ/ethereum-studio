@@ -84,6 +84,16 @@ export class FileEditor extends React.Component<IProps> {
         }
     }
 
+    componentWillReceiveProps(nextProps: IProps) {
+        if (nextProps.file.code && nextProps.file.code !== this.code) {
+            const monaco: any = this.refs.monaco;
+
+            if (monaco) {
+                setTimeout(() => monaco.editor.focus(), 100);
+            }
+        }
+    }
+
     editorDidMount = (editor: any, monacoObj: any) => {
         editor.addCommand(monacoObj.KeyMod.CtrlCmd | monacoObj.KeyCode.KEY_S, this.onSave);
         editor.focus();
@@ -119,7 +129,7 @@ export class FileEditor extends React.Component<IProps> {
                     language={this.language}
                     theme='vs-dark'
                     defaultValue={file.code}
-                    value={file.code}
+                    value={this.code}
                     options={this.options}
                     onChange={this.onFileChange}
                     editorDidMount={this.editorDidMount}
