@@ -35,8 +35,16 @@ export const exportProject = (action$: AnyAction, state$: any) => action$.pipe(
         const zip = new JSZip();
         const fileName = state.projects.project.name.trim().toLowerCase().replace(' ', '_') + '_' + Date.now();
 
+        let includeBuildFiles = false;
+        if (confirm('Do you also want to save the project state (current contract addresses, ABIs, etc...)?')) {
+            includeBuildFiles = true;
+        }
+
         // Add all files to zip variable
         traverseTree(files, (file, path) => {
+            if (!includeBuildFiles && path()[0] === 'build') {
+                return;
+            }
             if (file.type !== ProjectItemTypes.Folder) {
                 zip.file(pathToString(path()), file.code);
             } else if (file.type === ProjectItemTypes.Folder && !file.children.length) {
