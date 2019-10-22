@@ -38,6 +38,8 @@ export const exportProject = (action$: AnyAction, state$: any) => action$.pipe(
         traverseTree(files, (file, path) => {
             if (file.type !== ProjectItemTypes.Folder) {
                 zip.file(pathToString(path()), file.code);
+            } else if (file.type === ProjectItemTypes.Folder && !file.children.length) {
+                zip.folder(pathToString(path()), file.name);
             }
         });
 
