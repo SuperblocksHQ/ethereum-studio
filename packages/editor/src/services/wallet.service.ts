@@ -42,7 +42,7 @@ export const walletService = {
         if (!seed) {
             seed = prompt('Please enter the 12 word seed to unlock the wallet: ' + name);
             if (!seed) {
-                alert('Seed should contain 12 word!');
+                alert('Seed should contain 12 words!');
                 return Promise.reject('Seed should contain 12 words!');
             }
         }
