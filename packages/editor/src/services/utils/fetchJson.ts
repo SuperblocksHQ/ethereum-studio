@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { from } from 'rxjs';
+import { Observer, Observable } from 'rxjs';
 
 export function getAuthToken() {
     return localStorage.getItem('authToken') || null;
@@ -45,17 +45,31 @@ export interface IRequestParams {
     method?: string;
 }
 
-export function fetchJSON(url: string, params: IRequestParams) {
-    return from(fetch(url, {
-        method: params.method || 'GET',
-        headers: {
-            ...params.headers,
-            ...getTokenHeaders(),
-            'Content-Type': 'application/json'
-        },
-        credentials: 'same-origin',
-        body: JSON.stringify(params.body)
-    }));
+export function fetchJSON(url: string, params: IRequestParams):  Observable<Response> {
+    return Observable.create((observer: Observer<any>) => {
+        fetch(url, {
+            method: params.method || 'GET',
+            headers: {
+                ...params.headers,
+                ...getTokenHeaders(),
+                'Content-Type': 'application/json'
+            },
+            credentials: 'same-origin',
+            body: params.body ? JSON.stringify(params.body) : null
+        }).then(response => {
+            if (response.ok) {
+                observer.next(response);
+                observer.complete();
+            } else {
+                observer.error({
+                    statusText: response.statusText,
+                    status: response.status
+                });
+            }
+        }).catch(err => {
+            observer.error(err);
+        });
+    });
 }
 
 fetchJSON.setAuthTokens = (authToken: string, refreshToken: string) => {
