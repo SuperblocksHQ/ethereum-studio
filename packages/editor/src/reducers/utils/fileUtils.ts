@@ -21,12 +21,12 @@ export function isSolitidyFile(item: IProjectItem): boolean {
     return item.type === ProjectItemTypes.File && item.name.toLowerCase().endsWith('.sol');
 }
 
-const UNIX_RESERVED_CHARS_REGEX = /[<>:"\/\\|?*\x00-\x1F]/g;
+const UNIX_RESERVED_CHARS_REGEX = /[<>:"\/\\|?*\x00-\x1F]/;
 const WINDOWS_RESERVED_CHARS_REGEX = /^(con|prn|aux|nul|com[0-9]|lpt[0-9])$/i;
 
 export function isValidProjectItemName(name: string): boolean {
     name = name.trim();
-    return name.length > 0 && name.length < 255 && !UNIX_RESERVED_CHARS_REGEX.test(name) && !WINDOWS_RESERVED_CHARS_REGEX.test(name) && name.indexOf('/') === -1;
+    return name.length > 0 && name.length < 255 && !UNIX_RESERVED_CHARS_REGEX.test(name) && !WINDOWS_RESERVED_CHARS_REGEX.test(name);
 }
 
 // Insert path into directory tree structure:
