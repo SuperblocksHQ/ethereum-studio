@@ -97,6 +97,13 @@ export const projectsActions = {
             data: { name, addresses }
         };
     },
+    OPEN_WALLET_FAIL: 'OPEN_WALLET_FAIL',
+    openWalletFail(err: any) {
+        return {
+            type: projectsActions.OPEN_WALLET_FAIL,
+            data: { err }
+        };
+    },
 
     // ---------- CRUD Project actions ----------
     DELETE_PROJECT: 'DELETE_PROJECT',
