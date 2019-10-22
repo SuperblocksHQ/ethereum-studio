@@ -42,7 +42,8 @@ export const walletService = {
         if (!seed) {
             seed = prompt('Please enter the 12 word seed to unlock the wallet: ' + name);
             if (!seed) {
-                throw new Error('Seed should contain 12 word!');
+                alert('Seed should contain 12 word!');
+                return Promise.reject('Seed should contain 12 words!');
             }
         }
 
@@ -50,7 +51,8 @@ export const walletService = {
 
         const words = seed.split(' ');
         if (words.length !== 12 || !walletLight.keystore.isSeedValid(seed)) {
-            throw new Error('Seed should contain 12 word!');
+            alert('Seed should contain 12 words!');
+            return Promise.reject('Seed should contain 12 words!');
         }
 
         return new Promise((resolve, reject) => {
