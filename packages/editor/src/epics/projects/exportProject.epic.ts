@@ -33,6 +33,7 @@ export const exportProject = (action$: AnyAction, state$: any) => action$.pipe(
     switchMap(([, state]) => {
         const files = state.explorer.tree;
         const zip = new JSZip();
+        const fileName = state.projects.project.name.trim().toLowerCase().replace(' ', '_') + '_' + Date.now();
 
         // Add all files to zip variable
         traverseTree(files, (file, path) => {
@@ -46,7 +47,7 @@ export const exportProject = (action$: AnyAction, state$: any) => action$.pipe(
         // Generate zip and show pop up
         zip.generateAsync({type: 'blob'})
             .then((content: any) => {
-                FileSaver.saveAs(content, 'test.zip');
+                FileSaver.saveAs(content, `${fileName}.zip`);
             });
 
         return [projectsActions.exportProjectSuccess()];
