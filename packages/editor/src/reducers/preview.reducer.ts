@@ -85,7 +85,7 @@ export default function previewReducer(state = initialState, action: AnyAction, 
                 }
             }
 
-            if ((html === null || css === null || js === null || !html.code || !css.code || !js.code)) {
+            if ((!html || !css || !js || !html.code || !css.code || !js.code)) {
                 htmlToRender = errorHtml('There was an error rendering your project');
             } else {
                 htmlToRender = getInnerContent(html.code, css.code, contractJs + '\n' + js.code, rootState.projects.selectedEnvironment.endpoint, addresses);
