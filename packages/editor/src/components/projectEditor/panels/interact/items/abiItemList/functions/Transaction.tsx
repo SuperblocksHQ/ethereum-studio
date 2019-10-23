@@ -22,7 +22,7 @@ import { StyledButtonType } from '../../../../../../common/buttons/StyledButtonT
 
 interface IProps {
     rawAbiDefinition: IRawAbiDefinition;
-    call: (rawAbiDefinition: IRawAbiDefinition, args?: any[]) => void;
+    call: (rawAbiDefinitionName: string, args?: any[]) => void;
 }
 
 interface IState {
@@ -36,30 +36,18 @@ export class Transaction extends React.Component<IProps> {
     };
 
     onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const args: string = e.target.value || ' ';
-        // const errorName = newName ? validateProjectName(newName) : null;
-
-        this.setState({
-            args,
-        });
+        this.setState({ args: e.target.value || ' ' });
     }
 
     call = () => {
         const { call, rawAbiDefinition } = this.props;
-        const { args } = this.state;
-        const a = [];
-        a.push(args);
-        call(rawAbiDefinition, a);
+        call(rawAbiDefinition.name, this.state.args.split(','));
     }
 
-    renderPlaceHolder(inputs: IRawAbiParameter[]) {
-        const placeholder: string[] = [];
-        inputs.map((input) => placeholder.push(`${input.type} ${input.name}`));
-        return placeholder.join(', ');
-    }
     render() {
         const { rawAbiDefinition } = this.props;
         const { args } = this.state;
+        const placeholder = getPlaceholderText(rawAbiDefinition.inputs);
 
         return (
             <div className={style.container}>
@@ -68,13 +56,19 @@ export class Transaction extends React.Component<IProps> {
                     <TextInput
                         id='name'
                         onChangeText={this.onInputChange}
-                        placeholder={this.renderPlaceHolder(rawAbiDefinition.inputs)}
+                        placeholder={placeholder}
+                        title={placeholder}
                         className={style.input}
                         defaultValue={args}
                     />
                 </OnlyIf>
-
             </div>
         );
     }
+}
+
+function getPlaceholderText(inputs: IRawAbiParameter[]) {
+    const placeholder: string[] = [];
+    inputs.map((input) => placeholder.push(`${input.type} ${input.name}`));
+    return placeholder.join(', ');
 }

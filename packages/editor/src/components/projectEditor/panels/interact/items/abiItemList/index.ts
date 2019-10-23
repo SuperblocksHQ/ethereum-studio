@@ -17,24 +17,22 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
-import AbiItemList from './AbiItemList';
+import { AbiList } from './AbiList';
 import { interactActions } from '../../../../../../actions';
-import { IRawAbiDefinition, IDeployedContract } from '../../../../../../models';
-import { interactSelectors } from '../../../../../../selectors';
+import { IDeployedContract } from '../../../../../../models/state';
 
 const mapStateToProps = (state: any) => ({
-    result: interactSelectors.getResult(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
     return {
-        getConstant: (id: number, deployedContract: IDeployedContract, rawAbiDefinition: IRawAbiDefinition) => {
-            dispatch(interactActions.getConstant(id, deployedContract, rawAbiDefinition));
+        getConstant: (abiIndex: number, deployedContract: IDeployedContract) => {
+            dispatch(interactActions.getConstant(abiIndex, deployedContract));
         },
-        sendTransaction: (deployedContract: IDeployedContract, rawAbiDefinition: IRawAbiDefinition, args?: any[]) => {
-            dispatch(interactActions.sendTransaction(deployedContract, rawAbiDefinition, args));
+        sendTransaction: (deployedContract: IDeployedContract, abiDefinitionName: string, args?: any[]) => {
+            dispatch(interactActions.sendTransaction(deployedContract, abiDefinitionName, args));
         }
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AbiItemList);
+export default connect(mapStateToProps, mapDispatchToProps)(AbiList);

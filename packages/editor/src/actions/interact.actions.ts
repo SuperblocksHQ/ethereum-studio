@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { IDeployedContract, IRawAbiDefinition, IAbiCallResult } from '../models';
+import { IDeployedContract } from '../models/state';
 
 export const interactActions = {
 
@@ -27,18 +27,18 @@ export const interactActions = {
     },
 
     GET_CONSTANT: 'GET_CONSTANT',
-    getConstant(id: number, deployedContract: IDeployedContract, rawAbiDefinition: IRawAbiDefinition) {
+    getConstant(abiIndex: number, deployedContract: IDeployedContract) {
         return {
             type: interactActions.GET_CONSTANT,
-            data: { id, deployedContract, rawAbiDefinition }
+            data: { abiIndex, deployedContract }
         };
     },
 
     GET_CONSTANT_SUCCESS: 'GET_CONSTANT_SUCCESS',
-    getConstantSuccess(result: IAbiCallResult) {
+    getConstantSuccess(deployedContractId: string, abiIndex: number, result: string) {
         return {
             type: interactActions.GET_CONSTANT_SUCCESS,
-            data: { result }
+            data: { deployedContractId, abiIndex, result }
         };
     },
 
@@ -51,10 +51,10 @@ export const interactActions = {
     },
 
     SEND_TRANSACTION: 'SEND_TRANSACTION',
-    sendTransaction(deployedContract: IDeployedContract, rawAbiDefinition: IRawAbiDefinition, args?: any[]) {
+    sendTransaction(deployedContract: IDeployedContract, rawAbiDefinitionName: string, args?: any[]) {
         return {
             type: interactActions.SEND_TRANSACTION,
-            data: { deployedContract, rawAbiDefinition, args }
+            data: { deployedContract, rawAbiDefinitionName, args }
         };
     },
 
@@ -72,6 +72,6 @@ export const interactActions = {
             type: interactActions.SEND_TRANSACTION_FAIL,
             data: error
         };
-    },
+    }
 };
 
