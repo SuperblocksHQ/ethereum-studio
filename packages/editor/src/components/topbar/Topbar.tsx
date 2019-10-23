@@ -70,7 +70,7 @@ export default class TopBar extends Component<IProps> {
                 showModal('PREFERENCES_MODAL', null);
                 break;
             case 'share':
-                const defaultUrl = String(window.location);
+                const defaultUrl = String(window.location.href.split('?')[0]);
                 showModal('SHARE_MODAL', { defaultUrl });
                 break;
             default:
