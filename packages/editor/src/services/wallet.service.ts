@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import walletLight from 'eth-lightwallet/dist/lightwallet.min.js';
+import { keystore } from 'eth-lightwallet';
 import { from, Observable } from 'rxjs';
 import { getWeb3 } from './utils';
 
@@ -50,14 +50,14 @@ export const walletService = {
         const hdpath = hdpathParam || "m/44'/60'/0'/0";
 
         const words = seed.split(' ');
-        if (words.length !== 12 || !walletLight.keystore.isSeedValid(seed)) {
+        if (words.length !== 12 || !keystore.isSeedValid(seed)) {
             alert('Seed should contain 12 words!');
             return Promise.reject('Seed should contain 12 words!');
         }
 
         return new Promise((resolve, reject) => {
             const password = '';
-            walletLight.keystore.createVault(
+            keystore.createVault(
                 {
                     password,
                     seedPhrase: seed,
