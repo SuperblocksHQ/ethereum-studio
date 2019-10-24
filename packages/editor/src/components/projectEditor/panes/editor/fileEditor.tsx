@@ -30,7 +30,7 @@ interface IProps {
     onCompile: (file: IProjectItem) => void;
     onDeploy: (file: IProjectItem) => void;
     onConfigure: (file: IProjectItem) => void;
-    onUnsavedChange: (fileId: string, hasUnsavedChanges: boolean) => void;
+    onUnsavedChange: (fileId: string, hasUnsavedChanges: boolean, code: any) => void;
 }
 
 const langmap: any = {
@@ -92,9 +92,8 @@ export class FileEditor extends React.Component<IProps> {
     onFileChange = (value: string) => {
         this.code = value;
         const hasUnsavedChanges = this.code !== this.props.file.code;
-        if (hasUnsavedChanges !== this.props.hasUnsavedChanges) { // small optimization to have cleaner redux log
-            this.props.onUnsavedChange(this.props.file.id, hasUnsavedChanges);
-        }
+        // TODO cleaner redux log
+        this.props.onUnsavedChange(this.props.file.id, hasUnsavedChanges, value);
     }
 
     onSave = () => {
