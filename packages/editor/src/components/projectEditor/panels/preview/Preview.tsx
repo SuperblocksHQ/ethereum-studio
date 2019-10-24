@@ -56,15 +56,10 @@ interface IProps {
 export class Preview extends React.Component<IProps> {
 
     componentDidUpdate(prevProps: IProps) {
-        const { selectedAccount, selectedEnvironment, htmlToRender } = prevProps;
+        const { selectedAccount, htmlToRender } = prevProps;
 
         if (selectedAccount.name !== this.props.selectedAccount.name) {
             previewService.setAccount(selectedAccount);
-            this.refreshIframe();
-        }
-
-        if (selectedEnvironment.name !== this.props.selectedEnvironment.name) {
-            previewService.setEnvironment(selectedEnvironment);
             this.refreshIframe();
         }
 
