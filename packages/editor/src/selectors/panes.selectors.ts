@@ -15,5 +15,6 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 export const panesSelectors = {
-    getActivePane: state => state.panes.activePane
-}
+    getActivePane: (state: any) => state.panes.activePane,
+    getPanes: (state: any) => state.panes.items,
+};
