@@ -20,16 +20,25 @@ import { projectsActions } from '../../actions';
 import { projectService } from '../../services/project.service';
 import { projectSelectors } from '../../selectors';
 import { of } from 'rxjs';
+import { panesSelectors } from '../../selectors/panes.selectors';
+import { updateItemInTree } from '../../reducers/explorerLib';
 
 export const saveProject: Epic = (action$: any, state$: any) => action$.pipe(
     ofType(projectsActions.SAVE_PROJECT),
     withLatestFrom(state$),
     switchMap(([, state]) => {
         const project = projectSelectors.getProject(state);
+        const unsavedChanges = panesSelectors.getPanes(state);
         const { description, name, id } =  project;
 
         const isOwnProject = state.projects.isOwnProject;
-        const files = state.explorer.tree;
+        let files = state.explorer.tree;
+
+        unsavedChanges.map((pane: any) => {
+            if (pane.hasUnsavedChanges) {
+                files = updateItemInTree(files, pane.file.id, i => ({...i, code: pane.file.code}))[0];
+            }
+        });
 
         if (isOwnProject) {
             return projectService.putProjectById(id, {
