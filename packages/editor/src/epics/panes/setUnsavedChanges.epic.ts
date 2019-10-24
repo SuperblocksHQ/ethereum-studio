@@ -14,9 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import {switchMap, map, catchError, debounceTime, withLatestFrom} from 'rxjs/operators';
+import { switchMap, debounceTime, withLatestFrom } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
-import { panesActions, projectsActions } from '../../actions';
+import { panesActions } from '../../actions';
 
 const DEBOUNCE_INTERVAL_IN_MS = 1000;
 
