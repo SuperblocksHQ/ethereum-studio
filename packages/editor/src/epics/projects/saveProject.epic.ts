@@ -47,7 +47,7 @@ export const saveProject: Epic = (action$: any, state$: any) => action$.pipe(
                 files
             })
                 .pipe(
-                    switchMap(() => [projectsActions.saveProjectSuccess()]),
+                    switchMap(() => [projectsActions.saveProjectSuccess(files)]),
                     catchError((err) => [ projectsActions.saveProjectFail(err) ])
                 );
         } else {
