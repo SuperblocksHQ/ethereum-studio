@@ -37,6 +37,8 @@ interface IProps {
   closePane: (fileId: string) => void;
   onCreateItem: (parentId: string, type: ProjectItemTypes, name: string) => void;
   exportProject: () => void;
+  saveProject: () => void;
+  tryToDownload: () => void;
 }
 
 export default class MenuDropdownDialog extends React.Component<IProps> {
@@ -75,7 +77,7 @@ export default class MenuDropdownDialog extends React.Component<IProps> {
     render() {
         const { showTransactionsHistory, showFileSystem, showPreview, showConsole, showMessageLog,
                 togglePanel, closeAllPanels, closeAllPanes, closePane, activePaneId, rootFolderId, project, exportProject,
-                showInteract } = this.props;
+                showInteract, saveProject, tryToDownload } = this.props;
 
         return (
             <div className={style.menuDialog}>
@@ -84,14 +86,13 @@ export default class MenuDropdownDialog extends React.Component<IProps> {
                       <MenuItem title='New File' onClick={() => this.onCreateItem(rootFolderId, ProjectItemTypes.File)} />
                       <MenuItem title='New Folder' onClick={() => this.onCreateItem(rootFolderId, ProjectItemTypes.Folder)}  />
                       <Divider />
-                      <MenuItem title='Save' onClick={() => console.log('TODO')} />
-                      <MenuItem title='Save All' onClick={() => console.log('TODO')} />
+                      <MenuItem title='Save All' onClick={() => saveProject()} />
                       <Divider />
                       <MenuItem onClick={() => closePane(activePaneId)} disabled={!activePaneId} title='Close File' />
                       <MenuItem onClick={() => closeAllPanes()} disabled={!activePaneId} title='Close All Files' />
                       <Divider />
                       <MenuItem title='Export Project' onClick={() => exportProject()} />
-                      <MenuItem title='Download Project' onClick={() => console.log('TODO')} />
+                      <MenuItem title='Download Project' onClick={() => tryToDownload()} />
                   </SubMenu>
                 </OnlyIf>
                 <SubMenu title='View'>
