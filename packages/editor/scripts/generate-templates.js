@@ -100,10 +100,14 @@ function saveTemplateAsJSON(templateName, templateJSON) {
             children: sortFiles(templateJSON.children)
         }
     }
-    
-    fs.writeFile(filePath, JSON.stringify(finalJSON, null, 4), 'utf8', function (err) {
+
+    fs.mkdir(exportPath, { recursive: true }, (err) => {
         if (err) throw err;
-        console.log(`Template ${templateName} has been successfully generated.`);
+
+        fs.writeFile(filePath, JSON.stringify(finalJSON, null, 4), 'utf8', function (err) {
+            if (err) throw err;
+            console.log(`Template ${templateName} has been successfully generated.`);
+        });
     });
 }
 
