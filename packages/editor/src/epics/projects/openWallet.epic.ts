@@ -15,7 +15,7 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { empty, from } from 'rxjs';
-import { switchMap, withLatestFrom, map, tap } from 'rxjs/operators';
+import { switchMap, withLatestFrom, map, tap, catchError } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
 import { projectsActions } from '../../actions';
 import { walletService } from '../../services';
@@ -27,7 +27,8 @@ export const openWalletEpic: Epic = (action$: any, state$: any) => action$.pipe(
         const walletName = action.data.name;
         return from(walletService.openWallet(walletName, action.data.seed, null))
             .pipe(
-                map((wallet: any) => projectsActions.openWalletSuccess(walletName, wallet.addresses))
+                map((wallet: any) => projectsActions.openWalletSuccess(walletName, wallet.addresses)),
+                catchError(err => [projectsActions.openWalletFail(err)])
             );
     })
 );

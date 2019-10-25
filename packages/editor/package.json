@@ -36,6 +36,7 @@
     "@types/react-redux": "^7.0.1",
     "@types/react-router-dom": "^4.3.1",
     "@types/react-splitter-layout": "^3.0.0",
+    "@types/eth-lightwallet": "^3.0.0",
     "babel-cli": "^6.26.0",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "9.0.0",
@@ -105,7 +106,7 @@
     "classnames": "^2.2.5",
     "copy-to-clipboard": "^3.0.8",
     "crypto-js": "^3.1.9-1",
-    "eth-lightwallet": "^3.0.1",
+    "eth-lightwallet": "^4.0.0",
     "ethereumjs-abi": "~0.6.5",
     "ethereumjs-account": "~2.0.4",
     "ethereumjs-blockchain": "^2.1.0",
@@ -148,7 +149,7 @@
     "reselect": "^3.0.1",
     "rxjs": "^6.3.3",
     "solc": "^0.5.10",
-    "web3": "0.19.1"
+    "web3": "0.20.7"
   },
   "browserslist": [
     ">0.2%",
