@@ -13,7 +13,8 @@
     "format": "prettier --trailing-comma es5 --single-quote --write 'src/*/*.js' 'src/*/!(node_modules)/**/*.js' '!src/services/solc/**/*.js' '!src/services/evm/**/*.js' webpack.config.js",
     "lint-javascript": "exec eslint --config ./config/eslint/eslint.json --ext \".js\" ./src",
     "lint": "yarn run lint-javascript",
-    "postinstall": "node scripts/postinstall.js"
+    "postinstall": "node scripts/postinstall.js",
+    "generatetemplates": "node scripts/generate-templates.js"
   },
   "eslintIgnore": [
     "ethereumjs-tx-*.js",
