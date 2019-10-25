@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { previewActions, explorerActions, panesActions, deployerActions } from '../actions';
+import { previewActions, explorerActions, deployerActions, projectsActions } from '../actions';
 import Networks from '../networks';
 import { AnyAction } from 'redux';
 import { findItemByPath } from './explorerLib';
@@ -64,6 +64,7 @@ export default function previewReducer(state = initialState, action: AnyAction, 
     switch (action.type) {
         case deployerActions.DEPLOY_SUCCESS:
         case explorerActions.INIT_EXPLORER_SUCCESS:
+        case projectsActions.SET_ENVIRONMENT_SUCCESS:
         case previewActions.REFRESH_CONTENT:
             let htmlToRender;
             let exportableHtml;
@@ -85,7 +86,7 @@ export default function previewReducer(state = initialState, action: AnyAction, 
                 }
             }
 
-            if ((html === null || css === null || js === null || !html.code || !css.code || !js.code)) {
+            if ((!html || !css || !js || !html.code || !css.code || !js.code)) {
                 htmlToRender = errorHtml('There was an error rendering your project');
             } else {
                 htmlToRender = getInnerContent(html.code, css.code, contractJs + '\n' + js.code, rootState.projects.selectedEnvironment.endpoint, addresses);

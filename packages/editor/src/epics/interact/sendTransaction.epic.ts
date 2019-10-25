@@ -20,14 +20,13 @@ import { interactActions, outputLogActions, deployerActions, transactionsActions
 import { of, from, Observable, Observer, throwError, concat } from 'rxjs';
 import { getWeb3, convertGas } from '../../services/utils';
 import { projectSelectors } from '../../selectors';
-import { IDeployedContract, IRawAbiDefinition, TransactionType } from '../../models';
+import { TransactionType } from '../../models';
 import { signTransaction } from '../../services/deployer/deploy.utils';
-import { IEnvironment, IAccount } from '../../models/state';
+import { IEnvironment, IAccount, IDeployedContract } from '../../models/state';
 import { walletService } from '../../services';
 import Networks from '../../networks';
 
 function getData(instance: any, name: string, args: any[]) {
-    console.log(...args);
     return instance[name].getData(...args);
 }
 
@@ -154,17 +153,14 @@ export const sendTransactionEpic: Epic = (action$, state$) => action$.pipe(
     switchMap(([action, state]) => {
 
         const deployedContract: IDeployedContract = action.data.deployedContract;
-        const rawAbiDefinition: IRawAbiDefinition = action.data.rawAbiDefinition;
-        const args: any[] = action.data.args;
-
         const selectedEnv = projectSelectors.getSelectedEnvironment(state);
         const selectedAccount = projectSelectors.getSelectedAccount(state);
         const networkSettings = state.settings.preferences.network;
 
         return getContractInstance$(selectedEnv.endpoint, deployedContract)
             .pipe(
-                map((contractInstance) => getData(contractInstance, rawAbiDefinition.name, args)),
-                switchMap((data) => {
+                map(contractInstance => getData(contractInstance, action.data.rawAbiDefinitionName, action.data.args)),
+                switchMap(data => {
                     if (selectedAccount.type === 'metamask') {
                         return tryExternalSend$(selectedEnv, selectedAccount, networkSettings, deployedContract.contractName, data, deployedContract.address);
                     } else {
@@ -178,7 +174,6 @@ export const sendTransactionEpic: Epic = (action$, state$) => action$.pipe(
                                     return of(outputLogActions.addRows([ output ]));
                                 } else if (output.hash && output.tx) { // result
                                     return of(interactActions.sendTransactionSuccess(output.hash));
-                                    // return finalizeDeploy(state, deployRunner, output.hash, state.deployer.outputPath, true, output.tx);
                                 } else { // unexpected error
                                     return of(outputLogActions.addRows([{ msg: 'Unexpected error occurred. Please try again!', channel: 3 }]));
                                 }
@@ -187,7 +182,7 @@ export const sendTransactionEpic: Epic = (action$, state$) => action$.pipe(
                         );
                     }
                 }),
-                catchError(e => [ outputLogActions.addRows([ e ]), deployerActions.deployFail() ])
+                catchError(e => [ outputLogActions.addRows([ { msg: e.toString(), channel: 2 } ]), deployerActions.deployFail() ])
             );
     })
 );

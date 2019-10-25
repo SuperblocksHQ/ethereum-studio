@@ -16,32 +16,22 @@
 
 import React from 'react';
 import style from './style.less';
-import { IRawAbiDefinition, IAbiCallResult } from '../../../../../../../models';
-import { StyledButton, OnlyIf } from '../../../../../../common';
+import { StyledButton } from '../../../../../../common';
 import { StyledButtonType } from '../../../../../../common/buttons/StyledButtonType';
+import { IAbiDefinitionState } from '../../../../../../../models/state';
 
 interface IProps {
-    id: number;
-    rawAbiDefinition: IRawAbiDefinition;
-    call: (id: number, rawAbiDefinition: IRawAbiDefinition) => void;
-    result: IAbiCallResult;
+    abiDefinition: IAbiDefinitionState;
+    call(): void;
 }
 
 export class Constant extends React.Component<IProps> {
-
-    call = () => {
-        const { id, call, rawAbiDefinition } = this.props;
-        call(id, rawAbiDefinition);
-    }
-
     render() {
-        const { rawAbiDefinition, result, id } = this.props;
+        const { abiDefinition, call } = this.props;
         return (
             <div className={style.container}>
-                <StyledButton type={StyledButtonType.Constant} text={rawAbiDefinition.name} onClick={this.call}/>
-                {
-                    result && result.id === id ? <div>{result.data}</div> : null
-                }
+                <StyledButton type={StyledButtonType.Constant} text={abiDefinition.name} onClick={call}/>
+                <span className={style.result}>{abiDefinition.lastResult || ''}</span>
             </div>
         );
     }

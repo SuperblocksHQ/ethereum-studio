@@ -1,6 +1,5 @@
 .container {
     display: flex;
-    align-items: center;
     align-content: center;
     margin: 10px 0;
 
@@ -8,10 +7,20 @@
         padding: 5px 5px;
         // min-width: 90px;
         font-size: 0.9em;
+    }
 
+    > div {
+        flex: 1;
+    }
+
+    .result {
+        padding: 0px 6px;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .input {
         padding: 6px 6px !important;
+        width: 100% !important;
     }
 }

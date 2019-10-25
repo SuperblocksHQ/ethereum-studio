@@ -26,7 +26,6 @@ export * from './logLevel.model';
 export * from './auth.model';
 export * from './dependencies.model';
 export * from './transaction.model';
-export * from './interact.model';
 export * from './network.model';
 export * from './accountConfig.model';
 export * from './abi.model';

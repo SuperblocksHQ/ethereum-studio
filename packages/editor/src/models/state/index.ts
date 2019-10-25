@@ -23,3 +23,4 @@ export * from './outputLogState.model';
 export * from './messageLogState.model';
 export * from './contractConfigState.model';
 export * from './accountsState.model';
+export * from './interactState.model';
