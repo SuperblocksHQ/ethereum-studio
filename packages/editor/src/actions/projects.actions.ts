@@ -15,7 +15,7 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { IEnvironment } from '../models/state';
-import { IProject, ITemplate } from '../models';
+import { IProject, IProjectItem, ITemplate } from '../models';
 
 export const projectsActions = {
     SET_ALL_ENVIRONMENTS: 'SET_ALL_ENVIRONMENTS',
@@ -95,6 +95,13 @@ export const projectsActions = {
         return {
             type: projectsActions.OPEN_WALLET_SUCCESS,
             data: { name, addresses }
+        };
+    },
+    OPEN_WALLET_FAIL: 'OPEN_WALLET_FAIL',
+    openWalletFail(err: any) {
+        return {
+            type: projectsActions.OPEN_WALLET_FAIL,
+            data: { err }
         };
     },
 
@@ -182,6 +189,27 @@ export const projectsActions = {
             type: projectsActions.UPDATE_PROJECT_FAIL,
             data: error
        };
+    },
+
+    SAVE_PROJECT: 'SAVE_PROJECT',
+    saveProject() {
+        return {
+            type: projectsActions.SAVE_PROJECT,
+        };
+    },
+    SAVE_PROJECT_SUCCESS: 'SAVE_PROJECT_SUCCESS',
+    saveProjectSuccess(files: IProjectItem) {
+        return {
+            type: projectsActions.SAVE_PROJECT_SUCCESS,
+            data: { files }
+        };
+    },
+    SAVE_PROJECT_FAIL: 'SAVE_PROJECT_FAIL',
+    saveProjectFail(error: string) {
+        return {
+            type: projectsActions.SAVE_PROJECT_FAIL,
+            data: error
+        };
     },
 
     // ---------- FORK ----------

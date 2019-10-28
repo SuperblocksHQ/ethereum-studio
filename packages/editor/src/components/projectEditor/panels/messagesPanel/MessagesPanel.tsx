@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import classNames from 'classnames';
 import style from '../../style-console.less';
 import { IMessageLogRow } from '../../../../models/state';
@@ -30,7 +30,19 @@ function getTime(row: IMessageLogRow) {
     return row.timestamp.getHours() + ':' + row.timestamp.getMinutes();
 }
 
-export function MessagesPanel(props: IProps) {
+export const MessagesPanel = (props: IProps) => {
+    const messagesAnchor: any = useRef(null);
+
+    const scrollToBottom = () => {
+        if (messagesAnchor !== null && messagesAnchor.current !== null) {
+            messagesAnchor.current.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+
+    useEffect(() => {
+        scrollToBottom();
+    });
+
     return (
         <div className='scrollable-y'>
             <div className={style.console}>
@@ -49,8 +61,9 @@ export function MessagesPanel(props: IProps) {
                             return <div key={index + lineIndex} className={cl}>{getTime(row)}<span>&nbsp;&nbsp;&nbsp;&nbsp;</span>{line}</div>;
                         });
                     })}
+                    <div ref={messagesAnchor} />
                 </div>
             </div>
         </div>
     );
-}
+};

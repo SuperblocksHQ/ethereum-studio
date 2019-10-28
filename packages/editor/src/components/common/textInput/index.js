@@ -45,7 +45,7 @@ export class TextInput extends PureComponent {
                         <input
                             id={id}
                             type={type}
-                            onKeyUp={onChangeText}
+                            onChange={onChangeText}
                             defaultValue={defaultValue}
                             disabled={disabled}
                             readOnly={readOnly}

@@ -26,6 +26,7 @@ export function loadProjectById(projectId: string) {
             map(projectsActions.loadProjectSuccess),
             catchError((error) => {
                 console.log('There was an issue loading the project: ' + error);
+                window.location.href = '/';
                 return of(projectsActions.loadProjectFail(error));
             })
         );

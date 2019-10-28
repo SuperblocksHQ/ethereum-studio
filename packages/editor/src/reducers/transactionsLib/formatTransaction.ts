@@ -28,7 +28,7 @@ export function formatTransaction(state: any, transactionType: TransactionType, 
         hash: hash || '',
         index: receipt ? receipt.transactionIndex : 'n/a',
         type: transactionType,
-        contractName: contractName || '',
+        contractName: contractName || receipt,
         constructorArgs: [], // TODO: Add args
         createdAt: Date.now(),
         blockNumber: receipt ? receipt.blockNumber : 'n/a',
