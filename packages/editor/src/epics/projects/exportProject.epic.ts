@@ -33,7 +33,7 @@ export const exportProject = (action$: AnyAction, state$: any) => action$.pipe(
     switchMap(([, state]) => {
         const files = state.explorer.tree;
         const zip = new JSZip();
-        const fileName = state.projects.project.name.trim().toLowerCase().replace(' ', '_') + '_' + Date.now();
+        const fileName = state.projects.project.name.trim().toLowerCase().replace(/ /g, '_') + '_' + Date.now();
 
         let includeBuildFiles = false;
         if (confirm('Do you also want to save the project state (current contract addresses, ABIs, etc...)?')) {
