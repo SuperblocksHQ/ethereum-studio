@@ -148,7 +148,6 @@ Coin.prototype.bindButtons = function() {
 Coin.prototype.onReady = function() {
     this.bindButtons();
     this.init();
-    this.main();
 };
 
 var coin = new Coin(Contracts['Coin']);
