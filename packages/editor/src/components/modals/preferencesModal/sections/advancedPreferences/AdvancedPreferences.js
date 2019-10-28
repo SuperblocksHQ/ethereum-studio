@@ -45,7 +45,7 @@ export default class AdvancedPreferences extends Component {
                 <div>
                     <div className={style.title}>Analytics</div>
                     <div className={style.description}>
-                        <div className={style.text}>We use analytics in Lab to gain more insights into how Lab is used. Of course, this tracking is anonymous and we don't track any information about you. <b>We do not track any personal data, private keys or addresses.</b></div>
+                        <div className={style.text}>We use analytics in Ethereum Studio to gain more insights into how the application is used. Of course, this tracking is anonymous and we don't track any information about you. <b>We do not track any personal data, private keys or addresses.</b></div>
                         <Switch
                             checked={trackAnalytics}
                             onChange={this.onTrackAnalyticsChange}
