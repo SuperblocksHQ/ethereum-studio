@@ -1,0 +1,154 @@
+// Copyright 2018 Superblocks AB
+//
+// This file is part of Superblocks Lab.
+//
+// Superblocks Lab is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation version 3 of the License.
+//
+// Superblocks Lab is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
+
+@import '../../../../style/index.less';
+
+.markdownPreview {
+    color: white;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 0px 25px 25px 25px;
+    font-size: 16px;
+    line-height: 1.85;
+
+    * {
+        margin-top: 0px;
+    }
+
+    & > *:last-child {
+        padding-bottom: 20px;
+    }
+
+    a {
+        transition: color .15s;
+        text-decoration: underline !important;
+    }
+
+    a:hover {
+        color: @primary-color;
+    }
+    
+    p {
+        font-size: 1rem;
+        margin-bottom: 1.3rem;
+    }
+    
+    h1,
+    h2,
+    h3,
+    h4 {
+        margin: 1.414rem 0 .5rem;
+        font-weight: inherit;
+        line-height: 1.42;
+    }
+    
+    h1 {
+        margin-top: 0;
+        font-size: 3.2rem;
+    }
+    
+    h2 {
+        font-size: 2.827rem;
+    }
+    
+    h3 {
+        font-size: 1.999rem;
+    }
+    
+    h4 {
+        font-size: 1.414rem;
+    }
+    
+    h5 {
+        font-size: 1.121rem;
+    }
+    
+    h6 {
+        font-size: .88rem;
+    }
+    
+    img,
+    canvas,
+    iframe,
+    video,
+    svg,
+    select,
+    textarea {
+        max-width: 100%;
+    }
+    
+    pre,
+    code {
+        font-family: 'bitstream vera sans', 'Untitled Sans';
+    }
+
+    pre, table {
+        code {
+            color: inherit;
+            background: inherit;
+        }
+    }
+
+    code {
+        padding: 0 .25rem;
+        background:#e9ecef;
+        border-radius: .15rem;
+        font-size: .875em;
+        color:#e83e8c;
+        word-break: break-word;
+    }
+    
+    pre {
+        padding: .5rem;
+        line-height: 1.25;
+        background-color: #333;
+    }
+    
+    blockquote {
+        border-left: 2px solid @primary-color;
+        padding-left: 1rem;
+        margin-left: 0px;
+
+        p {
+            margin-bottom: 0px;
+        }
+    }
+
+    hr {
+        height: 1px;
+        width: 100%;
+        background: #1C2022;
+    }
+
+    table {
+        display: block;
+        border-spacing: 0;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+
+        th {
+            text-align: left;
+        }
+      
+        tr th, tr td {
+            padding: .5rem 1rem;
+            line-height: 1;
+            border: 1px solid #333;
+        }
+    }
+}
