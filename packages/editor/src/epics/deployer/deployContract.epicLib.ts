@@ -73,6 +73,10 @@ export function doDeployExternally(state: any, deployRunner: DeployRunner) {
  * @param deployRunner
  */
 export function tryExternalDeploy(state: any, deployRunner: DeployRunner) {
+    if (state.projects.selectedAccount.isLocked) {
+        return [outputLogActions.addRows([{ channel: 2, msg: 'The Metamask wallet is currently locked. Please unlock it and try again!' }]), deployerActions.deployFail()];
+    }
+
     const environment = projectSelectors.getSelectedEnvironment(state);
     const chainId = (Networks[environment.name] || {}).chainId;
     if (chainId && window.web3.version.network !== chainId.toString()) {
@@ -94,6 +98,10 @@ export function tryExternalDeploy(state: any, deployRunner: DeployRunner) {
 export function browserDeploy(state: any, deployRunner: DeployRunner) {
     const account: IAccount = projectSelectors.getSelectedAccount(state);
     const networkSettings = state.settings.preferences.network;
+
+    if (state.projects.selectedAccount.isLocked) {
+        return [outputLogActions.addRows([{ channel: 2, msg: 'The Custom wallet is currently locked. Please unlock it and try again!' }]), deployerActions.deployFail()];
+    }
 
     if (!account.walletName || !account.address) {
         return throwError('walletName and address property should be set on the account');
