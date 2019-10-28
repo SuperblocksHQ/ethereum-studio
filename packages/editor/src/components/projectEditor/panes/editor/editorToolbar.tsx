@@ -17,7 +17,7 @@
 import React from 'react';
 import style from './style-editor.less';
 import { Tooltip, OnlyIf } from '../../../common';
-import { IconSave, IconCompile, IconConfigure, IconDeploy, IconCode } from '../../../icons';
+import { IconSave, IconCompile, IconConfigure, IconDeploy, IconCode, IconFileAlt } from '../../../icons';
 import classNames from 'classnames';
 
 export interface IProps {
@@ -73,7 +73,10 @@ export function EditorToolbar(props: IProps) {
                         onClick={props.onShowMarkdownPreview}
                     >
                         <Tooltip title={props.showMarkdownPreview ? 'Display source' : 'Display preview'}>
-                            <IconCode />
+                            { props.showMarkdownPreview
+                                ? <IconCode />
+                                : <IconFileAlt />
+                            }
                         </Tooltip>
                     </button>
                 </OnlyIf>
