@@ -102,8 +102,6 @@ function saveTemplateAsJSON(templateName, templateJSON) {
     }
 
     fs.mkdir(exportPath, { recursive: true }, (err) => {
-        if (err) throw err;
-
         fs.writeFile(filePath, JSON.stringify(finalJSON, null, 4), 'utf8', function (err) {
             if (err) throw err;
             console.log(`Template ${templateName} has been successfully generated.`);
