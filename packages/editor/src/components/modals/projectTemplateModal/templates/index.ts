@@ -17,6 +17,7 @@
 import Coin from '../../../../assets/static/json/templates/Coin.json';
 import HelloWorld from '../../../../assets/static/json/templates/HelloWorld.json';
 import CryptoPizzas from '../../../../assets/static/json/templates/CryptoPizzas.json';
+import EmptyProject from '../../../../assets/static/json/templates/EmptyProject.json';
 
 export default class Templates {
     static templates = [
@@ -37,6 +38,12 @@ export default class Templates {
             name: 'CryptoPizza NFT',
             description: '<div><h2>CryptoPizza NFT</h2><p>A Crypto-collectible game built on top of the ERC-721 standard for creating unique tokens.</p></div>',
             content: CryptoPizzas,
+        },
+        {
+            id: 3,
+            name: 'Empty Project',
+            description: '<div><h2>Empty Project</h2><p>An empty boilerplate which can help you to get started quickly.</p></div>',
+            content: EmptyProject,
         }
     ];
 }
