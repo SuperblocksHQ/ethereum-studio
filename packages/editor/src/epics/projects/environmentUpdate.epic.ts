@@ -42,7 +42,7 @@ export const environmentUpdateEpic: Epic = (action$, state$) => action$.pipe(
             selectedEnvironment.name !== Networks.custom.name) {
             return from(window.web3.currentProvider.enable()).pipe(
                 // do nothing if user gives access to metamask
-                switchMap(() => [projectsActions.setMetamaskAccounts(window.web3.eth.accounts), projectsActions.setEnvironmentSuccess()]),
+                switchMap(() => [projectsActions.setMetamaskAccounts((window.web3 && window.web3.eth) ? window.web3.eth.accounts : []), projectsActions.setEnvironmentSuccess()]),
                 // set env back to browser in case user reject metamask access
                 catchError(() => [projectsActions.setEnvironment(Networks.browser.name)])
             );
