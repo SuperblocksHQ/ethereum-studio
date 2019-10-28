@@ -212,13 +212,15 @@ export default function projectsReducer(state = initialState, action: AnyAction,
             if (result.item && result.path.length === 1 && result.path[0] === 'dappfile.json') {
                 try {
                     const stateChange = getDappSettings(result.item.code || '', state.openWallets, state.metamaskAccounts);
-                    const selectedAccount = stateChange.accounts.find((a: any) => a.name === state.selectedAccount.name) || stateChange.selectedAccount;
+                    const selectedAccount = state.selectedAccount;
+                    const accounts = state.accounts;
                     const selectedEnvironment = stateChange.environments.find((e: any) => e.name === state.selectedEnvironment.name) || stateChange.selectedEnvironment;
 
                     return {
                         ...state,
                         ...stateChange,
                         selectedAccount,
+                        accounts,
                         selectedEnvironment
                     };
                 } catch (e) {
