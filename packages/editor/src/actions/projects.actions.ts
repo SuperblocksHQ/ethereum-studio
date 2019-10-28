@@ -212,6 +212,12 @@ export const projectsActions = {
             data: { name, description, tree }
         };
     },
+    CREATE_PROJECT_SUCCESS: 'CREATE_PROJECT_SUCCESS',
+    createProjectSuccess() {
+        return {
+            type: projectsActions.CREATE_PROJECT_SUCCESS,
+        };
+    },
 
     // ---------- EXPORT PROJECT ----------
     EXPORT_PROJECT: 'EXPORT_PROJECT',
