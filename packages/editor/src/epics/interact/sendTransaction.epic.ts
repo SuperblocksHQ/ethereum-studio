@@ -165,7 +165,7 @@ export const sendTransactionEpic: Epic = (action$, state$) => action$.pipe(
                         return tryExternalSend$(selectedEnv, selectedAccount, networkSettings, deployedContract.contractName, data, deployedContract.address);
                     } else {
                         if (!selectedAccount.walletName || !selectedAccount.address) {
-                            return throwError('walletName and address property should be set on the account');
+                            return of(outputLogActions.addRows([{ msg: 'WalletName and address property should be set on the account', channel: 2 }]));
                         }
                         const key = walletService.getKey(selectedAccount.walletName, selectedAccount.address);
                         return sendToBrowser$(selectedEnv, selectedAccount.address, networkSettings, key, data, deployedContract.address).pipe(

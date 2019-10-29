@@ -104,7 +104,7 @@ export function browserDeploy(state: any, deployRunner: DeployRunner) {
     }
 
     if (!account.walletName || !account.address) {
-        return throwError('walletName and address property should be set on the account');
+        return of(outputLogActions.addRows([{ msg: 'WalletName and address property should be set on the account', channel: 2 }]));
     }
     const key = walletService.getKey(account.walletName, account.address);
 
