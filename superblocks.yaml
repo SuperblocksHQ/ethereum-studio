@@ -27,7 +27,6 @@ jobs:
       - kubectl config use-context $K8S_CLUSTER_NAME
       - 'printf "apiVersion: v1\nkind: Secret\n$(kubectl create secret docker-registry $CI_PROJECT_NAME-github-registry --docker-server=$GITHUB_REGISTRY_IMAGE --docker-username=SuperblocksHQ --docker-password=$GITHUB_REGISTRY_TOKEN --docker-email=develop@superblocks.com -o yaml --dry-run)"'
 
-
 stages:
   - build:
       jobs:
