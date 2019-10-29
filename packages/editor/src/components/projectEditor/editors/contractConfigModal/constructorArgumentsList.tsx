@@ -24,7 +24,6 @@ import { IContractArgData } from '../../../../models';
 interface IProps {
     args: IContractArgData[];
     accounts: string[];
-    otherContracts: string[];
     onArgChange: (arg: IContractArgData, index: number) => void;
     onArgRemove: (index: number) => void;
     onArgAdd: () => void;
@@ -37,7 +36,6 @@ export function ConstructorArgumentsList(props: IProps) {
             <ConstructorArgument
                 data={arg}
                 accounts={props.accounts}
-                otherContracts={props.otherContracts}
                 onChange={c => props.onArgChange(c, index)}
                 onRemoveClick={() => props.onArgRemove(index)}
             />

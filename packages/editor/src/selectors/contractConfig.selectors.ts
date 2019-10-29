@@ -17,5 +17,4 @@
 export const contractConfigSelectors = {
     showContractConfig: (state: any) => state.contractConfig.showContractConfig,
     getSelectedContract: (state: any) => state.contractConfig.selectedContract,
-    getOtherContracts: (state: any) => state.contractConfig.otherContracts,
 };
