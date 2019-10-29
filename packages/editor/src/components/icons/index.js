@@ -68,7 +68,7 @@ export const IconCheckCircle = ({...props}) => <svg xmlns="http://www.w3.org/200
 export const IconRun = ({ ...props }) => <FaIcon icon={iconRun} {...props} />;
 export const IconSave = () => <FaIcon icon={iconSave} />;
 export const IconCompile = () => <FaIcon icon={iconCompile} />;
-export const IconCode = () => <FaIcon icon={iconCode} />;
+export const IconCode = () => <FaIcon size={'sm'} icon={iconCode} />;
 export const IconDeploy = ({ ...props }) => (
     <IconImg src={'/static/img/icon-deploy.svg'} {...props} />
 );
