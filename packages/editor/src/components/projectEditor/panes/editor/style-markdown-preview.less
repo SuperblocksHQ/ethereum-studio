@@ -16,9 +16,13 @@
 
 @import '../../../../style/index.less';
 
+.overflowFix {
+    overflow: auto;
+    margin-top: 15px;
+}
+
 .markdownPreview {
     color: white;
-    overflow: auto;
     display: flex;
     flex-direction: column;
     flex: 1;
@@ -106,19 +110,20 @@
 
     code {
         padding: 0 .25rem;
-        background:#e9ecef;
+        background:#f6f8fa;
+        color: #333;
         border-radius: .15rem;
         font-size: .875em;
-        color:#e83e8c;
         word-break: break-word;
     }
     
     pre {
+        overflow: auto;
         padding: .5rem;
         line-height: 1.25;
         background-color: #333;
     }
-    
+
     blockquote {
         border-left: 2px solid @primary-color;
         padding-left: 1rem;

@@ -15,6 +15,7 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 import React from 'react';
 import { Converter } from 'showdown';
+import showdownHighlight from 'showdown-highlight';
 import style from './style-markdown-preview.less';
 
 interface IProps {
@@ -22,12 +23,16 @@ interface IProps {
 }
 
 export const MarkdownPreview = (props: IProps) => {
-    const converter: Converter = new Converter();
+    const converter: Converter = new Converter({
+        extensions: [showdownHighlight]
+    });
 
     return (
-        <div
-            className={style.markdownPreview}
-            dangerouslySetInnerHTML={{__html: converter.makeHtml(props.markdown ? props.markdown : '')}}
-        />
+        <div className={style.overflowFix}>
+            <div
+                className={style.markdownPreview}
+                dangerouslySetInnerHTML={{__html: converter.makeHtml(props.markdown ? props.markdown : '')}}
+            />
+        </div>
     );
 };
