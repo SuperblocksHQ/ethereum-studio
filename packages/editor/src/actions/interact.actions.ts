@@ -26,35 +26,43 @@ export const interactActions = {
         };
     },
 
+    SET_CONTRACT_DEPLOYED: 'SET_CONTRACT_DEPLOYED',
+    setContactDeployed(itemId: string, deployed: boolean) {
+        return {
+            type: interactActions.SET_CONTRACT_DEPLOYED,
+            data: { itemId, deployed }
+        };
+    },
+
     GET_CONSTANT: 'GET_CONSTANT',
-    getConstant(abiIndex: number, deployedContract: IDeployedContract) {
+    getConstant(abiIndex: number, deployedContract: IDeployedContract, args?: any[]) {
         return {
             type: interactActions.GET_CONSTANT,
-            data: { abiIndex, deployedContract }
+            data: { abiIndex, deployedContract, args }
         };
     },
 
     GET_CONSTANT_SUCCESS: 'GET_CONSTANT_SUCCESS',
-    getConstantSuccess(deployedContractId: string, abiIndex: number, result: string) {
+    getConstantSuccess(deployedContractId: string, abiIndex: number, result: any) {
         return {
             type: interactActions.GET_CONSTANT_SUCCESS,
             data: { deployedContractId, abiIndex, result }
         };
     },
 
-    GET_CONSTANT_FAIL: 'GET_CONSTANT_FAIL',
-    getConstantFail(error: any) {
+    CLEAR_LAST_RESULT: 'INTERACT_ACTIONS.CLEAR_LAST_RESULT',
+    clearLastResult(deployedContractId: string, abiIndex: number) {
         return {
-            type: interactActions.GET_CONSTANT_FAIL,
-            data: error
+            type: interactActions.CLEAR_LAST_RESULT,
+            data: { deployedContractId, abiIndex }
         };
     },
 
     SEND_TRANSACTION: 'SEND_TRANSACTION',
-    sendTransaction(deployedContract: IDeployedContract, rawAbiDefinitionName: string, args?: any[]) {
+    sendTransaction(deployedContract: IDeployedContract, rawAbiDefinitionName: string, args?: any[], value?: string) {
         return {
             type: interactActions.SEND_TRANSACTION,
-            data: { deployedContract, rawAbiDefinitionName, args }
+            data: { deployedContract, rawAbiDefinitionName, args, value }
         };
     },
 
@@ -74,4 +82,3 @@ export const interactActions = {
         };
     }
 };
-

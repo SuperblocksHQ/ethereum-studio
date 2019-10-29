@@ -1,1 +1,1 @@
-export * from './deployedContractItem';
+export * from './DeployedContractItem';

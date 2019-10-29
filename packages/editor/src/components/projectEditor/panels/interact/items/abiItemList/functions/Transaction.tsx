@@ -16,9 +16,10 @@
 
 import React from 'react';
 import style from './style.less';
-import { IRawAbiDefinition, IRawAbiParameter } from '../../../../../../../models';
+import { IRawAbiDefinition } from '../../../../../../../models';
 import { StyledButton, TextInput, OnlyIf } from '../../../../../../common';
 import { StyledButtonType } from '../../../../../../common/buttons/StyledButtonType';
+import { getPlaceholderText } from './utils';
 
 interface IProps {
     rawAbiDefinition: IRawAbiDefinition;
@@ -54,7 +55,6 @@ export class Transaction extends React.Component<IProps> {
                 <StyledButton type={StyledButtonType.Transaction} text={rawAbiDefinition.name} onClick={this.call}/>
                 <OnlyIf test={rawAbiDefinition.inputs.length > 0}>
                     <TextInput
-                        id='name'
                         onChangeText={this.onInputChange}
                         placeholder={placeholder}
                         title={placeholder}
@@ -65,10 +65,4 @@ export class Transaction extends React.Component<IProps> {
             </div>
         );
     }
-}
-
-function getPlaceholderText(inputs: IRawAbiParameter[]) {
-    const placeholder: string[] = [];
-    inputs.map((input) => placeholder.push(`${input.type} ${input.name}`));
-    return placeholder.join(', ');
 }

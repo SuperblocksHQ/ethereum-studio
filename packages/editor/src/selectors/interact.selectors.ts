@@ -1,3 +1,5 @@
+import { IDeployedContract } from '../models/state';
+
 // Copyright 2018 Superblocks AB
 //
 // This file is part of Superblocks Lab.
@@ -16,5 +18,5 @@
 
 
 export const interactSelectors = {
-    getDeployedItems: (state: any) => state.interact.items
+    getDeployedItems: (state: any): IDeployedContract[] => state.interact.items
 };

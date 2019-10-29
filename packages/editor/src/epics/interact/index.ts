@@ -16,8 +16,10 @@
 
 import { getConstantEpic } from './getConstant.epic';
 import { sendTransactionEpic } from './sendTransaction.epic';
+import { checkDeployedContractsEpic } from './checkDeployedContracts.epic';
 
 export const interactEpics = [
     getConstantEpic,
-    sendTransactionEpic
+    sendTransactionEpic,
+    checkDeployedContractsEpic
 ];

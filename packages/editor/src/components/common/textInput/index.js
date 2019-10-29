@@ -24,7 +24,6 @@ export class TextInput extends PureComponent {
 
     render() {
         const {
-            id,
             onChangeText,
             type,
             label,
@@ -43,7 +42,6 @@ export class TextInput extends PureComponent {
                     { label != null && <label htmlFor="name">{label}</label> }
                     <div className={style.inputContainer}>
                         <input
-                            id={id}
                             type={type}
                             onKeyUp={onChangeText}
                             defaultValue={defaultValue}
@@ -64,7 +62,7 @@ export class TextInput extends PureComponent {
 }
 
 TextInput.propTypes = {
-    id: PropTypes.string.isRequired,
+    id: PropTypes.string,
     onChangeText: PropTypes.func,
     type: PropTypes.string,
     label: PropTypes.string,

@@ -16,24 +16,24 @@
 
 import { switchMap, catchError, withLatestFrom, map } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
-import { interactActions } from '../../actions';
+import { interactActions, outputLogActions } from '../../actions';
 import { of, from } from 'rxjs';
 import { getWeb3 } from '../../services/utils';
 import { projectSelectors } from '../../selectors';
 import { IDeployedContract } from '../../models/state';
 
-const call$ = (instance: any, name: string) => {
+const call$ = (instance: any, name: string, args?: any[]) => {
     return from(
         new Promise((resolve, reject) => {
-            instance[name].call((err: any, result: any) => {
+            instance[name].apply(instance, (args || []).concat((err: any, result: any) => {
                 if (err) {
                     console.log(err);
                     reject(`Problem calling to get the ${name}`);
                 } else {
-                    console.log(result);
+                    console.log('Constant function call result: ', result);
                     resolve(result);
                 }
-            });
+            }));
         })
     );
 };
@@ -59,12 +59,12 @@ export const getConstantEpic: Epic = (action$, state$) => action$.pipe(
 
         return getContractInstance$(selectedEnv.endpoint, deployedContract)
             .pipe(
-                switchMap(contractInstance => call$(contractInstance, deployedContract.abi[abiIndex].name)),
-                map(result => interactActions.getConstantSuccess(deployedContract.id, abiIndex, <string>result)),
-                catchError((error) => {
-                    console.log('There was an issue getting the value: ' + error);
-                    return of(interactActions.getConstantFail(error));
-                })
+                switchMap(contractInstance => call$(contractInstance, deployedContract.abi[abiIndex].name, action.data.args)),
+                map(result => interactActions.getConstantSuccess(deployedContract.id, abiIndex, result)),
+                catchError((error) => [
+                    interactActions.clearLastResult(deployedContract.id, abiIndex),
+                    outputLogActions.addRows([{ msg: 'There was an issue getting the value: ' + error, channel: 2 }])
+                ])
             );
     })
 );

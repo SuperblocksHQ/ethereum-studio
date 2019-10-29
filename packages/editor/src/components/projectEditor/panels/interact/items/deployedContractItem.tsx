@@ -24,12 +24,17 @@ export function DeployedContractItem(props: IProps) {
                 icon={ <IconContract /> }
                 iconOpen={ <IconContract /> }
             >
-                <div className={style.interactContainer}>
-                    <div className={style.title}>Contract Address:</div>
-                    <div className={style.address} title={data.address}>{data.address}</div>
-                    <div className={style.title}>Interact:</div>
-                    <AbiList deployedContract={data} />
-                </div>
+                {data.deployed ?
+                    <div className={style.interactContainer}>
+                        <div className={style.title}>Contract Address:</div>
+                        <div className={style.address} title={data.address}>{data.address}</div>
+                        <div className={style.title}>Interact:</div>
+                        <AbiList deployedContract={data} />
+                    </div> :
+                    <div className={style.noContracts}>
+                        <p>Contract is not found on current network. Please deploy it first.</p>
+                    </div>
+                }
             </BaseItem>
         </div>
     );

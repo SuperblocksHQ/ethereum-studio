@@ -17,7 +17,7 @@
 import { IRawAbiDefinition } from '../abi.model';
 
 export interface IAbiDefinitionState extends IRawAbiDefinition {
-    lastResult?: string;
+    lastResult?: any[];
 }
 
 export interface IDeployedContract {
@@ -29,6 +29,7 @@ export interface IDeployedContract {
     js: string;
     contractName: string;
     opened: boolean;
+    deployed: boolean; // show if the contract is deployed to current network
 }
 
 export interface IInteractState {
