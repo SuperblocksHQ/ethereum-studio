@@ -118,6 +118,6 @@ export function browserDeploy(state: any, deployRunner: DeployRunner) {
                 return of(outputLogActions.addRows([{ msg: 'Unexpected error occurred. Please try again!', channel: 3 }]));
             }
         }),
-        catchError((e) => [ outputLogActions.addRows([e]), deployerActions.deployFail()])
+        catchError((e) => [ outputLogActions.addRows([{ msg: `${e}\n`, channel: 2 }]), deployerActions.deployFail()])
     );
 }

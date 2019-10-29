@@ -112,7 +112,7 @@ export class DeployRunner {
                 observer.next(result);
                 observer.complete();
             })
-            .catch(err => observer.error({ msg: err, channel: 2 }));
+            .catch(err => observer.error({ msg: `${err}\n`, channel: 2 }));
         });
     }
 
