@@ -7,13 +7,14 @@ import "../node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol";
 
 contract CryptoPizza is IERC721, ERC165 {
 
-    // Let's use Open Zeppelin's SafeMath library to perform aritemetic operations savely.
+    // Use Open Zeppelin's SafeMath library to perform arithmetic operations safely.
     using SafeMath for uint256;
 
     /*
-        Pizza has only 5 various parts that can change according to DNA
-        When we generate DNA we get 10 digit long number and each pair corresponds to specific ingredient
-        Ex. DNA 5142446803 - 51_Basis/42_Cheeses/44_Meats/68_Spices/03_Vegetables
+        A Pizza has only 5 parts that can change according to its DNA.
+        When we generate DNA, we get a 10 digit long number, and each pair corresponds to a specific ingredient.
+
+        E.g. DNA 5142446803 - 51_Basis/42_Cheeses/44_Meats/68_Spices/03_Vegetables
     */
     uint constant dnaDigits = 10;
     uint constant dnaModulus = 10 ** dnaDigits;

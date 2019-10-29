@@ -42,8 +42,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
         onCloseAllPanes() {
             dispatch(panesActions.closeAllPanes());
         },
-        onUnsavedChange(fileId: string, hasUnsavedChanges: boolean) {
-            dispatch(panesActions.setUnsavedChanges(fileId, hasUnsavedChanges));
+        onUnsavedChange(fileId: string, hasUnsavedChanges: boolean, code: any) {
+            dispatch(panesActions.setUnsavedChanges(fileId, hasUnsavedChanges, code));
         },
         onMovePane(fromIndex: number, toIndex: number) {
             dispatch(panesActions.movePane(fromIndex, toIndex));

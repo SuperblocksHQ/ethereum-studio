@@ -35,7 +35,6 @@ export function EditorToolbar(props: IProps) {
             <div className={style.buttons}>
                 <button
                     className={classNames('btnNoBg', {[style.hasUnsavedChanges]: props.hasUnsavedChanges})}
-                    title='Save'
                     onClick={props.onSave}
                 >
                     <Tooltip title='Save'>
@@ -45,7 +44,6 @@ export function EditorToolbar(props: IProps) {
                 <OnlyIf test={props.isSmartContract}>
                     <button
                         className='btnNoBg'
-                        title='Compile'
                         onClick={props.onCompile}>
                         <Tooltip title='Compile'>
                             <IconCompile />
@@ -53,7 +51,6 @@ export function EditorToolbar(props: IProps) {
                     </button>
                     <button
                         className='btnNoBg'
-                        title='Deploy'
                         onClick={props.onDeploy}>
                         <Tooltip title='Deploy'>
                             <IconDeploy style={{ verticalAlign: 'middle' }} />
@@ -61,7 +58,6 @@ export function EditorToolbar(props: IProps) {
                     </button>
                     <button
                         className='btnNoBg'
-                        title='Configure'
                         onClick={props.onConfigure}>
                         <Tooltip title='Configure'>
                             <IconConfigure />

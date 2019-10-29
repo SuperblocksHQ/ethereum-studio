@@ -94,7 +94,7 @@ export default class AccountConfigModal extends Component<IProps, IState> {
 
                                     <div className={style.infoText}>
                                         <div className={style.titleContainer}>
-                                            <h3 className={style.title}>Configure the account foreach network</h3>
+                                            <h3 className={style.title}>Configure the account for each network</h3>
                                         </div>
                                         <div className={style.subtitle}>Each account must be configured for each of the networks available.
                                             <a href='https://help.superblocks.com/' target='_blank' rel='noopener noreferrer'>

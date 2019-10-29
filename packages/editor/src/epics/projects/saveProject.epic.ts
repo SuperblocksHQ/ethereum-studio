@@ -14,38 +14,46 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { switchMap, withLatestFrom, map, catchError } from 'rxjs/operators';
+import { switchMap, withLatestFrom, catchError } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
 import { projectsActions } from '../../actions';
 import { projectService } from '../../services/project.service';
 import { projectSelectors } from '../../selectors';
-import {EMPTY} from 'rxjs';
+import { of } from 'rxjs';
+import { panesSelectors } from '../../selectors/panes.selectors';
+import { updateItemInTree } from '../../reducers/explorerLib';
 
-export const renameProjectEpic: Epic = (action$: any, state$: any) => action$.pipe(
-    ofType(projectsActions.RENAME_PROJECT),
+export const saveProject: Epic = (action$: any, state$: any) => action$.pipe(
+    ofType(projectsActions.SAVE_PROJECT),
     withLatestFrom(state$),
-    switchMap(([action, state]) => {
+    switchMap(([, state]) => {
         const project = projectSelectors.getProject(state);
-        const { description, id } =  project;
-        const name = action.data.newName;
+        const unsavedChanges = panesSelectors.getPanes(state);
+        const { description, name, id } =  project;
 
         const isOwnProject = state.projects.isOwnProject;
-        const files = state.explorer.tree;
+        let files = state.explorer.tree;
+
+        unsavedChanges.map((pane: any) => {
+            if (pane.hasUnsavedChanges) {
+                files = updateItemInTree(files, pane.file.id, i => ({...i, code: pane.file.code}))[0];
+            }
+        });
 
         if (isOwnProject) {
-            // update
             return projectService.putProjectById(id, {
                 name,
                 description,
                 files
             })
                 .pipe(
-                    switchMap(() => projectService.getProjectById(project.id)),
-                    map(projectsActions.updateProjectSuccess),
-                    catchError(err => [projectsActions.renameProjectFail(err)])
+                    switchMap(() => [projectsActions.saveProjectSuccess(files)]),
+                    catchError((err) => [ projectsActions.saveProjectFail(err) ])
                 );
         } else {
-            return EMPTY;
+            // fork with new tree structure
+            return of(projectsActions.createForkedProject(name, description, files));
         }
     }),
+    catchError(err => [projectsActions.saveProjectFail(err)])
 );
