@@ -30,8 +30,8 @@ export default class Templates {
         {
             id: 1,
             name: 'Coin',
-            description: '<div><h2>Coin Contract</h2><p>A starter dapp that uses the ERC-20 standard to define a token you can create and send to others.</p></div>',
-            content: Coin,
+            description: '<div><h2>Coin Contract</h2><p>A starter dapp that defines a basic token you can create and send to others.</p></div>',
+            content: Coin
         },
         {
             id: 2,
