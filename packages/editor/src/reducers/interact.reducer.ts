@@ -20,7 +20,6 @@ import { ProjectItemTypes, IRawAbiDefinition } from '../models';
 import { findItemByPath } from './explorerLib';
 import { IExplorerState, IProjectState, IInteractState, IDeployedContract } from '../models/state';
 import { replaceInArray } from './utils';
-import { projectSelectors } from '../selectors';
 
 const initialState: IInteractState = {
     items: []
@@ -34,15 +33,13 @@ export default function interactReducer(state = initialState, action: AnyAction,
                 ...state,
                 items: state.items.map((item) => item.id !== item.id ? item : { ...item, opened: !item.opened })
             };
-        case explorerActions.INIT_EXPLORER_SUCCESS: {
-            const enviroment = projectSelectors.getSelectedEnvironment({ projects });
-            // do not load for browser as it should be redeployed after every page refresh
-            if (enviroment.name === 'browser') {
-                return state;
-            }
-        }
-        // tslint:disable-next-line: no-switch-case-fall-through
+        case interactActions.SET_CONTRACT_DEPLOYED:
+            return {
+                ...state,
+                items: replaceInArray(state.items, i => i.id === action.data.itemId, i => ({ ...i, deployed: action.data.deployed }))
+            };
         case projectsActions.SET_ENVIRONMENT_SUCCESS:
+        case explorerActions.INIT_EXPLORER_SUCCESS:
         case deployerActions.DEPLOY_SUCCESS:
             const tree: any = explorer.tree;
             const newItems = [];
@@ -70,7 +67,8 @@ export default function interactReducer(state = initialState, action: AnyAction,
                         deploy: deployFile.code,
                         js: jsFile.code,
                         opened: false,
-                        tx: txFile.code
+                        tx: txFile.code,
+                        deployed: false
                     };
 
                     newItems.push(item);
@@ -80,20 +78,36 @@ export default function interactReducer(state = initialState, action: AnyAction,
                 ...state,
                 items: newItems
             };
-        case interactActions.GET_CONSTANT_SUCCESS:
+        case interactActions.GET_CONSTANT_SUCCESS: {
             return {
                 ...state,
                 items: replaceInArray(state.items, i => i.id === action.data.deployedContractId, i => ({
                     ...i,
                     abi: i.abi.map((a, index) => {
                         if (index === action.data.abiIndex) {
-                            return { ...a, lastResult: action.data.result };
+                            return { ...a, lastResult: handleFunctionResult(action.data.result, a) };
                         } else {
                             return a;
                         }
                     })
                 }))
             };
+        }
+        case interactActions.CLEAR_LAST_RESULT: {
+            return {
+                ...state,
+                items: replaceInArray(state.items, i => i.id === action.data.deployedContractId, i => ({
+                    ...i,
+                    abi: i.abi.map((a, index) => {
+                        if (index === action.data.abiIndex) {
+                            return { ...a, lastResult: undefined };
+                        } else {
+                            return a;
+                        }
+                    })
+                }))
+            };
+        }
         default:
             return state;
     }
@@ -103,4 +117,18 @@ function compareAbi(a: IRawAbiDefinition, b: IRawAbiDefinition) {
     const isConstantA = a.constant;
     const isConstantB = b.constant;
     return (isConstantA === isConstantB) ? 0 : isConstantA ? -1 : 1;
+}
+
+function handleFunctionResult(result: any, abi: IRawAbiDefinition) {
+    if (result instanceof Array) {
+        const r = result.map(i => i.toString());
+        // in case return type is an array
+        if (abi.outputs.length === 1 && abi.outputs[0].type.includes('[]')) {
+            return [r];
+        } else {
+            return r;
+        }
+    } else {
+        return [ result.toString() ];
+    }
 }

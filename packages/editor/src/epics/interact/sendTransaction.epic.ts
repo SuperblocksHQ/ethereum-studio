@@ -85,7 +85,7 @@ function sendToBrowser$(environment: IEnvironment, accountAddress: string, netwo
             observer.next(result);
             observer.complete();
         })
-        .catch(err => observer.error({ msg: err, channel: 2 }));
+        .catch(err => observer.error({ msg: 'Error sending internal transation: ' + err.toString(), channel: 2 }));
     });
 }
 
@@ -153,6 +153,8 @@ export const sendTransactionEpic: Epic = (action$, state$) => action$.pipe(
     switchMap(([action, state]) => {
 
         const deployedContract: IDeployedContract = action.data.deployedContract;
+        const value = action.data.value;
+
         const selectedEnv = projectSelectors.getSelectedEnvironment(state);
         const selectedAccount = projectSelectors.getSelectedAccount(state);
         const networkSettings = state.settings.preferences.network;
@@ -162,13 +164,13 @@ export const sendTransactionEpic: Epic = (action$, state$) => action$.pipe(
                 map(contractInstance => getData(contractInstance, action.data.rawAbiDefinitionName, action.data.args)),
                 switchMap(data => {
                     if (selectedAccount.type === 'metamask') {
-                        return tryExternalSend$(selectedEnv, selectedAccount, networkSettings, deployedContract.contractName, data, deployedContract.address);
+                        return tryExternalSend$(selectedEnv, selectedAccount, networkSettings, deployedContract.contractName, data, deployedContract.address, value);
                     } else {
                         if (!selectedAccount.walletName || !selectedAccount.address) {
                             return throwError('walletName and address property should be set on the account');
                         }
                         const key = walletService.getKey(selectedAccount.walletName, selectedAccount.address);
-                        return sendToBrowser$(selectedEnv, selectedAccount.address, networkSettings, key, data, deployedContract.address).pipe(
+                        return sendToBrowser$(selectedEnv, selectedAccount.address, networkSettings, key, data, deployedContract.address, value).pipe(
                             mergeMap(output => {
                                 if (output.msg) { // intermediate messages coming
                                     return of(outputLogActions.addRows([ output ]));

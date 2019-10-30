@@ -22,27 +22,34 @@ import { IDeployedContract } from '../../../../../../models/state';
 
 interface IProps {
     deployedContract: IDeployedContract;
-    getConstant: (abiIndex: number, deployedContract: IDeployedContract) => void;
-    sendTransaction: (deployedContract: IDeployedContract, abiDefinitionName: string, args?: any[]) => void;
+    getConstant(abiIndex: number, deployedContract: IDeployedContract, args?: any[]): void;
+    sendTransaction(deployedContract: IDeployedContract, abiDefinitionName: string, args?: any[], value?: string): void;
+    clearLastResult(deployedContractId: string, abiIndex: number): void;
 }
 
 export class AbiList extends React.Component<IProps> {
 
-    getConstant = (abiIndex: number) => {
+    getConstant = (abiIndex: number, args: any[]) => {
         const { getConstant, deployedContract } = this.props;
-        getConstant(abiIndex, deployedContract);
+        getConstant(abiIndex, deployedContract, args);
     }
 
-    sendTransaction = (abiDefinitionName: string, args?: any[]) => {
+    sendTransaction = (abiDefinitionName: string, args?: any[], value?: string) => {
         const { sendTransaction, deployedContract } = this.props;
-        sendTransaction(deployedContract, abiDefinitionName, args);
+        sendTransaction(deployedContract, abiDefinitionName, args, value);
+    }
+
+    clearLastResult = (abiIndex: number) => {
+        const { clearLastResult, deployedContract } = this.props;
+        clearLastResult(deployedContract.id, abiIndex);
     }
 
     renderAbiDefinition(rawAbiDefinition: IRawAbiDefinition, index: number) {
         if (rawAbiDefinition.constant) {
             return <Constant
-                        call={() => this.getConstant(index)}
+                        call={args => this.getConstant(index, args)}
                         abiDefinition={rawAbiDefinition}
+                        clearLastResult={() => this.clearLastResult(index)}
                     />;
         } else if (rawAbiDefinition.type === Type.Function && !rawAbiDefinition.payable) {
             return <Transaction
@@ -51,7 +58,8 @@ export class AbiList extends React.Component<IProps> {
                     />;
         } else if (rawAbiDefinition.type === Type.Function && rawAbiDefinition.payable) {
             return <Payable
-                        data={rawAbiDefinition}
+                        rawAbiDefinition={rawAbiDefinition}
+                        call={(abiName, value) => this.sendTransaction(abiName, [], value)}
                     />;
         }
     }

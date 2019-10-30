@@ -76,7 +76,8 @@ export function tryExternalDeploy(state: any, deployRunner: DeployRunner) {
     const environment = projectSelectors.getSelectedEnvironment(state);
     const chainId = (Networks[environment.name] || {}).chainId;
     if (chainId && window.web3.version.network !== chainId.toString()) {
-        return throwError('The Metamask network does not match the Ethereum Studio network. Check so that you have the same network chosen in Metamask as in Superblocks Lab, then try again.');
+        const msg = 'The Metamask network does not match the Ethereum Studio network. Check so that you have the same network chosen in Metamask as in Superblocks Lab, then try again.';
+        return throwError({ msg, channel: 2 });
     }
 
     const isMainnetDeployment = window.web3.version.network === (Networks.mainnet.chainId && Networks.mainnet.chainId.toString());
@@ -96,7 +97,7 @@ export function browserDeploy(state: any, deployRunner: DeployRunner) {
     const networkSettings = state.settings.preferences.network;
 
     if (!account.walletName || !account.address) {
-        return throwError('walletName and address property should be set on the account');
+        return throwError({ msg: 'walletName and address property should be set on the account', channel: 2 });
     }
     const key = walletService.getKey(account.walletName, account.address);
 
