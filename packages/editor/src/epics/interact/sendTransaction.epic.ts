@@ -184,7 +184,7 @@ export const sendTransactionEpic: Epic = (action$, state$) => action$.pipe(
                         );
                     }
                 }),
-                catchError(e => [ outputLogActions.addRows([ { msg: e.toString(), channel: 2 } ]), deployerActions.deployFail() ])
+                catchError(e => [ outputLogActions.addRows([ { msg: e, channel: 2 } ]), deployerActions.deployFail() ])
             );
     })
 );
