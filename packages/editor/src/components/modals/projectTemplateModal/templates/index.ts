@@ -14,10 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import Coin from '../../../../assets/static/json/templates/Coin.json';
-import HelloWorld from '../../../../assets/static/json/templates/HelloWorld.json';
-import CryptoPizzas from '../../../../assets/static/json/templates/CryptoPizzas.json';
-import EmptyProject from '../../../../assets/static/json/templates/EmptyProject.json';
+import coin from '../../../../assets/static/json/templates/coin.json';
+import helloworld from '../../../../assets/static/json/templates/helloworld.json';
+import cryptopizzas from '../../../../assets/static/json/templates/cryptopizzas.json';
+import emptyproject from '../../../../assets/static/json/templates/emptyproject.json';
 
 export default class Templates {
     static templates = [
@@ -25,25 +25,25 @@ export default class Templates {
             id: 0,
             name: 'Hello World',
             description: '<div><h2>Hello World</h2><p>A Hello World style starter project. Deploys a smart contract with a message, and renders it in the front-end. You can change the message using the interact panel!</p></div>',
-            content: HelloWorld,
+            content: helloworld,
         },
         {
             id: 1,
             name: 'Coin',
             description: '<div><h2>Coin Contract</h2><p>A starter dapp that defines a basic token you can create and send to others.</p></div>',
-            content: Coin
+            content: coin
         },
         {
             id: 2,
             name: 'CryptoPizza NFT',
             description: '<div><h2>CryptoPizza NFT</h2><p>A Crypto-collectible game built on top of the ERC-721 standard for creating unique tokens.</p></div>',
-            content: CryptoPizzas,
+            content: cryptopizzas,
         },
         {
             id: 3,
             name: 'Empty Project',
             description: '<div><h2>Empty Project</h2><p>An empty boilerplate which can help you to get started quickly.</p></div>',
-            content: EmptyProject,
+            content: emptyproject,
         }
     ];
 }

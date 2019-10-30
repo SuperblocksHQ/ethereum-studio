@@ -91,7 +91,7 @@ function generateTemplateJSON(filePath) {
 
 // Saves generated JSON to 'exportPath' folder
 function saveTemplateAsJSON(templateName, templateJSON) {
-    const filePath = path.join(exportPath, `${templateName.replace(/ /g, '')}.json`);
+    const filePath = path.join(exportPath, `${templateName.replace(/ /g, '').toLowerCase()}.json`);
     const finalJSON = {
         ...json,
         name: templateName,
