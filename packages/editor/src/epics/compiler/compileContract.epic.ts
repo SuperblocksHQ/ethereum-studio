@@ -34,24 +34,13 @@ function compileContract(compilerState: any) {
     );
 }
 
-function cleanBuildFolder$(tree: IProjectItem) {
-    const buildFolder = findItemByPath(tree, [ 'build' ], ProjectItemTypes.Folder);
-    if (buildFolder === null || !buildFolder) {
-        return empty();
-    }
-
-    return of(explorerActions.deleteItem(buildFolder.id));
-}
-
 export const compileContractsEpic: Epic = (action$: any, state$: any) => action$.pipe(
     ofType(explorerActions.COMPILE_CONTRACT),
     withLatestFrom(state$),
     switchMap(([_action, state]) => {
         compilerService.init();
-
         return concat(
             of(panelsActions.openPanel(Panels.OutputLog)), // show output
-            cleanBuildFolder$(state.explorer.tree),
             interval(200).pipe(
                 first(() => compilerService.isReady()), // compiler has to be ready to be able to do smth
                 switchMap(() => concat(

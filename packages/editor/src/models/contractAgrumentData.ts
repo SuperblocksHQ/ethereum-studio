@@ -16,7 +16,6 @@
 
 export enum ContractArgTypes {
     account = 'account',
-    contract = 'contract',
     value = 'value',
     array = 'array'
 }

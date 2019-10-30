@@ -21,20 +21,38 @@ import { StyledButton, TextInput } from '../../../../../../common';
 import { StyledButtonType } from '../../../../../../common/buttons/StyledButtonType';
 
 interface IProps {
-    data: IRawAbiDefinition;
+    rawAbiDefinition: IRawAbiDefinition;
+    call: (rawAbiDefinitionName: string, value: string) => void;
 }
 
-export class Payable extends React.Component<IProps> {
+interface IState {
+    value: string;
+}
+
+export class Payable extends React.Component<IProps, IState> {
+
+    state: IState = {
+        value: '',
+    };
+
+    onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        this.setState({ value: e.target.value || ' ' });
+    }
+
+    call = () => {
+        const { call, rawAbiDefinition } = this.props;
+        call(rawAbiDefinition.name, this.state.value);
+    }
 
     render() {
-        const { data } = this.props;
+        const { rawAbiDefinition: data } = this.props;
         return (
             <div className={style.container}>
-                <StyledButton type={StyledButtonType.Payable} text={data.name} />
+                <StyledButton type={StyledButtonType.Payable} text={data.name} onClick={this.call} />
                 <TextInput
                     id='name'
-                    // onChangeText={this.onNameChange}
-                    // defaultValue={project.name}
+                    onChangeText={this.onInputChange}
+                    defaultValue={this.state.value}
                     placeholder={0}
                     className={style.input}
                     type='number'
