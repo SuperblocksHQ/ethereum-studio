@@ -38,6 +38,10 @@ export class DeployRunner {
     }
 
     checkExistingDeployment(buildFiles: IProjectItem[], contractArgs: any[]): Observable<ICheckDeployResult> {
+        if (!this.currWeb3) {
+            return throwError({ msg: 'Metamask is not installed.', channel: 2, result: CheckDeployResult.CanNotDeploy });
+        }
+
         // 1. create ".deploy" file
         try {
             this.deployFile = createDeployFile(this.currWeb3, buildFiles, contractArgs);
