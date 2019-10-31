@@ -8,3 +8,4 @@ dist
 */**/templates/*
 .env.local
 .vscode
+!templates/**
