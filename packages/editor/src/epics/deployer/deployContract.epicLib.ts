@@ -96,8 +96,12 @@ export function browserDeploy(state: any, deployRunner: DeployRunner) {
     const account: IAccount = projectSelectors.getSelectedAccount(state);
     const networkSettings = state.settings.preferences.network;
 
+    if (state.projects.selectedAccount.isLocked) {
+        return [outputLogActions.addRows([{ channel: 2, msg: 'The Custom wallet is currently locked. Please unlock it and try again!' }]), deployerActions.deployFail()];
+    }
+
     if (!account.walletName || !account.address) {
-        return throwError({ msg: 'walletName and address property should be set on the account', channel: 2 });
+        return of(outputLogActions.addRows([{ msg: 'WalletName and address property should be set on the account', channel: 2 }]));
     }
     const key = walletService.getKey(account.walletName, account.address);
 
@@ -111,6 +115,6 @@ export function browserDeploy(state: any, deployRunner: DeployRunner) {
                 return of(outputLogActions.addRows([{ msg: 'Unexpected error occurred. Please try again!', channel: 3 }]));
             }
         }),
-        catchError((e) => [ outputLogActions.addRows([e]), deployerActions.deployFail()])
+        catchError((e) => [ outputLogActions.addRows(e), deployerActions.deployFail()])
     );
 }
