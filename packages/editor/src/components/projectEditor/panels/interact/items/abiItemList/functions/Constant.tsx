@@ -42,7 +42,8 @@ export class Constant extends React.Component<IProps> {
     }
 
     call = () => {
-        this.props.call(this.state.args.split(','));
+        const { abiDefinition, call } = this.props;
+        call(abiDefinition.inputs.length ? this.state.args.split(',') : []);
     }
 
     render() {
