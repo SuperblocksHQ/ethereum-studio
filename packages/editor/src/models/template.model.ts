@@ -18,5 +18,5 @@ export interface ITemplate {
     id: number;
     description: string;
     name: string;
-    projectId: string;
+    content: any;
 }

@@ -12,7 +12,9 @@ COPY lerna*.json ./
 COPY packages/editor/package*.json ./packages/editor/
 COPY packages/web-server/package*.json ./packages/web-server/
 COPY packages/editor/scripts/postinstall.js ./packages/editor/scripts/postinstall.js
+COPY packages/editor/scripts/generate-templates.js ./packages/editor/scripts/generate-templates.js
 RUN mkdir -p /app/packages/editor/src/assets/static/json
+RUN mkdir -p /app/packages/editor/src/assets/static/json/templates
 
 # RUN npm i
 # If you are building your code for production

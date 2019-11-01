@@ -150,8 +150,8 @@ Pizza.prototype.loadInventory = function() {
                             \<div class="pizza-container">\
                             \<p><span style="float: left;">'+pizzaName+'</span><span id="'+pizzaId+'" class="pizzaDna" style="float: right;">#'+pizzaId+'</span></p>\
                             \<div class="pizza-inner-container">\
-                            <img class="pizza-frame" src="http://digitalpromotion.cz/test/container.jpg"/>\
-                            <img src="http://digitalpromotion.cz/test/corpus.png"/>\
+                            <img class="pizza-frame" src="https://studio.ethereum.org/static/img/cryptopizza/container.jpg"/>\
+                            <img src="https://studio.ethereum.org/static/img/cryptopizza/corpus.png"/>\
                             <div class="ingredients">\
                             '+pizza+'\
                             </div></div>'+actionButtons+'</div></div>');
@@ -185,7 +185,7 @@ Pizza.prototype.updateCreateContainer = function() {
             }
             else {
                 if(pizzaDna.toNumber() == 5142446803) {
-                    var a = new Audio("http://digitalpromotion.cz/superblocks/1.mp3");
+                    var a = new Audio("https://studio.ethereum.org/static/img/cryptopizza/1.mp3");
                     a.play();
                 }
                 var pizzaImage = that.generatePizzaImage(pizzaDna.toNumber());
@@ -200,7 +200,7 @@ Pizza.prototype.updateCreateContainer = function() {
 
 // Generates images from DNA - returns all of them in HTML
 Pizza.prototype.generatePizzaImage = function(dna) {
-    var url = "http://digitalpromotion.cz/superblocks/";
+    var url = "https://studio.ethereum.org/static/img/cryptopizza/";
     dna = dna.toString();
     var basis = (dna.substring(0, 2) % 2) + 1;
     var cheese = (dna.substring(2, 4) % 10) + 1;
@@ -216,9 +216,9 @@ Pizza.prototype.generatePizzaImage = function(dna) {
     image += '<img src="'+url+'veggies/veg-'+veggie+'.png"/>';
 
     if(dna == 5142446803) {
-        image = '<img src="http://digitalpromotion.cz/superblocks/basis/basis-2.png"/>\
-                 <img src="http://digitalpromotion.cz/superblocks/meats/meat-13.png"/>\
-                 <img src="http://digitalpromotion.cz/superblocks/8fe918632d847e8ea3ebffbd47bd8ca9.png"/>';
+        image = '<img src="https://studio.ethereum.org/static/img/cryptopizza/basis/basis-2.png"/>\
+                 <img src="https://studio.ethereum.org/static/img/cryptopizza/meats/meat-13.png"/>\
+                 <img src="https://studio.ethereum.org/static/img/cryptopizza/8fe918632d847e8ea3ebffbd47bd8ca9.png"/>';
     }
 
     return image;
@@ -241,7 +241,7 @@ Pizza.prototype.giftPizza = function(pizzaId, cb) {
     var pizzaDna = $('#pizza-'+pizzaId +' .pizzaDna').attr('id');
 
     if(pizzaDna == 5142446803) {
-        var a = new Audio("http://digitalpromotion.cz/superblocks/2.mp3");
+        var a = new Audio("https://studio.ethereum.org/static/img/cryptopizza/2.mp3");
         a.play();
     }
 
@@ -287,7 +287,7 @@ Pizza.prototype.eatPizza = function(pizzaId, cb) {
         var pizzaDna = $('#pizza-'+pizzaId +' .pizzaDna').attr('id');
 
         if(pizzaDna == 5142446803) {
-            var a = new Audio("http://digitalpromotion.cz/superblocks/3.mp3");
+            var a = new Audio("https://studio.ethereum.org/static/img/cryptopizza/3.mp3");
             a.play();
         }
 

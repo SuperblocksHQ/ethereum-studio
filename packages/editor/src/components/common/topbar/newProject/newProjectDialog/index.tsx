@@ -21,13 +21,13 @@ import { AnyAction } from 'redux';
 import { projectsActions, modalActions } from '../../../../../actions';
 import classNames from 'classnames';
 import style from '../style.less';
+import Templates from '../../../../modals/projectTemplateModal/templates';
+import { ITemplate } from '../../../../../models';
 
-// TODO - Finalise all this
 
 interface IProps {
-    createEmptyProject: (redirect: boolean) => void;
+    createProjectFromTemplate: (template: ITemplate) => void;
     showModal: (modalType: string, modalProps: any) => void;
-    redirect: boolean;
 }
 
 class NewProjectDialog extends Component<IProps> {
@@ -38,13 +38,13 @@ class NewProjectDialog extends Component<IProps> {
     }
 
     render() {
-        const { createEmptyProject, redirect } = this.props;
+        const { createProjectFromTemplate } = this.props;
 
         return (
             <div className={classNames([style.menu, 'contextMenu'])}>
                 <ul>
                     <li>
-                        <div onClick={() => createEmptyProject(redirect)}>
+                        <div onClick={() => createProjectFromTemplate(Templates.templates[3])}>
                             Create empty project
                         </div>
                     </li>
@@ -61,8 +61,8 @@ class NewProjectDialog extends Component<IProps> {
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
     return {
-        createEmptyProject: (redirect: boolean) => {
-            dispatch(projectsActions.createEmptyProject(redirect));
+        createProjectFromTemplate: (template: ITemplate) => {
+            dispatch(projectsActions.createProjectFromTemplate(template));
         },
         showModal: (modalType: string, modalProps: any) => {
             dispatch(modalActions.showModal(modalType, modalProps));

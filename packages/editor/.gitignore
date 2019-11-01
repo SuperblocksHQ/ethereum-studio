@@ -5,5 +5,7 @@ dist
 .idea
 *.iml
 */**/openzeppelin.json
+*/**/templates/*
 .env.local
 .vscode
+!templates/**

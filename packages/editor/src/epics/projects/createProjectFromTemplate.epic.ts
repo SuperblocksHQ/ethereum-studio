@@ -14,38 +14,34 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { of } from 'rxjs';
+import { of, from } from 'rxjs';
 import { switchMap, withLatestFrom, catchError, tap } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
 import { projectsActions } from '../../actions';
 import { projectService} from '../../services/project.service';
-import { IProject, ITemplate } from '../../models';
+import { ITemplate } from '../../models';
 import * as analytics from '../../utils/analytics';
 
 export const createProjectFromTemplateEpic: Epic = (action$: any, state$: any) => action$.pipe(
     ofType(projectsActions.CREATE_PROJECT_FROM_TEMPLATE_REQUEST),
     withLatestFrom(state$),
-    switchMap(([action, _state]) => {
+    switchMap(([action]) => {
         const template: ITemplate = action.data.template;
-        return projectService.getProjectById(template.projectId)
+        return from(projectService.createProject(template.content))
             .pipe(
                 tap(() => analytics.logEvent('CREATE_PROJECT_FROM_TEMPLATE', { template: template.name } )),
-                switchMap((project: IProject) => projectService.createProject({
-                    name: project.name,
-                    description: project.description,
-                    files: project.files
-                })),
-                switchMap((newProject: IProject) =>  {
-                    // redirect
+                switchMap((newProject) => {
+                    // Redirect
                     window.location.href = `${window.location.origin}/${newProject.id}?openFile=README.md`;
 
-                    return [projectsActions.loadProjectSuccess(newProject)];
+                    return [projectsActions.createProjectSuccess()];
                 }),
                 catchError((error) => {
                     console.log('There was an issue loading the project: ' + error);
                     return of(projectsActions.loadProjectFail(error));
-                })
-            );
+                }
+            )
+        );
     })
 );
 
