@@ -38,6 +38,7 @@ export default function toastsReducer(state = initialState, action: AnyAction, r
     switch (action.type) {
         case projectsActions.UPDATE_PROJECT_SETTINGS_FAIL:
         case projectsActions.FORK_PROJECT:
+        case projectsActions.CREATE_FORKED_PROJECT:
         case projectsActions.CREATE_PROJECT_SUCCESS:
         case projectsActions.DELETE_PROJECT_FAIL:
         case projectsActions.RENAME_PROJECT_FAIL:
