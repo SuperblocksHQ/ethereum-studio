@@ -74,6 +74,11 @@ export function doDeployExternally(state: any, deployRunner: DeployRunner) {
  */
 export function tryExternalDeploy(state: any, deployRunner: DeployRunner) {
     const environment = projectSelectors.getSelectedEnvironment(state);
+
+    if (state.projects.selectedAccount.isLocked) {
+        return [outputLogActions.addRows([{ channel: 2, msg: 'Your Metamask wallet is currently locked. Please unlock it and try again!' }]), deployerActions.deployFail()];
+    }
+
     const chainId = (Networks[environment.name] || {}).chainId;
     if (chainId && window.web3.version.network !== chainId.toString()) {
         const msg = 'The Metamask network does not match the Ethereum Studio network. Check so that you have the same network chosen in Metamask as in Superblocks Lab, then try again.';
