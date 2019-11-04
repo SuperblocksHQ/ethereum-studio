@@ -74,9 +74,15 @@ export function doDeployExternally(state: any, deployRunner: DeployRunner) {
  */
 export function tryExternalDeploy(state: any, deployRunner: DeployRunner) {
     const environment = projectSelectors.getSelectedEnvironment(state);
+
+    if (state.projects.selectedAccount.isLocked) {
+        return [outputLogActions.addRows([{ channel: 2, msg: 'Your Metamask wallet is currently locked. Please unlock it and try again!' }]), deployerActions.deployFail()];
+    }
+
     const chainId = (Networks[environment.name] || {}).chainId;
     if (chainId && window.web3.version.network !== chainId.toString()) {
-        return throwError('The Metamask network does not match the Ethereum Studio network. Check so that you have the same network chosen in Metamask as in Superblocks Lab, then try again.');
+        const msg = 'The Metamask network does not match the Ethereum Studio network. Check so that you have the same network chosen in Metamask as in Superblocks Lab, then try again.';
+        return throwError({ msg, channel: 2 });
     }
 
     const isMainnetDeployment = window.web3.version.network === (Networks.mainnet.chainId && Networks.mainnet.chainId.toString());
@@ -95,8 +101,12 @@ export function browserDeploy(state: any, deployRunner: DeployRunner) {
     const account: IAccount = projectSelectors.getSelectedAccount(state);
     const networkSettings = state.settings.preferences.network;
 
+    if (state.projects.selectedAccount.isLocked) {
+        return [outputLogActions.addRows([{ channel: 2, msg: 'The Custom wallet is currently locked. Please unlock it and try again!' }]), deployerActions.deployFail()];
+    }
+
     if (!account.walletName || !account.address) {
-        return throwError('walletName and address property should be set on the account');
+        return of(outputLogActions.addRows([{ msg: 'WalletName and address property should be set on the account', channel: 2 }]));
     }
     const key = walletService.getKey(account.walletName, account.address);
 
@@ -110,6 +120,6 @@ export function browserDeploy(state: any, deployRunner: DeployRunner) {
                 return of(outputLogActions.addRows([{ msg: 'Unexpected error occurred. Please try again!', channel: 3 }]));
             }
         }),
-        catchError((e) => [ outputLogActions.addRows([e]), deployerActions.deployFail()])
+        catchError((e) => [ outputLogActions.addRows(e), deployerActions.deployFail()])
     );
 }

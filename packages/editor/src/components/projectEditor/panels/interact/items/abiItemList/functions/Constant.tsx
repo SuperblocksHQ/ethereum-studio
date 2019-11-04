@@ -16,23 +16,76 @@
 
 import React from 'react';
 import style from './style.less';
-import { StyledButton } from '../../../../../../common';
+import { StyledButton, TextInput, OnlyIf } from '../../../../../../common';
 import { StyledButtonType } from '../../../../../../common/buttons/StyledButtonType';
 import { IAbiDefinitionState } from '../../../../../../../models/state';
+import { getPlaceholderText } from './utils';
+import { IconClose } from '../../../../../../icons';
 
 interface IProps {
     abiDefinition: IAbiDefinitionState;
-    call(): void;
+    call(args: any[]): void;
+    clearLastResult(): void;
+}
+
+interface IState {
+    args: string;
 }
 
 export class Constant extends React.Component<IProps> {
-    render() {
+    state: IState = {
+        args: '',
+    };
+
+    onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        this.setState({ args: e.target.value || ' ' });
+    }
+
+    call = () => {
         const { abiDefinition, call } = this.props;
+        call(abiDefinition.inputs.length ? this.state.args.split(',') : []);
+    }
+
+    render() {
+        const { abiDefinition, clearLastResult } = this.props;
+        const placeholder = getPlaceholderText(abiDefinition.inputs);
+
         return (
-            <div className={style.container}>
-                <StyledButton type={StyledButtonType.Constant} text={abiDefinition.name} onClick={call}/>
-                <span className={style.result}>{abiDefinition.lastResult || ''}</span>
+            <div>
+                <div className={style.container}>
+                    <StyledButton type={StyledButtonType.Constant} text={abiDefinition.name} onClick={this.call}/>
+                    <TextInput
+                        onChangeText={this.onInputChange}
+                        placeholder={placeholder}
+                        title={placeholder}
+                        className={style.input}
+                        defaultValue={this.state.args}
+                        disabled={abiDefinition.inputs.length === 0}
+                    />
+                </div>
+                <OnlyIf test={abiDefinition.lastResult}>
+                    <div className={style.resultContainer}>
+                    {
+                        abiDefinition.outputs.map((o, index) => (
+                            <div key={index} className={style.resultItem}>
+                                <div className={style.type}>{o.type}:</div>
+                                <div className={style.result}>{getResult(index, abiDefinition.lastResult)}</div>
+                            </div>
+                        ))
+                    }
+                        <IconClose className={style.closeIcon} onClick={clearLastResult} />
+                    </div>
+                </OnlyIf>
             </div>
         );
+    }
+}
+
+function getResult(index: number, result?: any[]) {
+    const res = (result || [])[index] || '(NO DATA)';
+    if (res instanceof Array) {
+        return '[' + res.join(', ') + ']';
+    } else {
+        return res;
     }
 }

@@ -23,6 +23,5 @@ export interface IContractConfigState {
         file: IProjectItem
         config: IContractConfiguration
     };
-    otherContracts: string[];
     errorLoadingContractConfig?: string;
 }

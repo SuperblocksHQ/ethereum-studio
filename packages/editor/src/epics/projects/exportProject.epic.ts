@@ -22,6 +22,7 @@ import { ProjectItemTypes } from '../../models';
 import { traverseTree } from '../../reducers/explorerLib';
 import JSZip from 'jszip';
 import FileSaver from 'file-saver';
+import { empty } from 'rxjs';
 
 function pathToString(path: string[]) {
     return '/' + path.join('/');
@@ -33,18 +34,38 @@ export const exportProject = (action$: AnyAction, state$: any) => action$.pipe(
     switchMap(([, state]) => {
         const files = state.explorer.tree;
         const zip = new JSZip();
+        const fileName = state.projects.project.name.trim().toLowerCase().replace(/ /g, '_') + '_' + Date.now();
+
+        const promptResult = prompt(
+            'Do you also want to save the project state (current contract addresses, ABIs, etc...)?',
+            'yes'
+        );
+        if (!promptResult) {
+            return empty();
+        }
+        const promptResultLowerCase = promptResult.toLowerCase();
+        if (promptResultLowerCase !== 'yes' && promptResultLowerCase !== 'no') {
+            alert('Download aborted. Yes or No answer expected.');
+            return empty();
+        }
+        const includeBuildFiles = promptResultLowerCase === 'yes';
 
         // Add all files to zip variable
         traverseTree(files, (file, path) => {
+            if (!includeBuildFiles && path()[0] === 'build') {
+                return;
+            }
             if (file.type !== ProjectItemTypes.Folder) {
                 zip.file(pathToString(path()), file.code);
+            } else if (file.type === ProjectItemTypes.Folder && !file.children.length) {
+                zip.folder(pathToString(path()), file.name);
             }
         });
 
         // Generate zip and show pop up
         zip.generateAsync({type: 'blob'})
             .then((content: any) => {
-                FileSaver.saveAs(content, 'test.zip');
+                FileSaver.saveAs(content, `${fileName}.zip`);
             });
 
         return [projectsActions.exportProjectSuccess()];

@@ -34,7 +34,7 @@ export const deployContractEpic: Epic = (action$: any, state$: any) => action$.p
         // prepare params
         const deployerState = state$.value.deployer;
         if (deployerState.needsCompilation) {
-            return empty();
+            return concat(of(panelsActions.openPanel(Panels.OutputLog)), of(outputLogActions.addRows([{ msg: 'Please compile your contracts before deployment.', channel: 3 }])));
         }
 
         const environment = projectSelectors.getSelectedEnvironment(state);

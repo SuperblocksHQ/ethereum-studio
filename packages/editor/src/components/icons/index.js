@@ -19,6 +19,7 @@ import { FontAwesomeIcon as FaIcon } from '@fortawesome/react-fontawesome';
 import { faSync as iconRun } from '@fortawesome/free-solid-svg-icons/faSync'
 import { faSave as iconSave } from '@fortawesome/free-regular-svg-icons/faSave';
 import { faPuzzlePiece as iconCompile } from '@fortawesome/free-solid-svg-icons/faPuzzlePiece';
+import { faCode as iconCode } from '@fortawesome/free-solid-svg-icons/faCode';
 import { faCog as iconConfigure } from '@fortawesome/free-solid-svg-icons/faCog';
 import { faTrashAlt as iconTrash } from '@fortawesome/free-regular-svg-icons/faTrashAlt';
 import { faGem as iconGem } from '@fortawesome/free-regular-svg-icons/faGem';
@@ -67,6 +68,7 @@ export const IconCheckCircle = ({...props}) => <svg xmlns="http://www.w3.org/200
 export const IconRun = ({ ...props }) => <FaIcon icon={iconRun} {...props} />;
 export const IconSave = () => <FaIcon icon={iconSave} />;
 export const IconCompile = () => <FaIcon icon={iconCompile} />;
+export const IconCode = () => <FaIcon size={'sm'} icon={iconCode} />;
 export const IconDeploy = ({ ...props }) => (
     <IconImg src={'/static/img/icon-deploy.svg'} {...props} />
 );

@@ -65,7 +65,7 @@ const error = (text: string) => ({
 
 export const getToastComponent = (type: string) => {
     switch (type) {
-        case projectsActions.FORK_PROJECT:
+        case projectsActions.CREATE_FORKED_PROJECT:
             return info('Forking project...');
         case projectsActions.FORK_PROJECT_FAIL:
             return error('Ups. Error while forking. Please try again');

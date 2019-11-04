@@ -24,7 +24,6 @@ import { ContractArgTypes, IContractArgData } from '../../../../models';
 interface IProps {
     data: IContractArgData;
     accounts: string[];
-    otherContracts: string[];
     onChange: (data: IContractArgData) => void;
     onRemoveClick: () => void;
 }
@@ -35,8 +34,6 @@ export class ConstructorArgument extends React.Component<IProps> {
         let value = '';
         if (type === ContractArgTypes.account) {
             value = this.props.accounts[0];
-        } else if (type === ContractArgTypes.contract) {
-            value = this.props.otherContracts[0];
         }
 
         this.props.onChange({ type: type as ContractArgTypes, value });
@@ -47,13 +44,11 @@ export class ConstructorArgument extends React.Component<IProps> {
     }
 
     render() {
-        const { data, accounts, otherContracts, onRemoveClick } = this.props;
+        const { data, accounts, onRemoveClick } = this.props;
         let argumentValue: React.ReactNode;
 
         if (data.type === ContractArgTypes.account) {
             argumentValue = <Select value={data.value} options={accounts} onChange={this.onValueChange} />;
-        } else if (data.type === ContractArgTypes.contract) {
-            argumentValue = <Select value={data.value} options={otherContracts} onChange={this.onValueChange} />;
         } else {
             argumentValue = (
                 <div className={classNames(['superInputDark', style.valueContainer])}>

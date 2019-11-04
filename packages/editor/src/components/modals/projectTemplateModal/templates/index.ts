@@ -14,25 +14,36 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
+import coin from '../../../../assets/static/json/templates/coin.json';
+import helloworld from '../../../../assets/static/json/templates/helloworld.json';
+import cryptopizzas from '../../../../assets/static/json/templates/cryptopizzas.json';
+import emptyproject from '../../../../assets/static/json/templates/emptyproject.json';
+
 export default class Templates {
     static templates = [
         {
             id: 0,
             name: 'Hello World',
             description: '<div><h2>Hello World</h2><p>A Hello World style starter project. Deploys a smart contract with a message, and renders it in the front-end. You can change the message using the interact panel!</p></div>',
-            projectId: '5d9453375634771a056d25d5'
+            content: helloworld,
         },
         {
             id: 1,
             name: 'Coin',
             description: '<div><h2>Coin Contract</h2><p>A starter dapp that defines a basic token you can create and send to others.</p></div>',
-            projectId: '5d95abae3725a262a1f05c7c'
+            content: coin
         },
         {
             id: 2,
             name: 'CryptoPizza NFT',
             description: '<div><h2>CryptoPizza NFT</h2><p>A Crypto-collectible game built on top of the ERC-721 standard for creating unique tokens.</p></div>',
-            projectId: '5d93b3ec5634771a056d25d3'
+            content: cryptopizzas,
+        },
+        {
+            id: 3,
+            name: 'Empty Project',
+            description: '<div><h2>Empty Project</h2><p>An empty boilerplate which can help you to get started quickly.</p></div>',
+            content: emptyproject,
         }
     ];
 }

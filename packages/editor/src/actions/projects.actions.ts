@@ -135,7 +135,7 @@ export const projectsActions = {
     },
     LOAD_PROJECT_SUCCESS: 'LOAD_PROJECT_SUCCESS',
     loadProjectSuccess(project: IProject) {
-       return {
+        return {
             type: projectsActions.LOAD_PROJECT_SUCCESS,
             data: { project, metamaskAccounts: (window.web3 && window.web3.eth) ? window.web3.eth.accounts : [] }
        };
@@ -240,22 +240,12 @@ export const projectsActions = {
             data: { name, description, tree }
         };
     },
-
-     // ---------- CREATE_EMPTY_PROJECT ----------
-     CREATE_EMPTY_PROJECT: 'CREATE_EMPTY_PROJECT',
-     createEmptyProject(redirect: boolean) {
-         return {
-             type: projectsActions.CREATE_EMPTY_PROJECT,
-             data: { redirect }
-         };
-     },
-
-     CREATE_PROJECT_SUCCESS: 'CREATE_PROJECT_SUCCESS',
-     createProjectSuccess() {
-         return {
-             type: projectsActions.CREATE_PROJECT_SUCCESS,
-         };
-     },
+    CREATE_PROJECT_SUCCESS: 'CREATE_PROJECT_SUCCESS',
+    createProjectSuccess() {
+        return {
+            type: projectsActions.CREATE_PROJECT_SUCCESS,
+        };
+    },
 
     // ---------- EXPORT PROJECT ----------
     EXPORT_PROJECT: 'EXPORT_PROJECT',
