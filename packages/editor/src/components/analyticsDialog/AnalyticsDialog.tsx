@@ -62,7 +62,7 @@ export default class AnalyticsDialog extends Component<IProps, IState> {
         return (
             <div className={style.container}>
                 <div className={style.content}>
-                    <h2>Support Ethereum Studio!</h2>
+                    <h2>Enable Anonymous Tracking</h2>
                     <div>By allowing us to track (anonymously) how you use Ethereum Studio, we can get valuable insights and better understand what the tool needs in order to make you a happier developer.
                         By leaving the tracking on, you will really help us see what can be improved, iterated or removed.</div>
                     <br/>
