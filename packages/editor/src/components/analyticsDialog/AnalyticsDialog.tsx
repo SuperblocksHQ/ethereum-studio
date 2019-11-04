@@ -15,7 +15,6 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import style from './style.less';
 import Switch from 'react-switch';
 

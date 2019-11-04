@@ -14,12 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { connect } from 'react-redux';
-import { settingsSelectors } from '../../../../../selectors';
-import AdvancedPreferences from './AdvancedPreferences';
-
-const mapStateToProps = state => ({
-    advancedPreferences: settingsSelectors.getAdvancedPreferences(state),
-});
-
-export default connect(mapStateToProps, null)(AdvancedPreferences);
+export const modalSelectors = {
+    isModalOpen: (state: any, modalKey: string) => state.modal.modalType !== null && state.modal.modalType === modalKey,
+};

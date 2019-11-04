@@ -15,7 +15,7 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, matchPath } from 'react-router-dom';
 import AnalyticsDialog from '../analyticsDialog';
 import { OnlyIf } from '../common';
 import ToastContainer from '../toasts/toastcontainer';
@@ -27,10 +27,15 @@ import ProjectEditor from '../projectEditor';
 
 interface IProps {
     showTrackingAnalyticsDialog: boolean;
+    isTemplateModalShowing: boolean;
     router: any;
     knownWalletSeed: string;
     notifyAppStart: (isIframe: boolean) => void;
     addMessageLogRow: (logLevel: LogLevel, msg: string) => void;
+}
+
+interface IMatchParams {
+    projectId: string;
 }
 
 export default class App extends Component<IProps> {
@@ -79,7 +84,7 @@ export default class App extends Component<IProps> {
     }
 
     render() {
-        const { showTrackingAnalyticsDialog } = this.props;
+        const { showTrackingAnalyticsDialog, isTemplateModalShowing } = this.props;
 
         return (
             <Router>
@@ -92,7 +97,7 @@ export default class App extends Component<IProps> {
                             </Switch>
                         </div>
                     </div>
-                    <OnlyIf test={showTrackingAnalyticsDialog}>
+                    <OnlyIf test={showTrackingAnalyticsDialog && !isTemplateModalShowing}>
                         <AnalyticsDialog />
                     </OnlyIf>
                     <ToastContainer />
