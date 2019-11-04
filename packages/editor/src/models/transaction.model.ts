@@ -26,7 +26,7 @@ export interface ITransaction {
     type: TransactionType;
     status: number | null;
     contractName: string | null;
-    constructorArgs: [];
+    constructorArgs: any[];
     createdAt: number;
     blockNumber: number;
     from: string | null;
