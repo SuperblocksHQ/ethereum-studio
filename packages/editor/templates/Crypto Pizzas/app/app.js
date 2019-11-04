@@ -11,6 +11,7 @@ function Pizza(Contract) {
     this.Contract = Contract;
 }
 
+if(typeof(Contracts) === "undefined") var Contracts={ CryptoPizza: { abi: [] }};
 var pizza = new Pizza(Contracts['CryptoPizza']);
 
 $(document).ready(function() {
@@ -35,7 +36,7 @@ Pizza.prototype.init = function() {
     var contract_interface = this.web3.eth.contract(this.Contract.abi);
 
     // Create the contract instance for the specific address provided in the configuration.
-    this.instance = contract_interface.at(this.Contract.address);
+    this.instance = this.Contract.address ? contract_interface.at(this.Contract.address) :  { getPizzasByOwner: () => {} };
 }
 
 // Generate random DNA from string

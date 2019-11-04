@@ -150,6 +150,7 @@ Coin.prototype.onReady = function() {
     this.init();
 };
 
+if(typeof(Contracts) === "undefined") var Contracts={ Coin: { abi: [] }};
 var coin = new Coin(Contracts['Coin']);
 
 $(document).ready(function() {

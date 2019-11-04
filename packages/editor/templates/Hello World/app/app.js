@@ -21,7 +21,7 @@ HelloWorld.prototype.init = function () {
     var contract_interface = this.web3.eth.contract(this.Contract.abi);
 
     // Create the contract instance for the specific address provided in the configuration.
-    this.instance = contract_interface.at(this.Contract.address);
+    this.instance = this.Contract.address ? contract_interface.at(this.Contract.address) :  { message: () => {} };
 };
 
 // Get the hello message from the contract.
@@ -69,6 +69,7 @@ HelloWorld.prototype.onReady = function () {
     this.main();
 };
 
+if(typeof(Contracts) === "undefined") var Contracts={ HelloWorld: { abi: [] }};
 var helloWorld = new HelloWorld(Contracts['HelloWorld']);
 
 $(document).ready(function () {
