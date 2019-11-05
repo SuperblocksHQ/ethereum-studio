@@ -241,6 +241,8 @@ export default class SuperProvider {
                     sendIframeMessage(error, null);
                 }
             }
+        } else if (payload.method === 'eth_accounts') {
+            sendIframeMessage(null, {id: payload.id, jsonrpc: '2.0', result: [this.selectedAccount.address]});
         } else {
             try {
                 const result = await this.send(data.payload, data.endpoint);
