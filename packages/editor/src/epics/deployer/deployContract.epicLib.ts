@@ -38,7 +38,7 @@ function finalizeDeploy(state: any, deployRunner: DeployRunner, hash: string, ou
                 return of<any>(
                     explorerActions.createPathWithContent(outputPath, files),
                     deployerActions.deploySuccess(files),
-                    isNewTransaction ? transactionsActions.addTransaction(TransactionType.Deploy, hash, res.environment, res.receipt, res.contractName, tx)
+                    isNewTransaction ? transactionsActions.addTransaction(TransactionType.Deploy, hash, res.environment, res.receipt, res.contractName, tx, state.deployer.contractArgs)
                     : transactionsActions.updateTransaction(TransactionType.Deploy, hash, res.environment, res.receipt , res.contractName, tx)
                 );
             }
@@ -58,7 +58,7 @@ export function doDeployExternally(state: any, deployRunner: DeployRunner) {
             concat(
                 of(outputLogActions.addRows([ result ])),
                 of(deployerActions.hideExternalProviderInfo()),
-                of(transactionsActions.addTransaction(TransactionType.Deploy, result.hash, undefined, result.contractName)),
+                of(transactionsActions.addTransaction(TransactionType.Deploy, result.hash, undefined, result.contractName, undefined, undefined, state.deployer.contractArgs)),
                 finalizeDeploy(state, deployRunner, result.hash, state.deployer.outputPath, false)
             )
         ),
