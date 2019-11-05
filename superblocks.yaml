@@ -26,6 +26,7 @@ jobs:
       - kubectl config set-context $K8S_CLUSTER_NAME --cluster=$K8S_CLUSTER_NAME --user=$K8S_USER_NAME
       - kubectl config use-context $K8S_CLUSTER_NAME
       - sed 's _APP_NAME_ '"$CI_PROJECT_NAME"' g; s _CONTAINER_IMAGE_ '"$GITHUB_REGISTRY_IMAGE:$SUPER_COMMIT_SHA1"' g' kubernetes.tpl.yml > kubernetes.yml;
+      - ls
       - kubectl apply -f kubernetes.yml
 
 stages:
