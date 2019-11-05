@@ -56,8 +56,8 @@ const HelpDropdownDialog = ({openAboutModal}: IProps) => (
                 </a>
             </li>
             <li>
-                <a className={style.container} href='https://gitter.im/ethereum/documentation' target='_blank' rel='noopener noreferrer' title="Ethereum' community">
-                    Join our Community!
+                <a className={style.container} href='https://gitter.im/ethereum/documentation' target='_blank' rel='noopener noreferrer'>
+                    Eth Docs Help
                     <span className={style.communityIcon}>
                         <IconGitter color='#7289DA'/>
                     </span>
