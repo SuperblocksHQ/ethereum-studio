@@ -175,7 +175,7 @@ export const sendTransactionEpic: Epic = (action$, state$) => action$.pipe(
                                 if (output.msg) { // intermediate messages coming
                                     return of(outputLogActions.addRows([ output ]));
                                 } else if (output.hash && output.tx) { // result
-                                    return of(interactActions.sendTransactionSuccess(output.hash));
+                                    return of(interactActions.sendTransactionSuccess(output.hash), transactionsActions.addTransaction(TransactionType.Interact, output.hash, undefined, deployedContract.contractName));
                                 } else { // unexpected error
                                     return of(outputLogActions.addRows([{ msg: 'Unexpected error occurred. Please try again!', channel: 3 }]));
                                 }
