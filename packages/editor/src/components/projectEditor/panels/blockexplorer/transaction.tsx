@@ -222,7 +222,8 @@ export class Transaction extends Component<IProps, IState> {
         const { transactionAge, isExpanded } = this.state;
 
         const gasPriceFormatted = this.web3.fromWei(transaction.gasPrice, 'gwei');
-        const gasCostFormatted = transaction.gasUsed * gasPriceFormatted;
+        const gasCost = transaction.gasUsed * gasPriceFormatted;
+        const gasCostFormatted = this.web3.fromWei(gasCost, 'gwei');
 
         return (
             <div key={transaction.hash} className={style.txbox}>
@@ -266,7 +267,7 @@ export class Transaction extends Component<IProps, IState> {
                                         <b>Gas Limit:</b> {transaction.gasLimit}
                                     </div>
                                     <div className={style.row}>
-                                        <b>Gas Price:</b> {transaction.gasPrice}{' '}
+                                        <b>Gas Price:</b> {gasPriceFormatted}{' '}
                                         GWei
                                     </div>
                                     <div className={style.row}>

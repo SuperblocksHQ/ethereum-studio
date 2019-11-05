@@ -27,7 +27,7 @@ const initialState: ITransactionsState = {
 export default function transactionsReducer(state = initialState, action: AnyAction, wholeState: any) {
     switch (action.type) {
         case transactionsActions.ADD_TRANSACTION:
-            const transaction = formatTransaction(wholeState, action.data.transactionType, action.data.hash, action.data.environment, action.data.receipt, action.data.contractName, action.data.tx);
+            const transaction = formatTransaction(wholeState, action.data.transactionType, action.data.hash, action.data.environment, action.data.receipt, action.data.contractName, action.data.tx, action.data.contractArgs);
             return {
                 ...state,
                 items: [
@@ -42,7 +42,7 @@ export default function transactionsReducer(state = initialState, action: AnyAct
                 items: replaceInArray(
                     state.items,
                     item => item.hash === updatedTx.hash,
-                    item => ({...item, ...updatedTx, createdAt: item.createdAt})
+                    item => ({...item, ...updatedTx, createdAt: item.createdAt, constructorArgs: item.constructorArgs})
                 )
             };
         default:
