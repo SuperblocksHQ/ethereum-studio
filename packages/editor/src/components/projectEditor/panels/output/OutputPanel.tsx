@@ -51,7 +51,7 @@ export const OutputPanel = (props: IProps) => {
                 </div>
                 <div className={style.terminal}>
                     { props.outputRows.map((row, index) => {
-                        return row.msg.split('\n').map((line: string, lineIndex: number) => {
+                        return row.msg.toString().split('\n').map((line: string, lineIndex: number) => {
                             let cl = style.std1;
                             if (row.channel === 2) {
                                 cl = style.std2;
