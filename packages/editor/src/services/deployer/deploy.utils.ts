@@ -40,7 +40,7 @@ export function createDeployFile(web3: any, buildFiles: IProjectItem[], contract
     const args = contractArgs.concat([{ data: binFileCode }]);
 
     let deployFileCode = null;
-    let error;
+    let error = '';
 
     try {
         deployFileCode = contract.new.getData.apply(contract, args);
