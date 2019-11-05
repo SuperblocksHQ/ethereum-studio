@@ -25,8 +25,7 @@ jobs:
       - kubectl config set-credentials $K8S_USER_NAME --token=$K8S_USER_TOKEN
       - kubectl config set-context $K8S_CLUSTER_NAME --cluster=$K8S_CLUSTER_NAME --user=$K8S_USER_NAME
       - kubectl config use-context $K8S_CLUSTER_NAME
-      - 'printf "apiVersion: v1\nkind: Secret\n$(kubectl create secret generic $CI_PROJECT_NAME-secret -o yaml --dry-run)" | kubectl apply -f -'
-      - sed 's _APP_NAME_ '"$CI_PROJECT_NAME"' g; s _CONTAINER_IMAGE_ '"$SUPER_COMMIT_SHA1"' g' kubernetes.tpl.yml > kubernetes.yml;
+      - sed 's _APP_NAME_ '"$CI_PROJECT_NAME"' g; s _CONTAINER_IMAGE_ '"$GITHUB_REGISTRY_IMAGE:$SUPER_COMMIT_SHA1"' g' kubernetes.tpl.yml > kubernetes.yml;
       - kubectl apply -f kubernetes.yml
 
 stages:
