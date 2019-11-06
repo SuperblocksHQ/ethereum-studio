@@ -13,7 +13,7 @@ jobs:
       - docker build --build-arg BUILD=build:dev -t $GITHUB_REGISTRY_IMAGE:$SUPER_COMMIT_SHA1 .
       - docker push $GITHUB_REGISTRY_IMAGE:$SUPER_COMMIT_SHA1
 
-  deploy_to_prod:
+  deploy_to_dev:
     image: alpine
     script:
       - apk add --no-cache curl
@@ -37,7 +37,7 @@ stages:
                 - master
   - deploy:
       jobs:
-        - deploy_to_prod:
+        - deploy_to_dev:
             filters:
-                only:
-                  -master
+              only:
+                - master
