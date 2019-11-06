@@ -28,8 +28,10 @@ export interface IRawAbiParameter {
     name: string;
     type: string;
     components?: IRawAbiParameter[];
-  }
+}
 
+
+// this type is as in .abi file
 export interface IRawAbiDefinition {
     constant: boolean;
     inputs: IRawAbiParameter[];

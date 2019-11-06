@@ -56,9 +56,9 @@ export function ContractItem(props: IProps) {
             contextMenu={ contextMenu }
             icon={ <IconContract /> }
             onMoveItem={props.onMoveItem}>
-            <BaseItem depth={props.depth} icon={ <IconConfigure /> } { ...getActionButtonProps('Configure', props.onConfigureClick) }  />
-            <BaseItem depth={props.depth} icon={ <IconCompile /> } { ...getActionButtonProps('Compile', props.onCompileClick) }  />
-            <BaseItem depth={props.depth} icon={ <IconDeploy /> } { ...getActionButtonProps('Deploy', props.onDeployClick ) }  />
+            <BaseItem disableDrag={true} depth={props.depth} icon={ <IconConfigure /> } { ...getActionButtonProps('Configure', props.onConfigureClick) }  />
+            <BaseItem disableDrag={true} depth={props.depth} icon={ <IconCompile /> } { ...getActionButtonProps('Compile', props.onCompileClick) }  />
+            <BaseItem disableDrag={true} depth={props.depth} icon={ <IconDeploy /> } { ...getActionButtonProps('Deploy', props.onDeployClick ) }  />
         </BaseItem>
     );
 }

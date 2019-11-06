@@ -1,5 +1,8 @@
 import React from 'react';
+import style from './style.less';
 import { SimpleModal } from '../../../modals/simpleModal';
+import { StyledButton } from '../../../common';
+import { StyledButtonType } from '../../../common/buttons/StyledButtonType';
 
 interface IProps {
     onClose: () => void;
@@ -15,14 +18,16 @@ export function CannotExportModal(props: IProps) {
                     When you download your creation, it is configured for
                     the specific network you have chosen (up to the far
                     left). Right now you have chosen the Browser network,
-                    which only exists in your browser when using Superblocks
-                    Lab, so downloading your DApp makes no sense until you
+                    which only exists in your browser when using Ethereum Studio,
+                    so downloading your DApp makes no sense until you
                     choose any other network than Browser.
                 </p>
-                <div style={{marginTop: 15}}>
-                    <a className='btn2' onClick={props.onClose}>
-                        Thanks, but I already knew that
-                    </a>
+                <div className={style.modalButtonsContainer}>
+                    <StyledButton
+                        type={StyledButtonType.Primary}
+                        text='Thanks, but I already knew that'
+                        onClick={props.onClose}
+                    />
                 </div>
             </div>
         </SimpleModal>

@@ -26,6 +26,6 @@ export * from './explorer.selectors';
 export * from './interact.selectors';
 export * from './preview.selectors';
 export * from './contractConfig.selectors';
-export * from './contractConfig.selectors';
-export * from './contractConfig.selectors';
 export * from './account.selectors';
+export * from './settings.selectors';
+export * from './modal.selectors';

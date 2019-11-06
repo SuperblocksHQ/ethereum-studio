@@ -23,7 +23,7 @@ import { previewActions, transactionsActions } from '../../../../actions';
 import { TransactionType } from '../../../../models';
 
 const mapStateToProps = (state: any) => ({
-    project: projectSelectors.getProject(state),
+    isProjectLoaded: !!projectSelectors.getProject(state),
     disableAccounts: previewSelectors.getDisableAccounts(state),
     showNoExportableContentModal: previewSelectors.getShowNoExportableContentModal(state),
     showCannotExportModal: previewSelectors.getShowCannotExportModal(state),
@@ -36,17 +36,17 @@ const mapStateToProps = (state: any) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
     return {
-        onDownload: () => {
-            // dispatch(outputLogActions.clearOutputLog());
+        download: () => {
+            dispatch(previewActions.download());
         },
-        onTryDownload: () => {
-            // dispatch(outputLogActions.clearOutputLog());
+        tryToDownload: () => {
+            dispatch(previewActions.tryDownload());
         },
         onToggleWeb3Accounts: () => {
             // dispatch(outputLogActions.clearOutputLog());
         },
         onHideModals: () => {
-            // dispatch(outputLogActions.clearOutputLog());
+            dispatch(previewActions.hideModals());
         },
         notifyTx: (transactionType: TransactionType, hash: string) => {
             dispatch(transactionsActions.addTransaction(transactionType, hash));

@@ -1,0 +1,61 @@
+// Copyright 2019 Superblocks AB
+//
+// This file is part of Superblocks Lab.
+//
+// Superblocks Lab is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation version 3 of the License.
+//
+// Superblocks Lab is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
+
+@import '../../../style/index';
+
+.aboutModal {
+    display: block;
+	border-radius: 2px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+    background-color: @modal-background-color;
+	z-index: 2;
+	color: #fff;
+	transition: visibility 0s, opacity 0.2s ease;
+    padding: 0px 0px 15px 0px;
+    width: 600px;
+
+    .content {
+        width: 100%;
+        height: 100%;
+        color: #eee;
+
+        .inner {
+            padding: 16px 10px 16px 50px;
+
+            a {
+                cursor: pointer;
+                color: @primary-color;
+            }
+        }
+    }
+    .footer {
+        text-align: right;
+        padding-right: 20px;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        display: flex;
+
+        & > button:nth-child(1) {
+            margin-left: auto;
+        }
+    }
+    .alignContentCenter {
+        align-items :center;
+        justify-content: center;
+        flex-direction: column;
+        display:grid;
+    }
+}

@@ -15,11 +15,12 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { from, interval, concat, of } from 'rxjs';
-import { switchMap, first } from 'rxjs/operators';
+import { switchMap, first, withLatestFrom } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
-import { explorerActions, compilerActions, panelsActions } from '../../actions';
+import { explorerActions, compilerActions, panelsActions, projectsActions } from '../../actions';
 import { compilerService } from '../../services';
 import { Panels } from '../../models/state';
+import { projectSelectors } from '../../selectors';
 
 function compileContract(compilerState: any) {
     return from(
@@ -34,18 +35,26 @@ function compileContract(compilerState: any) {
 
 export const compileContractsEpic: Epic = (action$: any, state$: any) => action$.pipe(
     ofType(explorerActions.COMPILE_CONTRACT),
-    switchMap(() => {
-        compilerService.init();
+    withLatestFrom(state$),
+    switchMap(([_action, state]) => {
+        const project = projectSelectors.getProject(state$.value);
+        const files = state$.value.explorer.tree;
+        const isOwnProject = state$.value.projects.isOwnProject;
 
-        return concat(
-            of(panelsActions.openPanel(Panels.OutputLog)), // show output
-            interval(200).pipe(
-                first(() => compilerService.isReady()), // compiler has to be ready to be able to do smth
-                switchMap(() => concat(
-                    of(compilerActions.compilerReady(compilerService.getVersion())),
-                    compileContract(state$.value.compiler)
-                ))
-            )
-        );
+        if (isOwnProject) {
+            compilerService.init();
+            return concat(
+                of(panelsActions.openPanel(Panels.OutputLog)), // show output
+                interval(200).pipe(
+                    first(() => compilerService.isReady()), // compiler has to be ready to be able to do smth
+                    switchMap(() => concat(
+                        of(compilerActions.compilerReady(compilerService.getVersion())),
+                        compileContract(state.compiler)
+                    ))
+                )
+            );
+        } else {
+            return [projectsActions.createForkedProject(project.name, project.description, files)];
+        }
     })
 );

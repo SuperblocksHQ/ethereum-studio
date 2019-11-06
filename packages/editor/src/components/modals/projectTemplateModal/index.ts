@@ -20,6 +20,7 @@ import { AnyAction } from 'redux';
 import { Dispatch } from 'react';
 import { projectsActions } from '../../../actions';
 import { projectSelectors } from '../../../selectors';
+import { ITemplate } from '../../../models';
 
 const mapStateToProps = (state: any) => ({
     isProjectLoading: projectSelectors.getLoadingProject(state)
@@ -27,8 +28,8 @@ const mapStateToProps = (state: any) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
     return {
-        loadAndForkProject(projectId: string) {
-            dispatch(projectsActions.loadProjectAndFork(projectId));
+        createProjectFromTemplate(template: ITemplate) {
+            dispatch(projectsActions.createProjectFromTemplate(template));
         },
     };
 };

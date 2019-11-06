@@ -39,6 +39,12 @@ declare module 'ethereumjs-tx' {
     export default content;
 }
 
+declare module 'jszip';
+
+declare module 'file-saver';
+
+declare module 'showdown-highlight';
+
 type Nullable<T> = T | null;
 
 declare interface Window { web3: any; Web3: any; }

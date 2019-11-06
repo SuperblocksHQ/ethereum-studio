@@ -15,7 +15,7 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 export const appSelectors = {
-    getAppVersion: state => state.app.version || ''
+    isEmbeddedMode: state => state.app.isEmbeddedMode,
 }
 
 

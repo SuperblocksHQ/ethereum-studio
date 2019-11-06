@@ -23,28 +23,36 @@
     border-radius: 2px;
     background-color: @modal-background-color;
     color: #fff;
+    max-width: 100%;
     .area {
         border-bottom: 1px solid #3c3c3c;
+        overflow: auto;
     }
     .innerContent {
-        min-width: 890px;
+        width: 890px;
+        max-width: 100%;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
         .container {
             display: flex;
         }
         .templateListPanel {
             width: 22%;
-            border-right: 1px solid @modal-separator-color;
+            min-width: 150px;
             .templateListTitle {
-                margin-top: 20px;
+                padding-top: 20px;
                 font-weight: 600;
-                margin-bottom: 16px;
+                padding-bottom: 16px;
                 padding-left: 20px;
+                border-right: 1px solid @modal-separator-color;
             }
             ul {
                 list-style-type: none;
                 margin: 0;
                 padding: 0;
                 color: white;
+                border-right: 1px solid @modal-separator-color;
                 li {
                     line-height: 40px;
                     padding: 0 20px;

@@ -23,13 +23,13 @@ import { CannotExportModal } from './CannotExportModal';
 import { DownloadModal } from './DownloadModal';
 import { NoExportableContentModal } from './NoExportableContentModal';
 import { IEnvironment, IAccount } from '../../../../models/state';
-import { IProject, TransactionType } from '../../../../models';
+import { TransactionType } from '../../../../models';
 
 function getIframeSrc() {
     if (window.location.hostname === 'localhost') {
         return `${window.location.protocol}//${window.location.host}/app-view.html`;
     } else {
-        return `${window.location.protocol}//${window.location.host.replace('lab', 'lab-dapp')}/app-view.html`;
+        return `${window.location.protocol}//${window.location.host.replace('studio', 'studio-dapp')}/app-view.html`;
     }
 }
 
@@ -38,9 +38,9 @@ const IFRAME_ID = 'appViewIframe';
 interface IProps {
     onToggleWeb3Accounts: () => void;
     onHideModals: () => void;
-    onTryDownload: (hasExportableContent: boolean, selectedEnvironment: IEnvironment) => void;
+    tryToDownload: () => void;
     notifyTx: (transactionType: TransactionType, hash: string) => void;
-    onDownload: () => void;
+    download: () => void;
     refreshContent: () => void;
     disableAccounts: boolean;
     showNoExportableContentModal: boolean;
@@ -48,18 +48,24 @@ interface IProps {
     showDownloadModal: boolean;
     selectedEnvironment: IEnvironment;
     selectedAccount: IAccount;
-    project: IProject;
+    isProjectLoaded: boolean;
     htmlToRender: string;
     knownWalletSeed: string;
 }
 
 export class Preview extends React.Component<IProps> {
 
-    componentDidUpdate(newProps: IProps) {
-        const { selectedAccount, selectedEnvironment } = newProps;
-        previewService.setAccount(selectedAccount);
-        previewService.setEnvironment(selectedEnvironment);
-        this.refreshIframe();
+    componentDidUpdate(prevProps: IProps) {
+        const { selectedAccount, htmlToRender } = prevProps;
+
+        if (selectedAccount.name !== this.props.selectedAccount.name) {
+            previewService.setAccount(selectedAccount);
+            this.refreshIframe();
+        }
+
+        if (htmlToRender !== this.props.htmlToRender) {
+            this.refreshIframe();
+        }
     }
 
     componentDidMount() {
@@ -67,6 +73,7 @@ export class Preview extends React.Component<IProps> {
         previewService.init(htmlToRender);
         previewService.initSuperProvider(IFRAME_ID, selectedEnvironment, selectedAccount, knownWalletSeed, notifyTx);
         previewService.superProvider.attachListener();
+        this.refreshIframe();
     }
 
     componentWillUnmount() {
@@ -82,9 +89,8 @@ export class Preview extends React.Component<IProps> {
     }
 
     tryDownload() {
-        const { selectedEnvironment } = this.props;
-        // TODO: parameters should not be passed here, but obtained from redux app state
-        // this.props.onTryDownload(previewService.hasExportableContent, selectedEnvironment);
+        const { tryToDownload: tryDownload } = this.props;
+        tryDownload();
     }
 
     toggleWeb3Accounts() {
@@ -109,34 +115,33 @@ export class Preview extends React.Component<IProps> {
 
     render() {
         const {
-            project,
+            isProjectLoaded,
             showCannotExportModal,
             showNoExportableContentModal,
             showDownloadModal,
             selectedEnvironment,
             onHideModals,
-            onDownload,
+            download,
             refreshContent
         } = this.props;
-        const isProjectOpen = Boolean(project);
 
         return (
-            <OnlyIf test={isProjectOpen}>
+            <OnlyIf test={isProjectLoaded}>
                 <div className={style.appview}>
                     <div className={style.toolbar}>
 
-                        <button className='btnNoBg' title='Refresh' onClick={() => refreshContent()}>
+                        <button className='btnNoBg' onClick={() => refreshContent()}>
                             <Tooltip title='Refresh Page'><IconRefresh /></Tooltip>
                         </button>
 
-                        <button className='btnNoBg' title='Download' onClick={() => this.tryDownload()}>
+                        <button className='btnNoBg' onClick={() => this.tryDownload()}>
                             <Tooltip title='Download DApp'><IconDownloadDApp /></Tooltip>
                         </button>
 
                         <div className={style.urlBar}>{getIframeSrc()}</div>
 
                         <DropdownContainer dropdownContent={this.renderMoreDropdown()}>
-                            <button className='btnNoBg' title='Settings'>
+                            <button className='btnNoBg'>
                                 <Tooltip title='Settings'><IconMore /></Tooltip>
                             </button>
                         </DropdownContainer>
@@ -155,7 +160,7 @@ export class Preview extends React.Component<IProps> {
                     <DownloadModal
                         environment={selectedEnvironment}
                         onClose={onHideModals}
-                        onDownload={onDownload} />
+                        onDownload={download} />
                 </OnlyIf>
             </OnlyIf>
         );

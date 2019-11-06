@@ -42,7 +42,8 @@ export const deleteItemEpic: Epic = (action$, state$) => action$.pipe(
                     switchMap(() => {
                         return [
                             panesActions.closePane(action.data.id),
-                            explorerActions.deleteItemSuccess(action.data.id), explorerActions.updateDappfile()
+                            explorerActions.deleteItemSuccess(action.data.id),
+                            explorerActions.updateDappfile()
                         ];
                     }),
                     catchError(() => [explorerActions.deleteItemFail(action.data.id)])

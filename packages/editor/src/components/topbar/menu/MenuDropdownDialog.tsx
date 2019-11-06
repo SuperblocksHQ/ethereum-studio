@@ -18,14 +18,17 @@ import React from 'react';
 import { SubMenu, MenuItem, Divider } from '../../common/menu';
 import { Panels } from '../../../models/state';
 import style from './style.less';
-import { ProjectItemTypes } from '../../../models';
+import { ProjectItemTypes, IProject } from '../../../models';
+import { OnlyIf } from '../../common';
 
 interface IProps {
+  project: IProject;
   showTransactionsHistory: boolean;
   showFileSystem: boolean;
   showPreview: boolean;
   showConsole: boolean;
   showMessageLog: boolean;
+  showInteract: boolean;
   activePaneId: string;
   rootFolderId: string;
   togglePanel: (panel: any) => void;
@@ -33,6 +36,9 @@ interface IProps {
   closeAllPanes: () => void;
   closePane: (fileId: string) => void;
   onCreateItem: (parentId: string, type: ProjectItemTypes, name: string) => void;
+  exportProject: () => void;
+  saveProject: () => void;
+  tryToDownload: () => void;
 }
 
 export default class MenuDropdownDialog extends React.Component<IProps> {
@@ -70,36 +76,40 @@ export default class MenuDropdownDialog extends React.Component<IProps> {
 
     render() {
         const { showTransactionsHistory, showFileSystem, showPreview, showConsole, showMessageLog,
-                togglePanel, closeAllPanels, closeAllPanes, closePane, activePaneId, rootFolderId } = this.props;
+                togglePanel, closeAllPanels, closeAllPanes, closePane, activePaneId, rootFolderId, project, exportProject,
+                showInteract, saveProject, tryToDownload } = this.props;
 
         return (
             <div className={style.menuDialog}>
-
-                <SubMenu title='File'>
-                    <MenuItem title='New File' onClick={() => this.onCreateItem(rootFolderId, ProjectItemTypes.File)} />
-                    <MenuItem title='New Folder' onClick={() => this.onCreateItem(rootFolderId, ProjectItemTypes.Folder)}  />
-                    <Divider />
-                    <MenuItem title='Save' onClick={() => console.log('TODO')} />
-                    <MenuItem title='Save All' onClick={() => console.log('TODO')} />
-                    <Divider />
-                    <MenuItem onClick={() => closePane(activePaneId)} disabled={!activePaneId} title='Close File' />
-                    <MenuItem onClick={() => closeAllPanes()} disabled={!activePaneId} title='Close All Files' />
-                    <Divider />
-                    <MenuItem title='Configure Project' onClick={() => console.log('TODO')} />
-                    <MenuItem title='Export Project' onClick={() => console.log('TODO')} />
-                    <MenuItem title='Download Project' onClick={() => console.log('TODO')} />
-                </SubMenu>
+                <OnlyIf test={project.id}>
+                  <SubMenu title='File'>
+                      <MenuItem title='New File' onClick={() => this.onCreateItem(rootFolderId, ProjectItemTypes.File)} />
+                      <MenuItem title='New Folder' onClick={() => this.onCreateItem(rootFolderId, ProjectItemTypes.Folder)}  />
+                      <Divider />
+                      <MenuItem title='Save All' onClick={() => saveProject()} />
+                      <Divider />
+                      <MenuItem onClick={() => closePane(activePaneId)} disabled={!activePaneId} title='Close File' />
+                      <MenuItem onClick={() => closeAllPanes()} disabled={!activePaneId} title='Close All Files' />
+                      <Divider />
+                      <MenuItem title='Export Project' onClick={() => exportProject()} />
+                      <MenuItem title='Download Project' onClick={() => tryToDownload()} />
+                  </SubMenu>
+                </OnlyIf>
                 <SubMenu title='View'>
                     <MenuItem onClick={() => togglePanel(Panels.Explorer)} isActive={showFileSystem} title='Explorer' />
-                    <MenuItem onClick={() => togglePanel(Panels.Interact)} isActive={showFileSystem} title='Interact' />
+                    <MenuItem onClick={() => togglePanel(Panels.Interact)} isActive={showInteract} title='Interact' />
                     <MenuItem onClick={() => togglePanel(Panels.Transactions)} isActive={showTransactionsHistory} title='Transactions' />
                     <MenuItem onClick={() => togglePanel(Panels.Preview)} isActive={showPreview} title='Preview' />
-                    <MenuItem onClick={() => togglePanel(Panels.OutputLog)} isActive={showConsole} title='Run' />
-                    <MenuItem onClick={() => togglePanel(Panels.MessageLog)} isActive={showMessageLog} title='Event Log' />
+                    <MenuItem onClick={() => togglePanel(Panels.OutputLog)} isActive={showConsole} title='Output' />
+                    <MenuItem onClick={() => togglePanel(Panels.MessageLog)} isActive={showMessageLog} title='Messages' />
                     <MenuItem onClick={() => closeAllPanels()} title='Close All Panels' />
                     <Divider />
                     <MenuItem onClick={() => this.toggleFullScreen()} title='Toggle Full Screen' />
                 </SubMenu>
+                <Divider />
+                <a href='https://ethereum.org/developers' target='_blank' rel='noopener noreferrer'>
+                    <MenuItem onClick={() => ''} title='Go to Ethereum.org' />
+                </a>
             </div>
         );
     }

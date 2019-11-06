@@ -17,16 +17,18 @@
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import MenuDropdownDialog from './MenuDropdownDialog';
-import { panelsSelectors, panesSelectors, explorerSelectors } from '../../../selectors';
-import { panelsActions, panesActions, explorerActions } from '../../../actions';
+import { panelsSelectors, panesSelectors, explorerSelectors, projectSelectors } from '../../../selectors';
+import { panelsActions, panesActions, explorerActions, projectsActions, previewActions } from '../../../actions';
 import { ProjectItemTypes } from '../../../models';
 
 const mapStateToProps = (state: any) => ({
+    project: projectSelectors.getProject(state),
     showTransactionsHistory: panelsSelectors.getShowTransactionsHistory(state),
     showFileSystem: panelsSelectors.getShowFileSystem(state),
     showPreview: panelsSelectors.getShowPreview(state),
     showConsole: panelsSelectors.getShowConsole(state),
     showMessageLog: panelsSelectors.getShowMessageLog(state),
+    showInteract: panelsSelectors.getShowInteract(state),
     activePaneId: panesSelectors.getActivePane(state),
     rootFolderId: explorerSelectors.getRootFolderId(state),
 });
@@ -47,6 +49,15 @@ function mapDispatchToProps(dispatch: Dispatch) {
         },
         closePane(fileId: string) {
             dispatch(panesActions.closePane(fileId));
+        },
+        exportProject() {
+            dispatch(projectsActions.exportProject());
+        },
+        saveProject() {
+            dispatch(projectsActions.saveProject());
+        },
+        tryToDownload: () => {
+            dispatch(previewActions.tryDownload());
         },
     };
 }

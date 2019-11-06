@@ -13,7 +13,8 @@
     "format": "prettier --trailing-comma es5 --single-quote --write 'src/*/*.js' 'src/*/!(node_modules)/**/*.js' '!src/services/solc/**/*.js' '!src/services/evm/**/*.js' webpack.config.js",
     "lint-javascript": "exec eslint --config ./config/eslint/eslint.json --ext \".js\" ./src",
     "lint": "yarn run lint-javascript",
-    "postinstall": "node scripts/postinstall.js"
+    "postinstall": "node scripts/postinstall.js && node scripts/generate-templates.js",
+    "generatetemplates": "node scripts/generate-templates.js"
   },
   "eslintIgnore": [
     "ethereumjs-tx-*.js",
@@ -36,6 +37,7 @@
     "@types/react-redux": "^7.0.1",
     "@types/react-router-dom": "^4.3.1",
     "@types/react-splitter-layout": "^3.0.0",
+    "@types/eth-lightwallet": "^3.0.0",
     "babel-cli": "^6.26.0",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "9.0.0",
@@ -99,13 +101,14 @@
     "@fortawesome/react-fontawesome": "^0.1.3",
     "@types/jwt-decode": "^2.2.1",
     "@types/react-loadable": "^5.5.1",
+    "@types/showdown": "^1.9.3",
     "@types/web3": "^1.0.18",
     "amplitude-js": "^4.6.0",
     "bfj": "6.1.1",
     "classnames": "^2.2.5",
     "copy-to-clipboard": "^3.0.8",
     "crypto-js": "^3.1.9-1",
-    "eth-lightwallet": "^3.0.1",
+    "eth-lightwallet": "^4.0.0",
     "ethereumjs-abi": "~0.6.5",
     "ethereumjs-account": "~2.0.4",
     "ethereumjs-blockchain": "^2.1.0",
@@ -147,8 +150,10 @@
     "redux-thunk": "^2.3.0",
     "reselect": "^3.0.1",
     "rxjs": "^6.3.3",
+    "showdown": "^1.9.0",
+    "showdown-highlight": "^2.1.3",
     "solc": "^0.5.10",
-    "web3": "0.19.1"
+    "web3": "0.20.7"
   },
   "browserslist": [
     ">0.2%",

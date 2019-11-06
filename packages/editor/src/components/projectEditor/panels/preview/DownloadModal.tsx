@@ -1,7 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import style from './style.less';
 import { SimpleModal } from '../../../modals/simpleModal';
 import { IEnvironment } from '../../../../models/state';
+import { StyledButton } from '../../../common';
+import { StyledButtonType } from '../../../common/buttons/StyledButtonType';
 
 interface IProps {
     onDownload: () => void;
@@ -12,11 +14,11 @@ interface IProps {
 export function DownloadModal(props: IProps) {
     return (
         <SimpleModal onClose={props.onClose}>
-            <h2>Download DApp for the {props.environment} network</h2>
+            <h2>Download DApp for the <b>{props.environment.name}</b> network</h2>
             <div style={{ textAlign: 'center' }}>
                 <p>
                     You are downloading this DApp pre-configured for the{' '}
-                    {props.environment} network.
+                    <b>{props.environment.name}</b> network.
                 </p>
                 <p>
                     The HTML file you are about to download contains everything
@@ -27,15 +29,18 @@ export function DownloadModal(props: IProps) {
                     After download you can upload the DApp HTML file to any
                     (decentralized) web host of choice.
                 </p>
-                <div style={{marginTop: 15}}>
-                    <a  className='btn2'
-                        style={{marginRight: 30}}
-                        onClick={props.onClose}>
-                        Cancel
-                    </a>
-                    <a className='btn2 filled' onClick={props.onDownload}>
-                        Download
-                    </a>
+                <div className={style.modalButtonsContainer}>
+                    <StyledButton
+                        type={StyledButtonType.Secondary}
+                        text='Cancel'
+                        onClick={props.onClose}
+                        className={style.cancelButton}
+                    />
+                    <StyledButton
+                        type={StyledButtonType.Primary}
+                        text='Download'
+                        onClick={props.onDownload}
+                    />
                 </div>
             </div>
         </SimpleModal>

@@ -37,7 +37,7 @@ interface IProps {
     onCompileContract: (file: IProjectItem) => void;
     onDeployContract: (file: IProjectItem) => void;
 
-    onUnsavedChange: (fileId: string, hasUnsavedChanges: boolean) => void;
+    onUnsavedChange: (fileId: string, hasUnsavedChanges: boolean, code: any) => void;
 }
 
 export function Panes(props: IProps) {

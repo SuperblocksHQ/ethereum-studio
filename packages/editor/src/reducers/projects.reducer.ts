@@ -114,7 +114,7 @@ export default function projectsReducer(state = initialState, action: AnyAction,
                     [action.data.name]: action.data.addresses
                 }
             };
-        case projectsActions.LOAD_PROJECT_AND_FORK_REQUEST:
+        case projectsActions.CREATE_PROJECT_FROM_TEMPLATE_REQUEST:
         case projectsActions.LOAD_PROJECT_REQUEST: {
             return {
                 ...state,
@@ -212,13 +212,15 @@ export default function projectsReducer(state = initialState, action: AnyAction,
             if (result.item && result.path.length === 1 && result.path[0] === 'dappfile.json') {
                 try {
                     const stateChange = getDappSettings(result.item.code || '', state.openWallets, state.metamaskAccounts);
-                    const selectedAccount = stateChange.accounts.find((a: any) => a.name === state.selectedAccount.name) || stateChange.selectedAccount;
+                    const selectedAccount = state.selectedAccount;
+                    const accounts = state.accounts;
                     const selectedEnvironment = stateChange.environments.find((e: any) => e.name === state.selectedEnvironment.name) || stateChange.selectedEnvironment;
 
                     return {
                         ...state,
                         ...stateChange,
                         selectedAccount,
+                        accounts,
                         selectedEnvironment
                     };
                 } catch (e) {

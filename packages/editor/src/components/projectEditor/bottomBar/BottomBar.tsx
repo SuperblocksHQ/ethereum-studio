@@ -19,6 +19,7 @@ import Web3 from 'web3';
 import style from './style.less';
 import { shortenBalance } from '../../../utils/accounts';
 import { IAccount } from '../../../models/state';
+import { IconEthereum } from '../../icons';
 
 interface IProps {
     endpoint:  string;
@@ -53,6 +54,9 @@ export default class BottomBar extends Component<IProps> {
                     <span>Gas Limit: {networkPreferences.gasLimit}</span>
                     <span>Gas Price: {gasPrice} Gwei</span>
                     <span>{endpoint}</span>
+                    <a href='https://ethereum.org' target='_blank' rel='noopener noreferrer'>
+                        <IconEthereum />
+                    </a>
                 </div>
             </div>
         );

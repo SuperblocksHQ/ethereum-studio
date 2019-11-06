@@ -25,10 +25,9 @@ export const previewActions = {
     },
 
     TRY_DOWNLOAD: 'PREVIEW.TRY_DOWNLOAD',
-    tryDownload(hasExportableContent: boolean, currentEnvironment: IEnvironment) {
+    tryDownload() {
         return {
-            type: previewActions.TRY_DOWNLOAD,
-            data: { hasExportableContent, currentEnvironment }
+            type: previewActions.TRY_DOWNLOAD
         };
     },
 

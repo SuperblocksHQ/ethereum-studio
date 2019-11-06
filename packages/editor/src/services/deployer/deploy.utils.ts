@@ -26,16 +26,7 @@ export function getFileCode(files: IProjectItem[], name: string) {
     return file.code as string;
 }
 
-// TODO - Make sure the above function is actually functional
-// export function getFileCode(files: IProjectItem[], name: string) {
-//     const file = files.find(f => f.name.toLowerCase() === name.toLowerCase());
-//     if (!file) {
-//         return '';
-//     }
-//     return file.code as string;
-// }
-
-export function createDeployFile(buildFiles: IProjectItem[], contractArgs: any[]): string {
+export function createDeployFile(web3: any, buildFiles: IProjectItem[], contractArgs: any[]): string {
     let parsedABI;
     try {
         // TODO: think of passing contract name!
@@ -45,7 +36,7 @@ export function createDeployFile(buildFiles: IProjectItem[], contractArgs: any[]
     }
 
     const binFileCode = getFileCode(buildFiles, '.bin');
-    const contract = window.web3.eth.contract(parsedABI);
+    const contract = web3.eth.contract(parsedABI);
     const args = contractArgs.concat([{ data: binFileCode }]);
 
     let deployFileCode = null;

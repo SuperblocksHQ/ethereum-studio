@@ -17,7 +17,7 @@
 import React from 'react';
 import style from './style-editor.less';
 import { Tooltip, OnlyIf } from '../../../common';
-import { IconSave, IconCompile, IconConfigure, IconDeploy } from '../../../icons';
+import { IconSave, IconCompile, IconConfigure, IconDeploy, IconCode, IconFileAlt } from '../../../icons';
 import classNames from 'classnames';
 
 export interface IProps {
@@ -27,6 +27,9 @@ export interface IProps {
     onCompile: () => void;
     onDeploy: () => void;
     onConfigure: () => void;
+    isMarkdown: boolean;
+    showMarkdownPreview: boolean;
+    onShowMarkdownPreview: () => void;
 }
 
 export function EditorToolbar(props: IProps) {
@@ -35,7 +38,6 @@ export function EditorToolbar(props: IProps) {
             <div className={style.buttons}>
                 <button
                     className={classNames('btnNoBg', {[style.hasUnsavedChanges]: props.hasUnsavedChanges})}
-                    title='Save'
                     onClick={props.onSave}
                 >
                     <Tooltip title='Save'>
@@ -45,7 +47,6 @@ export function EditorToolbar(props: IProps) {
                 <OnlyIf test={props.isSmartContract}>
                     <button
                         className='btnNoBg'
-                        title='Compile'
                         onClick={props.onCompile}>
                         <Tooltip title='Compile'>
                             <IconCompile />
@@ -53,7 +54,6 @@ export function EditorToolbar(props: IProps) {
                     </button>
                     <button
                         className='btnNoBg'
-                        title='Deploy'
                         onClick={props.onDeploy}>
                         <Tooltip title='Deploy'>
                             <IconDeploy style={{ verticalAlign: 'middle' }} />
@@ -61,10 +61,22 @@ export function EditorToolbar(props: IProps) {
                     </button>
                     <button
                         className='btnNoBg'
-                        title='Configure'
                         onClick={props.onConfigure}>
                         <Tooltip title='Configure'>
                             <IconConfigure />
+                        </Tooltip>
+                    </button>
+                </OnlyIf>
+                <OnlyIf test={props.isMarkdown}>
+                    <button
+                        className='btnNoBg'
+                        onClick={props.onShowMarkdownPreview}
+                    >
+                        <Tooltip title={props.showMarkdownPreview ? 'Display source' : 'Display preview'}>
+                            { props.showMarkdownPreview
+                                ? <IconCode />
+                                : <IconFileAlt />
+                            }
                         </Tooltip>
                     </button>
                 </OnlyIf>

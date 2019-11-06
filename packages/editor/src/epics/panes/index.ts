@@ -15,7 +15,9 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { saveFileEpic } from './saveFile.epic';
+import { setUnsavedChanges } from './setUnsavedChanges.epic';
 
 export const panesEpics = [
-    saveFileEpic
+    saveFileEpic,
+    setUnsavedChanges
 ];

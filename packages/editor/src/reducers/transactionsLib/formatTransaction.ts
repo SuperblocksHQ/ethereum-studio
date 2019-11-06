@@ -18,7 +18,7 @@ import { ITransaction, TransactionType } from '../../models';
 import { IAccount } from '../../models/state';
 import { projectSelectors } from '../../selectors';
 
-export function formatTransaction(state: any, transactionType: TransactionType, hash?: string, environment?: string, receipt?: any, contractName?: string, tx?: any): ITransaction {
+export function formatTransaction(state: any, transactionType: TransactionType, hash?: string, environment?: string, receipt?: any, contractName?: string, tx?: any, contractArgs?: any[]): ITransaction {
     const account: IAccount = projectSelectors.getSelectedAccount(state);
     const networkSettings = state.settings.preferences.network;
 
@@ -26,8 +26,8 @@ export function formatTransaction(state: any, transactionType: TransactionType, 
         hash: hash || '',
         index: receipt ? receipt.transactionIndex : 'n/a',
         type: transactionType,
-        contractName: contractName || '',
-        constructorArgs: [], // TODO: Add args
+        contractName: contractName || receipt,
+        constructorArgs: contractArgs || [],
         createdAt: Date.now(),
         blockNumber: receipt ? receipt.blockNumber : 'n/a',
         from: account.address,

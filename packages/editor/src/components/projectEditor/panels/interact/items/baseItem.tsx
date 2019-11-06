@@ -2,7 +2,7 @@ import React from 'react';
 import classnames from 'classnames';
 import style from './style.less';
 import { Caret } from '../../../../common';
-import { IDeployedContract } from '../../../../../models';
+import { IDeployedContract } from '../../../../../models/state';
 import classNames from 'classnames';
 
 interface IProps {

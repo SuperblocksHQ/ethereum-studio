@@ -49,6 +49,11 @@ const ImportFileModal = Loadable({
     loading: Loading,
 });
 
+const AboutModal = Loadable({
+    loader: () => import(/* webpackChunkName: "ImportFileModal" */'../../../modals/aboutModal'),
+    loading: Loading,
+});
+
 interface IProps {
     modalType: string;
     modalProps: any;
@@ -62,6 +67,7 @@ const MODAL_COMPONENTS: any = {
     GITHUB_MODAL: LoginModal,
     IMPORT_FILE_MODAL: ImportFileModal,
     PROJECT_TEMPLATE_MODAL: ProjectTemplateModal,
+    ABOUT_MODAL: AboutModal,
     /* other modals */
 };
 

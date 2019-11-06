@@ -28,7 +28,6 @@ interface IProps {
         file: IProjectItem
         config: IContractConfiguration;
     };
-    otherContracts: string[];
     accounts: IAccount[];
     saveContractConfig: (contractConfig: IContractConfiguration) => void;
     hideModal: () => void;
@@ -137,7 +136,7 @@ export default class ContractConfigModal extends Component<IProps, IState> {
     }
 
     render() {
-        const { selectedContract, accounts, otherContracts, hideModal } = this.props;
+        const { selectedContract, accounts, hideModal } = this.props;
         const { newContractConfig, isDirty } = this.state;
 
         // Make sure the item actually exists in the Dappfile.json
@@ -161,7 +160,6 @@ export default class ContractConfigModal extends Component<IProps, IState> {
                                     <input
                                         id='name'
                                         type='text'
-                                        // onKeyUp={this.onNameChange}
                                         value={newContractConfig.name}
                                         onChange={this.onNameChange}
                                     />
@@ -171,7 +169,6 @@ export default class ContractConfigModal extends Component<IProps, IState> {
                                     <ConstructorArgumentsList
                                         args={newContractConfig.args}
                                         accounts={accounts.map(account => account.name)}
-                                        otherContracts={otherContracts}
                                         onArgChange={this.onArgumentChange}
                                         onArgRemove={this.removeArgument}
                                         onArgAdd={this.addArgument}
@@ -179,12 +176,12 @@ export default class ContractConfigModal extends Component<IProps, IState> {
                                 </div>
                             </div>
                         </div>
-                        <div className={style.footer}>
-                            <div className={style.cancelBtn} onClick={(hideModal)}>Cancel</div>
-                            <button className='btn2' disabled={!isDirty} onClick={this.save}>
-                                Save
-                            </button>
-                        </div>
+                    </div>
+                    <div className={style.footer}>
+                        <div className={style.cancelBtn} onClick={(hideModal)}>Cancel</div>
+                        <button className='btn2' disabled={!isDirty} onClick={this.save}>
+                            Save
+                        </button>
                     </div>
                 </div>
             </Modal>

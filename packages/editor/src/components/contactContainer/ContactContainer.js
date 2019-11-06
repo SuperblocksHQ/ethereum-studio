@@ -20,7 +20,6 @@ import { IconGithub, IconTwitter, IconGitter } from '../icons';
 
 export default class ContactContainer extends Component {
     render() {
-        let { appVersion } = this.props;
         return (
             <div className={style.container}>
                 <div style={{ display: "inline-block" }}>
@@ -34,7 +33,6 @@ export default class ContactContainer extends Component {
                         <IconGitter />
                     </a>
                 </div>
-                <div className={style.version}>{appVersion}</div>
             </div>
         );
     }

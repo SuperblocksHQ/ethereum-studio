@@ -19,6 +19,7 @@ export const viewSelectors = {
     getShowTopBarOpenInLab: state => state.view.showTopBarOpenInLab,
     getShowTopBarForkButton: state => state.view.showTopBarForkProject,
     getShowTopBarShareButton: state => state.view.showTopBarShareProject,
+    getShowAboutModal: state => state.view.showAboutModal,
 }
 
 

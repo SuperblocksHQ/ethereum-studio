@@ -22,4 +22,5 @@ export const panelsSelectors = {
     getShowPreview: state => state.panels[Panels.Preview] && state.panels[Panels.Preview].open,
     getShowConsole: state => state.panels[Panels.OutputLog] && state.panels[Panels.OutputLog].open,
     getShowMessageLog: state => state.panels[Panels.MessageLog] && state.panels[Panels.MessageLog].open,
+    getShowInteract: state => state.panels[Panels.Interact] && state.panels[Panels.Interact].open,
 }

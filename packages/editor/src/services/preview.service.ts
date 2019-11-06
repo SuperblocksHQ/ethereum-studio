@@ -15,11 +15,9 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import SuperProvider from '../components/superProvider';
-import Networks from '../networks';
 import { IEnvironment, IAccount } from '../models/state';
 import { TransactionType } from '../models';
 
-// let exportableDappHtml: string;
 let iframeId: string;
 let disableAccounts = false;
 
@@ -31,7 +29,6 @@ export const previewService = {
 
     handleMessage: (e: any) => {
         if (e.data.type === 'window-ready') {
-            // // exportableDappHtml = builtProject.exportableContent;
             if (e.source) {
                 e.source.postMessage({ type: 'set-content', payload: previewService.htmlToRender }, '*');
                 previewService.superProvider.initIframe(document.getElementById(iframeId));
@@ -75,22 +72,4 @@ export const previewService = {
 
     get disableAccounts() { return disableAccounts; },
     set disableAccounts(value) { disableAccounts = value; },
-
-    // get hasExportableContent() { return Boolean(exportableDappHtml); },
-
-    downloadDapp() {
-        // if (!exportableDappHtml) {
-        //     return;
-        // }
-
-        // TODO
-        // const exportName = 'superblocks_dapp_' + this.projectItem.getName() + '.html';
-        // const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(exportableDappHtml);
-        // const downloadAnchorNode = document.createElement('a');
-        // downloadAnchorNode.setAttribute('href', dataStr);
-        // downloadAnchorNode.setAttribute('download', exportName);
-        // document.body.appendChild(downloadAnchorNode); // required for firefox
-        // downloadAnchorNode.click();
-        // downloadAnchorNode.remove();
-    }
 };

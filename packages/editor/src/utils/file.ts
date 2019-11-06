@@ -21,3 +21,7 @@ export function getFileExtension(filename: string) {
 export function isSmartContract(filename: string) {
     return getFileExtension(filename) === 'sol';
 }
+
+export function isMarkdown(filename: string) {
+    return getFileExtension(filename) === 'md';
+}

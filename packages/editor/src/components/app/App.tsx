@@ -27,8 +27,8 @@ import ProjectEditor from '../projectEditor';
 
 interface IProps {
     showTrackingAnalyticsDialog: boolean;
+    isTemplateModalShowing: boolean;
     router: any;
-    appVersion: string;
     knownWalletSeed: string;
     notifyAppStart: (isIframe: boolean) => void;
     addMessageLogRow: (logLevel: LogLevel, msg: string) => void;
@@ -80,7 +80,7 @@ export default class App extends Component<IProps> {
     }
 
     render() {
-        const { showTrackingAnalyticsDialog } = this.props;
+        const { showTrackingAnalyticsDialog, isTemplateModalShowing } = this.props;
 
         return (
             <Router>
@@ -93,7 +93,7 @@ export default class App extends Component<IProps> {
                             </Switch>
                         </div>
                     </div>
-                    <OnlyIf test={showTrackingAnalyticsDialog}>
+                    <OnlyIf test={showTrackingAnalyticsDialog && !isTemplateModalShowing}>
                         <AnalyticsDialog />
                     </OnlyIf>
                     <ToastContainer />

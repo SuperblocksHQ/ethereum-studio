@@ -19,6 +19,7 @@ interface IProps {
     isDragging?: boolean;
     isOver?: boolean;
     depth: number;
+    disableDrag?: boolean;
 
     onToggle?: (id: string) => void;
     onMoveItem?: (sourceId: string, targetId: string) => void;
@@ -28,6 +29,10 @@ interface IProps {
 
 const itemSource: DragSourceSpec<IProps, {}> = {
     canDrag(props) {
+        if (props.disableDrag) {
+            return false;
+        }
+
         // Disallow to move root item (Files folder)
         return !props.data.isRoot;
     },

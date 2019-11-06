@@ -1,0 +1,54 @@
+.container {
+    display: flex;
+    align-content: center;
+    margin: 10px 0;
+
+    > button {
+        padding: 5px 5px;
+        // min-width: 90px;
+        font-size: 0.9em;
+    }
+
+    > div {
+        flex: 1;
+    }
+
+    .input {
+        padding: 6px 6px !important;
+        width: 100% !important;
+    }
+}
+
+.resultContainer {
+    position: relative;
+
+    .resultItem {
+        padding: 0px 3px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: flex;
+
+        .type {
+            font-style: italic;
+        }
+
+        .result {
+            padding-left: 6px;
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }        
+    }
+
+    .closeIcon {
+        position: absolute;
+        right: 0;
+        top: 0;
+        cursor: pointer;
+        color: #c7c7c7;
+
+        &:hover {
+            color: white;
+        }
+    }
+}

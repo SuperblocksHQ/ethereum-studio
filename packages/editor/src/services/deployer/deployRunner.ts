@@ -38,9 +38,13 @@ export class DeployRunner {
     }
 
     checkExistingDeployment(buildFiles: IProjectItem[], contractArgs: any[]): Observable<ICheckDeployResult> {
+        if (!this.currWeb3) {
+            return throwError({ msg: 'Metamask is not installed.', channel: 2, result: CheckDeployResult.CanNotDeploy });
+        }
+
         // 1. create ".deploy" file
         try {
-            this.deployFile = createDeployFile(buildFiles, contractArgs);
+            this.deployFile = createDeployFile(this.currWeb3, buildFiles, contractArgs);
         } catch (e) {
             return throwError({ msg: e.message, channel: 2, result: CheckDeployResult.CanNotDeploy });
         }
@@ -112,7 +116,7 @@ export class DeployRunner {
                 observer.next(result);
                 observer.complete();
             })
-            .catch(err => observer.error({ msg: err, channel: 2 }));
+            .catch(err => observer.error({ msg: `${err}\n`, channel: 2 }));
         });
     }
 

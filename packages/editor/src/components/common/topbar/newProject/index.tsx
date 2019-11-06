@@ -31,7 +31,7 @@ interface IProps {
 export const NewProjectAction = (props: IProps) => (
     <DropdownContainer
             className={classNames([style.actionMenu, style.actionRight])}
-            dropdownContent={<NewProjectDialog redirect={props.redirect} />}
+            dropdownContent={<NewProjectDialog />}
     >
         <div className={classNames([style.action, style.actionRight])}>
             <Tooltip title='New Project'>

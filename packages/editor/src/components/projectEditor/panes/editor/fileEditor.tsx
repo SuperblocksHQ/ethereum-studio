@@ -20,7 +20,8 @@ import classnames from 'classnames';
 import MonacoEditor from 'react-monaco-editor';
 import { IProjectItem } from '../../../../models';
 import { EditorToolbar } from './editorToolbar';
-import { isSmartContract, getFileExtension } from '../../../../utils/file';
+import { isSmartContract, getFileExtension, isMarkdown } from '../../../../utils/file';
+import { MarkdownPreview } from './markdownPreview';
 
 interface IProps {
     file: IProjectItem;
@@ -30,7 +31,12 @@ interface IProps {
     onCompile: (file: IProjectItem) => void;
     onDeploy: (file: IProjectItem) => void;
     onConfigure: (file: IProjectItem) => void;
-    onUnsavedChange: (fileId: string, hasUnsavedChanges: boolean) => void;
+    onUnsavedChange: (fileId: string, hasUnsavedChanges: boolean, code: any) => void;
+}
+
+interface IState {
+    hasUnsavedChanges: boolean;
+    showMarkdownPreview: boolean;
 }
 
 const langmap: any = {
@@ -46,7 +52,7 @@ const requireConfig = {
     baseUrl: '/'
 };
 
-export class FileEditor extends React.Component<IProps> {
+export class FileEditor extends React.Component<IProps, IState> {
     language: string = '';
     options: any = {};
     code: string = '';
@@ -55,7 +61,8 @@ export class FileEditor extends React.Component<IProps> {
         super(props);
 
         this.state = {
-            hasUnsavedChanges: false
+            hasUnsavedChanges: false,
+            showMarkdownPreview: true
         };
 
         const suffix = getFileExtension(props.file.name);
@@ -92,17 +99,23 @@ export class FileEditor extends React.Component<IProps> {
     onFileChange = (value: string) => {
         this.code = value;
         const hasUnsavedChanges = this.code !== this.props.file.code;
-        if (hasUnsavedChanges !== this.props.hasUnsavedChanges) { // small optimization to have cleaner redux log
-            this.props.onUnsavedChange(this.props.file.id, hasUnsavedChanges);
-        }
+        // TODO cleaner redux log
+        this.props.onUnsavedChange(this.props.file.id, hasUnsavedChanges, value);
     }
 
     onSave = () => {
         this.props.onSave(this.props.file.id,  this.code);
     }
 
+    toggleMarkdownPreview = () => {
+        this.setState({
+            showMarkdownPreview: !this.state.showMarkdownPreview
+        });
+    }
+
     render() {
         const { file, visible, hasUnsavedChanges } = this.props;
+        const { showMarkdownPreview } = this.state;
 
         return (
             <div className={classnames(style.fileEditorContainer, { [style.visible]: visible })}>
@@ -112,20 +125,28 @@ export class FileEditor extends React.Component<IProps> {
                     onSave={this.onSave}
                     onCompile={ () => this.props.onCompile(file) }
                     onDeploy={ () => this.props.onDeploy(file) }
-                    onConfigure={ () => this.props.onConfigure(file) }/>
+                    onConfigure={ () => this.props.onConfigure(file) }
+                    isMarkdown={isMarkdown(file.name)}
+                    showMarkdownPreview={showMarkdownPreview}
+                    onShowMarkdownPreview={ () => this.toggleMarkdownPreview()} />
 
-                <MonacoEditor
-                    ref='monaco'
-                    language={this.language}
-                    theme='vs-dark'
-                    defaultValue={file.code}
-                    value={file.code}
-                    options={this.options}
-                    onChange={this.onFileChange}
-                    editorDidMount={this.editorDidMount}
-                    requireConfig={requireConfig}
-                    height='calc(100% - 42px)'
-                />
+                { isMarkdown(file.name) && showMarkdownPreview
+                    ?
+                        <MarkdownPreview markdown={file.code} />
+                    :
+                        <MonacoEditor
+                            ref='monaco'
+                            language={this.language}
+                            theme='vs-dark'
+                            defaultValue={file.code}
+                            value={file.code}
+                            options={this.options}
+                            onChange={this.onFileChange}
+                            editorDidMount={this.editorDidMount}
+                            requireConfig={requireConfig}
+                            height='calc(100% - 42px)'
+                        />
+                }
             </div>
         );
     }

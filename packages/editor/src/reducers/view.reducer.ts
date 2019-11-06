@@ -15,13 +15,14 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { AnyAction } from 'redux';
-import { appActions, projectsActions } from '../actions';
+import { appActions, projectsActions, viewActions } from '../actions';
 
 export const initialState = {
     showTopBarSelectedProjectName: true,
     showTopBarOpenInLab: false,
     showTopBarForkProject: false,
     showTopBarShareProject: false,
+    showAboutModal: false
 };
 
 export default function viewReducer(state = initialState, action: AnyAction, root: any) {
@@ -32,11 +33,16 @@ export default function viewReducer(state = initialState, action: AnyAction, roo
                 showTopBarSelectedProjectName: !root.app.isEmbeddedMode,
                 showTopBarOpenInLab: root.app.isEmbeddedMode,
             };
-        case projectsActions.LOAD_PROJECT_REQUEST:
+        case projectsActions.LOAD_PROJECT_SUCCESS:
                 return {
                     ...state,
                     showTopBarForkProject: !root.app.isEmbeddedMode && true,
                     showTopBarShareProject: !root.app.isEmbeddedMode && true,
+                };
+        case viewActions.TOGGLE_ABOUT_MODAL:
+                return {
+                    ...state,
+                    showAboutModal: !state.showAboutModal
                 };
         default:
             return state;

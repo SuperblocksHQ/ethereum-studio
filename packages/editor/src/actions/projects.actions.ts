@@ -15,7 +15,7 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { IEnvironment } from '../models/state';
-import { IProject } from '../models';
+import { IProject, IProjectItem, ITemplate } from '../models';
 
 export const projectsActions = {
     SET_ALL_ENVIRONMENTS: 'SET_ALL_ENVIRONMENTS',
@@ -97,6 +97,13 @@ export const projectsActions = {
             data: { name, addresses }
         };
     },
+    OPEN_WALLET_FAIL: 'OPEN_WALLET_FAIL',
+    openWalletFail(err: any) {
+        return {
+            type: projectsActions.OPEN_WALLET_FAIL,
+            data: { err }
+        };
+    },
 
     // ---------- CRUD Project actions ----------
     DELETE_PROJECT: 'DELETE_PROJECT',
@@ -128,9 +135,9 @@ export const projectsActions = {
     },
     LOAD_PROJECT_SUCCESS: 'LOAD_PROJECT_SUCCESS',
     loadProjectSuccess(project: IProject) {
-       return {
+        return {
             type: projectsActions.LOAD_PROJECT_SUCCESS,
-            data: { project, metamaskAccounts: window.web3.eth.accounts }
+            data: { project, metamaskAccounts: (window.web3 && window.web3.eth) ? window.web3.eth.accounts : [] }
        };
     },
     LOAD_PROJECT_FAIL: 'LOAD_PROJECT_FAIL',
@@ -141,11 +148,11 @@ export const projectsActions = {
        };
     },
 
-    LOAD_PROJECT_AND_FORK_REQUEST: 'LOAD_PROJECT_AND_FORK_REQUEST',
-    loadProjectAndFork(projectId: string) {
+    CREATE_PROJECT_FROM_TEMPLATE_REQUEST: 'CREATE_PROJECT_FROM_TEMPLATE_REQUEST',
+    createProjectFromTemplate(template: ITemplate) {
         return {
-            type: projectsActions.LOAD_PROJECT_AND_FORK_REQUEST,
-            data: { projectId }
+            type: projectsActions.CREATE_PROJECT_FROM_TEMPLATE_REQUEST,
+            data: { template }
         };
     },
     RENAME_PROJECT: 'RENAME_PROJECT',
@@ -184,6 +191,27 @@ export const projectsActions = {
        };
     },
 
+    SAVE_PROJECT: 'SAVE_PROJECT',
+    saveProject() {
+        return {
+            type: projectsActions.SAVE_PROJECT,
+        };
+    },
+    SAVE_PROJECT_SUCCESS: 'SAVE_PROJECT_SUCCESS',
+    saveProjectSuccess(files: IProjectItem) {
+        return {
+            type: projectsActions.SAVE_PROJECT_SUCCESS,
+            data: { files }
+        };
+    },
+    SAVE_PROJECT_FAIL: 'SAVE_PROJECT_FAIL',
+    saveProjectFail(error: string) {
+        return {
+            type: projectsActions.SAVE_PROJECT_FAIL,
+            data: error
+        };
+    },
+
     // ---------- FORK ----------
     FORK_PROJECT: 'FORK_PROJECT',
     forkProject(projectId: string, redirect: boolean) {
@@ -212,20 +240,31 @@ export const projectsActions = {
             data: { name, description, tree }
         };
     },
+    CREATE_PROJECT_SUCCESS: 'CREATE_PROJECT_SUCCESS',
+    createProjectSuccess() {
+        return {
+            type: projectsActions.CREATE_PROJECT_SUCCESS,
+        };
+    },
 
-     // ---------- CREATE_EMPTY_PROJECT ----------
-     CREATE_EMPTY_PROJECT: 'CREATE_EMPTY_PROJECT',
-     createEmptyProject(redirect: boolean) {
-         return {
-             type: projectsActions.CREATE_EMPTY_PROJECT,
-             data: { redirect }
-         };
-     },
-
-     CREATE_PROJECT_SUCCESS: 'CREATE_PROJECT_SUCCESS',
-     createProjectSuccess() {
-         return {
-             type: projectsActions.CREATE_PROJECT_SUCCESS,
-         };
-     }
+    // ---------- EXPORT PROJECT ----------
+    EXPORT_PROJECT: 'EXPORT_PROJECT',
+    exportProject() {
+        return {
+            type: projectsActions.EXPORT_PROJECT
+        };
+    },
+    EXPORT_PROJECT_SUCCESS: 'EXPORT_PROJECT_SUCCESS',
+    exportProjectSuccess() {
+        return {
+            type: projectsActions.EXPORT_PROJECT_SUCCESS
+        };
+    },
+    EXPORT_PROJECT_ERROR: 'EXPORT_PROJECT_ERROR',
+    exportProjectError(error: any) {
+        return {
+            type: projectsActions.EXPORT_PROJECT_ERROR,
+            data: error
+        };
+    },
 };
