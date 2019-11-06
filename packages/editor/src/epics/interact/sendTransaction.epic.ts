@@ -20,14 +20,13 @@ import { interactActions, outputLogActions, deployerActions, transactionsActions
 import { of, from, Observable, Observer, throwError, concat } from 'rxjs';
 import { getWeb3, convertGas } from '../../services/utils';
 import { projectSelectors } from '../../selectors';
-import { IDeployedContract, IRawAbiDefinition, TransactionType } from '../../models';
+import { TransactionType } from '../../models';
 import { signTransaction } from '../../services/deployer/deploy.utils';
-import { IEnvironment, IAccount } from '../../models/state';
+import { IEnvironment, IAccount, IDeployedContract } from '../../models/state';
 import { walletService } from '../../services';
 import Networks from '../../networks';
 
 function getData(instance: any, name: string, args: any[]) {
-    console.log(...args);
     return instance[name].getData(...args);
 }
 
@@ -86,7 +85,7 @@ function sendToBrowser$(environment: IEnvironment, accountAddress: string, netwo
             observer.next(result);
             observer.complete();
         })
-        .catch(err => observer.error({ msg: err, channel: 2 }));
+        .catch(err => observer.error({ msg: 'Error sending internal transation: ' + err.toString(), channel: 2 }));
     });
 }
 
@@ -154,8 +153,7 @@ export const sendTransactionEpic: Epic = (action$, state$) => action$.pipe(
     switchMap(([action, state]) => {
 
         const deployedContract: IDeployedContract = action.data.deployedContract;
-        const rawAbiDefinition: IRawAbiDefinition = action.data.rawAbiDefinition;
-        const args: any[] = action.data.args;
+        const value = action.data.value;
 
         const selectedEnv = projectSelectors.getSelectedEnvironment(state);
         const selectedAccount = projectSelectors.getSelectedAccount(state);
@@ -163,22 +161,21 @@ export const sendTransactionEpic: Epic = (action$, state$) => action$.pipe(
 
         return getContractInstance$(selectedEnv.endpoint, deployedContract)
             .pipe(
-                map((contractInstance) => getData(contractInstance, rawAbiDefinition.name, args)),
-                switchMap((data) => {
+                map(contractInstance => getData(contractInstance, action.data.rawAbiDefinitionName, action.data.args)),
+                switchMap(data => {
                     if (selectedAccount.type === 'metamask') {
-                        return tryExternalSend$(selectedEnv, selectedAccount, networkSettings, deployedContract.contractName, data, deployedContract.address);
+                        return tryExternalSend$(selectedEnv, selectedAccount, networkSettings, deployedContract.contractName, data, deployedContract.address, value);
                     } else {
                         if (!selectedAccount.walletName || !selectedAccount.address) {
-                            return throwError('walletName and address property should be set on the account');
+                            return of(outputLogActions.addRows([{ msg: 'WalletName and address property should be set on the account', channel: 2 }]));
                         }
                         const key = walletService.getKey(selectedAccount.walletName, selectedAccount.address);
-                        return sendToBrowser$(selectedEnv, selectedAccount.address, networkSettings, key, data, deployedContract.address).pipe(
+                        return sendToBrowser$(selectedEnv, selectedAccount.address, networkSettings, key, data, deployedContract.address, value).pipe(
                             mergeMap(output => {
                                 if (output.msg) { // intermediate messages coming
                                     return of(outputLogActions.addRows([ output ]));
                                 } else if (output.hash && output.tx) { // result
-                                    return of(interactActions.sendTransactionSuccess(output.hash));
-                                    // return finalizeDeploy(state, deployRunner, output.hash, state.deployer.outputPath, true, output.tx);
+                                    return of(interactActions.sendTransactionSuccess(output.hash), transactionsActions.addTransaction(TransactionType.Interact, output.hash, undefined, deployedContract.contractName));
                                 } else { // unexpected error
                                     return of(outputLogActions.addRows([{ msg: 'Unexpected error occurred. Please try again!', channel: 3 }]));
                                 }
@@ -187,7 +184,7 @@ export const sendTransactionEpic: Epic = (action$, state$) => action$.pipe(
                         );
                     }
                 }),
-                catchError(e => [ outputLogActions.addRows([ e ]), deployerActions.deployFail() ])
+                catchError(e => [ outputLogActions.addRows([ { msg: e, channel: 2 } ]), deployerActions.deployFail() ])
             );
     })
 );

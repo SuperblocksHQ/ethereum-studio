@@ -65,12 +65,14 @@ const error = (text: string) => ({
 
 export const getToastComponent = (type: string) => {
     switch (type) {
-        case projectsActions.FORK_PROJECT:
+        case projectsActions.CREATE_FORKED_PROJECT:
             return info('Forking project...');
         case projectsActions.FORK_PROJECT_FAIL:
             return error('Ups. Error while forking. Please try again');
         case projectsActions.UPDATE_PROJECT_SETTINGS_FAIL:
             return error('Ups. Error updating project settings');
+        case projectsActions.RENAME_PROJECT_FAIL:
+            return error('Ups. Error renaming project. No special characters allowed.');
         case projectsActions.CREATE_PROJECT_SUCCESS:
             return success('Project created!');
         case projectsActions.DELETE_PROJECT_FAIL:

@@ -18,7 +18,6 @@ import { AnyAction } from 'redux';
 import { appActions } from '../actions';
 
 export const initialState = {
-    version: '1.7.0',
     isEmbeddedMode: false,
     isEvmReady: false,
 };

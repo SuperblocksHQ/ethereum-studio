@@ -48,7 +48,7 @@ const HelpDropdownDialog = ({openAboutModal}: IProps) => (
             </li>
             <li>
                 <a
-                    href='https://help.superblocks.com/hc/en-us/requests/new'
+                    href='https://discuss.superblocks.com/c/ethereum-studio'
                     target='_blank'
                     rel='noopener noreferrer'
                 >

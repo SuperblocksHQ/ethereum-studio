@@ -8,8 +8,7 @@ import { projectSelectors, contractConfigSelectors } from '../../../../selectors
 
 const mapStateToProps = (state: any) => ({
     accounts: projectSelectors.getAccounts(state),
-    selectedContract: contractConfigSelectors.getSelectedContract(state),
-    otherContracts: contractConfigSelectors.getOtherContracts(state)
+    selectedContract: contractConfigSelectors.getSelectedContract(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {

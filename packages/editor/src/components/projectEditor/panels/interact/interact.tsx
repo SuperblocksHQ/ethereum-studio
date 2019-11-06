@@ -16,9 +16,8 @@
 
 import React from 'react';
 import style from './style.less';
-import { IDeployedContract } from '../../../../models';
-import { DeployedContractItem } from './items/deployedContractItem';
-import AbiItemList from './items/abiItemList';
+import { IDeployedContract } from '../../../../models/state';
+import { DeployedContractItem } from './items';
 
 interface IProps {
     deployedItems: IDeployedContract[];
@@ -26,18 +25,6 @@ interface IProps {
 }
 
 export class InteractPanel extends React.Component<IProps> {
-    renderItem(item: IDeployedContract) {
-        return (
-            <div className={style.interactContainer}>
-                <div className={style.title}>Contract Address:</div>
-                <div>{item.address}</div>
-                <div className={style.title}>Interact:</div>
-                    <AbiItemList
-                        deployedContract={item}
-                    />
-            </div>
-        );
-    }
 
     render() {
         const { deployedItems, onToggleTreeItem } = this.props;
@@ -58,9 +45,7 @@ export class InteractPanel extends React.Component<IProps> {
                             data={item}
                             depth={0}
                             onClick={ (i: IDeployedContract) => console.log(i.id) }
-                            onToggle={ onToggleTreeItem }>
-                                { this.renderItem(item) }
-                        </DeployedContractItem>
+                            onToggle={ onToggleTreeItem } />
                     ))
                 }
             </div>

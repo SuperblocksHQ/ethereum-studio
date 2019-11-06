@@ -184,7 +184,7 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                                         </SplitterLayout>
                                         <React.Fragment>
                                             <OnlyIf test={this.isPanelOpen(Panels.MessageLog)}>
-                                                <Panel name='Message' onClose={() => closePanel(Panels.MessageLog)} dragging={verticalPanelDragging}>
+                                                <Panel name='Messages' onClose={() => closePanel(Panels.MessageLog)} dragging={verticalPanelDragging}>
                                                     <MessagesPanel />
                                                 </Panel>
                                             </OnlyIf>

@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { IDeployedContract } from '../../models';
+import { IDeployedContract } from '../../models/state';
 
 function updateItemInTreeImpl(item: IDeployedContract, id: string, modify: (i: IDeployedContract) => Nullable<IDeployedContract>): Nullable<IDeployedContract> {
     // TODO - Fix this

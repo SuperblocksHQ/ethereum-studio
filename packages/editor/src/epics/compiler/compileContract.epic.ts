@@ -14,14 +14,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { from, interval, concat, of, empty } from 'rxjs';
-import { switchMap, first, tap, withLatestFrom } from 'rxjs/operators';
+import { from, interval, concat, of } from 'rxjs';
+import { switchMap, first, withLatestFrom } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
-import { explorerActions, compilerActions, panelsActions, panesActions } from '../../actions';
+import { explorerActions, compilerActions, panelsActions, projectsActions } from '../../actions';
 import { compilerService } from '../../services';
 import { Panels } from '../../models/state';
-import { IProjectItem, ProjectItemTypes } from '../../models';
-import { findItemByPath } from '../../reducers/explorerLib';
+import { projectSelectors } from '../../selectors';
 
 function compileContract(compilerState: any) {
     return from(
@@ -34,31 +33,28 @@ function compileContract(compilerState: any) {
     );
 }
 
-function cleanBuildFolder$(tree: IProjectItem) {
-    const buildFolder = findItemByPath(tree, [ 'build' ], ProjectItemTypes.Folder);
-    if (buildFolder === null || !buildFolder) {
-        return empty();
-    }
-
-    return of(explorerActions.deleteItem(buildFolder.id));
-}
-
 export const compileContractsEpic: Epic = (action$: any, state$: any) => action$.pipe(
     ofType(explorerActions.COMPILE_CONTRACT),
     withLatestFrom(state$),
     switchMap(([_action, state]) => {
-        compilerService.init();
+        const project = projectSelectors.getProject(state$.value);
+        const files = state$.value.explorer.tree;
+        const isOwnProject = state$.value.projects.isOwnProject;
 
-        return concat(
-            of(panelsActions.openPanel(Panels.OutputLog)), // show output
-            cleanBuildFolder$(state.explorer.tree),
-            interval(200).pipe(
-                first(() => compilerService.isReady()), // compiler has to be ready to be able to do smth
-                switchMap(() => concat(
-                    of(compilerActions.compilerReady(compilerService.getVersion())),
-                    compileContract(state.compiler)
-                ))
-            )
-        );
+        if (isOwnProject) {
+            compilerService.init();
+            return concat(
+                of(panelsActions.openPanel(Panels.OutputLog)), // show output
+                interval(200).pipe(
+                    first(() => compilerService.isReady()), // compiler has to be ready to be able to do smth
+                    switchMap(() => concat(
+                        of(compilerActions.compilerReady(compilerService.getVersion())),
+                        compileContract(state.compiler)
+                    ))
+                )
+            );
+        } else {
+            return [projectsActions.createForkedProject(project.name, project.description, files)];
+        }
     })
 );

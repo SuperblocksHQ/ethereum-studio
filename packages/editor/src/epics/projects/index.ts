@@ -29,12 +29,12 @@ import { updateProject } from './updateProject.epic';
 import { loadProject } from './loadProject.epic';
 import { createProjectFromTemplateEpic } from './createProjectFromTemplate.epic';
 import { renameProjectEpic } from './renameProject.epic';
-import { createEmptyProject } from './createEmptyProject.epic';
 import { openWalletEpic } from './openWallet.epic';
 import { updateAccountBalanceEpic } from './updateAccountBalance.epic';
 import { createForkedProject } from './createForkedProject.epic';
 import { notifyInitExplorerSuccessEpic } from './notifyInitExplorerSuccess.epic';
 import { exportProject } from './exportProject.epic';
+import { saveProject } from './saveProject.epic';
 
 export const projectsEpics = [
     environmentUpdateEpic,
@@ -45,11 +45,11 @@ export const projectsEpics = [
     deleteProject,
     renameProjectEpic,
     forkProject,
-    createEmptyProject,
     openWalletEpic,
     updateAccountBalanceEpic,
     updateProject,
     createForkedProject,
     exportProject,
-    notifyInitExplorerSuccessEpic
+    notifyInitExplorerSuccessEpic,
+    saveProject,
 ];

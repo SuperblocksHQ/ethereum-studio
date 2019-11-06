@@ -70,7 +70,7 @@ export default class TopBar extends Component<IProps> {
                 showModal('PREFERENCES_MODAL', null);
                 break;
             case 'share':
-                const defaultUrl = String(window.location);
+                const defaultUrl = String(window.location.href.split('?')[0]);
                 showModal('SHARE_MODAL', { defaultUrl });
                 break;
             default:
@@ -101,7 +101,6 @@ export default class TopBar extends Component<IProps> {
                             href={String(window.location)}
                             target='_blank'
                             rel='noopener noreferrer'
-                            title='Open Studio'
                         >
                             <StyledButton
                                 type={StyledButtonType.Primary}

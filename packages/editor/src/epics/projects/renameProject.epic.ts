@@ -42,10 +42,10 @@ export const renameProjectEpic: Epic = (action$: any, state$: any) => action$.pi
                 .pipe(
                     switchMap(() => projectService.getProjectById(project.id)),
                     map(projectsActions.updateProjectSuccess),
+                    catchError(err => [projectsActions.renameProjectFail(err)])
                 );
         } else {
             return EMPTY;
         }
     }),
-    catchError(err => [projectsActions.renameProjectFail(err)])
 );
