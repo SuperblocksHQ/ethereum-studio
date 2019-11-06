@@ -15,6 +15,7 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { IContractArgData, ContractArgTypes } from '../../models';
+import { IAccount } from '../../models/state';
 
 /**
  * Function to normalize and compile the contract arguments defined by the user to something web3 can use to configure the
@@ -22,7 +23,7 @@ import { IContractArgData, ContractArgTypes } from '../../models';
  *
  * @param contractArgs Contract arguments setup by the user in the Contract Configuration screen
  */
-export function normalizeContractArgs(contractArgs: IContractArgData[]) {
+export function normalizeContractArgs(contractArgs: IContractArgData[], accounts: IAccount[]) {
     const normalizedContractArgs: any[] = [];
     for (const argument of contractArgs) {
         switch (argument.type) {
@@ -31,6 +32,10 @@ export function normalizeContractArgs(contractArgs: IContractArgData[]) {
                 break;
             case ContractArgTypes.array:
                 normalizedContractArgs.push(argument.value.split(','));
+                break;
+            case ContractArgTypes.account:
+                const account = accounts.find(({name}) => name === argument.value);
+                normalizedContractArgs.push(account && account.address);
                 break;
             default:
                 break;
