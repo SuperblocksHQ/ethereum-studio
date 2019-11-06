@@ -28,9 +28,18 @@ export default function panesReducer(state = initialState, action: AnyAction, ro
     switch (action.type) {
 
         case panesActions.OPEN_FILE: {
+            const currentPane = state.activePane;
+            const activePane = action.data.id;
+
+            if (currentPane === activePane) {
+                return {
+                    ...state
+                };
+            }
+
             const items = replaceInArray(state.items.slice(), p => p.active, p => ({ ...p, active: false }));
             const itemIndex = items.findIndex(i => i.file.id === action.data.id);
-            const activePane = action.data.id;
+
             if (itemIndex >= 0) {
                 items[itemIndex] = { ...items[itemIndex], active: true };
             } else {
