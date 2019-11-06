@@ -15,17 +15,28 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import style from './style.less';
-import Switch from "react-switch";
+import Switch from 'react-switch';
 
-export default class AnalyticsDialog extends Component {
+
+interface IProps {
+    advancedPreferences: {
+        trackAnalytics: boolean;
+    };
+    updateAnalyticsTracking: (trackAnalytics: boolean) => void;
+}
+
+interface IState {
+    trackAnalytics: boolean;
+}
+
+export default class AnalyticsDialog extends Component<IProps, IState> {
 
     state = {
         trackAnalytics: this.props.advancedPreferences.trackAnalytics,
-    }
+    };
 
-    componentDidUpdate(prevProps) {
+    componentDidUpdate(prevProps: IProps) {
         if (prevProps.advancedPreferences.trackAnalytics !== this.props.advancedPreferences.trackAnalytics) {
             this.setState({
                 trackAnalytics: this.props.advancedPreferences.trackAnalytics
@@ -33,15 +44,16 @@ export default class AnalyticsDialog extends Component {
         }
     }
 
-    onTrackAnalyticsChange = (value) => {
+    onTrackAnalyticsChange = (value: boolean) => {
         const state = {
             trackAnalytics: value
-        }
+        };
         this.setState(state);
     }
 
     onSavePreferences = () => {
-        this.props.updateAnalyticsTracking(this.state.trackAnalytics);
+        const { trackAnalytics } = this.state;
+        this.props.updateAnalyticsTracking(trackAnalytics);
     }
 
     render() {
@@ -50,12 +62,13 @@ export default class AnalyticsDialog extends Component {
         return (
             <div className={style.container}>
                 <div className={style.content}>
-                    <h2>Support Ethereum Studio!</h2>
-                    <div>By allowing us to track (anonymously) how you use Ethereum Studio, we can get valuable insights and better understand what the tool needs in order to make you a happier developer. By leaving the tracking on, you will really help us see what can be improved, iterated or removed.</div>
+                    <h2>Enable Anonymous Tracking</h2>
+                    <div>By allowing us to track (anonymously) how you use Ethereum Studio, we can get valuable insights and better understand what the tool needs in order to make you a happier developer.
+                        By leaving the tracking on, you will really help us see what can be improved, iterated or removed.</div>
                     <br/>
-                    <div><b>We do not track any personal data, private keys or addresses.</b> Ethereum Studio is Open Source, so you can either check out the <a href="https://github.com/SuperblocksHQ/ethereum-studio" target="_blank" rel="noopener noreferrer" title="Ethereum Studio's Github repository">code</a> for yourself or read more on what we track and why in our <a href="https://help.superblocks.com/en/articles/3195311-what-and-why-are-we-tracking-in-ethereum-studio" target="_blank" rel="noopener noreferrer" title="Tracking article">Help Center.</a></div>
+                    <div><b>We do not track any personal data, private keys or addresses.</b> Ethereum Studio is Open Source, so you can either check out the <a href='https://github.com/SuperblocksHQ/ethereum-studio' target='_blank' rel='noopener noreferrer' title="Ethereum Studio's Github repository">code</a> for yourself or read more on what we track and why in our <a href='https://help.superblocks.com/en/articles/3195311-what-and-why-are-we-tracking-in-ethereum-studio' target='_blank' rel='noopener noreferrer' title='Tracking article'>Help Center.</a></div>
                     <br/>
-                    <div>Thanks for your support and happy buidling!</div>
+                    <div>Thanks for your support and happy building!</div>
                     <div className={style.switchContainer}>
                         <div className={style.title}>Allow tracking (anonymously)</div>
                         <div className={style.description}>
@@ -63,8 +76,8 @@ export default class AnalyticsDialog extends Component {
                             <Switch
                                 checked={trackAnalytics}
                                 onChange={this.onTrackAnalyticsChange}
-                                id="control-analytics"
-                                onColor="#6CFFB8"
+                                id='control-analytics'
+                                onColor='#6CFFB8'
                                 className={style.switch}
                                 checkedIcon={false}
                                 uncheckedIcon={false}
@@ -73,14 +86,9 @@ export default class AnalyticsDialog extends Component {
                             />
                         </div>
                     </div>
-                    <button onClick={this.onSavePreferences} className="btn2">Save</button>
+                    <button onClick={this.onSavePreferences} className='btn2'>Save</button>
                 </div>
             </div>
-        )
+        );
     }
-}
-
-AnalyticsDialog.propTypes = {
-    advancedPreferences: PropTypes.object.isRequired,
-    updateAnalyticsTracking: PropTypes.func.isRequired,
 }

@@ -14,7 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export const getShowAnalyticsTrackingDialog = (state) => state.settings.showTrackingAnalyticsDialog;
-export const getPreferences = (state) => state.settings.preferences;
-export const getNetworkPreferences = (state) => state.settings.preferences.network;
-export const getAdvancedPreferences = (state) => state.settings.preferences.advanced;
+export const settingsSelectors = {
+    getShowAnalyticsTrackingDialog: (state: any) => state.settings.showTrackingAnalyticsDialog,
+    getPreferences: (state: any) => state.settings.preferences,
+    getNetworkPreferences: (state: any) => state.settings.preferences.network,
+    getAdvancedPreferences: (state: any) => state.settings.preferences.advanced,
+};

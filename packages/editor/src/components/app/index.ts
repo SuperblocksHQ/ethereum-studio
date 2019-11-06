@@ -17,14 +17,14 @@
 import { connect } from 'react-redux';
 import { AnyAction, Dispatch } from 'redux';
 import { appActions, messageLogActions } from '../../actions';
-import { getShowAnalyticsTrackingDialog } from '../../selectors/settings';
-import { accountsConfigSelectors } from '../../selectors';
+import { accountsConfigSelectors, settingsSelectors, modalSelectors } from '../../selectors';
 import App from './App';
 import { LogLevel } from '../../models';
 
 const mapStateToProps = (state: any) => ({
-    showTrackingAnalyticsDialog: getShowAnalyticsTrackingDialog(state),
+    showTrackingAnalyticsDialog: settingsSelectors.getShowAnalyticsTrackingDialog(state),
     knownWalletSeed: accountsConfigSelectors.getKnownWalletSeed(state),
+    isTemplateModalShowing: modalSelectors.isModalOpen(state, 'PROJECT_TEMPLATE_MODAL')
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {

@@ -15,20 +15,21 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { connect } from 'react-redux';
-import { getAdvancedPreferences } from '../../selectors/settings';
+import { settingsSelectors } from '../../selectors';
 import { settingsActions } from '../../actions';
 import AnalyticsDialog from './AnalyticsDialog';
+import { Dispatch, AnyAction } from 'redux';
 
-const mapStateToProps = state => ({
-    advancedPreferences: getAdvancedPreferences(state),
+const mapStateToProps = (state: any) => ({
+    advancedPreferences: settingsSelectors.getAdvancedPreferences(state),
 });
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
     return {
-        updateAnalyticsTracking: (value) => {
-            dispatch(settingsActions.updateAnalyticsTracking(value))
+        updateAnalyticsTracking: (trackAnalytics: boolean) => {
+            dispatch(settingsActions.updateAnalyticsTracking(trackAnalytics));
         }
-    }
-}
+    };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(AnalyticsDialog);

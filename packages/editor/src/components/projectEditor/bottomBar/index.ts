@@ -15,14 +15,13 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { connect } from 'react-redux';
-import { getNetworkPreferences } from '../../../selectors/settings';
-import { projectSelectors } from '../../../selectors';
+import { projectSelectors, settingsSelectors } from '../../../selectors';
 import BottomBar from './BottomBar';
 import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
 
 const mapStateToProps = (state: any) => ({
-    networkPreferences: getNetworkPreferences(state),
+    networkPreferences: settingsSelectors.getNetworkPreferences(state),
     selectedAccount: projectSelectors.getSelectedAccount(state)
 });
 

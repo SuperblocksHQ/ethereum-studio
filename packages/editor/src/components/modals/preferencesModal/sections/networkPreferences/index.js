@@ -15,11 +15,11 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { connect } from 'react-redux';
-import { getNetworkPreferences } from '../../../../../selectors/settings';
+import { settingsSelectors } from '../../../../../selectors';
 import NetworkPreferences from './NetworkPreferences';
 
 const mapStateToProps = state => ({
-    networkPreferences: getNetworkPreferences(state),
+    networkPreferences: settingsSelectors.getNetworkPreferences(state),
 });
 
 export default connect(mapStateToProps, null)(NetworkPreferences);
