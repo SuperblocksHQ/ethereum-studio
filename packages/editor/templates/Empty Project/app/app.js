@@ -33,6 +33,7 @@ Empty.prototype.init = function(cb) {
     cb();
 }
 
+if(typeof(Contracts) === "undefined") var Contracts={ MyContract: { abi: [] }};
 var empty = new Empty(Contracts['MyContract']);
 
 $(document).ready(function() {
