@@ -15,7 +15,7 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch, matchPath } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import AnalyticsDialog from '../analyticsDialog';
 import { OnlyIf } from '../common';
 import ToastContainer from '../toasts/toastcontainer';
@@ -32,10 +32,6 @@ interface IProps {
     knownWalletSeed: string;
     notifyAppStart: (isIframe: boolean) => void;
     addMessageLogRow: (logLevel: LogLevel, msg: string) => void;
-}
-
-interface IMatchParams {
-    projectId: string;
 }
 
 export default class App extends Component<IProps> {
