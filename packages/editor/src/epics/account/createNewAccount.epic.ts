@@ -40,12 +40,6 @@ export const createNewAccountEpic = (action$: AnyAction, state$: any) => action$
                         wallet: 'development',
                         index: accounts.length
                     }
-                }, {
-                    name: 'custom',
-                    data: {
-                        wallet: 'private',
-                        index: accounts.length
-                    }
                 }]
             };
 
