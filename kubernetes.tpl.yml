@@ -35,4 +35,6 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 80
+      imagePullSecrets:
+        - name: _APP_NAME_-github-registry
 
