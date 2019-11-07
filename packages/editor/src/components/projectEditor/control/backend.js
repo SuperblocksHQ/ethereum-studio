@@ -265,7 +265,22 @@ export default class Backend {
         const environments = [
             {
                 name: 'browser',
-            }
+            },
+            {
+                name: 'custom',
+            },
+            {
+                name: 'rinkeby',
+            },
+            {
+                name: 'ropsten',
+            },
+            {
+                name: 'kovan',
+            },
+            {
+                name: 'mainnet',
+            },
         ];
         const wallets = [
             {
@@ -297,7 +312,42 @@ export default class Backend {
                             wallet: 'development',
                             index: 0,
                         },
-                    }
+                    },
+                    {
+                        name: 'custom',
+                        data: {
+                            wallet: 'private',
+                            index: 0,
+                        },
+                    },
+                    {
+                        name: 'rinkeby',
+                        data: {
+                            wallet: 'external',
+                            index: 0,
+                        },
+                    },
+                    {
+                        name: 'ropsten',
+                        data: {
+                            wallet: 'external',
+                            index: 0,
+                        },
+                    },
+                    {
+                        name: 'kovan',
+                        data: {
+                            wallet: 'external',
+                            index: 0,
+                        },
+                    },
+                    {
+                        name: 'mainnet',
+                        data: {
+                            wallet: 'external',
+                            index: 0,
+                        },
+                    },
                 ],
             },
         ];
