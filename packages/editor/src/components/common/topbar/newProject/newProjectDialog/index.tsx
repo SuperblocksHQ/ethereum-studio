@@ -34,7 +34,7 @@ class NewProjectDialog extends Component<IProps> {
 
     startWithTemplate = () => {
         const { showModal } = this.props;
-        showModal('PROJECT_TEMPLATE_MODAL', null);
+        showModal('PROJECT_TEMPLATE_MODAL', { hideWelcome: true });
     }
 
     render() {

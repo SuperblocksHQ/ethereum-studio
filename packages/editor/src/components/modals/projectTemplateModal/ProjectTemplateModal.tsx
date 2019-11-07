@@ -27,6 +27,7 @@ interface IProps {
     isProjectLoading: boolean;
     createProjectFromTemplate: (template: ITemplate) => void;
     hideModal: () => void;
+    hideWelcome: boolean;
 }
 
 interface IState {
@@ -35,7 +36,7 @@ interface IState {
 
 export default class ProjectTemplateModal extends Component<IProps, IState> {
     state: IState = {
-        selectedTemplate: null
+        selectedTemplate: this.props.hideWelcome ? Templates.templates[0] as ITemplate : null
     };
 
     onCloseClickHandle = () => {
@@ -59,7 +60,7 @@ export default class ProjectTemplateModal extends Component<IProps, IState> {
 
     render() {
         const { templates } = Templates;
-        const { isProjectLoading } = this.props;
+        const { isProjectLoading, hideWelcome } = this.props;
         const { selectedTemplate } = this.state;
 
         return (
@@ -77,7 +78,7 @@ export default class ProjectTemplateModal extends Component<IProps, IState> {
                                     {  templates.map((template: ITemplate) => (
                                             <li key={template.id}
                                                 className={selectedTemplate && selectedTemplate.id === template.id ? style.selected : null}>
-                                                <div onClick={() => this.onTemplateSelected(selectedTemplate && selectedTemplate.id === template.id ? null : template)}>{template.name}</div>
+                                                <div onClick={() => this.onTemplateSelected((!hideWelcome && selectedTemplate && selectedTemplate.id === template.id) ? null : template)}>{template.name}</div>
                                             </li>
                                         ))
                                     }
