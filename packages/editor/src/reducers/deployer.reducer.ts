@@ -63,7 +63,7 @@ export default function deployerReducer(state = initialState, action: AnyAction,
             const dappFileData = projects.dappFileData;
 
             // 1. build arguments
-            const contractArgs = normalizeContractArgs(getContractArguments(tree, item, dappFileData));
+            const contractArgs = normalizeContractArgs(getContractArguments(tree, item, dappFileData), projects.accounts);
 
             // 2. check if compilation is fresh
             const findItemResult = findItemById(explorer.tree, item.id);
