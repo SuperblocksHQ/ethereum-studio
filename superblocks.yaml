@@ -4,17 +4,40 @@
 
 version: 1
 jobs:
-  compile:
-    image: node
+  push_to_docker_registry:
+    image: docker:18.09.7
+    services:
+      - docker:18.09.7-dind
     script:
-      - echo Hello world!
-  test:
-    image: node
+      - echo "$GITHUB_REGISTRY_TOKEN" | docker login docker.pkg.github.com --username SuperblocksHQ --password-stdin
+      - docker build --build-arg BUILD=build:dev -t $GITHUB_REGISTRY_IMAGE:$SUPER_COMMIT_SHA1 .
+      - docker push $GITHUB_REGISTRY_IMAGE:$SUPER_COMMIT_SHA1
+
+  deploy_to_dev:
+    image: alpine
     script:
-      - echo Multiple Jobs can be defined the same way as single jobs
-      - echo http://superblocks.com/docs/configuration/configuration-introduction/#section=configuration
+      - apk add --no-cache curl
+      - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+      - chmod +x ./kubectl
+      - mv ./kubectl /usr/local/bin/kubectl
+      - kubectl config set-cluster $K8S_CLUSTER_NAME --server=$K8S_SERVER --insecure-skip-tls-verify=true
+      - kubectl config set clusters.k8s.certificate-authority-data $K8S_CERTIFICATE_AUTHORITY_DATA
+      - kubectl config set-credentials $K8S_USER_NAME --token=$K8S_USER_TOKEN
+      - kubectl config set-context $K8S_CLUSTER_NAME --cluster=$K8S_CLUSTER_NAME --user=$K8S_USER_NAME
+      - kubectl config use-context $K8S_CLUSTER_NAME
+      - sed 's _APP_NAME_ '"$CI_PROJECT_NAME"' g; s _CONTAINER_IMAGE_ '"$GITHUB_REGISTRY_IMAGE:$SUPER_COMMIT_SHA1"' g' kubernetes.tpl.yml > kubernetes.yml;
+      - kubectl apply -f kubernetes.yml
+
 stages:
-  - custom_sequence:
+  - build:
       jobs:
-        - compile
-        - test
+        - push_to_docker_registry:
+            filters:
+              only:
+                - master
+  - deploy:
+      jobs:
+        - deploy_to_dev:
+            filters:
+              only:
+                - master
