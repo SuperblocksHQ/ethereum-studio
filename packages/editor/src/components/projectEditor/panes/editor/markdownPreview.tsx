@@ -24,7 +24,8 @@ interface IProps {
 
 export const MarkdownPreview = (props: IProps) => {
     const converter: Converter = new Converter({
-        extensions: [showdownHighlight]
+        extensions: [showdownHighlight],
+        openLinksInNewWindow: true
     });
 
     return (
