@@ -42,7 +42,8 @@ export class Transaction extends React.Component<IProps> {
 
     call = () => {
         const { call, rawAbiDefinition } = this.props;
-        call(rawAbiDefinition.name, this.state.args.split(','));
+        const { args } = this.state;
+        call(rawAbiDefinition.name, args ? args.split(',') : []);
     }
 
     render() {
