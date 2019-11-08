@@ -70,7 +70,7 @@ export default class SuperProvider {
                 evmService.getProvider().sendAsync(payload, ((err: any, result: any) => {
                     if (err) {
                         console.log(err);
-                        reject('Problem calling the provider async call');
+                        reject('Problem calling the provider async call: ' + err);
                     }
                     resolve(result);
                 }));
@@ -237,7 +237,7 @@ export default class SuperProvider {
                     const result = await this.send(obj3, data.endpoint);
                     sendIframeMessage(null, result);
                 } catch (error) {
-                    console.log(error);
+                    alert(error);
                     sendIframeMessage(error, null);
                 }
             }
