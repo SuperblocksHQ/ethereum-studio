@@ -114,7 +114,8 @@ function doSendExternally$(environment: IEnvironment, selectedAccount: IAccount,
             concat(
                 of(outputLogActions.addRows([ result ])),
                 of(deployerActions.hideExternalProviderInfo()),
-                of(transactionsActions.addTransaction(TransactionType.Interact, result.hash, undefined, result.contractName)),
+                of(transactionsActions.addTransaction(TransactionType.Interact, result.hash, undefined, result.contractName),
+                of(transactionsActions.checkSentTransactions(environment.endpoint, contractName))),
                 // finalizeDeploy(state, deployRunner, result.hash, state.deployer.outputPath, false)
             )
         ),
@@ -175,7 +176,10 @@ export const sendTransactionEpic: Epic = (action$, state$) => action$.pipe(
                                 if (output.msg) { // intermediate messages coming
                                     return of(outputLogActions.addRows([ output ]));
                                 } else if (output.hash && output.tx) { // result
-                                    return of(interactActions.sendTransactionSuccess(output.hash), transactionsActions.addTransaction(TransactionType.Interact, output.hash, undefined, deployedContract.contractName));
+                                    return of(
+                                        interactActions.sendTransactionSuccess(output.hash),
+                                        transactionsActions.addTransaction(TransactionType.Interact, output.hash, undefined, deployedContract.contractName),
+                                        transactionsActions.checkSentTransactions(selectedEnv.endpoint, deployedContract.contractName));
                                 } else { // unexpected error
                                     return of(outputLogActions.addRows([{ msg: 'Unexpected error occurred. Please try again!', channel: 3 }]));
                                 }
