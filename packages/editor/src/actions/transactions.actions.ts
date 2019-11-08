@@ -42,4 +42,19 @@ export const transactionsActions = {
             data: error
         };
     },
+
+    CHECK_SENT_TRANSACTIONS: 'CHECK_SENT_TRANSACTIONS',
+    checkSentTransactions(endpoint: string, contractName: string) {
+        return {
+            type: transactionsActions.CHECK_SENT_TRANSACTIONS,
+            data: { endpoint, contractName }
+        };
+    },
+    CHECK_SENT_TRANSACTIONS_FAIL: 'CHECK_SENT_TRANSACTIONS_FAIL',
+    checkSentTransactionsFail(err: any) {
+        return {
+            type: transactionsActions.CHECK_SENT_TRANSACTIONS_FAIL,
+            data: { err }
+        };
+    }
 };
