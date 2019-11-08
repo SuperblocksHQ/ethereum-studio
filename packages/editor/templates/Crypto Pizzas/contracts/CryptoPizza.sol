@@ -273,7 +273,7 @@ contract CryptoPizza is IERC721, ERC165 {
                 result = false;
             }
         }
-        require(result);
+        require(result, "Pizza with such name already exists.");
         _;
     }
 
