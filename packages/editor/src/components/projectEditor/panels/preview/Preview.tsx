@@ -57,10 +57,11 @@ export class Preview extends React.Component<IProps> {
 
     componentDidUpdate(prevProps: IProps) {
         const { selectedAccount, htmlToRender } = prevProps;
+        const { refreshContent } = this.props;
 
         if (selectedAccount.name !== this.props.selectedAccount.name) {
-            previewService.setAccount(selectedAccount);
-            this.refreshIframe();
+            previewService.setAccount(this.props.selectedAccount);
+            refreshContent();
         }
 
         if (htmlToRender !== this.props.htmlToRender) {
