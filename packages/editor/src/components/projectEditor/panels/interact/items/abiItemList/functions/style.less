@@ -1,7 +1,10 @@
+@import '../../../../../../../style/index.less';
+
 .container {
-    display: flex;
     align-content: center;
     margin: 10px 0;
+    display: flex;
+    flex-flow: wrap;
 
     > button {
         padding: 5px 5px;
@@ -17,13 +20,40 @@
         padding: 6px 6px !important;
         width: 100% !important;
     }
+
+    .break {
+        flex-basis: 100%;
+        width: 0;
+        height: 0;
+        margin: 0;
+        border: 0;
+        overflow: hidden;
+    }
+
+    .transactionValue {
+        padding: 10px;
+        background-color: @modal-background-color;
+
+        .valueInput {
+            align-content: center;
+            margin: 10px 0;
+            display: flex;
+            flex-flow: wrap;
+        }
+
+        .wei {
+            flex: 0;
+            display: table;
+            margin: auto auto auto 10px;
+        }
+    }
 }
 
 .resultContainer {
     position: relative;
 
     .resultItem {
-        padding: 0px 3px;
+        padding: 0 3px;
         overflow: hidden;
         text-overflow: ellipsis;
         display: flex;
@@ -37,7 +67,7 @@
             flex: 1;
             overflow: hidden;
             text-overflow: ellipsis;
-        }        
+        }
     }
 
     .closeIcon {

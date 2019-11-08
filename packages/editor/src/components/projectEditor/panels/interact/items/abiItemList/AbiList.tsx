@@ -23,7 +23,7 @@ import { IDeployedContract } from '../../../../../../models/state';
 interface IProps {
     deployedContract: IDeployedContract;
     getConstant(abiIndex: number, deployedContract: IDeployedContract, args?: any[]): void;
-    sendTransaction(deployedContract: IDeployedContract, abiDefinitionName: string, args?: any[], value?: string): void;
+    sendTransaction(deployedContract: IDeployedContract, abiDefinitionName: string, args?: any[], value?: number): void;
     clearLastResult(deployedContractId: string, abiIndex: number): void;
 }
 
@@ -34,7 +34,7 @@ export class AbiList extends React.Component<IProps> {
         getConstant(abiIndex, deployedContract, args);
     }
 
-    sendTransaction = (abiDefinitionName: string, args?: any[], value?: string) => {
+    sendTransaction = (abiDefinitionName: string, args?: any[], value?: number) => {
         const { sendTransaction, deployedContract } = this.props;
         sendTransaction(deployedContract, abiDefinitionName, args, value);
     }
@@ -59,7 +59,7 @@ export class AbiList extends React.Component<IProps> {
         } else if (rawAbiDefinition.type === Type.Function && rawAbiDefinition.payable) {
             return <Payable
                         rawAbiDefinition={rawAbiDefinition}
-                        call={(abiName, value) => this.sendTransaction(abiName, [], value)}
+                        call={(abiName, args, value) => this.sendTransaction(abiName, args, value)}
                     />;
         }
     }
