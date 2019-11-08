@@ -206,7 +206,7 @@ export default class SuperProvider {
 
                 const nonce = await this.getNonce(this.selectedEnvironment.endpoint, this.selectedAccount.address)
                     .catch((err) => console.log(err));
-                if (!nonce) {
+                if (nonce == null) {  // Catches both null and undefined but not 0.
                     alert('The nonce could not be fetched');
                     return;
                 }
