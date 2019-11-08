@@ -6,12 +6,12 @@
 [Ethereum Studio](https://superblocks.com/ethereum-studio) is an integrated development environment (IDE) to learn, build and deploy decentralized apps (DApps) for _Ethereum_. It's a full browser experience which requires no installations to run.
 
 <p align="center">
-  <img alt="Ethereum Studio in action" src="https://user-images.githubusercontent.com/7814134/45118436-d135c300-b158-11e8-8271-648495d35d29.png">
+  <img alt="Ethereum Studio in action" src="https://user-images.githubusercontent.com/8097623/68451252-d817f580-01a2-11ea-9084-b4ae593c56dd.png">
 </p>
 
 **Ethereum Studio** has a built in _Solidity_ compiler and _Ethereum Virtual Machine_. It also works with local and public networks.
 
-To try it out, go to [studio.superblocks.com](https://studio.superblocks.com).
+To try it out, go to [studio.ethereum.org](https://studio.ethereum.org).
 
 ## Features
 * In-browser Blockchain
