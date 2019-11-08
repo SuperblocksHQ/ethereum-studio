@@ -10,7 +10,7 @@ jobs:
       - docker:18.09.7-dind
     script:
       - echo "$GITHUB_REGISTRY_TOKEN" | docker login docker.pkg.github.com --username $GITHUB_REGISTRY_USER --password-stdin
-      - docker build --build-arg BUILD=build:prod -t $GITHUB_REGISTRY_IMAGE:$SUPER_COMMIT_SHA1 .
+      - docker build --build-arg BUILD=build -t $GITHUB_REGISTRY_IMAGE:$SUPER_COMMIT_SHA1 .
       - docker push $GITHUB_REGISTRY_IMAGE:$SUPER_COMMIT_SHA1
 
   deploy_to_dev:
