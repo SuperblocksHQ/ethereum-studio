@@ -17,9 +17,10 @@
 import React from 'react';
 import style from './style.less';
 import { IRawAbiDefinition } from '../../../../../../../models';
-import { StyledButton, TextInput } from '../../../../../../common';
+import { OnlyIf, StyledButton, TextInput } from '../../../../../../common';
 import { StyledButtonType } from '../../../../../../common/buttons/StyledButtonType';
 import { getPlaceholderText } from './utils';
+import classnames from 'classnames';
 
 interface IProps {
     rawAbiDefinition: IRawAbiDefinition;
@@ -57,16 +58,18 @@ export class Payable extends React.Component<IProps, IState> {
         const placeholder = getPlaceholderText(data.inputs);
 
         return (
-            <div className={style.container}>
+            <div className={classnames([style.container, style.containerBackground])}>
                 <StyledButton type={StyledButtonType.Payable} text={data.name} onClick={this.call} />
-                <TextInput
-                    id='input'
-                    onChangeText={this.onInputChange}
-                    defaultValue={this.state.args}
-                    placeholder={placeholder}
-                    title={placeholder}
-                    className={style.input}
-                />
+                <OnlyIf test={data.inputs.length > 0}>
+                    <TextInput
+                        id='input'
+                        onChangeText={this.onInputChange}
+                        defaultValue={this.state.args}
+                        placeholder={placeholder}
+                        title={placeholder}
+                        className={style.input}
+                    />
+                </OnlyIf>
                 <div className={style.break}/>
                 <div className={style.transactionValue}>
                     <span>Value:</span>
