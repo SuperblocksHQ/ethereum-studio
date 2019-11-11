@@ -19,8 +19,9 @@ import { switchMap, first, withLatestFrom } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
 import { explorerActions, compilerActions, panelsActions, projectsActions } from '../../actions';
 import { compilerService } from '../../services';
-import { Panels } from '../../models/state';
+import { IPane, Panels } from '../../models/state';
 import { projectSelectors } from '../../selectors';
+import { panesSelectors } from '../../selectors/panes.selectors';
 
 function compileContract(compilerState: any) {
     return from(
@@ -33,28 +34,46 @@ function compileContract(compilerState: any) {
     );
 }
 
+function initCompilation(state: any) {
+    const project = projectSelectors.getProject(state);
+    const files = state.explorer.tree;
+    const isOwnProject = state.projects.isOwnProject;
+
+    if (isOwnProject) {
+        compilerService.init();
+        return concat(
+            of(panelsActions.openPanel(Panels.OutputLog)), // show output
+            interval(200).pipe(
+                first(() => compilerService.isReady()), // compiler has to be ready to be able to do smth
+                switchMap(() => concat(
+                    of(compilerActions.compilerReady(compilerService.getVersion())),
+                    compileContract(state.compiler)
+                ))
+            )
+        );
+    } else {
+        return [projectsActions.createForkedProject(project.name, project.description, files)];
+    }
+}
+
 export const compileContractsEpic: Epic = (action$: any, state$: any) => action$.pipe(
     ofType(explorerActions.COMPILE_CONTRACT),
     withLatestFrom(state$),
     switchMap(([_action, state]) => {
-        const project = projectSelectors.getProject(state$.value);
-        const files = state$.value.explorer.tree;
-        const isOwnProject = state$.value.projects.isOwnProject;
 
-        if (isOwnProject) {
-            compilerService.init();
-            return concat(
-                of(panelsActions.openPanel(Panels.OutputLog)), // show output
-                interval(200).pipe(
-                    first(() => compilerService.isReady()), // compiler has to be ready to be able to do smth
-                    switchMap(() => concat(
-                        of(compilerActions.compilerReady(compilerService.getVersion())),
-                        compileContract(state.compiler)
-                    ))
-                )
-            );
-        } else {
-            return [projectsActions.createForkedProject(project.name, project.description, files)];
+        const panes = panesSelectors.getPanes(state$.value);
+        const hasUnsavedChanges = panes.reduce((acc: any, curr: IPane) => {
+            if (acc === true) {
+                return true;
+            }
+            return curr.hasUnsavedChanges;
+        }, []);
+
+        if (hasUnsavedChanges) {
+            // Autosave
+            return concat(of(projectsActions.saveProject()), from(initCompilation(state$.value)));
         }
+
+        return from(initCompilation(state));
     })
 );
