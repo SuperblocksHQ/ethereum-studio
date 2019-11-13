@@ -17,8 +17,7 @@ import { IAccount, IEnvironment } from '../models/state';
 import { IProject } from '../models';
 
 export const projectSelectors = {
-    // TODO enable external environments
-    getEnvironments: (state: any) => state.projects.environments.slice(0, 1).map((env: any) => env),
+    getEnvironments: (state: any) => state.projects.environments,
     getAccounts: (state: any) => state.projects.accounts,
     getSelectedEnvironment: (state: any): IEnvironment => state.projects.selectedEnvironment,
     getSelectedAccount: (state: any): IAccount => state.projects.selectedAccount,
