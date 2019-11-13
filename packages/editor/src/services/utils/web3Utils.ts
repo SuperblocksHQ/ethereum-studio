@@ -16,6 +16,7 @@
 
 import Networks from '../../networks';
 import { evmService } from '..';
+import Web3 from 'web3';
 
 export function getWeb3(endpoint: string) {
     let provider;
@@ -25,7 +26,8 @@ export function getWeb3(endpoint: string) {
         provider = new window.Web3.providers.HttpProvider(endpoint);
     }
 
-    return new window.Web3(provider);
+    window.Web3 = new Web3(provider);
+    return window.Web3;
 }
 
 export function convertGas(value: string) {
