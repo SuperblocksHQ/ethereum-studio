@@ -20,6 +20,7 @@ import { IProjectItem } from '../models';
 import { getDappSettings, resolveAccounts } from './dappfileLib';
 import { authActions, accountActions, panesActions, projectsActions } from '../actions';
 import { findItemById } from './explorerLib';
+import { replaceInArray } from './utils';
 
 export const initialState: IProjectState = {
     project: {
@@ -251,6 +252,20 @@ export default function projectsReducer(state = initialState, action: AnyAction,
             return {
                 ...state,
                 ...stateChange
+            };
+        }
+        case accountActions.UPDATE_ACCOUNT_NAME: {
+            return {
+                ...state,
+                accounts: replaceInArray(
+                    state.accounts,
+                    acc => acc.name === action.data.account.name,
+                    acc => ({ ...acc, name: action.data.newName })
+                ),
+                selectedAccount: {
+                    ...state.selectedAccount,
+                    name: state.selectedAccount.name === action.data.account.name ? action.data.newName : state.selectedAccount.name
+                }
             };
         }
         default:
