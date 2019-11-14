@@ -67,16 +67,16 @@ stages:
             filters:
               only:
                 - master
-  - build_prod:
-      jobs:
-        - push_to_docker_registry_prod:
-            when: manual
-            filters:
-              only:
-                - master
-  - deploy_prod:
-      jobs:
-        - deploy_to_prod:
-            filters:
-              only:
-                - master
+  # - build_prod:
+  #     jobs:
+  #       - push_to_docker_registry_prod:
+  #           when: manual
+  #           filters:
+  #             only:
+  #               - master
+  # - deploy_prod:
+  #     jobs:
+  #       - deploy_to_prod:
+  #           filters:
+  #             only:
+  #               - master
