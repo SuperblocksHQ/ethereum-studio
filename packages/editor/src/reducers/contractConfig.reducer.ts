@@ -45,7 +45,8 @@ export default function contractConfigReducer(state = initialState, action: AnyA
                     config: {
                         args: contractConfiguration.args,
                         name: contractConfiguration.name,
-                        source: contractSource
+                        source: contractSource,
+                        value: contractConfiguration.value
                     },
                 },
             };

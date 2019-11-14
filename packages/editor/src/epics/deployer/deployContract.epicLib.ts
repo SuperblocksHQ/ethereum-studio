@@ -53,7 +53,7 @@ function finalizeDeploy(state: any, deployRunner: DeployRunner, hash: string, ou
  * @param deployRunner
  */
 export function doDeployExternally(state: any, deployRunner: DeployRunner) {
-    return deployRunner.deployExternally(state.settings.preferences.network).pipe(
+    return deployRunner.deployExternally(state.settings.preferences.network, state.deployer.value).pipe(
         switchMap((result: any) =>
             concat(
                 of(outputLogActions.addRows([ result ])),
@@ -110,7 +110,7 @@ export function browserDeploy(state: any, deployRunner: DeployRunner) {
     }
     const key = walletService.getKey(account.walletName, account.address);
 
-    return deployRunner.deployToBrowser(networkSettings, key).pipe(
+    return deployRunner.deployToBrowser(networkSettings, key, state.deployer.value).pipe(
         mergeMap(output => {
             if (output.msg) { // intermediate messages comming
                 return of(outputLogActions.addRows([ output ]));

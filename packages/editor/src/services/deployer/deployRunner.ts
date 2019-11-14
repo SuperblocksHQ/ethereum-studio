@@ -74,13 +74,14 @@ export class DeployRunner {
         }
     }
 
-    deployExternally(gasSettings: any) {
+    deployExternally(gasSettings: any, value: string) {
         gasSettings = { gasPrice: convertGas(gasSettings.gasPrice), gasLimit: convertGas(gasSettings.gasLimit) };
+        const valueFormatted = convertGas(value);
 
         const params = {
             from: this.account.address,
             to: '',
-            value: '0x0',
+            value: valueFormatted ? valueFormatted : '0x0',
             gasPrice: gasSettings.gasPrice,
             gasLimit: gasSettings.gasLimit,
             data: this.deployFile
@@ -98,13 +99,14 @@ export class DeployRunner {
         }));
     }
 
-    deployToBrowser(gasSettings: any, key: string): Observable<any> {
+    deployToBrowser(gasSettings: any, key: string, value: string): Observable<any> {
         gasSettings = { gasPrice: convertGas(gasSettings.gasPrice), gasLimit: convertGas(gasSettings.gasLimit) };
+        const valueFormatted = convertGas(value);
 
         return Observable.create((observer: Observer<any>) => {
             this.getNonce(this.account.address).then(nonce => {
                 observer.next({ channel: 1, msg: `Nonce for address ${this.account.address} is ${nonce}.` });
-                const tx = signTransaction(this.account.address, nonce, gasSettings, key, this.deployFile);
+                const tx = signTransaction(this.account.address, nonce, gasSettings, key, this.deployFile, undefined, valueFormatted);
                 observer.next({ channel: 1, msg: `Transaction signed.` });
                 observer.next({ channel: 1, msg: `Gaslimit=${gasSettings.gasLimit}, gasPrice=${gasSettings.gasPrice}.` });
                 observer.next({ channel: 1, msg: `Sending transaction to network ${this.environment.name} on endpoint ${this.environment.endpoint}...` });
