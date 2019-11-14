@@ -76,7 +76,7 @@ export class DeployRunner {
 
     deployExternally(gasSettings: any, value: string) {
         gasSettings = { gasPrice: convertGas(gasSettings.gasPrice), gasLimit: convertGas(gasSettings.gasLimit) };
-        const valueFormatted = convertGas(value);
+        const valueFormatted = value ? convertGas(value) : value;
 
         const params = {
             from: this.account.address,
@@ -101,7 +101,7 @@ export class DeployRunner {
 
     deployToBrowser(gasSettings: any, key: string, value: string): Observable<any> {
         gasSettings = { gasPrice: convertGas(gasSettings.gasPrice), gasLimit: convertGas(gasSettings.gasLimit) };
-        const valueFormatted = convertGas(value);
+        const valueFormatted = value ? convertGas(value) : value;
 
         return Observable.create((observer: Observer<any>) => {
             this.getNonce(this.account.address).then(nonce => {
