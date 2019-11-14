@@ -59,10 +59,10 @@ export const interactActions = {
     },
 
     SEND_TRANSACTION: 'SEND_TRANSACTION',
-    sendTransaction(deployedContract: IDeployedContract, rawAbiDefinitionName: string, args?: any[], value?: number) {
+    sendTransaction(deployedContract: IDeployedContract, rawAbiDefinitionName: string, abiIndex: number, args?: any[], value?: number) {
         return {
             type: interactActions.SEND_TRANSACTION,
-            data: { deployedContract, rawAbiDefinitionName, args, value }
+            data: { deployedContract, rawAbiDefinitionName, abiIndex, args, value }
         };
     },
 

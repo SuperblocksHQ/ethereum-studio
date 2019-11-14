@@ -26,8 +26,9 @@ import { IEnvironment, IAccount, IDeployedContract } from '../../models/state';
 import { walletService } from '../../services';
 import Networks from '../../networks';
 
-function getData(instance: any, name: string, args: any[]) {
-    return instance[name].getData(...args);
+function getData(instance: any, name: string, abiIndex: number, args: any[]) {
+    const inputTypes = instance.abi[abiIndex].inputs.map((input: any) => input.type).join();
+    return instance[name][inputTypes].getData(...args);
 }
 
 function sendInternalTransaction(endpoint: string, tx: any) {
@@ -162,7 +163,7 @@ export const sendTransactionEpic: Epic = (action$, state$) => action$.pipe(
 
         return getContractInstance$(selectedEnv.endpoint, deployedContract)
             .pipe(
-                map(contractInstance => getData(contractInstance, action.data.rawAbiDefinitionName, action.data.args)),
+                map(contractInstance => getData(contractInstance, action.data.rawAbiDefinitionName, action.data.abiIndex, action.data.args)),
                 switchMap(data => {
                     if (selectedAccount.type === 'metamask') {
                         return tryExternalSend$(selectedEnv, selectedAccount, networkSettings, deployedContract.contractName, data, deployedContract.address, value);

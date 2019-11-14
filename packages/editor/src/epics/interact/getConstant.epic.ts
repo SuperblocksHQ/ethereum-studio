@@ -22,10 +22,12 @@ import { getWeb3 } from '../../services/utils';
 import { projectSelectors } from '../../selectors';
 import { IDeployedContract } from '../../models/state';
 
-const call$ = (instance: any, name: string, args?: any[]) => {
+const call$ = (instance: any, name: string, abiIndex: number, args?: any[]) => {
+    const inputTypes = instance.abi[abiIndex].inputs.map((input: any) => input.type).join();
+
     return from(
         new Promise((resolve, reject) => {
-            instance[name].apply(instance, (args || []).concat((err: any, result: any) => {
+            instance[name][inputTypes].apply(instance, (args || []).concat((err: any, result: any) => {
                 if (err) {
                     console.log(err);
                     reject(`Problem calling to get the ${name}`);
@@ -59,7 +61,7 @@ export const getConstantEpic: Epic = (action$, state$) => action$.pipe(
 
         return getContractInstance$(selectedEnv.endpoint, deployedContract)
             .pipe(
-                switchMap(contractInstance => call$(contractInstance, deployedContract.abi[abiIndex].name, action.data.args)),
+                switchMap(contractInstance => call$(contractInstance, deployedContract.abi[abiIndex].name, abiIndex, action.data.args)),
                 map(result => interactActions.getConstantSuccess(deployedContract.id, abiIndex, result)),
                 catchError((error) => [
                     interactActions.clearLastResult(deployedContract.id, abiIndex),
