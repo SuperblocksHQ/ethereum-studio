@@ -19,11 +19,15 @@ import { switchMap, withLatestFrom, map, catchError, first, tap } from 'rxjs/ope
 import { ofType, Epic } from 'redux-observable';
 import { projectsActions } from '../../actions';
 import { projectService} from '../../services/project.service';
+import { IProject } from '../../models';
 
 export function loadProjectById(projectId: string) {
     return projectService.getProjectById(projectId)
         .pipe(
-            map(projectsActions.loadProjectSuccess),
+            map((project: IProject) => {
+                document.title = `${project.name} | Ethereum Studio`;
+                return projectsActions.loadProjectSuccess(project);
+            }),
             catchError((error) => {
                 console.log('There was an issue loading the project: ' + error);
                 window.location.href = '/';
