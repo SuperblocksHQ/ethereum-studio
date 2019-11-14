@@ -31,7 +31,7 @@ export const OutputPanel = (props: IProps) => {
 
     const scrollToBottom = () => {
         if (messagesAnchor !== null && messagesAnchor.current !== null) {
-            messagesAnchor.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
+            messagesAnchor.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
     };
 
