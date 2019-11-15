@@ -18,10 +18,12 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 import style from './style.less';
 import { IAccount, IEnvironment } from '../../../../models/state';
-import { Modal, ModalHeader } from '../../../common';
+import { Modal, ModalHeader, TextInput } from '../../../common';
 import AccountEnvironmentList from './AccountEnvironmentList';
+import { validateAccountName } from '../../../../validations';
 
 interface IProps {
+    accounts: IAccount[];
     accountInfo: IAccount;
     environments: IEnvironment[];
     environment: string;
@@ -35,38 +37,47 @@ interface IProps {
 
 interface IState {
     newAccountName: string;
-    accountNameDirty: boolean;
+    errorName: Nullable<string>;
 }
 
 export default class AccountConfigModal extends Component<IProps, IState> {
 
     state = {
         newAccountName: this.props.accountInfo.name,
-        accountNameDirty: false
+        errorName: null
     };
 
     onNameChange = (e: any) => {
         const value = e.target.value;
+        const { accountInfo, accounts } = this.props;
+        const isDuplicate = accounts.find((acc) => acc.name === value);
+
+        let errorName = null;
+        if (!!isDuplicate && accountInfo.name !== value) {
+            errorName = 'Account with such name already exists, please choose a different one.';
+        } else {
+            errorName = validateAccountName(value);
+        }
+
         this.setState({
             newAccountName: value,
-            accountNameDirty: true
+            errorName
         });
     }
 
     saveName = (e: any) => {
         const { accountInfo: account, updateAccountName } = this.props;
-        const { newAccountName } = this.state;
+        const { newAccountName, errorName } = this.state;
         e.preventDefault();
 
-        updateAccountName(account, newAccountName);
-        this.setState({
-            accountNameDirty: false
-        });
+        if (!errorName) {
+            updateAccountName(account, newAccountName);
+        }
     }
 
     render() {
         const { accountInfo, environments, environment, hideModal, changeEnvironment, updateAddress, openWallet } = this.props;
-        const { accountNameDirty, newAccountName } = this.state;
+        const { newAccountName, errorName } = this.state;
 
         return (
             <Modal hideModal={hideModal}>
@@ -77,20 +88,18 @@ export default class AccountConfigModal extends Component<IProps, IState> {
                         <div className={style.inner}>
                             <div className={style.form}>
                                 <div className={style.field}>
-
-                                    <div className='superInputDarkInline'>
-                                        <label htmlFor='name'>Name</label>
-                                        <input
-                                            type='text'
-                                            id='name'
-                                            value={newAccountName}
-                                            onKeyUp={this.onNameChange}
-                                            onChange={this.onNameChange}
-                                        />
-                                        <button className='btn2' disabled={!accountNameDirty} onClick={this.saveName}>
-                                            Save name
-                                        </button>
-                                    </div>
+                                    <TextInput
+                                        label='Name'
+                                        type='text'
+                                        id='name'
+                                        value={newAccountName}
+                                        onKeyUp={this.onNameChange}
+                                        onChange={this.onNameChange}
+                                        error={errorName}
+                                    />
+                                    <button className='btn2' disabled={!!errorName || accountInfo.name === newAccountName} onClick={this.saveName}>
+                                        Save name
+                                    </button>
 
                                     <div className={style.infoText}>
                                         <div className={style.titleContainer}>

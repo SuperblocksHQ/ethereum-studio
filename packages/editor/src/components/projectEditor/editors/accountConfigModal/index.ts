@@ -9,7 +9,8 @@ import { IAccount } from '../../../../models/state';
 const mapStateToProps = (state: any) => ({
     accountInfo: accountsConfigSelectors.getAccountInfo(state),
     environments: projectSelectors.getEnvironments(state),
-    environment: accountsConfigSelectors.getEnvironment(state)
+    environment: accountsConfigSelectors.getEnvironment(state),
+    accounts: state.projects.accounts
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
