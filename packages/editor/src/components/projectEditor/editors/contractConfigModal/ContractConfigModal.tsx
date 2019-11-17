@@ -181,9 +181,9 @@ export default class ContractConfigModal extends Component<IProps, IState> {
                                             Value
                                             <Tooltip html={
                                                     <div className='arrayInfoTooltip'>
-                                                        <div>Value is in wei units</div>
-                                                        <div className='example'>this field can be used in case if contract has payable constructor and needs initial funding</div>
-                                                        <div className='example'>`for example constructor() public payable {'{ ... }'}</div>
+                                                        <div>Value is in Wei units</div>
+                                                        <div className='example'>This field can be used when a contract defines payable constructor and requires initial funding</div>
+                                                        <div className='example'>For example: constructor() public payable {'{ ... }'}</div>
                                                     </div>
                                                 }>
                                                 <IconHelp className={style.icon} />
