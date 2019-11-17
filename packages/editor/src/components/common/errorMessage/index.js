@@ -37,6 +37,12 @@ class ErrorMessage extends PureComponent {
             {"Invalid project name. Only alphanumeric characters are allowed."}
           </div>
         );
+      case 'ACCOUNT_NAME':
+        return (
+          <div id="error.accountName">
+            {"Invalid account name. Only alphanumeric characters are allowed."}
+          </div>
+        );
       default:
         // eslint-disable-next-line no-unused-expressions
         (error);

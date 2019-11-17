@@ -25,3 +25,6 @@ export const validateMainnetWarning = (projectName: string, value: string) =>
 
 export const validateProjectName = (projectName: string) =>
     (!/^[a-zA-ZA-Z0-9 -]+$/.test(projectName) || /^\s*$/.test(projectName) || projectName === '' ? 'PROJECT_NAME' : null);
+
+export const validateAccountName = (accountName: string) =>
+    (!/^[a-zA-ZA-Z0-9 -]+$/.test(accountName) || /^\s*$/.test(accountName) || accountName === '' ? 'ACCOUNT_NAME' : null);
