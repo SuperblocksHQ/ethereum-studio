@@ -114,8 +114,8 @@ function doSendExternally$(environment: IEnvironment, selectedAccount: IAccount,
             concat(
                 of(outputLogActions.addRows([ result ])),
                 of(deployerActions.hideExternalProviderInfo()),
-                of(transactionsActions.addTransaction(TransactionType.Interact, result.hash, undefined, result.contractName),
-                of(transactionsActions.checkSentTransactions(environment.endpoint, contractName))),
+                of(transactionsActions.checkSentTransactions(environment.endpoint, contractName)),
+                of(transactionsActions.addTransaction(TransactionType.Interact, result.hash, undefined, result.contractName)),
                 // finalizeDeploy(state, deployRunner, result.hash, state.deployer.outputPath, false)
             )
         ),
