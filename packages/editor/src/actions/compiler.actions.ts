@@ -14,6 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
+import { IProjectItem } from '../models';
+
 export const compilerActions = {
     HANDLE_COMPILE_OUTPUT: 'HANDLE_COMPILE_OUTPUT',
     handleCompileOutput(data: any) {
@@ -28,6 +30,14 @@ export const compilerActions = {
         return {
             type: compilerActions.COMPILER_READY,
             data: version
+        };
+    },
+
+    INIT_COMPILATION: 'INIT_COMPILATION',
+    initCompilation(item: IProjectItem) {
+        return {
+            type: compilerActions.INIT_COMPILATION,
+            data: item
         };
     }
 };

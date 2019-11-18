@@ -18,7 +18,7 @@ import { switchMap, debounceTime, withLatestFrom } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
 import { panesActions } from '../../actions';
 
-const DEBOUNCE_INTERVAL_IN_MS = 1000;
+const DEBOUNCE_INTERVAL_IN_MS = 200;
 
 export const setUnsavedChanges: Epic = (action$, state$) => action$.pipe(
     ofType(panesActions.SET_UNSAVED_CHANGES),

@@ -14,47 +14,32 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { from, interval, concat, of } from 'rxjs';
-import { switchMap, first, withLatestFrom } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { switchMap, withLatestFrom } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
-import { explorerActions, compilerActions, panelsActions, projectsActions } from '../../actions';
-import { compilerService } from '../../services';
-import { Panels } from '../../models/state';
-import { projectSelectors } from '../../selectors';
-
-function compileContract(compilerState: any) {
-    return from(
-        new Promise((resolve) => {
-            compilerService.queue(
-                { input: JSON.stringify(compilerState.input), files: compilerState.files },
-                (data: any) => resolve(compilerActions.handleCompileOutput(JSON.parse(data)))
-            );
-        })
-    );
-}
+import { explorerActions, compilerActions, projectsActions } from '../../actions';
+import { IPane } from '../../models/state';
+import { explorerSelectors, panesSelectors } from '../../selectors';
 
 export const compileContractsEpic: Epic = (action$: any, state$: any) => action$.pipe(
     ofType(explorerActions.COMPILE_CONTRACT),
     withLatestFrom(state$),
-    switchMap(([_action, state]) => {
-        const project = projectSelectors.getProject(state$.value);
-        const files = state$.value.explorer.tree;
-        const isOwnProject = state$.value.projects.isOwnProject;
+    switchMap(([action]) => {
 
-        if (isOwnProject) {
-            compilerService.init();
-            return concat(
-                of(panelsActions.openPanel(Panels.OutputLog)), // show output
-                interval(200).pipe(
-                    first(() => compilerService.isReady()), // compiler has to be ready to be able to do smth
-                    switchMap(() => concat(
-                        of(compilerActions.compilerReady(compilerService.getVersion())),
-                        compileContract(state.compiler)
-                    ))
-                )
-            );
-        } else {
-            return [projectsActions.createForkedProject(project.name, project.description, files)];
+        const hasUnstoredChanges = explorerSelectors.hasUnstoredChanges(state$.value);
+
+        const panes = panesSelectors.getPanes(state$.value);
+        const hasUnsavedChanges = panes.reduce((acc: any, curr: IPane) => {
+            if (acc === true) {
+                return true;
+            }
+            return curr.hasUnsavedChanges;
+        }, []);
+
+        if (hasUnsavedChanges || hasUnstoredChanges) {
+            return of(projectsActions.saveProject(action.data));
         }
+
+        return of(compilerActions.initCompilation(action.data));
     })
 );
