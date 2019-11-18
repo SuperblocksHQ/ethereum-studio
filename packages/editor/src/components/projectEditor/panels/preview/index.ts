@@ -43,7 +43,7 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
             dispatch(previewActions.tryDownload());
         },
         onToggleWeb3Accounts: () => {
-            // dispatch(outputLogActions.clearOutputLog());
+            dispatch(previewActions.toggleWeb3Accounts());
         },
         onHideModals: () => {
             dispatch(previewActions.hideModals());
