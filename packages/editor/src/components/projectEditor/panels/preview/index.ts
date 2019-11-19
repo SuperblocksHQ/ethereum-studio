@@ -24,7 +24,7 @@ import { TransactionType } from '../../../../models';
 
 const mapStateToProps = (state: any) => ({
     isProjectLoaded: !!projectSelectors.getProject(state),
-    disableAccounts: previewSelectors.getDisableAccounts(state),
+    disableWeb3: previewSelectors.getDisableWeb3(state),
     showNoExportableContentModal: previewSelectors.getShowNoExportableContentModal(state),
     showCannotExportModal: previewSelectors.getShowCannotExportModal(state),
     showDownloadModal: previewSelectors.getShowDownloadModal(state),
@@ -42,8 +42,8 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
         tryToDownload: () => {
             dispatch(previewActions.tryDownload());
         },
-        onToggleWeb3Accounts: () => {
-            dispatch(previewActions.toggleWeb3Accounts());
+        onToggleWeb3: () => {
+            dispatch(previewActions.toggleWeb3());
         },
         onHideModals: () => {
             dispatch(previewActions.hideModals());

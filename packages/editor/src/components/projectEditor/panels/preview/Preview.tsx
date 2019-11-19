@@ -36,13 +36,13 @@ function getIframeSrc() {
 const IFRAME_ID = 'appViewIframe';
 
 interface IProps {
-    onToggleWeb3Accounts: () => void;
+    onToggleWeb3: () => void;
     onHideModals: () => void;
     tryToDownload: () => void;
     notifyTx: (transactionType: TransactionType, hash: string) => void;
     download: () => void;
     refreshContent: () => void;
-    disableAccounts: boolean;
+    disableWeb3: boolean;
     showNoExportableContentModal: boolean;
     showCannotExportModal: boolean;
     showDownloadModal: boolean;
@@ -94,9 +94,9 @@ export class Preview extends React.Component<IProps> {
         tryDownload();
     }
 
-    toggleWeb3Accounts() {
-        const { onToggleWeb3Accounts, refreshContent } = this.props;
-        onToggleWeb3Accounts();
+    toggleWeb3() {
+        const { onToggleWeb3, refreshContent } = this.props;
+        onToggleWeb3();
         refreshContent();
     }
 
@@ -104,12 +104,12 @@ export class Preview extends React.Component<IProps> {
         return (
             <div className={style.moreContainer} onClick={ e => e.stopPropagation() }>
                 <div className={style.heading}>
-                    <p>Disable Web3 Accounts</p>
+                    <p>Disable Web3</p>
                     <input type='checkbox'
-                        checked={this.props.disableAccounts}
-                        onChange={() => this.toggleWeb3Accounts()} />
+                        checked={this.props.disableWeb3}
+                        onChange={() => this.toggleWeb3()} />
                 </div>
-                <div className={style.description}>Simulate that no Web3 accounts are available</div>
+                <div className={style.description}>Simulate that Web3 is not available.</div>
             </div>
         );
     }
