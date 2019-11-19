@@ -19,7 +19,7 @@ import { IEnvironment, IAccount } from '../models/state';
 import { TransactionType } from '../models';
 
 let iframeId: string;
-let disableAccounts = false;
+let disableWeb3 = false;
 
 export const previewService = {
     superProvider: <any>null,
@@ -70,6 +70,6 @@ export const previewService = {
         }
     },
 
-    get disableAccounts() { return disableAccounts; },
-    set disableAccounts(value) { disableAccounts = value; },
+    get disableWeb3() { return disableWeb3; },
+    set disableWeb3(value) { disableWeb3 = value; },
 };
