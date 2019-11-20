@@ -104,12 +104,12 @@ export class Preview extends React.Component<IProps> {
         return (
             <div className={style.moreContainer} onClick={ e => e.stopPropagation() }>
                 <div className={style.heading}>
-                    <p>Disable Web3</p>
+                    <p>Disable Web3 Provider</p>
                     <input type='checkbox'
                         checked={this.props.disableWeb3}
                         onChange={() => this.toggleWeb3()} />
                 </div>
-                <div className={style.description}>Simulate that Web3 is not available.</div>
+                <div className={style.description}>Simulate that Superblocks Web3 provider is not available.</div>
             </div>
         );
     }
