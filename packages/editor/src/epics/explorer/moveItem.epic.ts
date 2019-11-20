@@ -42,7 +42,7 @@ export const moveItemEpic: Epic = (action$, state$) => action$.pipe(
                     files
                 })
                 .pipe(
-                    switchMap(() => [explorerActions.moveItemSuccess(data.sourceId), explorerActions.updateDappfile()]),
+                    switchMap(() => [explorerActions.moveItemSuccess(data.sourceId), explorerActions.updateDappfile(data.data.sourceId)]),
                     catchError(() => [ explorerActions.moveItemFail(data.sourceId) ])
                 );
             } else {
