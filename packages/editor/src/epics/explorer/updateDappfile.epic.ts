@@ -50,8 +50,16 @@ export const updateDappfileEpic = (action$: AnyAction, state$: any) => action$.p
                         newContracts.push(newContract);
                     } else {
                         const contractConfig = dappFileData.contracts.find((contract: IContractConfiguration) => (contract.name === item.name.replace('.sol', '') && contract.source === pathToString(path())));
-
-                        newContracts.push(contractConfig);
+                        if (contractConfig) {
+                            newContracts.push(contractConfig);
+                        } else {
+                            const newContract = {
+                                source: pathToString(path()),
+                                name: item.name.replace('.sol', ''),
+                                args: []
+                            };
+                            newContracts.push(newContract);
+                        }
                     }
                 }
             });
