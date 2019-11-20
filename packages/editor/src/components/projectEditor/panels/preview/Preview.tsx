@@ -109,7 +109,7 @@ export class Preview extends React.Component<IProps> {
                         checked={this.props.disableWeb3}
                         onChange={() => this.toggleWeb3()} />
                 </div>
-                <div className={style.description}>Simulate that Superblocks Web3 provider is not available.</div>
+                <div className={style.description}>Simulate that Web3 provider is not available.</div>
             </div>
         );
     }
