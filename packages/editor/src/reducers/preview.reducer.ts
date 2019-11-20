@@ -31,15 +31,12 @@ const initialState = {
 };
 
 function getProviderHTML(endpoint: string, accounts: string[], disableWeb3?: boolean) {
-    const web3Provider = disableWeb3 ? '' : `<script type="text/javascript" src="${window.location.origin}/static/js/web3provider.js?ts=${Date.now()}"></script>`;
-
-    const js =
-        `${web3Provider}
+    return disableWeb3 ? '' :
+        `<script type="text/javascript" src="${window.location.origin}/static/js/web3provider.js?ts=${Date.now()}"></script>
          <script type="text/javascript">
             window.web3={currentProvider:new DevKitProvider.provider("${endpoint}"), eth:{ accounts:${JSON.stringify(accounts)} }};
             console.log("Using Superblocks web3 provider for endpoint: ${endpoint}");
          </script>`;
-    return js;
 }
 
 function getInnerContent(html: string, style: string, js: string, endpoint?: string, accounts?: string[], disableWeb3?: boolean) {
