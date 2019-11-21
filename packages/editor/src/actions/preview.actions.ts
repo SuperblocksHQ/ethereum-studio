@@ -45,10 +45,10 @@ export const previewActions = {
         };
     },
 
-    TOGGLE_WEB3_ACCOUNTS: 'PREVIEW.TOGGLE_WEB3_ACCOUNTS',
-    toggleWeb3Accounts() {
+    TOGGLE_WEB3: 'PREVIEW.TOGGLE_WEB3',
+    toggleWeb3() {
         return {
-            type: previewActions.TOGGLE_WEB3_ACCOUNTS
+            type: previewActions.TOGGLE_WEB3
         };
     },
 };

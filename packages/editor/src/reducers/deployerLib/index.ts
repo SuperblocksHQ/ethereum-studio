@@ -16,3 +16,4 @@
 
 export * from './normalizeContractArgs';
 export * from './getContractArguments';
+export * from './getContractValue';

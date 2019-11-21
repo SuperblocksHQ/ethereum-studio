@@ -14,10 +14,20 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export const previewSelectors = {
-    getDisableWeb3: (state: any) => state.preview.disableWeb3,
-    getShowNoExportableContentModal: (state: any) => state.preview.showNoExportableContentModal,
-    getShowCannotExportModal: (state: any) => state.preview.showCannotExportModal,
-    getShowDownloadModal: (state: any) => state.preview.showDownloadModal,
-    getHtmlToRender: (state: any) => state.preview.htmlToRender
-};
+import { switchMap, withLatestFrom } from 'rxjs/operators';
+import { Epic, ofType } from 'redux-observable';
+import { panelsActions, previewActions } from '../../actions';
+import { EMPTY } from 'rxjs';
+import { Panels } from '../../models/state';
+
+export const tryToDownloadEpic: Epic = (action$: any, state$: any) => action$.pipe(
+    ofType(previewActions.TRY_DOWNLOAD),
+    withLatestFrom(state$),
+    switchMap(([_, state]) => {
+        if (!state.panels.Preview.open) {
+            return [panelsActions.openPanel(Panels.Preview)];
+        }
+
+        return EMPTY;
+    })
+);

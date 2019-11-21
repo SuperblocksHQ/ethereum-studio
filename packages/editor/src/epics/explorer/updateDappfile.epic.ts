@@ -56,10 +56,10 @@ export const updateDappfileEpic = (action$: AnyAction, state$: any) => action$.p
                             const newContract = {
                                 source: pathToString(path()),
                                 name: item.name.replace('.sol', ''),
-                                args: []
+                                args: [],
+                                value: ''
                             };
                             newContracts.push(newContract);
-                        }
                     }
                 }
             });
