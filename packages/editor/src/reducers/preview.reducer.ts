@@ -19,29 +19,28 @@ import Networks from '../networks';
 import { AnyAction } from 'redux';
 import { findItemByPath } from './explorerLib';
 import { ProjectItemTypes } from '../models';
-import { projectSelectors } from '../selectors';
+import { projectSelectors, previewSelectors } from '../selectors';
 
 const initialState = {
     showNoExportableContentModal: false,
     showCannotExportModal: false,
     showDownloadModal: false,
-    disableAccounts: false,
+    disableWeb3: false,
     htmlToRender: '',
     exportableHtml: undefined
 };
 
-function getProviderHTML(endpoint: string, accounts: string[]) {
-    const js =
+function getProviderHTML(endpoint: string, accounts: string[], disableWeb3?: boolean) {
+    return disableWeb3 ? '' :
         `<script type="text/javascript" src="${window.location.origin}/static/js/web3provider.js?ts=${Date.now()}"></script>
          <script type="text/javascript">
             window.web3={currentProvider:new DevKitProvider.provider("${endpoint}"), eth:{ accounts:${JSON.stringify(accounts)} }};
             console.log("Using Superblocks web3 provider for endpoint: ${endpoint}");
          </script>`;
-    return js;
 }
 
-function getInnerContent(html: string, style: string, js: string, endpoint?: string, accounts?: string[]) {
-    const js2 = ((endpoint && endpoint !== null) && (accounts && accounts !== null) ? getProviderHTML(endpoint, accounts) : '') + `<script type="text/javascript">${js}</script>`;
+function getInnerContent(html: string, style: string, js: string, endpoint?: string, accounts?: string[], disableWeb3?: boolean) {
+    const js2 = ((endpoint && endpoint !== null) && (accounts && accounts !== null) ? getProviderHTML(endpoint, accounts, disableWeb3) : '') + `<script type="text/javascript">${js}</script>`;
 
     const style2 = `<style type="text/css">${style}</style>`;
     html = html.replace('<!-- STYLE -->', style2);
@@ -70,6 +69,7 @@ export default function previewReducer(state = initialState, action: AnyAction, 
             let exportableHtml;
             const tree = rootState.explorer.tree;
             const addresses = [projectSelectors.getSelectedAccount(rootState).address];
+            const disableWeb3 = previewSelectors.getDisableWeb3(rootState);
 
             const html = findItemByPath(tree, [ 'app', 'app.html' ], ProjectItemTypes.File);
             const css = findItemByPath(tree, [ 'app', 'app.css' ], ProjectItemTypes.File);
@@ -89,7 +89,7 @@ export default function previewReducer(state = initialState, action: AnyAction, 
             if ((!html || !css || !js || !html.code || !css.code || !js.code)) {
                 htmlToRender = errorHtml('There was an error rendering your project');
             } else {
-                htmlToRender = getInnerContent(html.code, css.code, contractJs + '\n' + js.code, rootState.projects.selectedEnvironment.endpoint, addresses);
+                htmlToRender = getInnerContent(html.code, css.code, contractJs + '\n' + js.code, rootState.projects.selectedEnvironment.endpoint, addresses, disableWeb3);
                 exportableHtml = getInnerContent(html.code, css.code, contractJs + '\n' + js.code);
             }
 
@@ -125,10 +125,10 @@ export default function previewReducer(state = initialState, action: AnyAction, 
                 showDownloadModal
             };
         }
-        case previewActions.TOGGLE_WEB3_ACCOUNTS:
+        case previewActions.TOGGLE_WEB3:
             return {
                 ...state,
-                disableAccounts: !state.disableAccounts
+                disableWeb3: !state.disableWeb3
             };
         default:
             return state;
