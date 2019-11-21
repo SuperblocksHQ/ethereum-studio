@@ -14,12 +14,20 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { downloadEpic } from './download.epic';
-import { toggleWeb3AccountsEpic } from './toggleWeb3Accounts.epic';
-import { tryToDownloadEpic } from './tryToDownload.epic';
+import { switchMap, withLatestFrom } from 'rxjs/operators';
+import { Epic, ofType } from 'redux-observable';
+import { panelsActions, previewActions } from '../../actions';
+import { EMPTY } from 'rxjs';
+import { Panels } from '../../models/state';
 
-export const previewEpics = [
-    downloadEpic,
-    toggleWeb3AccountsEpic,
-    tryToDownloadEpic
-];
+export const tryToDownloadEpic: Epic = (action$: any, state$: any) => action$.pipe(
+    ofType(previewActions.TRY_DOWNLOAD),
+    withLatestFrom(state$),
+    switchMap(([_, state]) => {
+        if (!state.panels.Preview.open) {
+            return [panelsActions.openPanel(Panels.Preview)];
+        }
+
+        return EMPTY;
+    })
+);
