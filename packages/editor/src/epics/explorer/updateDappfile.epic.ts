@@ -45,7 +45,8 @@ export const updateDappfileEpic = (action$: AnyAction, state$: any) => action$.p
                         const newContract = {
                             source: pathToString(path()),
                             name: item.name.replace('.sol', ''),
-                            args: contractConfig.args
+                            args: contractConfig.args,
+                            value: contractConfig.value
                         };
                         newContracts.push(newContract);
                     } else {
@@ -60,6 +61,7 @@ export const updateDappfileEpic = (action$: AnyAction, state$: any) => action$.p
                                 value: ''
                             };
                             newContracts.push(newContract);
+                        }
                     }
                 }
             });
