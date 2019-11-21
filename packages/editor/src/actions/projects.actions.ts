@@ -192,9 +192,10 @@ export const projectsActions = {
     },
 
     SAVE_PROJECT: 'SAVE_PROJECT',
-    saveProject() {
+    saveProject(item?: IProjectItem) {
         return {
             type: projectsActions.SAVE_PROJECT,
+            data: { item }
         };
     },
     SAVE_PROJECT_SUCCESS: 'SAVE_PROJECT_SUCCESS',

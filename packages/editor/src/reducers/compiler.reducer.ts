@@ -126,7 +126,7 @@ function getCompilerInputParams(sources: any) {
 
 export default function compilerReducer(state = initialState, action: AnyAction, { explorer }: { explorer: IExplorerState }) {
     switch (action.type) {
-        case explorerActions.COMPILE_CONTRACT: {
+        case compilerActions.INIT_COMPILATION: {
             if (!explorer.tree) {
                 return state;
             }

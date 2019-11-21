@@ -17,9 +17,11 @@
 import { compileContractsEpic } from './compileContract.epic';
 import { handleCompilerOutputEpic } from './handleCompilerOutput.epic';
 import { compilerReadyEpic } from './compilerReady.epic';
+import { initCompilation } from './initCompilation.epic';
 
 export const compilerEpics = [
     compilerReadyEpic,
     compileContractsEpic,
-    handleCompilerOutputEpic
+    handleCompilerOutputEpic,
+    initCompilation
 ];

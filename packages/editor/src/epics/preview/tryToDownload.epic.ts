@@ -1,4 +1,4 @@
-// Copyright 2019 Superblocks AB
+// Copyright 2018 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -14,19 +14,20 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { switchMap, debounceTime, withLatestFrom } from 'rxjs/operators';
-import { ofType, Epic } from 'redux-observable';
-import { panesActions } from '../../actions';
+import { switchMap, withLatestFrom } from 'rxjs/operators';
+import { Epic, ofType } from 'redux-observable';
+import { panelsActions, previewActions } from '../../actions';
+import { EMPTY } from 'rxjs';
+import { Panels } from '../../models/state';
 
-const DEBOUNCE_INTERVAL_IN_MS = 200;
-
-export const setUnsavedChanges: Epic = (action$, state$) => action$.pipe(
-    ofType(panesActions.SET_UNSAVED_CHANGES),
-    debounceTime(DEBOUNCE_INTERVAL_IN_MS),
+export const tryToDownloadEpic: Epic = (action$: any, state$: any) => action$.pipe(
+    ofType(previewActions.TRY_DOWNLOAD),
     withLatestFrom(state$),
-    switchMap(([action]) => {
-        const { fileId, hasUnsavedChanges, code} = action.data;
+    switchMap(([_, state]) => {
+        if (!state.panels.Preview.open) {
+            return [panelsActions.openPanel(Panels.Preview)];
+        }
 
-        return [panesActions.storeUnsavedChanges(fileId, hasUnsavedChanges, code)];
+        return EMPTY;
     })
 );

@@ -15,9 +15,12 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { downloadEpic } from './download.epic';
+import { tryToDownloadEpic } from './tryToDownload.epic';
 import { toggleWeb3Epic } from './toggleWeb3.epic';
 
 export const previewEpics = [
     downloadEpic,
+    tryToDownloadEpic,
     toggleWeb3Epic,
 ];
+

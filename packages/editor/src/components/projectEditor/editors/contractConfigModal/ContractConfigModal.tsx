@@ -21,7 +21,8 @@ import { ConstructorArgumentsList } from './constructorArgumentsList';
 import { ConstructorArgumentsHeader } from './constructorArgumentsHeader';
 import { ContractArgTypes, IProjectItem, IContractArgData, IContractConfiguration } from '../../../../models';
 import { IAccount } from '../../../../models/state';
-import { Modal, ModalHeader } from '../../../common';
+import { Modal, ModalHeader, Tooltip } from '../../../common';
+import { IconHelp } from '../../../icons';
 
 interface IProps {
     selectedContract: {
@@ -118,7 +119,6 @@ export default class ContractConfigModal extends Component<IProps, IState> {
             newContractConfig: {
                 ...this.state.newContractConfig,
                 args: [...prevState.newContractConfig.args, { type: ContractArgTypes.value, value: '' }],
-
             }
         }));
     }
@@ -133,6 +133,17 @@ export default class ContractConfigModal extends Component<IProps, IState> {
                 }
             }));
         }
+    }
+
+    onValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        this.setState({
+            newContractConfig: {
+                ...this.state.newContractConfig,
+                value,
+            },
+            isDirty: true
+        });
     }
 
     render() {
@@ -163,6 +174,29 @@ export default class ContractConfigModal extends Component<IProps, IState> {
                                         value={newContractConfig.name}
                                         onChange={this.onNameChange}
                                     />
+                                </div>
+                                <div className={style.valueContainer}>
+                                    <div className='superInputDark'>
+                                        <label htmlFor='value'>
+                                            Value
+                                            <Tooltip html={
+                                                    <div className='arrayInfoTooltip'>
+                                                        <div>Value is in Wei units</div>
+                                                        <div className='example'>This field can be used when a contract defines payable constructor and requires initial funding</div>
+                                                        <div className='example'>For example: constructor() public payable {'{ ... }'}</div>
+                                                    </div>
+                                                }>
+                                                <IconHelp className={style.icon} />
+                                            </Tooltip>
+                                        </label>
+                                        <input
+                                            id='value'
+                                            type='number'
+                                            placeholder='0'
+                                            value={newContractConfig.value}
+                                            onChange={this.onValueChange}
+                                        />
+                                    </div>
                                 </div>
                                 <div className={style.constructorContainer}>
                                     <ConstructorArgumentsHeader />

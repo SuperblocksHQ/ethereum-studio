@@ -21,4 +21,5 @@ export interface IContractConfiguration {
     name: string;
     args: IContractArgData[];
     source: string;
+    value: string;
 }

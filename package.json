@@ -3,9 +3,8 @@
   "private": true,
   "scripts": {
     "build": "npm run build:clean && npm run build:prod",
-    "build:dev": "npm run build:clean && npm run build:development",
+    "build:staging": "npm run build:clean && NODE_OPTIONS=\"--max-old-space-size=4096\" lerna run build:staging --scope editor --stream && lerna run build --scope web-server --stream && gulp",
     "build:prod": "NODE_OPTIONS=\"--max-old-space-size=4096\" lerna run build --scope editor --stream && lerna run build --scope web-server --stream && gulp",
-    "build:development": "NODE_OPTIONS=\"--max-old-space-size=4096\" lerna run build:development --scope editor --stream && lerna run build --scope web-server --stream && gulp",
     "build:server": "NODE_OPTIONS=\"--max-old-space-size=4096\" lerna run build --scope web-server --stream && gulp",
     "build:clean": "lerna run build:clean --scope editor && lerna run build:clean --scope web-server && rimraf www",
     "start": "lerna run start --scope editor --stream",
