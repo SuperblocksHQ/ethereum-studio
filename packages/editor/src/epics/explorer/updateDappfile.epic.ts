@@ -19,7 +19,7 @@ import { ofType } from 'redux-observable';
 import { explorerActions, panesActions } from '../../actions';
 import { empty } from 'rxjs';
 import { findItemByPath, traverseTree } from '../../reducers/explorerLib';
-import { IProjectItem, ProjectItemTypes, IContractConfiguration } from '../../models';
+import { IContractConfiguration, IProjectItem, ProjectItemTypes } from '../../models';
 import { isSolitidyFile } from '../../reducers/utils/fileUtils';
 import { AnyAction } from 'redux';
 
@@ -30,7 +30,7 @@ function pathToString(path: string[]) {
 export const updateDappfileEpic = (action$: AnyAction, state$: any) => action$.pipe(
     ofType(explorerActions.UPDATE_DAPPFILE),
     withLatestFrom(state$),
-    switchMap(([, state]) => {
+    switchMap(([action, state]) => {
         const files = state.explorer.tree;
         const dappFileData = state.projects.dappFileData;
         const dappFileItem: Nullable<IProjectItem> = findItemByPath(files, [ 'dappfile.json' ], ProjectItemTypes.File);
@@ -39,17 +39,29 @@ export const updateDappfileEpic = (action$: AnyAction, state$: any) => action$.p
             const newContracts: IContractConfiguration[] = [];
             traverseTree(files, (item, path) => {
                 if (isSolitidyFile(item)) {
-                    const contractConfig = dappFileData.contracts.find((contract: IContractConfiguration) => (contract.name === item.name.replace('.sol', '') && contract.source === pathToString(path())));
-                    if (contractConfig) {
-                        newContracts.push(contractConfig);
-                    } else {
+                    if (action.data.id === item.id) {
+                        const contractConfig = dappFileData.contracts.find((contract: IContractConfiguration) => (contract.name === item.name.replace('.sol', '')));
+
                         const newContract = {
                             source: pathToString(path()),
                             name: item.name.replace('.sol', ''),
-                            args: [],
-                            value: ''
+                            args: contractConfig.args,
+                            value: contractConfig.value
                         };
                         newContracts.push(newContract);
+                    } else {
+                        const contractConfig = dappFileData.contracts.find((contract: IContractConfiguration) => (contract.name === item.name.replace('.sol', '') && contract.source === pathToString(path())));
+                        if (contractConfig) {
+                            newContracts.push(contractConfig);
+                        } else {
+                            const newContract = {
+                                source: pathToString(path()),
+                                name: item.name.replace('.sol', ''),
+                                args: [],
+                                value: ''
+                            };
+                            newContracts.push(newContract);
+                        }
                     }
                 }
             });
