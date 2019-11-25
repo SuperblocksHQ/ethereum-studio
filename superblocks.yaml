@@ -26,8 +26,17 @@ jobs:
       - kubectl config set-context $K8S_CLUSTER_NAME_STAGING --cluster=$K8S_CLUSTER_NAME_STAGING --user=$K8S_USER_NAME_STAGING
       - kubectl config use-context $K8S_CLUSTER_NAME_STAGING
       - 'printf "apiVersion: v1\nkind: Secret\n$(kubectl create secret docker-registry $CI_PROJECT_NAME-github-registry --docker-server=$CI_REGISTRY --docker-username=$GITHUB_REGISTRY_USER --docker-password=$GITHUB_REGISTRY_TOKEN -o yaml --dry-run)" | kubectl apply -f -'
-      - sed 's _APP_NAME_ '"$CI_PROJECT_NAME"' g; s _CONTAINER_IMAGE_ '"$GITHUB_REGISTRY_IMAGE:$SUPER_COMMIT_SHA1"' g' kubernetes.tpl.yml > kubernetes.yml;
-      - kubectl apply -f kubernetes.yml
+      - sed 's _APP_NAME_ '"$CI_PROJECT_NAME"' g; s _CONTAINER_IMAGE_ '"$GITHUB_REGISTRY_IMAGE:$SUPER_COMMIT_SHA1.dev"' g' kubernetes.tpl.yml > kubernetes.yml;
+      - kubectl apply -f kubernetes.yml\
+
+  push_to_docker_registry_prod:
+    image: docker:18.09.7
+    services:
+      - docker:18.09.7-dind
+    script:
+      - echo "$GITHUB_REGISTRY_TOKEN" | docker login docker.pkg.github.com --username $GITHUB_REGISTRY_USER --password-stdin
+      - docker build --build-arg BUILD=build -t $GITHUB_REGISTRY_IMAGE:$SUPER_COMMIT_SHA1 .
+      - docker push $GITHUB_REGISTRY_IMAGE:$SUPER_COMMIT_SHA1
 
   deploy_to_prod:
     image: alpine
@@ -42,17 +51,8 @@ jobs:
       - kubectl config set-context $K8S_CLUSTER_NAME --cluster=$K8S_CLUSTER_NAME --user=$K8S_USER_NAME
       - kubectl config use-context $K8S_CLUSTER_NAME
       - 'printf "apiVersion: v1\nkind: Secret\n$(kubectl create secret docker-registry $CI_PROJECT_NAME-github-registry --docker-server=$CI_REGISTRY --docker-username=$GITHUB_REGISTRY_USER --docker-password=$GITHUB_REGISTRY_TOKEN -o yaml --dry-run)" | kubectl apply -f -'
-      - sed 's _APP_NAME_ '"$CI_PROJECT_NAME"' g; s _CONTAINER_IMAGE_ '"$GITHUB_REGISTRY_IMAGE:$SUPER_COMMIT_SHA1.dev"' g' kubernetes.tpl.yml > kubernetes.yml;
+      - sed 's _APP_NAME_ '"$CI_PROJECT_NAME"' g; s _CONTAINER_IMAGE_ '"$GITHUB_REGISTRY_IMAGE:$SUPER_COMMIT_SHA1"' g' kubernetes.tpl.yml > kubernetes.yml;
       - kubectl apply -f kubernetes.yml
-
-  push_to_docker_registry_prod:
-    image: docker:18.09.7
-    services:
-      - docker:18.09.7-dind
-    script:
-      - echo "$GITHUB_REGISTRY_TOKEN" | docker login docker.pkg.github.com --username $GITHUB_REGISTRY_USER --password-stdin
-      - docker build --build-arg BUILD=build -t $GITHUB_REGISTRY_IMAGE:$SUPER_COMMIT_SHA1 .
-      - docker push $GITHUB_REGISTRY_IMAGE:$SUPER_COMMIT_SHA1
 
 stages:
   - build_staging:
