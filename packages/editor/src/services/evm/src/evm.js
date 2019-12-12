@@ -1321,7 +1321,7 @@ function getBlock(blockNumber, returnTransactionObjects, callback) {
                                 to: utils.addHexPrefix(
                                     transaction.to.toString('hex')
                                 ), // TODO: check if empty must be null or not
-                                value: utils.bufferToInt(transaction.value),
+                                value: utils.fromSigned(transaction.value),
                                 r: utils.addHexPrefix(
                                     transaction.r.toString('hex')
                                 ),
@@ -1582,7 +1582,7 @@ function getTransaction(transactionHash, callback) {
                             : '0x0',
                         transactionIndex: transactionIndex,
                         to: utils.addHexPrefix(transaction.to.toString('hex')), // TODO: check if empty must be null or not
-                        value: utils.bufferToInt(transaction.value),
+                        value: utils.fromSigned(transaction.value),
                         r: utils.addHexPrefix(transaction.r.toString('hex')),
                         s: utils.addHexPrefix(transaction.s.toString('hex')),
                         v: utils.addHexPrefix(transaction.v.toString('hex')),
@@ -1645,7 +1645,7 @@ function getTransactionByBlock(blockNumber, transactionIndex, callback) {
                             : '0x0',
                         transactionIndex: transactionIndex,
                         to: utils.addHexPrefix(transaction.to.toString('hex')), // TODO: check if empty must be null or not
-                        value: utils.bufferToInt(transaction.value),
+                        value: utils.fromSigned(transaction.value),
                         r: utils.addHexPrefix(transaction.r.toString('hex')),
                         s: utils.addHexPrefix(transaction.s.toString('hex')),
                         v: utils.addHexPrefix(transaction.v.toString('hex')),
