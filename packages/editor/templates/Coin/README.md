@@ -64,7 +64,7 @@ function Coin(Contract) {
 }
 ```
 
-Initialize the `Coin` object and create an instance of the web3js library, passing Metamask as a provider for the contract, or any other network endpoint you can configure in the IDE settings. The initialization function then defines the interface for the contract using [the web3js contract object](https://web3js.readthedocs.io/en/v1.2.1/web3-eth-contract.html#new-contract) and then defines the address of the instance of the contract for the `Coin` object.
+Initialize the `Coin` object and create an instance of the web3js library, passing Metamask as a provider for the contract. The initialization function then defines the interface for the contract using [the web3js contract object](https://web3js.readthedocs.io/en/v1.2.1/web3-eth-contract.html#new-contract) and then defines the address of the instance of the contract for the `Coin` object.
 
 ```javascript
 Coin.prototype.init = function() {
