@@ -36,13 +36,10 @@ function compileContract(compilerState: any) {
 export const initCompilation: Epic = (action$: any, state$: any) => action$.pipe(
     ofType(compilerActions.INIT_COMPILATION),
     withLatestFrom(state$),
-    switchMap(([action, state]) => {
-
+    switchMap(([, state]) => {
         const project = projectSelectors.getProject(state);
-        const files = action.data.files;
         const isOwnProject = state.projects.isOwnProject;
 
-        console.log(files);
         if (isOwnProject) {
             compilerService.init();
             return concat(
@@ -56,7 +53,7 @@ export const initCompilation: Epic = (action$: any, state$: any) => action$.pipe
                 )
             );
         } else {
-            return [projectsActions.createForkedProject(project.name, project.description, files)];
+            return [projectsActions.forkProject(project.id, true)];
         }
     })
 );
