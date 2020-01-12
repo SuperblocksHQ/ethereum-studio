@@ -16,17 +16,15 @@
 
 import React, { Component } from 'react';
 import style from './style.less';
-import { DropdownContainer } from '../common/dropdown';
 import { HelpAction, NewProjectAction, OnlyIf, StyledButton } from '../common';
 import NetworkAccountSelector from '../networkAccountSelector';
-import MenuDropdownDialog from './menu';
 import ProjectTitle from './projectTitle';
 import { IProject } from '../../models';
-import { ForkDropdownAction, MenuAction, PreferencesAction, ShareDropdownAction } from './actions';
+import { ForkDropdownAction, PreferencesAction, ShareDropdownAction } from './actions';
 import AccountConfigModal from '../projectEditor/editors/accountConfigModal';
 import { StyledButtonType } from '../common/buttons/StyledButtonType';
-import { SimpleModal } from '../modals';
 import AboutModal from '../modals/aboutModal';
+import { IconEthereum } from '../icons';
 
 interface IView {
     showOpenStudio: boolean;
@@ -90,11 +88,12 @@ export default class TopBar extends Component<IProps> {
         return (
             <div className={style.topbar}>
                 <div className={style.actionsLeft}>
-                    <DropdownContainer
-                        className={style.actionDialogMenu}
-                        dropdownContent={<MenuDropdownDialog />} >
-                        <MenuAction />
-                    </DropdownContainer>
+                    <a href='https://ethereum.org' target='_blank' rel='noopener noreferrer' className={style.logo}>
+                        <IconEthereum
+                            height={'30'}
+                            width={'30'}
+                        />
+                    </a>
                     <OnlyIf test={showOpenStudio}>
                         <a
                             className={style.openStudio}
