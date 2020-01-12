@@ -232,7 +232,7 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                 </OnlyIf>
 
 
-                <BottomBar endpoint={selectedEnvironment.endpoint} />
+                <BottomBar />
                 <Deployer />
             </div>
         );
