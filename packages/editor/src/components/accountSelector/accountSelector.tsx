@@ -21,6 +21,7 @@ import style from './style.less';
 import { IconDropdown, IconLock, IconLockOpen, IconMetamask, IconMetamaskLocked, IconPublicAddress } from '../icons';
 import { AccountsList } from './accountsList';
 import { IAccount } from '../../models/state';
+import Identicon from '../identicon';
 
 interface IProps {
     selectedAccount: IAccount;
@@ -29,34 +30,6 @@ interface IProps {
     onAccountEdit(account: IAccount): void;
     onAccountDelete(account: IAccount): void;
     onAccountCreate(): void;
-}
-
-function getAccountIcon(accountType: string, isLocked: boolean) {
-    let accountIcon;
-    if (accountType === 'metamask') {
-        if (isLocked) {
-            accountIcon = (
-                <IconMetamaskLocked alt='locked metamask account' />
-            );
-        } else {
-            accountIcon = <IconMetamask alt='available metamask account' />;
-        }
-    } else if (accountType === 'wallet') {
-        if (isLocked) {
-            accountIcon = (
-                <IconLock alt='locked wallet account' size='xs' />
-            );
-        } else {
-            accountIcon = (
-                <IconLockOpen alt='open wallet account' size='xs' />
-            );
-        }
-    } else if (accountType === 'pseudo') {
-        accountIcon = (
-            <IconPublicAddress alt='pseudo account with only a public address' />
-        );
-    }
-    return accountIcon;
 }
 
 export class AccountSelector extends React.Component<IProps> {
@@ -83,7 +56,7 @@ export class AccountSelector extends React.Component<IProps> {
                 }
             >
                 <div className={classnames([style.selector, style.account])}>
-                    {getAccountIcon(selectedAccount.type, selectedAccount.isLocked)}
+                    <Identicon seed={selectedAccount.address} size={7}/>
                     <div className={style.accountContainer}>
                         <div title={selectedAccount.address || ''} className={style.nameContainer}>
                             {selectedAccount.name}

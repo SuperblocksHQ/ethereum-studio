@@ -17,10 +17,9 @@
 import React, { Component } from 'react';
 import style from './style.less';
 import { HelpAction, NewProjectAction, OnlyIf, StyledButton } from '../common';
-import NetworkAccountSelector from '../networkAccountSelector';
 import ProjectTitle from './projectTitle';
 import { IProject } from '../../models';
-import { ForkDropdownAction, PreferencesAction, ShareDropdownAction } from './actions';
+import { ForkDropdownAction, PreferencesAction, ShareDropdownAction, AccountSelectorAction } from './actions';
 import AccountConfigModal from '../projectEditor/editors/accountConfigModal';
 import { StyledButtonType } from '../common/buttons/StyledButtonType';
 import AboutModal from '../modals/aboutModal';
@@ -107,7 +106,6 @@ export default class TopBar extends Component<IProps> {
                             />
                         </a>
                     </OnlyIf>
-                    <NetworkAccountSelector />
                     <div className={style.projectActions}>
                         <OnlyIf test={showForkButton}>
                             <ForkDropdownAction
@@ -131,6 +129,7 @@ export default class TopBar extends Component<IProps> {
                         <PreferencesAction />
                     </div>
                     <HelpAction openAboutModal={toggleAboutModal}/>
+                    <AccountSelectorAction />
                 </div>
                 <OnlyIf test={showAboutModal}>
                     <AboutModal

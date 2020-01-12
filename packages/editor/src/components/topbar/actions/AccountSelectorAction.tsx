@@ -1,4 +1,4 @@
-// Copyright 2018 Superblocks AB
+// Copyright 2019 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -14,8 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export * from './ForkDropdownAction';
-export * from './MenuAction';
-export * from './PreferencesAction';
-export * from './ShareDropdownAction';
-export * from './AccountSelectorAction';
+import React from 'react';
+import style from '../style.less';
+import AccountSelectorWrapper from '../../accountSelector';
+
+export const AccountSelectorAction = () => (
+    <div className={style.action}>
+        <AccountSelectorWrapper/>
+    </div>
+);

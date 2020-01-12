@@ -21,10 +21,9 @@ import OnlyIf from '../common/onlyIf';
 import { AccountSelector } from './accountSelector';
 import { projectsActions } from '../../actions';
 import { projectSelectors } from '../../selectors';
-import { IProject, INetwork } from '../../models';
-import { IAccount, IEnvironment } from '../../models/state';
+import { IProject } from '../../models';
+import { IAccount } from '../../models/state';
 import { AnyAction } from 'redux';
-import { NetworkSelector } from './networkSelector';
 import { accountActions } from '../../actions/account.actions';
 
 interface IProps {
@@ -37,7 +36,7 @@ interface IProps {
     selectedAccount: IAccount;
 }
 
-class NetworkAccountSelector extends Component<IProps> {
+class AccountSelectorWrapper extends Component<IProps> {
     render() {
         const {
             project,
@@ -52,15 +51,13 @@ class NetworkAccountSelector extends Component<IProps> {
         return (
             <OnlyIf test={Boolean(project.id)}>
                 <div className={style.container}>
-                    <div className={style.actionWrapper}>
-                        <AccountSelector
+                    <AccountSelector
                             accounts={accounts}
                             selectedAccount={selectedAccount}
                             onAccountSelected={onAccountSelected}
                             onAccountCreate={onAccountCreate}
                             onAccountDelete={onAccountDelete}
                             onAccountEdit={onAccountEdit} />
-                    </div>
                 </div>
             </OnlyIf>
         );
@@ -90,4 +87,4 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(NetworkAccountSelector);
+export default connect(mapStateToProps, mapDispatchToProps)(AccountSelectorWrapper);
