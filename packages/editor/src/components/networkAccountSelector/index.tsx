@@ -29,9 +29,6 @@ import { accountActions } from '../../actions/account.actions';
 
 interface IProps {
     project: IProject;
-    selectedEnvironment: IEnvironment;
-    onNetworkSelected: (environmentName: string) => void;
-    environments: [IEnvironment];
     onAccountSelected: (account: IAccount) => void;
     onAccountCreate: () => void;
     onAccountDelete: (account: IAccount) => void;
@@ -44,9 +41,6 @@ class NetworkAccountSelector extends Component<IProps> {
     render() {
         const {
             project,
-            selectedEnvironment,
-            onNetworkSelected,
-            environments,
             onAccountSelected,
             onAccountCreate,
             onAccountDelete,
@@ -58,12 +52,6 @@ class NetworkAccountSelector extends Component<IProps> {
         return (
             <OnlyIf test={Boolean(project.id)}>
                 <div className={style.container}>
-                    <div className={style.actionWrapper}>
-                        <NetworkSelector
-                            selectedEnvironment={selectedEnvironment}
-                            environments={environments}
-                            onNetworkSelected={onNetworkSelected} />
-                    </div>
                     <div className={style.actionWrapper}>
                         <AccountSelector
                             accounts={accounts}
@@ -81,17 +69,12 @@ class NetworkAccountSelector extends Component<IProps> {
 
 const mapStateToProps = (state: any) => ({
     project: projectSelectors.getProject(state),
-    selectedEnvironment: projectSelectors.getSelectedEnvironment(state),
-    environments: projectSelectors.getEnvironments(state),
     selectedAccount: projectSelectors.getSelectedAccount(state),
     accounts: state.projects.accounts
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
     return {
-        onNetworkSelected(environmentName: string) {
-            dispatch(projectsActions.setEnvironment(environmentName));
-        },
         onAccountSelected(account: IAccount) {
             dispatch(projectsActions.selectAccount(account.name));
         },

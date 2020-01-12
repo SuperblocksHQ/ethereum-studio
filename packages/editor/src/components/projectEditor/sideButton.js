@@ -9,9 +9,6 @@ export function SideButton(props) {
             onClick={props.onClick}
         >
             {props.icon}
-            <span className={style.buttonText}>
-                {props.name}
-            </span>
         </button>
     );
 }
