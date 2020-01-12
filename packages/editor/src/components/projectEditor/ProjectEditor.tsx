@@ -182,42 +182,8 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                                                 </SplitterLayout>
                                             </div>
                                         </SplitterLayout>
-                                        <React.Fragment>
-                                            <OnlyIf test={this.isPanelOpen(Panels.MessageLog)}>
-                                                <Panel name='Messages' onClose={() => closePanel(Panels.MessageLog)} dragging={verticalPanelDragging}>
-                                                    <MessagesPanel />
-                                                </Panel>
-                                            </OnlyIf>
-                                            <OnlyIf test={this.isPanelOpen(Panels.OutputLog)}>
-                                                <Panel name='Output' onClose={() => closePanel(Panels.OutputLog)} dragging={verticalPanelDragging}>
-                                                    <OutputPanel />
-                                                </Panel>
-                                            </OnlyIf>
-                                        </React.Fragment>
                             </SplitterLayout>
                         </div>
-
-                        <div className={style.bottomButtonsContainer}>
-                            <SideButton name='Output'
-                                icon={<IconPanelOutput />}
-                                onClick={() => togglePanel(Panels.OutputLog)}  />
-
-                            <div style={{marginLeft: 'auto'}}>
-                                <SideButton name='Messages'
-                                    icon={<IconEventLog />}
-                                    onClick={() => togglePanel(Panels.MessageLog)}  />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className={classnames([style.sideButtonsContainer, style.sideButtonsContainerRight])}>
-                        <SideButton name='Transactions'
-                            icon={<IconTransactions />}
-                            onClick={() => togglePanel(Panels.Transactions)}  />
-
-                        <SideButton name='Preview'
-                            icon={<IconShowPreview />}
-                            onClick={() => togglePanel(Panels.Preview)}  />
                     </div>
                 </div>
 
