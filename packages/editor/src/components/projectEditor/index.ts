@@ -34,6 +34,9 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
         togglePanel(panel: Panels) {
             dispatch(panelsActions.togglePanel(panel));
         },
+        openPanel(panel: Panels) {
+            dispatch(panelsActions.openPanel(panel));
+        },
         closePanel(panel: Panels) {
             dispatch(panelsActions.closePanel(panel));
         },

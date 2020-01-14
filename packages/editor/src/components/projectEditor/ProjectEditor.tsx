@@ -44,6 +44,7 @@ interface IProps {
     showExternalProviderInfo: boolean;
     showModal: (modalType: string, modalProps: any) => void;
     togglePanel(panel: Panels): void;
+    openPanel(panel: Panels): void;
     closePanel(panel: Panels): void;
     closeContractConfigModal(): void;
 }
@@ -94,6 +95,7 @@ export class ProjectEditor extends React.Component<IProps, IState> {
 
     render() {
         const { togglePanel,
+                openPanel,
                 closePanel,
                 selectedEnvironment,
                 showContractConfig,
@@ -109,17 +111,17 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                 <LoadingBar className='loading' />
                 <div className={style.mainWrapper}>
                     <div className={classnames([style.sideButtonsContainer, style.sideButtonsContainerLeft])}>
-                        <SideButton name='Explorer'
+                        <SideButton
                             icon={<IconFolderOpen color='#fff' />}
                             onClick={() => togglePanel(Panels.Explorer)}
                             className={this.isPanelOpen(Panels.Explorer) && style.active}
                         />
-                        <SideButton name='Configure'
+                        <SideButton
                             icon={<IconConfigure color='#fff' />}
                             onClick={() => togglePanel(Panels.Configure)}
                             className={this.isPanelOpen(Panels.Configure) && style.active}
                         />
-                        <SideButton name='Interact'
+                        <SideButton
                             icon={<IconInteract color='#fff' />}
                             onClick={() => togglePanel(Panels.Interact)}
                             className={this.isPanelOpen(Panels.Interact) && style.active}
@@ -185,18 +187,33 @@ export class ProjectEditor extends React.Component<IProps, IState> {
 
                                                     <Panes dragging={sidePanelDragging} />
 
-                                                    { this.isPanelOpen(Panels.Transactions) &&
-                                                        <Panel icon={ <IconTransactions /> } name='Transactions History' onClose={() => closePanel(Panels.Transactions)} dragging={sidePanelDragging}>
-                                                            <TransactionLogPanel />
-                                                        </Panel>
-                                                    }
+                                                    <div className={style.rightPanelWrapper}>
+                                                        <div className={classnames([style.topButtonsContainer])}>
+                                                            <SideButton
+                                                                name='Browser'
+                                                                icon={<IconShowPreview />}
+                                                                onClick={() => openPanel(Panels.Preview)}
+                                                                active={this.isPanelOpen(Panels.Preview)}
+                                                            />
+                                                            <SideButton
+                                                                name='Transactions'
+                                                                icon={<IconTransactions />}
+                                                                onClick={() => openPanel(Panels.Transactions)}
+                                                                active={this.isPanelOpen(Panels.Transactions)}
+                                                            />
+                                                        </div>
+                                                        { this.isPanelOpen(Panels.Transactions) &&
+                                                            <Panel icon={ <IconTransactions /> } onClose={() => closePanel(Panels.Transactions)} dragging={sidePanelDragging}>
+                                                                <TransactionLogPanel />
+                                                            </Panel>
+                                                        }
 
-                                                    { this.isPanelOpen(Panels.Preview) &&
-                                                        <Panel name='Preview' onClose={() => closePanel(Panels.Preview)} dragging={sidePanelDragging}>
-                                                            <PreviewPanel />
-                                                        </Panel>
-                                                    }
-
+                                                        { this.isPanelOpen(Panels.Preview) &&
+                                                            <Panel dragging={sidePanelDragging}>
+                                                                <PreviewPanel />
+                                                            </Panel>
+                                                        }
+                                                    </div>
                                                 </SplitterLayout>
                                             </div>
                                         </SplitterLayout>

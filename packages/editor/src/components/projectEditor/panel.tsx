@@ -7,29 +7,31 @@ import { OnlyIf } from '../common';
 interface IProps {
     dragging: boolean;
     icon?: JSX.Element;
-    name: string;
+    name?: string;
     children: JSX.Element;
-    onClose(): void;
+    onClose?(): void;
 }
 
 export function Panel(props: IProps) {
     return (
         <div className={classNames(style.actionContainer, { dragging: props.dragging })}>
-            <div className={style.header}>
-                <OnlyIf test={props.icon}>
-                    <div className={style.panelIcon}>
-                        {props.icon}
-                    </div>
-                </OnlyIf>
-                <span className={style.title}>
-                    {props.name}
-                </span>
-                <button
-                    className={classNames([ style.icon, 'btnNoBg', ])}
-                    onClick={props.onClose}>
-                    <IconClose />
-                </button>
-            </div>
+            { props.name &&
+                <div className={style.header}>
+                    <OnlyIf test={props.icon}>
+                        <div className={style.panelIcon}>
+                            {props.icon}
+                        </div>
+                    </OnlyIf>
+                        <span className={style.title}>
+                            {props.name}
+                        </span>
+                        <button
+                            className={classNames([ style.icon, 'btnNoBg', ])}
+                            onClick={props.onClose}>
+                            <IconClose />
+                        </button>
+                </div>
+            }
             {props.children}
         </div>
     );

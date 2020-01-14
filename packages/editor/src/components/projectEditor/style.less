@@ -56,15 +56,43 @@
         }
     }
 
+    .rightPanelWrapper {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .topButtonsContainer {
+        width: 100%;
+        display: flex;
+        width: 100%;
+        border-left: 1px solid #121516;
+        border-bottom: 1px solid #121516;
+        background: #252525;
+        min-height: 30px;
+        overflow: auto;
+        scrollbar-width: thin;
+
+        .buttonText {
+            margin-left: 5px;
+        }
+
+        .sideButton {
+            display: flex;
+            align-items: center;
+            padding-left: 15px;
+            padding-right: 15px;
+
+            &.active {
+                background: #1e1e1e;
+            }
+        }
+    }
+
     .sideButtonsContainer {
         background-color: #1C2022;
         width: 30px;
 
-        .buttonText {
-            writing-mode: vertical-rl;
-            text-orientation: mixed;
-            margin-top: 5px;
-        }
         &.sideButtonsContainerRight {
             border-left: 1px solid #121516;
             .sideButton {
