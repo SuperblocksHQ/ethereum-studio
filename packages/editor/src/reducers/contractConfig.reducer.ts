@@ -17,8 +17,6 @@
 import { contractConfigActions } from '../actions';
 import { AnyAction } from 'redux';
 import { IContractConfigState } from '../models/state';
-import { getItemPath } from './explorerLib';
-import { IContractConfiguration } from '../models';
 import { findContractConfiguration } from './dappfileLib';
 
 export const initialState: IContractConfigState = {
@@ -31,13 +29,10 @@ export default function contractConfigReducer(state = initialState, action: AnyA
     switch (action.type) {
 
         case contractConfigActions.OPEN_CONTRACT_CONFIGURATION: {
-            const file = action.data.file;
-            const tree = rootState.explorer.tree;
             const dappFileData = rootState.projects.dappFileData;
+            const contractSource = action.data.contractSource;
 
-            const contractSource = getItemPath(tree, file);
             const contractConfiguration = findContractConfiguration(dappFileData, contractSource);
-
             return {
                 ...state,
                 showContractConfig: true,

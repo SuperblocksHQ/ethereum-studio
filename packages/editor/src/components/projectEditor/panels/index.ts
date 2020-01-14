@@ -4,3 +4,4 @@ export { default as OutputPanel } from './output';
 export { default as Explorer } from './explorer';
 export { default as MessagesPanel } from './messagesPanel';
 export { default as InteractPanel } from './interact';
+export { default as ConfigurePanel } from './configure';

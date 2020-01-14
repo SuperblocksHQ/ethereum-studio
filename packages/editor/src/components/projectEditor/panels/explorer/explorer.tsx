@@ -29,7 +29,6 @@ interface IProps {
     onDeleteItem(id: string): void;
     onMoveItem(sourceId: string, targetId: string): void;
 
-    onConfigureContract(file: IProjectItem): void;
     onCompileContract(file: IProjectItem): void;
     onDeployContract(file: IProjectItem): void;
 
@@ -98,7 +97,6 @@ export class Explorer extends React.Component<IProps> {
                         onDeleteClick={ (id: string) => this.onDeleteItem(id, itemData.name) }
                         onMoveItem={this.onMoveItem}
 
-                        onConfigureClick={ actions.onConfigureContract }
                         onCompileClick={ actions.onCompileContract }
                         onDeployClick={ actions.onDeployContract } />
                 );

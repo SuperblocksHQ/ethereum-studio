@@ -12,7 +12,6 @@ interface IProps {
     onClick(data: IProjectItem): void;
     onRenameClick(id: string): void;
     onDeleteClick(id: string): void;
-    onConfigureClick(data: IProjectItem): void;
     onCompileClick(data: IProjectItem): void;
     onDeployClick(data: IProjectItem): void;
     onMoveItem(sourceId: string, targetId: string): void;
@@ -56,7 +55,6 @@ export function ContractItem(props: IProps) {
             contextMenu={ contextMenu }
             icon={ <IconContract /> }
             onMoveItem={props.onMoveItem}>
-            <BaseItem disableDrag={true} depth={props.depth} icon={ <IconConfigure /> } { ...getActionButtonProps('Configure', props.onConfigureClick) }  />
             <BaseItem disableDrag={true} depth={props.depth} icon={ <IconCompile /> } { ...getActionButtonProps('Compile', props.onCompileClick) }  />
             <BaseItem disableDrag={true} depth={props.depth} icon={ <IconDeploy /> } { ...getActionButtonProps('Deploy', props.onDeployClick ) }  />
         </BaseItem>

@@ -22,8 +22,8 @@ import Panes from './panes';
 import TopBar from '../topbar';
 import BottomBar from './bottomBar';
 import ContactContainer from '../contactContainer';
-import { PreviewPanel, TransactionLogPanel, OutputPanel, Explorer, MessagesPanel, InteractPanel } from './panels';
-import { IconTransactions, IconShowPreview, IconPanelOutput, IconFolderOpen, IconEventLog, IconInteract } from '../icons';
+import { PreviewPanel, TransactionLogPanel, OutputPanel, Explorer, MessagesPanel, InteractPanel, ConfigurePanel } from './panels';
+import { IconTransactions, IconShowPreview, IconPanelOutput, IconFolderOpen, IconEventLog, IconInteract, IconConfigure } from '../icons';
 import { SideButton } from './sideButton';
 import { SplitterLayout } from './splitterLayout';
 import { Panel } from './panel';
@@ -112,10 +112,17 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                         <SideButton name='Explorer'
                             icon={<IconFolderOpen color='#fff' />}
                             onClick={() => togglePanel(Panels.Explorer)}
+                            className={this.isPanelOpen(Panels.Explorer) && style.active}
+                        />
+                        <SideButton name='Configure'
+                            icon={<IconConfigure color='#fff' />}
+                            onClick={() => togglePanel(Panels.Configure)}
+                            className={this.isPanelOpen(Panels.Configure) && style.active}
                         />
                         <SideButton name='Interact'
                             icon={<IconInteract color='#fff' />}
                             onClick={() => togglePanel(Panels.Interact)}
+                            className={this.isPanelOpen(Panels.Interact) && style.active}
                         />
                     </div>
 
@@ -131,7 +138,7 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                                         primaryIndex={1}
                                         secondaryMinSize={0}
                                         secondaryInitialSize={280}
-                                        customClassName={!this.isPanelOpen(Panels.Explorer) && !this.isPanelOpen(Panels.Interact) ? 'hideFileSystemPanel' : undefined}
+                                        customClassName={!this.isPanelOpen(Panels.Explorer) && !this.isPanelOpen(Panels.Interact) && !this.isPanelOpen(Panels.Configure) ? 'hideFileSystemPanel' : undefined}
                                         onSecondaryPaneSizeChange={() => null}>
                                             <div className={style.control}>
                                                 { this.isPanelOpen(Panels.Explorer) &&
@@ -141,6 +148,17 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                                                             onClose={() => this.props.closePanel(Panels.Explorer)}
                                                             dragging={this.state.sidePanelDragging}>
                                                             <Explorer />
+                                                        </Panel>
+                                                        <ContactContainer />
+                                                    </React.Fragment>
+                                                }
+                                                { this.isPanelOpen(Panels.Configure) &&
+                                                    <React.Fragment>
+                                                        <Panel
+                                                            name='Configure Contracts'
+                                                            onClose={() => this.props.closePanel(Panels.Configure)}
+                                                            dragging={this.state.sidePanelDragging}>
+                                                            <ConfigurePanel />
                                                         </Panel>
                                                         <ContactContainer />
                                                     </React.Fragment>
