@@ -135,11 +135,14 @@ export class Preview extends React.Component<IProps> {
                             <Tooltip title='Refresh Page'><IconRefresh /></Tooltip>
                         </button>
 
+                        <div className={style.urlBar}>
+                            {getIframeSrc()}
+                        </div>
+
                         <button className='btnNoBg' onClick={() => this.tryDownload()}>
-                            <Tooltip title='Download DApp'><IconDownloadDApp /></Tooltip>
+                            <Tooltip title='Download DApp'><IconDownloadDApp width={'24px'} height={'24px'} /></Tooltip>
                         </button>
 
-                        <div className={style.urlBar}>{getIframeSrc()}</div>
 
                         <DropdownContainer dropdownContent={this.renderMoreDropdown()}>
                             <button className='btnNoBg'>
