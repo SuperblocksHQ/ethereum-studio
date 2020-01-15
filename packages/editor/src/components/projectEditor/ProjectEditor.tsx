@@ -42,23 +42,27 @@ interface IProps {
     showContractConfig: boolean;
     showTemplateModal?: boolean;
     showExternalProviderInfo: boolean;
+    unreadRows: boolean;
     showModal: (modalType: string, modalProps: any) => void;
     togglePanel(panel: Panels): void;
     openPanel(panel: Panels): void;
     closePanel(panel: Panels): void;
     closeContractConfigModal(): void;
+    removeUnreadRowsFlag(): void;
 }
 
 interface IState {
     sidePanelDragging: boolean;
     verticalPanelDragging: boolean;
+    outputPanelSize: number;
 }
 
 @DragDropContext(HTML5Backend)
 export class ProjectEditor extends React.Component<IProps, IState> {
     state: IState = {
         sidePanelDragging: false,
-        verticalPanelDragging: false
+        verticalPanelDragging: false,
+        outputPanelSize: 30
     };
 
     constructor(props: IProps) {
@@ -91,6 +95,16 @@ export class ProjectEditor extends React.Component<IProps, IState> {
         this.setState({ verticalPanelDragging: !this.state.verticalPanelDragging });
     }
 
+    checkOutputUnreadRows(panelSize: number) {
+        const { unreadRows, removeUnreadRowsFlag } = this.props;
+        this.setState({
+            outputPanelSize: panelSize
+        });
+        if (unreadRows && panelSize > 80) {
+            removeUnreadRowsFlag();
+        }
+    }
+
     isPanelOpen = (panel: Panels) => this.props.panels[panel] && this.props.panels[panel].open;
 
     render() {
@@ -100,7 +114,8 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                 selectedEnvironment,
                 showContractConfig,
                 closeContractConfigModal,
-                showExternalProviderInfo } = this.props;
+                showExternalProviderInfo,
+                unreadRows } = this.props;
 
         const { sidePanelDragging, verticalPanelDragging } = this.state;
         const rightPanelSize = window.innerWidth < 1000 ? 280 : 500;
@@ -177,45 +192,68 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                                                     </React.Fragment>
                                                 }
                                             </div>
-                                            <div>
                                                 <SplitterLayout
                                                     primaryIndex={0}
                                                     secondaryInitialSize={rightPanelSize}
                                                     onDragStart={() => this.toggleSidePanelDragging()}
                                                     onDragEnd={() => this.toggleSidePanelDragging()}
-                                                    onSecondaryPaneSizeChange={() => null}>
+                                                    onSecondaryPaneSizeChange={() => null}
+                                                    customClassName={style.overflowHidden}>
 
                                                     <Panes dragging={sidePanelDragging} />
 
-                                                    <div className={style.rightPanelWrapper}>
-                                                        <div className={classnames([style.topButtonsContainer])}>
-                                                            <SideButton
-                                                                name='Browser'
-                                                                icon={<IconShowPreview />}
-                                                                onClick={() => openPanel(Panels.Preview)}
-                                                                active={this.isPanelOpen(Panels.Preview)}
-                                                            />
-                                                            <SideButton
-                                                                name='Transactions'
-                                                                icon={<IconTransactions />}
-                                                                onClick={() => openPanel(Panels.Transactions)}
-                                                                active={this.isPanelOpen(Panels.Transactions)}
-                                                            />
-                                                        </div>
-                                                        { this.isPanelOpen(Panels.Transactions) &&
-                                                            <Panel icon={ <IconTransactions /> } onClose={() => closePanel(Panels.Transactions)} dragging={sidePanelDragging}>
-                                                                <TransactionLogPanel />
-                                                            </Panel>
-                                                        }
+                                                    <div>
+                                                        <SplitterLayout
+                                                            primaryIndex={0}
+                                                            onDragStart={() => this.toggleSidePanelDragging()}
+                                                            onDragEnd={() => this.toggleSidePanelDragging()}
+                                                            vertical={true}
+                                                            onSecondaryPaneSizeChange={(panelSize: number) => this.checkOutputUnreadRows(panelSize)}
+                                                            secondaryMinSize={30}
+                                                            secondaryInitialSize={30}
+                                                            customClassName={style.rightSplitter}
+                                                        >
+                                                            <div className={style.rightPanelWrapper}>
+                                                                <div className={classnames([style.topButtonsContainer])}>
+                                                                    <SideButton
+                                                                        name='Browser'
+                                                                        icon={<IconShowPreview />}
+                                                                        onClick={() => openPanel(Panels.Preview)}
+                                                                        active={this.isPanelOpen(Panels.Preview)}
+                                                                    />
+                                                                    <SideButton
+                                                                        name='Transactions'
+                                                                        icon={<IconTransactions />}
+                                                                        onClick={() => openPanel(Panels.Transactions)}
+                                                                        active={this.isPanelOpen(Panels.Transactions)}
+                                                                    />
+                                                                </div>
+                                                                { this.isPanelOpen(Panels.Transactions) &&
+                                                                    <Panel icon={ <IconTransactions /> } onClose={() => closePanel(Panels.Transactions)} dragging={sidePanelDragging}>
+                                                                        <TransactionLogPanel />
+                                                                    </Panel>
+                                                                }
 
-                                                        { this.isPanelOpen(Panels.Preview) &&
-                                                            <Panel dragging={sidePanelDragging}>
-                                                                <PreviewPanel />
-                                                            </Panel>
-                                                        }
+                                                                { this.isPanelOpen(Panels.Preview) &&
+                                                                    <Panel dragging={sidePanelDragging}>
+                                                                        <PreviewPanel />
+                                                                    </Panel>
+                                                                }
+                                                            </div>
+                                                            <div className={style.rightPanelWrapper}>
+                                                                <div className={classnames([style.topButtonsContainer])}>
+                                                                    <SideButton
+                                                                        name='Console'
+                                                                        onClick={() => togglePanel(Panels.OutputLog)}
+                                                                        pillStatus={unreadRows && this.state.outputPanelSize < 80 ? '1' : '0'}
+                                                                        icon={<IconTransactions />}
+                                                                    />
+                                                                </div>
+                                                                <OutputPanel />
+                                                            </div>
+                                                        </SplitterLayout>
                                                     </div>
                                                 </SplitterLayout>
-                                            </div>
                                         </SplitterLayout>
                             </SplitterLayout>
                         </div>

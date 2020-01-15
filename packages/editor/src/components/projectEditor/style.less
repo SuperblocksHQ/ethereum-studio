@@ -83,6 +83,32 @@
             padding-left: 15px;
             padding-right: 15px;
 
+            .buttonText {
+                position: relative;
+                padding-right: 20px;
+            }
+
+            .pillStatus {
+                transition: background .3s ease-in-out, color .3s ease-in-out;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 0.6rem;
+                margin-left: 10px;
+                border-radius: 50%;
+                height: 16px;
+                width: 16px;
+                color: white;
+                background-color: #666;
+                position: absolute;
+                top: 2px;
+
+                &.active {
+                    background: @primary-color;
+                    color: black;
+                }
+            }
+
             &.active {
                 background: #1e1e1e;
             }
@@ -154,7 +180,7 @@
 
             .buttonText {
                 margin-left: 5px;
-            }
+            } 
         }
 
         .bottomPanelContainer {

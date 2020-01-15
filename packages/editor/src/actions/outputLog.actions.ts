@@ -30,5 +30,12 @@ export const outputLogActions = {
         return {
             type: outputLogActions.CLEAR_OUTPUT_LOG
         };
-    }
+    },
+
+    REMOVE_UNREAD_ROWS_FLAG: 'REMOVE_UNREAD_ROWS_FLAG',
+    removeUnreadRowsFlag() {
+        return {
+            type: outputLogActions.REMOVE_UNREAD_ROWS_FLAG
+        };
+    },
 };

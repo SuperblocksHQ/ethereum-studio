@@ -20,6 +20,7 @@ import { IOutputLogState } from '../models/state';
 
 const initialState: IOutputLogState = {
     rows: [],
+    unreadRows: false
 };
 
 export default function consoleReducer(state = initialState, action: AnyAction) {
@@ -27,13 +28,21 @@ export default function consoleReducer(state = initialState, action: AnyAction) 
         case outputLogActions.ADD_ROWS: {
             return {
                 ...state,
-                rows: state.rows.concat(action.data).slice(0, 5000) // limit total number or rows
+                rows: state.rows.concat(action.data).slice(0, 5000), // limit total number or rows,
+                unreadRows: true
             };
         }
         case outputLogActions.CLEAR_OUTPUT_LOG: {
             return {
                 ...state,
                 rows: initialState.rows
+            };
+        }
+
+        case outputLogActions.REMOVE_UNREAD_ROWS_FLAG: {
+            return {
+                ...state,
+                unreadRows: false
             };
         }
 

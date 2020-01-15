@@ -17,7 +17,7 @@
 import { connect } from 'react-redux';
 import { ProjectEditor } from './ProjectEditor';
 import { projectSelectors, contractConfigSelectors } from '../../selectors';
-import { panelsActions, contractConfigActions, modalActions } from '../../actions';
+import { panelsActions, contractConfigActions, modalActions, outputLogActions } from '../../actions';
 import { AnyAction } from 'redux';
 import { Dispatch } from 'react';
 import { Panels } from '../../models/state';
@@ -26,7 +26,8 @@ const mapStateToProps = (state: any) => ({
     panels: state.panels,
     selectedEnvironment: projectSelectors.getSelectedEnvironment(state),
     showContractConfig: contractConfigSelectors.showContractConfig(state),
-    showExternalProviderInfo: state.deployer.showExternalProviderInfo
+    showExternalProviderInfo: state.deployer.showExternalProviderInfo,
+    unreadRows: state.outputLog.unreadRows
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
@@ -45,6 +46,9 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
         },
         showModal: (modalType: string, modalProps: any) => {
             dispatch(modalActions.showModal(modalType, modalProps));
+        },
+        removeUnreadRowsFlag: () => {
+            dispatch(outputLogActions.removeUnreadRowsFlag());
         }
     };
 };

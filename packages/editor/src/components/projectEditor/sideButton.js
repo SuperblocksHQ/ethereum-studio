@@ -11,6 +11,11 @@ export function SideButton(props) {
             {props.icon}
             <span className={style.buttonText}>
                 {props.name}
+                { props.pillStatus &&
+                    <span className={classNames([style.pillStatus, props.pillStatus === '1' && style.active])}>
+                        {props.pillStatus}
+                    </span>
+                }
             </span>
         </button>
     );
