@@ -27,7 +27,7 @@ To try it out, go to [studio.ethereum.org](https://studio.ethereum.org).
 
 
 ## Quick start
-Below is described how to get the **Ethereum Studio** _PreactJS_ project setup and running locally.
+Below is described how to get the **Ethereum Studio** project setup and running locally.
 
 ### Install node modules
 ```sh
