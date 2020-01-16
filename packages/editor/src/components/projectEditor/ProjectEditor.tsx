@@ -22,8 +22,8 @@ import Panes from './panes';
 import TopBar from '../topbar';
 import BottomBar from './bottomBar';
 import ContactContainer from '../contactContainer';
-import { PreviewPanel, TransactionLogPanel, OutputPanel, Explorer, MessagesPanel, InteractPanel, ConfigurePanel } from './panels';
-import { IconTransactions, IconShowPreview, IconPanelOutput, IconFolderOpen, IconEventLog, IconInteract, IconConfigure } from '../icons';
+import { PreviewPanel, TransactionLogPanel, OutputPanel, Explorer, InteractPanel, ConfigurePanel } from './panels';
+import { IconTransactions, IconShowPreview, IconPanelOutput, IconFolderOpen, IconInteract, IconConfigure } from '../icons';
 import { SideButton } from './sideButton';
 import { SplitterLayout } from './splitterLayout';
 import { Panel } from './panel';
@@ -35,6 +35,7 @@ import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import ContractConfigModal from './editors/contractConfigModal';
 import ExternalProviderInfo from '../externalProviderInfo';
+import classNames from 'classnames';
 
 interface IProps {
     panels: IPanelsState;
@@ -48,7 +49,6 @@ interface IProps {
     openPanel(panel: Panels): void;
     closePanel(panel: Panels): void;
     closeContractConfigModal(): void;
-    removeUnreadRowsFlag(): void;
 }
 
 interface IState {
@@ -93,16 +93,6 @@ export class ProjectEditor extends React.Component<IProps, IState> {
 
     toggleVerticalPanelDragging() {
         this.setState({ verticalPanelDragging: !this.state.verticalPanelDragging });
-    }
-
-    checkOutputUnreadRows(panelSize: number) {
-        const { unreadRows, removeUnreadRowsFlag } = this.props;
-        this.setState({
-            outputPanelSize: panelSize
-        });
-        if (unreadRows && panelSize > 80) {
-            removeUnreadRowsFlag();
-        }
     }
 
     isPanelOpen = (panel: Panels) => this.props.panels[panel] && this.props.panels[panel].open;
@@ -202,19 +192,18 @@ export class ProjectEditor extends React.Component<IProps, IState> {
 
                                                     <Panes dragging={sidePanelDragging} />
 
-                                                    <div>
+                                                    <div className={style.rightPanel}>
                                                         <SplitterLayout
                                                             primaryIndex={0}
                                                             onDragStart={() => this.toggleSidePanelDragging()}
                                                             onDragEnd={() => this.toggleSidePanelDragging()}
                                                             vertical={true}
-                                                            onSecondaryPaneSizeChange={(panelSize: number) => this.checkOutputUnreadRows(panelSize)}
                                                             secondaryMinSize={30}
-                                                            secondaryInitialSize={30}
+                                                            secondaryInitialSize={250}
                                                             customClassName={style.rightSplitter}
                                                         >
                                                             <div className={style.rightPanelWrapper}>
-                                                                <div className={classnames([style.topButtonsContainer])}>
+                                                                <div className={classnames([style.panelButtonsContainer])}>
                                                                     <SideButton
                                                                         name='Browser'
                                                                         icon={<IconShowPreview />}
@@ -240,18 +229,21 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                                                                     </Panel>
                                                                 }
                                                             </div>
-                                                            <div className={style.rightPanelWrapper}>
-                                                                <div className={classnames([style.topButtonsContainer])}>
-                                                                    <SideButton
-                                                                        name='Console'
-                                                                        onClick={() => togglePanel(Panels.OutputLog)}
-                                                                        pillStatus={unreadRows && this.state.outputPanelSize < 80 ? '1' : '0'}
-                                                                        icon={<IconTransactions />}
-                                                                    />
-                                                                </div>
-                                                                <OutputPanel />
-                                                            </div>
+                                                            { this.isPanelOpen(Panels.OutputLog) &&
+                                                                    <Panel name={'Console'} onClose={() => closePanel(Panels.OutputLog)} dragging={sidePanelDragging}>
+                                                                        <OutputPanel />
+                                                                    </Panel>
+                                                            }
                                                         </SplitterLayout>
+                                                        <div className={classNames([style.panelButtonsContainer, style.bottomButtonsContainer])}>
+                                                            <SideButton
+                                                                name='Console'
+                                                                icon={<IconPanelOutput />}
+                                                                onClick={() => togglePanel(Panels.OutputLog)}
+                                                                pillStatus={unreadRows && !this.isPanelOpen(Panels.OutputLog) ? '1' : '0'}
+                                                                active={this.isPanelOpen(Panels.OutputLog)}
+                                                            />
+                                                        </div>
                                                     </div>
                                                 </SplitterLayout>
                                         </SplitterLayout>

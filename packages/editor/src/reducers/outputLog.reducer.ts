@@ -15,8 +15,8 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { AnyAction } from 'redux';
-import { outputLogActions } from '../actions';
-import { IOutputLogState } from '../models/state';
+import { outputLogActions, panelsActions } from '../actions';
+import { IOutputLogState, Panels } from '../models/state';
 
 const initialState: IOutputLogState = {
     rows: [],
@@ -39,10 +39,10 @@ export default function consoleReducer(state = initialState, action: AnyAction) 
             };
         }
 
-        case outputLogActions.REMOVE_UNREAD_ROWS_FLAG: {
+        case panelsActions.TOGGLE_PANEL: {
             return {
                 ...state,
-                unreadRows: false
+                unreadRows: action.data === Panels.OutputLog && false
             };
         }
 

@@ -46,9 +46,6 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
         },
         showModal: (modalType: string, modalProps: any) => {
             dispatch(modalActions.showModal(modalType, modalProps));
-        },
-        removeUnreadRowsFlag: () => {
-            dispatch(outputLogActions.removeUnreadRowsFlag());
         }
     };
 };

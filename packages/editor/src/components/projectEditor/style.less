@@ -60,9 +60,15 @@
         height: 100%;
         display: flex;
         flex-direction: column;
+        overflow: hidden;
     }
 
-    .topButtonsContainer {
+    .rightPanel {
+        height: 100%;
+        display: flex;
+    }
+
+    .panelButtonsContainer {
         width: 100%;
         display: flex;
         width: 100%;
@@ -159,11 +165,11 @@
     }
 
     .bottomButtonsContainer {
-        background-color: #1C2022;
         border-top: 1px solid #121516;
         height: 30px;
         position: relative;
         display: flex;
+        margin-top: auto;
 
         .sideButton {
             display: flex;
@@ -181,15 +187,6 @@
             .buttonText {
                 margin-left: 5px;
             } 
-        }
-
-        .bottomPanelContainer {
-            position: absolute;
-            bottom: 25px;
-            height: 200px;
-            width: 100%;
-            overflow: hidden;
-            z-index: 2;
         }
     }
 
