@@ -4,13 +4,21 @@
 //  address: "0x..",
 //  endpoint: "http://...."
 // }
+
+// Create an instance of the smart contract, passing it as a property, 
+// which allows web3js to interact with it.
 function HelloWorld(Contract) {
     this.web3 = null;
     this.instance = null;
     this.Contract = Contract;
 }
 
+// Initialize the `HelloWorld` object and create an instance of the web3js library, 
 HelloWorld.prototype.init = function () {
+    // The initialization function defines the interface for the contract using 
+    // the web3js contract object and then defines the address of the instance 
+    // of the contract for the `HelloWorld` object.
+
     // Create a new Web3 instance using either the Metamask provider
     // or an independent provider created as the endpoint configured for the contract.
     this.web3 = new Web3(
@@ -24,20 +32,25 @@ HelloWorld.prototype.init = function () {
     this.instance = this.Contract.address ? contract_interface.at(this.Contract.address) :  { message: () => {} };
 };
 
-// Get the hello message from the contract.
+// Gets the message value passed to the instance of the contract. 
+// With the IDE, you pass this value from the _Configure_ option under the 
+// contract file.
 HelloWorld.prototype.getMessage = function (cb) {
     this.instance.message(function (error, result) {
         cb(error, result);
     });
 };
 
-// Get the current block number and show it.
+// Gets the block number by using the web3js `getBlockNumber` function to return 
+// the value of the latest block in the configured endpoint.
 HelloWorld.prototype.getBlockNumber = function (cb) {
     this.web3.eth.getBlockNumber(function (error, result) {
         cb(error, result);
     });
 };
 
+// Ties everything together, calling the two functions defined above, and 
+// setting the `H2` tags to the values they return or showing an error message.
 HelloWorld.prototype.update = function () {
     var that = this;
     this.getMessage(function (error, result) {
@@ -58,6 +71,8 @@ HelloWorld.prototype.update = function () {
     });
 }
 
+// JavaScript boilerplate to create the instance of the `HelloWorld` object 
+// defined above, and show the HTML elements on the page:
 HelloWorld.prototype.main = function () {
     $(".blocknumber").show();
     $(".message").show();
