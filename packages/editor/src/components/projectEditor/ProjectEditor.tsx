@@ -23,7 +23,7 @@ import TopBar from '../topbar';
 import BottomBar from './bottomBar';
 import ContactContainer from '../contactContainer';
 import { PreviewPanel, TransactionLogPanel, OutputPanel, Explorer, InteractPanel, ConfigurePanel } from './panels';
-import { IconTransactions, IconShowPreview, IconPanelOutput, IconFolderOpen, IconInteract, IconConfigure, IconDownloadDApp } from '../icons';
+import { IconTransactions, IconFolderOpen, IconInteract, IconConfigure, IconDownloadDApp, IconTogglePreview } from '../icons';
 import { SideButton } from './sideButton';
 import { SplitterLayout } from './splitterLayout';
 import { Panel, PanelAction } from './panel';
@@ -188,7 +188,7 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                                     onDragStart={() => this.toggleSidePanelDragging()}
                                     onDragEnd={() => this.toggleSidePanelDragging()}
                                     onSecondaryPaneSizeChange={() => null}
-                                    customClassName={style.overflowHidden}
+                                    customClassName={!this.isPanelOpen(Panels.Preview) ? 'hidePreviewSystemPanel' : style.overflowHidden}
                                 >
                                     <Panes dragging={sidePanelDragging} />
                                     <div className={style.rightPanel}>
@@ -213,6 +213,13 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                                                         onClick={() => openPanel(Panels.Transactions)}
                                                         active={this.isPanelOpen(Panels.Transactions)}
                                                     />
+                                                    <div className={style.toggle}>
+                                                        <Tooltip title='Toggle Preview'>
+                                                            <button className={'btnNoBg'} onClick={() => togglePanel(Panels.Preview)}>
+                                                                <IconTogglePreview />
+                                                            </button>
+                                                        </Tooltip>
+                                                    </div>
                                                 </div>
                                                 { this.isPanelOpen(Panels.Transactions) &&
                                                     <Panel icon={ <IconTransactions /> } dragging={sidePanelDragging}>

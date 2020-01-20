@@ -18,7 +18,7 @@ import React from 'react';
 import classnames from 'classnames';
 import { DropdownContainer } from '../common/dropdown';
 import style from './style.less';
-import { IconDropdown, IconLock, IconLockOpen, IconMetamask, IconMetamaskLocked, IconPublicAddress } from '../icons';
+import { IconDropdown } from '../icons';
 import { AccountsList } from './accountsList';
 import { IAccount } from '../../models/state';
 import Identicon from '../identicon';
