@@ -16,12 +16,9 @@
 
 import React from 'react';
 import style from './style.less';
-import { IconRefresh, IconDownloadDApp, IconMore } from '../../../icons';
+import { IconRefresh, IconMore } from '../../../icons';
 import { DropdownContainer, Tooltip, OnlyIf } from '../../../common';
 import { previewService } from '../../../../services';
-import { CannotExportModal } from './CannotExportModal';
-import { DownloadModal } from './DownloadModal';
-import { NoExportableContentModal } from './NoExportableContentModal';
 import { IEnvironment, IAccount } from '../../../../models/state';
 import { TransactionType } from '../../../../models';
 
@@ -39,12 +36,8 @@ interface IProps {
     onToggleWeb3: () => void;
     onHideModals: () => void;
     notifyTx: (transactionType: TransactionType, hash: string) => void;
-    download: () => void;
     refreshContent: () => void;
     disableWeb3: boolean;
-    showNoExportableContentModal: boolean;
-    showCannotExportModal: boolean;
-    showDownloadModal: boolean;
     selectedEnvironment: IEnvironment;
     selectedAccount: IAccount;
     isProjectLoaded: boolean;
@@ -111,12 +104,6 @@ export class Preview extends React.Component<IProps> {
     render() {
         const {
             isProjectLoaded,
-            showCannotExportModal,
-            showNoExportableContentModal,
-            showDownloadModal,
-            selectedEnvironment,
-            onHideModals,
-            download,
             refreshContent
         } = this.props;
 
@@ -142,19 +129,6 @@ export class Preview extends React.Component<IProps> {
                     </div>
                     <iframe id={IFRAME_ID} src={getIframeSrc()}></iframe>
                 </div>
-
-                <OnlyIf test={showNoExportableContentModal}>
-                    <NoExportableContentModal onClose={onHideModals} />
-                </OnlyIf>
-                <OnlyIf test={showCannotExportModal}>
-                    <CannotExportModal onClose={onHideModals} />
-                </OnlyIf>
-                <OnlyIf test={showDownloadModal}>
-                    <DownloadModal
-                        environment={selectedEnvironment}
-                        onClose={onHideModals}
-                        onDownload={download} />
-                </OnlyIf>
             </OnlyIf>
         );
     }

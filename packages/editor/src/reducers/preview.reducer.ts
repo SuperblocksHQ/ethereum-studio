@@ -15,16 +15,12 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { previewActions, explorerActions, deployerActions, projectsActions } from '../actions';
-import Networks from '../networks';
 import { AnyAction } from 'redux';
 import { findItemByPath } from './explorerLib';
 import { ProjectItemTypes } from '../models';
 import { projectSelectors, previewSelectors } from '../selectors';
 
 const initialState = {
-    showNoExportableContentModal: false,
-    showCannotExportModal: false,
-    showDownloadModal: false,
     disableWeb3: false,
     htmlToRender: '',
     exportableHtml: undefined
@@ -105,26 +101,6 @@ export default function previewReducer(state = initialState, action: AnyAction, 
                 showNoExportableContentModal: false,
                 showDownloadModal: false
             };
-        case previewActions.TRY_DOWNLOAD: {
-            let showNoExportableContentModal = false;
-            let showCannotExportModal = false;
-            let showDownloadModal = false;
-
-            if (!state.exportableHtml) {
-                showNoExportableContentModal = true;
-            } else if (rootState.projects.selectedEnvironment.name === Networks.browser.name) {
-                showCannotExportModal = true;
-            } else {
-                showDownloadModal = true;
-            }
-
-            return {
-                ...state,
-                showNoExportableContentModal,
-                showCannotExportModal,
-                showDownloadModal
-            };
-        }
         case previewActions.TOGGLE_WEB3:
             return {
                 ...state,
