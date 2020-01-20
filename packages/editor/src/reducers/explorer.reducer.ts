@@ -17,7 +17,7 @@
 import { explorerActions, panesActions, projectsActions } from '../actions';
 import { isValidProjectItemName } from './utils';
 import { IExplorerState, IItemNameValidation } from '../models/state';
-import { IProjectItem } from '../models';
+import { IProjectItem, ProjectItemTypes } from '../models';
 import { AnyAction } from 'redux';
 import { generateUniqueId } from '../services/utils';
 import {
@@ -26,7 +26,8 @@ import {
     ensurePath,
     findItemById,
     sortProjectItems,
-    updateItemInTree
+    updateItemInTree,
+    traverseTree
 } from './explorerLib';
 
 export const initialState: IExplorerState = {
@@ -47,7 +48,19 @@ function hasNoChildWithId(parentItem: Nullable<IProjectItem>, id: string) {
 export default function explorerReducer(state = initialState, action: AnyAction) {
     switch (action.type) {
         case explorerActions.INIT_EXPLORER:
-            return { ...state, tree: action.data };
+
+            // In order to make it more obvious the access to compile/deploy/app, lets auto expand those files to make it dead obvious
+            const rootItem = action.data;
+            traverseTree(rootItem, ((projectItem: IProjectItem) => {
+                if ((projectItem.type === ProjectItemTypes.Folder && projectItem.name === 'app' || projectItem.name === 'contracts')
+                    || projectItem.name.toLowerCase().endsWith('.sol')) {
+                    projectItem.opened = true;
+                }
+            }));
+            return {
+                ...state,
+                tree: rootItem
+            };
 
         case explorerActions.TOGGLE_TREE_ITEM:
             return {
