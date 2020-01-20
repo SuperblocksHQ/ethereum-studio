@@ -205,13 +205,11 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                                                 <div className={classnames([style.panelButtonsContainer])}>
                                                     <SideButton
                                                         name='Browser'
-                                                        icon={<IconShowPreview />}
                                                         onClick={() => openPanel(Panels.Preview)}
                                                         active={this.isPanelOpen(Panels.Preview)}
                                                     />
                                                     <SideButton
                                                         name='Transactions'
-                                                        icon={<IconTransactions />}
                                                         onClick={() => openPanel(Panels.Transactions)}
                                                         active={this.isPanelOpen(Panels.Transactions)}
                                                     />
@@ -237,7 +235,6 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                                         <div className={classNames([style.panelButtonsContainer, style.bottomButtonsContainer])}>
                                             <SideButton
                                                 name='Console'
-                                                icon={<IconPanelOutput />}
                                                 onClick={() => togglePanel(Panels.OutputLog)}
                                                 pillStatus={unreadRows && !this.isPanelOpen(Panels.OutputLog) ? '1' : '0'}
                                                 active={this.isPanelOpen(Panels.OutputLog)}
