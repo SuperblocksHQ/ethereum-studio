@@ -116,9 +116,10 @@ export class Preview extends React.Component<IProps> {
                             <Tooltip title='Refresh Page'><IconRefresh /></Tooltip>
                         </button>
 
+                        {/* // Disable for now
                         <div className={style.urlBar}>
                             {getIframeSrc()}
-                        </div>
+                        </div> */}
 
                         <DropdownContainer dropdownContent={this.renderMoreDropdown()}>
                             <button className='btnNoBg'>
