@@ -21,4 +21,5 @@ export interface IOutputLogRow {
 
 export interface IOutputLogState {
     rows: IOutputLogRow[];
+    unreadRows: boolean;
 }

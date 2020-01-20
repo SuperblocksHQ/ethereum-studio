@@ -14,27 +14,22 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-export enum Panels {
-    Explorer = 'Explorer',
-    Preview = 'Preview',
-    Transactions = 'Transactions',
-    OutputLog = 'OutputLog',
-    MessageLog = 'MessageLog',
-    Interact = 'Interact',
-    Configure = 'Configure'
-}
+import { connect } from 'react-redux';
+import { ConfigurePanel } from './ConfigurePanel';
+import { projectSelectors } from '../../../../selectors';
+import { Dispatch } from 'redux';
+import { contractConfigActions } from '../../../../actions';
 
-export enum PanelSides {
-    Left = 'Left',
-    Right = 'Right',
-    Bottom = 'Bottom'
-}
+const mapStateToProps = (state: any) => ({
+    dappFileData: projectSelectors.getDappFileData(state)
+});
 
-export interface IPanelData {
-    open: boolean;
-    side: PanelSides;
-}
+const mapDispatchToProps = (dispatch: Dispatch) => {
+    return {
+        onConfigureContract: (contractSource: string) => {
+            dispatch(contractConfigActions.openContractConfig(contractSource));
+        },
+    };
+};
 
-export interface IPanelsState {
-    [key: string]: IPanelData;
-}
+export default connect<any, any, any, any>(mapStateToProps, mapDispatchToProps)(ConfigurePanel);

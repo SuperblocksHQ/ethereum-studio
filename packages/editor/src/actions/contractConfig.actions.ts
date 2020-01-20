@@ -14,15 +14,15 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { IContractConfiguration, IProjectItem } from '../models';
+import { IContractConfiguration } from '../models';
 
 export const contractConfigActions = {
 
     OPEN_CONTRACT_CONFIGURATION: 'OPEN_CONTRACT_CONFIGURATION',
-    openContractConfig(file: IProjectItem) {
+    openContractConfig(contractSource: string) {
         return {
             type: contractConfigActions.OPEN_CONTRACT_CONFIGURATION,
-            data: { file }
+            data: { contractSource }
         };
     },
 

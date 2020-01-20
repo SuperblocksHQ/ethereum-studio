@@ -39,6 +39,7 @@ export class InteractPanel extends React.Component<IProps> {
 
         return (
             <div className={ style.treeContainer }>
+                <p className={style.note}>Interact directly with each of your deployed contracts.</p>
                 {
                     deployedItems.map((item) => (
                         <DeployedContractItem key={ item.id }

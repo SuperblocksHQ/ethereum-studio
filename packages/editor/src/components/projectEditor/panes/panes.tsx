@@ -26,6 +26,7 @@ import PaneDraggable from './paneDraggable';
 interface IProps {
     panes: Pane[];
     dragging: boolean;
+    tree: IProjectItem;
     onSaveFile: (fileId: string, code: string) => void;
     onOpenFile: (fileItem: IProjectItem) => void;
     onClosePane: (fileId: string) => void;
@@ -33,7 +34,7 @@ interface IProps {
     onCloseAllPanes: () => void;
     onMovePane: (fromIndex: number, toIndex: number) => void;
 
-    onConfigureContract: (file: IProjectItem) => void;
+    onConfigureContract: (contractSource: string) => void;
     onCompileContract: (file: IProjectItem) => void;
     onDeployContract: (file: IProjectItem) => void;
 
@@ -62,6 +63,7 @@ export function Panes(props: IProps) {
                         return <FileEditor
                                     key={pane.file.id}
                                     file={pane.file}
+                                    tree={props.tree}
                                     visible={pane.active}
                                     hasUnsavedChanges={pane.hasUnsavedChanges}
                                     onSave={props.onSaveFile}

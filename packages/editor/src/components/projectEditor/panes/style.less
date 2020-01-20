@@ -34,6 +34,7 @@
         overflow-x: auto;
         display: flex;
         scrollbar-width: thin;
+
         .tab {
             background-color: #2D2D2D;
             cursor: pointer;
@@ -128,14 +129,14 @@
 
     .isOver {
         position: relative;
-    
+
         &:after {
             position: absolute;
             content: ' ';
             top: 0;
             bottom: 0;
             right: 0;
-            left: 0; 
+            left: 0;
             background: rgba(255, 255, 255, 0.1);
             z-index: 3;
         }

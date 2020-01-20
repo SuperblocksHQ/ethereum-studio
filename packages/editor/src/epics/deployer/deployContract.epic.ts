@@ -34,7 +34,7 @@ export const deployContractEpic: Epic = (action$: any, state$: any) => action$.p
         // prepare params
         const deployerState = state$.value.deployer;
         if (deployerState.needsCompilation) {
-            return concat(of(panelsActions.openPanel(Panels.OutputLog)), of(outputLogActions.addRows([{ msg: 'Please compile your contracts before deployment.', channel: 3 }])));
+            return concat(of(outputLogActions.addRows([{ msg: 'Please compile your contracts before deployment.', channel: 3 }])));
         }
 
         const environment = projectSelectors.getSelectedEnvironment(state);
@@ -55,7 +55,6 @@ export const deployContractEpic: Epic = (action$: any, state$: any) => action$.p
         lastDeployRunner = new DeployRunner(selectedAccount, environment, contractTargetName);
 
         return concat(
-            of(panelsActions.openPanel(Panels.OutputLog)),
             lastDeployRunner.checkExistingDeployment(deployerState.buildFiles, deployerState.contractArgs)
                 .pipe(
                     mergeMap(result => {

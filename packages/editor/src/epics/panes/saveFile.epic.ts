@@ -14,12 +14,14 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { switchMap, map, catchError } from 'rxjs/operators';
+import { switchMap, catchError } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
-import { panesActions, projectsActions } from '../../actions';
+import { panesActions, projectsActions, compilerActions } from '../../actions';
 import { projectSelectors } from '../../selectors';
 import { projectService } from '../../services';
-import { updateItemInTree } from '../../reducers/explorerLib';
+import { updateItemInTree, findItemById } from '../../reducers/explorerLib';
+import { IProjectItem } from '../../models';
+import { of } from 'rxjs';
 
 export const saveFileEpic: Epic = (action$, state$) => action$.pipe(
     ofType(panesActions.SAVE_FILE),
@@ -30,6 +32,8 @@ export const saveFileEpic: Epic = (action$, state$) => action$.pipe(
         const explorerState = state$.value.explorer;
         const files = explorerState.tree;
         const isOwnProject = state$.value.projects.isOwnProject;
+        const file: Nullable<IProjectItem> = findItemById(files, action.data.fileId).item;
+        const isSolidityFile = file && file.name.toLowerCase().endsWith('.sol');
 
         if (isOwnProject) {
             const newTree = updateItemInTree(files, action.data.fileId, i => ({...i, code: action.data.code}))[0];
@@ -40,7 +44,12 @@ export const saveFileEpic: Epic = (action$, state$) => action$.pipe(
                 files: newTree
             })
                 .pipe(
-                    map(() => panesActions.saveFileSuccess(action.data.fileId, action.data.code)),
+                    switchMap(() => {
+                        if (isSolidityFile && file) {
+                            return [compilerActions.initCompilation(file), panesActions.saveFileSuccess(action.data.fileId, action.data.code)];
+                        }
+                        return of(panesActions.saveFileSuccess(action.data.fileId, action.data.code));
+                    }),
                     catchError(() => [ panesActions.saveFileFail() ])
                 );
         } else {

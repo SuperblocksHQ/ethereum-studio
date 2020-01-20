@@ -20,10 +20,7 @@
     display: flex;
     align-items: center;
     color: white;
-    margin-left: 4px;
-    border: 1px solid #595959;
-    margin-top: 8px;
-    margin-bottom: 8px;
+    margin: 8px 4px;
     z-index: 3;
     .selector {
         display: flex;
@@ -32,17 +29,6 @@
         padding: 0px 10px;
         .dropdownIcon {
             margin-left: 14px;
-        }
-    }
-    .actionWrapper {
-        transition: background .2s;
-        height: 100%;
-        &:hover {
-            background: @primary-color-light-hover;
-            cursor: pointer;
-        }
-        &:first-of-type {
-            border-right: 1px solid #595959;
         }
     }
     .account {
@@ -68,43 +54,9 @@
             text-transform: capitalize
         }
     }
-    .networks {
-        position: fixed;
-        margin-top: 9px;
-        background-color: #2a2a2a;
-        width: 320px;
-        max-width: 100%;
-        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .50);
-        padding: 20px 0 20px 0;
-        z-index: 2;
-        .title {
-            font-weight: 600;
-            margin: 0 0 20px 20px;
-        }
-        .networkLink {
-            display: block;
-            color: #A5A5A5;
-            padding: 0px 100px 0px 20px;
-            padding-left: 20px;
-            line-height: 40px;
-            border-left: 2px solid;
-            border-color: transparent;
-            margin: 0;
-            &:hover {
-                background-color: @primary-color-light-hover;
-                cursor: pointer;
-                color: #fff;
-                border-color: @primary-color;
-            }
-        }
-        .networkLinkChosen {
-            background-color: @primary-color !important;
-            color: black !important;
-            border-color: @primary-color;
-        }
-    }
     .accounts {
         position: fixed;
+        right: 8px;
         margin-top: 9px;
         background-color: #2a2a2a;
         width: 346px;

@@ -26,6 +26,16 @@ export class TransactionLogPanel extends Component<IProps> {
     render() {
         const { transactions } = this.props;
 
+        if (!transactions.length) {
+            return(
+                <div className={style.noTransactions}>
+                    <p>
+                        No transactions found
+                    </p>
+                </div>
+            );
+        }
+
         return (
             <div className={style.transactionlogPanel}>
                 <div>

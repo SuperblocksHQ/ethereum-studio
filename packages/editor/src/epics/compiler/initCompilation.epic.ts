@@ -43,7 +43,6 @@ export const initCompilation: Epic = (action$: any, state$: any) => action$.pipe
         if (isOwnProject) {
             compilerService.init();
             return concat(
-                of(panelsActions.openPanel(Panels.OutputLog)), // show output
                 interval(200).pipe(
                     first(() => compilerService.isReady()), // compiler has to be ready to be able to do smth
                     switchMap(() => concat(

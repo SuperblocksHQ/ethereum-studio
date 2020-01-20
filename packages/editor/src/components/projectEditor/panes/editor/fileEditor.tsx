@@ -22,15 +22,17 @@ import { IProjectItem } from '../../../../models';
 import { EditorToolbar } from './editorToolbar';
 import { isSmartContract, getFileExtension, isMarkdown } from '../../../../utils/file';
 import { MarkdownPreview } from './markdownPreview';
+import { getItemPath } from '../../../../reducers/explorerLib';
 
 interface IProps {
     file: IProjectItem;
+    tree: IProjectItem;
     visible: boolean;
     hasUnsavedChanges: boolean;
     onSave: (fileId: string, code: string) => void;
     onCompile: (file: IProjectItem) => void;
     onDeploy: (file: IProjectItem) => void;
-    onConfigure: (file: IProjectItem) => void;
+    onConfigure: (contractSource: string) => void;
     onUnsavedChange: (fileId: string, hasUnsavedChanges: boolean, code: any) => void;
 }
 
@@ -56,6 +58,7 @@ export class FileEditor extends React.Component<IProps, IState> {
     language: string = '';
     options: any = {};
     code: string = '';
+    contractSource: string = '';
 
     constructor(props: IProps) {
         super(props);
@@ -79,6 +82,7 @@ export class FileEditor extends React.Component<IProps, IState> {
         };
 
         this.code = props.file.code || '';
+        this.contractSource = getItemPath(props.tree, props.file);
     }
 
     componentDidUpdate(prevProps: IProps) {
@@ -125,7 +129,7 @@ export class FileEditor extends React.Component<IProps, IState> {
                     onSave={this.onSave}
                     onCompile={ () => this.props.onCompile(file) }
                     onDeploy={ () => this.props.onDeploy(file) }
-                    onConfigure={ () => this.props.onConfigure(file) }
+                    onConfigure={ () => this.props.onConfigure(this.contractSource) }
                     isMarkdown={isMarkdown(file.name)}
                     showMarkdownPreview={showMarkdownPreview}
                     onShowMarkdownPreview={ () => this.toggleMarkdownPreview()} />

@@ -35,7 +35,7 @@
         display: block;
         height: 100%;
         flex: 0 0 auto;
-        background-color: #252525;
+        background-color: #272727;
         padding-bottom: 44px;
         border-right: 1px solid #121516;
     }
@@ -56,15 +56,74 @@
         }
     }
 
+    .rightPanelWrapper {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    .rightPanel {
+        height: 100%;
+        display: flex;
+    }
+
+    .panelButtonsContainer {
+        width: 100%;
+        display: flex;
+        width: 100%;
+        border-left: 1px solid #121516;
+        background: #252525;
+        min-height: 30px;
+        overflow: auto;
+        scrollbar-width: thin;
+
+        .buttonText {
+            margin-left: 5px;
+        }
+
+        .sideButton {
+            display: flex;
+            align-items: center;
+            padding-left: 15px;
+            padding-right: 15px;
+
+            .buttonText {
+                position: relative;
+                padding-right: 20px;
+            }
+
+            .pillStatus {
+                transition: background .3s ease-in-out, color .3s ease-in-out;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 0.6rem;
+                margin-left: 10px;
+                border-radius: 50%;
+                height: 16px;
+                width: 16px;
+                color: white;
+                background-color: #666;
+                position: absolute;
+                top: 2px;
+
+                &.active {
+                    background: @primary-color;
+                    color: black;
+                }
+            }
+
+            &.active {
+                background: #1e1e1e;
+            }
+        }
+    }
+
     .sideButtonsContainer {
         background-color: #1C2022;
         width: 30px;
 
-        .buttonText {
-            writing-mode: vertical-rl;
-            text-orientation: mixed;
-            margin-top: 5px;
-        }
         &.sideButtonsContainerRight {
             border-left: 1px solid #121516;
             .sideButton {
@@ -73,6 +132,7 @@
         }
         &.sideButtonsContainerLeft {
             border-right: 1px solid #121516;
+            width: 56px;
             .buttonText {
                 transform: rotate(180deg);
                 margin-bottom: 5px;
@@ -82,12 +142,18 @@
                 flex-direction: column;
                 width: 100%;
                 align-items: center;
+                padding: 15px;
+                opacity: .5;
+
+                &.active {
+                    opacity: 1;
+                }
 
                 img:first-of-type,
                 svg:first-of-type {
                     order: 2;
-                    width: 12px;
-                    height: 12px;
+                    width: 24px;
+                    height: 24px;
                 }
 
                 span:last-of-type {
@@ -98,11 +164,11 @@
     }
 
     .bottomButtonsContainer {
-        background-color: #1C2022;
         border-top: 1px solid #121516;
         height: 30px;
         position: relative;
         display: flex;
+        margin-top: auto;
 
         .sideButton {
             display: flex;
@@ -120,15 +186,6 @@
             .buttonText {
                 margin-left: 5px;
             }
-        }
-
-        .bottomPanelContainer {
-            position: absolute;
-            bottom: 25px;
-            height: 200px;
-            width: 100%;
-            overflow: hidden;
-            z-index: 2;
         }
     }
 

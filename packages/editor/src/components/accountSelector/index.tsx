@@ -21,17 +21,13 @@ import OnlyIf from '../common/onlyIf';
 import { AccountSelector } from './accountSelector';
 import { projectsActions } from '../../actions';
 import { projectSelectors } from '../../selectors';
-import { IProject, INetwork } from '../../models';
-import { IAccount, IEnvironment } from '../../models/state';
+import { IProject } from '../../models';
+import { IAccount } from '../../models/state';
 import { AnyAction } from 'redux';
-import { NetworkSelector } from './networkSelector';
 import { accountActions } from '../../actions/account.actions';
 
 interface IProps {
     project: IProject;
-    selectedEnvironment: IEnvironment;
-    onNetworkSelected: (environmentName: string) => void;
-    environments: [IEnvironment];
     onAccountSelected: (account: IAccount) => void;
     onAccountCreate: () => void;
     onAccountDelete: (account: IAccount) => void;
@@ -40,13 +36,10 @@ interface IProps {
     selectedAccount: IAccount;
 }
 
-class NetworkAccountSelector extends Component<IProps> {
+class AccountSelectorWrapper extends Component<IProps> {
     render() {
         const {
             project,
-            selectedEnvironment,
-            onNetworkSelected,
-            environments,
             onAccountSelected,
             onAccountCreate,
             onAccountDelete,
@@ -58,21 +51,13 @@ class NetworkAccountSelector extends Component<IProps> {
         return (
             <OnlyIf test={Boolean(project.id)}>
                 <div className={style.container}>
-                    <div className={style.actionWrapper}>
-                        <NetworkSelector
-                            selectedEnvironment={selectedEnvironment}
-                            environments={environments}
-                            onNetworkSelected={onNetworkSelected} />
-                    </div>
-                    <div className={style.actionWrapper}>
-                        <AccountSelector
+                    <AccountSelector
                             accounts={accounts}
                             selectedAccount={selectedAccount}
                             onAccountSelected={onAccountSelected}
                             onAccountCreate={onAccountCreate}
                             onAccountDelete={onAccountDelete}
                             onAccountEdit={onAccountEdit} />
-                    </div>
                 </div>
             </OnlyIf>
         );
@@ -81,17 +66,12 @@ class NetworkAccountSelector extends Component<IProps> {
 
 const mapStateToProps = (state: any) => ({
     project: projectSelectors.getProject(state),
-    selectedEnvironment: projectSelectors.getSelectedEnvironment(state),
-    environments: projectSelectors.getEnvironments(state),
     selectedAccount: projectSelectors.getSelectedAccount(state),
     accounts: state.projects.accounts
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
     return {
-        onNetworkSelected(environmentName: string) {
-            dispatch(projectsActions.setEnvironment(environmentName));
-        },
         onAccountSelected(account: IAccount) {
             dispatch(projectsActions.selectAccount(account.name));
         },
@@ -107,4 +87,4 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(NetworkAccountSelector);
+export default connect(mapStateToProps, mapDispatchToProps)(AccountSelectorWrapper);

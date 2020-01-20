@@ -30,5 +30,5 @@ export const outputLogActions = {
         return {
             type: outputLogActions.CLEAR_OUTPUT_LOG
         };
-    }
+    },
 };

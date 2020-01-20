@@ -1,4 +1,4 @@
-// Copyright 2018 Superblocks AB
+// Copyright 2019 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -14,21 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-.container {
-    display: flex;
-    color: rgb(99, 99, 99);
-    font-size: 1.25em;
-    width: 100%;
-    padding: 8px 16px;
-    white-space: nowrap;
-    background-color: #272727;
-    .contactIcon {
-        display: inline-block;
-        color: rgba(255, 255, 255, 0.4) !important;
-        font-size: 1.125em;
-        margin-right: 0.5em;
-        &:hover {
-            color: rgba(255, 255, 255, 0.6) !important;
-        }
-    }
-}
+import React from 'react';
+import style from '../style.less';
+import AccountSelectorWrapper from '../../accountSelector';
+
+export const AccountSelectorAction = () => (
+    <div className={style.action}>
+        <AccountSelectorWrapper/>
+    </div>
+);

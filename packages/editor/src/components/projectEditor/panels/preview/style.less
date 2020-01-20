@@ -21,15 +21,19 @@
     flex-direction: column;
 
     .toolbar {
-        background-color: #F0F0F0;
+        background-color: #1e1e1e;
         height: 37px;
-        border-bottom: 1px solid #C1C1C1;
+        min-height: 37px;
         display: flex;
         align-items: center;
 
         button {
-            color: #626262;
+            color: #979797;
             padding-right: 0;
+
+            &:hover {
+                color: white;
+            }
         }
 
         button:last-child {
@@ -39,7 +43,6 @@
         .urlBar {
             margin-left: 6px;
             flex: 1;
-            user-select: none;
             border: 1px solid #CCCCCC;
             border-radius: 3px;
             background-color: white;
@@ -49,7 +52,6 @@
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
-            visibility: hidden;
         }
 
         .moreContainer {

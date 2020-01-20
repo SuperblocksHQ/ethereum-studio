@@ -18,3 +18,4 @@ export * from './ForkDropdownAction';
 export * from './MenuAction';
 export * from './PreferencesAction';
 export * from './ShareDropdownAction';
+export * from './AccountSelectorAction';

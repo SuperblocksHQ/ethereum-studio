@@ -22,6 +22,7 @@ import { panesActions, explorerActions, contractConfigActions } from '../../../a
 import { deployerActions } from '../../../actions/deployer.actions';
 
 const mapStateToProps = (state: any) => ({
+    tree: state.explorer.tree,
     panes: state.panes.items,
 });
 
@@ -50,8 +51,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
         },
 
         // contract related
-        onConfigureContract: (file: IProjectItem) => {
-            dispatch(contractConfigActions.openContractConfig(file));
+        onConfigureContract: (contractSource: string) => {
+            dispatch(contractConfigActions.openContractConfig(contractSource));
         },
         onCompileContract: (file: IProjectItem) => {
             dispatch(explorerActions.compileContract(file));

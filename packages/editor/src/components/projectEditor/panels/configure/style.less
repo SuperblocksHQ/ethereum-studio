@@ -1,4 +1,4 @@
-// Copyright 2018 Superblocks AB
+// Copyright 2019 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -14,33 +14,47 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-.main {
-    background-color: #1e1e1e;
-    width: 100%;
-    height: 100%;
-    .inner {
-        margin-left: 10px;
-        padding: 16px 10px 80px 50px;
-    }
-}
-
-.noTransactions {
+.noContracts {
     display: flex;
     width: 100%;
     height: 100%;
     align-content: center;
     align-items: center;
-    justify-content: center;
     color: #fff;
     padding: 10px;
 
-    p {
+    > p {
+        width: 100%;
         text-align: center;
+        margin-right: 0;
     }
 }
 
-.transactionlogPanel {
-    height: 100%;
+.container {
+    display: block;
     overflow-y: auto;
-    padding-bottom: 110px;
+    height: 100%;
+    padding: 5px 10px;
+    scrollbar-width: thin;
+    color: white;
+
+    .note {
+        color: #929292;
+        margin-top: 5px;
+    }
+
+    .contractContainer {
+        margin-bottom: 15px;
+
+        .title {
+            font-weight: bold;
+        }
+
+        .contractBtn {
+            border-radius: 5px;
+            padding: 0px 5px;
+            margin-top: 5px;
+            min-width: auto;
+        }
+    }
 }
