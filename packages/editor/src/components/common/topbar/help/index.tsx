@@ -18,7 +18,6 @@ import React from 'react';
 import classNames from 'classnames';
 import {
     IconHelp,
-    IconGitter
 } from '../../../icons';
 import { DropdownContainer } from '../../';
 import { Tooltip } from '../../';
