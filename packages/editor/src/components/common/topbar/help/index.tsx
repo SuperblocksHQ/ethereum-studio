@@ -39,28 +39,11 @@ const HelpDropdownDialog = ({openAboutModal}: IProps) => (
             </li>
             <li>
                 <a
-                    href='https://help.superblocks.com'
-                    target='_blank'
-                    rel='noopener noreferrer'
-                >
-                    Help Center
-                </a>
-            </li>
-            <li>
-                <a
                     href='https://discuss.superblocks.com/c/ethereum-studio'
                     target='_blank'
                     rel='noopener noreferrer'
                 >
                     Ask a question
-                </a>
-            </li>
-            <li>
-                <a className={style.container} href='https://gitter.im/ethereum/documentation' target='_blank' rel='noopener noreferrer' title='Ethereum documentation'>
-                    Eth Docs Help
-                    <span className={style.communityIcon}>
-                        <IconGitter color='#7289DA'/>
-                    </span>
                 </a>
             </li>
             <li>
