@@ -38,7 +38,6 @@ const IFRAME_ID = 'appViewIframe';
 interface IProps {
     onToggleWeb3: () => void;
     onHideModals: () => void;
-    tryToDownload: () => void;
     notifyTx: (transactionType: TransactionType, hash: string) => void;
     download: () => void;
     refreshContent: () => void;
@@ -89,11 +88,6 @@ export class Preview extends React.Component<IProps> {
         iframe.contentWindow.location.replace(getIframeSrc());
     }
 
-    tryDownload() {
-        const { tryToDownload: tryDownload } = this.props;
-        tryDownload();
-    }
-
     toggleWeb3() {
         const { onToggleWeb3, refreshContent } = this.props;
         onToggleWeb3();
@@ -138,11 +132,6 @@ export class Preview extends React.Component<IProps> {
                         <div className={style.urlBar}>
                             {getIframeSrc()}
                         </div>
-
-                        <button className='btnNoBg' onClick={() => this.tryDownload()}>
-                            <Tooltip title='Download DApp'><IconDownloadDApp width={'24px'} height={'24px'} /></Tooltip>
-                        </button>
-
 
                         <DropdownContainer dropdownContent={this.renderMoreDropdown()}>
                             <button className='btnNoBg'>

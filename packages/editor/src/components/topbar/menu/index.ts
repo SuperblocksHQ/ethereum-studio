@@ -50,9 +50,6 @@ function mapDispatchToProps(dispatch: Dispatch) {
         closePane(fileId: string) {
             dispatch(panesActions.closePane(fileId));
         },
-        exportProject() {
-            dispatch(projectsActions.exportProject());
-        },
         saveProject() {
             dispatch(projectsActions.saveProject());
         },

@@ -39,9 +39,6 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
         download: () => {
             dispatch(previewActions.download());
         },
-        tryToDownload: () => {
-            dispatch(previewActions.tryDownload());
-        },
         onToggleWeb3: () => {
             dispatch(previewActions.toggleWeb3());
         },
