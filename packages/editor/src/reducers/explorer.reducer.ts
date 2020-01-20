@@ -17,7 +17,7 @@
 import { explorerActions, panesActions, projectsActions } from '../actions';
 import { isValidProjectItemName } from './utils';
 import { IExplorerState, IItemNameValidation } from '../models/state';
-import { IProjectItem } from '../models';
+import { IProjectItem, ProjectItemTypes } from '../models';
 import { AnyAction } from 'redux';
 import { generateUniqueId } from '../services/utils';
 import {
@@ -52,7 +52,8 @@ export default function explorerReducer(state = initialState, action: AnyAction)
             // In order to make it more obvious the access to compile/deploy/app, lets auto expand those files to make it dead obvious
             const rootItem = action.data;
             traverseTree(rootItem, ((projectItem: IProjectItem) => {
-                if (projectItem.name === 'app' || projectItem.name === 'contracts' || projectItem.name.toLowerCase().endsWith('.sol')) {
+                if ((projectItem.type === ProjectItemTypes.Folder && projectItem.name === 'app' || projectItem.name === 'contracts')
+                    || projectItem.name.toLowerCase().endsWith('.sol')) {
                     projectItem.opened = true;
                 }
             }));
