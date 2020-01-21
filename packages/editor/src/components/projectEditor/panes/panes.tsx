@@ -18,13 +18,17 @@ import React from 'react';
 import classnames from 'classnames';
 import style from './style.less';
 import { PaneTabs } from './paneTabs';
-import { PaneType, Pane, IFilePane } from '../../../models/state';
+import { PaneType, Pane, IFilePane, Panels, IPanelsState } from '../../../models/state';
 import { FileEditor } from './editor';
 import { IProjectItem } from '../../../models';
 import PaneDraggable from './paneDraggable';
+import { IconTogglePreview } from '../../icons';
+import { PaneAction } from '../paneAction';
+import { OnlyIf } from '../../common';
 
 interface IProps {
     panes: Pane[];
+    panels: IPanelsState;
     dragging: boolean;
     tree: IProjectItem;
     onSaveFile: (fileId: string, code: string) => void;
@@ -33,15 +37,17 @@ interface IProps {
     onCloseAllOtherPanes: (fileId: string) => void;
     onCloseAllPanes: () => void;
     onMovePane: (fromIndex: number, toIndex: number) => void;
-
     onConfigureContract: (contractSource: string) => void;
     onCompileContract: (file: IProjectItem) => void;
     onDeployContract: (file: IProjectItem) => void;
-
+    togglePanel: (panel: Panels) => void;
     onUnsavedChange: (fileId: string, hasUnsavedChanges: boolean, code: any) => void;
 }
 
 export function Panes(props: IProps) {
+
+    const isPanelOpen = (panel: Panels) => props.panels[panel] && props.panels[panel].open;
+
     return (
         <div className={classnames(style.panescontainer, { dragging: props.dragging })}>
             <PaneDraggable index={props.panes.length} onMovePane={props.onMovePane} isRoot={true}>
@@ -53,6 +59,14 @@ export function Panes(props: IProps) {
                         onCloseAllOtherTabs={props.onCloseAllOtherPanes}
                         onCloseAllTabs={props.onCloseAllPanes}
                         onMovePane={props.onMovePane} />
+
+                    <OnlyIf test={!isPanelOpen(Panels.Preview)}>
+                        <PaneAction
+                            tooltipText='Toggle Preview'
+                            icon={<IconTogglePreview />}
+                            onClick={() => props.togglePanel(Panels.Preview)}
+                        />
+                    </OnlyIf>
                 </div>
             </PaneDraggable>
             <div className={style.panes}>

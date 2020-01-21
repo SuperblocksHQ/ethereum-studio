@@ -36,6 +36,7 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import ContractConfigModal from './editors/contractConfigModal';
 import ExternalProviderInfo from '../externalProviderInfo';
 import classNames from 'classnames';
+import { PaneAction } from './paneAction';
 
 interface IProps {
     panels: IPanelsState;
@@ -107,7 +108,7 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                 showExternalProviderInfo,
                 unreadRows } = this.props;
 
-        const { sidePanelDragging, verticalPanelDragging } = this.state;
+        const { sidePanelDragging } = this.state;
         const rightPanelSize = window.innerWidth < 1000 ? 280 : 500;
 
         return (
@@ -213,13 +214,11 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                                                         onClick={() => openPanel(Panels.Transactions)}
                                                         active={this.isPanelOpen(Panels.Transactions)}
                                                     />
-                                                    <div className={style.toggle}>
-                                                        <Tooltip title='Toggle Preview'>
-                                                            <button className={'btnNoBg'} onClick={() => togglePanel(Panels.Preview)}>
-                                                                <IconTogglePreview />
-                                                            </button>
-                                                        </Tooltip>
-                                                    </div>
+                                                    <PaneAction
+                                                        tooltipText='Toggle Preview'
+                                                        icon={<IconTogglePreview />}
+                                                        onClick={() => togglePanel(Panels.Preview)}
+                                                    />
                                                 </div>
                                                 { this.isPanelOpen(Panels.Transactions) &&
                                                     <Panel icon={ <IconTransactions /> } dragging={sidePanelDragging}>
