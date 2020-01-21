@@ -189,7 +189,7 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                                     onDragStart={() => this.toggleSidePanelDragging()}
                                     onDragEnd={() => this.toggleSidePanelDragging()}
                                     onSecondaryPaneSizeChange={() => null}
-                                    customClassName={!this.isPanelOpen(Panels.Preview) ? 'hidePreviewSystemPanel' : style.overflowHidden}
+                                    customClassName={!this.isPanelOpen(Panels.Preview) && !this.isPanelOpen(Panels.Transactions) ? 'hidePreviewSystemPanel' : style.overflowHidden}
                                 >
                                     <Panes dragging={sidePanelDragging} />
                                     <div className={style.rightPanel}>

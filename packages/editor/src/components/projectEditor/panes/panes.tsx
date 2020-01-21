@@ -60,7 +60,7 @@ export function Panes(props: IProps) {
                         onCloseAllTabs={props.onCloseAllPanes}
                         onMovePane={props.onMovePane} />
 
-                    <OnlyIf test={!isPanelOpen(Panels.Preview)}>
+                    <OnlyIf test={!isPanelOpen(Panels.Preview) && !isPanelOpen(Panels.Transactions)}>
                         <PaneAction
                             tooltipText='Toggle Preview'
                             icon={<IconTogglePreview />}

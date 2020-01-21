@@ -27,7 +27,7 @@ interface IProps {
 export function PaneAction({ tooltipText, onClick, icon }: IProps) {
     return (
         <div className={style.toggle}>
-            <Tooltip title={tooltipText}>
+            <Tooltip title={tooltipText} position='bottom' distance='30'>
                 <button className={'btnNoBg'} onClick={onClick}>
                     {icon}
                 </button>
