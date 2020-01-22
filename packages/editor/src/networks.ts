@@ -1,6 +1,6 @@
 import { INetwork } from './models';
 
-const INFURA_API_KEY = process.env.REACT_APP_INFURA_API_KEY;
+const INFURA_API_KEY = window.ENV.INFURA_API_KEY || '';
 
 interface INetworkRecord {
     [key: string]: INetwork;

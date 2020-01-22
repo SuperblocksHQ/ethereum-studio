@@ -26,7 +26,7 @@ function handleErrors(response: Response) {
 
 export const userService = {
     getUser() {
-        return fetchJSON(process.env.REACT_APP_API_BASE_URL + '/v1/user', {})
+        return fetchJSON(window.ENV.API_BASE_URL + '/v1/user', {})
             .pipe(
                 map(handleErrors),
                 switchMap(r => (r.ok ? r.json() : throwError(r.statusText))),

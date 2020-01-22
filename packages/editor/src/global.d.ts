@@ -47,4 +47,4 @@ declare module 'showdown-highlight';
 
 type Nullable<T> = T | null;
 
-declare interface Window { web3: any; Web3: any; }
+declare interface Window { web3: any; Web3: any; ENV: any }
