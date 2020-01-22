@@ -106,45 +106,6 @@ export default class ShareModal extends React.Component<IProps, IState> {
                         width={40}
                     />
                 </div>
-                <div className={classNames([style.inputContainer, style.optionInput])}>
-                    <p>Show Transactions</p>
-                    <Switch
-                        checked={showTransactions}
-                        onChange={() => {
-                               this.setState({options: { ...this.state.options, showTransactions: !showTransactions, showPreview: false }}, () => {
-                                        this.updateUrl();
-                                    }
-                               );
-                               this.updateUrl();
-                           }
-                        }
-                        onColor='#6CFFB8'
-                        className={style.switch}
-                        checkedIcon={false}
-                        uncheckedIcon={false}
-                        height={20}
-                        width={40}
-                    />
-                </div>
-                <div className={classNames([style.inputContainer, style.optionInput])}>
-                    <p>Show Preview</p>
-                    <Switch
-                        checked={!hidePreview}
-                        onChange={() => {
-                                this.setState({options: { ...this.state.options, hidePreview: !hidePreview, showTransactions: false }}, () => {
-                                        this.updateUrl();
-                                    }
-                                );
-                            }
-                        }
-                        onColor='#6CFFB8'
-                        className={style.switch}
-                        checkedIcon={false}
-                        uncheckedIcon={false}
-                        height={20}
-                        width={40}
-                    />
-                </div>
             </div>
         );
     }
