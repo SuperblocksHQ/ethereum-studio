@@ -8,3 +8,4 @@ dist
 */**/templates/*
 .vscode
 !templates/**
+/public/env-config.js

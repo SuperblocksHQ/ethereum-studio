@@ -32,9 +32,8 @@
       try {
         window.ENV = JSON.parse(__ENV_VARIABLES__);
       } catch(e) {
-        window.ENV = {
-          API_BASE_URL: "https://studio-api-staging.ethereum.org"
-        };
+        window.ENV = {};
+        import('%PUBLIC_URL%/env-config.js');
       }
     </script>
 
