@@ -28,6 +28,15 @@
     <!-- Splash loader css to be displayed meanwhile the app gets loaded -->
     <link rel="stylesheet" href="%PUBLIC_URL%/splash.css">
 
+    <script>
+      try {
+        window.ENV = JSON.parse(__ENV_VARIABLES__);
+      } catch(e) {
+        window.ENV = {};
+        import('%PUBLIC_URL%/env-config.js');
+      }
+    </script>
+
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.

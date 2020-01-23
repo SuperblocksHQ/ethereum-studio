@@ -29,7 +29,7 @@ import {
  */
 
 // This variable will injected automatically during the build process
-export const AMPLITUDE_KEY = process.env.REACT_APP_AMPLITUDE_API_KEY
+export const AMPLITUDE_KEY = window.ENV.AMPLITUDE_API_KEY;
 
 export function setEnable(enabled) {
     amplitude.getInstance().setOptOut(!enabled);
@@ -41,7 +41,7 @@ export function setEnable(enabled) {
  * @param {object} eventProperties - An object with string keys and values for the event properties.
  */
 export function logEvent(eventType, eventProperties) {
-  return amplitude.getInstance().logEvent(eventType, eventProperties);
+    amplitude.getInstance().logEvent(eventType, eventProperties);
 }
 
 export const AnalyticsProvider = ({children}) => (
@@ -49,9 +49,9 @@ export const AnalyticsProvider = ({children}) => (
         amplitudeInstance={amplitude.getInstance()}
         apiKey={AMPLITUDE_KEY}
     >
-        {children}
+            {children}
     </AmplitudeProvider>
-);
+)
 
 export const Analytics = ({eventProperties, children}) => {
     return (

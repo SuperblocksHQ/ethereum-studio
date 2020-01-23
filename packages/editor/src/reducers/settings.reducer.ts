@@ -24,7 +24,7 @@ export const initialState = {
             gasPrice: '1000000000' // '0x3B9ACA00'
         },
         advanced: {
-            trackAnalytics: true
+            trackAnalytics: process.env.NODE_ENV === 'production'
         }
     },
     showTrackingAnalyticsDialog: true

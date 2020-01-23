@@ -1,10 +1,11 @@
 import express, { Request, Response } from 'express';
-import path from 'path';
-import { publicDirectory } from '../../common';
+import { InjectEnvVariablesCommand } from '../../app';
 
 // Default "catch-all" route serving the Ethereum Studio editor
 export const catchAllRouter = express.Router();
 
-catchAllRouter.get('/*', (_req: Request, res: Response) => {
-    res.sendFile(path.join(publicDirectory, 'index.html'));
+catchAllRouter.get('/*', async (_req: Request, res: Response) => {
+    const command = new InjectEnvVariablesCommand();
+    const html = await command.execute();
+    res.send(html);
 });

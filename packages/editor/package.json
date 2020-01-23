@@ -4,9 +4,8 @@
   "version": "1.0.0",
   "license": "GPL",
   "scripts": {
-    "start": "node scripts/start.js",
-    "build": "sh -ac '. ./.env; node scripts/build.js'",
-    "build:staging": "sh -ac '. ./.env.staging; node scripts/build.js'",
+    "start": "chmod +x ./scripts/env.sh && ./scripts/env.sh && node scripts/start.js",
+    "build": "sh -ac 'node scripts/build.js'",
     "build:clean": "rimraf dist",
     "test": "mocha ./test/*.js",
     "test:watch": "npm test -- --watch",
