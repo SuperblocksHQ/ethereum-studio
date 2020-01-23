@@ -7,7 +7,7 @@
     "build:server": "NODE_OPTIONS=\"--max-old-space-size=4096\" lerna run build --scope web-server --stream && gulp",
     "build:clean": "lerna run build:clean --scope editor && lerna run build:clean --scope web-server && rimraf www",
     "start": "lerna run start --scope editor --stream",
-    "start:prod": "node www/api/app.js",
+    "start:prod": "chmod +x /packages/editor/scripts/env.sh && ./packages/editor/scripts/env.sh && node www/api/app.js",
     "lint": "lerna run lint",
     "typecheck": "lerna run typecheck --scope editor && lerna run typecheck --scope web-server"
   },
