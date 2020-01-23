@@ -27,12 +27,5 @@ export const previewActions = {
         return {
             type: previewActions.HIDE_MODALS
         };
-    },
-
-    TOGGLE_WEB3: 'PREVIEW.TOGGLE_WEB3',
-    toggleWeb3() {
-        return {
-            type: previewActions.TOGGLE_WEB3
-        };
-    },
+    }
 };

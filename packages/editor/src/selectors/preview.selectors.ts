@@ -15,6 +15,5 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 export const previewSelectors = {
-    getDisableWeb3: (state: any) => state.preview.disableWeb3,
     getHtmlToRender: (state: any) => state.preview.htmlToRender
 };

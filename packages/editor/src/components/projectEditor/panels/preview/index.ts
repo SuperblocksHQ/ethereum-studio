@@ -24,7 +24,6 @@ import { TransactionType } from '../../../../models';
 
 const mapStateToProps = (state: any) => ({
     isProjectLoaded: !!projectSelectors.getProject(state),
-    disableWeb3: previewSelectors.getDisableWeb3(state),
     selectedEnvironment: projectSelectors.getSelectedEnvironment(state),
     selectedAccount: projectSelectors.getSelectedAccount(state),
     htmlToRender: previewSelectors.getHtmlToRender(state),
@@ -33,12 +32,6 @@ const mapStateToProps = (state: any) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
     return {
-        onToggleWeb3: () => {
-            dispatch(previewActions.toggleWeb3());
-        },
-        onHideModals: () => {
-            dispatch(previewActions.hideModals());
-        },
         notifyTx: (transactionType: TransactionType, hash: string) => {
             dispatch(transactionsActions.addTransaction(transactionType, hash));
         },

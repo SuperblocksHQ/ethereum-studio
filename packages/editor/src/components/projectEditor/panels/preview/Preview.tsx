@@ -33,11 +33,8 @@ function getIframeSrc() {
 const IFRAME_ID = 'appViewIframe';
 
 interface IProps {
-    onToggleWeb3: () => void;
-    onHideModals: () => void;
     notifyTx: (transactionType: TransactionType, hash: string) => void;
     refreshContent: () => void;
-    disableWeb3: boolean;
     selectedEnvironment: IEnvironment;
     selectedAccount: IAccount;
     isProjectLoaded: boolean;
@@ -81,26 +78,6 @@ export class Preview extends React.Component<IProps> {
         iframe.contentWindow.location.replace(getIframeSrc());
     }
 
-    toggleWeb3() {
-        const { onToggleWeb3, refreshContent } = this.props;
-        onToggleWeb3();
-        refreshContent();
-    }
-
-    renderMoreDropdown() {
-        return (
-            <div className={style.moreContainer} onClick={ e => e.stopPropagation() }>
-                <div className={style.heading}>
-                    <p>Disable Web3 Provider</p>
-                    <input type='checkbox'
-                        checked={this.props.disableWeb3}
-                        onChange={() => this.toggleWeb3()} />
-                </div>
-                <div className={style.description}>Simulate that Web3 provider is not available.</div>
-            </div>
-        );
-    }
-
     render() {
         const {
             isProjectLoaded,
@@ -120,12 +97,6 @@ export class Preview extends React.Component<IProps> {
                         <div className={style.urlBar}>
                             {getIframeSrc()}
                         </div> */}
-
-                        <DropdownContainer dropdownContent={this.renderMoreDropdown()}>
-                            <button className='btnNoBg'>
-                                <Tooltip title='Settings'><IconMore /></Tooltip>
-                            </button>
-                        </DropdownContainer>
 
                     </div>
                     <iframe id={IFRAME_ID} src={getIframeSrc()}></iframe>
