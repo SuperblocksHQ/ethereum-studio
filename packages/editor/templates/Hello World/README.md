@@ -62,7 +62,7 @@ function HelloWorld(Contract) {
 Initialize the `HelloWorld` object and create an instance of the web3js library, passing Metamask as a provider for the contract. The initialization function then defines the interface for the contract using [the web3js contract object](https://web3js.readthedocs.io/en/v1.2.1/web3-eth-contract.html#new-contract) and then defines the address of the instance of the contract for the `HelloWorld` object.
 
 ```javascript
-HelloWorld.prototype.init = function() {
+HelloWorld.prototype.init = function () {
 
     this.web3 = new Web3(
         (window.web3 && window.web3.currentProvider) ||
@@ -70,27 +70,28 @@ HelloWorld.prototype.init = function() {
 
     var contract_interface = this.web3.eth.contract(this.Contract.abi);
 
-    this.instance = contract_interface.at(this.Contract.address);
+    this.instance = this.Contract.address ? contract_interface.at(this.Contract.address) :  { message: () => {} };
 };
 ```
 
 Add other JavaScript boilerplate to create the instance of the `HelloWorld` object defined above, and show the HTML elements on the page:
 
 ```javascript
-HelloWorld.prototype.main = function() {
+HelloWorld.prototype.main = function () {
     $(".blocknumber").show();
     $(".message").show();
     this.update();
 }
 
-HelloWorld.prototype.onReady = function() {
+HelloWorld.prototype.onReady = function () {
     this.init();
     this.main();
 };
 
+if(typeof(Contracts) === "undefined") var Contracts={ HelloWorld: { abi: [] }};
 var helloWorld = new HelloWorld(Contracts['HelloWorld']);
 
-$(document).ready(function() {
+$(document).ready(function () {
     helloWorld.onReady();
 });
 ```
@@ -100,14 +101,14 @@ The `getMessage` function gets the message value passed to the instance of the c
 The `getBlockNumber` works similarly but uses the web3js [`getBlockNumber`](https://web3js.readthedocs.io/en/v1.2.1/web3-eth.html?highlight=getBlockNumber#getblocknumber) function to return the value of the latest block in the configured endpoint.
 
 ```javascript
-HelloWorld.prototype.getMessage = function(cb) {
+HelloWorld.prototype.getMessage = function (cb) {
     this.instance.message(function (error, result) {
         cb(error, result);
     });
 };
 
-HelloWorld.prototype.getBlockNumber = function(cb) {
-    this.web3.eth.getBlockNumber(function(error, result) {
+HelloWorld.prototype.getBlockNumber = function (cb) {
+    this.web3.eth.getBlockNumber(function (error, result) {
         cb(error, result);
     });
 };
@@ -116,22 +117,22 @@ HelloWorld.prototype.getBlockNumber = function(cb) {
 The `update` function ties everything together, calling the two functions defined above, and setting the `H2` tags to the values they return or showing an error message.
 
 ```javascript
-HelloWorld.prototype.update = function() {
+HelloWorld.prototype.update = function () {
     var that = this;
-    this.getMessage(function(error, result) {
-        if(error) {
+    this.getMessage(function (error, result) {
+        if (error) {
             $(".error").show();
             return;
         }
         $("#message").text(result);
 
-        that.getBlockNumber(function(error, result) {
-            if(error) {
+        that.getBlockNumber(function (error, result) {
+            if (error) {
                 $(".error").show();
                 return;
             }
             $("#blocknumber").text(result);
-            setTimeout(function() {that.update()}, 1000);
+            setTimeout(function () { that.update() }, 1000);
         });
     });
 }
