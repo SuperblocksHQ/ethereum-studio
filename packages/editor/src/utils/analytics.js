@@ -30,7 +30,6 @@ import {
 
 // This variable will injected automatically during the build process
 export const AMPLITUDE_KEY = window.ENV.AMPLITUDE_API_KEY;
-const dev = process.env.NODE_ENV !== 'production';
 
 export function setEnable(enabled) {
     amplitude.getInstance().setOptOut(!enabled);
@@ -42,30 +41,17 @@ export function setEnable(enabled) {
  * @param {object} eventProperties - An object with string keys and values for the event properties.
  */
 export function logEvent(eventType, eventProperties) {
-    if (!dev) {
-        return amplitude.getInstance().logEvent(eventType, eventProperties);
-    }
+    amplitude.getInstance().logEvent(eventType, eventProperties);
 }
 
-export const AnalyticsProvider = ({children}) => {
-
-    if (dev) {
-        return (
-            <React.Fragment>
-                {children}
-            </React.Fragment>
-        );
-    }
-
-    return (
-        <AmplitudeProvider
-            amplitudeInstance={amplitude.getInstance()}
-            apiKey={AMPLITUDE_KEY}
-        >
+export const AnalyticsProvider = ({children}) => (
+    <AmplitudeProvider
+        amplitudeInstance={amplitude.getInstance()}
+        apiKey={AMPLITUDE_KEY}
+    >
             {children}
-        </AmplitudeProvider>
-    );
-};
+    </AmplitudeProvider>
+)
 
 export const Analytics = ({eventProperties, children}) => {
     return (
