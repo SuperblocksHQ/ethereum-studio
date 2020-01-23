@@ -1,11 +1,10 @@
-import { Response } from 'express';
 import path from 'path';
 import fs from 'fs';
 import { publicDirectory } from '../../common';
 
 export class InjectEnvVariablesCommand {
 
-    async execute(res: Response) {
+    async execute() {
         const filePath = path.join(publicDirectory, 'index.html');
 
         fs.readFile(filePath, 'utf8', (readErr, file) => {
@@ -18,7 +17,7 @@ export class InjectEnvVariablesCommand {
             };
 
             // Inject environment variables into index.html and send response
-            res.send(file.replace(/__ENV_VARIABLES__/g, JSON.stringify(envVariables)));
+            return file.replace(/__ENV_VARIABLES__/g, JSON.stringify(envVariables));
         });
     }
 }

@@ -6,5 +6,6 @@ export const catchAllRouter = express.Router();
 
 catchAllRouter.get('/*', async (_req: Request, res: Response) => {
     const command = new InjectEnvVariablesCommand();
-    await command.execute(res);
+    const html = await command.execute();
+    res.send(html);
 });
