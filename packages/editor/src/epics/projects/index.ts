@@ -20,12 +20,6 @@ import { initExplorerEpic } from './initExplorer.epic';
 import { deleteProject } from './deleteProject.epic';
 import { forkProject } from './forkProject.epic';
 import { updateProject } from './updateProject.epic';
-
-// TODO - Add missing epics
-
-// import { downloadProject } from './downloadProject.epic';
-// import { importProject } from './importProject.epic';
-
 import { loadProject } from './loadProject.epic';
 import { createProjectFromTemplateEpic } from './createProjectFromTemplate.epic';
 import { renameProjectEpic } from './renameProject.epic';
