@@ -16,12 +16,9 @@
 
 import React from 'react';
 import style from './style.less';
-import { IconRefresh, IconDownloadDApp, IconMore } from '../../../icons';
+import { IconRefresh, IconMore } from '../../../icons';
 import { DropdownContainer, Tooltip, OnlyIf } from '../../../common';
 import { previewService } from '../../../../services';
-import { CannotExportModal } from './CannotExportModal';
-import { DownloadModal } from './DownloadModal';
-import { NoExportableContentModal } from './NoExportableContentModal';
 import { IEnvironment, IAccount } from '../../../../models/state';
 import { TransactionType } from '../../../../models';
 
@@ -36,16 +33,8 @@ function getIframeSrc() {
 const IFRAME_ID = 'appViewIframe';
 
 interface IProps {
-    onToggleWeb3: () => void;
-    onHideModals: () => void;
-    tryToDownload: () => void;
     notifyTx: (transactionType: TransactionType, hash: string) => void;
-    download: () => void;
     refreshContent: () => void;
-    disableWeb3: boolean;
-    showNoExportableContentModal: boolean;
-    showCannotExportModal: boolean;
-    showDownloadModal: boolean;
     selectedEnvironment: IEnvironment;
     selectedAccount: IAccount;
     isProjectLoaded: boolean;
@@ -89,40 +78,9 @@ export class Preview extends React.Component<IProps> {
         iframe.contentWindow.location.replace(getIframeSrc());
     }
 
-    tryDownload() {
-        const { tryToDownload: tryDownload } = this.props;
-        tryDownload();
-    }
-
-    toggleWeb3() {
-        const { onToggleWeb3, refreshContent } = this.props;
-        onToggleWeb3();
-        refreshContent();
-    }
-
-    renderMoreDropdown() {
-        return (
-            <div className={style.moreContainer} onClick={ e => e.stopPropagation() }>
-                <div className={style.heading}>
-                    <p>Disable Web3 Provider</p>
-                    <input type='checkbox'
-                        checked={this.props.disableWeb3}
-                        onChange={() => this.toggleWeb3()} />
-                </div>
-                <div className={style.description}>Simulate that Web3 provider is not available.</div>
-            </div>
-        );
-    }
-
     render() {
         const {
             isProjectLoaded,
-            showCannotExportModal,
-            showNoExportableContentModal,
-            showDownloadModal,
-            selectedEnvironment,
-            onHideModals,
-            download,
             refreshContent
         } = this.props;
 
@@ -135,37 +93,14 @@ export class Preview extends React.Component<IProps> {
                             <Tooltip title='Refresh Page'><IconRefresh /></Tooltip>
                         </button>
 
+                        {/* // Disable for now
                         <div className={style.urlBar}>
                             {getIframeSrc()}
-                        </div>
-
-                        <button className='btnNoBg' onClick={() => this.tryDownload()}>
-                            <Tooltip title='Download DApp'><IconDownloadDApp width={'24px'} height={'24px'} /></Tooltip>
-                        </button>
-
-
-                        <DropdownContainer dropdownContent={this.renderMoreDropdown()}>
-                            <button className='btnNoBg'>
-                                <Tooltip title='Settings'><IconMore /></Tooltip>
-                            </button>
-                        </DropdownContainer>
+                        </div> */}
 
                     </div>
                     <iframe id={IFRAME_ID} src={getIframeSrc()}></iframe>
                 </div>
-
-                <OnlyIf test={showNoExportableContentModal}>
-                    <NoExportableContentModal onClose={onHideModals} />
-                </OnlyIf>
-                <OnlyIf test={showCannotExportModal}>
-                    <CannotExportModal onClose={onHideModals} />
-                </OnlyIf>
-                <OnlyIf test={showDownloadModal}>
-                    <DownloadModal
-                        environment={selectedEnvironment}
-                        onClose={onHideModals}
-                        onDownload={download} />
-                </OnlyIf>
             </OnlyIf>
         );
     }

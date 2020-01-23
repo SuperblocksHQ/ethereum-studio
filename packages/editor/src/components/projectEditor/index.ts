@@ -17,7 +17,7 @@
 import { connect } from 'react-redux';
 import { ProjectEditor } from './ProjectEditor';
 import { projectSelectors, contractConfigSelectors } from '../../selectors';
-import { panelsActions, contractConfigActions, modalActions, outputLogActions } from '../../actions';
+import { panelsActions, contractConfigActions, modalActions, outputLogActions, projectsActions } from '../../actions';
 import { AnyAction } from 'redux';
 import { Dispatch } from 'react';
 import { Panels } from '../../models/state';
@@ -46,7 +46,10 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
         },
         showModal: (modalType: string, modalProps: any) => {
             dispatch(modalActions.showModal(modalType, modalProps));
-        }
+        },
+        exportProject() {
+            dispatch(projectsActions.exportProject());
+        },
     };
 };
 

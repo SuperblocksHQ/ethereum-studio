@@ -1,4 +1,4 @@
-// Copyright 2019 Superblocks AB
+// Copyright 2018 Superblocks AB
 //
 // This file is part of Superblocks Lab.
 //
@@ -14,15 +14,24 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { EMPTY } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
-import { ofType } from 'redux-observable';
-import { previewActions } from '../../actions';
-import { previewService } from '../../services';
+import React from 'react';
+import style from './style.less';
+import { Tooltip } from '../../common';
 
-export const toggleWeb3Epic = (action$: any, state$: any) => action$.pipe(
-    ofType(previewActions.TOGGLE_WEB3),
-    switchMap(() => {
-        previewService.disableWeb3 = state$.value.preview.disableWeb3;
-        return EMPTY;
-    }));
+interface IProps {
+    tooltipText: string;
+    onClick: () => void;
+    icon: JSX.Element;
+}
+
+export function PaneAction({ tooltipText, onClick, icon }: IProps) {
+    return (
+        <div className={style.toggle}>
+            <Tooltip title={tooltipText} position='bottom' distance='30'>
+                <button className={'btnNoBg'} onClick={onClick}>
+                    {icon}
+                </button>
+            </Tooltip>
+        </div>
+    );
+}
