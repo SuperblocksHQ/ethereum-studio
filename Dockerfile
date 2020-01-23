@@ -24,8 +24,6 @@ RUN npx lerna bootstrap --hoist
 # Bundle app source
 COPY . .
 
-RUN npm run inject-env-variables
-
 RUN npm run $BUILD
 
 EXPOSE 80
