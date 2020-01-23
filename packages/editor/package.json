@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "license": "GPL",
   "scripts": {
-    "start": "chmod +x ./env.sh && ./env.sh && node scripts/start.js",
+    "start": "chmod +x ./scripts/env.sh && ./scripts/env.sh && node scripts/start.js",
     "build": "sh -ac 'node scripts/build.js'",
     "build:clean": "rimraf dist",
     "test": "mocha ./test/*.js",
