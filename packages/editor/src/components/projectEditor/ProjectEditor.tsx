@@ -23,19 +23,20 @@ import TopBar from '../topbar';
 import BottomBar from './bottomBar';
 import ContactContainer from '../contactContainer';
 import { PreviewPanel, TransactionLogPanel, OutputPanel, Explorer, InteractPanel, ConfigurePanel } from './panels';
-import { IconTransactions, IconShowPreview, IconPanelOutput, IconFolderOpen, IconInteract, IconConfigure } from '../icons';
+import { IconTransactions, IconFolderOpen, IconInteract, IconConfigure, IconDownloadDApp, IconTogglePreview } from '../icons';
 import { SideButton } from './sideButton';
 import { SplitterLayout } from './splitterLayout';
-import { Panel } from './panel';
+import { Panel, PanelAction } from './panel';
 import classnames from 'classnames';
 import { Panels, IPanelsState, IEnvironment } from '../../models/state';
 import { Deployer } from './deployer';
-import { OnlyIf } from '../common';
+import { OnlyIf, Tooltip } from '../common';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import ContractConfigModal from './editors/contractConfigModal';
 import ExternalProviderInfo from '../externalProviderInfo';
 import classNames from 'classnames';
+import { PaneAction } from './paneAction';
 
 interface IProps {
     panels: IPanelsState;
@@ -49,6 +50,7 @@ interface IProps {
     openPanel(panel: Panels): void;
     closePanel(panel: Panels): void;
     closeContractConfigModal(): void;
+    exportProject(): void;
 }
 
 interface IState {
@@ -100,14 +102,13 @@ export class ProjectEditor extends React.Component<IProps, IState> {
     render() {
         const { togglePanel,
                 openPanel,
-                closePanel,
-                selectedEnvironment,
+                exportProject,
                 showContractConfig,
                 closeContractConfigModal,
                 showExternalProviderInfo,
                 unreadRows } = this.props;
 
-        const { sidePanelDragging, verticalPanelDragging } = this.state;
+        const { sidePanelDragging } = this.state;
         const rightPanelSize = window.innerWidth < 1000 ? 280 : 500;
 
         return (
@@ -146,9 +147,16 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                                     { this.isPanelOpen(Panels.Explorer) &&
                                         <React.Fragment>
                                             <Panel
-                                                name='Explorer'
-                                                onClose={() => this.props.closePanel(Panels.Explorer)}
-                                                dragging={this.state.sidePanelDragging}>
+                                                name='EXPLORER'
+                                                dragging={this.state.sidePanelDragging}
+                                                actions={
+                                                    <PanelAction
+                                                        tooltipText={'Export to ZIP'}
+                                                        icon={<IconDownloadDApp />}
+                                                        onClick={exportProject}
+                                                    />
+                                                }
+                                            >
                                                 <Explorer />
                                             </Panel>
                                             <ContactContainer />
@@ -157,8 +165,7 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                                     { this.isPanelOpen(Panels.Configure) &&
                                         <React.Fragment>
                                             <Panel
-                                                name='Configure Contracts'
-                                                onClose={() => this.props.closePanel(Panels.Configure)}
+                                                name='CONFIGURE CONTRACTS'
                                                 dragging={this.state.sidePanelDragging}>
                                                 <ConfigurePanel />
                                             </Panel>
@@ -168,8 +175,7 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                                     { this.isPanelOpen(Panels.Interact) &&
                                         <React.Fragment>
                                             <Panel
-                                                name='Interact'
-                                                onClose={() => this.props.closePanel(Panels.Interact)}
+                                                name='INTERACT'
                                                 dragging={this.state.sidePanelDragging}>
                                                 <InteractPanel />
                                             </Panel>
@@ -183,7 +189,7 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                                     onDragStart={() => this.toggleSidePanelDragging()}
                                     onDragEnd={() => this.toggleSidePanelDragging()}
                                     onSecondaryPaneSizeChange={() => null}
-                                    customClassName={style.overflowHidden}
+                                    customClassName={!this.isPanelOpen(Panels.Preview) && !this.isPanelOpen(Panels.Transactions) ? 'hidePreviewSystemPanel' : style.overflowHidden}
                                 >
                                     <Panes dragging={sidePanelDragging} />
                                     <div className={style.rightPanel}>
@@ -200,19 +206,22 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                                                 <div className={classnames([style.panelButtonsContainer])}>
                                                     <SideButton
                                                         name='Browser'
-                                                        icon={<IconShowPreview />}
                                                         onClick={() => openPanel(Panels.Preview)}
                                                         active={this.isPanelOpen(Panels.Preview)}
                                                     />
                                                     <SideButton
                                                         name='Transactions'
-                                                        icon={<IconTransactions />}
                                                         onClick={() => openPanel(Panels.Transactions)}
                                                         active={this.isPanelOpen(Panels.Transactions)}
                                                     />
+                                                    <PaneAction
+                                                        tooltipText='Toggle Preview'
+                                                        icon={<IconTogglePreview />}
+                                                        onClick={() => togglePanel(Panels.Preview)}
+                                                    />
                                                 </div>
                                                 { this.isPanelOpen(Panels.Transactions) &&
-                                                    <Panel icon={ <IconTransactions /> } onClose={() => closePanel(Panels.Transactions)} dragging={sidePanelDragging}>
+                                                    <Panel icon={ <IconTransactions /> } dragging={sidePanelDragging}>
                                                         <TransactionLogPanel />
                                                     </Panel>
                                                 }
@@ -224,7 +233,7 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                                                 }
                                             </div>
                                             { this.isPanelOpen(Panels.OutputLog) &&
-                                                    <Panel name={'Console'} onClose={() => closePanel(Panels.OutputLog)} dragging={sidePanelDragging}>
+                                                    <Panel name={'Console'} dragging={sidePanelDragging}>
                                                         <OutputPanel />
                                                     </Panel>
                                             }
@@ -232,7 +241,6 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                                         <div className={classNames([style.panelButtonsContainer, style.bottomButtonsContainer])}>
                                             <SideButton
                                                 name='Console'
-                                                icon={<IconPanelOutput />}
                                                 onClick={() => togglePanel(Panels.OutputLog)}
                                                 pillStatus={unreadRows && !this.isPanelOpen(Panels.OutputLog) ? '1' : '0'}
                                                 active={this.isPanelOpen(Panels.OutputLog)}

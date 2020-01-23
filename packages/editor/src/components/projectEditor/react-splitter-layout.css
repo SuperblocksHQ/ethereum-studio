@@ -50,6 +50,14 @@
     display: none;
 }
 
+.hidePreviewSystemPanel > div:nth-child(3) {
+    display: none;
+}
+
+.hidePreviewSystemPanel >.layout-splitter {
+    display: none;
+}
+
 .hideBottomSystemPanel > div:nth-child(3) {
     display: none;
 }

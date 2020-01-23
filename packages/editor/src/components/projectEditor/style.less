@@ -78,10 +78,6 @@
         overflow: auto;
         scrollbar-width: thin;
 
-        .buttonText {
-            margin-left: 5px;
-        }
-
         .sideButton {
             display: flex;
             align-items: center;
@@ -90,7 +86,7 @@
 
             .buttonText {
                 position: relative;
-                padding-right: 20px;
+                padding: 0 10px;
             }
 
             .pillStatus {
@@ -147,6 +143,7 @@
 
                 &.active {
                     opacity: 1;
+                    border-left: 1px solid white;
                 }
 
                 img:first-of-type,
@@ -175,7 +172,7 @@
             align-content: center;
             align-items: center;
             height: 100%;
-            padding: 0px 10px;
+            padding: 0px 25px 0 0;
 
             svg,
             img {
@@ -215,14 +212,13 @@
     flex-direction: column;
 
     .header {
-        background-color: #333;
         display: flex;
         align-content: center;
         align-items: center;
         height: 30px;
         min-height: 30px;
-        padding: 7px 12px 8px 12px;
-        border-bottom: 1px solid #121516;
+        padding: 4px 16px 0px 16px;
+
         .panelIcon {
             color: #fff;
             margin-left: 7px;
@@ -233,14 +229,17 @@
             font-weight: 600;
             white-space: nowrap;
         }
-        .icon {
+        .actions {
             margin-left: auto;
-            color: #c7c7c7;
-            padding-left: 0px;
-            padding-right: 0px;
-            display: flex;
-            &:hover {
-                color: white;
+
+            .icon {
+                padding-left: 0px;
+                padding-right: 0px;
+                display: flex;
+                color: #a1a1a1;
+                &:hover {
+                    color: white;
+                }
             }
         }
     }

@@ -14,8 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { IEnvironment } from '../models/state';
-
 export const previewActions = {
     REFRESH_CONTENT: 'REFRESH_CONTENT',
     refreshContent() {
@@ -24,31 +22,10 @@ export const previewActions = {
         };
     },
 
-    TRY_DOWNLOAD: 'PREVIEW.TRY_DOWNLOAD',
-    tryDownload() {
-        return {
-            type: previewActions.TRY_DOWNLOAD
-        };
-    },
-
-    DOWNLOAD: 'PREVIEW.DOWNLOAD',
-    download() {
-        return {
-            type: previewActions.DOWNLOAD
-        };
-    },
-
     HIDE_MODALS: 'PREVIEW.HIDE_MODALS',
     hideModals() {
         return {
             type: previewActions.HIDE_MODALS
         };
-    },
-
-    TOGGLE_WEB3: 'PREVIEW.TOGGLE_WEB3',
-    toggleWeb3() {
-        return {
-            type: previewActions.TOGGLE_WEB3
-        };
-    },
+    }
 };

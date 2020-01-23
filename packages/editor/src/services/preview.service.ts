@@ -19,7 +19,6 @@ import { IEnvironment, IAccount } from '../models/state';
 import { TransactionType } from '../models';
 
 let iframeId: string;
-let disableWeb3 = false;
 
 export const previewService = {
     superProvider: <any>null,
@@ -69,7 +68,4 @@ export const previewService = {
             this.superProvider.setEnvironment(environment);
         }
     },
-
-    get disableWeb3() { return disableWeb3; },
-    set disableWeb3(value) { disableWeb3 = value; },
 };

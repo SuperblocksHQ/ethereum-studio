@@ -39,7 +39,7 @@ export class ConfigurePanel extends React.Component<IProps> {
 
         return (
             <div className={style.container}>
-                <p className={style.note}>Each of your contracts requires a configuration in order to be deployed successfully.</p>
+                <p className={style.note}>Depending on your contract, some extra configuration might be required to be deployed successfully.</p>
                 {
                     dappFileData.contracts.map((contract: any, index: number) => (
                         <div className={style.contractContainer} key={index}>

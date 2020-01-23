@@ -14,33 +14,26 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { previewActions, explorerActions, deployerActions, projectsActions } from '../actions';
-import Networks from '../networks';
+import { previewActions, explorerActions, deployerActions, projectsActions, panesActions } from '../actions';
 import { AnyAction } from 'redux';
-import { findItemByPath } from './explorerLib';
+import { findItemByPath, findItemById } from './explorerLib';
 import { ProjectItemTypes } from '../models';
-import { projectSelectors, previewSelectors } from '../selectors';
+import { projectSelectors } from '../selectors';
 
 const initialState = {
-    showNoExportableContentModal: false,
-    showCannotExportModal: false,
-    showDownloadModal: false,
-    disableWeb3: false,
-    htmlToRender: '',
-    exportableHtml: undefined
+    htmlToRender: ''
 };
 
-function getProviderHTML(endpoint: string, accounts: string[], disableWeb3?: boolean) {
-    return disableWeb3 ? '' :
-        `<script type="text/javascript" src="${window.location.origin}/static/js/web3provider.js?ts=${Date.now()}"></script>
-         <script type="text/javascript">
-            window.web3={currentProvider:new DevKitProvider.provider("${endpoint}"), eth:{ accounts:${JSON.stringify(accounts)} }};
-            console.log("Using Superblocks web3 provider for endpoint: ${endpoint}");
-         </script>`;
+function getProviderHTML(endpoint: string, accounts: string[]) {
+    return `<script type="text/javascript" src="${window.location.origin}/static/js/web3provider.js?ts=${Date.now()}"></script>
+            <script type="text/javascript">
+                window.web3={currentProvider:new DevKitProvider.provider("${endpoint}"), eth:{ accounts:${JSON.stringify(accounts)} }};
+                console.log("Using Superblocks web3 provider for endpoint: ${endpoint}");
+            </script>`;
 }
 
-function getInnerContent(html: string, style: string, js: string, endpoint?: string, accounts?: string[], disableWeb3?: boolean) {
-    const js2 = ((endpoint && endpoint !== null) && (accounts && accounts !== null) ? getProviderHTML(endpoint, accounts, disableWeb3) : '') + `<script type="text/javascript">${js}</script>`;
+function getInnerContent(html: string, style: string, js: string, endpoint?: string, accounts?: string[]) {
+    const js2 = ((endpoint && endpoint !== null) && (accounts && accounts !== null) ? getProviderHTML(endpoint, accounts) : '') + `<script type="text/javascript">${js}</script>`;
 
     const style2 = `<style type="text/css">${style}</style>`;
     html = html.replace('<!-- STYLE -->', style2);
@@ -59,77 +52,55 @@ function errorHtml(message: string) {
     </html>`;
 }
 
+function generateHtmlToRender(rootState: any) {
+    const tree = rootState.explorer.tree;
+    const addresses = [projectSelectors.getSelectedAccount(rootState).address];
+
+    const html = findItemByPath(tree, [ 'app', 'app.html' ], ProjectItemTypes.File);
+    const css = findItemByPath(tree, [ 'app', 'app.css' ], ProjectItemTypes.File);
+    const js = findItemByPath(tree, [ 'app', 'app.js' ], ProjectItemTypes.File);
+
+    let contractJs = '';
+    const contractListFolder = findItemByPath(tree, [ 'build', 'contracts' ], ProjectItemTypes.Folder);
+    if (contractListFolder && contractListFolder.children.length > 0) {
+        for (const contractFolder of contractListFolder.children) {
+            const contractFiles = contractFolder.children.filter((file) => file.name.includes(`${rootState.projects.selectedEnvironment.name}.js`));
+            for (const file of contractFiles) {
+                contractJs += file.code + '\n';
+            }
+        }
+    }
+
+    if ((!html || !css || !js || !html.code || !css.code || !js.code)) {
+        return errorHtml('There was an error rendering your project');
+    } else {
+        return getInnerContent(html.code, css.code, contractJs + '\n' + js.code, rootState.projects.selectedEnvironment.endpoint, addresses);
+    }
+}
+
 export default function previewReducer(state = initialState, action: AnyAction, rootState: any) {
     switch (action.type) {
         case deployerActions.DEPLOY_SUCCESS:
         case explorerActions.INIT_EXPLORER_SUCCESS:
         case projectsActions.SET_ENVIRONMENT_SUCCESS:
         case previewActions.REFRESH_CONTENT:
-            let htmlToRender;
-            let exportableHtml;
-            const tree = rootState.explorer.tree;
-            const addresses = [projectSelectors.getSelectedAccount(rootState).address];
-            const disableWeb3 = previewSelectors.getDisableWeb3(rootState);
-
-            const html = findItemByPath(tree, [ 'app', 'app.html' ], ProjectItemTypes.File);
-            const css = findItemByPath(tree, [ 'app', 'app.css' ], ProjectItemTypes.File);
-            const js = findItemByPath(tree, [ 'app', 'app.js' ], ProjectItemTypes.File);
-
-            let contractJs = '';
-            const contractListFolder = findItemByPath(tree, [ 'build', 'contracts' ], ProjectItemTypes.Folder);
-            if (contractListFolder && contractListFolder.children.length > 0) {
-                for (const contractFolder of contractListFolder.children) {
-                    const contractFiles = contractFolder.children.filter((file) => file.name.includes(`${rootState.projects.selectedEnvironment.name}.js`));
-                    for (const file of contractFiles) {
-                        contractJs += file.code + '\n';
-                    }
-                }
-            }
-
-            if ((!html || !css || !js || !html.code || !css.code || !js.code)) {
-                htmlToRender = errorHtml('There was an error rendering your project');
+            return {
+                ...state,
+                htmlToRender: generateHtmlToRender(rootState),
+            };
+        case panesActions.SAVE_FILE_SUCCESS:
+            const result = findItemById(rootState.explorer.tree, action.data.fileId);
+            // reload dapp file data if the file was updated
+            if (result.item && (result.item.name.endsWith('.css') ||
+                result.item.name.endsWith('.html') ||
+                result.item.name.endsWith('.js'))) {
+                return {
+                    ...state,
+                    htmlToRender: generateHtmlToRender(rootState),
+                };
             } else {
-                htmlToRender = getInnerContent(html.code, css.code, contractJs + '\n' + js.code, rootState.projects.selectedEnvironment.endpoint, addresses, disableWeb3);
-                exportableHtml = getInnerContent(html.code, css.code, contractJs + '\n' + js.code);
+                return state;
             }
-
-            return {
-                ...state,
-                htmlToRender,
-                exportableHtml
-            };
-        case previewActions.HIDE_MODALS:
-            return {
-                ...state,
-                showCannotExportModal: false,
-                showNoExportableContentModal: false,
-                showDownloadModal: false
-            };
-        case previewActions.TRY_DOWNLOAD: {
-            let showNoExportableContentModal = false;
-            let showCannotExportModal = false;
-            let showDownloadModal = false;
-
-            if (!state.exportableHtml) {
-                showNoExportableContentModal = true;
-            } else if (rootState.projects.selectedEnvironment.name === Networks.browser.name) {
-                showCannotExportModal = true;
-            } else {
-                showDownloadModal = true;
-            }
-
-            return {
-                ...state,
-                showNoExportableContentModal,
-                showCannotExportModal,
-                showDownloadModal
-            };
-        }
-        case previewActions.TOGGLE_WEB3:
-            return {
-                ...state,
-                disableWeb3: !state.disableWeb3
-            };
         default:
             return state;
     }
