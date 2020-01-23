@@ -13,7 +13,8 @@
     "lint-javascript": "exec eslint --config ./config/eslint/eslint.json --ext \".js\" ./src",
     "lint": "yarn run lint-javascript",
     "postinstall": "node scripts/postinstall.js && node scripts/generate-templates.js",
-    "generatetemplates": "node scripts/generate-templates.js"
+    "generatetemplates": "node scripts/generate-templates.js",
+    "inject-env-variables": "chmod +x scripts/env.sh && scripts/env.sh "
   },
   "eslintIgnore": [
     "ethereumjs-tx-*.js",
