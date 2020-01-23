@@ -10,7 +10,7 @@
     "start:prod": "npm run inject-env-variables && node www/api/app.js",
     "lint": "lerna run lint",
     "typecheck": "lerna run typecheck --scope editor && lerna run typecheck --scope web-server",
-    "inject-env-variables": "lerna run inject-env-variables"
+    "inject-env-variables": "lerna run inject-env-variables --scope editor"
   },
   "devDependencies": {
     "gulp": "^4.0.0",
