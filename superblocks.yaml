@@ -26,6 +26,11 @@ jobs:
       - kubectl config set-context $K8S_CLUSTER_NAME_STAGING --cluster=$K8S_CLUSTER_NAME_STAGING --user=$K8S_USER_NAME_STAGING
       - kubectl config use-context $K8S_CLUSTER_NAME_STAGING
       - 'printf "apiVersion: v1\nkind: Secret\n$(kubectl create secret docker-registry $CI_PROJECT_NAME-github-registry --docker-server=$CI_REGISTRY --docker-username=$GITHUB_REGISTRY_USER --docker-password=$GITHUB_REGISTRY_TOKEN -o yaml --dry-run)" | kubectl apply -f -'
+      # pass env variables, which names start with "STAGING_" to application running in kubernetes
+      - env | sed -n "s/^STAGING_\(.*\)$/\1/p" > k8s_prefixed_variables
+      - 'printf "apiVersion: v1\nkind: Secret\n$(kubectl create secret generic $CI_PROJECT_NAME-secret --from-env-file k8s_prefixed_variables -o yaml --dry-run)" | kubectl apply -f -'
+      - rm k8s_prefixed_variables
+      # generate deployment file
       - sed 's _APP_NAME_ '"$CI_PROJECT_NAME"' g; s _CONTAINER_IMAGE_ '"$GITHUB_REGISTRY_IMAGE:$SUPER_COMMIT_SHA1"' g' kubernetes.tpl.yml > kubernetes.yml;
       - kubectl apply -f kubernetes.yml\
 
@@ -42,6 +47,11 @@ jobs:
       - kubectl config set-context $K8S_CLUSTER_NAME --cluster=$K8S_CLUSTER_NAME --user=$K8S_USER_NAME
       - kubectl config use-context $K8S_CLUSTER_NAME
       - 'printf "apiVersion: v1\nkind: Secret\n$(kubectl create secret docker-registry $CI_PROJECT_NAME-github-registry --docker-server=$CI_REGISTRY --docker-username=$GITHUB_REGISTRY_USER --docker-password=$GITHUB_REGISTRY_TOKEN -o yaml --dry-run)" | kubectl apply -f -'
+      # pass env variables, which names start with "PROD_" to application running in kubernetes
+      - env | sed -n "s/^PROD_\(.*\)$/\1/p" > k8s_prefixed_variables
+      - 'printf "apiVersion: v1\nkind: Secret\n$(kubectl create secret generic $CI_PROJECT_NAME-secret --from-env-file k8s_prefixed_variables -o yaml --dry-run)" | kubectl apply -f -'
+      - rm k8s_prefixed_variables
+      # generate deployment file
       - sed 's _APP_NAME_ '"$CI_PROJECT_NAME"' g; s _CONTAINER_IMAGE_ '"$GITHUB_REGISTRY_IMAGE:$SUPER_COMMIT_SHA1"' g' kubernetes.tpl.yml > kubernetes.yml;
       - kubectl apply -f kubernetes.yml
 

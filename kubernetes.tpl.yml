@@ -33,6 +33,9 @@ spec:
         - name: _APP_NAME_
           image: _CONTAINER_IMAGE_
           imagePullPolicy: Always
+          envFrom:
+          - secretRef:
+              name: _APP_NAME_-secret
           ports:
             - containerPort: 80
       imagePullSecrets:
