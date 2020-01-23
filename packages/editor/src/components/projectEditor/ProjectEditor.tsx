@@ -23,7 +23,7 @@ import TopBar from '../topbar';
 import BottomBar from './bottomBar';
 import ContactContainer from '../contactContainer';
 import { PreviewPanel, TransactionLogPanel, OutputPanel, Explorer, InteractPanel, ConfigurePanel } from './panels';
-import { IconTransactions, IconFolderOpen, IconInteract, IconConfigure, IconDownloadDApp, IconToggleBrowser } from '../icons';
+import { IconTransactions, IconFolderOpen, IconInteract, IconConfigure, IconDownloadDApp, IconTogglePreview } from '../icons';
 import { SideButton } from './sideButton';
 import { SplitterLayout } from './splitterLayout';
 import { Panel, PanelAction } from './panel';
@@ -215,8 +215,8 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                                                         active={this.isPanelOpen(Panels.Transactions)}
                                                     />
                                                     <PaneAction
-                                                        tooltipText='Toggle Browser'
-                                                        icon={<IconToggleBrowser />}
+                                                        tooltipText='Toggle Preview'
+                                                        icon={<IconTogglePreview />}
                                                         onClick={() => togglePanel(Panels.Preview)}
                                                     />
                                                 </div>

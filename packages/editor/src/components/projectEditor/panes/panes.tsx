@@ -22,7 +22,7 @@ import { PaneType, Pane, IFilePane, Panels, IPanelsState } from '../../../models
 import { FileEditor } from './editor';
 import { IProjectItem } from '../../../models';
 import PaneDraggable from './paneDraggable';
-import { IconToggleBrowser } from '../../icons';
+import { IconTogglePreview } from '../../icons';
 import { PaneAction } from '../paneAction';
 import { OnlyIf } from '../../common';
 
@@ -62,8 +62,8 @@ export function Panes(props: IProps) {
 
                     <OnlyIf test={!isPanelOpen(Panels.Preview) && !isPanelOpen(Panels.Transactions)}>
                         <PaneAction
-                            tooltipText='Toggle Browser'
-                            icon={<IconToggleBrowser />}
+                            tooltipText='Toggle Preview'
+                            icon={<IconTogglePreview />}
                             onClick={() => props.togglePanel(Panels.Preview)}
                         />
                     </OnlyIf>
