@@ -49,8 +49,8 @@ HelloWorld.prototype.getBlockNumber = function (cb) {
     });
 };
 
-// Ties everything together, calling the two functions defined above, and 
-// setting the `H2` tags to the values they return or showing an error message.
+// Calls the functions `getMessage` and `getBlockNumber` defined above, then 
+// sets the DOM element texts to the values they return or displays an error message
 HelloWorld.prototype.update = function () {
     var that = this;
     this.getMessage(function (error, result) {
