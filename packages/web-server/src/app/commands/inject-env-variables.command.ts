@@ -3,6 +3,7 @@ import fs from 'fs';
 import { promisify } from 'util';
 import { publicDirectory } from '../../common';
 const readFileAsync = promisify(fs.readFile);
+const writeFileAsync = promisify(fs.writeFile);
 
 export class InjectEnvVariablesCommand {
 
@@ -15,7 +16,8 @@ export class InjectEnvVariablesCommand {
             API_BASE_URL: process.env.API_BASE_URL
         };
 
-        // Inject environment variables into index.html and send response
-        return file.replace(/__ENV_VARIABLES__/g, JSON.stringify(envVariables));
+        const fileWithVars = file.replace(/__ENV_VARIABLES__/g, JSON.stringify(envVariables));
+
+        await writeFileAsync(filePath, fileWithVars, 'utf-8');
     }
 }
