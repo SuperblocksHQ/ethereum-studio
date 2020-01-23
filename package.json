@@ -9,7 +9,8 @@
     "start": "lerna run start --scope editor --stream",
     "start:prod": "node www/api/app.js",
     "lint": "lerna run lint",
-    "typecheck": "lerna run typecheck --scope editor && lerna run typecheck --scope web-server"
+    "typecheck": "lerna run typecheck --scope editor && lerna run typecheck --scope web-server",
+    "inject-env-variables": "lerna run inject-env-variables"
   },
   "devDependencies": {
     "gulp": "^4.0.0",
