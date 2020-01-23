@@ -44,27 +44,14 @@ export function logEvent(eventType, eventProperties) {
   return amplitude.getInstance().logEvent(eventType, eventProperties);
 }
 
-export const AnalyticsProvider = ({children}) => {
-
-    const dev = process.env.NODE_ENV !== 'production';
-
-    if (dev) {
-        return (
-            <React.Fragment>
-                {children}
-            </React.Fragment>
-        );
-    }
-
-    return (
+export const AnalyticsProvider = ({children}) => (
         <AmplitudeProvider
             amplitudeInstance={amplitude.getInstance()}
             apiKey={AMPLITUDE_KEY}
         >
             {children}
         </AmplitudeProvider>
-    );
-};
+);
 
 export const Analytics = ({eventProperties, children}) => {
     return (
