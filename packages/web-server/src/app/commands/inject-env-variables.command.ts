@@ -11,7 +11,6 @@ export class InjectEnvVariablesCommand {
             if (readErr) { throw readErr; }
 
             const envVariables = {
-                INFURA_API_KEY: process.env.INFURA_API_KEY,
                 AMPLITUDE_API_KEY: process.env.AMPLITUDE_API_KEY,
                 API_BASE_URL: process.env.API_BASE_URL
             };
