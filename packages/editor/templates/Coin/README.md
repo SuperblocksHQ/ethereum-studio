@@ -122,9 +122,9 @@ Coin.prototype.bindButtons = function() {
 Coin.prototype.onReady = function() {
     this.bindButtons();
     this.init();
-    this.main();
 };
 
+if(typeof(Contracts) === "undefined") var Contracts={ Coin: { abi: [] }};
 var coin = new Coin(Contracts['Coin']);
 
 $(document).ready(function() {
@@ -152,7 +152,7 @@ Coin.prototype.createTokens = function() {
         return;
     }
 
-    this.instance.mint(address, amount, { from: window.web3.eth.accounts[0], gas: 100000, gasPrice: 100000, gasLimit: 100000 },
+    this.instance.mint(address, amount, { from: window.web3.eth.accounts[0], gas: 100000, gasPrice: 100000, gasLimit: 100000 }, 
         function(error, txHash) {
             if(error) {
                 console.log(error);
@@ -235,7 +235,7 @@ function isValidAddress(address) {
 }
 
 function isValidAmount(amount) {
-    return amount > 0 && typeof Number(amount) == 'number';
+    return amount > 0 && typeof Number(amount) == 'number';    
 }
 ```
 

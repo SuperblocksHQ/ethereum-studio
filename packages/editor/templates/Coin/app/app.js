@@ -4,15 +4,23 @@
 //  address: "0x..",
 //  endpoint: "http://...."
 // }
+
+// Create an instance of the smart contract, passing it as a property, 
+// which allows web3js to interact with it.
 function Coin(Contract) {
     this.web3 = null;
     this.instance = null;
     this.Contract = Contract;
 }
 
+// Initialize the `Coin` object and create an instance of the web3js library, 
 Coin.prototype.init = function() {
-    // We create a new Web3 instance using either the Metamask provider
-    // or an independent provider created towards the endpoint configured for the contract.
+    // The initialization function defines the interface for the contract using 
+    // the web3js contract object and then defines the address of the instance 
+    // of the contract for the `Coin` object.
+
+    // Create a new Web3 instance using either the Metamask provider
+    // or an independent provider created as the endpoint configured for the contract.
     this.web3 = new Web3(
         (window.web3 && window.web3.currentProvider) ||
         new Web3.providers.HttpProvider(this.Contract.endpoint));
@@ -25,27 +33,21 @@ Coin.prototype.init = function() {
 };
 
 
-// Get balance of Tokens found by address from contract
-Coin.prototype.getBalance = function(address, cb) {
-    this.instance.balances(address, function(error, result) {
-        cb(error, result);
-    })
-}
-
 // Function triggered by "Check Balance" button
+// to display account balance
 Coin.prototype.showAddressBalance = function(hash, cb) {
     var that = this;
 
-    // Get input values
+    // Get input values, the address to check balance of
     var address = $("#balance-address").val();
 
-    // Validate address
+    // Validate address using utility function
     if(!isValidAddress(address)) {
         console.log("Invalid address");
         return;
     }
 
-    // Check the balance from the address passed and output value 
+    // Check the balance from the address passed and output the value 
     this.getBalance(address, function(error, balance) {
         if(error) {
             console.log(error)
@@ -57,34 +59,44 @@ Coin.prototype.showAddressBalance = function(hash, cb) {
     })
 }
 
-// Send Tokens to another address
+// Get balance of Tokens found by address from contract
+Coin.prototype.getBalance = function(address, cb) {
+    this.instance.balances(address, function(error, result) {
+        cb(error, result);
+    })
+}
+
+// Send Tokens to another address when the "send" button is clicked
 Coin.prototype.createTokens = function() {
     var that = this;
 
-    // Get input values
+    // Get input values for address and amount
     var address = $("#create-address").val();
     var amount = $("#create-amount").val();
     console.log(amount);
 
-
-    // Validate address
+    // Validate address using utility function
     if(!isValidAddress(address)) {
         console.log("Invalid address");
         return;
     }
 
-    // Validate amount
+    // Validate amount using utility function
     if(!isValidAmount(amount)) {
         console.log("Invalid amount");
         return;
     }
 
     // Transfer amount to other address
+    // Use the public mint function from the smart contract
     this.instance.mint(address, amount, { from: window.web3.eth.accounts[0], gas: 100000, gasPrice: 100000, gasLimit: 100000 }, 
+        // If there's an erro, log it
         function(error, txHash) {
             if(error) {
                 console.log(error);
             }
+            // If success then wait for confirmation of transaction
+            // with utility function and clear form values while waiting
             else {
                 that.waitForReceipt(txHash, function(receipt) {
                     if(receipt.status) {
@@ -100,11 +112,11 @@ Coin.prototype.createTokens = function() {
     )
 }
 
-// Waits for receipt from transaction
+// Waits for receipt of transaction
 Coin.prototype.waitForReceipt = function(hash, cb) {
     var that = this;
 
-    // Checks for transaction receipt
+    // Checks for transaction receipt using web3 library method
     this.web3.eth.getTransactionReceipt(hash, function(err, receipt) {
         if (err) {
             error(err);
@@ -133,6 +145,7 @@ function isValidAmount(amount) {
     return amount > 0 && typeof Number(amount) == 'number';    
 }
 
+// Bind functions to the buttons defined in app.html
 Coin.prototype.bindButtons = function() {
     var that = this;
 
@@ -145,6 +158,7 @@ Coin.prototype.bindButtons = function() {
     }); 
 }
 
+// Create the instance of the `Coin` object 
 Coin.prototype.onReady = function() {
     this.bindButtons();
     this.init();
