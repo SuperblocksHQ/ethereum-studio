@@ -17,3 +17,4 @@ yarn-error.log
 .vscode
 .idea
 lerna-debug.log
+packages/editor/.env.development.local

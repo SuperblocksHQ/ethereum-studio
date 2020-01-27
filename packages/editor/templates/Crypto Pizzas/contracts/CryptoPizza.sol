@@ -1,9 +1,9 @@
 pragma solidity ^0.5.10;
 
-import "../node_modules/openzeppelin-solidity/contracts/token/ERC721/IERC721.sol";
-import "../node_modules/openzeppelin-solidity/contracts/token/ERC721/IERC721Receiver.sol";
-import "../node_modules/openzeppelin-solidity/contracts/introspection/ERC165.sol";
-import "../node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol";
+import "../node_modules/@openzeppelin/contracts/token/ERC721/IERC721.sol";
+import "../node_modules/@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
+import "../node_modules/@openzeppelin/contracts/introspection/ERC165.sol";
+import "../node_modules/@openzeppelin/contracts/math/SafeMath.sol";
 
 contract CryptoPizza is IERC721, ERC165 {
 
