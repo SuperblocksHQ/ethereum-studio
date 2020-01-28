@@ -52,19 +52,25 @@ The `mint` function sends an amount of newly created coins to another address. T
 
 Anyone can use the `send` (who already has some of these coins) to send coins to anyone else. If the sender does not have enough coins to send, the `require` call fails and provides the sender with an appropriate error message string.
 
-### Configure
+### 1. Configure
 
-Clicking the disclosure triangle next to the contract name reveals three sub-sections. In the _Configure_ sub-section you can change the name of the contract and set the initial values sent to the constructor arguments. In this example, the string displayed in the front end interface.
+![Configure the contract](./images/hw-configure.png)
 
-### Compile
+Configuring the contract allows you to set the name of the contract and the initial values sent to the constructor as arguments. You can configure the contract by clicking on the gear icon in the left panel.
 
-Solidity is a compiled language, and you need to convert the Solidity code into bytecode before the contract can run. Clicking the disclosure triangle next to the contract name reveals three sub-sections, you can compile the contract by clicking the _Compile_ sub-section, and output appears in the _Output_ pane.
+### 2. Compile
 
-### Deploy
+![Compile the contract](./images/hw-compile.png)
 
-Every smart contract runs at an address on the Ethereum blockchain, and needs an address before it can run. When using Studio, the browser simulates the network, but there are several test networks available, and one main network.
+Solidity is a compiled language, and you need to convert the Solidity code into bytecode before the contract can run. In the file tree under the contract file, you can compile the contract by clicking the _Compile_ sub-section, and output will appear in the _Output_ pane.
 
-Clicking the disclosure triangle next to the contract name reveals three sub-sections, you can deploy the contract by clicking the _Deploy_ sub-section, and output appears in the _Output_ pane.
+### 3. Deploy
+
+![Deploy the contract](./images/hw-deploy.png)
+
+Every smart contract runs at an address on the Ethereum blockchain, and must be deployed to an address before it can run. When using Studio, the browser simulates the network, but there are several test networks and one main network for the Ethereum blockchain.
+
+Deploy the contract by clicking the _Deploy_ sub-section (nested under the contract file in the file tree), and output will appear in the _Output_ pane.
 
 ### The Web app
 
