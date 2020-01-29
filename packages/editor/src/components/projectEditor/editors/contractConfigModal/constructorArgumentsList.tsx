@@ -26,7 +26,6 @@ interface IProps {
     accounts: string[];
     onArgChange: (arg: IContractArgData, index: number) => void;
     onArgRemove: (index: number) => void;
-    onArgAdd: () => void;
 }
 
 export function ConstructorArgumentsList(props: IProps) {
@@ -47,12 +46,6 @@ export function ConstructorArgumentsList(props: IProps) {
             <p><b>No. args: </b>{props.args.length}</p>
             <div className={style.arguments}>
                 {argumentsNodes}
-                <button
-                    className={classNames([ 'btnNoBg', style.iconAdd ])}
-                    onClick={props.onArgAdd}
-                >
-                    <IconAdd />
-                </button>
             </div>
         </React.Fragment>
     );
