@@ -25,7 +25,6 @@ interface IProps {
     args: IContractArgData[];
     accounts: string[];
     onArgChange: (arg: IContractArgData, index: number) => void;
-    onArgRemove: (index: number) => void;
 }
 
 export function ConstructorArgumentsList(props: IProps) {
@@ -36,7 +35,6 @@ export function ConstructorArgumentsList(props: IProps) {
                 data={arg}
                 accounts={props.accounts}
                 onChange={c => props.onArgChange(c, index)}
-                onRemoveClick={() => props.onArgRemove(index)}
             />
         </div>
     );

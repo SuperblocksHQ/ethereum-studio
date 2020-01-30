@@ -113,18 +113,6 @@ export default class ContractConfigModal extends Component<IProps, IState> {
         });
     }
 
-    removeArgument = (index: number) => {
-        if (index > -1) {
-            this.setState((prevState: IState) => ({
-                isDirty: true,
-                newContractConfig: {
-                    ...this.state.newContractConfig,
-                    args: prevState.newContractConfig.args.filter((_, i) => i !== index),
-                }
-            }));
-        }
-    }
-
     onValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
         this.setState({
@@ -194,8 +182,7 @@ export default class ContractConfigModal extends Component<IProps, IState> {
                                         args={newContractConfig.args}
                                         accounts={accounts.map(account => account.name)}
                                         onArgChange={this.onArgumentChange}
-                                        onArgRemove={this.removeArgument}
-                                        />
+                                    />
                                 </div>
                             </div>
                         </div>
