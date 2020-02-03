@@ -21,29 +21,11 @@ export const updateContractConfig = (action$: AnyAction, state$: any) => action$
         console.log('constructor data', constructorData);
         const numberOfArgs = constructorData[0].inputs.length;
         const dappFileItem: Nullable<IProjectItem> = findItemByPath(state.explorer.tree, ['dappfile.json'], ProjectItemTypes.File);
-        console.log('BRUH', dappFileItem);
         if (dappFileItem != null && dappFileItem.code != null) {
             const code = dappFileItem.code;
             const parsedCode = JSON.parse(code);
-            console.log('parsed code', parsedCode);
-            console.log('NUMBER OF ARGS', numberOfArgs);
-            console.log('DAPP FILE ARGS', parsedCode.contracts[0].args.length);
-            if (numberOfArgs > parsedCode.contracts[0].args.length) {
-                for (const el of constructorData[0].inputs.slice(1)) {
-
-                    parsedCode.contracts[0].args.push({ type: 'value', value: el.name });
-                }
-                console.log('after all', parsedCode);
-                return [panesActions.saveFile(dappFileItem.id, JSON.stringify(parsedCode, null, 4))];
-            }
-            //TODO: not working as intended, find a better way
-            if (numberOfArgs < parsedCode.contracts[0].args.length) {
-                for (let el of constructorData[0].inputs) {
-                    el = { type: 'value', value: el.name };
-                    const arr = [el];
-                    parsedCode.contracts[0].args = arr;
-                }
-                console.log('after all 2', parsedCode);
+            if (numberOfArgs !== parsedCode.contracts[0].args.length) {
+                overwriteArray(state$, constructorData[0].inputs, parsedCode);
                 return [panesActions.saveFile(dappFileItem.id, JSON.stringify(parsedCode, null, 4))];
             } else {
                 return empty();
@@ -58,3 +40,17 @@ export const updateContractConfig = (action$: AnyAction, state$: any) => action$
         return of(compilerActions.HANDLE_COMPILE_OUTPUT);
     })
 );
+
+export const overwriteArray = (state$: any, constructorOutputArray: any[], parsedDappfile: any) => {
+    const arr: any[] = [];
+    for (let el of constructorOutputArray) {
+        if (el.name === 'initMessage' && state$.value.projects.project.name === 'Hello World') {
+            el = {type: 'value', value: 'Hello World!'};
+            arr.push(el);
+        } else {
+            el = { type: 'value', value: el.name };
+            arr.push(el);
+        }
+        parsedDappfile.contracts[0].args = arr;
+    }
+};
