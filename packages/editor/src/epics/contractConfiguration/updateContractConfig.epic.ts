@@ -2,11 +2,9 @@ import { ofType } from 'redux-observable';
 import { AnyAction } from 'redux';
 import { compilerActions, panesActions, contractConfigActions } from '../../actions';
 import { withLatestFrom, switchMap, catchError } from 'rxjs/operators';
-import { IContractConfiguration, IProjectItem, ProjectItemTypes } from '../../models';
-import { findItemByPath, traverseTree } from '../../reducers/explorerLib';
+import { IProjectItem, ProjectItemTypes } from '../../models';
+import { findItemByPath } from '../../reducers/explorerLib';
 import { empty, of } from 'rxjs';
-import { ConstructorArgumentsList } from '../../components/projectEditor/editors/contractConfigModal/constructorArgumentsList';
-import { number } from 'prop-types';
 
 export const updateContractConfig = (action$: AnyAction, state$: any) => action$.pipe(
     ofType(compilerActions.HANDLE_COMPILE_OUTPUT),
@@ -18,7 +16,6 @@ export const updateContractConfig = (action$: AnyAction, state$: any) => action$
         const compilerOutputData = action.data.contracts[firstKey][secondKey].metadata;
         const parsedCompilerOutputData = JSON.parse(compilerOutputData);
         const constructorData = parsedCompilerOutputData.output.abi.filter((obj: { type: string; }) => obj.type === 'constructor');
-        console.log('constructor data', constructorData);
         const numberOfArgs = constructorData[0].inputs.length;
         const dappFileItem: Nullable<IProjectItem> = findItemByPath(state.explorer.tree, ['dappfile.json'], ProjectItemTypes.File);
         if (dappFileItem != null && dappFileItem.code != null) {
