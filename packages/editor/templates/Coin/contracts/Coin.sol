@@ -1,5 +1,5 @@
 // Specifies that the source code is for a version
-// of Solidity greater than 0.5.10
+// of Solidity greater than 0.5.0
 pragma solidity >=0.5.0 <0.7.0;
 
 // A contract is a collection of functions and data (its state)
