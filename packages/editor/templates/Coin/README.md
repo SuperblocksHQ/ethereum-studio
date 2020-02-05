@@ -56,7 +56,7 @@ Anyone can use the `send` (who already has some of these coins) to send coins to
 
 ![Configure the contract](./images/hw-configure.png)
 
-Configuring the contract allows you to set the name of the contract and the initial values sent to the constructor as arguments. You can configure the contract by clicking on the gear icon in the left panel.
+Configuring the contract allows you to set the name of the contract and the initial values sent to the constructor as arguments. You can configure the contract by clicking on the gear icon in the left panel. In this example, the constructor doesn't accept arguments by default, so no configuration is necessary.
 
 ### 2. Compile
 
