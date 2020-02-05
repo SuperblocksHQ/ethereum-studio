@@ -90,7 +90,7 @@ Coin.prototype.createTokens = function() {
     // Transfer amount to other address
     // Use the public mint function from the smart contract
     this.instance.mint(address, amount, { from: window.web3.eth.accounts[0], gas: 100000, gasPrice: 100000, gasLimit: 100000 }, 
-        // If there's an erro, log it
+        // If there's an error, log it
         function(error, txHash) {
             if(error) {
                 console.log(error);
