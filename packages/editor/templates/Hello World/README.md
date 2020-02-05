@@ -32,15 +32,15 @@ Configuring the contract allows you to set the name of the contract and the init
 
 ![Compile the contract](./images/hw-compile.png)
 
-Solidity is a compiled language, and you need to convert the Solidity code into bytecode before the contract can run. In the file tree under the contract file, you can compile the contract by clicking the _Compile_ sub-section, and output will appear in the _Output_ pane.
+Solidity is a compiled language, and you need to convert the Solidity code into bytecode before the contract can run. In the file tree under the contract file, you can compile the contract by clicking the _Compile_ sub-section, and output appears in the _Output_ pane.
 
 ### 3. Deploy
 
 ![Deploy the contract](./images/hw-deploy.png)
 
-Every smart contract runs at an address on the Ethereum blockchain, and must be deployed to an address before it can run. When using Studio, the browser simulates the network, but there are several test networks and one main network for the Ethereum blockchain.
+Every smart contract runs at an address on the Ethereum blockchain, and you must deploy it to an address before it can run. When using Studio, the browser simulates the network, but there are several test networks and one main network for the Ethereum blockchain.
 
-Deploy the contract by clicking the _Deploy_ sub-section (nested under the contract file in the file tree), and output will appear in the _Output_ pane.
+Deploy the contract by clicking the _Deploy_ sub-section (nested under the contract file in the file tree), and output appears in the _Output_ pane.
 
 ### The Web app
 
