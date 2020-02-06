@@ -1,20 +1,27 @@
+// Specifies that the source code is for a version
+// of Solidity greater than 0.5.10
 pragma solidity ^0.5.10;
 
+// Imports symbols from other files into the current contract.
+// In this case, a series of helper contracts from OpenZeppelin.
 import "../node_modules/@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import "../node_modules/@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
 import "../node_modules/@openzeppelin/contracts/introspection/ERC165.sol";
 import "../node_modules/@openzeppelin/contracts/math/SafeMath.sol";
 
+// A contract is a collection of functions and data (its state)
+// that resides at a specific address on the Ethereum blockchain.
+// "is" keyword inherits functions and  keywords from two external contracts
 contract CryptoPizza is IERC721, ERC165 {
 
     // Use Open Zeppelin's SafeMath library to perform arithmetic operations safely.
     using SafeMath for uint256;
 
     /*
-        A Pizza has only 5 parts that can change according to its DNA.
-        When we generate DNA, we get a 10 digit long number, and each pair corresponds to a specific ingredient.
+    A Pizza has only 5 parts that can change according to its DNA.
+    When we generate DNA, we get a 10 digit long number, and each pair corresponds to a specific ingredient.
 
-        E.g. DNA 5142446803 - 51_Basis/42_Cheeses/44_Meats/68_Spices/03_Vegetables
+    e.g. DNA 5142446803 - 51_Basis/42_Cheeses/44_Meats/68_Spices/03_Vegetables
     */
     uint constant dnaDigits = 10;
     uint constant dnaModulus = 10 ** dnaDigits;
