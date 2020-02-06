@@ -22,6 +22,19 @@ The [`constructor`](https://solidity.readthedocs.io/en/latest/contracts.html#con
 
 The `update` function is another public function that is similar to the constructor, taking a string as a parameter, and updating the `message` variable.
 
+### Configure
+
+Clicking the disclosure triangle next to the contract name reveals three sub-sections. In the _Configure_ sub-section you can change the name of the contract and set the initial values sent to the constructor arguments. In this example, the string displayed in the front end interface.
+
+### Compile
+
+Solidity is a compiled language, and you need to convert the Solidity code into bytecode before the contract can run. Clicking the disclosure triangle next to the contract name reveals three sub-sections, you can compile the contract by clicking the _Compile_ sub-section, and output appears in the _Output_ pane.
+
+### Deploy
+
+Every smart contract runs at an address on the Ethereum blockchain, and needs an address before it can run. When using Studio, the browser simulates the network, but there are several test networks available, and one main network.
+
+Clicking the disclosure triangle next to the contract name reveals three sub-sections, you can deploy the contract by clicking the _Deploy_ sub-section, and output appears in the _Output_ pane.
 
 ### The Web app
 
