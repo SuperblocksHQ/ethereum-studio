@@ -54,25 +54,6 @@ And that's all the code relevant to this dapp, there are other functions for glu
 > Find the CSS file in _app/app.css_
 > Find the JavaScript file in _app/app.js_
 
-### Configure
-
-![Configure the contract](/static/img/hw-configure.png)
-Clicking the disclosure triangle next to the contract name reveals three sub-sections. In the _Configure_ sub-section you can change the name of the contract and set the initial values sent to the constructor arguments. In this example, the string displayed in the front end interface.
-
-### Compile
-
-![Compile the contract](/static/img/hw-compile.png)
-
-Solidity is a compiled language, and you need to convert the Solidity code into bytecode before the contract can run. Clicking the disclosure triangle next to the contract name reveals three sub-sections, you can compile the contract by clicking the _Compile_ sub-section, and output appears in the _Output_ pane.
-
-### Deploy
-
-![Deploy the contract](/static/img/hw-deploy.png)
-
-Every smart contract runs at an address on the Ethereum blockchain, and needs an address before it can run. When using Studio, the browser simulates the network, but there are several test networks available, and one main network.
-
-Clicking the disclosure triangle next to the contract name reveals three sub-sections, you can deploy the contract by clicking the _Deploy_ sub-section, and output appears in the _Output_ pane.
-
 ## Find out more
 
 You can read a full tutorial that accompanies this example dapp, plus many more tutorials, on [kauri.io](https://kauri.io/article/bdd65d6155a74b8aa52672b46b7230a8/v1/a-fullstack-dapp-for-creating-tokens).
