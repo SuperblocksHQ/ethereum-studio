@@ -8,8 +8,8 @@ contract Coin {
     // The keyword "public" makes variables accessible from outside a contract
     // and creates a function that other contracts or SDKs can call to access the value
 
-    // An address stores addresses of contracts, or a hash of the public half
-    // of a keypair belonging to external accounts
+
+    // An address stores addresses of contracts or external (user) accounts
     address public minter;
 
     // A mapping lets you create complex custom data types.
