@@ -1,0 +1,829 @@
+{
+  "contractName": "OwnableInterfaceId",
+  "abi": [
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "getInterfaceId",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bytes4"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "pure",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.5.7+commit.6da8b019\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":true,\"inputs\":[],\"name\":\"getInterfaceId\",\"outputs\":[{\"name\":\"\",\"type\":\"bytes4\"}],\"payable\":false,\"stateMutability\":\"pure\",\"type\":\"function\"}],\"devdoc\":{\"details\":\"See the EIP165 specification for more information: https://eips.ethereum.org/EIPS/eip-165#specification\",\"methods\":{},\"title\":\"Ownable interface id calculator.\"},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/home/frangio/oz/contracts/.worktree/release-v2.4.0/contracts/mocks/OwnableInterfaceId.sol\":\"OwnableInterfaceId\"},\"evmVersion\":\"petersburg\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/home/frangio/oz/contracts/.worktree/release-v2.4.0/contracts/GSN/Context.sol\":{\"keccak256\":\"0x90a3995645af7562d84b9d69363ffa5ae7217714ab61e951bf7bc450f40e4061\",\"urls\":[\"bzzr://51482c01bddf23793bddee43b60ab9578a62948a4f2082def24ea792a553b055\"]},\"/home/frangio/oz/contracts/.worktree/release-v2.4.0/contracts/mocks/OwnableInterfaceId.sol\":{\"keccak256\":\"0xbf8d16f7c6473af34bb46f889be1f23bf4b8476b6f196f8b2977511e92262eeb\",\"urls\":[\"bzzr://1118b5ab5a16af26c2ca4e9ae00bd09f64e348bbecbc510ec0a2984788854016\"]},\"/home/frangio/oz/contracts/.worktree/release-v2.4.0/contracts/ownership/Ownable.sol\":{\"keccak256\":\"0xecd8ab29d9a5771c3964d0cd1788c4a5098a0081b20fb275da850a22b1c59806\",\"urls\":[\"bzzr://4950def18270142a78d503ef6b7b13bdb053f2f050cee50c883cd7cab2bb02d7\"]}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b50610148806100206000396000f3fe608060405234801561001057600080fd5b506004361061002b5760003560e01c80636b9241fc14610030575b600080fd5b61003861008c565b60405180827bffffffffffffffffffffffffffffffffffffffffffffffffffffffff19167bffffffffffffffffffffffffffffffffffffffffffffffffffffffff1916815260200191505060405180910390f35b6000808073ffffffffffffffffffffffffffffffffffffffff1663f2fde38b905060e01b8173ffffffffffffffffffffffffffffffffffffffff1663715018a6905060e01b8273ffffffffffffffffffffffffffffffffffffffff16638f32d59b905060e01b8373ffffffffffffffffffffffffffffffffffffffff16638da5cb5b905060e01b1818189150509056fea165627a7a7230582095d9dd2329acb915e9efa6691ed23df5cab72fbddf5a053b9d434b86195f4e940029",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b506004361061002b5760003560e01c80636b9241fc14610030575b600080fd5b61003861008c565b60405180827bffffffffffffffffffffffffffffffffffffffffffffffffffffffff19167bffffffffffffffffffffffffffffffffffffffffffffffffffffffff1916815260200191505060405180910390f35b6000808073ffffffffffffffffffffffffffffffffffffffff1663f2fde38b905060e01b8173ffffffffffffffffffffffffffffffffffffffff1663715018a6905060e01b8273ffffffffffffffffffffffffffffffffffffffff16638f32d59b905060e01b8373ffffffffffffffffffffffffffffffffffffffff16638da5cb5b905060e01b1818189150509056fea165627a7a7230582095d9dd2329acb915e9efa6691ed23df5cab72fbddf5a053b9d434b86195f4e940029",
+  "sourceMap": "227:233:86:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;227:233:86;;;;;;;",
+  "deployedSourceMap": "227:233:86:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;227:233:86;;;;;;;;;;;;;;;;;;;261:197;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;;;;308:6;326:9;423:1;:19;;;:28;;;;392:1;:19;;;:28;;;;371:1;:9;;;:18;;;;352:1;:7;;;:16;;;;:37;:68;:99;345:106;;;261:197;:::o",
+  "source": "pragma solidity ^0.5.0;\n\nimport \"../ownership/Ownable.sol\";\n\n/**\n * @title Ownable interface id calculator.\n * @dev See the EIP165 specification for more information:\n * https://eips.ethereum.org/EIPS/eip-165#specification\n */\ncontract OwnableInterfaceId {\n    function getInterfaceId() public pure returns (bytes4) {\n        Ownable i;\n        return i.owner.selector ^ i.isOwner.selector ^ i.renounceOwnership.selector ^ i.transferOwnership.selector;\n    }\n}\n",
+  "sourcePath": "/home/frangio/oz/contracts/.worktree/release-v2.4.0/contracts/mocks/OwnableInterfaceId.sol",
+  "ast": {
+    "absolutePath": "/home/frangio/oz/contracts/.worktree/release-v2.4.0/contracts/mocks/OwnableInterfaceId.sol",
+    "exportedSymbols": {
+      "OwnableInterfaceId": [
+        7146
+      ]
+    },
+    "id": 7147,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 7119,
+        "literals": [
+          "solidity",
+          "^",
+          "0.5",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:23:86"
+      },
+      {
+        "absolutePath": "/home/frangio/oz/contracts/.worktree/release-v2.4.0/contracts/ownership/Ownable.sol",
+        "file": "../ownership/Ownable.sol",
+        "id": 7120,
+        "nodeType": "ImportDirective",
+        "scope": 7147,
+        "sourceUnit": 8370,
+        "src": "25:34:86",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": "@title Ownable interface id calculator.\n@dev See the EIP165 specification for more information:\nhttps://eips.ethereum.org/EIPS/eip-165#specification",
+        "fullyImplemented": true,
+        "id": 7146,
+        "linearizedBaseContracts": [
+          7146
+        ],
+        "name": "OwnableInterfaceId",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": {
+              "id": 7144,
+              "nodeType": "Block",
+              "src": "316:142:86",
+              "statements": [
+                {
+                  "assignments": [
+                    7126
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 7126,
+                      "name": "i",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 7144,
+                      "src": "326:9:86",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_Ownable_$8369",
+                        "typeString": "contract Ownable"
+                      },
+                      "typeName": {
+                        "contractScope": null,
+                        "id": 7125,
+                        "name": "Ownable",
+                        "nodeType": "UserDefinedTypeName",
+                        "referencedDeclaration": 8369,
+                        "src": "326:7:86",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_Ownable_$8369",
+                          "typeString": "contract Ownable"
+                        }
+                      },
+                      "value": null,
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 7127,
+                  "initialValue": null,
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "326:9:86"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "commonType": {
+                      "typeIdentifier": "t_bytes4",
+                      "typeString": "bytes4"
+                    },
+                    "id": 7142,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftExpression": {
+                      "argumentTypes": null,
+                      "commonType": {
+                        "typeIdentifier": "t_bytes4",
+                        "typeString": "bytes4"
+                      },
+                      "id": 7138,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "leftExpression": {
+                        "argumentTypes": null,
+                        "commonType": {
+                          "typeIdentifier": "t_bytes4",
+                          "typeString": "bytes4"
+                        },
+                        "id": 7134,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "argumentTypes": null,
+                          "expression": {
+                            "argumentTypes": null,
+                            "expression": {
+                              "argumentTypes": null,
+                              "id": 7128,
+                              "name": "i",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 7126,
+                              "src": "352:1:86",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_contract$_Ownable_$8369",
+                                "typeString": "contract Ownable"
+                              }
+                            },
+                            "id": 7129,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": false,
+                            "lValueRequested": false,
+                            "memberName": "owner",
+                            "nodeType": "MemberAccess",
+                            "referencedDeclaration": 8292,
+                            "src": "352:7:86",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_function_external_view$__$returns$_t_address_$",
+                              "typeString": "function () view external returns (address)"
+                            }
+                          },
+                          "id": 7130,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "selector",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": null,
+                          "src": "352:16:86",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bytes4",
+                            "typeString": "bytes4"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "^",
+                        "rightExpression": {
+                          "argumentTypes": null,
+                          "expression": {
+                            "argumentTypes": null,
+                            "expression": {
+                              "argumentTypes": null,
+                              "id": 7131,
+                              "name": "i",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 7126,
+                              "src": "371:1:86",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_contract$_Ownable_$8369",
+                                "typeString": "contract Ownable"
+                              }
+                            },
+                            "id": 7132,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": false,
+                            "lValueRequested": false,
+                            "memberName": "isOwner",
+                            "nodeType": "MemberAccess",
+                            "referencedDeclaration": 8313,
+                            "src": "371:9:86",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_function_external_view$__$returns$_t_bool_$",
+                              "typeString": "function () view external returns (bool)"
+                            }
+                          },
+                          "id": 7133,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "selector",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": null,
+                          "src": "371:18:86",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bytes4",
+                            "typeString": "bytes4"
+                          }
+                        },
+                        "src": "352:37:86",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes4",
+                          "typeString": "bytes4"
+                        }
+                      },
+                      "nodeType": "BinaryOperation",
+                      "operator": "^",
+                      "rightExpression": {
+                        "argumentTypes": null,
+                        "expression": {
+                          "argumentTypes": null,
+                          "expression": {
+                            "argumentTypes": null,
+                            "id": 7135,
+                            "name": "i",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 7126,
+                            "src": "392:1:86",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_contract$_Ownable_$8369",
+                              "typeString": "contract Ownable"
+                            }
+                          },
+                          "id": 7136,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "renounceOwnership",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": 8332,
+                          "src": "392:19:86",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_function_external_nonpayable$__$returns$__$",
+                            "typeString": "function () external"
+                          }
+                        },
+                        "id": 7137,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "selector",
+                        "nodeType": "MemberAccess",
+                        "referencedDeclaration": null,
+                        "src": "392:28:86",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes4",
+                          "typeString": "bytes4"
+                        }
+                      },
+                      "src": "352:68:86",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bytes4",
+                        "typeString": "bytes4"
+                      }
+                    },
+                    "nodeType": "BinaryOperation",
+                    "operator": "^",
+                    "rightExpression": {
+                      "argumentTypes": null,
+                      "expression": {
+                        "argumentTypes": null,
+                        "expression": {
+                          "argumentTypes": null,
+                          "id": 7139,
+                          "name": "i",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 7126,
+                          "src": "423:1:86",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_contract$_Ownable_$8369",
+                            "typeString": "contract Ownable"
+                          }
+                        },
+                        "id": 7140,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "transferOwnership",
+                        "nodeType": "MemberAccess",
+                        "referencedDeclaration": 8344,
+                        "src": "423:19:86",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_function_external_nonpayable$_t_address_$returns$__$",
+                          "typeString": "function (address) external"
+                        }
+                      },
+                      "id": 7141,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "selector",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": null,
+                      "src": "423:28:86",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bytes4",
+                        "typeString": "bytes4"
+                      }
+                    },
+                    "src": "352:99:86",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes4",
+                      "typeString": "bytes4"
+                    }
+                  },
+                  "functionReturnParameters": 7124,
+                  "id": 7143,
+                  "nodeType": "Return",
+                  "src": "345:106:86"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 7145,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getInterfaceId",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 7121,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "284:2:86"
+            },
+            "returnParameters": {
+              "id": 7124,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 7123,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7145,
+                  "src": "308:6:86",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes4",
+                    "typeString": "bytes4"
+                  },
+                  "typeName": {
+                    "id": 7122,
+                    "name": "bytes4",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "308:6:86",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes4",
+                      "typeString": "bytes4"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "307:8:86"
+            },
+            "scope": 7146,
+            "src": "261:197:86",
+            "stateMutability": "pure",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 7147,
+        "src": "227:233:86"
+      }
+    ],
+    "src": "0:461:86"
+  },
+  "legacyAST": {
+    "absolutePath": "/home/frangio/oz/contracts/.worktree/release-v2.4.0/contracts/mocks/OwnableInterfaceId.sol",
+    "exportedSymbols": {
+      "OwnableInterfaceId": [
+        7146
+      ]
+    },
+    "id": 7147,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 7119,
+        "literals": [
+          "solidity",
+          "^",
+          "0.5",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:23:86"
+      },
+      {
+        "absolutePath": "/home/frangio/oz/contracts/.worktree/release-v2.4.0/contracts/ownership/Ownable.sol",
+        "file": "../ownership/Ownable.sol",
+        "id": 7120,
+        "nodeType": "ImportDirective",
+        "scope": 7147,
+        "sourceUnit": 8370,
+        "src": "25:34:86",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": "@title Ownable interface id calculator.\n@dev See the EIP165 specification for more information:\nhttps://eips.ethereum.org/EIPS/eip-165#specification",
+        "fullyImplemented": true,
+        "id": 7146,
+        "linearizedBaseContracts": [
+          7146
+        ],
+        "name": "OwnableInterfaceId",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": {
+              "id": 7144,
+              "nodeType": "Block",
+              "src": "316:142:86",
+              "statements": [
+                {
+                  "assignments": [
+                    7126
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 7126,
+                      "name": "i",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 7144,
+                      "src": "326:9:86",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_Ownable_$8369",
+                        "typeString": "contract Ownable"
+                      },
+                      "typeName": {
+                        "contractScope": null,
+                        "id": 7125,
+                        "name": "Ownable",
+                        "nodeType": "UserDefinedTypeName",
+                        "referencedDeclaration": 8369,
+                        "src": "326:7:86",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_Ownable_$8369",
+                          "typeString": "contract Ownable"
+                        }
+                      },
+                      "value": null,
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 7127,
+                  "initialValue": null,
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "326:9:86"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "commonType": {
+                      "typeIdentifier": "t_bytes4",
+                      "typeString": "bytes4"
+                    },
+                    "id": 7142,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftExpression": {
+                      "argumentTypes": null,
+                      "commonType": {
+                        "typeIdentifier": "t_bytes4",
+                        "typeString": "bytes4"
+                      },
+                      "id": 7138,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "leftExpression": {
+                        "argumentTypes": null,
+                        "commonType": {
+                          "typeIdentifier": "t_bytes4",
+                          "typeString": "bytes4"
+                        },
+                        "id": 7134,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "argumentTypes": null,
+                          "expression": {
+                            "argumentTypes": null,
+                            "expression": {
+                              "argumentTypes": null,
+                              "id": 7128,
+                              "name": "i",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 7126,
+                              "src": "352:1:86",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_contract$_Ownable_$8369",
+                                "typeString": "contract Ownable"
+                              }
+                            },
+                            "id": 7129,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": false,
+                            "lValueRequested": false,
+                            "memberName": "owner",
+                            "nodeType": "MemberAccess",
+                            "referencedDeclaration": 8292,
+                            "src": "352:7:86",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_function_external_view$__$returns$_t_address_$",
+                              "typeString": "function () view external returns (address)"
+                            }
+                          },
+                          "id": 7130,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "selector",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": null,
+                          "src": "352:16:86",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bytes4",
+                            "typeString": "bytes4"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "^",
+                        "rightExpression": {
+                          "argumentTypes": null,
+                          "expression": {
+                            "argumentTypes": null,
+                            "expression": {
+                              "argumentTypes": null,
+                              "id": 7131,
+                              "name": "i",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 7126,
+                              "src": "371:1:86",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_contract$_Ownable_$8369",
+                                "typeString": "contract Ownable"
+                              }
+                            },
+                            "id": 7132,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": false,
+                            "lValueRequested": false,
+                            "memberName": "isOwner",
+                            "nodeType": "MemberAccess",
+                            "referencedDeclaration": 8313,
+                            "src": "371:9:86",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_function_external_view$__$returns$_t_bool_$",
+                              "typeString": "function () view external returns (bool)"
+                            }
+                          },
+                          "id": 7133,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "selector",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": null,
+                          "src": "371:18:86",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bytes4",
+                            "typeString": "bytes4"
+                          }
+                        },
+                        "src": "352:37:86",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes4",
+                          "typeString": "bytes4"
+                        }
+                      },
+                      "nodeType": "BinaryOperation",
+                      "operator": "^",
+                      "rightExpression": {
+                        "argumentTypes": null,
+                        "expression": {
+                          "argumentTypes": null,
+                          "expression": {
+                            "argumentTypes": null,
+                            "id": 7135,
+                            "name": "i",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 7126,
+                            "src": "392:1:86",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_contract$_Ownable_$8369",
+                              "typeString": "contract Ownable"
+                            }
+                          },
+                          "id": 7136,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "renounceOwnership",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": 8332,
+                          "src": "392:19:86",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_function_external_nonpayable$__$returns$__$",
+                            "typeString": "function () external"
+                          }
+                        },
+                        "id": 7137,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "selector",
+                        "nodeType": "MemberAccess",
+                        "referencedDeclaration": null,
+                        "src": "392:28:86",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes4",
+                          "typeString": "bytes4"
+                        }
+                      },
+                      "src": "352:68:86",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bytes4",
+                        "typeString": "bytes4"
+                      }
+                    },
+                    "nodeType": "BinaryOperation",
+                    "operator": "^",
+                    "rightExpression": {
+                      "argumentTypes": null,
+                      "expression": {
+                        "argumentTypes": null,
+                        "expression": {
+                          "argumentTypes": null,
+                          "id": 7139,
+                          "name": "i",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 7126,
+                          "src": "423:1:86",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_contract$_Ownable_$8369",
+                            "typeString": "contract Ownable"
+                          }
+                        },
+                        "id": 7140,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "transferOwnership",
+                        "nodeType": "MemberAccess",
+                        "referencedDeclaration": 8344,
+                        "src": "423:19:86",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_function_external_nonpayable$_t_address_$returns$__$",
+                          "typeString": "function (address) external"
+                        }
+                      },
+                      "id": 7141,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "selector",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": null,
+                      "src": "423:28:86",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bytes4",
+                        "typeString": "bytes4"
+                      }
+                    },
+                    "src": "352:99:86",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes4",
+                      "typeString": "bytes4"
+                    }
+                  },
+                  "functionReturnParameters": 7124,
+                  "id": 7143,
+                  "nodeType": "Return",
+                  "src": "345:106:86"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 7145,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getInterfaceId",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 7121,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "284:2:86"
+            },
+            "returnParameters": {
+              "id": 7124,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 7123,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7145,
+                  "src": "308:6:86",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes4",
+                    "typeString": "bytes4"
+                  },
+                  "typeName": {
+                    "id": 7122,
+                    "name": "bytes4",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "308:6:86",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes4",
+                      "typeString": "bytes4"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "307:8:86"
+            },
+            "scope": 7146,
+            "src": "261:197:86",
+            "stateMutability": "pure",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 7147,
+        "src": "227:233:86"
+      }
+    ],
+    "src": "0:461:86"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.5.7+commit.6da8b019.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.0.16",
+  "updatedAt": "2019-10-29T20:17:41.188Z",
+  "devdoc": {
+    "details": "See the EIP165 specification for more information: https://eips.ethereum.org/EIPS/eip-165#specification",
+    "methods": {},
+    "title": "Ownable interface id calculator."
+  },
+  "userdoc": {
+    "methods": {}
+  }
+}

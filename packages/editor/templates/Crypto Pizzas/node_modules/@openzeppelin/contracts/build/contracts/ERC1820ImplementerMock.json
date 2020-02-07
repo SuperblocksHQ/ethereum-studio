@@ -1,0 +1,538 @@
+{
+  "contractName": "ERC1820ImplementerMock",
+  "abi": [
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "interfaceHash",
+          "type": "bytes32"
+        },
+        {
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "canImplementInterfaceForAddress",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "interfaceHash",
+          "type": "bytes32"
+        },
+        {
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "registerInterfaceForAddress",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.5.7+commit.6da8b019\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":true,\"inputs\":[{\"name\":\"interfaceHash\",\"type\":\"bytes32\"},{\"name\":\"account\",\"type\":\"address\"}],\"name\":\"canImplementInterfaceForAddress\",\"outputs\":[{\"name\":\"\",\"type\":\"bytes32\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"interfaceHash\",\"type\":\"bytes32\"},{\"name\":\"account\",\"type\":\"address\"}],\"name\":\"registerInterfaceForAddress\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{\"canImplementInterfaceForAddress(bytes32,address)\":{\"notice\":\"See {IERC1820Implementer-canImplementInterfaceForAddress}.\"}}}},\"settings\":{\"compilationTarget\":{\"/home/frangio/oz/contracts/.worktree/release-v2.4.0/contracts/mocks/ERC1820ImplementerMock.sol\":\"ERC1820ImplementerMock\"},\"evmVersion\":\"petersburg\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/home/frangio/oz/contracts/.worktree/release-v2.4.0/contracts/introspection/ERC1820Implementer.sol\":{\"keccak256\":\"0x60aa004bb6a80456cde34ef43536ca7f9c0a8d37f3b048ad5db493f5fc07badd\",\"urls\":[\"bzzr://dabfbb8dc6fc39c5802e4ce70c64b141e9034a52664ee76957607a73134c1afb\"]},\"/home/frangio/oz/contracts/.worktree/release-v2.4.0/contracts/introspection/IERC1820Implementer.sol\":{\"keccak256\":\"0x30f42c596e8f00bdde81284f76f7bd00df6df5d32f5c60b890dd3831acb2e540\",\"urls\":[\"bzzr://e592ac08800e72591024e798d4fc8ac5053f63385b060e724a7ed85f4c3aab2d\"]},\"/home/frangio/oz/contracts/.worktree/release-v2.4.0/contracts/mocks/ERC1820ImplementerMock.sol\":{\"keccak256\":\"0x0958f62d5d841a56de7f912b6564cb45812f06980947910f5ff6ca78511b982e\",\"urls\":[\"bzzr://51e14c674a2f75c6a7a79224eb571aa535992dfee986fe1e8272a58074605144\"]}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b5061024d806100206000396000f3fe608060405234801561001057600080fd5b50600436106100365760003560e01c8063249cb3fa1461003b5780635536e45d1461009d575b600080fd5b6100876004803603604081101561005157600080fd5b8101908080359060200190929190803573ffffffffffffffffffffffffffffffffffffffff1690602001909291905050506100eb565b6040518082815260200191505060405180910390f35b6100e9600480360360408110156100b357600080fd5b8101908080359060200190929190803573ffffffffffffffffffffffffffffffffffffffff1690602001909291905050506101a7565b005b600080600084815260200190815260200160002060008373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060009054906101000a900460ff16610157576000801b61019f565b60405160200180807f455243313832305f4143434550545f4d414749430000000000000000000000008152506014019050604051602081830303815290604052805190602001205b905092915050565b6101b182826101b5565b5050565b600160008084815260200190815260200160002060008373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060006101000a81548160ff021916908315150217905550505056fea165627a7a7230582037c8601b3f8e259992d301ad9b25ed736496542941570b7e08a212c63b29726f0029",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b50600436106100365760003560e01c8063249cb3fa1461003b5780635536e45d1461009d575b600080fd5b6100876004803603604081101561005157600080fd5b8101908080359060200190929190803573ffffffffffffffffffffffffffffffffffffffff1690602001909291905050506100eb565b6040518082815260200191505060405180910390f35b6100e9600480360360408110156100b357600080fd5b8101908080359060200190929190803573ffffffffffffffffffffffffffffffffffffffff1690602001909291905050506101a7565b005b600080600084815260200190815260200160002060008373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060009054906101000a900460ff16610157576000801b61019f565b60405160200180807f455243313832305f4143434550545f4d414749430000000000000000000000008152506014019050604051602081830303815290604052805190602001205b905092915050565b6101b182826101b5565b5050565b600160008084815260200190815260200160002060008373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060006101000a81548160ff021916908315150217905550505056fea165627a7a7230582037c8601b3f8e259992d301ad9b25ed736496542941570b7e08a212c63b29726f0029",
+  "sourceMap": "76:215:60:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;76:215:60;;;;;;;",
+  "deployedSourceMap": "76:215:60:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;76:215:60;;;;;;;;;;;;;;;;;;;;;;;;696:220:39;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;696:220:39;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;136:153:60;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;136:153:60;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;696:220:39;800:7;826:20;:35;847:13;826:35;;;;;;;;;;;:44;862:7;826:44;;;;;;;;;;;;;;;;;;;;;;;;;:83;;904:4;896:13;;826:83;;;486:40;;;;;;;;;;;;;;;;49:4:-1;39:7;30;26:21;22:32;13:7;6:49;486:40:39;;;476:51;;;;;;826:83;819:90;;696:220;;;;:::o;136:153:60:-;230:52;259:13;274:7;230:28;:52::i;:::-;136:153;;:::o;1151:155:39:-;1295:4;1248:20;:35;1269:13;1248:35;;;;;;;;;;;:44;1284:7;1248:44;;;;;;;;;;;;;;;;:51;;;;;;;;;;;;;;;;;;1151:155;;:::o",
+  "source": "pragma solidity ^0.5.0;\n\nimport \"../introspection/ERC1820Implementer.sol\";\n\ncontract ERC1820ImplementerMock is ERC1820Implementer {\n    function registerInterfaceForAddress(bytes32 interfaceHash, address account) public {\n        _registerInterfaceForAddress(interfaceHash, account);\n    }\n}\n",
+  "sourcePath": "/home/frangio/oz/contracts/.worktree/release-v2.4.0/contracts/mocks/ERC1820ImplementerMock.sol",
+  "ast": {
+    "absolutePath": "/home/frangio/oz/contracts/.worktree/release-v2.4.0/contracts/mocks/ERC1820ImplementerMock.sol",
+    "exportedSymbols": {
+      "ERC1820ImplementerMock": [
+        5791
+      ]
+    },
+    "id": 5792,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 5774,
+        "literals": [
+          "solidity",
+          "^",
+          "0.5",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:23:60"
+      },
+      {
+        "absolutePath": "/home/frangio/oz/contracts/.worktree/release-v2.4.0/contracts/introspection/ERC1820Implementer.sol",
+        "file": "../introspection/ERC1820Implementer.sol",
+        "id": 5775,
+        "nodeType": "ImportDirective",
+        "scope": 5792,
+        "sourceUnit": 4824,
+        "src": "25:49:60",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 5776,
+              "name": "ERC1820Implementer",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 4823,
+              "src": "111:18:60",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_ERC1820Implementer_$4823",
+                "typeString": "contract ERC1820Implementer"
+              }
+            },
+            "id": 5777,
+            "nodeType": "InheritanceSpecifier",
+            "src": "111:18:60"
+          }
+        ],
+        "contractDependencies": [
+          4823,
+          4845
+        ],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 5791,
+        "linearizedBaseContracts": [
+          5791,
+          4823,
+          4845
+        ],
+        "name": "ERC1820ImplementerMock",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": {
+              "id": 5789,
+              "nodeType": "Block",
+              "src": "220:69:60",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 5785,
+                        "name": "interfaceHash",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 5779,
+                        "src": "259:13:60",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes32",
+                          "typeString": "bytes32"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "id": 5786,
+                        "name": "account",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 5781,
+                        "src": "274:7:60",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bytes32",
+                          "typeString": "bytes32"
+                        },
+                        {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      ],
+                      "id": 5784,
+                      "name": "_registerInterfaceForAddress",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 4822,
+                      "src": "230:28:60",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_internal_nonpayable$_t_bytes32_$_t_address_$returns$__$",
+                        "typeString": "function (bytes32,address)"
+                      }
+                    },
+                    "id": 5787,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "230:52:60",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 5788,
+                  "nodeType": "ExpressionStatement",
+                  "src": "230:52:60"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 5790,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "registerInterfaceForAddress",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5782,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5779,
+                  "name": "interfaceHash",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5790,
+                  "src": "173:21:60",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 5778,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "173:7:60",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 5781,
+                  "name": "account",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5790,
+                  "src": "196:15:60",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 5780,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "196:7:60",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "172:40:60"
+            },
+            "returnParameters": {
+              "id": 5783,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "220:0:60"
+            },
+            "scope": 5791,
+            "src": "136:153:60",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 5792,
+        "src": "76:215:60"
+      }
+    ],
+    "src": "0:292:60"
+  },
+  "legacyAST": {
+    "absolutePath": "/home/frangio/oz/contracts/.worktree/release-v2.4.0/contracts/mocks/ERC1820ImplementerMock.sol",
+    "exportedSymbols": {
+      "ERC1820ImplementerMock": [
+        5791
+      ]
+    },
+    "id": 5792,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 5774,
+        "literals": [
+          "solidity",
+          "^",
+          "0.5",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:23:60"
+      },
+      {
+        "absolutePath": "/home/frangio/oz/contracts/.worktree/release-v2.4.0/contracts/introspection/ERC1820Implementer.sol",
+        "file": "../introspection/ERC1820Implementer.sol",
+        "id": 5775,
+        "nodeType": "ImportDirective",
+        "scope": 5792,
+        "sourceUnit": 4824,
+        "src": "25:49:60",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 5776,
+              "name": "ERC1820Implementer",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 4823,
+              "src": "111:18:60",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_ERC1820Implementer_$4823",
+                "typeString": "contract ERC1820Implementer"
+              }
+            },
+            "id": 5777,
+            "nodeType": "InheritanceSpecifier",
+            "src": "111:18:60"
+          }
+        ],
+        "contractDependencies": [
+          4823,
+          4845
+        ],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 5791,
+        "linearizedBaseContracts": [
+          5791,
+          4823,
+          4845
+        ],
+        "name": "ERC1820ImplementerMock",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": {
+              "id": 5789,
+              "nodeType": "Block",
+              "src": "220:69:60",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 5785,
+                        "name": "interfaceHash",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 5779,
+                        "src": "259:13:60",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes32",
+                          "typeString": "bytes32"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "id": 5786,
+                        "name": "account",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 5781,
+                        "src": "274:7:60",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bytes32",
+                          "typeString": "bytes32"
+                        },
+                        {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      ],
+                      "id": 5784,
+                      "name": "_registerInterfaceForAddress",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 4822,
+                      "src": "230:28:60",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_internal_nonpayable$_t_bytes32_$_t_address_$returns$__$",
+                        "typeString": "function (bytes32,address)"
+                      }
+                    },
+                    "id": 5787,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "230:52:60",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 5788,
+                  "nodeType": "ExpressionStatement",
+                  "src": "230:52:60"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 5790,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "registerInterfaceForAddress",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5782,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5779,
+                  "name": "interfaceHash",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5790,
+                  "src": "173:21:60",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 5778,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "173:7:60",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 5781,
+                  "name": "account",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5790,
+                  "src": "196:15:60",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 5780,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "196:7:60",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "172:40:60"
+            },
+            "returnParameters": {
+              "id": 5783,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "220:0:60"
+            },
+            "scope": 5791,
+            "src": "136:153:60",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 5792,
+        "src": "76:215:60"
+      }
+    ],
+    "src": "0:292:60"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.5.7+commit.6da8b019.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.0.16",
+  "updatedAt": "2019-10-29T20:17:41.170Z",
+  "devdoc": {
+    "methods": {}
+  },
+  "userdoc": {
+    "methods": {
+      "canImplementInterfaceForAddress(bytes32,address)": {
+        "notice": "See {IERC1820Implementer-canImplementInterfaceForAddress}."
+      }
+    }
+  }
+}
