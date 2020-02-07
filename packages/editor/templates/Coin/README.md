@@ -117,9 +117,9 @@ Coin.prototype.bindButtons = function() {
 Coin.prototype.onReady = function() {
     this.bindButtons();
     this.init();
-    this.main();
 };
 
+if(typeof(Contracts) === "undefined") var Contracts={ Coin: { abi: [] }};
 var coin = new Coin(Contracts['Coin']);
 
 $(document).ready(function() {

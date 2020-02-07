@@ -1,42 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <script type="text/javascript" src="https://unpkg.com/jquery@3.3.1/dist/jquery.js"></script>
-        <script type="text/javascript" src="https://unpkg.com/web3@0.20.5/dist/web3.min.js"></script>
-        <!-- The generated javascript and app.js will be substituted in below -->
-        <!-- JAVASCRIPT -->
 
-        <!-- The app.css contents will be substituted in below -->
-        <!-- STYLE -->
-    </head>
-    <body>
-            <div id="create" class="tabcontent">
-                <h2>Create new coins</h2>
-                <div class="input-group">
-                    <h3>Address</h3>
-                    <input type="text" id="create-address" placeholder="Enter address..." />
-                </div>
-                <div class="input-group">
-                    <h3>Amount</h3>
-                    <input type="number" id="create-amount" placeholder="Enter amount..." />
-                </div>
-                <div class="input-group">
-                    <button class="btn" id="button-create">Send</button>
-                </div>
-            </div>  
+<head>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="https://unpkg.com/jquery@3.3.1/dist/jquery.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/web3@0.20.5/dist/web3.min.js"></script>
+    <!-- The generated javascript and app.js will be substituted in below -->
+    <!-- JAVASCRIPT -->
 
-            <div id="balances" class="tabcontent">
-                <h2>Check balance of wallet</h2>
-                <div class="input-group">
-                    <h3>Address</h3>
-                    <input type="text" id="balance-address" placeholder="Enter address..." />
-                </div>
-                <div class="input-group" >
-                    <button class="btn" id="button-check">Check balance</button>
-                </div>
-            </div>         
+    <!-- The app.css contents will be substituted in below -->
+    <!-- STYLE -->
+</head>
 
-        <h1 class="text message">Balance:&nbsp;<span id="message"></span></h1>
-    </body>
+<body>
+    <!-- Form fields for creating new coins -->
+    <div id="create" class="tabcontent">
+        <h2>Create new coins</h2>
+        <div class="input-group">
+            <h3>Address</h3>
+            <input type="text" id="create-address" placeholder="Enter address..." />
+        </div>
+        <div class="input-group">
+            <h3>Amount</h3>
+            <input type="number" id="create-amount" placeholder="Enter amount..." />
+        </div>
+        <div class="input-group">
+            <button class="btn" id="button-create">Send</button>
+        </div>
+    </div>
+    <!-- Form fields for checking wallet balances -->
+    <div id="balances" class="tabcontent">
+        <h2>Check balance of wallet</h2>
+        <div class="input-group">
+            <h3>Address</h3>
+            <input type="text" id="balance-address" placeholder="Enter address..." />
+        </div>
+        <div class="input-group">
+            <button class="btn" id="button-check">Check balance</button>
+        </div>
+    </div>
+
+    <h1 class="text message">Balance:&nbsp;<span id="message"></span></h1>
+</body>
+
 </html>
