@@ -32,7 +32,9 @@ contract Coin {
     // Sends an amount of newly created coins to an address
     function mint(address receiver, uint amount) public {
         // require statements define conditions that must pass
-        // before state is changed
+        // before state is changed.
+        // If it fails (equals false), an exception is triggered
+        // and reverts all modifications to state from the current call
 
         // Can only be called by the contract creator
         require(msg.sender == minter);
