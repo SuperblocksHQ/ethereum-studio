@@ -68,6 +68,40 @@ Every smart contract runs at an address on the Ethereum blockchain, and you must
 
 Deploy the contract by clicking the _Deploy_ sub-section (nested under the contract file in the file tree), and output appears in the _Output_ pane.
 
+### The Web app
+
+> Find the HTML file in _app/app.html_
+> Find the CSS file in _app/app.css_
+> Find the JavaScript file in _app/app.js_
+
+This tutorial doesn't cover the HTML or CSS as it's not web3 specific, aside from the element IDs that the JavaScript manipulates. A lot of the JavaScript code follows standard patterns for object-oriented JavaScript, so this tutorial focuses on the web3js specific parts.
+
+First create an instance of the smart contract, [passing it as a property](https://web3js.readthedocs.io/en/v1.2.0/web3-eth-contract.html), which allows web3js to interact with it.
+
+```javascript
+function Pizza(Contract) {
+    this.web3 = null;
+    this.instance = null;
+    this.Contract = Contract;
+}
+```
+
+Initialize the `Pizza` object and create an instance of the web3js library, passing Metamask as a provider for the contract. The initialization function then defines the interface for the contract using [the web3js contract object](https://web3js.readthedocs.io/en/v1.2.1/web3-eth-contract.html#new-contract) and then defines the address of the instance of the contract for the `HelloWorld` object.
+
+```javascript
+Pizza.prototype.init = function() {
+
+    this.web3 = new Web3(
+        (window.web3 && window.web3.currentProvider) ||
+        new Web3.providers.HttpProvider(this.Contract.endpoint));
+
+    var contract_interface = this.web3.eth.contract(this.Contract.abi);
+
+    this.instance = this.Contract.address ? contract_interface.at(this.Contract.address) :  { getPizzasByOwner: () => {} };
+}
+```
+
+
 ## Find out more
 
 You can read a full tutorial that accompanies this example dapp, plus many more tutorials, on [kauri.io](https://kauri.io/article/bdd65d6155a74b8aa52672b46b7230a8/v1/a-fullstack-dapp-for-creating-tokens).
