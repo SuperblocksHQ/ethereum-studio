@@ -43,7 +43,7 @@ Browse to `http://localhost:3000`. Note that if you use any other hostname/IP th
 
 ### Make a production build
 ```sh
-npm build
+npm run build
 ```
 
 The dist files will be inside `./dist`. Note that the this command uses production version of ".env" file, so in order to test it locally please create a ".env.local" with proper ORIGIN variable value prior to build.
