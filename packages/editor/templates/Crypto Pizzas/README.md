@@ -42,9 +42,9 @@ The `createRandomPizza` function is the public function called in JavaScript tha
 
 The `generateRandomDna` introduces another new function modifier, [`pure`](https://solidity.readthedocs.io/en/v0.5.12/contracts.html#pure-functions). Pure functions promise not to read from or modify the state, instead they generally return values to another function that does.
 
-The `getPizzasByOwner` function is another public function called by JavaScript to return all pizzas created by the owner of a specified address. The function introduces another modifier, [`view`](https://solidity.readthedocs.io/en/v0.5.12/contracts.html#view-functions) which promise not to modify the state.
+The `getPizzasByOwner` function is another public function called by JavaScript to return all pizzas created by the owner of a specified address. The function introduces another modifier, [`view`](https://solidity.readthedocs.io/en/v0.5.12/contracts.html#view-functions) which promise not to modify the state. The function uses the [`memory`](https://solidity.readthedocs.io/en/latest/introduction-to-smart-contracts.html#storage-memory-and-the-stack) data storage area to only keep a valuable for the life of the contract instance.
 
-The `transferFrom` contract function is called by JavaScript when a user clicks the _Gift_ button for an individual pizza, and transfers ownership to the address specified. The function uses another form of [error handling function](https://solidity.readthedocs.io/en/v0.5.12/control-structures.html#id4), `require` that checks for valid conditions at run time. If all these conditions are correct the function transfers ownership and emits an event to the blockchain recording the ownership transfer.
+The `transferFrom` contract function is called by JavaScript when a user clicks the _Gift_ button for an individual pizza, and transfers ownership to the address specified. The function uses another form of [error handling function](https://solidity.readthedocs.io/en/v0.5.12/control-structures.html#id4), `require` that checks for valid conditions at run time. If all these conditions are correct the function transfers ownership and emits an event (defined in the imported IERC721 contract) to the blockchain recording the ownership transfer.
 
 When the user clicks the _Eat_ button for an individual pizza, JavaScript calls the `burn` contract function that destroys the pizza at the specified id. The `burn` function uses the [`external`](https://solidity.readthedocs.io/en/v0.5.12/contracts.html#visibility-and-getters) function modifier, which makes the function part of the contract interface and can be called from other contracts.
 
@@ -54,19 +54,19 @@ And that's all the code relevant to this dapp, there are other functions for glu
 > Find the CSS file in _app/app.css_
 > Find the JavaScript file in _app/app.js_
 
-### 1. Configure
+### Configure
 
-Configuring the contract allows you to set the name of the contract and the initial values sent to the constructor as arguments. You can configure the contract by clicking on the gear icon in the left panel.  In this example, the constructor doesn't accept arguments by default, so no configuration is necessary.
+Clicking the disclosure triangle next to the contract name reveals three sub-sections. In the _Configure_ sub-section you can change the name of the contract and set the initial values sent to the constructor arguments. In this example, the string displayed in the front end interface.
 
-### 2. Compile
+### Compile
 
-Solidity is a compiled language, and you need to convert the Solidity code into bytecode before the contract can run. In the file tree under the contract file, you can compile the contract by clicking the _Compile_ sub-section, and output appears in the _Output_ pane.
+Solidity is a compiled language, and you need to convert the Solidity code into bytecode before the contract can run. Clicking the disclosure triangle next to the contract name reveals three sub-sections, you can compile the contract by clicking the _Compile_ sub-section, and output appears in the _Output_ pane.
 
-### 3. Deploy
+### Deploy
 
-Every smart contract runs at an address on the Ethereum blockchain, and you must deploy it to an address before it can run. When using Studio, the browser simulates the network, but there are several test networks and one main network for the Ethereum blockchain.
+Every smart contract runs at an address on the Ethereum blockchain, and needs an address before it can run. When using Studio, the browser simulates the network, but there are several test networks available, and one main network.
 
-Deploy the contract by clicking the _Deploy_ sub-section (nested under the contract file in the file tree), and output appears in the _Output_ pane.
+Clicking the disclosure triangle next to the contract name reveals three sub-sections, you can deploy the contract by clicking the _Deploy_ sub-section, and output appears in the _Output_ pane.
 
 ## Find out more
 
