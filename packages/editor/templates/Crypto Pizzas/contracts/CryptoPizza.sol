@@ -4,6 +4,7 @@ pragma solidity ^0.5.10;
 
 // Imports symbols from other files into the current contract.
 // In this case, a series of helper contracts from OpenZeppelin.
+// https://solidity.readthedocs.io/en/latest/layout-of-source-files.html#importing-other-source-files
 import "../node_modules/@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import "../node_modules/@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
 import "../node_modules/@openzeppelin/contracts/introspection/ERC165.sol";
@@ -11,7 +12,7 @@ import "../node_modules/@openzeppelin/contracts/math/SafeMath.sol";
 
 // A contract is a collection of functions and data (its state)
 // that resides at a specific address on the Ethereum blockchain.
-// "is" keyword inherits functions and  keywords from two external contracts
+// "is" keyword derives functions and keywords from the two external contracts
 contract CryptoPizza is IERC721, ERC165 {
     // Use Open Zeppelin's SafeMath library to perform arithmetic operations safely.
     using SafeMath for uint256;
@@ -51,7 +52,7 @@ contract CryptoPizza is IERC721, ERC165 {
     // The internal visibility keyword means this function is
     // only visible within this contract and contracts that derive this contract
 
-    // isUnique is a funciton modifier defined below that checks if the pizza
+    // isUnique is a function modifier defined below that checks if the pizza
     // already exists
     function _createPizza(string memory _name, uint256 _dna)
         internal
