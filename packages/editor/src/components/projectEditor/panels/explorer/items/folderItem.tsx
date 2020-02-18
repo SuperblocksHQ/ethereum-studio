@@ -81,7 +81,7 @@ export function FolderItem(props: IProps) {
     const toolbar = getToolbar(props);
 
     const contextMenu = (
-        <div className={ style.contextMenu }>
+        <React.Fragment>
             <div onClick={ () => props.onCreateItemClick(props.data.id, ProjectItemTypes.File) }>
                 <div className={style.icon} >
                     <IconAddFile />
@@ -116,7 +116,7 @@ export function FolderItem(props: IProps) {
                 </div>
                 </React.Fragment>
             }
-        </div>
+        </React.Fragment>
     );
 
     return (

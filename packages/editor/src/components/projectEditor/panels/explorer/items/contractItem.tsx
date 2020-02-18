@@ -29,7 +29,7 @@ export function ContractItem(props: IProps) {
     }
 
     const contextMenu = (
-        <div className={ style.contextMenu }>
+        <React.Fragment>
             <div onClick={ () => props.onRenameClick(props.data.id) }>
                 <div className={style.icon}>
                     <IconEdit />
@@ -42,7 +42,7 @@ export function ContractItem(props: IProps) {
                 </div>
                 Delete
             </div>
-        </div>
+        </React.Fragment>
     );
 
     // TODO: Remove all the actions when we move it to config file
