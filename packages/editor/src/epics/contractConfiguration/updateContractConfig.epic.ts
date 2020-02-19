@@ -1,8 +1,8 @@
 import { ofType } from 'redux-observable';
 import { AnyAction } from 'redux';
-import { compilerActions, panesActions, contractConfigActions } from '../../actions';
+import { compilerActions, panesActions } from '../../actions';
 import { withLatestFrom, switchMap, catchError } from 'rxjs/operators';
-import { IProjectItem, ProjectItemTypes } from '../../models';
+import { IProjectItem, ProjectItemTypes, ContractArgTypes } from '../../models';
 import { findItemByPath } from '../../reducers/explorerLib';
 import { empty, of } from 'rxjs';
 
@@ -10,7 +10,6 @@ export const updateContractConfig = (action$: AnyAction, state$: any) => action$
     ofType(compilerActions.HANDLE_COMPILE_OUTPUT),
     withLatestFrom(state$),
     switchMap(([action, state]) => {
-        console.log(state$);
         const firstKey = Object.keys(action.data.contracts)[0];
         const secondKey = Object.keys(action.data.contracts[firstKey])[0];
         const compilerOutputData = action.data.contracts[firstKey][secondKey].metadata;
@@ -42,10 +41,12 @@ export const overwriteArray = (state$: any, constructorOutputArray: any[], parse
     const arr: any[] = [];
     for (let el of constructorOutputArray) {
         if (el.name === 'initMessage' && state$.value.projects.project.name === 'Hello World') {
-            el = {type: 'value', value: 'Hello World!'};
+            const value = ContractArgTypes.value;
+            el = {type: 'value', [value]: 'Hello World!'};
             arr.push(el);
         } else {
-            el = { type: 'value', value: el.name };
+            const value = ContractArgTypes.value;
+            el = { type: 'value', [value]: el.name };
             arr.push(el);
         }
         parsedDappfile.contracts[0].args = arr;
