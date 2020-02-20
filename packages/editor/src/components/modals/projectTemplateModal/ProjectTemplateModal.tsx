@@ -95,7 +95,7 @@ export default class ProjectTemplateModal extends Component<IProps, IState> {
                                             The templates on the left side will teach you how to write a smart contract, deploy it to Ethereum,
                                             and interact with the contracts through a web-based application.
                                         </p>
-                                        <p>For quick start, check out this <a href='https://youtu.be/8cJmSCHNKrg' target='_blank' rel='noopener noreferrer'>video</a>.</p>
+                                        <p>For quick start, check out this <a href='https://www.youtube.com/watch?v=-tjk0yIIaIM' target='_blank' rel='noopener noreferrer'>video</a>.</p>
                                     </div>
                                 }
                             </div>
