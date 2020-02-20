@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import classnames from 'classnames';
 import style from './style.less';
 import { DropdownContainer, Caret } from '../../../../common';
@@ -25,7 +25,6 @@ interface IProps {
     onMoveItem?: (sourceId: string, targetId: string) => void;
     onClick(data: IProjectItem): void;
 }
-
 
 const itemSource: DragSourceSpec<IProps, {}> = {
     canDrag(props) {
@@ -76,6 +75,8 @@ const collect: any = (connect: any, monitor: any) => {
 };
 
 export function BaseItem(props: IProps) {
+    const [mousePositionX, setMousePositionX] = useState(0);
+    const [mousePositionY, setMousePositionY] = useState(0);
     let icon = props.icon;
     let caret;
     const { connectDragSource, isDragging, isOver, depth } = props;
@@ -90,6 +91,12 @@ export function BaseItem(props: IProps) {
         if (props.onToggle) {
             props.onToggle(id);
         }
+    }
+
+    function handleRightClick(e: React.MouseEvent) {
+        e.preventDefault();
+        setMousePositionX(e.pageX);
+        setMousePositionY(e.pageY + 10);
     }
 
     if (props.togglable) {
@@ -111,8 +118,14 @@ export function BaseItem(props: IProps) {
     return (
         connectDragSource ? connectDragSource(
             <div className={ classNames(style.item, cls) }>
-                <DropdownContainer dropdownContent={ props.contextMenu } useRightClick={ true }>
-                    <div onClick={ () => props.onClick(props.data) } onContextMenu={ e => e.preventDefault() }>
+                <DropdownContainer useRightClick={true} dropdownContent={
+                        props.contextMenu &&
+                            <div className={style.contextMenu} style={{left: mousePositionX, top: mousePositionY}}>
+                                {props.contextMenu}
+                            </div>
+                        }
+                >
+                    <div onClick={ () => props.onClick(props.data) } onContextMenu={(e) => handleRightClick(e) }>
                         <div className={style.header} style={{paddingLeft: (depth * 20)}}>
                             <div className={ style.icons }>
                                 { caret }

@@ -37,7 +37,7 @@ export function FileItem(props: IProps) {
     const toolbar = props.data.mutable ? getToolbar(props) : null;
 
     const contextMenu = props.data.mutable ? (
-        <div className={ style.contextMenu }>
+        <React.Fragment>
             <div onClick={ () => props.onRenameClick(props.data.id) }>
                 <div className={style.icon}>
                     <IconEdit />
@@ -50,7 +50,7 @@ export function FileItem(props: IProps) {
                 </div>
                 Delete
             </div>
-        </div>
+        </React.Fragment>
     ) : null;
 
     return (
