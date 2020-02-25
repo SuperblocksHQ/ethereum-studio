@@ -10,6 +10,9 @@ export const updateContractConfig = (action$: AnyAction, state$: any) => action$
     ofType(compilerActions.HANDLE_COMPILE_OUTPUT),
     withLatestFrom(state$),
     switchMap(([action, state]) => {
+        if (action.data.errors) {
+            return empty();
+        }
         const firstKey = Object.keys(action.data.contracts)[0];
         const secondKey = Object.keys(action.data.contracts[firstKey])[0];
         const compilerOutputData = action.data.contracts[firstKey][secondKey].metadata;
