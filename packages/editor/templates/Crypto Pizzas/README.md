@@ -22,7 +22,7 @@ Adding the `is` keyword after the contract name allows a contract to derive all 
 
 The `using A for B` directive is a method for attaching library functions to a Solidity type. In this case the [OpenZeppelin Contracts SafeMath](https://docs.openzeppelin.com/contracts/2.x/api/math.html) library that adds overflow checks to any use of the `uint256` type.
 
-This contract introduces [constant variables](https://solidity.readthedocs.io/en/latest/contracts.html#constant-state-variables), these work in a similar way to other programming languages, but constants are not allowed to access storage, blockchain, or execution data, or make calls to external contracts.
+This contract introduces [constant variables](https://solidity.readthedocs.io/en/latest/contracts.html#constant-state-variables), these work in a similar way to other programming languages, but you must assign an expression which is constant at compile time. You cannot use any expressions that accesses storage, blockchain data, execution data, or makes calls to external contracts.
 
 [A `struct` type](https://solidity.readthedocs.io/en/latest/types.html#structs) lets you define your own type. In this example `Pizza` is a type that contains a `string` and a `uint`. The [array type](https://solidity.readthedocs.io/en/v0.5.12/types.html#arrays) below the struct definition creates an empty array to contain instances of the `Pizza` type.
 
@@ -42,7 +42,7 @@ The `createRandomPizza` function is the public function called in JavaScript tha
 
 The `generateRandomDna` introduces another new function modifier, [`pure`](https://solidity.readthedocs.io/en/v0.5.12/contracts.html#pure-functions). Pure functions promise not to read from or modify the state, instead they generally return values to another function that does.
 
-The `getPizzasByOwner` function is another public function called by JavaScript to return all pizzas created by the owner of a specified address. The function introduces another modifier, [`view`](https://solidity.readthedocs.io/en/v0.5.12/contracts.html#view-functions) which promise not to modify the state. The function uses the [`memory`](https://solidity.readthedocs.io/en/latest/introduction-to-smart-contracts.html#storage-memory-and-the-stack) data storage area to only keep a valuable for the life of the contract instance.
+The `getPizzasByOwner` function is another public function called by JavaScript to return all pizzas created by the owner of a specified address. The function introduces another modifier, [`view`](https://solidity.readthedocs.io/en/v0.5.12/contracts.html#view-functions) which promise not to modify the state. The function uses the [`memory`](https://solidity.readthedocs.io/en/latest/introduction-to-smart-contracts.html#storage-memory-and-the-stack) data storage area to only keep a value for the life of the contract call.
 
 The `transferFrom` contract function is called by JavaScript when a user clicks the _Gift_ button for an individual pizza, and transfers ownership to the address specified. The function uses another form of [error handling function](https://solidity.readthedocs.io/en/v0.5.12/control-structures.html#id4), `require` that checks for valid conditions at run time. If all these conditions are correct the function transfers ownership and emits an event (defined in the imported IERC721 contract) to the blockchain recording the ownership transfer.
 
@@ -54,17 +54,17 @@ And that's all the code relevant to this dapp, there are other functions for glu
 > Find the CSS file in _app/app.css_
 > Find the JavaScript file in _app/app.js_
 
-### Configure
+### 1. Configure
 
 Configuring the contract allows you to set the name of the contract and the initial values sent to the constructor as arguments. You can configure the contract by clicking on the gear icon in the left panel.  In this example, the constructor doesn't accept arguments by default, so no configuration is necessary.
 
-### Compile
+### 2. Compile
 
 Solidity is a compiled language, and you need to convert the Solidity code into bytecode before the contract can run. In the file tree under the contract file, you can compile the contract by clicking the _Compile_ sub-section, and output appears in the _Output_ pane.
 
-### Deploy
+### 3. Deploy
 
-Every smart contract runs at an address on the Ethereum blockchain, and needs an address before it can run. When using Studio, the browser simulates the network, but there are several test networks available, and one main network.
+Every smart contract runs at an address on the Ethereum blockchain, and you must deploy it to an address before it can run. When using Studio, the browser simulates the network, but there are several test networks and one main network for the Ethereum blockchain.
 
 Deploy the contract by clicking the _Deploy_ sub-section (nested under the contract file in the file tree), and output appears in the _Output_ pane.
 

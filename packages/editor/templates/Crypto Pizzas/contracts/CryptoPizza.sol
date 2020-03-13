@@ -17,9 +17,8 @@ contract CryptoPizza is IERC721, ERC165 {
     // Use Open Zeppelin's SafeMath library to perform arithmetic operations safely.
     using SafeMath for uint256;
 
-    // Constant variables in Solidity are similar to other languages
-    // but are not allowed to access storage, blockchain, or execution data,
-    // or make calls to external contracts.
+    // Constant state variables in Solidity are similar to other languages
+    // but you must assign from an expression which is constant at compile time.
     uint256 constant dnaDigits = 10;
     uint256 constant dnaModulus = 10**dnaDigits;
     bytes4 private constant _ERC721_RECEIVED = 0x150b7a02;
