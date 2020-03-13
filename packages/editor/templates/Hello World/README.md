@@ -136,3 +136,12 @@ HelloWorld.prototype.update = function () {
 ## Find out more
 
 You can read a full tutorial that accompanies this example dapp, plus many more tutorials, on [kauri.io](https://kauri.io/article/68fca74301814d09bfcc35e07ff30fbc/v1/create-a-%22hello-world%22-fullstack-dapp).
+
+Other resources useful to continue your dapp development journey are:
+
+- [Remix](https://remix.ethereum.org/): Ethereum IDE and tools for the web
+- [Grid](https://grid.ethereum.org/): Download, configure, and run Ethereum nodes and tools
+- [CryptoZombies](https://cryptozombies.io/): Learn Solidity building your own Zombie game
+- [Open Zeppelin Ethernaut](https://ethernaut.openzeppelin.com/): Complete levels by hacking smart contracts
+- [ChainShot](https://www.chainshot.com/): Solidity, Vyper and Web3.js coding tutorials
+- [Consensys Academy](https://consensys.net/academy/bootcamp/): Online Ethereum developer bootcamp

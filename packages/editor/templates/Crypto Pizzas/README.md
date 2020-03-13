@@ -71,3 +71,12 @@ Deploy the contract by clicking the _Deploy_ sub-section (nested under the contr
 ## Find out more
 
 You can read a full tutorial that accompanies this example dapp, plus many more tutorials, on [kauri.io](https://kauri.io/article/bdd65d6155a74b8aa52672b46b7230a8/v1/a-fullstack-dapp-for-creating-tokens).
+
+Other resources useful to continue your dapp development journey are:
+
+- [Remix](https://remix.ethereum.org/): Ethereum IDE and tools for the web
+- [Grid](https://grid.ethereum.org/): Download, configure, and run Ethereum nodes and tools
+- [CryptoZombies](https://cryptozombies.io/): Learn Solidity building your own Zombie game
+- [Open Zeppelin Ethernaut](https://ethernaut.openzeppelin.com/): Complete levels by hacking smart contracts
+- [ChainShot](https://www.chainshot.com/): Solidity, Vyper and Web3.js coding tutorials
+- [Consensys Academy](https://consensys.net/academy/bootcamp/): Online Ethereum developer bootcamp
