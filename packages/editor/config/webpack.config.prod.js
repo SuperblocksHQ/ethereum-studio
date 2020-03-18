@@ -21,6 +21,7 @@ const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin-alt');
+const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 
 
 // Webpack uses `publicPath` to determine where the app is being served from.
@@ -505,7 +506,11 @@ module.exports = {
     //     // public/ and not a SPA route
     //     new RegExp('/[^/]+\\.[^/]+$'),
     //   ],
-    // }),
+    // })
+    // A plugin to simplify loading the Monaco Editor with webpack.
+    // https://github.com/Microsoft/monaco-editor-webpack-plugin
+    // available options are documented at https://github.com/Microsoft/monaco-editor-webpack-plugin#options
+    new MonacoWebpackPlugin(),
     new ForkTsCheckerWebpackPlugin({
       typescript: resolve.sync('typescript', {
         basedir: paths.appNodeModules,
