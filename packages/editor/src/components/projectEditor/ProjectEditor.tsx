@@ -45,6 +45,7 @@ interface IProps {
     showTemplateModal?: boolean;
     showExternalProviderInfo: boolean;
     unreadRows: boolean;
+    rows: any;
     showModal: (modalType: string, modalProps: any) => void;
     togglePanel(panel: Panels): void;
     openPanel(panel: Panels): void;
@@ -99,6 +100,13 @@ export class ProjectEditor extends React.Component<IProps, IState> {
 
     isPanelOpen = (panel: Panels) => this.props.panels[panel] && this.props.panels[panel].open;
 
+    hasRows = () => {
+        const {rows, togglePanel} = this.props;
+        if (rows.length === 1) {
+            togglePanel(Panels.OutputLog);
+        }
+    }
+
     render() {
         const { togglePanel,
                 openPanel,
@@ -106,11 +114,11 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                 showContractConfig,
                 closeContractConfigModal,
                 showExternalProviderInfo,
-                unreadRows } = this.props;
+                unreadRows,
+                rows } = this.props;
 
         const { sidePanelDragging } = this.state;
         const rightPanelSize = window.innerWidth < 1000 ? 280 : 500;
-
         return (
             <div className={style.projecteditor}>
                 <TopBar />
@@ -243,7 +251,7 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                                                 name='Console'
                                                 onClick={() => togglePanel(Panels.OutputLog)}
                                                 pillStatus={unreadRows && !this.isPanelOpen(Panels.OutputLog) ? '1' : '0'}
-                                                active={this.isPanelOpen(Panels.OutputLog)}
+                                                active={this.isPanelOpen(Panels.OutputLog) || this.hasRows()}
                                             />
                                         </div>
                                     </div>
