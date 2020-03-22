@@ -20,7 +20,7 @@ import { HelpAction, NewProjectAction, OnlyIf, StyledButton } from '../common';
 import ProjectTitle from './projectTitle';
 import { IProject } from '../../models';
 import { ForkDropdownAction, PreferencesAction, ShareDropdownAction, AccountSelectorAction } from './actions';
-import AccountConfigModal from '../projectEditor/editors/accountConfigModal';
+// import AccountConfigModal from '../projectEditor/editors/accountConfigModal';
 import { StyledButtonType } from '../common/buttons/StyledButtonType';
 import AboutModal from '../modals/aboutModal';
 import { IconEthereum } from '../icons';
@@ -136,11 +136,11 @@ export default class TopBar extends Component<IProps> {
                         hideModal={toggleAboutModal}
                     />
                 </OnlyIf>
-                <OnlyIf test={showAccountConfig}>
+                {/* <OnlyIf test={showAccountConfig}>
                     <AccountConfigModal
                         hideModal={closeAccountConfigModal}
                     />
-                </OnlyIf>
+                </OnlyIf> */}
             </div>
         );
     }

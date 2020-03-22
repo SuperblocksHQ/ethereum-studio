@@ -24,29 +24,55 @@ import { IAccount } from '../../models/state';
 import Identicon from '../identicon';
 
 interface IProps {
+    accountInfo: IAccount;
     selectedAccount: IAccount;
     accounts: IAccount[];
     onAccountSelected(account: IAccount): void;
     onAccountEdit(account: IAccount): void;
     onAccountDelete(account: IAccount): void;
     onAccountCreate(): void;
+    updateAccountName(account: IAccount, newName: string): void;
 }
 
+// interface IState {
+//     accountName: string;
+// }
+
 export class AccountSelector extends React.Component<IProps> {
+
+    // constructor(props: IProps) {
+    //     super(props);
+    //     console.log('PROPS', props);
+    //     this.state = { accountName: this.props.selectedAccount.name};
+    // }
 
     onDeleteAccountClick = (account: IAccount) => {
         if (!confirm('Are you sure to delete account?')) { return; }
         this.props.onAccountDelete(account);
     }
 
-    render() {
-        const { selectedAccount, accounts } = this.props;
+    // componentDidUpdate(prevProps: IProps) {
+    //     console.log('prevProps', prevProps);
+    //     console.log('props now', this.props);
+    //     if (prevProps.selectedAccount.name !== this.props.selectedAccount.name) {
+    //         console.log('I GO HERE?');
+    //         const accountName = this.props.accountInfo.name;
+    //         this.setState({
+    //             accountName,
+    //         });
+    //     }
+    // }
 
+    render() {
+        const { selectedAccount, accounts, accountInfo } = this.props;
         return (
             <DropdownContainer
                 dropdownContent={
                     <AccountsList
+                        accountInfo={accountInfo}
+                        updateAccountName={this.props.updateAccountName}
                         accounts={accounts}
+                        selectedAccount={selectedAccount}
                         selectedAccountName={selectedAccount.name}
                         onSelect={this.props.onAccountSelected}
                         onEdit={this.props.onAccountEdit}
