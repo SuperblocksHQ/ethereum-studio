@@ -93,19 +93,18 @@ export class Transaction extends Component<IProps, IState> {
     }
 
     _renderHeader() {
-        const { type, contractName } = this.props.transaction;
-
+        const { type, contractName, functionName, constructorArgs } = this.props.transaction;
         if (type === TransactionType.Deploy) {
             return (
                 <div className={style.header}>
-                    <div className={style.title}>Deploy {contractName}</div>
+                    <div className={style.title}>{contractName} deploy: {constructorArgs}</div>
                     {this._renderStatus()}
                 </div>
             );
         } else {
             return (
                 <div className={style.header}>
-                    <div className={style.title}>{type}</div>
+                    <div className={style.title}>{contractName} {functionName}: {constructorArgs}</div>
                     {this._renderStatus()}
                 </div>
             );

@@ -36,7 +36,7 @@ export const deployContractEpic: Epic = (action$: any, state$: any) => action$.p
         if (deployerState.needsCompilation) {
             return concat(of(outputLogActions.addRows([{ msg: 'Please compile your contracts before deployment.', channel: 3 }])));
         }
-
+        const contractArgs = state$.value.deployer.contractArgs;
         const environment = projectSelectors.getSelectedEnvironment(state);
         const selectedAccount = projectSelectors.getSelectedAccount(state);
         const contractTargetName = deployerState.outputPath[deployerState.outputPath.length - 1]; // TODO: this would be taken from contract settings
@@ -52,7 +52,7 @@ export const deployContractEpic: Epic = (action$: any, state$: any) => action$.p
         // }
 
         // create deploy runner
-        lastDeployRunner = new DeployRunner(selectedAccount, environment, contractTargetName);
+        lastDeployRunner = new DeployRunner(selectedAccount, environment, contractTargetName, contractArgs);
 
         return concat(
             lastDeployRunner.checkExistingDeployment(deployerState.buildFiles, deployerState.contractArgs)
