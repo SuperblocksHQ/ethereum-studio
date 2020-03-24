@@ -34,34 +34,12 @@ interface IProps {
     updateAccountName(account: IAccount, newName: string): void;
 }
 
-// interface IState {
-//     accountName: string;
-// }
-
 export class AccountSelector extends React.Component<IProps> {
-
-    // constructor(props: IProps) {
-    //     super(props);
-    //     console.log('PROPS', props);
-    //     this.state = { accountName: this.props.selectedAccount.name};
-    // }
 
     onDeleteAccountClick = (account: IAccount) => {
         if (!confirm('Are you sure to delete account?')) { return; }
         this.props.onAccountDelete(account);
     }
-
-    // componentDidUpdate(prevProps: IProps) {
-    //     console.log('prevProps', prevProps);
-    //     console.log('props now', this.props);
-    //     if (prevProps.selectedAccount.name !== this.props.selectedAccount.name) {
-    //         console.log('I GO HERE?');
-    //         const accountName = this.props.accountInfo.name;
-    //         this.setState({
-    //             accountName,
-    //         });
-    //     }
-    // }
 
     render() {
         const { selectedAccount, accounts, accountInfo } = this.props;
@@ -82,7 +60,7 @@ export class AccountSelector extends React.Component<IProps> {
                 }
             >
                 <div className={classnames([style.selector, style.account])}>
-                    <Identicon seed={selectedAccount.address} size={7}/>
+                    <Identicon seed={selectedAccount.address} size={7} />
                     <div className={style.accountContainer}>
                         <div title={selectedAccount.address || ''} className={style.nameContainer}>
                             {selectedAccount.name}
