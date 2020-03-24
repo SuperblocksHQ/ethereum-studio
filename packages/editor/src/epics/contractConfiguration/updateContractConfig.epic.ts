@@ -18,6 +18,9 @@ export const updateContractConfig = (action$: AnyAction, state$: any) => action$
         const compilerOutputData = action.data.contracts[firstKey][secondKey].metadata;
         const parsedCompilerOutputData = JSON.parse(compilerOutputData);
         const constructorData = parsedCompilerOutputData.output.abi.filter((obj: { type: string; }) => obj.type === 'constructor');
+        if (constructorData.length === 0) {
+            return empty();
+        }
         const numberOfArgs = constructorData[0].inputs.length;
         const dappFileItem: Nullable<IProjectItem> = findItemByPath(state.explorer.tree, ['dappfile.json'], ProjectItemTypes.File);
         if (dappFileItem != null && dappFileItem.code != null) {
