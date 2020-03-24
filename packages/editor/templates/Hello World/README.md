@@ -139,9 +139,11 @@ You can read a full tutorial that accompanies this example dapp, plus many more 
 
 Other resources useful to continue your dapp development journey are:
 
-- [Remix](https://remix.ethereum.org/): Ethereum IDE and tools for the web
-- [Grid](https://grid.ethereum.org/): Download, configure, and run Ethereum nodes and tools
 - [CryptoZombies](https://cryptozombies.io/): Learn Solidity building your own Zombie game
 - [Open Zeppelin Ethernaut](https://ethernaut.openzeppelin.com/): Complete levels by hacking smart contracts
 - [ChainShot](https://www.chainshot.com/): Solidity, Vyper and Web3.js coding tutorials
 - [Consensys Academy](https://consensys.net/academy/bootcamp/): Online Ethereum developer bootcamp
+- [Remix](https://remix.ethereum.org/): Web-based IDE for working on Solidity and Vyper smart contracts with in-line compile errors & code auto-complete
+- [Ganache](https://www.trufflesuite.com/ganache): One-click blockchain for local development
+- [Grid](https://grid.ethereum.org/): Download, configure, and run Ethereum nodes and tools
+- [Embark](https://framework.embarklabs.io/) All-in-one platform with smart contract workflows, debugger, testing, and more
