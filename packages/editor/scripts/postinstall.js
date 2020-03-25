@@ -4,16 +4,15 @@ const fs = require('fs');
 // Generate OpenZeppelin file structure
 
 // Directory, where smart contracts are stored
-const contractsDirectory = path.join(__dirname, '../../../', 'node_modules', 'openzeppelin-solidity', 'contracts');
+const contractsDirectory = path.join(__dirname, '../../../', 'node_modules', '@openzeppelin', 'contracts');
 
 // Directory, where json contract files are stored
-const jsonDirectory = path.join(__dirname, '../../../', 'node_modules', 'openzeppelin-solidity', 'build', 'contracts');
+const jsonDirectory = path.join(__dirname, '../../../', 'node_modules', '@openzeppelin', 'contracts', 'build', 'contracts');
 
 // Path of the resulting file
 const jsonFilePath = path.join(__dirname, '../', 'src', 'assets', 'static', 'json', 'openzeppelin.json');
 
 const separator = path.sep;
-
 // Read all Solidity files from directory
 const getAllSolidityFiles = dir =>
     fs.readdirSync(dir).reduce((files, file) => {
@@ -21,7 +20,7 @@ const getAllSolidityFiles = dir =>
         const isDirectory = fs.statSync(name).isDirectory();
         const isSolidityFile = path.extname(name) === '.sol';
 
-        const trimmedPath = name.split(`openzeppelin-solidity${separator}`)[1];
+        const trimmedPath = name.split(`@openzeppelin${separator}`)[1];
         return isDirectory
             ? [...files, ...getAllSolidityFiles(name)]
             : isSolidityFile
@@ -52,7 +51,7 @@ function buildTree(paths) {
                 if (currentPath.endsWith('.sol')){
                     // if it is a file
                     let json = getFileJSON(jsonDirectory, name);
-                    let relativePath = getLocalPath(json.sourcePath);
+                    let relativePath = json.sourcePath;
                     // using a dictionary to avoid duplicates
                     let dict = {};
                     let dependencies = getDependencies(json, relativePath, dict);
@@ -88,7 +87,6 @@ function buildTree(paths) {
 function getFileJSON(jsonFolderPath, fileName) {
     fileName = path.parse(fileName).name.concat('.json');
     let filePath = path.join(jsonFolderPath, fileName);
-
     if (fileName === "TokenMetadata.json") {
         // apply fix
         fileName = "ERC20".concat(fileName);
@@ -127,16 +125,11 @@ function getDependencies(json, relativePath, dict) {
     // Check dependencies of dependencies
     dependenciesArray.map(dependency => {
         let json = getFileJSON(jsonDirectory, dependency.fileName);
-        let relativePath = getLocalPath(json.sourcePath);
+        let relativePath = json.sourcePath;
         dependenciesArray = dependenciesArray.concat(getDependencies(json,relativePath, dict))
     });
 
     return dependenciesArray
-}
-
-// get local path after openzeppelin directory
-function getLocalPath(absolutePath) {
-    return absolutePath.split("openzeppelin-solidity/")[1]
 }
 
 function getAbsoluteDependencyPath(filePath, relativePath) {

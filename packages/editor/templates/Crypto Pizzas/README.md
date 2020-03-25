@@ -22,7 +22,7 @@ Adding the `is` keyword after the contract name allows a contract to derive all 
 
 The `using A for B` directive is a method for attaching library functions to a Solidity type. In this case the [OpenZeppelin Contracts SafeMath](https://docs.openzeppelin.com/contracts/2.x/api/math.html) library that adds overflow checks to any use of the `uint256` type.
 
-This contract introduces [constant variables](https://solidity.readthedocs.io/en/latest/contracts.html#constant-state-variables), these work in a similar way to other programming languages, but constants are not allowed to access storage, blockchain, or execution data, or make calls to external contracts.
+This contract introduces [constant variables](https://solidity.readthedocs.io/en/latest/contracts.html#constant-state-variables), these work in a similar way to other programming languages, but you must assign an expression which is constant at compile time. You cannot use any expressions that accesses storage, blockchain data, execution data, or makes calls to external contracts.
 
 [A `struct` type](https://solidity.readthedocs.io/en/latest/types.html#structs) lets you define your own type. In this example `Pizza` is a type that contains a `string` and a `uint`. The [array type](https://solidity.readthedocs.io/en/v0.5.12/types.html#arrays) below the struct definition creates an empty array to contain instances of the `Pizza` type.
 
@@ -42,9 +42,9 @@ The `createRandomPizza` function is the public function called in JavaScript tha
 
 The `generateRandomDna` introduces another new function modifier, [`pure`](https://solidity.readthedocs.io/en/v0.5.12/contracts.html#pure-functions). Pure functions promise not to read from or modify the state, instead they generally return values to another function that does.
 
-The `getPizzasByOwner` function is another public function called by JavaScript to return all pizzas created by the owner of a specified address. The function introduces another modifier, [`view`](https://solidity.readthedocs.io/en/v0.5.12/contracts.html#view-functions) which promise not to modify the state.
+The `getPizzasByOwner` function is another public function called by JavaScript to return all pizzas created by the owner of a specified address. The function introduces another modifier, [`view`](https://solidity.readthedocs.io/en/v0.5.12/contracts.html#view-functions) which promise not to modify the state. The function uses the [`memory`](https://solidity.readthedocs.io/en/latest/introduction-to-smart-contracts.html#storage-memory-and-the-stack) data storage area to only keep a value for the life of the contract call.
 
-The `transferFrom` contract function is called by JavaScript when a user clicks the _Gift_ button for an individual pizza, and transfers ownership to the address specified. The function uses another form of [error handling function](https://solidity.readthedocs.io/en/v0.5.12/control-structures.html#id4), `require` that checks for valid conditions at run time. If all these conditions are correct the function transfers ownership and emits an event to the blockchain recording the ownership transfer.
+The `transferFrom` contract function is called by JavaScript when a user clicks the _Gift_ button for an individual pizza, and transfers ownership to the address specified. The function uses another form of [error handling function](https://solidity.readthedocs.io/en/v0.5.12/control-structures.html#id4), `require` that checks for valid conditions at run time. If all these conditions are correct the function transfers ownership and emits an event (defined in the imported IERC721 contract) to the blockchain recording the ownership transfer.
 
 When the user clicks the _Eat_ button for an individual pizza, JavaScript calls the `burn` contract function that destroys the pizza at the specified id. The `burn` function uses the [`external`](https://solidity.readthedocs.io/en/v0.5.12/contracts.html#visibility-and-getters) function modifier, which makes the function part of the contract interface and can be called from other contracts.
 
