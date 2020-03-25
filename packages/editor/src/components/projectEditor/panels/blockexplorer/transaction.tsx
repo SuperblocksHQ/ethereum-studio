@@ -94,18 +94,29 @@ export class Transaction extends Component<IProps, IState> {
 
     _renderHeader() {
         const { type, contractName, functionName, constructorArgs } = this.props.transaction;
-        const constructorArgsToString = constructorArgs.toString();
+        const args = constructorArgs.map((item) => {
+            return item.value;
+        });
         if (type === TransactionType.Deploy) {
             return (
                 <div className={style.header}>
-                    <div className={style.title}>{contractName} deploy: {constructorArgsToString}</div>
+                    <div className={style.title}>{contractName} deploy: {constructorArgs.toString()}</div>
                     {this._renderStatus()}
                 </div>
             );
-        } else {
+        }
+        if (type === TransactionType.Preview) {
             return (
                 <div className={style.header}>
-                    <div className={style.title}>{contractName} {functionName}: {constructorArgsToString}</div>
+                    <div className={style.title}>{contractName} {functionName}: {args.toString()}</div>
+                    {this._renderStatus()}
+                </div>
+            );
+        }
+        if (type === TransactionType.Interact) {
+            return (
+                <div className={style.header}>
+                    <div className={style.title}>{contractName} {functionName}: {constructorArgs.toString()}</div>
                     {this._renderStatus()}
                 </div>
             );
@@ -255,8 +266,8 @@ export class Transaction extends Component<IProps, IState> {
                                 {isExpanded ? (
                                     <b>Hide more</b>
                                 ) : (
-                                    <b>Show more</b>
-                                )}
+                                        <b>Show more</b>
+                                    )}
                             </button>
                         </div>
                         {isExpanded && (

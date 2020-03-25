@@ -35,6 +35,17 @@ export const transactionsActions = {
             }
         };
     },
+
+    UPDATE_TRANSACTION_SUCCESS: 'UPDATE_TRANSACTION_SUCCESS',
+    updateTransactionSuccess(transactionType: TransactionType, hash?: string, environment?: string, receipt?: any, contractName?: string, tx?: any, contractArgs?: any[], functionName?: string) {
+        return {
+            type: transactionsActions.UPDATE_TRANSACTION_SUCCESS,
+            data: {
+                transactionType, hash, environment, receipt, contractName, tx, contractArgs, functionName
+            }
+        };
+    },
+
     UPDATE_TRANSACTION_FAIL: 'UPDATE_TRANSACTION_FAIL',
     updateTransactionFail(error: any) {
         return {

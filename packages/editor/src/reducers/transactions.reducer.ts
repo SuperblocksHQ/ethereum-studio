@@ -32,7 +32,7 @@ export default function transactionsReducer(state = initialState, action: AnyAct
             return {
                 ...state,
                 items: [
-                    {...transaction},
+                    { ...transaction },
                     ...state.items,
                 ]
             };
@@ -43,7 +43,19 @@ export default function transactionsReducer(state = initialState, action: AnyAct
                 items: replaceInArray(
                     state.items,
                     item => item.hash === updatedTx.hash,
-                    item => ({...item, ...updatedTx, createdAt: item.createdAt, constructorArgs: item.constructorArgs})
+                    item => ({ ...item, ...updatedTx, createdAt: item.createdAt, constructorArgs: item.constructorArgs })
+                )
+            };
+
+        case transactionsActions.UPDATE_TRANSACTION_SUCCESS:
+            const updatedTransaction = formatTransaction(wholeState, action.data.transactionType, action.data.hash, action.data.environment,
+                action.data.receipt, action.data.contractName, undefined, action.data.contractArgs, action.data.functionName);
+            return {
+                ...state,
+                items: replaceInArray(
+                    state.items,
+                    item => item.hash === updatedTransaction.hash,
+                    item => ({ ...item, ...updatedTransaction, createdAt: item.createdAt })
                 )
             };
         default:
