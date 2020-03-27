@@ -37,6 +37,7 @@ import ContractConfigModal from './editors/contractConfigModal';
 import ExternalProviderInfo from '../externalProviderInfo';
 import classNames from 'classnames';
 import { PaneAction } from './paneAction';
+import { IOutputLogRow } from '../../models/state';
 
 interface IProps {
     panels: IPanelsState;
@@ -45,7 +46,7 @@ interface IProps {
     showTemplateModal?: boolean;
     showExternalProviderInfo: boolean;
     unreadRows: boolean;
-    rows: any;
+    rows: IOutputLogRow[];
     showModal: (modalType: string, modalProps: any) => void;
     togglePanel(panel: Panels): void;
     openPanel(panel: Panels): void;
@@ -74,7 +75,7 @@ export class ProjectEditor extends React.Component<IProps, IState> {
         window.addEventListener(
             'keydown',
             (e) => {
-                if ( e.keyCode === 83 && (navigator.platform.match('Mac') ? e.metaKey : e.ctrlKey) ) {
+                if (e.keyCode === 83 && (navigator.platform.match('Mac') ? e.metaKey : e.ctrlKey)) {
                     e.preventDefault();
                 }
             },
@@ -90,6 +91,13 @@ export class ProjectEditor extends React.Component<IProps, IState> {
         }
     }
 
+    componentDidUpdate(prevProps: IProps) {
+        const { rows, togglePanel } = this.props;
+        if (prevProps.rows !== this.props.rows && rows.length === 1) {
+            togglePanel(Panels.OutputLog);
+        }
+    }
+
     toggleSidePanelDragging() {
         this.setState({ sidePanelDragging: !this.state.sidePanelDragging });
     }
@@ -100,22 +108,15 @@ export class ProjectEditor extends React.Component<IProps, IState> {
 
     isPanelOpen = (panel: Panels) => this.props.panels[panel] && this.props.panels[panel].open;
 
-    hasRows = () => {
-        const {rows, togglePanel} = this.props;
-        if (rows.length === 1) {
-            togglePanel(Panels.OutputLog);
-        }
-    }
-
     render() {
         const { togglePanel,
-                openPanel,
-                exportProject,
-                showContractConfig,
-                closeContractConfigModal,
-                showExternalProviderInfo,
-                unreadRows,
-                rows } = this.props;
+            openPanel,
+            exportProject,
+            showContractConfig,
+            closeContractConfigModal,
+            showExternalProviderInfo,
+            unreadRows
+        } = this.props;
 
         const { sidePanelDragging } = this.state;
         const rightPanelSize = window.innerWidth < 1000 ? 280 : 500;
@@ -152,7 +153,7 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                                 onSecondaryPaneSizeChange={() => null}
                             >
                                 <div className={style.control}>
-                                    { this.isPanelOpen(Panels.Explorer) &&
+                                    {this.isPanelOpen(Panels.Explorer) &&
                                         <React.Fragment>
                                             <Panel
                                                 name='EXPLORER'
@@ -170,7 +171,7 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                                             <ContactContainer />
                                         </React.Fragment>
                                     }
-                                    { this.isPanelOpen(Panels.Configure) &&
+                                    {this.isPanelOpen(Panels.Configure) &&
                                         <React.Fragment>
                                             <Panel
                                                 name='CONFIGURE CONTRACTS'
@@ -180,7 +181,7 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                                             <ContactContainer />
                                         </React.Fragment>
                                     }
-                                    { this.isPanelOpen(Panels.Interact) &&
+                                    {this.isPanelOpen(Panels.Interact) &&
                                         <React.Fragment>
                                             <Panel
                                                 name='INTERACT'
@@ -228,22 +229,22 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                                                         onClick={() => togglePanel(Panels.Preview)}
                                                     />
                                                 </div>
-                                                { this.isPanelOpen(Panels.Transactions) &&
-                                                    <Panel icon={ <IconTransactions /> } dragging={sidePanelDragging}>
+                                                {this.isPanelOpen(Panels.Transactions) &&
+                                                    <Panel icon={<IconTransactions />} dragging={sidePanelDragging}>
                                                         <TransactionLogPanel />
                                                     </Panel>
                                                 }
 
-                                                { this.isPanelOpen(Panels.Preview) &&
+                                                {this.isPanelOpen(Panels.Preview) &&
                                                     <Panel dragging={sidePanelDragging}>
                                                         <PreviewPanel />
                                                     </Panel>
                                                 }
                                             </div>
-                                            { this.isPanelOpen(Panels.OutputLog) &&
-                                                    <Panel name={'Console'} dragging={sidePanelDragging}>
-                                                        <OutputPanel />
-                                                    </Panel>
+                                            {this.isPanelOpen(Panels.OutputLog) &&
+                                                <Panel name={'Console'} dragging={sidePanelDragging}>
+                                                    <OutputPanel />
+                                                </Panel>
                                             }
                                         </SplitterLayout>
                                         <div className={classNames([style.panelButtonsContainer, style.bottomButtonsContainer])}>
@@ -251,7 +252,7 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                                                 name='Console'
                                                 onClick={() => togglePanel(Panels.OutputLog)}
                                                 pillStatus={unreadRows && !this.isPanelOpen(Panels.OutputLog) ? '1' : '0'}
-                                                active={this.isPanelOpen(Panels.OutputLog) || this.hasRows()}
+                                                active={this.isPanelOpen(Panels.OutputLog)}
                                             />
                                         </div>
                                     </div>
