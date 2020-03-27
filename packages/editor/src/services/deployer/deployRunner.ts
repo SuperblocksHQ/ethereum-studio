@@ -161,7 +161,6 @@ export class DeployRunner {
                         return;
                     }
                     observer.next({ msg: 'Contract deployed at address ' + receipt.contractAddress + '.\nDone.', channel: 4 });
-                    console.log('IM IN THE RUNNER', this.deployFile);
                     // emit final deployer output
                     const fileName = this.contractName + '.' + this.environment.name;
                     observer.next(<IDeployResult>{
