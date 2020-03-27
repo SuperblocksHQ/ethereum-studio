@@ -45,6 +45,7 @@ export class AccountSelector extends React.Component<IProps> {
         const { selectedAccount, accounts, accountInfo } = this.props;
         return (
             <DropdownContainer
+                enableClickInside={true}
                 dropdownContent={
                     <AccountsList
                         accountInfo={accountInfo}

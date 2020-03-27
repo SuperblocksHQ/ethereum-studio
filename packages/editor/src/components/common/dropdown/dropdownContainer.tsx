@@ -92,7 +92,7 @@ export class DropdownContainer extends React.Component<IProps, IState> {
                 <DropdownBasic
                     outsideClickIgnoreClass={this.ignoreClassName}
                     handleClickOutside={this.closeMenu}
-                    // handleClickInside={!enableClickInside ? this.closeMenu : undefined}
+                    handleClickInside={!enableClickInside ? this.closeMenu : undefined}
                 >
                     {dropdownContent}
                 </DropdownBasic> }
