@@ -31,4 +31,5 @@ export interface IDeployResult {
     environment: string;
     receipt: any;
     contractName: string;
+    contractArgs: any[];
 }

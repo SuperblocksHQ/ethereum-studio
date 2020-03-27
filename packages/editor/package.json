@@ -104,6 +104,7 @@
     "@types/react-loadable": "^5.5.1",
     "@types/showdown": "^1.9.3",
     "@types/web3": "^1.0.18",
+    "abi-decoder": "^2.3.0",
     "amplitude-js": "^4.6.0",
     "bfj": "6.1.1",
     "classnames": "^2.2.5",
