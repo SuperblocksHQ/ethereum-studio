@@ -94,13 +94,10 @@ export class Transaction extends Component<IProps, IState> {
 
     _renderHeader() {
         const { type, contractName, functionName, constructorArgs } = this.props.transaction;
-        const args = constructorArgs.map((item) => {
-            return item.value;
-        });
         if (type === TransactionType.Deploy) {
             return (
                 <div className={style.header}>
-                    <div className={style.title}>{contractName} deploy: {constructorArgs.toString()}</div>
+                    <div className={style.title}>{contractName} deploy</div>
                     {this._renderStatus()}
                 </div>
             );
@@ -108,7 +105,7 @@ export class Transaction extends Component<IProps, IState> {
         if (type === TransactionType.Preview) {
             return (
                 <div className={style.header}>
-                    <div className={style.title}>{contractName} {functionName}: {args.toString()}</div>
+                    <div className={style.title}>{contractName} {functionName}</div>
                     {this._renderStatus()}
                 </div>
             );
@@ -116,7 +113,7 @@ export class Transaction extends Component<IProps, IState> {
         if (type === TransactionType.Interact) {
             return (
                 <div className={style.header}>
-                    <div className={style.title}>{contractName} {functionName}: {constructorArgs.toString()}</div>
+                    <div className={style.title}>{contractName} {functionName}</div>
                     {this._renderStatus()}
                 </div>
             );
@@ -196,22 +193,6 @@ export class Transaction extends Component<IProps, IState> {
         );
     }
 
-    _renderBottomContentLeft() {
-        const { transaction } = this.props;
-
-        if (transaction.type === TransactionType.Deploy) {
-            return (
-                <div className={style.left}>
-                    <div className={style.row}>
-                        <div className={style.deployArgs}>
-                            {this._renderDeployArguments()}
-                        </div>
-                    </div>
-                </div>
-            );
-        }
-    }
-
     _toggleBottom() {
         this.setState({
             isExpanded: !this.state.isExpanded
@@ -219,13 +200,23 @@ export class Transaction extends Component<IProps, IState> {
     }
 
     _renderDeployArguments() {
-        const { constructorArgs } = this.props.transaction;
-
-        return (
-            <div>
-                <b>Constructor arguments:</b> {constructorArgs.join(', ')}
-            </div>
-        );
+        const { type, constructorArgs } = this.props.transaction;
+        const args = constructorArgs.map((item) => {
+            return item.value;
+        });
+        if (type === TransactionType.Deploy || type === TransactionType.Interact) {
+            return (
+                <div>
+                    <b>Constructor arguments:</b> {constructorArgs.toString()}
+                </div>
+            );
+        } else {
+            return (
+                <div>
+                    <b>Constructor arguments:</b> {args.toString()}
+                </div>
+            );
+        }
     }
 
     render() {
@@ -253,6 +244,11 @@ export class Transaction extends Component<IProps, IState> {
                         <div className={style.row}>
                             <b>Gas used:</b> {transaction.gasUsed}
                         </div>
+                        <div className={style.row}>
+                            <div className={style.deployArgs}>
+                                {this._renderDeployArguments()}
+                            </div>
+                        </div>
                     </div>
                     <div className={style.bottom}>
                         <div className={style.bottomButton}>
@@ -272,7 +268,6 @@ export class Transaction extends Component<IProps, IState> {
                         </div>
                         {isExpanded && (
                             <div className={style.bottomContent}>
-                                {this._renderBottomContentLeft()}
                                 <div className={style.right}>
                                     <div className={style.row}>
                                         <b>Gas Limit:</b> {transaction.gasLimit}
