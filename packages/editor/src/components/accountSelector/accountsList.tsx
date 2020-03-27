@@ -47,8 +47,7 @@ export class AccountsList extends Component<IProps, IState> {
 
     constructor(props: IProps) {
         super(props);
-        console.log('PROPS', props);
-        this.state = { stateIndex: null, newAccountName: '', isButtonClicked: false, errorName: null };
+        this.state = { stateIndex: null, newAccountName: this.props.selectedAccountName, isButtonClicked: false, errorName: null };
     }
 
     onCopyAddressClick = (e: React.MouseEvent, str: Nullable<string>) => {
@@ -63,12 +62,9 @@ export class AccountsList extends Component<IProps, IState> {
         if (prevProps.selectedAccount.name !== this.props.selectedAccount.name) {
             this.setState({
                 isButtonClicked: false,
+                newAccountName: this.props.selectedAccountName
             });
         }
-    }
-
-    handleChange = ({ target }: any) => {
-        this.setState({ [target.name]: target.value } as Pick<IState, keyof IState>);
     }
 
     onEditClick = (e: React.MouseEvent, index: number) => {
@@ -124,7 +120,6 @@ export class AccountsList extends Component<IProps, IState> {
 
     render() {
         const { stateIndex, isButtonClicked, newAccountName, errorName } = this.state;
-        const { selectedAccount } = this.props;
         const renderedAccounts = this.props.accounts.map((account, index) => {
             let deleteButton;
             if (index !== 0) {
@@ -157,7 +152,8 @@ export class AccountsList extends Component<IProps, IState> {
                                     <TextInput
                                         type='text'
                                         id='name'
-                                        value={newAccountName}
+                                        value={newAccountName || ''}
+                                        onBlur={this.saveName}
                                         onKeyDown={this.handleKeyDown}
                                         onChange={this.onNameChange}
                                         error={errorName}
