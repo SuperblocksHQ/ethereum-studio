@@ -20,7 +20,7 @@ import style from './style.less';
 import OnlyIf from '../common/onlyIf';
 import { AccountSelector } from './accountSelector';
 import { projectsActions } from '../../actions';
-import { projectSelectors, accountsConfigSelectors } from '../../selectors';
+import { projectSelectors } from '../../selectors';
 import { IProject } from '../../models';
 import { IAccount } from '../../models/state';
 import { AnyAction } from 'redux';
@@ -28,14 +28,12 @@ import { accountActions } from '../../actions/account.actions';
 
 interface IProps {
     project: IProject;
-    accounts: [IAccount];
-    accountInfo: IAccount;
-    selectedAccount: IAccount;
     onAccountSelected: (account: IAccount) => void;
     onAccountCreate: () => void;
     onAccountDelete: (account: IAccount) => void;
     onAccountEdit: (account: IAccount) => void;
-    updateAccountName(account: IAccount, newName: string): void;
+    accounts: [IAccount];
+    selectedAccount: IAccount;
 }
 
 class AccountSelectorWrapper extends Component<IProps> {
@@ -47,17 +45,13 @@ class AccountSelectorWrapper extends Component<IProps> {
             onAccountDelete,
             onAccountEdit,
             accounts,
-            selectedAccount,
-            updateAccountName,
-            accountInfo,
+            selectedAccount
         } = this.props;
 
         return (
             <OnlyIf test={Boolean(project.id)}>
                 <div className={style.container}>
                     <AccountSelector
-                            accountInfo={accountInfo}
-                            updateAccountName={updateAccountName}
                             accounts={accounts}
                             selectedAccount={selectedAccount}
                             onAccountSelected={onAccountSelected}
@@ -73,15 +67,11 @@ class AccountSelectorWrapper extends Component<IProps> {
 const mapStateToProps = (state: any) => ({
     project: projectSelectors.getProject(state),
     selectedAccount: projectSelectors.getSelectedAccount(state),
-    accounts: state.projects.accounts,
-    accountInfo: accountsConfigSelectors.getAccountInfo(state),
+    accounts: state.projects.accounts
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
     return {
-        updateAccountName(account: IAccount, newName: string) {
-            dispatch(accountActions.updateAccountName(account, newName));
-        },
         onAccountSelected(account: IAccount) {
             dispatch(projectsActions.selectAccount(account.name));
         },

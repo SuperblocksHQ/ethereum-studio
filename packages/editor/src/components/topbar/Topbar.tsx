@@ -20,6 +20,7 @@ import { HelpAction, NewProjectAction, OnlyIf, StyledButton } from '../common';
 import ProjectTitle from './projectTitle';
 import { IProject } from '../../models';
 import { ForkDropdownAction, PreferencesAction, ShareDropdownAction, AccountSelectorAction } from './actions';
+import AccountConfigModal from '../projectEditor/editors/accountConfigModal';
 import { StyledButtonType } from '../common/buttons/StyledButtonType';
 import AboutModal from '../modals/aboutModal';
 import { IconEthereum } from '../icons';
@@ -81,7 +82,7 @@ export default class TopBar extends Component<IProps> {
 
     render() {
         const { project, showOpenStudio, showForkButton, showShareButton } = this.props.view;
-        const { isProjectForking, showAboutModal, toggleAboutModal } = this.props;
+        const { isProjectForking, showAccountConfig, closeAccountConfigModal, showAboutModal, toggleAboutModal } = this.props;
 
         return (
             <div className={style.topbar}>
@@ -133,6 +134,11 @@ export default class TopBar extends Component<IProps> {
                 <OnlyIf test={showAboutModal}>
                     <AboutModal
                         hideModal={toggleAboutModal}
+                    />
+                </OnlyIf>
+                <OnlyIf test={showAccountConfig}>
+                    <AccountConfigModal
+                        hideModal={closeAccountConfigModal}
                     />
                 </OnlyIf>
             </div>

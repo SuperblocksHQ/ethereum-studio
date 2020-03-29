@@ -24,14 +24,12 @@ import { IAccount } from '../../models/state';
 import Identicon from '../identicon';
 
 interface IProps {
-    accountInfo: IAccount;
     selectedAccount: IAccount;
     accounts: IAccount[];
     onAccountSelected(account: IAccount): void;
     onAccountEdit(account: IAccount): void;
     onAccountDelete(account: IAccount): void;
     onAccountCreate(): void;
-    updateAccountName(account: IAccount, newName: string): void;
 }
 
 export class AccountSelector extends React.Component<IProps> {
@@ -42,16 +40,13 @@ export class AccountSelector extends React.Component<IProps> {
     }
 
     render() {
-        const { selectedAccount, accounts, accountInfo } = this.props;
+        const { selectedAccount, accounts } = this.props;
+
         return (
             <DropdownContainer
-                enableClickInside={true}
                 dropdownContent={
                     <AccountsList
-                        accountInfo={accountInfo}
-                        updateAccountName={this.props.updateAccountName}
                         accounts={accounts}
-                        selectedAccount={selectedAccount}
                         selectedAccountName={selectedAccount.name}
                         onSelect={this.props.onAccountSelected}
                         onEdit={this.props.onAccountEdit}
@@ -61,7 +56,7 @@ export class AccountSelector extends React.Component<IProps> {
                 }
             >
                 <div className={classnames([style.selector, style.account])}>
-                    <Identicon seed={selectedAccount.address} size={7} />
+                    <Identicon seed={selectedAccount.address} size={7}/>
                     <div className={style.accountContainer}>
                         <div title={selectedAccount.address || ''} className={style.nameContainer}>
                             {selectedAccount.name}
