@@ -18,9 +18,10 @@ import { ITransaction, TransactionType } from '../../models';
 import { IAccount } from '../../models/state';
 import { projectSelectors } from '../../selectors';
 
-export function formatTransaction(state: any, transactionType: TransactionType, hash?: string, environment?: string, receipt?: any, contractName?: string, tx?: any, contractArgs?: any[], functionName?: string): ITransaction {
+export function formatTransaction(state: any, transactionType: TransactionType, hash?: string, environment?: string, receipt?: any, contractName?: string, tx?: any, contractArgs?: any[]): ITransaction {
     const account: IAccount = projectSelectors.getSelectedAccount(state);
     const networkSettings = state.settings.preferences.network;
+
     return  {
         hash: hash || '',
         index: receipt ? receipt.transactionIndex : 'n/a',
@@ -37,7 +38,6 @@ export function formatTransaction(state: any, transactionType: TransactionType, 
         gasUsed: receipt ? receipt.gasUsed : 0,
         status: receipt ? Number(receipt.status) : null,
         gasLimit: networkSettings.gasLimit,
-        gasPrice: networkSettings.gasPrice,
-        functionName: functionName || ''
+        gasPrice: networkSettings.gasPrice
     };
 }

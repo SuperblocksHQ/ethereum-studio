@@ -16,10 +16,8 @@
 
 import { updateTransactionStateEpic } from './updateTransactionState.epic';
 import { checkSentTransactionsEpic } from './checkSentTransactions.epic';
-import { updateTransactionEpic } from './updateTransaction.epic';
 
 export const transactionEpics = [
     updateTransactionStateEpic,
-    checkSentTransactionsEpic,
-    updateTransactionEpic
+    checkSentTransactionsEpic
 ];

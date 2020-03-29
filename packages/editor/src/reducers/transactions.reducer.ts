@@ -27,35 +27,22 @@ const initialState: ITransactionsState = {
 export default function transactionsReducer(state = initialState, action: AnyAction, wholeState: any) {
     switch (action.type) {
         case transactionsActions.ADD_TRANSACTION:
-            const transaction = formatTransaction(wholeState, action.data.transactionType, action.data.hash, action.data.environment,
-                action.data.receipt, action.data.contractName, action.data.tx, action.data.contractArgs, action.data.functionName);
+            const transaction = formatTransaction(wholeState, action.data.transactionType, action.data.hash, action.data.environment, action.data.receipt, action.data.contractName, action.data.tx, action.data.contractArgs);
             return {
                 ...state,
                 items: [
-                    { ...transaction },
+                    {...transaction},
                     ...state.items,
                 ]
             };
         case transactionsActions.UPDATE_TRANSACTION:
-            const updatedTx = formatTransaction(wholeState, action.data.transactionType, action.data.hash, action.data.environment, action.data.receipt, action.data.contractName, action.data.tx, undefined, action.data.functionName);
+            const updatedTx = formatTransaction(wholeState, action.data.transactionType, action.data.hash, action.data.environment, action.data.receipt, action.data.contractName, action.data.tx);
             return {
                 ...state,
                 items: replaceInArray(
                     state.items,
                     item => item.hash === updatedTx.hash,
-                    item => ({ ...item, ...updatedTx, createdAt: item.createdAt, constructorArgs: item.constructorArgs })
-                )
-            };
-
-        case transactionsActions.UPDATE_TRANSACTION_SUCCESS:
-            const updatedTransaction = formatTransaction(wholeState, action.data.transactionType, action.data.hash, action.data.environment,
-                action.data.receipt, action.data.contractName, undefined, action.data.contractArgs, action.data.functionName);
-            return {
-                ...state,
-                items: replaceInArray(
-                    state.items,
-                    item => item.hash === updatedTransaction.hash,
-                    item => ({ ...item, ...updatedTransaction, createdAt: item.createdAt })
+                    item => ({...item, ...updatedTx, createdAt: item.createdAt, constructorArgs: item.constructorArgs})
                 )
             };
         default:

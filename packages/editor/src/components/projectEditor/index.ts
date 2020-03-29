@@ -27,8 +27,7 @@ const mapStateToProps = (state: any) => ({
     selectedEnvironment: projectSelectors.getSelectedEnvironment(state),
     showContractConfig: contractConfigSelectors.showContractConfig(state),
     showExternalProviderInfo: state.deployer.showExternalProviderInfo,
-    unreadRows: state.outputLog.unreadRows,
-    rows: state.outputLog.rows
+    unreadRows: state.outputLog.unreadRows
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
@@ -53,5 +52,6 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
         },
     };
 };
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProjectEditor);

@@ -18,34 +18,23 @@ import { TransactionType } from '../models';
 
 export const transactionsActions = {
     ADD_TRANSACTION: 'ADD_TRANSACTION',
-    addTransaction(transactionType: TransactionType, hash?: string, environment?: string, receipt?: any, contractName?: string, tx?: any, contractArgs?: any[], functionName?: string) {
+    addTransaction(transactionType: TransactionType, hash?: string, environment?: string, receipt?: any, contractName?: string, tx?: any, contractArgs?: any[]) {
         return {
             type: transactionsActions.ADD_TRANSACTION,
             data: {
-                transactionType, hash, environment, receipt, contractName, tx, contractArgs, functionName
+                transactionType, hash, environment, receipt, contractName, tx, contractArgs
             }
         };
     },
     UPDATE_TRANSACTION: 'UPDATE_TRANSACTION',
-    updateTransaction(transactionType: TransactionType, hash?: string, environment?: string, receipt?: any, contractName?: string, tx?: any, contractArgs?: any[], functionName?: string) {
+    updateTransaction(transactionType: TransactionType, hash?: string, environment?: string, receipt?: any, contractName?: string, tx?: any) {
         return {
             type: transactionsActions.UPDATE_TRANSACTION,
             data: {
-                transactionType, hash, environment, receipt, contractName, tx, contractArgs, functionName
+                transactionType, hash, environment, receipt, contractName, tx
             }
         };
     },
-
-    UPDATE_TRANSACTION_SUCCESS: 'UPDATE_TRANSACTION_SUCCESS',
-    updateTransactionSuccess(transactionType: TransactionType, hash?: string, environment?: string, receipt?: any, contractName?: string, tx?: any, contractArgs?: any[], functionName?: string) {
-        return {
-            type: transactionsActions.UPDATE_TRANSACTION_SUCCESS,
-            data: {
-                transactionType, hash, environment, receipt, contractName, tx, contractArgs, functionName
-            }
-        };
-    },
-
     UPDATE_TRANSACTION_FAIL: 'UPDATE_TRANSACTION_FAIL',
     updateTransactionFail(error: any) {
         return {

@@ -37,7 +37,6 @@ export interface ITransaction {
     gasUsed: number;
     gasLimit: number;
     gasPrice: number;
-    functionName?: string;
 }
 
 export interface ITransactionsState {
