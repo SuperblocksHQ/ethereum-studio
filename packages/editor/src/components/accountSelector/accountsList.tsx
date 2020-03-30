@@ -14,25 +14,42 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import React from 'react';
+import React, { Component } from 'react';
 import classnames from 'classnames';
-import { Tooltip } from '../common';
+import { Tooltip, TextInput } from '../common';
 import style from './style.less';
 import copy from 'copy-to-clipboard';
 import * as accountUtils from '../../utils/accounts';
 import { IconTrash, IconEdit, IconCopy } from '../icons';
 import { IAccount } from '../../models/state';
+import { validateAccountName } from '../../validations';
 
 interface IProps {
+    accountInfo: IAccount;
     accounts: IAccount[];
+    selectedAccount: IAccount;
     selectedAccountName: string;
     onSelect(account: IAccount): void;
     onEdit(account: IAccount): void;
     onDelete(account: IAccount): void;
     onCreate(): void;
+    updateAccountName(account: IAccount, newName: string): void;
 }
 
-export class AccountsList extends React.Component<IProps> {
+interface IState {
+    newAccountName: string;
+    isButtonClicked: boolean;
+    errorName: Nullable<string>;
+    stateIndex: any;
+}
+
+export class AccountsList extends Component<IProps, IState> {
+
+    constructor(props: IProps) {
+        super(props);
+        this.state = { stateIndex: null, newAccountName: this.props.selectedAccountName, isButtonClicked: false, errorName: null };
+    }
+
     onCopyAddressClick = (e: React.MouseEvent, str: Nullable<string>) => {
         e.preventDefault();
         e.stopPropagation();
@@ -41,9 +58,17 @@ export class AccountsList extends React.Component<IProps> {
         }
     }
 
-    onEditClick = (e: React.MouseEvent, account: IAccount) => {
-        e.stopPropagation();
-        this.props.onEdit(account);
+    componentDidUpdate(prevProps: IProps) {
+        if (prevProps.selectedAccount.name !== this.props.selectedAccount.name) {
+            this.setState({
+                isButtonClicked: false,
+                newAccountName: this.props.selectedAccountName
+            });
+        }
+    }
+
+    onEditClick = (e: React.MouseEvent, index: number) => {
+        this.setState({ isButtonClicked: true, stateIndex: index });
     }
 
     onDeleteClick = (e: React.MouseEvent, account: IAccount) => {
@@ -56,7 +81,45 @@ export class AccountsList extends React.Component<IProps> {
         this.props.onCreate();
     }
 
+    onNameChange = (e: any) => {
+        const value = e.target.value;
+        const { selectedAccount, accounts } = this.props;
+        const isDuplicate = accounts.find((acc) => acc.name === value);
+
+        let errorName = null;
+        if (!!isDuplicate && selectedAccount.name !== value) {
+            errorName = 'Account with such name already exists, please choose a different one.';
+        } else {
+            errorName = validateAccountName(value);
+        }
+
+        this.setState({
+            newAccountName: value,
+            errorName
+        });
+
+    }
+
+    handleKeyDown = (e: any) => {
+        if (e.key === 'Enter') {
+            this.saveName(e);
+        }
+    }
+
+    saveName = (e: any) => {
+        const { selectedAccount: account, updateAccountName } = this.props;
+        const { newAccountName, errorName } = this.state;
+        e.preventDefault();
+        if (!errorName) {
+            updateAccountName(account, newAccountName);
+            this.setState({ isButtonClicked: false, newAccountName: '' });
+        }
+
+    }
+
+
     render() {
+        const { stateIndex, isButtonClicked, newAccountName, errorName } = this.state;
         const renderedAccounts = this.props.accounts.map((account, index) => {
             let deleteButton;
             if (index !== 0) {
@@ -84,12 +147,25 @@ export class AccountsList extends React.Component<IProps> {
                         onClick={() => this.props.onSelect(account)}>
 
                         <div className={style.nameContainer}>
-                            <div className={style.accountName}>{account.name}</div>
+                            <div className={style.accountName}>
+                                {stateIndex === index && isButtonClicked ?
+                                    <TextInput
+                                        type='text'
+                                        id='name'
+                                        value={newAccountName || ''}
+                                        onBlur={this.saveName}
+                                        onKeyDown={this.handleKeyDown}
+                                        onChange={this.onNameChange}
+                                        error={errorName}
+                                    />
+                                    : <div>{account.name}</div>
+                                }
+                            </div>
                             <div className={style.address}>{accountUtils.shortenAddres(account.address || '')}</div>
                         </div>
-                        <div className={style.actionsContainer}>
-                            <button className='btnNoBg' onClick={(e) => this.onEditClick(e, account)}>
-                                <Tooltip title='Edit Account'>
+                        <div className={isButtonClicked && stateIndex === index ? style.actionsContainerClicked : style.actionsContainer}>
+                            <button className='btnNoBg' onClick={(e) => this.onEditClick(e, index)}>
+                                <Tooltip title='Edit account name'>
                                     <IconEdit />
                                 </Tooltip>
                             </button>
@@ -115,7 +191,7 @@ export class AccountsList extends React.Component<IProps> {
                 <div className={style.newAccount} onClick={this.onCreateAccountClick}>
                     <button className='btnNoBg'>
                         + New Account
-                    </button>
+                </button>
                 </div>
             </div>
         );
