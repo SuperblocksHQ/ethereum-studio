@@ -61,14 +61,15 @@ export class AccountsList extends Component<IProps, IState> {
     componentDidUpdate(prevProps: IProps) {
         if (prevProps.selectedAccount.name !== this.props.selectedAccount.name) {
             this.setState({
-                isButtonClicked: false,
                 newAccountName: this.props.selectedAccountName
             });
         }
     }
 
-    onEditClick = (e: React.MouseEvent, index: number) => {
+    onEditClick = (e: React.MouseEvent, index: number, account: IAccount) => {
+        e.stopPropagation();
         this.setState({ isButtonClicked: true, stateIndex: index });
+        this.props.onSelect(account);
     }
 
     onDeleteClick = (e: React.MouseEvent, account: IAccount) => {
@@ -98,6 +99,12 @@ export class AccountsList extends Component<IProps, IState> {
             errorName
         });
 
+    }
+
+    onSelectAccount = (e: React.MouseEvent, account: IAccount) => {
+        e.stopPropagation();
+        this.setState({ isButtonClicked: false });
+        this.props.onSelect(account);
     }
 
     handleKeyDown = (e: any) => {
@@ -144,7 +151,7 @@ export class AccountsList extends Component<IProps, IState> {
             return (
                 <div key={index}>
                     <div className={classnames(style.accountLink, { [style.accountLinkChosen]: account.name === this.props.selectedAccountName })}
-                        onClick={() => this.props.onSelect(account)}>
+                        onClick={(e) => this.onSelectAccount(e, account)}>
 
                         <div className={style.nameContainer}>
                             <div className={style.accountName}>
@@ -164,7 +171,7 @@ export class AccountsList extends Component<IProps, IState> {
                             <div className={style.address}>{accountUtils.shortenAddres(account.address || '')}</div>
                         </div>
                         <div className={isButtonClicked && stateIndex === index ? style.actionsContainerClicked : style.actionsContainer}>
-                            <button className='btnNoBg' onClick={(e) => this.onEditClick(e, index)}>
+                            <button className='btnNoBg' onClick={(e) => this.onEditClick(e, index, account)}>
                                 <Tooltip title='Edit account name'>
                                     <IconEdit />
                                 </Tooltip>
