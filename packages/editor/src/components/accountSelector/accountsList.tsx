@@ -61,14 +61,15 @@ export class AccountsList extends Component<IProps, IState> {
     componentDidUpdate(prevProps: IProps) {
         if (prevProps.selectedAccount.name !== this.props.selectedAccount.name) {
             this.setState({
-                isButtonClicked: false,
                 newAccountName: this.props.selectedAccountName
             });
         }
     }
 
-    onEditClick = (e: React.MouseEvent, index: number) => {
+    onEditClick = (e: React.MouseEvent, index: number, account: IAccount) => {
+        e.stopPropagation();
         this.setState({ isButtonClicked: true, stateIndex: index });
+        // this.props.onSelect(account);
     }
 
     onDeleteClick = (e: React.MouseEvent, account: IAccount) => {
@@ -81,13 +82,13 @@ export class AccountsList extends Component<IProps, IState> {
         this.props.onCreate();
     }
 
-    onNameChange = (e: any) => {
+    onNameChange = (e: any, account: IAccount) => {
         const value = e.target.value;
-        const { selectedAccount, accounts } = this.props;
+        const { accounts } = this.props;
         const isDuplicate = accounts.find((acc) => acc.name === value);
 
         let errorName = null;
-        if (!!isDuplicate && selectedAccount.name !== value) {
+        if (!!isDuplicate && account.name !== value) {
             errorName = 'Account with such name already exists, please choose a different one.';
         } else {
             errorName = validateAccountName(value);
@@ -100,14 +101,20 @@ export class AccountsList extends Component<IProps, IState> {
 
     }
 
-    handleKeyDown = (e: any) => {
+    onSelectAccount = (e: React.MouseEvent, account: IAccount) => {
+        e.stopPropagation();
+        this.setState({ isButtonClicked: false });
+        this.props.onSelect(account);
+    }
+
+    handleKeyDown = (e: any, account: IAccount) => {
         if (e.key === 'Enter') {
-            this.saveName(e);
+            this.saveName(e, account);
         }
     }
 
-    saveName = (e: any) => {
-        const { selectedAccount: account, updateAccountName } = this.props;
+    saveName = (e: any, account: IAccount) => {
+        const { updateAccountName } = this.props;
         const { newAccountName, errorName } = this.state;
         e.preventDefault();
         if (!errorName) {
@@ -144,7 +151,7 @@ export class AccountsList extends Component<IProps, IState> {
             return (
                 <div key={index}>
                     <div className={classnames(style.accountLink, { [style.accountLinkChosen]: account.name === this.props.selectedAccountName })}
-                        onClick={() => this.props.onSelect(account)}>
+                        onClick={(e) => this.onSelectAccount(e, account)}>
 
                         <div className={style.nameContainer}>
                             <div className={style.accountName}>
@@ -152,11 +159,12 @@ export class AccountsList extends Component<IProps, IState> {
                                     <TextInput
                                         type='text'
                                         id='name'
-                                        value={newAccountName || ''}
-                                        onBlur={this.saveName}
-                                        onKeyDown={this.handleKeyDown}
-                                        onChange={this.onNameChange}
+                                        onBlur={(e: any) => this.saveName(e, account)}
+                                        onKeyDown={(e: any) => this.handleKeyDown(e, account)}
+                                        onChange={(e: any) => this.onNameChange(e, account)}
+                                        onClick={(e: any) => e.stopPropagation()}
                                         error={errorName}
+                                        defaultValue={account.name}
                                     />
                                     : <div>{account.name}</div>
                                 }
@@ -164,7 +172,7 @@ export class AccountsList extends Component<IProps, IState> {
                             <div className={style.address}>{accountUtils.shortenAddres(account.address || '')}</div>
                         </div>
                         <div className={isButtonClicked && stateIndex === index ? style.actionsContainerClicked : style.actionsContainer}>
-                            <button className='btnNoBg' onClick={(e) => this.onEditClick(e, index)}>
+                            <button className='btnNoBg' onClick={(e) => this.onEditClick(e, index, account)}>
                                 <Tooltip title='Edit account name'>
                                     <IconEdit />
                                 </Tooltip>
