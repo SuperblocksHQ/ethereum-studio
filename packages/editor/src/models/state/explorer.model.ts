@@ -29,4 +29,5 @@ export interface IExplorerState {
     itemNameValidation: IItemNameValidation;
     lastDeletedId: Nullable<string>;
     hasUnstoredChanges: boolean;
+    currentItem: Nullable<IProjectItem>;
 }

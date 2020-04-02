@@ -35,6 +35,7 @@ export const initialState: IExplorerState = {
     itemNameValidation: { isNameValid: false, isNotDuplicate: false },
     lastDeletedId: null,
     hasUnstoredChanges: false,
+    currentItem: null
 };
 
 function hasNoChildWithName(parentItem: Nullable<IProjectItem>, name: string) {
@@ -320,6 +321,12 @@ export default function explorerReducer(state = initialState, action: AnyAction)
             return {
                 ...state,
                 tree: action.data.files
+            };
+
+        case explorerActions.COMPILE_CONTRACT:
+            return {
+                ...state,
+                currentItem: action.data
             };
 
         default:

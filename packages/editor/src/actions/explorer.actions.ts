@@ -101,10 +101,10 @@ export const explorerActions = {
 
     // --------- Contract specific
     COMPILE_CONTRACT: 'COMPILE_CONTRACT',
-    compileContract(item: IProjectItem) {
+    compileContract(item: IProjectItem, shouldBeDeployed?: boolean) {
         return {
             type: explorerActions.COMPILE_CONTRACT,
-            data: item
+            data: {item, shouldBeDeployed}
         };
     },
 

@@ -17,7 +17,7 @@
 import { of } from 'rxjs';
 import { switchMap, withLatestFrom } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
-import { explorerActions, compilerActions, projectsActions } from '../../actions';
+import { explorerActions, compilerActions, projectsActions, deployerActions } from '../../actions';
 import { IPane } from '../../models/state';
 import { explorerSelectors, panesSelectors } from '../../selectors';
 
@@ -25,9 +25,7 @@ export const compileContractsEpic: Epic = (action$: any, state$: any) => action$
     ofType(explorerActions.COMPILE_CONTRACT),
     withLatestFrom(state$),
     switchMap(([action]) => {
-
         const hasUnstoredChanges = explorerSelectors.hasUnstoredChanges(state$.value);
-
         const panes = panesSelectors.getPanes(state$.value);
         const hasUnsavedChanges = panes.reduce((acc: any, curr: IPane) => {
             if (acc === true) {
@@ -37,9 +35,9 @@ export const compileContractsEpic: Epic = (action$: any, state$: any) => action$
         }, []);
 
         if (hasUnsavedChanges || hasUnstoredChanges) {
-            return of(projectsActions.saveProject(action.data));
+            return of(projectsActions.saveProject(action.data.item));
         }
 
-        return of(compilerActions.initCompilation(action.data));
+        return of(compilerActions.initCompilation(action.data.item));
     })
 );
