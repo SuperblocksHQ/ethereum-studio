@@ -28,8 +28,6 @@ interface IProps {
     onCreateItem(parentId: string, type: ProjectItemTypes, name: string): void;
     onDeleteItem(id: string): void;
     onMoveItem(sourceId: string, targetId: string): void;
-
-    onCompileContract(file: IProjectItem): void;
     onDeployContract(file: IProjectItem): void;
 
     showModal(action: any, modalProps: any): void;
@@ -96,8 +94,6 @@ export class Explorer extends React.Component<IProps> {
                         onRenameClick={ (id: string) => this.onRenameItem(id, itemData.name) }
                         onDeleteClick={ (id: string) => this.onDeleteItem(id, itemData.name) }
                         onMoveItem={this.onMoveItem}
-
-                        onCompileClick={ actions.onCompileContract }
                         onDeployClick={ actions.onDeployContract } />
                 );
             } else {

@@ -49,10 +49,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
             dispatch(explorerActions.moveItem(sourceId, targetId));
         },
 
-        // smart contract specific
-        onCompileContract: (file: IProjectItem) => {
-            dispatch(explorerActions.compileContract(file));
-        },
         onDeployContract: (file: IProjectItem) => {
             dispatch(deployerActions.deployContract(file));
         },

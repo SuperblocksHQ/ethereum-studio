@@ -81,8 +81,6 @@ export function Panes(props: IProps) {
                                     visible={pane.active}
                                     hasUnsavedChanges={pane.hasUnsavedChanges}
                                     onSave={props.onSaveFile}
-                                    onConfigure={props.onConfigureContract}
-                                    onCompile={props.onCompileContract}
                                     onDeploy={props.onDeployContract}
                                     onUnsavedChange={props.onUnsavedChange}
                                 />;
