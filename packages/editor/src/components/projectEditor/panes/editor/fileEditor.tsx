@@ -30,7 +30,6 @@ interface IProps {
     visible: boolean;
     hasUnsavedChanges: boolean;
     onSave: (fileId: string, code: string) => void;
-    onDeploy: (file: IProjectItem) => void;
     onUnsavedChange: (fileId: string, hasUnsavedChanges: boolean, code: any) => void;
 }
 
@@ -126,7 +125,6 @@ export class FileEditor extends React.Component<IProps, IState> {
                     isSmartContract={isSmartContract(file.name)}
                     hasUnsavedChanges={hasUnsavedChanges}
                     onSave={this.onSave}
-                    onDeploy={ () => this.props.onDeploy(file) }
                     isMarkdown={isMarkdown(file.name)}
                     showMarkdownPreview={showMarkdownPreview}
                     onShowMarkdownPreview={ () => this.toggleMarkdownPreview()} />

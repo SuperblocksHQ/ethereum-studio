@@ -16,10 +16,8 @@
 
 import { saveFileEpic } from './saveFile.epic';
 import { setUnsavedChanges } from './setUnsavedChanges.epic';
-import { openFileEpic } from './openFile.epic';
 
 export const panesEpics = [
     saveFileEpic,
     setUnsavedChanges,
-    openFileEpic
 ];

@@ -37,9 +37,6 @@ interface IProps {
     onCloseAllOtherPanes: (fileId: string) => void;
     onCloseAllPanes: () => void;
     onMovePane: (fromIndex: number, toIndex: number) => void;
-    onConfigureContract: (contractSource: string) => void;
-    onCompileContract: (file: IProjectItem) => void;
-    onDeployContract: (file: IProjectItem) => void;
     togglePanel: (panel: Panels) => void;
     onUnsavedChange: (fileId: string, hasUnsavedChanges: boolean, code: any) => void;
 }
@@ -81,7 +78,6 @@ export function Panes(props: IProps) {
                                     visible={pane.active}
                                     hasUnsavedChanges={pane.hasUnsavedChanges}
                                     onSave={props.onSaveFile}
-                                    onDeploy={props.onDeployContract}
                                     onUnsavedChange={props.onUnsavedChange}
                                 />;
                     }

@@ -48,10 +48,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
         onMoveItem: (sourceId: string, targetId: string) => {
             dispatch(explorerActions.moveItem(sourceId, targetId));
         },
-
-        onDeployContract: (file: IProjectItem) => {
-            dispatch(deployerActions.deployContract(file));
-        },
     };
 };
 

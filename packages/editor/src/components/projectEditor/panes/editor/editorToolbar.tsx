@@ -24,7 +24,6 @@ export interface IProps {
     isSmartContract: boolean;
     hasUnsavedChanges: boolean;
     onSave: () => void;
-    onDeploy: () => void;
     isMarkdown: boolean;
     showMarkdownPreview: boolean;
     onShowMarkdownPreview: () => void;
@@ -42,15 +41,6 @@ export function EditorToolbar(props: IProps) {
                         <IconSave />
                     </Tooltip>
                 </button>
-                <OnlyIf test={props.isSmartContract}>
-                    <button
-                        className='btnNoBg'
-                        onClick={props.onDeploy}>
-                        <Tooltip title='Deploy'>
-                            <IconDeploy style={{ verticalAlign: 'middle' }} />
-                        </Tooltip>
-                    </button>
-                </OnlyIf>
                 <OnlyIf test={props.isMarkdown}>
                     <button
                         className='btnNoBg'

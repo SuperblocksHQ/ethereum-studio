@@ -57,16 +57,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
             dispatch(panelsActions.togglePanel(panel));
         },
 
-        // contract related
-        onConfigureContract: (contractSource: string) => {
-            dispatch(contractConfigActions.openContractConfig(contractSource));
-        },
-        onCompileContract: (file: IProjectItem) => {
-            dispatch(explorerActions.compileContract(file));
-        },
-        onDeployContract: (file: IProjectItem) => {
-            dispatch(deployerActions.deployContract(file));
-        },
     };
 };
 
