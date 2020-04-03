@@ -18,16 +18,21 @@ import { connect } from 'react-redux';
 import { ConfigurePanel } from './ConfigurePanel';
 import { projectSelectors } from '../../../../selectors';
 import { Dispatch } from 'redux';
-import { contractConfigActions } from '../../../../actions';
+import { contractConfigActions, deployerActions } from '../../../../actions';
+import { IProjectItem } from '../../../../models';
 
 const mapStateToProps = (state: any) => ({
-    dappFileData: projectSelectors.getDappFileData(state)
+    dappFileData: projectSelectors.getDappFileData(state),
+    ...state.explorer
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
     return {
         onConfigureContract: (contractSource: string) => {
             dispatch(contractConfigActions.openContractConfig(contractSource));
+        },
+        onDeployContract: (file: IProjectItem) => {
+            dispatch(deployerActions.deployContract(file));
         },
     };
 };

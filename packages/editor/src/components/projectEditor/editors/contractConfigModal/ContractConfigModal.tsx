@@ -29,21 +29,21 @@ interface IProps {
         file: IProjectItem
         config: IContractConfiguration;
     };
+    tree: IProjectItem;
     accounts: IAccount[];
     saveContractConfig: (contractConfig: IContractConfiguration) => void;
     hideModal: () => void;
+    onDeployContract(file: IProjectItem): void;
 }
 
 interface IState {
     newContractConfig: IContractConfiguration;
-    isDirty: boolean;
 }
 
 export default class ContractConfigModal extends Component<IProps, IState> {
 
     state = {
         newContractConfig: this.props.selectedContract.config,
-        isDirty: false,
     };
 
     componentDidUpdate() {
@@ -77,15 +77,24 @@ export default class ContractConfigModal extends Component<IProps, IState> {
     //     cb(0);
     // }
 
-    save = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-        const { saveContractConfig } = this.props;
+    onDeploy = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        const { saveContractConfig, onDeployContract, tree} = this.props;
         const { newContractConfig } = this.state;
-
+        let itemData: any = null;
+        console.log('TREE', tree);
+        if (tree) {
+            const contractsTree = tree.children.filter(item => item.name === 'contracts');
+            for (const key in contractsTree[0].children) {
+                if (key) {
+                    itemData = contractsTree[0].children[key];
+                }
+            }
+        }
+        console.log('ITEM DATA???', itemData);
         e.preventDefault();
         saveContractConfig(newContractConfig);
-        this.setState({
-            isDirty: false
-        });
+        onDeployContract(itemData);
+
     }
 
     onNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -95,14 +104,12 @@ export default class ContractConfigModal extends Component<IProps, IState> {
                 ...this.state.newContractConfig,
                 name: value,
             },
-            isDirty: true,
         });
     }
 
     onArgumentChange = (argumentChanged: IContractArgData, index: number) => {
         this.setState((prevState: IState) => {
             return {
-                isDirty: true,
                 newContractConfig: {
                     ...this.state.newContractConfig,
                     args: prevState.newContractConfig.args.map((arg, i) => {
@@ -120,14 +127,12 @@ export default class ContractConfigModal extends Component<IProps, IState> {
                 ...this.state.newContractConfig,
                 value,
             },
-            isDirty: true
         });
     }
 
     render() {
-        const { selectedContract, accounts, hideModal } = this.props;
-        const { newContractConfig, isDirty } = this.state;
-
+        const { selectedContract, accounts, hideModal, tree} = this.props;
+        const { newContractConfig } = this.state;
         // Make sure the item actually exists in the Dappfile.json
         if (!selectedContract.config) {
             return <div>Could not find contract in dappfile.json</div>;
@@ -137,7 +142,7 @@ export default class ContractConfigModal extends Component<IProps, IState> {
             <Modal hideModal={hideModal}>
                 <div className={classNames([style.configureContractModal, 'modal'])}>
                     <ModalHeader
-                        title='Configure Contract'
+                        title='Deploy Contract'
                         onCloseClick={hideModal}
                     />
                     <div className={classNames([style.content, 'scrollable-y'])}>
@@ -189,8 +194,8 @@ export default class ContractConfigModal extends Component<IProps, IState> {
                     </div>
                     <div className={style.footer}>
                         <div className={style.cancelBtn} onClick={(hideModal)}>Cancel</div>
-                        <button className='btn2' disabled={!isDirty} onClick={this.save}>
-                            Save
+                        <button className='btn2' onClick={this.onDeploy}>
+                            Deploy
                         </button>
                     </div>
                 </div>

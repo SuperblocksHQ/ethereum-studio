@@ -23,7 +23,7 @@ import TopBar from '../topbar';
 import BottomBar from './bottomBar';
 import ContactContainer from '../contactContainer';
 import { PreviewPanel, TransactionLogPanel, OutputPanel, Explorer, InteractPanel, ConfigurePanel } from './panels';
-import { IconTransactions, IconFolderOpen, IconInteract, IconConfigure, IconDownloadDApp, IconTogglePreview } from '../icons';
+import { IconTransactions, IconFolderOpen, IconInteract, IconDeploy, IconDownloadDApp, IconTogglePreview } from '../icons';
 import { SideButton } from './sideButton';
 import { SplitterLayout } from './splitterLayout';
 import { Panel, PanelAction } from './panel';
@@ -132,7 +132,7 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                             className={this.isPanelOpen(Panels.Explorer) && style.active}
                         />
                         <SideButton
-                            icon={<IconConfigure color='#fff' />}
+                            icon={<IconDeploy color='#fff'/>}
                             onClick={() => togglePanel(Panels.Configure)}
                             className={this.isPanelOpen(Panels.Configure) && style.active}
                         />
@@ -174,7 +174,7 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                                     {this.isPanelOpen(Panels.Configure) &&
                                         <React.Fragment>
                                             <Panel
-                                                name='CONFIGURE CONTRACTS'
+                                                name='DEPLOY CONTRACTS'
                                                 dragging={this.state.sidePanelDragging}>
                                                 <ConfigurePanel />
                                             </Panel>

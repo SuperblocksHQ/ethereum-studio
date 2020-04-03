@@ -18,17 +18,28 @@ import React from 'react';
 import style from './style.less';
 import { StyledButton } from '../../../common';
 import { StyledButtonType } from '../../../common/buttons/StyledButtonType';
+import { IProjectItem } from '../../../../models';
 
 interface IProps {
     dappFileData: any;
+    tree: IProjectItem;
     onConfigureContract: (contractSource: string) => void;
+    onDeployContract(file: IProjectItem): void;
 }
 
 export class ConfigurePanel extends React.Component<IProps> {
 
     render() {
-        const { dappFileData, onConfigureContract } = this.props;
-
+        const { dappFileData, onConfigureContract, onDeployContract, tree } = this.props;
+        let itemData: any = null;
+        if (tree) {
+            const contractsTree = tree.children.filter(item => item.name === 'contracts');
+            for (const key in contractsTree[0].children) {
+                if (key) {
+                    itemData = contractsTree[0].children[key];
+                }
+            }
+        }
         if (!dappFileData || !dappFileData.contracts.length) {
             return (
                 <div className={style.noContracts}>
@@ -49,8 +60,8 @@ export class ConfigurePanel extends React.Component<IProps> {
                             <StyledButton
                                 className={style.contractBtn}
                                 type={StyledButtonType.Primary}
-                                text={'Configure'}
-                                onClick={() => onConfigureContract(contract.source)}
+                                text={'Deploy'}
+                                onClick={contract.args.length !== 0 ? () => onConfigureContract(contract.source) : () => onDeployContract(itemData)}
                             />
                         </div>
                     ))
