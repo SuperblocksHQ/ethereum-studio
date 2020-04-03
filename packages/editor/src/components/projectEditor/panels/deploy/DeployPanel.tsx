@@ -27,7 +27,7 @@ interface IProps {
     onDeployContract(file: IProjectItem): void;
 }
 
-export class ConfigurePanel extends React.Component<IProps> {
+export class DeployPanel extends React.Component<IProps> {
 
     render() {
         const { dappFileData, onConfigureContract, onDeployContract, tree } = this.props;

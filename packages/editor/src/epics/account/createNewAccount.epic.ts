@@ -28,7 +28,7 @@ export const createNewAccountEpic = (action$: AnyAction, state$: any) => action$
     switchMap(([, state]) => {
 
         const dappFileData = state.projects.dappFileData;
-        const dappFileItem: Nullable<IProjectItem> = findItemByPath(state.explorer.tree, [ 'dappfile.json' ], ProjectItemTypes.File);
+        const dappFileItem: Nullable<IProjectItem> = findItemByPath(state.explorer.tree, ['dappfile.json'], ProjectItemTypes.File);
         if (dappFileItem != null) {
             const { accounts } = state.projects;
             const newAccount = {
@@ -48,7 +48,10 @@ export const createNewAccountEpic = (action$: AnyAction, state$: any) => action$
                     }
                 }]
             };
-
+            const accountNames = accounts.map((item: any) => item.name);
+            if (accountNames.includes(newAccount.name)) {
+                newAccount.name = `Account${accounts.length + 1}`;
+            }
             dappFileData.accounts.push(newAccount);
             return [panesActions.saveFile(dappFileItem.id, JSON.stringify(dappFileData, null, 4)), accountActions.createNewAccountSuccess(dappFileData)];
         } else {

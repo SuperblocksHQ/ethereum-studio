@@ -22,7 +22,7 @@ import Panes from './panes';
 import TopBar from '../topbar';
 import BottomBar from './bottomBar';
 import ContactContainer from '../contactContainer';
-import { PreviewPanel, TransactionLogPanel, OutputPanel, Explorer, InteractPanel, ConfigurePanel } from './panels';
+import { PreviewPanel, TransactionLogPanel, OutputPanel, Explorer, InteractPanel, DeployPanel } from './panels';
 import { IconTransactions, IconFolderOpen, IconInteract, IconDeploy, IconDownloadDApp, IconTogglePreview } from '../icons';
 import { SideButton } from './sideButton';
 import { SplitterLayout } from './splitterLayout';
@@ -33,7 +33,7 @@ import { Deployer } from './deployer';
 import { OnlyIf, Tooltip } from '../common';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
-import ContractConfigModal from './editors/contractConfigModal';
+import DeployContractModal from './editors/deployContractModal';
 import ExternalProviderInfo from '../externalProviderInfo';
 import classNames from 'classnames';
 import { PaneAction } from './paneAction';
@@ -176,7 +176,7 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                                             <Panel
                                                 name='DEPLOY CONTRACTS'
                                                 dragging={this.state.sidePanelDragging}>
-                                                <ConfigurePanel />
+                                                <DeployPanel />
                                             </Panel>
                                             <ContactContainer />
                                         </React.Fragment>
@@ -263,7 +263,7 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                 </div>
 
                 <OnlyIf test={showContractConfig}>
-                    <ContractConfigModal
+                    <DeployContractModal
                         hideModal={closeContractConfigModal}
                     />
                 </OnlyIf>

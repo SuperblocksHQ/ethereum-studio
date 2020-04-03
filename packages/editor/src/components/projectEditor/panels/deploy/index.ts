@@ -15,7 +15,7 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { connect } from 'react-redux';
-import { ConfigurePanel } from './ConfigurePanel';
+import { DeployPanel } from './DeployPanel';
 import { projectSelectors } from '../../../../selectors';
 import { Dispatch } from 'redux';
 import { contractConfigActions, deployerActions } from '../../../../actions';
@@ -37,4 +37,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
     };
 };
 
-export default connect<any, any, any, any>(mapStateToProps, mapDispatchToProps)(ConfigurePanel);
+export default connect<any, any, any, any>(mapStateToProps, mapDispatchToProps)(DeployPanel);
