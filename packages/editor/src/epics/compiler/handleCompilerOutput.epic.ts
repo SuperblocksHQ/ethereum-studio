@@ -24,13 +24,13 @@ export const handleCompilerOutputEpic: Epic = (action$: any, state$: any) => act
     switchMap(() => {
         const compilerState = state$.value.compiler;
         const compileDataState = state$.value.explorer.currentItem;
-        if (compilerState.outputFolderPath.length && compilerState.outputFiles.length && compileDataState.shouldBeDeployed) {
+        if (compilerState.outputFolderPath.length && compilerState.outputFiles.length && compileDataState && compileDataState.shouldBeDeployed) {
             return of(
                 // save files
                 explorerActions.createPathWithContent(compilerState.outputFolderPath, compilerState.outputFiles),
                 // show output in console
                 outputLogActions.addRows(compilerState.consoleRows),
-                deployerActions.deployContract(compileDataState.item)
+                deployerActions.deployContract(compileDataState.item),
             );
 
         }
