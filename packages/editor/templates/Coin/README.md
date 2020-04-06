@@ -58,7 +58,7 @@ Configuring the contract allows you to set the name of the contract and the init
 
 ### 2. Compile
 
-Solidity is a compiled language, and you need to convert the Solidity code into bytecode before the contract can run. In the file tree under the contract file, you can compile the contract by clicking the _Compile_ sub-section, and output appears in the _Output_ pane.
+Solidity is a compiled language, and you need to convert the Solidity code into bytecode before the contract can run. We will automatically compile the contract for you once you open the Solidity file.
 
 ### 3. Deploy
 
@@ -234,7 +234,7 @@ function isValidAmount(amount) {
 }
 ```
 
-And that's all the code. To see the dapp in action, click _Compile_, then _Deploy_ found under the disclosure triangle of the contract file, then open the _Preview_ tab to see the frontend of the dapp.
+And that's all the code. To see the dapp in action, click _Deploy_ found under the disclosure triangle of the contract file, then open the _Preview_ tab to see the frontend of the dapp.
 
 ## Find out more
 
