@@ -81,7 +81,6 @@ export default class DeployContractModal extends Component<IProps, IState> {
         const { saveContractConfig, onDeployContract, tree} = this.props;
         const { newContractConfig } = this.state;
         let itemData: any = null;
-        console.log('TREE', tree);
         if (tree) {
             const contractsTree = tree.children.filter(item => item.name === 'contracts');
             for (const key in contractsTree[0].children) {
@@ -90,7 +89,6 @@ export default class DeployContractModal extends Component<IProps, IState> {
                 }
             }
         }
-        console.log('ITEM DATA???', itemData);
         e.preventDefault();
         saveContractConfig(newContractConfig);
         onDeployContract(itemData);
