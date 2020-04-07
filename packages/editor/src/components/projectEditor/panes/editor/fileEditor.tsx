@@ -86,10 +86,11 @@ export class FileEditor extends React.Component<IProps, IState> {
     }
 
     componentDidUpdate(prevProps: IProps) {
-        if (this.props.visible && !prevProps.visible) {
-            const monaco: any = this.refs.monaco;
-            // restore focus when editor is shown
-            if (monaco) {
+        const monaco: any = this.refs.monaco;
+        if (monaco) {
+            monaco.editor.layout();
+
+            if (this.props.visible && !prevProps.visible) {
                 setTimeout(() => monaco.editor.focus(), 100);
             }
         }
@@ -148,6 +149,7 @@ export class FileEditor extends React.Component<IProps, IState> {
                             onChange={this.onFileChange}
                             editorDidMount={this.editorDidMount}
                             requireConfig={requireConfig}
+                            automaticLayout={true}
                             height='calc(100% - 42px)'
                         />
                 }

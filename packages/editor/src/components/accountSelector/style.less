@@ -73,7 +73,6 @@
             padding-left: 20px;
             padding-right: 12px;
             line-height: 40px;
-            border-left: 2px solid;
             border-color: transparent;
             margin: 0;
             .accountName {
@@ -102,6 +101,21 @@
                     }
                 }
             }
+
+            .actionsContainerClicked {
+                display: flex;
+                margin-left: auto;
+                padding-bottom: 15px;
+                button {
+                    color: black;
+                    font-size: 0.8em;
+                    transition: opacity .15s;
+                    &:hover {
+                        opacity: .6;
+                    }
+                }
+            }
+
             .nameContainer {
                 line-height: 1.8em;
                 margin: 2px 0;

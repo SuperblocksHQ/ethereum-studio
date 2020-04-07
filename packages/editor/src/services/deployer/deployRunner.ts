@@ -27,14 +27,16 @@ export class DeployRunner {
     private readonly account: IAccount;
     private readonly environment: IEnvironment;
     private readonly contractName: string;
+    private readonly contractArgs: any[];
     private deployFile: string = '';
     private abiFile: string = '';
 
-    constructor(account: IAccount, environment: IEnvironment, contractName: string) {
+    constructor(account: IAccount, environment: IEnvironment, contractName: string, contractArgs: any[], functionName?: string, ) {
         this.account = account;
         this.environment = environment;
         this.contractName = contractName;
         this.currWeb3 = account.type === 'metamask' ? window.web3 : getWeb3(this.environment.endpoint);
+        this.contractArgs = contractArgs;
     }
 
     checkExistingDeployment(buildFiles: IProjectItem[], contractArgs: any[]): Observable<ICheckDeployResult> {
@@ -159,7 +161,6 @@ export class DeployRunner {
                         return;
                     }
                     observer.next({ msg: 'Contract deployed at address ' + receipt.contractAddress + '.\nDone.', channel: 4 });
-
                     // emit final deployer output
                     const fileName = this.contractName + '.' + this.environment.name;
                     observer.next(<IDeployResult>{

@@ -153,10 +153,9 @@ export const sendTransactionEpic: Epic = (action$, state$) => action$.pipe(
     ofType(interactActions.SEND_TRANSACTION),
     withLatestFrom(state$),
     switchMap(([action, state]) => {
-
         const deployedContract: IDeployedContract = action.data.deployedContract;
         const value = action.data.value;
-
+        const {args, rawAbiDefinitionName} = action.data;
         const selectedEnv = projectSelectors.getSelectedEnvironment(state);
         const selectedAccount = projectSelectors.getSelectedAccount(state);
         const networkSettings = state.settings.preferences.network;
@@ -179,7 +178,7 @@ export const sendTransactionEpic: Epic = (action$, state$) => action$.pipe(
                                 } else if (output.hash && output.tx) { // result
                                     return of(
                                         interactActions.sendTransactionSuccess(output.hash),
-                                        transactionsActions.addTransaction(TransactionType.Interact, output.hash, undefined, deployedContract.contractName),
+                                        transactionsActions.addTransaction(TransactionType.Interact, output.hash, undefined, undefined, deployedContract.contractName, undefined, args, rawAbiDefinitionName),
                                         transactionsActions.checkSentTransactions(selectedEnv.endpoint, deployedContract.contractName));
                                 } else { // unexpected error
                                     return of(outputLogActions.addRows([{ msg: 'Unexpected error occurred. Please try again!', channel: 3 }]));

@@ -25,7 +25,6 @@ interface IProps {
     data: IContractArgData;
     accounts: string[];
     onChange: (data: IContractArgData) => void;
-    onRemoveClick: () => void;
 }
 
 export class ConstructorArgument extends React.Component<IProps> {
@@ -44,7 +43,7 @@ export class ConstructorArgument extends React.Component<IProps> {
     }
 
     render() {
-        const { data, accounts, onRemoveClick } = this.props;
+        const { data, accounts } = this.props;
         let argumentValue: React.ReactNode;
 
         if (data.type === ContractArgTypes.account) {
@@ -73,12 +72,6 @@ export class ConstructorArgument extends React.Component<IProps> {
             <div>
                 <Select value={data.type} options={Object.keys(ContractArgTypes)} onChange={this.onTypeChange} />
                 { argumentValue }
-                <button
-                    className={classNames(['btnNoBg', style.iconTrash])}
-                    onClick={onRemoveClick}
-                >
-                    <IconTrash />
-                </button>
             </div>
         );
     }
