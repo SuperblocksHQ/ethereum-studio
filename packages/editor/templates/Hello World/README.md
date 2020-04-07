@@ -69,18 +69,27 @@ HelloWorld.prototype.init = function () {
 };
 ```
 
-Add other JavaScript boilerplate to create the instance of the `HelloWorld` object defined above, and show the HTML elements on the page:
+Add other JavaScript boilerplate to create the instance of the `HelloWorld` object defined above, show the HTML elements on the page, and bind the functions for interacting with the contract to the button defined in the HTML::
 
 ```javascript
+HelloWorld.prototype.bindButton = function() {
+  var that = this;
+
+  $(document).on("click", "#message-button", function() {
+      that.setMessage();
+  });
+}
+
 HelloWorld.prototype.main = function () {
-    $(".blocknumber").show();
-    $(".message").show();
-    this.update();
+  $(".blocknumber").show();
+  $(".message").show();
+  this.updateDisplay();
 }
 
 HelloWorld.prototype.onReady = function () {
-    this.init();
-    this.main();
+  this.init();
+  this.bindButton();
+  this.main();
 };
 
 if(typeof(Contracts) === "undefined") var Contracts={ HelloWorld: { abi: [] }};
@@ -91,7 +100,7 @@ $(document).ready(function () {
 });
 ```
 
-The `getMessage` function gets the message value passed to the instance of the contract. With the IDE, you pass this value from the _Configure_ option found under the disclosure triangle of the contract file, but outside of the IDE, you could pass the value in a variety of ways.
+The `getMessage` function gets the `message` value passed to the instance of the contract. With the IDE, you pass this value from the _Configure_ option found under the disclosure triangle of the contract file, but outside of the IDE, you could pass the value in a variety of ways.
 
 The `getBlockNumber` works similarly but uses the web3js [`getBlockNumber`](https://web3js.readthedocs.io/en/v1.2.1/web3-eth.html?highlight=getBlockNumber#getblocknumber) function to return the value of the latest block in the configured endpoint.
 
@@ -109,28 +118,68 @@ HelloWorld.prototype.getBlockNumber = function (cb) {
 };
 ```
 
-The `update` function ties everything together, calling the two functions defined above, and setting the `H2` tags to the values they return or showing an error message.
+The `setMessage` function updates the `message` value. This function is triggered when someone clicks the "send" button in the interface.
 
 ```javascript
-HelloWorld.prototype.update = function () {
+HelloWorld.prototype.setMessage = function() {
     var that = this;
-    this.getMessage(function (error, result) {
+    var msg = $("#message-input").val();
+
+    // Set message using the public update function of the smart contract
+    this.instance.update(
+        msg,
+        {
+            from: window.web3.eth.accounts[0],
+            gas: 100000,
+            gasPrice: 100000,
+            gasLimit: 100000
+        },
+        function(error, txHash) {
+            // If there's an error, log it
+            if (error) {
+                console.log(error);
+            }
+            // If success, then wait for confirmation of transaction
+            // with utility function and clear form values while waiting
+            else {
+                that.waitForReceipt(txHash, function(receipt) {
+                    if (receipt.status) {
+                        console.log({ receipt });
+                        $("#message-input").val("");
+                    } else {
+                        console.log("error");
+                    }
+                });
+            }
+        }
+    );
+};
+```
+
+The `updateDisplay` function sets the DOM element texts to the values they return or displays an error message.
+
+```javascript
+HelloWorld.prototype.updateDisplay = function() {
+    var that = this;
+    this.getMessage(function(error, result) {
         if (error) {
             $(".error").show();
             return;
         }
         $("#message").text(result);
 
-        that.getBlockNumber(function (error, result) {
+        that.getBlockNumber(function(error, result) {
             if (error) {
                 $(".error").show();
                 return;
             }
             $("#blocknumber").text(result);
-            setTimeout(function () { that.update() }, 1000);
+            setTimeout(function() {
+                that.updateDisplay();
+            }, 1000);
         });
     });
-}
+};
 ```
 
 ## Find out more
