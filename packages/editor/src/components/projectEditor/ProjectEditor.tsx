@@ -23,17 +23,17 @@ import TopBar from '../topbar';
 import BottomBar from './bottomBar';
 import ContactContainer from '../contactContainer';
 import { PreviewPanel, TransactionLogPanel, OutputPanel, Explorer, InteractPanel, DeployPanel } from './panels';
-import { IconTransactions, IconFolderOpen, IconInteract, IconDeploy, IconDownloadDApp, IconTogglePreview } from '../icons';
+import { IconTransactions, IconFolderOpen, IconInteract, IconDownloadDApp, IconTogglePreview, IconRocket } from '../icons';
 import { SideButton } from './sideButton';
 import { SplitterLayout } from './splitterLayout';
 import { Panel, PanelAction } from './panel';
 import classnames from 'classnames';
 import { Panels, IPanelsState, IEnvironment } from '../../models/state';
 import { Deployer } from './deployer';
-import { OnlyIf, Tooltip } from '../common';
+import { OnlyIf } from '../common';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
-import DeployContractModal from './editors/deployContractModal';
+import ContractConfigModal from './editors/contractConfigModal';
 import ExternalProviderInfo from '../externalProviderInfo';
 import classNames from 'classnames';
 import { PaneAction } from './paneAction';
@@ -132,7 +132,7 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                             className={this.isPanelOpen(Panels.Explorer) && style.active}
                         />
                         <SideButton
-                            icon={<IconDeploy color='#fff'/>}
+                            icon={<IconRocket color='#fff'/>}
                             onClick={() => togglePanel(Panels.Configure)}
                             className={this.isPanelOpen(Panels.Configure) && style.active}
                         />
@@ -174,7 +174,7 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                                     {this.isPanelOpen(Panels.Configure) &&
                                         <React.Fragment>
                                             <Panel
-                                                name='DEPLOY CONTRACTS'
+                                                name='CONFIGURE & DEPLOY CONTRACTS'
                                                 dragging={this.state.sidePanelDragging}>
                                                 <DeployPanel />
                                             </Panel>
@@ -263,7 +263,7 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                 </div>
 
                 <OnlyIf test={showContractConfig}>
-                    <DeployContractModal
+                    <ContractConfigModal
                         hideModal={closeContractConfigModal}
                     />
                 </OnlyIf>

@@ -88,7 +88,9 @@ export const IconFolder = ({ ...props }) => <FaIcon icon={iconFolder} color="#49
 export const IconFolderOpen = ({ ...props }) => (
     <FaIcon icon={iconFolderOpen} color="#49616C" {...props} />
 )
-
+export const IconRocket = ({...props}) => (
+    <IconImg src={'/static/img/rocket-ship.svg'} {...props} />
+)
 export const IconSuperblocks = ({ ...props }) => (
     <IconImg src={'/static/img/img-logo-superblocks.svg'} {...props} />
 );
