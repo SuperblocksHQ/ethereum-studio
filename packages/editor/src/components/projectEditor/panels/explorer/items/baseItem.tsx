@@ -99,7 +99,7 @@ export function BaseItem(props: IProps) {
         setMousePositionY(e.pageY + 10);
     }
 
-    if (props.togglable) {
+    if (props.togglable && props.data.type === 'FOLDER') {
         if (props.data.opened) {
             icon = props.iconOpen || props.icon;
         }
