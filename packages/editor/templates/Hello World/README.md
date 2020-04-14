@@ -69,7 +69,7 @@ HelloWorld.prototype.init = function () {
 };
 ```
 
-Add other JavaScript boilerplate to create the instance of the `HelloWorld` object defined above, show the HTML elements on the page, and bind the functions for interacting with the contract to the button defined in the HTML::
+Add other JavaScript boilerplate to create the instance of the `HelloWorld` object defined above, show the HTML elements on the page, and bind the functions for interacting with the contract to the button defined in the HTML:
 
 ```javascript
 HelloWorld.prototype.bindButton = function() {
