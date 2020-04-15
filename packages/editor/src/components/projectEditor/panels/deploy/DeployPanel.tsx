@@ -58,6 +58,12 @@ export class DeployPanel extends React.Component<IProps> {
                                 {contract.name}.sol
                             </span>
                             <div>
+                            <StyledButton
+                                className={style.contractBtn}
+                                type={StyledButtonType.Primary}
+                                text={'Deploy'}
+                                onClick={() => onDeployContract(itemData)}
+                            />
                             {contract.args.length !== 0 &&
                                 <StyledButton
                                 className={style.contractBtn}
@@ -66,12 +72,6 @@ export class DeployPanel extends React.Component<IProps> {
                                 onClick={() => onConfigureContract(contract.source)}
                             />
                             }
-                            <StyledButton
-                                className={style.contractBtn}
-                                type={StyledButtonType.Primary}
-                                text={'Deploy'}
-                                onClick={() => onDeployContract(itemData)}
-                            />
                             </div>
                         </div>
                     ))

@@ -174,7 +174,7 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                                     {this.isPanelOpen(Panels.Configure) &&
                                         <React.Fragment>
                                             <Panel
-                                                name='CONFIGURE & DEPLOY CONTRACTS'
+                                                name='DEPLOY'
                                                 dragging={this.state.sidePanelDragging}>
                                                 <DeployPanel />
                                             </Panel>
