@@ -8,7 +8,7 @@ This is a bare bones dapp project containing a smart contract and boilerplate ap
 
 ### 1. Configure
 
-Configuring the contract allows you to set the name of the contract and the initial values sent to the constructor as arguments. You can configure the contract by clicking on the gear icon in the left panel.
+Configuring the contract allows you to set the name of the contract and the initial values sent to the constructor as arguments.  You can configure the contract by going to the Deploy panel, accessed by clicking on the rocket icon in the left side menu and choosing _Configure_ option.
 
 ### 2. Compile
 
@@ -18,7 +18,7 @@ Solidity is a compiled language, and you need to convert the Solidity code into 
 
 Every smart contract runs at an address on the Ethereum blockchain, and must be deployed to an address before it can run. When using Studio, the browser simulates the network, but there are several test networks and one main network for the Ethereum blockchain.
 
-Deploy the contract by clicking the _Deploy_ sub-section (nested under the contract file in the file tree), and output will appear in the _Output_ pane.
+Deploy the contract by going to the _Deploy_ panel, accessed by clicking on the rocket icon in the left side menu.
 
 ## Where to go from here
 
