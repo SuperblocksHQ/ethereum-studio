@@ -1,3 +1,4 @@
+
 // Copyright 2019 Superblocks AB
 //
 // This file is part of Superblocks Lab.
@@ -19,7 +20,7 @@ import classNames from 'classnames';
 import style from './style.less';
 import { ConstructorArgumentsList } from './constructorArgumentsList';
 import { ConstructorArgumentsHeader } from './constructorArgumentsHeader';
-import { ContractArgTypes, IProjectItem, IContractArgData, IContractConfiguration } from '../../../../models';
+import { IProjectItem, IContractArgData, IContractConfiguration } from '../../../../models';
 import { IAccount } from '../../../../models/state';
 import { Modal, ModalHeader, Tooltip } from '../../../common';
 import { IconHelp } from '../../../icons';
@@ -56,6 +57,9 @@ export default class ContractConfigModal extends Component<IProps, IState> {
 
     _updateProps = () => {
         // const { file } = this.props;
+
+
+
 
         // // Only update internal props if we are clean.
         // if (!this.state.isDirty) {
@@ -198,3 +202,4 @@ export default class ContractConfigModal extends Component<IProps, IState> {
         );
     }
 }
+

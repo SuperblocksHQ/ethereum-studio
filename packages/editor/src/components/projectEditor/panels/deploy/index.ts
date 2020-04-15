@@ -15,13 +15,15 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { connect } from 'react-redux';
-import { ConfigurePanel } from './ConfigurePanel';
+import { DeployPanel } from './DeployPanel';
 import { projectSelectors } from '../../../../selectors';
 import { Dispatch } from 'redux';
-import { contractConfigActions } from '../../../../actions';
+import { contractConfigActions, deployerActions } from '../../../../actions';
+import { IProjectItem } from '../../../../models';
 
 const mapStateToProps = (state: any) => ({
-    dappFileData: projectSelectors.getDappFileData(state)
+    dappFileData: projectSelectors.getDappFileData(state),
+    ...state.explorer
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
@@ -29,7 +31,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
         onConfigureContract: (contractSource: string) => {
             dispatch(contractConfigActions.openContractConfig(contractSource));
         },
+        onDeployContract: (file: IProjectItem) => {
+            dispatch(deployerActions.deployContract(file));
+        },
     };
 };
 
-export default connect<any, any, any, any>(mapStateToProps, mapDispatchToProps)(ConfigurePanel);
+export default connect<any, any, any, any>(mapStateToProps, mapDispatchToProps)(DeployPanel);

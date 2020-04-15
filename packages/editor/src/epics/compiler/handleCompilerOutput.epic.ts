@@ -17,19 +17,32 @@
 import { of, empty } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
-import { compilerActions, explorerActions, outputLogActions } from '../../actions';
+import { compilerActions, explorerActions, outputLogActions, deployerActions } from '../../actions';
 
 export const handleCompilerOutputEpic: Epic = (action$: any, state$: any) => action$.pipe(
     ofType(compilerActions.HANDLE_COMPILE_OUTPUT),
     switchMap(() => {
         const compilerState = state$.value.compiler;
+        const compileDataState = state$.value.explorer.currentItem;
+        if (compilerState.outputFolderPath.length && compilerState.outputFiles.length && compileDataState && compileDataState.shouldBeDeployed) {
+            return of(
+                // save files
+                explorerActions.createPathWithContent(compilerState.outputFolderPath, compilerState.outputFiles),
+                // show output in console
+                outputLogActions.addRows(compilerState.consoleRows),
+                deployerActions.deployContract(compileDataState.item),
+            );
+
+        }
         if (compilerState.outputFolderPath.length && compilerState.outputFiles.length) {
             return of(
                 // save files
                 explorerActions.createPathWithContent(compilerState.outputFolderPath, compilerState.outputFiles),
                 // show output in console
-                outputLogActions.addRows(compilerState.consoleRows)
+                outputLogActions.addRows(compilerState.consoleRows),
+
             );
+
         } else {
             return of(
                 // show output in console

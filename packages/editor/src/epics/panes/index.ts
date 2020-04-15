@@ -19,5 +19,5 @@ import { setUnsavedChanges } from './setUnsavedChanges.epic';
 
 export const panesEpics = [
     saveFileEpic,
-    setUnsavedChanges
+    setUnsavedChanges,
 ];

@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { explorerActions, panesActions, projectsActions } from '../actions';
+import { explorerActions, panesActions, projectsActions, deployerActions } from '../actions';
 import { isValidProjectItemName } from './utils';
 import { IExplorerState, IItemNameValidation } from '../models/state';
 import { IProjectItem, ProjectItemTypes } from '../models';
@@ -35,6 +35,7 @@ export const initialState: IExplorerState = {
     itemNameValidation: { isNameValid: false, isNotDuplicate: false },
     lastDeletedId: null,
     hasUnstoredChanges: false,
+    currentItem: null
 };
 
 function hasNoChildWithName(parentItem: Nullable<IProjectItem>, name: string) {
@@ -320,6 +321,18 @@ export default function explorerReducer(state = initialState, action: AnyAction)
             return {
                 ...state,
                 tree: action.data.files
+            };
+
+        case explorerActions.COMPILE_CONTRACT:
+            return {
+                ...state,
+                currentItem: action.data
+            };
+
+        case deployerActions.DEPLOY_SUCCESS:
+            return {
+                ...state,
+                currentItem: null
             };
 
         default:

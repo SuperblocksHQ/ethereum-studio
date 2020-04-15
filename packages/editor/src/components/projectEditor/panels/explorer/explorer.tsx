@@ -29,9 +29,6 @@ interface IProps {
     onDeleteItem(id: string): void;
     onMoveItem(sourceId: string, targetId: string): void;
 
-    onCompileContract(file: IProjectItem): void;
-    onDeployContract(file: IProjectItem): void;
-
     showModal(action: any, modalProps: any): void;
     closeModal(): void;
 }
@@ -87,46 +84,43 @@ export class Explorer extends React.Component<IProps> {
         if (itemData.type === ProjectItemTypes.File) {
             if (itemData.name.toLowerCase().endsWith('.sol')) {
                 return (
-                    <ContractItem key={ itemData.id }
-                        data={ itemData }
-                        depth= { depth }
+                    <ContractItem key={itemData.id}
+                        data={itemData}
+                        depth={depth}
 
-                        onToggle={ actions.onToggleTreeItem }
-                        onClick={ actions.onOpenFile }
-                        onRenameClick={ (id: string) => this.onRenameItem(id, itemData.name) }
-                        onDeleteClick={ (id: string) => this.onDeleteItem(id, itemData.name) }
-                        onMoveItem={this.onMoveItem}
-
-                        onCompileClick={ actions.onCompileContract }
-                        onDeployClick={ actions.onDeployContract } />
+                        onToggle={actions.onToggleTreeItem}
+                        onClick={actions.onOpenFile}
+                        onRenameClick={(id: string) => this.onRenameItem(id, itemData.name)}
+                        onDeleteClick={(id: string) => this.onDeleteItem(id, itemData.name)}
+                        onMoveItem={this.onMoveItem} />
                 );
             } else {
                 return (
-                    <FileItem key={ itemData.id }
-                        data={ itemData }
-                        depth= { depth }
+                    <FileItem key={itemData.id}
+                        data={itemData}
+                        depth={depth}
 
-                        onClick={ actions.onOpenFile }
-                        onRenameClick={ (id: string) => this.onRenameItem(id, itemData.name) }
-                        onDeleteClick={ (id: string) => this.onDeleteItem(id, itemData.name) }
+                        onClick={actions.onOpenFile}
+                        onRenameClick={(id: string) => this.onRenameItem(id, itemData.name)}
+                        onDeleteClick={(id: string) => this.onDeleteItem(id, itemData.name)}
                         onMoveItem={this.onMoveItem} />
                 );
             }
         } else if (itemData.type === ProjectItemTypes.Folder) {
             return (
-                <FolderItem key={ itemData.id }
-                        data={ itemData }
-                        depth= { depth }
+                <FolderItem key={itemData.id}
+                    data={itemData}
+                    depth={depth}
 
-                        onClick={ (i: IProjectItem) => actions.onToggleTreeItem(i.id) }
-                        onToggle={ actions.onToggleTreeItem }
+                    onClick={(i: IProjectItem) => actions.onToggleTreeItem(i.id)}
+                    onToggle={actions.onToggleTreeItem}
 
-                        onCreateItemClick={ this.onCreateItem }
-                        onImportFileClick={(parentId: string) => this.showModal('import', parentId)}
-                        onRenameClick={ (id: string) => this.onRenameItem(id, itemData.name) }
-                        onDeleteClick={ (id: string) => this.onDeleteItem(id, itemData.name) }
-                        onMoveItem={this.onMoveItem}>
-                        { childHtml }
+                    onCreateItemClick={this.onCreateItem}
+                    onImportFileClick={(parentId: string) => this.showModal('import', parentId)}
+                    onRenameClick={(id: string) => this.onRenameItem(id, itemData.name)}
+                    onDeleteClick={(id: string) => this.onDeleteItem(id, itemData.name)}
+                    onMoveItem={this.onMoveItem}>
+                    {childHtml}
                 </FolderItem>
             );
         } else {
@@ -137,8 +131,8 @@ export class Explorer extends React.Component<IProps> {
     render() {
         const treeHtml = this.props.tree ? this.renderTree(this.props.tree, this.props, -1) : null;
         return (
-            <div className={ style.treeContainer }>
-                { treeHtml }
+            <div className={style.treeContainer}>
+                {treeHtml}
             </div>
         );
     }

@@ -22,15 +22,15 @@ import Panes from './panes';
 import TopBar from '../topbar';
 import BottomBar from './bottomBar';
 import ContactContainer from '../contactContainer';
-import { PreviewPanel, TransactionLogPanel, OutputPanel, Explorer, InteractPanel, ConfigurePanel } from './panels';
-import { IconTransactions, IconFolderOpen, IconInteract, IconConfigure, IconDownloadDApp, IconTogglePreview } from '../icons';
+import { PreviewPanel, TransactionLogPanel, OutputPanel, Explorer, InteractPanel, DeployPanel } from './panels';
+import { IconTransactions, IconFolderOpen, IconInteract, IconDownloadDApp, IconTogglePreview, IconRocket } from '../icons';
 import { SideButton } from './sideButton';
 import { SplitterLayout } from './splitterLayout';
 import { Panel, PanelAction } from './panel';
 import classnames from 'classnames';
 import { Panels, IPanelsState, IEnvironment } from '../../models/state';
 import { Deployer } from './deployer';
-import { OnlyIf, Tooltip } from '../common';
+import { OnlyIf } from '../common';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import ContractConfigModal from './editors/contractConfigModal';
@@ -132,7 +132,7 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                             className={this.isPanelOpen(Panels.Explorer) && style.active}
                         />
                         <SideButton
-                            icon={<IconConfigure color='#fff' />}
+                            icon={<IconRocket color='#fff'/>}
                             onClick={() => togglePanel(Panels.Configure)}
                             className={this.isPanelOpen(Panels.Configure) && style.active}
                         />
@@ -174,9 +174,9 @@ export class ProjectEditor extends React.Component<IProps, IState> {
                                     {this.isPanelOpen(Panels.Configure) &&
                                         <React.Fragment>
                                             <Panel
-                                                name='CONFIGURE CONTRACTS'
+                                                name='DEPLOY'
                                                 dragging={this.state.sidePanelDragging}>
-                                                <ConfigurePanel />
+                                                <DeployPanel />
                                             </Panel>
                                             <ContactContainer />
                                         </React.Fragment>
