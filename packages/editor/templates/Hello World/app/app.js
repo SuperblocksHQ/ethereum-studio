@@ -46,6 +46,7 @@ HelloWorld.prototype.getMessage = function(cb) {
 HelloWorld.prototype.setMessage = function() {
     var that = this;
     var msg = $("#message-input").val();
+    this.showLoader(true);
 
     // Set message using the public update function of the smart contract
     this.instance.update(
@@ -60,11 +61,13 @@ HelloWorld.prototype.setMessage = function() {
             // If there's an error, log it
             if (error) {
                 console.log(error);
+                that.showLoader(false);
             }
             // If success, then wait for confirmation of transaction
             // with utility function and clear form values while waiting
             else {
                 that.waitForReceipt(txHash, function(receipt) {
+                    that.showLoader(false);
                     if (receipt.status) {
                         console.log({ receipt });
                         $("#message-input").val("");
@@ -107,6 +110,12 @@ HelloWorld.prototype.getBlockNumber = function(cb) {
         cb(error, result);
     });
 };
+
+// Hide or show the loader when performing async operations
+HelloWorld.prototype.showLoader = function(show) {
+    document.getElementById("loader").style.display = show ? "block" : "none";
+    document.getElementById("message-button").style.display = show ? "none" : "block";
+}
 
 // Calls the functions `getMessage` and `getBlockNumber` defined above, then
 // sets the DOM element texts to the values they return or displays an error message
