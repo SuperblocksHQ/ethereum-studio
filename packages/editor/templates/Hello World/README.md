@@ -28,7 +28,7 @@ Configuring the contract allows you to set the name of the contract and the init
 
 ### 2. Compile
 
-Solidity is a compiled language, and you need to convert the Solidity code into bytecode before the contract can run. We will automatically compile the contract for you once you open the Solidity file.
+Solidity is a compiled language, and you need to convert the Solidity code into bytecode before the contract can run. We will automatically compile the contract for you on deploying.
 
 ### 3. Deploy
 
