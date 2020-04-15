@@ -67,7 +67,7 @@ export class DeployPanel extends React.Component<IProps> {
                             {contract.args.length !== 0 &&
                                 <StyledButton
                                 className={style.contractBtn}
-                                type={StyledButtonType.Primary}
+                                type={StyledButtonType.Secondary}
                                 text={'Configure'}
                                 onClick={() => onConfigureContract(contract.source)}
                             />
