@@ -20,11 +20,11 @@ jobs:
       - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
       - chmod +x ./kubectl
       - mv ./kubectl /usr/local/bin/kubectl
-      - kubectl config set-cluster $K8S_CLUSTER_NAME_STAGING --server=$K8S_SERVER_STAGING --insecure-skip-tls-verify=true
-      - kubectl config set clusters.k8s.certificate-authority-data $K8S_CERTIFICATE_AUTHORITY_DATA_STAGING
-      - kubectl config set-credentials $K8S_USER_NAME_STAGING --token=$K8S_USER_TOKEN_STAGING
-      - kubectl config set-context $K8S_CLUSTER_NAME_STAGING --cluster=$K8S_CLUSTER_NAME_STAGING --user=$K8S_USER_NAME_STAGING
-      - kubectl config use-context $K8S_CLUSTER_NAME_STAGING
+      - kubectl config set-cluster $K8S_CLUSTER_NAME --server=$K8S_SERVER --insecure-skip-tls-verify=true
+      - kubectl config set clusters.k8s.certificate-authority-data $K8S_CERTIFICATE_AUTHORITY_DATA
+      - kubectl config set-credentials $K8S_USER_NAME --token=$K8S_USER_TOKEN
+      - kubectl config set-context staging --cluster=$K8S_CLUSTER_NAME --user=$K8S_USER_NAME --namespace=staging
+      - kubectl config use-context staging
       - 'printf "apiVersion: v1\nkind: Secret\n$(kubectl create secret docker-registry $CI_PROJECT_NAME-github-registry --docker-server=$CI_REGISTRY --docker-username=$GITHUB_REGISTRY_USER --docker-password=$GITHUB_REGISTRY_TOKEN -o yaml --dry-run)" | kubectl apply -f -'
       # pass env variables, which names start with "STAGING_" to application running in kubernetes
       - env | sed -n "s/^STAGING_\(.*\)$/\1/p" > k8s_prefixed_variables
@@ -44,8 +44,8 @@ jobs:
       - kubectl config set-cluster $K8S_CLUSTER_NAME --server=$K8S_SERVER --insecure-skip-tls-verify=true
       - kubectl config set clusters.k8s.certificate-authority-data $K8S_CERTIFICATE_AUTHORITY_DATA
       - kubectl config set-credentials $K8S_USER_NAME --token=$K8S_USER_TOKEN
-      - kubectl config set-context $K8S_CLUSTER_NAME --cluster=$K8S_CLUSTER_NAME --user=$K8S_USER_NAME
-      - kubectl config use-context $K8S_CLUSTER_NAME
+      - kubectl config set-context prodution --cluster=$K8S_CLUSTER_NAME --user=$K8S_USER_NAME
+      - kubectl config use-context prodution
       - 'printf "apiVersion: v1\nkind: Secret\n$(kubectl create secret docker-registry $CI_PROJECT_NAME-github-registry --docker-server=$CI_REGISTRY --docker-username=$GITHUB_REGISTRY_USER --docker-password=$GITHUB_REGISTRY_TOKEN -o yaml --dry-run)" | kubectl apply -f -'
       # pass env variables, which names start with "PROD_" to application running in kubernetes
       - env | sed -n "s/^PROD_\(.*\)$/\1/p" > k8s_prefixed_variables
