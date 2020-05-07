@@ -68,3 +68,4 @@ Contributions are welcome. Please, visit the Wiki for a guide on [How to Contrib
 
 ## License
 **Ethereum Studio** is free software and GPLv3 licensed. See the COPYING file for details.
+
