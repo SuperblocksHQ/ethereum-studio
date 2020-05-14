@@ -37,6 +37,10 @@ Pizza.prototype.init = function() {
 
     // Create the contract instance for the specific address provided in the configuration.
     this.instance = this.Contract.address ? contract_interface.at(this.Contract.address) :  { getPizzasByOwner: () => {} };
+
+    if (this.hasContractDeployed()) {
+        this.activateInputElements();
+    }
 }
 
 // Generate random DNA from string
@@ -350,6 +354,19 @@ Pizza.prototype.bindInputs = function() {
         that.eatPizza(pizzaId);
     });
 }
+
+// Show Input elements in app.html once the contract has been deployed,
+// and hide the starter message.
+Pizza.prototype.activateInputElements = function() {
+    $('#create-name').removeClass('hidden');
+    $('#button-create').removeClass('hidden');
+    $('#start-message').addClass('hidden');
+}
+
+// A contract will not have its address set until it has been deployed
+Pizza.prototype.hasContractDeployed = function() {
+    return this.instance && this.instance.address;
+};
 
 // Show status on bottom of the page when some action happens
 function showStatus(text) {

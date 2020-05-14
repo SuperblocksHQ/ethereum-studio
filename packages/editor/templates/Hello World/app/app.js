@@ -150,6 +150,19 @@ HelloWorld.prototype.bindButton = function() {
     });
 };
 
+// Show Input elements in app.html once the contract has been deployed,
+// and hide the starter message.
+HelloWorld.prototype.activateInputElements = function() {
+    $("#create").removeClass("hidden");
+    $("#welcome-text").removeClass("display-message");
+    $("#welcome-text").addClass("hidden");
+};
+
+// A contract will not have its address set until it has been deployed
+HelloWorld.prototype.hasContractDeployed = function() {
+    return this.instance && this.instance.address;
+};
+
 // JavaScript boilerplate to create the instance of the `HelloWorld` object
 // defined above, and show the HTML elements on the page:
 HelloWorld.prototype.main = function() {
@@ -160,7 +173,12 @@ HelloWorld.prototype.main = function() {
 
 HelloWorld.prototype.onReady = function() {
     this.init();
-    this.bindButton();
+    // Don't show interactive UI elements like input/button until
+    // the contract has been deployed.
+    if (this.hasContractDeployed()) {
+        this.activateInputElements();
+        this.bindButton();
+    }
     this.main();
 };
 
