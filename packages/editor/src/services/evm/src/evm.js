@@ -24,7 +24,9 @@ const Transaction = require('ethereumjs-tx');
 const utils = require('ethereumjs-util');
 const VM = require('ethereumjs-vm');
 const Trie = require('merkle-patricia-tree');
-
+const BigNumber = require('bignumber.js');
+const Web3Utils = require('web3-utils');
+const BN = require('bn.js');
 // Other
 const Buffer = require('safe-buffer').Buffer;
 
@@ -1218,7 +1220,6 @@ function getBlock(blockNumber, returnTransactionObjects, callback) {
             callback('TODO: getBlock missing defaultBlock implementation');
             return null;
         }
-
         _vm.blockchain.getBlock(utils.bufferToInt(blockNumber), function(
             err,
             block
@@ -1261,20 +1262,11 @@ function getBlock(blockNumber, returnTransactionObjects, callback) {
                         block.header.extraData.toString('hex')
                     ),
                     size: 0, // TODO: integer size of this block in bytes (?)
-                    gasLimit: utils.addHexPrefix(
-                        block.header.gasLimit.toString('hex')
-                    ),
-                    gasUsed: block.header.gasUsed.toString('hex')
-                        ? utils.addHexPrefix(
-                              block.header.gasUsed.toString('hex')
-                          )
-                        : '0x0',
-                    timestamp: block.header.timestamp.toString('hex')
-                        ? utils.addHexPrefix(
-                              block.header.timestamp.toString('hex')
-                          )
-                        : '0x0',
+                    gasLimit: new BN(block.header.gasLimit),
+                    gasUsed: new BN(block.header.gasUsed),
+                    timestamp: new BN(block.header.timestamp),
                     transactions: block.transactions.map(function(transaction) {
+                        console.log('TRANSACTION IN MAP', transaction);
                         // TODO: implement returnTransactionObjects
                         if (returnTransactionObjects) {
                             var transactionIndex = 0;
@@ -1294,7 +1286,7 @@ function getBlock(blockNumber, returnTransactionObjects, callback) {
                                 blockHash: utils.addHexPrefix(
                                     block.hash().toString('hex')
                                 ),
-                                blockNumber: utils.bufferToInt(
+                                blockNumber: utils.fromSigned(
                                     block.header.number
                                 ),
                                 from: utils.addHexPrefix(
@@ -1346,6 +1338,11 @@ function getBlock(blockNumber, returnTransactionObjects, callback) {
                         return {};
                     }),
                 };
+                console.log('BLOCK', block);
+                console.log('TRANSACTION DATA', data);
+                console.log('TYPE OF TRANSACTION DATA', typeof data);
+                console.log('GASLIMIT', data.gasLimit);
+                console.log('TYPE OF GASLIMIT', typeof data.gasLimit);
                 callback(null, data);
             }
         });
