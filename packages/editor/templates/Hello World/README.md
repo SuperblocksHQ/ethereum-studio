@@ -76,7 +76,7 @@ Try using the form in the IDE's Browser to set the `message` variable on the con
 
 Congratulations! You've made it through our first tutorial. You've taken your first big step towards developing on Ethereum.
 
-Each of our subsequent Ethereum Studio templates increase in complexity. We recommend you you create a "Coin" project next. Create a new project by selecting the plus symbol in the top-right IDE menu of your screen.
+Each of our subsequent Ethereum Studio templates increase in complexity. We recommend you [create a "Coin" project next](https://studio.ethereum.org/).
 
 ## Learn more
 
