@@ -27,8 +27,8 @@
     ],
     "contracts": [
         {
-            "source": "/contracts/Coin.sol",
-            "name": "Coin",
+            "source": "/contracts/Token.sol",
+            "name": "Token",
             "args": []
         }
     ],
