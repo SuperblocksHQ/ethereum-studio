@@ -3,8 +3,8 @@
 The goal of this "Hello World" project template is to teach you how to:
 
 -   Deploy an [Ethereum smart contract](https://ethereum.org/learn/#smart-contracts) written in the [Solidity programming language](https://ethereum.org/developers/#smart-contract-languages).
--   Store and update state variables of your deployed contract.
 -   Fetch your contract's state from the blockchain and render it to a frontend using a [JavaScript library](https://ethereum.org/developers/#frontend-javascript-apis).
+-   Update state variables of your deployed contract by interacting with your app in the IDE's Browser.
 
 If you'd like to learn more about how Ethereum works before diving in, we recommend you [start here](https://ethereum.org/learn/).
 
@@ -18,23 +18,23 @@ On the right side this IDE, you'll find the Preview panel, where you can view th
 
 There are additional features of Ethereum Studio that we will introduce in later tutorials but for now, let's move on.
 
-<!-- TODO: For support, go here. -->
-<!-- TODO: For documentationm, go here. -->
-<!-- TODO: For a video tutorial, go here. -->
+<!-- TODO provide links to learn more. For support, go here. For documentation, go here. For a video tutorial, go here. -->
 
 ## The smart contract
 
-First, let's find the [smart contract](https://ethereum.org/learn/#smart-contracts).
+First, let's take a look at the smart contract.
 
 > Use the Explore panel to navigate to the _Files/contracts/HelloWorld.sol_ file.
 
 Return here once you've read through the file.
 
+<!-- TODO link to address explantion -->
+<!-- TODO link to Ethereum networks explanation -->
 Every smart contract runs at an address on the Ethereum blockchain. You must compile and deploy a smart contract to an address before it can run. When using Studio, the browser simulates the network, but there are several test networks and one main network for the Ethereum blockchain.
 
 ### 1. Compile
 
-Before you deploy the HelloWorld.sol contract, you should understand compilation. Solidity is a compiled language, and you need to convert the Solidity code into bytecode before the contract can run. We will automatically compile the code every time you save your changes (by clicking the floppy disk icon at the top of a file) or when performing a deployment.
+Before you deploy the HelloWorld.sol contract, you should understand compilation. [Solidity](https://solidity.readthedocs.io/en/latest/) is a compiled language, and you need to convert the Solidity code into bytecode before the contract can run. Ethereum Studio will automatically compile the code every time you save your changes (by clicking the floppy disk icon at the top of a file) or when performing a deployment.
 
 ### 2. Deploy
 
@@ -44,7 +44,7 @@ Configuring the contract allows you to set the name of the contract as well as t
 
 Then deploy the contract by selecting the "_Deploy_" option within the Deploy panel.
 
-You should now see the deployed contract's `message` variable displayed on the IDE's Browser.
+You should now see the deployed contract's `message` variable displayed on the IDE's Browser as well as output from the transaction in the IDE's console (on the lower right side of the IDE).
 
 ### 3. Interact
 
@@ -70,13 +70,13 @@ Return here once you've read through the file.
 
 Now that you have an understanding of the logic, let's use the app UI to interact with the contract!
 
-Try using the form in the IDE's Browser to set the `message` variable on the contract. Submitting the form should trigger our JavaScrip function, `setMessage`, which creates an Ethereum transaction to update the smart contract state. The new state is then read from the contract and updated in the Browser.
+Try using the form in the IDE's Browser to set the `message` variable on the contract. Submitting the form should trigger the JavaScript function, `setMessage`, which creates an Ethereum transaction to call the `update` function on the smart contract. The new state is then read from the contract and updated in the Browser.
 
 ## Next Steps
 
 Congratulations! You've made it through our first tutorial. You've taken your first big step towards developing on Ethereum.
 
-Each of our subsequent Ethereum Studio templates increase in complexity. We recommend you [create a "Coin" project next](https://studio.ethereum.org/).
+Each of our subsequent Ethereum Studio templates increase in complexity. We recommend you [create a "Coin" project](https://studio.ethereum.org/) next.
 
 ## Learn more
 
