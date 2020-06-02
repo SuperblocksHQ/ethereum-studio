@@ -45,19 +45,20 @@ export class AccountSelector extends React.Component<IProps> {
         const { selectedAccount, accounts, accountInfo } = this.props;
         return (
             <DropdownContainer
-                enableClickInside={true}
                 dropdownContent={
-                    <AccountsList
-                        accountInfo={accountInfo}
-                        updateAccountName={this.props.updateAccountName}
-                        accounts={accounts}
-                        selectedAccount={selectedAccount}
-                        selectedAccountName={selectedAccount.name}
-                        onSelect={this.props.onAccountSelected}
-                        onEdit={this.props.onAccountEdit}
-                        onDelete={this.onDeleteAccountClick}
-                        onCreate={this.props.onAccountCreate}
-                    />
+                    <div className={style.dropdownWrapper}>
+                        <AccountsList
+                            accountInfo={accountInfo}
+                            updateAccountName={this.props.updateAccountName}
+                            accounts={accounts}
+                            selectedAccount={selectedAccount}
+                            selectedAccountName={selectedAccount.name}
+                            onSelect={this.props.onAccountSelected}
+                            onEdit={this.props.onAccountEdit}
+                            onDelete={this.onDeleteAccountClick}
+                            onCreate={this.props.onAccountCreate}
+                        />
+                    </div>
                 }
             >
                 <div className={classnames([style.selector, style.account])}>
