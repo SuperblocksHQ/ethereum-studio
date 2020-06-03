@@ -6,15 +6,15 @@ The goal of this "Hello World" project template is to teach you how to:
 -   Fetch your contract's state from the blockchain and render it to a frontend using a [JavaScript library](https://ethereum.org/developers/#frontend-javascript-apis).
 -   Update state variables of your deployed contract by interacting with your app in the IDE's Browser.
 
-If you'd like to learn more about how Ethereum works before diving in, we recommend you [start here](https://ethereum.org/learn/).
+If you'd like to learn more about how Ethereum works before beginning, we recommend you [start here](https://ethereum.org/learn/).
 
 ## Introduction to the Ethereum Studio IDE
 
 Ethereum Studio is a web-based IDE where you can write, deploy and test smart contracts, and build a frontend application to interact with them.
 
-On the left side of this IDE, you'll find the Explorer panel (the folder icon). Here you can view the file structure of your project. You can toggle the folder icon on the far left to hide or display this panel.
+On the left side of this IDE, you can find the Explorer panel (the folder icon). Here you can view the file structure of your project. You can toggle the folder icon on the far left to hide or display this panel.
 
-On the right side this IDE, you'll find the Preview panel, where you can view this project's application in the Browser tab. You can toggle the panel icon on the far right to hide or display this preview.
+On the right side this IDE, you can find the Preview panel, where you can view this project's application in the Browser tab. You can toggle the panel icon on the far right to hide or display this preview.
 
 There are additional features of Ethereum Studio that we will introduce in later tutorials but for now, let's move on.
 
@@ -34,11 +34,11 @@ Every smart contract runs at an address on the Ethereum blockchain. You must com
 
 ### 1. Compile
 
-Before you deploy the HelloWorld.sol contract, you should understand compilation. [Solidity](https://solidity.readthedocs.io/en/latest/) is a compiled language, and you need to convert the Solidity code into bytecode before the contract can run. Ethereum Studio will automatically compile the code every time you save your changes (by clicking the floppy disk icon at the top of a file) or when performing a deployment.
+Before you deploy the _HelloWorld.sol_ contract, you should understand compilation. [Solidity](https://solidity.readthedocs.io/en/latest/) is a compiled language, and you need to convert the Solidity code into bytecode before the contract can run. Ethereum Studio automatically compiles the code every time you save your changes (manually by clicking the floppy disk icon at the top of a file) or when performing a deployment.
 
 ### 2. Deploy
 
-Now let's deploy the HelloWorld.sol contract. Again, in the left panel of the IDE, you'll find the Deploy panel (the rocket icon). Here you can configure and deploy your contract to your local network.
+Now let's deploy the _HelloWorld.sol_ contract. Again, in the left panel of the IDE, you can find the Deploy panel (the rocket icon). Here you can configure and deploy your contract to your local network.
 
 Configuring the contract allows you to set the name of the contract as well as the contract's `message` variable by specifying the initial value sent to the constructor function. Configure the contract within the Deploy panel by selecting the "_Configure_" option.
 
@@ -48,17 +48,17 @@ You should now see the deployed contract's `message` variable displayed on the I
 
 ### 3. Interact
 
-Now check out the Interaction panel on the left side of this IDE (the mouse icon).
+Now look at the Interaction panel on the left side of this IDE (the mouse icon).
 
-Here you view and interact with your deployed contract using its functions. Try updating the `message` variable using the `update` function. This will create a new Ethereum transaction and you should see the message update in the IDE's Browser.
+Here you view and interact with your deployed contract using its functions. Try updating the `message` variable using the `update` function. This creates a new Ethereum transaction and you should see the message update in the IDE's Browser.
 
 ## The web app (dapp)
 
 Often when creating an Ethereum smart contract, it's useful to create a web application for users to interact with. We call these applications "dapps". [Dapps on Ethereum](https://ethereum.org/dapps/) are web applications backed by Ethereum smart contracts. Instead of using a centralized server or database, these applications rely on the blockchain as a backend for program logic and storage.
 
-Dapps typically use a [JavaScript convenience libraries](https://ethereum.org/developers/#frontend-javascript-apis) that provide an API to make integrations with smart contract easier for developers. In this project, you'll be using [web3.js](https://web3js.readthedocs.io/en/v1.2.8/).
+Dapps typically use a [JavaScript convenience libraries](https://ethereum.org/developers/#frontend-javascript-apis) that provide an API to make integrations with smart contract easier for developers. In this project, you are using [web3.js](https://web3js.readthedocs.io/en/v1.2.8/).
 
-This tutorial won't cover the HTML or CSS since it's not specific to a dapp, although it's worth noting that this application uses jQuery to manipulate the HTML (of _Files/app/app.html_) that is utlimately rendered in our IDE's Browser.
+This tutorial won't cover the HTML or CSS since it's not specific to a dapp, although it's worth noting that this application uses jQuery to manipulate the HTML (of _Files/app/app.html_) that is ultimately rendered in the IDE's Browser.
 
 Let's take a look at our application logic.
 
