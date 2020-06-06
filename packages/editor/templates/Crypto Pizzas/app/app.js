@@ -39,6 +39,7 @@ Pizza.prototype.init = function() {
     this.instance = this.Contract.address ? contract_interface.at(this.Contract.address) :  { getPizzasByOwner: () => {} };
 
     if (this.hasContractDeployed()) {
+        this.updateDisplayMessage();
         this.activateInputElements();
     }
 }
@@ -361,6 +362,11 @@ Pizza.prototype.activateInputElements = function() {
     $('#create-name').removeClass('hidden');
     $('#button-create').removeClass('hidden');
     $('#start-message').addClass('hidden');
+}
+
+Pizza.prototype.updateDisplayMessage = function() {
+    $('#welcome-container').addClass('hidden');
+    $('#main-container').removeClass('hidden');
 }
 
 // A contract will not have its address set until it has been deployed

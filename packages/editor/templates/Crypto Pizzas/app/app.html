@@ -31,8 +31,12 @@
     </head>
     <body>
         <div id="status"></div>
+        <div id="welcome-container" class="container">
+           <h1>Welcome!</h1>
+           <h3 id="start-message">Please deploy (<img src="/static/img/rocket-ship.svg" color="#fff" height="14" width="14">) your contract to begin.</h3>
+        </div>
 
-        <div class="container">
+        <div id="main-container" class="container hidden">
             <!-- Header -->
             <header>
                 <h1>CryptoPizza</h1>
@@ -57,9 +61,8 @@
                 </div>
 
                 <div class="input-container">
-                    <input type="text" id="create-name" class="hidden" placeholder="Enter name..." maxlength="20" />
-                    <button class="btn hidden" id="button-create">Create</button>
-                    <h3 id="start-message">Please deploy (<img src="/static/img/rocket-ship.svg" color="#fff" height="14" width="14">) your contract to begin.</h3>
+                    <input type="text" id="create-name" placeholder="Enter name..." maxlength="20" />
+                    <button class="btn" id="button-create">Create</button>
                 </div>
             </div>
 
