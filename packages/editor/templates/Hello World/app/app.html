@@ -11,10 +11,15 @@
         <!-- STYLE -->
     </head>
     <body>
-        <!-- Displays message passed via JavaScript -->
-        <h1 class="text message">Message:&nbsp;<span id="message"></span></h1>
-        <!-- Displays blocknumber passed via JavaScript -->
-        <h2 class="text blocknumber">Block number:&nbsp;<span id="blocknumber"></span></h2>
+        <div id="message-container" class="hidden">
+            <!-- Displays message passed via JavaScript -->
+            <h1 class="text message">Message:&nbsp;<span id="message"></span></h1>
+            <!-- Displays blocknumber passed via JavaScript -->
+            <h2 class="text blocknumber">Block number:&nbsp;<span id="blocknumber"></span></h2>
+        </div>
+        <div id="welcome-container">
+            <h1>Welcome!</h1>
+        </div>
         <h2 class="text error">There was an error communicating with the contract.</h2>
         <!-- Form field for updating the message -->
         <div id="create" class="tabcontent hidden">

@@ -158,6 +158,13 @@ HelloWorld.prototype.activateInputElements = function() {
     $("#welcome-text").addClass("hidden");
 };
 
+// Remove the welcome message, and display the message and block number
+// fields
+HelloWorld.prototype.updateDisplayMessage = function() {
+    $("#message-container").removeClass("hidden");
+    $("#welcome-container").addClass("hidden");
+}
+
 // A contract will not have its address set until it has been deployed
 HelloWorld.prototype.hasContractDeployed = function() {
     return this.instance && this.instance.address;
@@ -177,6 +184,7 @@ HelloWorld.prototype.onReady = function() {
     // the contract has been deployed.
     if (this.hasContractDeployed()) {
         this.activateInputElements();
+        this.updateDisplayMessage();
         this.bindButton();
     }
     this.main();
