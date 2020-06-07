@@ -1,5 +1,5 @@
 // The object 'Contracts' will be injected here, which contains all data for all contracts, keyed on contract name:
-// Contracts['HelloWorld'] = {
+// Contracts['Coin'] = {
 //  abi: [],
 //  address: "0x..",
 //  endpoint: "http://...."
@@ -158,10 +158,33 @@ Coin.prototype.bindButtons = function() {
     }); 
 }
 
+// Remove the welcome content, and display the main content.
+// Called once a contract has been deployed
+Coin.prototype.updateDisplayContent = function() {
+    this.hideWelcomeContent();
+    this.showMainContent();
+};
+
+// A contract will not have its address set until it has been deployed
+Coin.prototype.hasContractDeployed = function() {
+    return this.instance && this.instance.address;
+};
+
+Coin.prototype.hideWelcomeContent = function() {
+    $('#welcome-container').addClass('hidden');
+};
+
+Coin.prototype.showMainContent = function() {
+    $('#main-container').removeClass('hidden');
+};
+
 // Create the instance of the `Coin` object 
 Coin.prototype.onReady = function() {
-    this.bindButtons();
     this.init();
+    if (this.hasContractDeployed()) {
+        this.updateDisplayContent();
+        this.bindButtons();
+    }
 };
 
 if(typeof(Contracts) === "undefined") var Contracts={ Coin: { abi: [] }};

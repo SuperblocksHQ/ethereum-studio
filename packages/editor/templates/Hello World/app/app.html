@@ -11,31 +11,28 @@
         <!-- STYLE -->
     </head>
     <body>
-        <div id="message-container" class="hidden">
-            <!-- Displays message passed via JavaScript -->
-            <h1 class="text message">Message:&nbsp;<span id="message"></span></h1>
-            <!-- Displays blocknumber passed via JavaScript -->
-            <h2 class="text blocknumber">Block number:&nbsp;<span id="blocknumber"></span></h2>
-        </div>
         <div id="welcome-container">
             <h1>Welcome!</h1>
+            <h3>Please deploy (<img src="/static/img/rocket-ship.svg" color="#fff" height="14" width="14">) your contract to begin.</h3>
         </div>
-        <h2 class="text error">There was an error communicating with the contract.</h2>
-        <!-- Form field for updating the message -->
-        <div id="create" class="tabcontent hidden">
-            <div class="input-group">
-                <h3>Update Message</h3>
-                <input type="text" id="message-input" placeholder="Enter new message..." />
+        <div id="main-container" class="hidden">
+            <div>
+                <!-- Displays message passed via JavaScript -->
+                <h1 class="text message">Message:&nbsp;<span id="message"></span></h1>
+                <!-- Displays blocknumber passed via JavaScript -->
+                <h2 class="text blocknumber">Block number:&nbsp;<span id="blocknumber"></span></h2>
             </div>
-            <div class="input-group">
-                <button class="btn" id="message-button">Send</button>
-                <div id="loader" style="display: none;"></div>
-            </div>
-        </div>
-        <!-- Initial display message until contract is deployed -->
-        <div class="tabcontent">
-            <div id="welcome-text" class="display-message">
-                <h3>Please deploy (<img src="/static/img/rocket-ship.svg" color="#fff" height="14" width="14">) your contract to begin.</h3>
+            <h2 class="text error">There was an error communicating with the contract.</h2>
+            <!-- Form field for updating the message -->
+            <div id="create" class="tabcontent">
+                <div class="input-group">
+                    <h3>Update Message</h3>
+                    <input type="text" id="message-input" placeholder="Enter new message..." />
+                </div>
+                <div class="input-group">
+                    <button class="btn" id="message-button">Send</button>
+                    <div id="loader" style="display: none;"></div>
+                </div>
             </div>
         </div>
     </body>

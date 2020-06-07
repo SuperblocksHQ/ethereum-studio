@@ -39,8 +39,7 @@ Pizza.prototype.init = function() {
     this.instance = this.Contract.address ? contract_interface.at(this.Contract.address) :  { getPizzasByOwner: () => {} };
 
     if (this.hasContractDeployed()) {
-        this.updateDisplayMessage();
-        this.activateInputElements();
+        this.updateDisplayContent();
     }
 }
 
@@ -356,16 +355,18 @@ Pizza.prototype.bindInputs = function() {
     });
 }
 
-// Show Input elements in app.html once the contract has been deployed,
-// and hide the starter message.
-Pizza.prototype.activateInputElements = function() {
-    $('#create-name').removeClass('hidden');
-    $('#button-create').removeClass('hidden');
-    $('#start-message').addClass('hidden');
+// Remove the welcome content, and display the main content.
+// Called once a contract has been deployed
+Pizza.prototype.updateDisplayContent = function() {
+    this.hideWelcomeContent();
+    this.showMainContent();
 }
 
-Pizza.prototype.updateDisplayMessage = function() {
+Pizza.prototype.hideWelcomeContent = function() {
     $('#welcome-container').addClass('hidden');
+}
+
+Pizza.prototype.showMainContent = function() {
     $('#main-container').removeClass('hidden');
 }
 
