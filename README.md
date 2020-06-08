@@ -56,8 +56,8 @@ Run this script to fix that for you:
 
 Consider double-checking and updating the `CHANGELOG` to reflect the changes. Tag the new version.
 
-### Modifying templates
-Templates are now located inside `./packages/editor/templates` folder. After you modify those files and want to see changes you need to run `generate-templates.js` script inside `./packages/editor/scripts`.
+### Modifying examples
+Example projects are now located inside `./packages/editor/templates` folder. After you modify those files and want to see changes you need to run `generate-templates.js` script inside `./packages/editor/scripts`.
 
 ## Issues
 Bug reports and suggestions can be filed at the project [Issues](https://github.com/SuperblocksHQ/ethereum-studio/issues) page.

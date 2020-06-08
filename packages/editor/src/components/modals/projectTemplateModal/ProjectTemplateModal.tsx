@@ -68,12 +68,12 @@ export default class ProjectTemplateModal extends Component<IProps, IState> {
                 <LogOnMount eventType='NEW_PROJECT_SELECT_TEMPLATE'/>
                 <div className={style.innerContent}>
                     <ModalHeader
-                        title='Select Template'
+                        title='Select Example'
                         onCloseClick={this.onCloseClickHandle}
                     />
                     <div className={classNames([style.area, style.container])}>
                         <div className={style.templateListPanel}>
-                            <div className={style.templateListTitle}>Templates</div>
+                            <div className={style.templateListTitle}>Examples</div>
                                 <ul>
                                     {  templates.map((template: ITemplate) => (
                                             <li key={template.id}
@@ -92,7 +92,7 @@ export default class ProjectTemplateModal extends Component<IProps, IState> {
                                         <h2>Welcome</h2>
                                         <p>
                                             Ethereum Studio is a tool for developers who want to learn about building on Ethereum.
-                                            The templates on the left side will teach you how to write a smart contract, deploy it to Ethereum,
+                                            The examples on the left side will teach you how to write a smart contract, deploy it to Ethereum,
                                             and interact with the contracts through a web-based application.
                                         </p>
                                         <p>For quick start, check out this <a href='https://www.youtube.com/watch?v=-tjk0yIIaIM' target='_blank' rel='noopener noreferrer'>video</a>.</p>

@@ -10,7 +10,7 @@ This project is an example application that teaches you how to:
 
 > Tutorial content supplied by [kauri.io](https://kauri.io).
 
-## Explanation of the template
+## Explanation of the example
 
 ### The smart contract
 
