@@ -38,7 +38,7 @@ Second it uses a [function modifier](https://solidity.readthedocs.io/en/v0.5.12/
 
 Once the modifier confirms the Pizza is unique the function adds it to the array and maps it to the owner (creator in this case), using [the `assert` error handling function](https://solidity.readthedocs.io/en/v0.5.12/control-structures.html#id4) to check that the owner address is the same as the address of the current user.
 
-The `createRandomPizza` function is the public function called in JavaScript that assigns the string the user sets in the front end as the name of the pizza and calls the `generateRandomDna` function, passing the name, and the owner.
+The `createRandomPizza` function is the public function called in JavaScript that assigns the string the user sets in the frontend as the name of the pizza and calls the `generateRandomDna` function, passing the name, and the owner.
 
 The `generateRandomDna` introduces another new function modifier, [`pure`](https://solidity.readthedocs.io/en/v0.5.12/contracts.html#pure-functions). Pure functions promise not to read from or modify the state, instead they generally return values to another function that does.
 

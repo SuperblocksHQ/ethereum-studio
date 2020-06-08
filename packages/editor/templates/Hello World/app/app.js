@@ -5,44 +5,42 @@
 //  endpoint: "http://...."
 // }
 
-// Create an instance of the smart contract, passing it as a property,
-// which allows web3js to interact with it.
+// Creates an instance of the smart contract, passing it as a property,
+// which allows web3.js to interact with it.
 function HelloWorld(Contract) {
     this.web3 = null;
     this.instance = null;
     this.Contract = Contract;
 }
 
-// Initialize the `HelloWorld` object and create an instance of the web3js library,
+// Initializes the `HelloWorld` object and creates an instance of the web3.js library.
 HelloWorld.prototype.init = function() {
-    // The initialization function defines the interface for the contract using
-    // the web3js contract object and then defines the address of the instance
-    // of the contract for the `HelloWorld` object.
-
-    // Create a new Web3 instance using either the Metamask provider
-    // or an independent provider created as the endpoint configured for the contract.
+    // Creates a new Web3 instance using a provider
+    // Learn more: https://web3js.readthedocs.io/en/v1.2.0/web3.html
     this.web3 = new Web3(
         (window.web3 && window.web3.currentProvider) ||
             new Web3.providers.HttpProvider(this.Contract.endpoint)
     );
 
-    // Create the contract interface using the ABI provided in the configuration.
+    // Creates the contract interface using the web3.js contract object
+    // Learn more: https://web3js.readthedocs.io/en/v1.2.1/web3-eth-contract.html#new-contract
     var contract_interface = this.web3.eth.contract(this.Contract.abi);
 
-    // Create the contract instance for the specific address provided in the configuration.
+    // Defines the address of the contract instance
     this.instance = this.Contract.address
         ? contract_interface.at(this.Contract.address)
         : { message: () => {} };
 };
 
-// Gets the message value stored on the instance of the contract.
+// Gets the `message` value stored on the instance of the contract.
 HelloWorld.prototype.getMessage = function(cb) {
     this.instance.message(function(error, result) {
         cb(error, result);
     });
 };
 
-// Updates the message value on the instance of the contract.
+// Updates the `message` value on the instance of the contract.
+// This function is triggered when someone clicks the "send" button in the interface.
 HelloWorld.prototype.setMessage = function() {
     var that = this;
     var msg = $("#message-input").val();
@@ -103,19 +101,21 @@ HelloWorld.prototype.waitForReceipt = function(hash, cb) {
     });
 };
 
-// Gets the block number by using the web3js `getBlockNumber` function to return
-// the value of the latest block in the configured endpoint.
+// Gets the latest block number by using the web3js `getBlockNumber` function
+// Learn more: https://web3js.readthedocs.io/en/v1.2.1/web3-eth.html#getblocknumber
 HelloWorld.prototype.getBlockNumber = function(cb) {
     this.web3.eth.getBlockNumber(function(error, result) {
         cb(error, result);
     });
 };
 
-// Hide or show the loader when performing async operations
+// Hides or displays the loader when performing async operations
 HelloWorld.prototype.showLoader = function(show) {
     document.getElementById("loader").style.display = show ? "block" : "none";
-    document.getElementById("message-button").style.display = show ? "none" : "block";
-}
+    document.getElementById("message-button").style.display = show
+        ? "none"
+        : "block";
+};
 
 // Calls the functions `getMessage` and `getBlockNumber` defined above, then
 // sets the DOM element texts to the values they return or displays an error message
@@ -141,7 +141,7 @@ HelloWorld.prototype.updateDisplay = function() {
     });
 };
 
-// Bind setMessage function to the button defined in app.html
+// Binds setMessage function to the button defined in app.html
 HelloWorld.prototype.bindButton = function() {
     var that = this;
 
@@ -191,6 +191,7 @@ HelloWorld.prototype.onReady = function() {
 
 if (typeof Contracts === "undefined")
     var Contracts = { HelloWorld: { abi: [] } };
+
 var helloWorld = new HelloWorld(Contracts["HelloWorld"]);
 
 $(document).ready(function() {
