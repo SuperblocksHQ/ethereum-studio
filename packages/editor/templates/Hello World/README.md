@@ -30,7 +30,7 @@ Return here once you've read through the file.
 
 <!-- TODO link to address explantion -->
 <!-- TODO link to Ethereum networks explanation -->
-Every smart contract runs at an address on the Ethereum blockchain. You must compile and deploy a smart contract to an address before it can run. When using Studio, the browser simulates the network, but there are several test networks and one main network for the Ethereum blockchain.
+Every smart contract runs at an address on the Ethereum blockchain. You must compile and deploy a smart contract to an address before it can run. When using Studio, your browser simulates the network, but there are several test networks and one main network for the Ethereum blockchain.
 
 ### 1. Compile
 
@@ -42,7 +42,7 @@ Now let's deploy the _HelloWorld.sol_ contract. Again, in the left panel of the 
 
 Configuring the contract allows you to set the name of the contract as well as the contract's `message` variable by specifying the initial value sent to the constructor function. Configure the contract within the Deploy panel by selecting the "_Configure_" option.
 
-Then deploy the contract by selecting the "_Deploy_" option within the Deploy panel.
+Then deploy the contract by selecting the "Deploy" button within the Deploy panel.
 
 You should now see the deployed contract's `message` variable displayed on the IDE's Browser as well as output from the transaction in the IDE's console (on the lower right side of the IDE).
 

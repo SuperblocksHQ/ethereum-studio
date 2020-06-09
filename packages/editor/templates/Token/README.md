@@ -1,77 +1,57 @@
 # Token tutorial
 
-This tutorial builds off knowledge from our first tutorial, [Hello World](https://studio.ethereum.org/). We recommend you start there.
+This example dapp builds off learnings from our first tutorial, [Hello World](https://studio.ethereum.org/). We recommend you start there.
 
-The goal of this tutorial is to demonstrate how to:
+The goal of this tutorial is to teach you how to:
 
-- Write and deploy a smart contract that issues tokens
-- Build a web application that can interact with your smart contract
-- Understand the basics of Ethereum accounts and how they represent both users and smart contracts on the blockchain
-- Transfer tokens between Ethereum accounts by initiating transactions with your smart contract
+-   Write and deploy a smart contract that issues [tokens](https://docs.openzeppelin.com/contracts/2.x/tokens)
+-   Build a web application that interacts with your smart contract
+-   Understand the basics of [Ethereum accounts](https://ethereum.org/whitepaper/#ethereum-accounts) and how they represent both users and smart contracts on the blockchain
+-   Transfer tokens between Ethereum accounts by initiating [transactions](https://ethereum.org/whitepaper/#messages-and-transactions) with your smart contract
 
 If you'd like to learn more about how Ethereum works before diving in, we recommend you [start here](https://ethereum.org/learn/).
 
 ## Introduction to tokens
 
-What is a token? 
+**What is a token?**
 
-Ethereum tokens are simply digital assets that are built on top of the Ethereum blockchain. They are built using smart contracts and are used across many projects.
+Ethereum tokens are simply digital assets that are built on top of the Ethereum blockchain using smart contracts. Tokens are used across many Ethereum projects.
 
-Why create a token?
+**Why create a token?**
 
 A token can serve many purposes,
 such as a [stablecoin](https://www.investopedia.com/terms/s/stablecoin.asp),
-or to track a "point" sytem (such as [Reddit's recent "community points" initiative to tokenize karma](https://www.reddit.com/community-points/)),
-or even to represent shares of voting rights over a project.
+or to track a point system (such as [Reddit's "community points"](https://www.reddit.com/community-points/)),
+or even to represent shares of voting rights over a project. By representing things as tokens, we can allow smart contracts to interact with them, exchange them, create or destroy them.
 
-You may have heard of ERC20, which is a token standard established by the community in order to have tokens that can interoperate with man applications,
-similar to the SMTP email standards (created in the 90's) created so different email clients (like Gmail or Apple mail) are compatabile together.
-
-## Introduction to the Ethereum Studio IDE
-
-Ethereum Studio is a web-based IDE where you can write, deploy and test smart contracts, and build a frontend application to interact with them.
-
-On the left side of this IDE, you'll find the Explorer panel (the folder icon). Here you can view the file structure of your project. You can toggle the folder icon on the far left to hide or display this panel. Use the Explore panel to navigate between files of your project.
-
-On the right side this IDE, you'll find the Browser with the Preview panel, where you can view and interact with this project's web application. You can toggle the panel icon on the far right to hide or display this preview.
+You may have heard of [ERC-20](https://docs.openzeppelin.com/contracts/2.x/erc20), a token standard established by the Ethereum community to promote interopability across applications.
+In this example, you'll create a more simple token but we invite you to extend the contract code in order to satisfy the formal specification.
 
 ## The smart contract
 
-First, let's find the [smart contract](https://ethereum.org/learn/#smart-contracts).
+At its core, a token contract is a mapping of addresses to balances, with some methods to add and subtract from those balances.
 
-> Use the Explore panel to navigate to the _Files/contracts/Token.sol_ file.
+Let's find the [smart contract](https://ethereum.org/learn/#smart-contracts).
+
+> Use the Explore panel on the left of the IDE to navigate to the _Files/contracts/Token.sol_ file.
 
 Return here once you've read through the file.
 
-Every smart contract runs at an address on the Ethereum blockchain. You must compile and deploy a smart contract to an address before it can run. When using Studio, the browser simulates the network, but there are several test networks and one main network for the Ethereum blockchain.
+Every smart contract runs at an address on the Ethereum blockchain. You must compile and deploy a smart contract to an address before it can run. When using Studio, your browser simulates the network, but there are several test networks and one main network for the Ethereum blockchain.
 
 ### 1. Compile
 
-Before you deploy the HelloWorld.sol contract, you should understand compilation. Solidity is a compiled language, and you need to convert the Solidity code into bytecode before the contract can run. We will automatically compile the code every time you save your changes (by clicking the floppy disk icon at the top of a file) or when performing a deployment.
+Solidity is a compiled language, and you need to convert the Solidity code into bytecode before the contract can run. We will automatically compile the code every time you save your contract (by clicking the floppy disk icon at the top of a file) or when performing a deployment.
 
 ### 2. Deploy
 
-Now let's deploy the HelloWorld.sol contract. Again, in the left panel of the IDE, you'll find the Deploy panel (the rocket icon). Here you can configure and deploy your contract to your local network.
+Now let's deploy the Token.sol contract. In the left panel of the IDE, you'll find the Deploy panel (the rocket icon). Deploy the contract by selecting the "Deploy" button within the Deploy panel.
 
-Configuring the contract allows you to set the name of the contract as well as the contract's `message` variable by specifying the initial value sent to the constructor function. Configure the contract within the Deploy panel by selecting the "_Configure_" option.
-
-Then deploy the contract by selecting the "_Deploy_" option within the Deploy panel.
-
-You should now see the deployed contract's `message` variable displayed on the IDE's Browser.
-
-### 3. Interact
-
-Now check out the Interaction panel on the left side of this IDE (the mouse icon).
-
-Here you view and interact with your deployed contract using its functions. Try updating the `message` variable using the `update` function. This will create a new Ethereum transaction and you should see the message update in the IDE's Browser.
+You should now see successful output from the IDE's Console (lower right panel) and a web form in the IDE's Browser. This form allows you to interact with your deployed token contract.
 
 ## The web app (dapp)
 
-Often when creating an Ethereum smart contract, it's useful to create a web application for users to interact with. We call these applications "dapps". [Dapps on Ethereum](https://ethereum.org/dapps/) are web applications backed by Ethereum smart contracts. Instead of using a centralized server or database, these applications rely on the blockchain as a backend for program logic and storage.
-
-Dapps typically use a [JavaScript convenience libraries](https://ethereum.org/developers/#frontend-javascript-apis) that provide an API to make integrations with smart contract easier for developers. In this project, you'll be using [web3.js](https://web3js.readthedocs.io/en/v1.2.8/).
-
-This tutorial won't cover the HTML or CSS since it's not specific to a dapp, although it's worth noting that this application uses jQuery to manipulate the HTML (of _Files/app/app.html_) that is utlimately rendered in our IDE's Browser.
+As you learned in the Hello World example, dapps typically use a [JavaScript convenience libraries](https://ethereum.org/developers/#frontend-javascript-apis) that provide an API to make integrations with smart contract easier. In this project, you'll again be using [web3.js](https://web3js.readthedocs.io/en/v1.2.8/).
 
 Let's take a look at our application logic.
 
@@ -83,19 +63,35 @@ Return here once you've read through the file.
 
 Now that you have an understanding of the logic, let's use the app UI to interact with the contract!
 
-Try using the form in the IDE's Browser to set the `message` variable on the contract. Submitting the form should trigger our JavaScrip function, `setMessage`, which creates an Ethereum transaction to update the smart contract state. The new state is then read from the contract and updated in the Browser.
+**Find your Ethereum address**
+
+At the top right of the IDE, find the Account dropdown menu (the "Default" account is pre-selected). Click to "Copy address" (the paper icon), then paste your address into the "Mint new tokens" address input field. Enter an amount and click "Mint".
+
+Behind the scenes, submitting the form should trigger our JavaScript function, `createTokens`, which creates an Ethereum transaction to call the public function, `mint` on your smart contract and to update the contract's state.
+
+**View you transactions**
+
+Find the "Transactions" tab on the right panel of the IDE. Here you can inspect all transactions you've triggered on your deployed contract.
+
+**Mint tokens**
+
+Try using the Account dropdown menu to create a new Ethereum account, then transfer tokens to that account from your "Default" account (the account you deployed the contract on). You can verify if this worked using the "Check balance of wallet" form.
 
 ## Next Steps
 
-Congratulations! You've made it through our first tutorial. You've taken your first big step towards developing on Ethereum.
+Congratulations! You've made it through our second tutorial. You've taken another important step towards building on Ethereum.
 
-Each of our subsequent Ethereum Studio templates increase in complexity. We recommend you [create a "Coin" project next](https://studio.ethereum.org/).
+Our final Ethereum Studio tutorial is our most complex example. We recommend you [build a "CryptoPizza NFT"](https://studio.ethereum.org/) next.
 
 ## Learn more
 
-Ready to move on from Ethereum Studio?
+Want to learn more about Ethereum tokens?
 
-Here's some other useful online resources to continue your dapp development journey:
+-   [Read the ERC-20 Token Standard](https://eips.ethereum.org/EIPS/eip-20)
+-   [Learn how standards are established on Ethereum](https://ethereum.org/developers/#standards)
+-   [See popular implementations of ERC-20 interfaces, contracts and utilities](https://docs.openzeppelin.com/contracts/2.x/api/token/erc20)
+
+Ready to move on from Ethereum Studio? Here's some other useful online resources to continue your dapp development journey:
 
 -   [CryptoZombies](https://cryptozombies.io/): Learn Solidity building your own Zombie game
 -   [Open Zeppelin Ethernaut](https://ethernaut.openzeppelin.com/): Complete levels by hacking smart contracts

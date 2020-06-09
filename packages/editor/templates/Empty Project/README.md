@@ -16,7 +16,7 @@ Solidity is a compiled language, and you need to convert the Solidity code into 
 
 ### 3. Deploy
 
-Every smart contract runs at an address on the Ethereum blockchain, and must be deployed to an address before it can run. When using Studio, the browser simulates the network, but there are several test networks and one main network for the Ethereum blockchain.
+Every smart contract runs at an address on the Ethereum blockchain, and must be deployed to an address before it can run. When using Studio, your browser simulates the network, but there are several test networks and one main network for the Ethereum blockchain.
 
 Deploy the contract by going to the _Deploy_ panel, accessed by clicking on the rocket icon in the left side menu.
 
