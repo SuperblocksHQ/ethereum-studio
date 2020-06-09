@@ -150,7 +150,27 @@ HelloWorld.prototype.bindButton = function() {
     });
 };
 
-// Creates the instance of the `HelloWorld` object
+// Remove the welcome content, and display the main content.
+// Called once a contract has been deployed
+HelloWorld.prototype.updateDisplayContent = function() {
+    this.hideWelcomeContent();
+    this.showMainContent();
+};
+
+// A contract will not have its address set until it has been deployed
+HelloWorld.prototype.hasContractDeployed = function() {
+    return this.instance && this.instance.address;
+};
+
+HelloWorld.prototype.hideWelcomeContent = function() {
+    $('#welcome-container').addClass('hidden');
+};
+
+HelloWorld.prototype.showMainContent = function() {
+    $('#main-container').removeClass('hidden');
+};
+
+// JavaScript boilerplate to create the instance of the `HelloWorld` object
 // defined above, and show the HTML elements on the page:
 HelloWorld.prototype.main = function() {
     $(".blocknumber").show();
@@ -160,7 +180,12 @@ HelloWorld.prototype.main = function() {
 
 HelloWorld.prototype.onReady = function() {
     this.init();
-    this.bindButton();
+    // Don't show interactive UI elements like input/button until
+    // the contract has been deployed.
+    if (this.hasContractDeployed()) {
+        this.updateDisplayContent();
+        this.bindButton();
+    }
     this.main();
 };
 

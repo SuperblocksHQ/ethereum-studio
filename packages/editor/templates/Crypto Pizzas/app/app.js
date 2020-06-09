@@ -37,6 +37,10 @@ Pizza.prototype.init = function() {
 
     // Create the contract instance for the specific address provided in the configuration.
     this.instance = this.Contract.address ? contract_interface.at(this.Contract.address) :  { getPizzasByOwner: () => {} };
+
+    if (this.hasContractDeployed()) {
+        this.updateDisplayContent();
+    }
 }
 
 // Generate random DNA from string
@@ -350,6 +354,26 @@ Pizza.prototype.bindInputs = function() {
         that.eatPizza(pizzaId);
     });
 }
+
+// Remove the welcome content, and display the main content.
+// Called once a contract has been deployed
+Pizza.prototype.updateDisplayContent = function() {
+    this.hideWelcomeContent();
+    this.showMainContent();
+}
+
+Pizza.prototype.hideWelcomeContent = function() {
+    $('#welcome-container').addClass('hidden');
+}
+
+Pizza.prototype.showMainContent = function() {
+    $('#main-container').removeClass('hidden');
+}
+
+// A contract will not have its address set until it has been deployed
+Pizza.prototype.hasContractDeployed = function() {
+    return this.instance && this.instance.address;
+};
 
 // Show status on bottom of the page when some action happens
 function showStatus(text) {
