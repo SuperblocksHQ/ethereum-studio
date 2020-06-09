@@ -14,11 +14,12 @@
         <div id="welcome-container">
             <h1>Welcome!</h1>
             <h3>Please deploy (<img src="/static/img/rocket-ship.svg" color="#fff" height="14" width="14">) your contract to begin.</h3>
-        </div>
-        <div id="main-container" class="hidden">
-            <!-- Form fields for creating new coins -->
+          </div>
+          <div id="main-container" class="hidden">
+            <div id="main-container" class="hidden">
+            <!-- Form fields for minting new tokens -->
             <div id="create" class="tabcontent">
-                <h2>Create new coins</h2>
+                <h2>Create new tokens</h2>
                 <div class="input-group">
                     <h3>Address</h3>
                     <input type="text" id="create-address" placeholder="Enter address..." />
@@ -28,12 +29,12 @@
                     <input type="number" id="create-amount" placeholder="Enter amount..." />
                 </div>
                 <div class="input-group">
-                    <button class="btn" id="button-create">Send</button>
+                    <button class="btn" id="button-create">Mint</button>
                 </div>
             </div>
-            <!-- Form fields for checking wallet balances -->
+            <!-- Form fields for checking address balance -->
             <div id="balances" class="tabcontent">
-                <h2>Check balance of wallet</h2>
+                <h2>Check balance of address</h2>
                 <div class="input-group">
                     <h3>Address</h3>
                     <input type="text" id="balance-address" placeholder="Enter address..." />

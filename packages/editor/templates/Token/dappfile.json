@@ -1,8 +1,8 @@
 {
     "project": {
         "info": {
-            "name": "Subcurrency",
-            "title": "Subcurrency"
+            "name": "Token",
+            "title": "Token"
         }
     },
     "environments": [

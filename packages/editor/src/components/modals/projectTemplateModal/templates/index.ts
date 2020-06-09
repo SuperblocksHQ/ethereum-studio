@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import coin from '../../../../assets/static/json/templates/coin.json';
+import token from '../../../../assets/static/json/templates/token.json';
 import helloworld from '../../../../assets/static/json/templates/helloworld.json';
 import cryptopizzas from '../../../../assets/static/json/templates/cryptopizzas.json';
 import emptyproject from '../../../../assets/static/json/templates/emptyproject.json';
@@ -24,14 +24,14 @@ export default class Templates {
         {
             id: 0,
             name: 'Hello World',
-            description: '<div><h2>Hello World</h2><p>A Hello World style starter project. Deploys a smart contract with a message, and renders it in the front-end. You can change the message using the interact panel!</p></div>',
+            description: '<div><h2>Hello World</h2><p>A Hello World style starter project. Deploys a smart contract with a message, and renders it in the frontend. You can change the message using the interact panel!</p></div>',
             content: helloworld,
         },
         {
             id: 1,
-            name: 'Coin',
-            description: '<div><h2>Coin Contract</h2><p>A starter dapp that defines a basic token you can create and send to others.</p></div>',
-            content: coin
+            name: 'Token',
+            description: '<div><h2>Token Contract</h2><p>A starter dapp that defines a basic token you can create and send to others.</p></div>',
+            content: token
         },
         {
             id: 2,
