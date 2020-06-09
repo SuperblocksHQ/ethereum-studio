@@ -1,13 +1,13 @@
 pragma solidity ^0.5.10;
 
 contract Token {
-    // An Ethereum address is similar to an email address. It's used to identify an account.
-    // Addresses can can represent a smart contract or an external (user) accounts.
+    // An `address` is comparable to an email address - it's used to identify an account on Ethereum.
+    // Addresses can represent a smart contract or an external (user) accounts.
     // Learn more: https://solidity.readthedocs.io/en/v0.5.10/types.html#address
     address public owner;
 
-    // A mapping is essentially a hash table data structure.
-    // This mapping assigns an unsigned integer (the token balance) to an address (the token holder).
+    // A `mapping` is essentially a hash table data structure.
+    // This `mapping` assigns an unsigned integer (the token balance) to an address (the token holder).
     // Learn more: https://solidity.readthedocs.io/en/v0.5.10/types.html#mapping-types
     mapping (address => uint) public balances;
 
@@ -21,8 +21,8 @@ contract Token {
     constructor() public {
         // All smart contracts rely on external transactions to trigger its functions.
         // `msg` is a global variable that includes relevant data on the given transaction,
-        // such as the address that sent the transaction and the ETH value included in the transation.
-        // Learn more: https://solidity.readthedocs.io/en/latest/units-and-global-variables.html#block-and-transaction-properties
+        // such as the address of the sender and the ETH value included in the transaction.
+        // Learn more: https://solidity.readthedocs.io/en/v0.5.10/units-and-global-variables.html#block-and-transaction-properties
         owner = msg.sender;
     }
 
