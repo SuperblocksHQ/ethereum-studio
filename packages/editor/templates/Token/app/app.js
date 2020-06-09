@@ -5,49 +5,47 @@
 //  endpoint: "http://...."
 // }
 
-// Create an instance of the smart contract, passing it as a property,
-// which allows web3js to interact with it.
+// Creates an instance of the smart contract, passing it as a property,
+// which allows web3.js to interact with it.
 function Token(Contract) {
     this.web3 = null;
     this.instance = null;
     this.Contract = Contract;
 }
 
-// Initialize the `Token` object and create an instance of the web3js library,
+// Initializes the `Token` object and creates an instance of the web3.js library,
 Token.prototype.init = function() {
-    // The initialization function defines the interface for the contract using
-    // the web3js contract object and then defines the address of the instance
-    // of the contract for the `Token` object.
-
-    // Create a new Web3 instance using either the Metamask provider
-    // or an independent provider created as the endpoint configured for the contract.
+    // Creates a new Web3 instance using a provider
+    // Learn more: https://web3js.readthedocs.io/en/v1.2.0/web3.html
     this.web3 = new Web3(
         (window.web3 && window.web3.currentProvider) ||
             new Web3.providers.HttpProvider(this.Contract.endpoint)
     );
 
-    // Create the contract interface using the ABI provided in the configuration.
+    // Creates the contract interface using the web3.js contract object
+    // Learn more: https://web3js.readthedocs.io/en/v1.2.0/web3-eth-contract.html#new-contract
     var contract_interface = this.web3.eth.contract(this.Contract.abi);
 
-    // Create the contract instance for the specific address provided in the configuration.
-    this.instance = contract_interface.at(this.Contract.address);
+    // Defines the address of the contract instance
+    this.instance = this.Contract.address
+        ? contract_interface.at(this.Contract.address)
+        : { createTokens: () => {} };
 };
 
-// Function triggered by "Check Balance" button
-// to display account balance
+// Displays the token balance of an address, triggered by the "Check balance" button
 Token.prototype.showAddressBalance = function(hash, cb) {
     var that = this;
 
-    // Get input values, the address to check balance of
+    // Gets form input value
     var address = $("#balance-address").val();
 
-    // Validate address using utility function
+    // Validates address using utility function
     if (!isValidAddress(address)) {
         console.log("Invalid address");
         return;
     }
 
-    // Check the balance from the address passed and output the value
+    // Gets the value stored within the `balances` mapping of the contract
     this.getBalance(address, function(error, balance) {
         if (error) {
             console.log(error);
@@ -58,23 +56,23 @@ Token.prototype.showAddressBalance = function(hash, cb) {
     });
 };
 
-// Get balance of Tokens found by address from contract
+// Returns the token balance (from the contract) of the given address
 Token.prototype.getBalance = function(address, cb) {
     this.instance.balances(address, function(error, result) {
         cb(error, result);
     });
 };
 
-// Send Tokens to another address when the "send" button is clicked
+// Sends tokens to another address, triggered by the "Mint" button
 Token.prototype.createTokens = function() {
     var that = this;
 
-    // Get input values for address and amount
+    // Gets form input values
     var address = $("#create-address").val();
     var amount = $("#create-amount").val();
     console.log(amount);
 
-    // Validate address using utility function
+    // Validates address using utility function
     if (!isValidAddress(address)) {
         console.log("Invalid address");
         return;
@@ -86,8 +84,7 @@ Token.prototype.createTokens = function() {
         return;
     }
 
-    // Transfer amount to other address
-    // Use the public mint function from the smart contract
+    // Calls the public `mint` function from the smart contract
     this.instance.mint(
         address,
         amount,
@@ -97,13 +94,12 @@ Token.prototype.createTokens = function() {
             gasPrice: 100000,
             gasLimit: 100000
         },
-        // If there's an error, log it
         function(error, txHash) {
             if (error) {
                 console.log(error);
             }
-            // If success then wait for confirmation of transaction
-            // with utility function and clear form values while waiting
+            // If success, wait for confirmation of transaction,
+            // then clear form values
             else {
                 that.waitForReceipt(txHash, function(receipt) {
                     if (receipt.status) {
@@ -122,7 +118,7 @@ Token.prototype.createTokens = function() {
 Token.prototype.waitForReceipt = function(hash, cb) {
     var that = this;
 
-    // Checks for transaction receipt using web3 library method
+    // Checks for transaction receipt using web3.js library method
     this.web3.eth.getTransactionReceipt(hash, function(err, receipt) {
         if (err) {
             error(err);
@@ -141,7 +137,7 @@ Token.prototype.waitForReceipt = function(hash, cb) {
     });
 };
 
-// Check if it has the basic requirements of an address
+// Checks if it has the basic requirements of an address
 function isValidAddress(address) {
     return /^(0x)?[0-9a-f]{40}$/i.test(address);
 }
@@ -151,7 +147,7 @@ function isValidAmount(amount) {
     return amount > 0 && typeof Number(amount) == "number";
 }
 
-// Bind functions to the buttons defined in app.html
+// Binds functions to the buttons defined in app.html
 Token.prototype.bindButtons = function() {
     var that = this;
 
