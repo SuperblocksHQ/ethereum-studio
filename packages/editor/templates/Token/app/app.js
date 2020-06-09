@@ -183,7 +183,6 @@ Token.prototype.showMainContent = function() {
 
 // Creates the instance of the `Token` object 
 Token.prototype.onReady = function() {
-    this.bindButtons();
     this.init();
     if (this.hasContractDeployed()) {
         this.updateDisplayContent();

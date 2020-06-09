@@ -30,7 +30,7 @@ export default class Templates {
         {
             id: 1,
             name: 'Token',
-            description: '<div><h2>Token Contract</h2><p>A starter dapp that defines a basic token you can create and send to others.</p></div>',
+            description: '<div><h2>Token</h2><p>A starter dapp that defines a basic token you can create and send to others.</p></div>',
             content: token
         },
         {

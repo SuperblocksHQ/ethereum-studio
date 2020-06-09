@@ -75,7 +75,7 @@ Find the "Transactions" tab on the right panel of the IDE. Here you can inspect 
 
 **Mint tokens**
 
-Try using the Account dropdown menu to create a new Ethereum account, then transfer tokens to that account from your "Default" account (the account you deployed the contract on). You can verify if this worked using the "Check balance of wallet" form.
+Try using the Account dropdown menu to create a new Ethereum account, then transfer tokens to that account from your "Default" account (the account you deployed the contract on). You can verify if this worked using the "Check balance of address" form.
 
 ## Next Steps
 
