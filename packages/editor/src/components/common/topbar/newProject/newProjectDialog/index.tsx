@@ -44,13 +44,13 @@ class NewProjectDialog extends Component<IProps> {
             <div className={classNames([style.menu, 'contextMenu'])}>
                 <ul>
                     <li>
-                        <div onClick={() => createProjectFromTemplate(Templates.templates[3])}>
-                            Create empty project
+                        <div onClick={this.startWithTemplate}>
+                            Start with an example project
                         </div>
                     </li>
                     <li>
-                        <div onClick={this.startWithTemplate}>
-                            Start with a template
+                        <div onClick={() => createProjectFromTemplate(Templates.templates[3])}>
+                            Create empty project
                         </div>
                     </li>
                 </ul>

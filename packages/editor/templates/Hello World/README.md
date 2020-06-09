@@ -1,6 +1,6 @@
 # Hello World
 
-The goal of this "Hello World" project template is to teach you how to:
+The goal of this "Hello World" example project is to teach you how to:
 
 -   Deploy an [Ethereum smart contract](https://ethereum.org/learn/#smart-contracts) written in the [Solidity programming language](https://ethereum.org/developers/#smart-contract-languages).
 -   Fetch your contract's state from the blockchain and render it to a frontend using a [JavaScript library](https://ethereum.org/developers/#frontend-javascript-apis).
@@ -76,7 +76,7 @@ Try using the form in the IDE's Browser to set the `message` variable on the con
 
 Congratulations! You've made it through our first tutorial. You've taken your first big step towards developing on Ethereum.
 
-Each of our subsequent Ethereum Studio templates increase in complexity. We recommend you [create a "Coin" project](https://studio.ethereum.org/) next.
+Each of our subsequent Ethereum Studio project examples increase in complexity. We recommend you [create a "Coin" project](https://studio.ethereum.org/) next.
 
 ## Learn more
 
