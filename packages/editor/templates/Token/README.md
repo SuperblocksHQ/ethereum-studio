@@ -24,7 +24,7 @@ such as a [stablecoin](https://www.investopedia.com/terms/s/stablecoin.asp),
 or to track a point system (such as [Reddit's "community points"](https://www.reddit.com/community-points/)),
 or even to represent shares of voting rights over a project. By representing things as tokens, we can allow smart contracts to interact with them, exchange them, create or destroy them.
 
-You may have heard of [ERC-20](https://docs.openzeppelin.com/contracts/2.x/erc20), a token standard established by the Ethereum community to promote interopability across applications.
+You may have heard of [ERC20](https://docs.openzeppelin.com/contracts/2.x/erc20), a token standard established by the Ethereum community to promote interopability across applications.
 In this example, you'll create a more simple token but we invite you to extend the contract code in order to satisfy the formal specification.
 
 ## The smart contract
@@ -87,9 +87,9 @@ Our final Ethereum Studio tutorial is our most complex example. We recommend you
 
 Want to learn more about Ethereum tokens?
 
--   [Read the ERC-20 Token Standard](https://eips.ethereum.org/EIPS/eip-20)
+-   [Read the ERC20 Token Standard](https://eips.ethereum.org/EIPS/eip-20)
 -   [Learn how standards are established on Ethereum](https://ethereum.org/developers/#standards)
--   [See popular implementations of ERC-20 interfaces, contracts and utilities](https://docs.openzeppelin.com/contracts/2.x/api/token/erc20)
+-   [See popular implementations of ERC20 interfaces, contracts and utilities](https://docs.openzeppelin.com/contracts/2.x/api/token/erc20)
 
 Ready to move on from Ethereum Studio? Here's some other useful online resources to continue your dapp development journey:
 
