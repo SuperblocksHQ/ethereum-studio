@@ -23,7 +23,7 @@ HelloWorld.prototype.init = function() {
     );
 
     // Creates the contract interface using the web3.js contract object
-    // Learn more: https://web3js.readthedocs.io/en/v1.2.1/web3-eth-contract.html#new-contract
+    // Learn more: https://web3js.readthedocs.io/en/v1.2.0/web3-eth-contract.html#new-contract
     var contract_interface = this.web3.eth.contract(this.Contract.abi);
 
     // Defines the address of the contract instance
@@ -46,7 +46,7 @@ HelloWorld.prototype.setMessage = function() {
     var msg = $("#message-input").val();
     this.showLoader(true);
 
-    // Set message using the public update function of the smart contract
+    // Sets message using the public update function of the smart contract
     this.instance.update(
         msg,
         {
@@ -56,13 +56,12 @@ HelloWorld.prototype.setMessage = function() {
             gasLimit: 100000
         },
         function(error, txHash) {
-            // If there's an error, log it
             if (error) {
                 console.log(error);
                 that.showLoader(false);
             }
-            // If success, then wait for confirmation of transaction
-            // with utility function and clear form values while waiting
+            // If success, wait for confirmation of transaction,
+            // then clear form value
             else {
                 that.waitForReceipt(txHash, function(receipt) {
                     that.showLoader(false);
@@ -82,7 +81,7 @@ HelloWorld.prototype.setMessage = function() {
 HelloWorld.prototype.waitForReceipt = function(hash, cb) {
     var that = this;
 
-    // Checks for transaction receipt using web3 library method
+    // Checks for transaction receipt using web3.js library method
     this.web3.eth.getTransactionReceipt(hash, function(err, receipt) {
         if (err) {
             error(err);

@@ -6,6 +6,7 @@
     "build:prod": "NODE_OPTIONS=\"--max-old-space-size=4096\" lerna run build --scope editor --stream && lerna run build --scope web-server --stream && gulp",
     "build:server": "NODE_OPTIONS=\"--max-old-space-size=4096\" lerna run build --scope web-server --stream && gulp",
     "build:clean": "lerna run build:clean --scope editor && lerna run build:clean --scope web-server && rimraf www",
+    "generate-templates": "node packages/editor/scripts/generate-templates.js",
     "start": "lerna run start --scope editor --stream",
     "start:prod": "npm run inject-env-variables && node www/api/app.js",
     "lint": "lerna run lint",

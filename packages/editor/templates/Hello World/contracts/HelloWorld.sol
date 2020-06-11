@@ -1,11 +1,11 @@
-// Specifies that the source code is for a version of Solidity greater than 0.5.10.
-// Learn more: https://solidity.readthedocs.io/en/latest/layout-of-source-files.html#pragma
+// Specifies the version of Solidity, using semantic versioning.
+// Learn more: https://solidity.readthedocs.io/en/v0.5.10/layout-of-source-files.html#pragma
 pragma solidity ^0.5.10;
 
 // Defines a contract named `HelloWorld`.
 // A contract is a collection of functions and data (its state).
 // Once deployed, a contract resides at a specific address on the Ethereum blockchain.
-// Learn more: https://solidity.readthedocs.io/en/latest/structure-of-a-contract.html
+// Learn more: https://solidity.readthedocs.io/en/v0.5.10/structure-of-a-contract.html
 contract HelloWorld {
 
     // Declares a state variable `message` of type `string`.
@@ -17,7 +17,7 @@ contract HelloWorld {
     // Similar to many class-based object-oriented languages, a constructor is
     // a special function that is only executed upon contract creation.
     // Constructors are used to initialize the contract's data.
-    // Learn more: https://solidity.readthedocs.io/en/latest/contracts.html#constructors
+    // Learn more: https://solidity.readthedocs.io/en/v0.5.10/contracts.html#constructors
     constructor(string memory initMessage) public {
         // Accepts a string argument `initMessage` and sets the value
         // into the contract's `message` storage variable).
