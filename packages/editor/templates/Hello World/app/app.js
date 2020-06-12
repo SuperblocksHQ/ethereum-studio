@@ -17,19 +17,21 @@ function HelloWorld(Contract) {
 HelloWorld.prototype.init = function() {
     // Creates a new Web3 instance using a provider
     // Learn more: https://web3js.readthedocs.io/en/v1.2.0/web3.html
+    console.log('WINDOW IN HELLO', window);
     this.web3 = new Web3(
-        (window.web3 && window.web3.currentProvider) ||
-            new Web3.providers.HttpProvider(this.Contract.endpoint)
+        (window.web3 && console.log('I WENT HERE'), window.web3.currentProvider) ||
+        console.log('I WENT THERE'),
+        new Web3.providers.HttpProvider(this.Contract.endpoint)
     );
 
     // Creates the contract interface using the web3.js contract object
     // Learn more: https://web3js.readthedocs.io/en/v1.2.1/web3-eth-contract.html#new-contract
-    var contract_interface = this.web3.eth.contract(this.Contract.abi);
+    var contract_interface = new this.web3.eth.Contract(this.Contract.abi);
 
     // Defines the address of the contract instance
     this.instance = this.Contract.address
         ? contract_interface.at(this.Contract.address)
-        : { message: () => {} };
+        : { message: () => { } }
 };
 
 // Gets the `message` value stored on the instance of the contract.
@@ -55,7 +57,7 @@ HelloWorld.prototype.setMessage = function() {
             gasPrice: 100000,
             gasLimit: 100000
         },
-        function(error, txHash) {
+        function (error, txHash) {
             // If there's an error, log it
             if (error) {
                 console.log(error);
@@ -64,7 +66,7 @@ HelloWorld.prototype.setMessage = function() {
             // If success, then wait for confirmation of transaction
             // with utility function and clear form values while waiting
             else {
-                that.waitForReceipt(txHash, function(receipt) {
+                that.waitForReceipt(txHash, function (receipt) {
                     that.showLoader(false);
                     if (receipt.status) {
                         console.log({ receipt });
@@ -79,11 +81,11 @@ HelloWorld.prototype.setMessage = function() {
 };
 
 // Waits for receipt of transaction
-HelloWorld.prototype.waitForReceipt = function(hash, cb) {
+HelloWorld.prototype.waitForReceipt = function (hash, cb) {
     var that = this;
 
     // Checks for transaction receipt using web3 library method
-    this.web3.eth.getTransactionReceipt(hash, function(err, receipt) {
+    this.web3.eth.getTransactionReceipt(hash, function (err, receipt) {
         if (err) {
             error(err);
         }
@@ -94,7 +96,7 @@ HelloWorld.prototype.waitForReceipt = function(hash, cb) {
             }
         } else {
             // Try again in 2 second
-            window.setTimeout(function() {
+            window.setTimeout(function () {
                 that.waitForReceipt(hash, cb);
             }, 2000);
         }
@@ -119,22 +121,22 @@ HelloWorld.prototype.showLoader = function(show) {
 
 // Calls the functions `getMessage` and `getBlockNumber` defined above, then
 // sets the DOM element texts to the values they return or displays an error message
-HelloWorld.prototype.updateDisplay = function() {
+HelloWorld.prototype.updateDisplay = function () {
     var that = this;
-    this.getMessage(function(error, result) {
+    this.getMessage(function (error, result) {
         if (error) {
             $(".error").show();
             return;
         }
         $("#message").text(result);
 
-        that.getBlockNumber(function(error, result) {
+        that.getBlockNumber(function (error, result) {
             if (error) {
                 $(".error").show();
                 return;
             }
             $("#blocknumber").text(result);
-            setTimeout(function() {
+            setTimeout(function () {
                 that.updateDisplay();
             }, 1000);
         });
@@ -145,7 +147,7 @@ HelloWorld.prototype.updateDisplay = function() {
 HelloWorld.prototype.bindButton = function() {
     var that = this;
 
-    $(document).on("click", "#message-button", function() {
+    $(document).on("click", "#message-button", function () {
         that.setMessage();
     });
 };
@@ -172,13 +174,13 @@ HelloWorld.prototype.showMainContent = function() {
 
 // JavaScript boilerplate to create the instance of the `HelloWorld` object
 // defined above, and show the HTML elements on the page:
-HelloWorld.prototype.main = function() {
+HelloWorld.prototype.main = function () {
     $(".blocknumber").show();
     $(".message").show();
     this.updateDisplay();
 };
 
-HelloWorld.prototype.onReady = function() {
+HelloWorld.prototype.onReady = function () {
     this.init();
     // Don't show interactive UI elements like input/button until
     // the contract has been deployed.
@@ -194,6 +196,6 @@ if (typeof Contracts === "undefined")
 
 var helloWorld = new HelloWorld(Contracts["HelloWorld"]);
 
-$(document).ready(function() {
+$(document).ready(function () {
     helloWorld.onReady();
 });

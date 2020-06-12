@@ -26,24 +26,24 @@ function getToolbar(props: IProps) {
         <div className={classnames(style.buttonsWrapper, { [style.alwaysOn]: props.data.isRoot })}>
             <div className={style.buttons} onClick={e => e.stopPropagation()}>
                 <a href='#' onClick={() => props.onCreateItemClick(props.data.id, ProjectItemTypes.File) }>
-                    <Tooltip delay='500' title='New File'>
+                    <Tooltip delay={500} title='New File'>
                         <IconAddFile />
                     </Tooltip>
                 </a>
                 <a href='#' onClick={() => props.onCreateItemClick(props.data.id, ProjectItemTypes.Folder)}>
-                    <Tooltip delay='500' title='New Folder'>
+                    <Tooltip delay={500} title='New Folder'>
                         <IconAddFolder />
                     </Tooltip>
                 </a>
                 { props.data.mutable &&
                 <React.Fragment>
                     <a href='#' onClick={() => props.onRenameClick(props.data.id)}>
-                        <Tooltip delay='500' title='Rename'>
+                        <Tooltip delay={500} title='Rename'>
                             <IconEdit />
                         </Tooltip>
                     </a>
                     <a href='#' onClick={() => props.onDeleteClick(props.data.id)} >
-                        <Tooltip delay='500' title='Delete'>
+                        <Tooltip delay={500} title='Delete'>
                             <IconTrash />
                         </Tooltip>
                     </a>

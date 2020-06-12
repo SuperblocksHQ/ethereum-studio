@@ -98,7 +98,7 @@ export const walletService = {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve(web3.fromWei(res.toNumber()));
+                    resolve(web3.utils.fromWei(res));
                 }
             });
         }));

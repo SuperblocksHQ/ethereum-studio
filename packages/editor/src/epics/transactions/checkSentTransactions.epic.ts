@@ -41,7 +41,7 @@ export const checkSentTransactionsEpic: Epic = (action$: any, state$: any) => ac
 const getReceipt$ = (endpoint: string, hash: string) => {
     const web3 = getWeb3(endpoint);
     return new Observable((observer: Observer<any>) => {
-        const getTxObject = () => web3.eth.getTransactionReceipt(hash, (err: string, res: any) => {
+        const getTxObject = () => web3.eth.getTransactionReceipt(hash, (err: Error, res: any) => {
             if (err) {
                 observer.error({ msg: err, channel: 2 });
                 return;

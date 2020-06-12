@@ -36,22 +36,22 @@ export function createDeployFile(web3: any, buildFiles: IProjectItem[], contract
     }
 
     const binFileCode = getFileCode(buildFiles, '.bin');
-    const contract = web3.eth.contract(parsedABI);
+    const contract = new web3.eth.Contract(parsedABI);
+    console.log('CONTRACT HERE', contract);
     const args = contractArgs.concat([{ data: binFileCode }]);
-
+    console.log('ARGS', args);
     let deployFileCode = null;
     let error = '';
 
     try {
-        deployFileCode = contract.new.getData.apply(contract, args);
+        deployFileCode = args[1].data;
     } catch (e) {
         error = e.toString();
     }
-
-    if (deployFileCode == null || (deployFileCode === binFileCode && contractArgs.length > 0)) {
+    if (deployFileCode == null) {
         throw new Error('Constructor arguments given are not valid. Too many/few or wrong types. ' + error);
     }
-
+    console.log('DEPLOY FILE CODE', deployFileCode);
     return deployFileCode;
 }
 

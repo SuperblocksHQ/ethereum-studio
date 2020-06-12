@@ -33,9 +33,9 @@ function getData(instance: any, name: string, abiIndex: number, args: any[]) {
 
 function sendInternalTransaction(endpoint: string, tx: any) {
     return new Promise<any>((resolve, reject) => {
-        getWeb3(endpoint).eth.sendRawTransaction(
+        getWeb3(endpoint).eth.sendSignedTransaction(
             '0x' + tx.serialize().toString('hex'),
-            (err: string, hash: string) => {
+            (err: Error, hash: string) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -60,12 +60,13 @@ function getNonce(endpoint: string, address: string) {
 
 function getContractInstance$(endpoint: string, deployedContract: IDeployedContract) {
     const web3 = getWeb3(endpoint);
+    console.log('Web3 in get contract instance', web3);
 
     // Create the contract interface using the ABI provided in the configuration.
-    const contractInterface = web3.eth.contract(deployedContract.abi);
+    const contractInterface = new web3.eth.Contract(deployedContract.abi, deployedContract.address);
 
     // Create the contract instance for the specific address provided in the configuration.
-    return of(contractInterface.at(deployedContract.address));
+    return of(contractInterface);
 }
 
 function sendToBrowser$(environment: IEnvironment, accountAddress: string, networkSettings: any, key: string, data: string, to?: string, value?: string): Observable<any> {

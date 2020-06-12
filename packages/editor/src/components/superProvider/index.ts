@@ -258,6 +258,7 @@ export default class SuperProvider {
         let provider;
         if (endpoint.toLowerCase() === Networks.browser.endpoint) {
             provider = evmService.getProvider();
+            console.log('PROVIDER HERE', provider);
         } else {
             provider = new Web3.providers.HttpProvider(endpoint);
         }
@@ -271,6 +272,7 @@ export default class SuperProvider {
                 return;
             }
             const web3 = this.getWeb3(endpoint);
+            // @ts-ignore
             web3.eth.getTransactionCount(address, undefined, ((err: any, result: any) => {
                 if (err) {
                     reject(err);

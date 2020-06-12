@@ -216,6 +216,7 @@ export class DeployRunner {
     private getNonce(address: string) {
         return new Promise((resolve, reject) => {
             this.currWeb3.eth.getTransactionCount(address, (err: any, res: any) => {
+                console.log('ERROR HERE', err);
                 if (err == null) {
                     resolve(res);
                 } else {

@@ -42,12 +42,13 @@ const call$ = (instance: any, name: string, abiIndex: number, args?: any[]) => {
 
 const getContractInstance$ = (endpoint: string, deployedContract: IDeployedContract) => {
     const web3 = getWeb3(endpoint);
+    console.log('DAFUQ', web3);
 
     // Create the contract interface using the ABI provided in the configuration.
-    const contractInterface = web3.eth.contract(deployedContract.abi);
+    const contractInterface = new web3.eth.Contract(deployedContract.abi, deployedContract.address);
 
     // Create the contract instance for the specific address provided in the configuration.
-    return of(contractInterface.at(deployedContract.address));
+    return of(contractInterface);
 };
 
 export const getConstantEpic: Epic = (action$, state$) => action$.pipe(

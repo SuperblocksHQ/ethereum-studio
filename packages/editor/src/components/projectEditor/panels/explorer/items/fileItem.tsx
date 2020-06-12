@@ -19,12 +19,12 @@ export function getToolbar(props: IProps) {
         <div className={style.buttonsWrapper}>
             <div className={style.buttons} onClick={e => e.stopPropagation()}>
                 <a href='#' onClick={() => props.onRenameClick(props.data.id)}>
-                    <Tooltip delay='500' title='Rename'>
+                    <Tooltip delay={500} title='Rename'>
                         <IconEdit />
                     </Tooltip>
                 </a>
                 <a href='#' onClick={() => props.onDeleteClick(props.data.id)} >
-                    <Tooltip delay='500' title='Delete'>
+                    <Tooltip delay={500} title='Delete'>
                         <IconTrash />
                     </Tooltip>
                 </a>
