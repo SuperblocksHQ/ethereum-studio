@@ -20,7 +20,7 @@ import { Dispatch } from 'react';
 import { AnyAction } from 'redux';
 import { projectSelectors, previewSelectors, accountsConfigSelectors } from '../../../../selectors';
 import { previewActions, transactionsActions } from '../../../../actions';
-import { TransactionType } from '../../../../models';
+import { TransactionType, IApiError } from '../../../../models';
 
 const mapStateToProps = (state: any) => ({
     isProjectLoaded: !!projectSelectors.getProject(state),
@@ -32,12 +32,12 @@ const mapStateToProps = (state: any) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
     return {
-        notifyTx: (transactionType: TransactionType, hash: string) => {
-            dispatch(transactionsActions.addTransaction(transactionType, hash));
+        notifyTx: (transactionType: TransactionType, hash: string, error?: IApiError) => {
+            dispatch(transactionsActions.addTransaction(transactionType, hash, undefined, undefined, undefined, undefined, undefined, undefined, error));
         },
         refreshContent: () => {
             dispatch(previewActions.refreshContent());
-        }
+        },
     };
 };
 

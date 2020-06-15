@@ -20,17 +20,19 @@ import Buffer from 'buffer';
 import { evmService, walletService } from '../../services';
 import { IEnvironment, IAccount } from '../../models/state';
 import Networks from '../../networks';
+import { transactionsActions } from '../../actions';
+import { IApiError } from '../../models';
 
 export default class SuperProvider {
     private readonly channelId: string;
-    private readonly notifyTx: (hash: string, endpoint: string) => void;
+    private readonly notifyTx: (hash: string, endpoint: string, error?: IApiError) => void;
     private selectedAccount: IAccount;
     private selectedEnvironment: IEnvironment;
     private iframe: any;
     private iframeStatus: number;
     private knownWalletSeed: string;
 
-    constructor(channelId: string, environment: IEnvironment, account: IAccount, knownWalletSeed: string, notifyTx: (hash: string, endpoint: string) => void) {
+    constructor(channelId: string, environment: IEnvironment, account: IAccount, knownWalletSeed: string, notifyTx: (hash: string, endpoint: string, error?: IApiError) => void) {
         this.channelId = channelId;
         this.selectedEnvironment = environment;
         this.selectedAccount = account;
@@ -70,6 +72,7 @@ export default class SuperProvider {
                 evmService.getProvider().sendAsync(payload, ((err: any, result: any) => {
                     if (err) {
                         console.log(err);
+                        this.notifyTx(result.result, endpoint, err);
                         reject('Problem calling the provider async call: ' + err);
                     }
                     resolve(result);

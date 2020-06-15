@@ -54,9 +54,8 @@ export class Transaction extends Component<IProps, IState> {
     }
 
     _renderStatus() {
-        const { status } = this.props.transaction;
-
-        if (!status) {
+        const { status, error } = this.props.transaction;
+        if (!status && !error) {
             return (
                 <div
                     className={classNames([
@@ -93,7 +92,7 @@ export class Transaction extends Component<IProps, IState> {
     }
 
     _renderHeader() {
-        const { type, contractName, functionName, constructorArgs } = this.props.transaction;
+        const { type, contractName, functionName } = this.props.transaction;
         if (type === TransactionType.Deploy) {
             return (
                 <div className={style.header}>
@@ -121,7 +120,7 @@ export class Transaction extends Component<IProps, IState> {
     }
 
     _renderLeft() {
-        const { type, from, to, value } = this.props.transaction;
+        const { type, from, to, value, error } = this.props.transaction;
 
         if (type === TransactionType.Deploy) {
             return (
@@ -149,6 +148,12 @@ export class Transaction extends Component<IProps, IState> {
                         <b>To:</b>
                         <div className={style.address}>{to}</div>
                     </div>
+                    {error &&
+                        <div className={style.row}>
+                            <b>Error Message:</b>
+                            <div className={style.address}>{error}</div>
+                        </div>
+                    }
                     <div className={style.row}>
                         <b>Value:</b>{' '}
                         <span title='{value} wei'>{valueFormatted} ether</span>
@@ -200,20 +205,20 @@ export class Transaction extends Component<IProps, IState> {
     }
 
     _renderDeployArguments() {
-        const { type, constructorArgs } = this.props.transaction;
+        const { type, constructorArgs, functionName } = this.props.transaction;
         const args = constructorArgs.map((item) => {
             return item.value;
         });
         if (type === TransactionType.Deploy || type === TransactionType.Interact) {
             return (
                 <div>
-                    <b>Constructor arguments:</b> {constructorArgs.toString()}
+                    <b>{functionName === '' ? 'Constructor arguments: ' : 'Function arguments:'}</b> {constructorArgs.toString()}
                 </div>
             );
         } else {
             return (
                 <div>
-                    <b>Constructor arguments:</b> {args.toString()}
+                    <b>{functionName === '' ? 'Constructor arguments: ' : 'Function arguments:'}</b> {args.toString()}
                 </div>
             );
         }

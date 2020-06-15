@@ -28,7 +28,7 @@ export default function transactionsReducer(state = initialState, action: AnyAct
     switch (action.type) {
         case transactionsActions.ADD_TRANSACTION:
             const transaction = formatTransaction(wholeState, action.data.transactionType, action.data.hash, action.data.environment,
-                action.data.receipt, action.data.contractName, action.data.tx, action.data.contractArgs, action.data.functionName);
+                action.data.receipt, action.data.contractName, action.data.tx, action.data.contractArgs, action.data.functionName, action.data.error);
             return {
                 ...state,
                 items: [
@@ -37,7 +37,7 @@ export default function transactionsReducer(state = initialState, action: AnyAct
                 ]
             };
         case transactionsActions.UPDATE_TRANSACTION:
-            const updatedTx = formatTransaction(wholeState, action.data.transactionType, action.data.hash, action.data.environment, action.data.receipt, action.data.contractName, action.data.tx, undefined, action.data.functionName);
+            const updatedTx = formatTransaction(wholeState, action.data.transactionType, action.data.hash, action.data.environment, action.data.receipt, action.data.contractName, action.data.tx, undefined, action.data.functionName, action.data.error);
             return {
                 ...state,
                 items: replaceInArray(
@@ -58,6 +58,18 @@ export default function transactionsReducer(state = initialState, action: AnyAct
                     item => ({ ...item, ...updatedTransaction, createdAt: item.createdAt })
                 )
             };
+        case transactionsActions.UPDATE_TRANSACTION_FAIL:
+            const updatedFailTx = formatTransaction(wholeState, action.data.transactionType, action.data.hash, action.data.environment,
+                action.data.receipt, action.data.contractName, undefined, action.data.contractArgs, action.data.functionName, action.data.error);
+            return {
+                ...state,
+                items: replaceInArray(
+                    state.items,
+                    item => item.hash === updatedFailTx.hash,
+                    item => ({ ...item, ...updatedFailTx, createdAt: item.createdAt})
+                )
+            };
+
         default:
             return state;
     }

@@ -14,24 +14,24 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { TransactionType } from '../models';
+import { TransactionType, IApiError } from '../models';
 
 export const transactionsActions = {
     ADD_TRANSACTION: 'ADD_TRANSACTION',
-    addTransaction(transactionType: TransactionType, hash?: string, environment?: string, receipt?: any, contractName?: string, tx?: any, contractArgs?: any[], functionName?: string) {
+    addTransaction(transactionType: TransactionType, hash?: string, environment?: string, receipt?: any, contractName?: string, tx?: any, contractArgs?: any[], functionName?: string, error?: IApiError) {
         return {
             type: transactionsActions.ADD_TRANSACTION,
             data: {
-                transactionType, hash, environment, receipt, contractName, tx, contractArgs, functionName
+                transactionType, hash, environment, receipt, contractName, tx, contractArgs, functionName, error
             }
         };
     },
     UPDATE_TRANSACTION: 'UPDATE_TRANSACTION',
-    updateTransaction(transactionType: TransactionType, hash?: string, environment?: string, receipt?: any, contractName?: string, tx?: any, contractArgs?: any[], functionName?: string) {
+    updateTransaction(transactionType: TransactionType, hash?: string, environment?: string, receipt?: any, contractName?: string, tx?: any, contractArgs?: any[], functionName?: string, error?: IApiError) {
         return {
             type: transactionsActions.UPDATE_TRANSACTION,
             data: {
-                transactionType, hash, environment, receipt, contractName, tx, contractArgs, functionName
+                transactionType, hash, environment, receipt, contractName, tx, contractArgs, functionName, error
             }
         };
     },
@@ -47,10 +47,12 @@ export const transactionsActions = {
     },
 
     UPDATE_TRANSACTION_FAIL: 'UPDATE_TRANSACTION_FAIL',
-    updateTransactionFail(error: any) {
+    updateTransactionFail(transactionType: TransactionType, hash?: string, environment?: string, receipt?: any, contractName?: string, tx?: any, contractArgs?: any[], functionName?: string, error?: IApiError) {
         return {
             type: transactionsActions.UPDATE_TRANSACTION_FAIL,
-            data: error
+            data: {
+                transactionType, hash, environment, receipt, contractName, tx, contractArgs, functionName, error
+            }
         };
     },
 

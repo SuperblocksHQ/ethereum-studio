@@ -20,7 +20,7 @@ import { IconRefresh, IconMore } from '../../../icons';
 import { DropdownContainer, Tooltip, OnlyIf } from '../../../common';
 import { previewService } from '../../../../services';
 import { IEnvironment, IAccount } from '../../../../models/state';
-import { TransactionType } from '../../../../models';
+import { TransactionType, IApiError } from '../../../../models';
 
 function getIframeSrc() {
     if (window.location.hostname === 'localhost') {
@@ -59,7 +59,7 @@ export class Preview extends React.Component<IProps> {
     }
 
     componentDidMount() {
-        const { selectedAccount, selectedEnvironment, htmlToRender, knownWalletSeed, notifyTx } = this.props;
+        const { selectedAccount, selectedEnvironment, htmlToRender, knownWalletSeed, notifyTx} = this.props;
         previewService.init(htmlToRender);
         previewService.initSuperProvider(IFRAME_ID, selectedEnvironment, selectedAccount, knownWalletSeed, notifyTx);
         previewService.superProvider.attachListener();

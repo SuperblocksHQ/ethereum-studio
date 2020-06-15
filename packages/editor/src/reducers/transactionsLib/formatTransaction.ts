@@ -14,18 +14,18 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { ITransaction, TransactionType } from '../../models';
+import { ITransaction, TransactionType, IApiError } from '../../models';
 import { IAccount } from '../../models/state';
 import { projectSelectors } from '../../selectors';
 
-export function formatTransaction(state: any, transactionType: TransactionType, hash?: string, environment?: string, receipt?: any, contractName?: string, tx?: any, contractArgs?: any[], functionName?: string): ITransaction {
+export function formatTransaction(state: any, transactionType: TransactionType, hash?: string, environment?: string, receipt?: any, contractName?: string, tx?: any, contractArgs?: any[], functionName?: string, error?: IApiError): ITransaction {
     const account: IAccount = projectSelectors.getSelectedAccount(state);
     const networkSettings = state.settings.preferences.network;
     return  {
         hash: hash || '',
         index: receipt ? receipt.transactionIndex : 'n/a',
         type: transactionType,
-        contractName: contractName || receipt,
+        contractName: contractName || '',
         constructorArgs: contractArgs || [],
         createdAt: Date.now(),
         blockNumber: receipt ? receipt.blockNumber : 'n/a',
@@ -38,6 +38,7 @@ export function formatTransaction(state: any, transactionType: TransactionType, 
         status: receipt ? Number(receipt.status) : null,
         gasLimit: networkSettings.gasLimit,
         gasPrice: networkSettings.gasPrice,
-        functionName: functionName || ''
+        functionName: functionName || '',
+        error: error || undefined
     };
 }

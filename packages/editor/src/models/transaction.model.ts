@@ -14,6 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
+import { IApiError } from './apiError.model';
+
 export enum TransactionType {
     Deploy = 'Deploy',
     Interact = 'Interact',
@@ -38,8 +40,10 @@ export interface ITransaction {
     gasLimit: number;
     gasPrice: number;
     functionName?: string;
+    error?: IApiError;
 }
 
 export interface ITransactionsState {
     items: ITransaction[];
+    errorMessage?: IApiError;
 }
