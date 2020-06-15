@@ -27,8 +27,8 @@ const initialState: ITransactionsState = {
 export default function transactionsReducer(state = initialState, action: AnyAction, wholeState: any) {
     switch (action.type) {
         case transactionsActions.ADD_TRANSACTION:
-            const transaction = formatTransaction(wholeState, action.data.transactionType, action.data.hash, action.data.environment,
-                action.data.receipt, action.data.contractName, action.data.tx, action.data.contractArgs, action.data.functionName, action.data.error);
+            const transaction = formatTransaction({state: wholeState, transactionType: action.data.transactionType, hash: action.data.hash, environment: action.data.environment,
+                receipt: action.data.receipt, contractName: action.data.contractName, tx: action.data.tx, contractArgs: action.data.contractArgs, functionName: action.data.functionName, error: action.data.error});
             return {
                 ...state,
                 items: [
@@ -37,7 +37,8 @@ export default function transactionsReducer(state = initialState, action: AnyAct
                 ]
             };
         case transactionsActions.UPDATE_TRANSACTION:
-            const updatedTx = formatTransaction(wholeState, action.data.transactionType, action.data.hash, action.data.environment, action.data.receipt, action.data.contractName, action.data.tx, undefined, action.data.functionName, action.data.error);
+            const updatedTx = formatTransaction({state: wholeState, transactionType: action.data.transactionType, hash: action.data.hash, environment: action.data.environment,
+                receipt: action.data.receipt, contractName: action.data.contractName, tx: action.data.tx, functionName: action.data.functionName, error: action.data.error});
             return {
                 ...state,
                 items: replaceInArray(
@@ -48,8 +49,8 @@ export default function transactionsReducer(state = initialState, action: AnyAct
             };
 
         case transactionsActions.UPDATE_TRANSACTION_SUCCESS:
-            const updatedTransaction = formatTransaction(wholeState, action.data.transactionType, action.data.hash, action.data.environment,
-                action.data.receipt, action.data.contractName, undefined, action.data.contractArgs, action.data.functionName);
+            const updatedTransaction = formatTransaction({state: wholeState, transactionType: action.data.transactionType, hash: action.data.hash, environment: action.data.environment,
+                receipt: action.data.receipt, contractName: action.data.contractName, contractArgs: action.data.contractArgs, functionName: action.data.functionName, error: action.data.error});
             return {
                 ...state,
                 items: replaceInArray(
@@ -59,8 +60,8 @@ export default function transactionsReducer(state = initialState, action: AnyAct
                 )
             };
         case transactionsActions.UPDATE_TRANSACTION_FAIL:
-            const updatedFailTx = formatTransaction(wholeState, action.data.transactionType, action.data.hash, action.data.environment,
-                action.data.receipt, action.data.contractName, undefined, action.data.contractArgs, action.data.functionName, action.data.error);
+            const updatedFailTx = formatTransaction({state: wholeState, transactionType: action.data.transactionType, hash: action.data.hash, environment: action.data.environment,
+                receipt: action.data.receipt, contractName: action.data.contractName, contractArgs: action.data.contractArgs, functionName: action.data.functionName, error: action.data.error});
             return {
                 ...state,
                 items: replaceInArray(

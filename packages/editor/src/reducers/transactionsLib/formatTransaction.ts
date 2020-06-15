@@ -17,28 +17,31 @@
 import { ITransaction, TransactionType, IApiError } from '../../models';
 import { IAccount } from '../../models/state';
 import { projectSelectors } from '../../selectors';
+import { IFormatTransactionParams } from '../../models/formatTransaction.model';
 
-export function formatTransaction(state: any, transactionType: TransactionType, hash?: string, environment?: string, receipt?: any, contractName?: string, tx?: any, contractArgs?: any[], functionName?: string, error?: IApiError): ITransaction {
-    const account: IAccount = projectSelectors.getSelectedAccount(state);
-    const networkSettings = state.settings.preferences.network;
+export function formatTransaction(
+    params: IFormatTransactionParams
+    ): ITransaction {
+    const account: IAccount = projectSelectors.getSelectedAccount(params.state);
+    const networkSettings = params.state.settings.preferences.network;
     return  {
-        hash: hash || '',
-        index: receipt ? receipt.transactionIndex : 'n/a',
-        type: transactionType,
-        contractName: contractName || '',
-        constructorArgs: contractArgs || [],
+        hash: params.hash || '',
+        index: params.receipt ? params.receipt.transactionIndex : 'n/a',
+        type: params.transactionType,
+        contractName: params.contractName || '',
+        constructorArgs: params.contractArgs || [],
         createdAt: Date.now(),
-        blockNumber: receipt ? receipt.blockNumber : 'n/a',
+        blockNumber: params.receipt ? params.receipt.blockNumber : 'n/a',
         from: account.address,
-        to: (receipt && receipt.contractAddress) ? receipt.contractAddress : (tx && tx.to) ? tx.to : '',
-        network: environment ? environment : '',
+        to: (params.receipt && params.receipt.contractAddress) ? params.receipt.contractAddress : (params.tx && params.tx.to) ? params.tx.to : '',
+        network: params.environment ? params.environment : '',
         origin: 'Superblocks',
         value: 0,
-        gasUsed: receipt ? receipt.gasUsed : 0,
-        status: receipt ? Number(receipt.status) : null,
+        gasUsed: params.receipt ? params.receipt.gasUsed : 0,
+        status: params.receipt ? Number(params.receipt.status) : null,
         gasLimit: networkSettings.gasLimit,
         gasPrice: networkSettings.gasPrice,
-        functionName: functionName || '',
-        error: error || undefined
+        functionName: params.functionName || '',
+        error: params.error || undefined
     };
 }

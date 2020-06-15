@@ -22,7 +22,7 @@ export const updateTransactionEpic: Epic = (action$: any, state$: any) => action
         if (transactionType === TransactionType.Preview && !error) {
             return[transactionsActions.updateTransactionSuccess(transactionType, hash, selectedEnv.name, action.data.receipt, contractName, undefined, decodedData.params, decodedData.name)];
         } else if (error) {
-            return[transactionsActions.updateTransactionFail(transactionType, hash, selectedEnv.name, action.data.receipt, contractName, undefined, decodedData.params, decodedData.name, error)];
+            return[transactionsActions.updateTransactionFail({transactionType, hash, environment: selectedEnv.name, receipt: action.data.receipt, contractName, contractArgs: decodedData.params, functionName: decodedData.name, error})];
         } else {
             return empty();
         }

@@ -16,11 +16,11 @@
 
 import React from 'react';
 import style from './style.less';
-import { IconRefresh, IconMore } from '../../../icons';
-import { DropdownContainer, Tooltip, OnlyIf } from '../../../common';
+import { IconRefresh } from '../../../icons';
+import { Tooltip, OnlyIf } from '../../../common';
 import { previewService } from '../../../../services';
 import { IEnvironment, IAccount } from '../../../../models/state';
-import { TransactionType, IApiError } from '../../../../models';
+import { IAddTransactionParams } from '../../../../models/addTransaction.model';
 
 function getIframeSrc() {
     if (window.location.hostname === 'localhost') {
@@ -33,7 +33,7 @@ function getIframeSrc() {
 const IFRAME_ID = 'appViewIframe';
 
 interface IProps {
-    notifyTx: (transactionType: TransactionType, hash: string) => void;
+    notifyTx: (params: IAddTransactionParams) => void;
     refreshContent: () => void;
     selectedEnvironment: IEnvironment;
     selectedAccount: IAccount;

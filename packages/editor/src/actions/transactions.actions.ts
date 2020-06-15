@@ -15,14 +15,15 @@
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
 import { TransactionType, IApiError } from '../models';
+import { IAddTransactionParams, IUpdateTransactionFailParams } from '../models';
 
 export const transactionsActions = {
     ADD_TRANSACTION: 'ADD_TRANSACTION',
-    addTransaction(transactionType: TransactionType, hash?: string, environment?: string, receipt?: any, contractName?: string, tx?: any, contractArgs?: any[], functionName?: string, error?: IApiError) {
+    addTransaction(params: IAddTransactionParams) {
         return {
             type: transactionsActions.ADD_TRANSACTION,
             data: {
-                transactionType, hash, environment, receipt, contractName, tx, contractArgs, functionName, error
+                ...params
             }
         };
     },
@@ -47,11 +48,11 @@ export const transactionsActions = {
     },
 
     UPDATE_TRANSACTION_FAIL: 'UPDATE_TRANSACTION_FAIL',
-    updateTransactionFail(transactionType: TransactionType, hash?: string, environment?: string, receipt?: any, contractName?: string, tx?: any, contractArgs?: any[], functionName?: string, error?: IApiError) {
+    updateTransactionFail(params: IUpdateTransactionFailParams) {
         return {
             type: transactionsActions.UPDATE_TRANSACTION_FAIL,
             data: {
-                transactionType, hash, environment, receipt, contractName, tx, contractArgs, functionName, error
+                ...params
             }
         };
     },

@@ -17,6 +17,7 @@
 import SuperProvider from '../components/superProvider';
 import { IEnvironment, IAccount } from '../models/state';
 import { TransactionType, IApiError } from '../models';
+import { IAddTransactionParams } from '../models/addTransaction.model';
 
 let iframeId: string;
 
@@ -48,11 +49,11 @@ export const previewService = {
         window.removeEventListener('message', this.handleMessage);
     },
 
-    initSuperProvider(_iframeId: string, environment: IEnvironment, account: IAccount, knownWalletSeed: string, notifyTx: (transactionType: TransactionType, hash: string, error?: IApiError) => void) {
+    initSuperProvider(_iframeId: string, environment: IEnvironment, account: IAccount, knownWalletSeed: string, notifyTx: (params: IAddTransactionParams) => void) {
         iframeId = _iframeId;
         this.superProvider = new SuperProvider(iframeId, environment, account, knownWalletSeed,
-            (hash: string, endpoint: string, error?: IApiError) => {
-                notifyTx(TransactionType.Preview, hash, error);
+            (params: IAddTransactionParams) => {
+                notifyTx(params);
             });
     },
 
