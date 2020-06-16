@@ -16,11 +16,11 @@
 
 import React from 'react';
 import style from './style.less';
-import { IconRefresh, IconMore } from '../../../icons';
-import { DropdownContainer, Tooltip, OnlyIf } from '../../../common';
+import { IconRefresh } from '../../../icons';
+import { Tooltip, OnlyIf } from '../../../common';
 import { previewService } from '../../../../services';
 import { IEnvironment, IAccount } from '../../../../models/state';
-import { TransactionType } from '../../../../models';
+import { IAddTransactionParams } from '../../../../models/addTransaction.model';
 
 function getIframeSrc() {
     if (window.location.hostname === 'localhost') {
@@ -33,7 +33,7 @@ function getIframeSrc() {
 const IFRAME_ID = 'appViewIframe';
 
 interface IProps {
-    notifyTx: (transactionType: TransactionType, hash: string) => void;
+    notifyTx: (params: IAddTransactionParams) => void;
     refreshContent: () => void;
     selectedEnvironment: IEnvironment;
     selectedAccount: IAccount;
@@ -59,7 +59,7 @@ export class Preview extends React.Component<IProps> {
     }
 
     componentDidMount() {
-        const { selectedAccount, selectedEnvironment, htmlToRender, knownWalletSeed, notifyTx } = this.props;
+        const { selectedAccount, selectedEnvironment, htmlToRender, knownWalletSeed, notifyTx} = this.props;
         previewService.init(htmlToRender);
         previewService.initSuperProvider(IFRAME_ID, selectedEnvironment, selectedAccount, knownWalletSeed, notifyTx);
         previewService.superProvider.attachListener();

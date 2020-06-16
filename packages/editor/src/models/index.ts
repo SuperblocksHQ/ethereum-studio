@@ -31,3 +31,6 @@ export * from './accountConfig.model';
 export * from './abi.model';
 export * from './toast.model';
 export * from './template.model';
+export * from './addTransaction.model';
+export * from './formatTransaction.model';
+export * from './updateTransactionFail.model';

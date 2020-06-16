@@ -72,7 +72,7 @@ export const updateTransactionStateEpic: Epic = (action$: any, state$: any) => a
     ofType(transactionsActions.ADD_TRANSACTION),
     withLatestFrom(state$),
     switchMap(([action, state]) => {
-        const { transactionType, hash, functionName, contractArgs, contractName} = action.data;
+        const { transactionType, hash, functionName, contractArgs, contractName, error} = action.data;
         const selectedAccount = projectSelectors.getSelectedAccount(state);
         const selectedEnv = projectSelectors.getSelectedEnvironment(state);
 
@@ -83,8 +83,8 @@ export const updateTransactionStateEpic: Epic = (action$: any, state$: any) => a
         } else {
             return waitForContract(hash, selectedAccount, selectedEnv)
             .pipe(
-                switchMap((([txObject, receipt]) => [transactionsActions.updateTransaction(transactionType, hash, selectedEnv.name, receipt, contractName, txObject, contractArgs, functionName)])),
-                catchError((error) => [ transactionsActions.updateTransactionFail(error) ])
+                switchMap((([txObject, receipt]) => [transactionsActions.updateTransaction(transactionType, hash, selectedEnv.name, receipt, contractName, txObject, contractArgs, functionName, error)])),
+                catchError((err) => [ transactionsActions.updateTransactionFail(err)])
             );
         }
     })
