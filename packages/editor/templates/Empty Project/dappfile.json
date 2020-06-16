@@ -1,4 +1,10 @@
 {
+    "project": {
+        "info": {
+            "name": "Empty Project",
+            "title": "Empty Project"
+        }
+    },
     "environments": [
         {
             "name": "browser"
