@@ -17,6 +17,7 @@ import React from 'react';
 import { Converter } from 'showdown';
 import showdownHighlight from 'showdown-highlight';
 import style from './style-markdown-preview.less';
+import * as analytics from '../../../../utils/analytics';
 
 interface IProps {
     markdown?: string;
@@ -27,12 +28,18 @@ export const MarkdownPreview = (props: IProps) => {
         extensions: [showdownHighlight],
         openLinksInNewWindow: true
     });
+    const handleOnClick = (e: any) => {
+        if (e.target.nodeName === 'A') {
+            analytics.logEvent('OUTBOUND_LINK_CLICK', { URL: e.target.href });
+        }
+    };
 
     return (
         <div className={style.overflowFix}>
             <div
+                onClick={(e) => handleOnClick(e)}
                 className={style.markdownPreview}
-                dangerouslySetInnerHTML={{__html: converter.makeHtml(props.markdown ? props.markdown : '')}}
+                dangerouslySetInnerHTML={{ __html: converter.makeHtml(props.markdown ? props.markdown : '') }}
             />
         </div>
     );
