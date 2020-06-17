@@ -76,18 +76,15 @@ export const updateTransactionStateEpic: Epic = (action$: any, state$: any) => a
         const { transactionType, hash, functionName, contractArgs, contractName, error} = action.data;
         const selectedAccount = projectSelectors.getSelectedAccount(state);
         const selectedEnv = projectSelectors.getSelectedEnvironment(state);
-        const templateName = state.projects.dappFileData.project.info.name;
-        const status = action.data.receipt.status === 1 ? 'success' : 'fail';
         // For now, the deployer is taking care of all this, so there is no need to re-do it here. Make sure
         // we consolidate both approaches into a single one in the future
         if (transactionType === TransactionType.Deploy) {
-            analytics.logEvent('SEND_TRANSACTION', { template: templateName, status });
             return empty();
         } else {
             return waitForContract(hash, selectedAccount, selectedEnv)
             .pipe(
                 switchMap((([txObject, receipt]) => [transactionsActions.updateTransaction(transactionType, hash, selectedEnv.name, receipt, contractName, txObject, contractArgs, functionName, error)])),
-                catchError((err) => [ analytics.logEvent('SEND_TRANSACTION', { template: templateName, status }), transactionsActions.updateTransactionFail(err)])
+                catchError((err) => [transactionsActions.updateTransactionFail(err)])
             );
         }
     })
