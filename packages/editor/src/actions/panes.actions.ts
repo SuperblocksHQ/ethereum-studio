@@ -84,5 +84,18 @@ export const panesActions = {
             type: panesActions.MOVE_PANE,
             data: { fromIndex, toIndex }
         };
+    },
+    OUTBOUND_LINK_CLICK: 'OUTBOUND_LINK_CLICK',
+    outboundLinkClick(url: string) {
+        return {
+            type: panesActions.OUTBOUND_LINK_CLICK,
+            data: url
+        };
+    },
+    OUTBOUND_LINK_CLICK_SUCCESS: 'OUTBOUND_LINK_CLICK_SUCCESS',
+    outboundLinkClickSuccess() {
+        return {
+            type: panesActions.OUTBOUND_LINK_CLICK_SUCCESS
+        };
     }
 };

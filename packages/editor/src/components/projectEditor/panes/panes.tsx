@@ -19,7 +19,7 @@ import classnames from 'classnames';
 import style from './style.less';
 import { PaneTabs } from './paneTabs';
 import { PaneType, Pane, IFilePane, Panels, IPanelsState } from '../../../models/state';
-import { FileEditor } from './editor';
+import FileEditor from './editor';
 import { IProjectItem } from '../../../models';
 import PaneDraggable from './paneDraggable';
 import { IconTogglePreview } from '../../icons';

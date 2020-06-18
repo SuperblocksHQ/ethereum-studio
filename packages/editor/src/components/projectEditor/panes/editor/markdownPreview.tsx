@@ -17,10 +17,10 @@ import React from 'react';
 import { Converter } from 'showdown';
 import showdownHighlight from 'showdown-highlight';
 import style from './style-markdown-preview.less';
-import * as analytics from '../../../../utils/analytics';
 
 interface IProps {
     markdown?: string;
+    onOutboundLinkClick: (url: string) => void;
 }
 
 export const MarkdownPreview = (props: IProps) => {
@@ -28,9 +28,10 @@ export const MarkdownPreview = (props: IProps) => {
         extensions: [showdownHighlight],
         openLinksInNewWindow: true
     });
+
     const handleOnClick = (e: any) => {
         if (e.target.nodeName === 'A') {
-            analytics.logEvent('OUTBOUND_LINK_CLICK', { URL: e.target.href });
+           props.onOutboundLinkClick(e.target.href);
         }
     };
 
