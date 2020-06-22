@@ -137,16 +137,6 @@ Token.prototype.waitForReceipt = function(hash, cb) {
     });
 };
 
-// Checks if it has the basic requirements of an address
-function isValidAddress(address) {
-    return /^(0x)?[0-9a-f]{40}$/i.test(address);
-}
-
-// Basic validation of amount. Bigger than 0 and typeof number
-function isValidAmount(amount) {
-    return amount > 0 && typeof Number(amount) == "number";
-}
-
 // Binds functions to the buttons defined in app.html
 Token.prototype.bindButtons = function() {
     var that = this;
@@ -174,14 +164,14 @@ Token.prototype.hasContractDeployed = function() {
 };
 
 Token.prototype.hideWelcomeContent = function() {
-    $('#welcome-container').addClass('hidden');
+    $("#welcome-container").addClass("hidden");
 };
 
 Token.prototype.showMainContent = function() {
-    $('#main-container').removeClass('hidden');
+    $("#main-container").removeClass("hidden");
 };
 
-// Creates the instance of the `Token` object 
+// Creates the instance of the `Token` object
 Token.prototype.onReady = function() {
     this.init();
     if (this.hasContractDeployed()) {
@@ -190,9 +180,19 @@ Token.prototype.onReady = function() {
     }
 };
 
+// Checks if it has the basic requirements of an address
+function isValidAddress(address) {
+    return /^(0x)?[0-9a-f]{40}$/i.test(address);
+}
+
+// Basic validation of amount. Bigger than 0 and typeof number
+function isValidAmount(amount) {
+    return amount > 0 && typeof Number(amount) == "number";
+}
+
 if (typeof Contracts === "undefined") var Contracts = { Token: { abi: [] } };
-var Token = new Token(Contracts["Token"]);
+var token = new Token(Contracts["Token"]);
 
 $(document).ready(function() {
-    Token.onReady();
+    token.onReady();
 });

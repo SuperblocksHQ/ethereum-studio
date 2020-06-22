@@ -36,7 +36,7 @@ export default class Templates {
         {
             id: 2,
             name: 'CryptoPizza NFT',
-            description: '<div><h2>CryptoPizza NFT</h2><p>A Crypto-collectible game built on top of the ERC-721 standard for creating unique tokens.</p></div>',
+            description: '<div><h2>CryptoPizza NFT</h2><p>A game built on top of the ERC721 standard for creating unique collectible tokens.</p></div>',
             content: cryptopizzas,
         },
         {

@@ -1,84 +1,99 @@
-# Creating a unique collectible token
+# CryptoPizza
 
-This project is an example application that teaches you how to:
+This example dapp builds off learnings from our previous tutorials, Hello World and Token. We recommend you [start there](https://studio.ethereum.org/).
 
--   Write a smart contract and web app that conforms to a token standard.
--   Different variable types in Solidity.
--   Create, update and get variables in a smart contract.
--   Emit events that clients can subscribe to.
--   Provide arguments to a contract constructor using the _Configure contract_ modal.
+The goal of this tutorial is to teach you how to:
 
-> Tutorial content supplied by [kauri.io](https://kauri.io).
+-   Create a unique collectible token
+-   Write a smart contract that conforms to a [token standard](https://ethereum.org/developers/#standards)
+-   Import contracts and implement smart contract inheritance
+-   Build a web application that interacts with your smart contract
 
-## Explanation of the template
+## Introduction to non-fungible tokens (NFTs)
 
-### The smart contract
+**What is an NFT?**
 
-> Find the smart contract file in _contracts/CryptoPizza.sol_
+In the previous Token example, we introduced Ethereum tokens and a few of their use cases.
 
-After the `pragma` line are a series of `import` statements [that imports all global symbols from another file](https://solidity.readthedocs.io/en/latest/layout-of-source-files.html#importing-other-source-files) to make them available to the current contract.
+The tokens we created were [fungible](https://en.wikipedia.org/wiki/Fungibility) tokens - each individual token was interchangable and indistinguishable from each other.
+Fiat currencies (e.g. USD, EUR), commodities (e.g. gold bars, oil barrels) and most cryptocurrencies (e.g. [Ether](https://ethereum.org/eth/), Bitcoin) are examples of fungible goods.
 
-Adding the `is` keyword after the contract name allows a contract to derive all non-private members from the named external contract including internal functions and state variables. In this example, `CryptoPizza` inherits from the external `IERC721` and `ERC165` contracts.
+[Non-fungible tokens (NFTs)](https://en.wikipedia.org/wiki/Non-fungible_token) are a particular type of token used when individual tokens must be unique and distinguishable from others.
+While fungible tokens can be useful as currencies or shares of a company, NFTs can be used to represent ownership of real estate (because no two houses are the same) or collectibles like digital art.
+NFTs come in handy whenever some items (represented by tokens) are valued more than others, due to their usefulness, rarity, or other features.
 
-The `using A for B` directive is a method for attaching library functions to a Solidity type. In this case the [OpenZeppelin Contracts SafeMath](https://docs.openzeppelin.com/contracts/2.x/api/math.html) library that adds overflow checks to any use of the `uint256` type.
+**Token standards**
 
-This contract introduces [constant variables](https://solidity.readthedocs.io/en/latest/contracts.html#constant-state-variables), these work in a similar way to other programming languages, but you must assign an expression which is constant at compile time. You cannot use any expressions that accesses storage, blockchain data, execution data, or makes calls to external contracts.
+In the Token example we touched on the ERC20 standard to build fungible tokens.
 
-[A `struct` type](https://solidity.readthedocs.io/en/latest/types.html#structs) lets you define your own type. In this example `Pizza` is a type that contains a `string` and a `uint`. The [array type](https://solidity.readthedocs.io/en/v0.5.12/types.html#arrays) below the struct definition creates an empty array to contain instances of the `Pizza` type.
+[ERC721](http://erc721.org/) is a standard interface for non-fungible tokens. It's a more complex standard than ERC20, with optional extensions and functionality often split accross multiple contracts.
+In this example, you'll see a full implementation of this standard.
 
-[The `mapping` type](https://solidity.readthedocs.io/en/v0.5.12/types.html#mapping-types) is another custom type that lets you define key/value pairs as a content type. The first three are simpler examples that map one value of a certain type to a key of a certain type. For example `mapping (uint => address) public pizzaToOwner` maps an `address` type to a `uint` type inside a mapping called `pizzaToOwner`.
+## The smart contract
 
-The fourth mapping shows that you can also nest mappings, in this case `mapping (address => mapping (address => bool)) private operatorApprovals;` creates an `address` key type that contains another `address` key that maps to a `bool` type.
+First, find the smart contract.
 
-The `_createPizza` function introduces several new concepts.
+> Use the Explore panel on the left of the IDE to navigate to the _Files/contracts/CryptoPizza.sol_ file.
 
-First is the `internal` visibility [keyword](https://solidity.readthedocs.io/en/v0.5.12/contracts.html#visibility-and-getters) that means this function is only visible within the current contract or contracts that derive it.
+Return here once you've read through the file.
 
-Second it uses a [function modifier](https://solidity.readthedocs.io/en/v0.5.12/contracts.html#function-modifiers) that accepts the input variables passed to the function, and passes them to another function, that checks a condition is correct before executing the function. The `isUnique` modifier checks to see if the Pizza created exists yet by checking its `_dna` and `_name` using a standard Solidity method for string comparison that compares the byte data.
+Every smart contract runs at an address on the Ethereum blockchain. You must compile and deploy a smart contract to an address before it can run. When using Studio, your browser simulates the network, but there are several test networks and one main network for the Ethereum blockchain.
 
-Once the modifier confirms the Pizza is unique the function adds it to the array and maps it to the owner (creator in this case), using [the `assert` error handling function](https://solidity.readthedocs.io/en/v0.5.12/control-structures.html#id4) to check that the owner address is the same as the address of the current user.
+### Deploy
 
-The `createRandomPizza` function is the public function called in JavaScript that assigns the string the user sets in the frontend as the name of the pizza and calls the `generateRandomDna` function, passing the name, and the owner.
+In the left panel of the IDE, you'll find the Deploy panel (the rocket icon). Deploy the CryptoPizza.sol contract by selecting the "Deploy" button within the Deploy panel (we will automatically compile it first).
 
-The `generateRandomDna` introduces another new function modifier, [`pure`](https://solidity.readthedocs.io/en/v0.5.12/contracts.html#pure-functions). Pure functions promise not to read from or modify the state, instead they generally return values to another function that does.
+You should now see successful output from the IDE's Console (lower right panel) and a web app in the IDE's Browser. This app allows you to interact with your deployed token contract.
 
-The `getPizzasByOwner` function is another public function called by JavaScript to return all pizzas created by the owner of a specified address. The function introduces another modifier, [`view`](https://solidity.readthedocs.io/en/v0.5.12/contracts.html#view-functions) which promise not to modify the state. The function uses the [`memory`](https://solidity.readthedocs.io/en/latest/introduction-to-smart-contracts.html#storage-memory-and-the-stack) data storage area to only keep a value for the life of the contract call.
+## The web app (dapp)
 
-The `transferFrom` contract function is called by JavaScript when a user clicks the _Gift_ button for an individual pizza, and transfers ownership to the address specified. The function uses another form of [error handling function](https://solidity.readthedocs.io/en/v0.5.12/control-structures.html#id4), `require` that checks for valid conditions at run time. If all these conditions are correct the function transfers ownership and emits an event (defined in the imported IERC721 contract) to the blockchain recording the ownership transfer.
+Similar to our previous examples, this dapps uses [web3.js](https://web3js.readthedocs.io/en/v1.2.8/), a [JavaScript convenience library](https://ethereum.org/developers/#frontend-javascript-apis) that makes integrations with smart contracts easier.
 
-When the user clicks the _Eat_ button for an individual pizza, JavaScript calls the `burn` contract function that destroys the pizza at the specified id. The `burn` function uses the [`external`](https://solidity.readthedocs.io/en/v0.5.12/contracts.html#visibility-and-getters) function modifier, which makes the function part of the contract interface and can be called from other contracts.
+Let's take a look at our application logic.
 
-And that's all the code relevant to this dapp, there are other functions for glue code not included here. To see the dapp in action, click _Compile_, then _Deploy_ found under the disclosure triangle of the contract file, then open the _Preview_ tab to see the frontend of the dapp. Try creating one or more pizzas, then gifting them to other accounts (create new accounts from the _Default_ drop down), and eating them 😋.
+> Use the Explore panel to navigate to the _Files/app/app.js_ file.
 
-> Find the HTML file in _app/app.html_
-> Find the CSS file in _app/app.css_
-> Find the JavaScript file in _app/app.js_
+Return here once you've read through the file.
 
-### 1. Configure
+### Interact
 
-Configuring the contract allows you to set the name of the contract and the initial values sent to the constructor as arguments. You can configure the contract by going to the Deploy panel, accessed by clicking on the rocket icon in the left side menu and choosing _Configure_ option. In this example, the constructor doesn't accept arguments by default, so no configuration is necessary.
+Now that you have an understanding of the logic, let's use the app UI (in the Browser tab) to interact with the contract!
 
-### 2. Compile
+**Create a CryptoPizza**
 
-Solidity is a compiled language, and you need to convert the Solidity code into bytecode before the contract can run. We will automatically compile the code every time you save your changes or when performing a deployment.  
+Create a CryptoPizza by entering a name in the form and clicking "Create".
 
-### 3. Deploy
+Under the hood, this triggers the `createRandomPizza` JavaScript function, which in turn calls the CryptoPizza.sol function of the same name.
+The string the user sets in the form input field is used in the `generateRandomDna` which, in tandem with the sender's Ethereum address, is used to create a unique token.
 
-Every smart contract runs at an address on the Ethereum blockchain, and you must deploy it to an address before it can run. When using Studio, your browser simulates the network, but there are several test networks and one main network for the Ethereum blockchain.
+**Eat a CryptoPizza**
 
-Deploy the contract by going to the _Deploy_ panel, accessed by clicking on the rocket icon in the left side menu.
+Clicking the "Eat" button on a pizza in your "Inventory" triggers the JavaScript to call the `burn` contract function, which destroys the token at the specified id.
 
-## Find out more
+**Gift a CryptoPizza**
 
-You can read a full tutorial that accompanies this example dapp, plus many more tutorials, on [kauri.io](https://kauri.io/article/bdd65d6155a74b8aa52672b46b7230a8/v1/a-fullstack-dapp-for-creating-tokens).
+Clicking the "Gift" button triggers the `transferFrom` contract function, which transfers ownership of the token to the address specified.
 
-Other resources useful to continue your dapp development journey are:
+Try to create a few CryptoPizzas, then gift them to other accounts and eat them 😋.
 
-- [CryptoZombies](https://cryptozombies.io/): Learn Solidity building your own Zombie game
-- [Open Zeppelin Ethernaut](https://ethernaut.openzeppelin.com/): Complete levels by hacking smart contracts
-- [ChainShot](https://www.chainshot.com/): Solidity, Vyper and Web3.js coding tutorials
-- [Consensys Academy](https://consensys.net/academy/bootcamp/): Online Ethereum developer bootcamp
-- [Remix](https://remix.ethereum.org/): Web-based IDE for working on Solidity and Vyper smart contracts with in-line compile errors & code auto-complete
-- [Ganache](https://www.trufflesuite.com/ganache): One-click blockchain for local development
-- [Grid](https://grid.ethereum.org/): Download, configure, and run Ethereum nodes and tools
-- [Embark](https://framework.embarklabs.io/) All-in-one platform with smart contract workflows, debugger, testing, and more
+## Next Steps
+
+Congratulations! You've made it through our final tutorial. You're well on your way to becoming an Ethereum developer.
+
+**Want to learn more about ERC721 tokens?**
+
+-   [Read the ERC20 Token Standard](https://eips.ethereum.org/EIPS/eip-721)
+-   [Learn how standards are established on Ethereum](https://ethereum.org/developers/#standards)
+-   [See popular implementations of ERC20 interfaces, contracts and utilities](https://docs.openzeppelin.com/contracts/2.x/api/token/erc721)
+
+**Ready to keep building?**
+Here's some other useful online resources to continue your dapp development journey:
+
+-   [CryptoZombies](https://cryptozombies.io/): Learn Solidity building your own Zombie game
+-   [Open Zeppelin Ethernaut](https://ethernaut.openzeppelin.com/): Complete levels by hacking smart contracts
+-   [ChainShot](https://www.chainshot.com/): Solidity, Vyper and Web3.js coding tutorials
+-   [Consensys Academy](https://consensys.net/academy/bootcamp/): Online Ethereum developer bootcamp
+-   [Remix](https://remix.ethereum.org/): Web-based IDE for working on Solidity and Vyper smart contracts with in-line compile errors & code auto-complete
+
+**Looking to set up a local Ethereum development environment?**
+[Start here](https://ethereum.org/developers/#developer-tools).
