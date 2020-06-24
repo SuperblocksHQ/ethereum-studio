@@ -20,6 +20,7 @@ import style from './style-markdown-preview.less';
 
 interface IProps {
     markdown?: string;
+    onOutboundLinkClick: (url: string) => void;
 }
 
 export const MarkdownPreview = (props: IProps) => {
@@ -28,11 +29,18 @@ export const MarkdownPreview = (props: IProps) => {
         openLinksInNewWindow: true
     });
 
+    const handleOnClick = (e: any) => {
+        if (e.target.nodeName === 'A') {
+           props.onOutboundLinkClick(e.target.href);
+        }
+    };
+
     return (
         <div className={style.overflowFix}>
             <div
+                onClick={(e) => handleOnClick(e)}
                 className={style.markdownPreview}
-                dangerouslySetInnerHTML={{__html: converter.makeHtml(props.markdown ? props.markdown : '')}}
+                dangerouslySetInnerHTML={{ __html: converter.makeHtml(props.markdown ? props.markdown : '') }}
             />
         </div>
     );

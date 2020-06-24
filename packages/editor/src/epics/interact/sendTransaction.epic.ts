@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
 
-import { switchMap, catchError, withLatestFrom, map, mergeMap } from 'rxjs/operators';
+import { switchMap, catchError, withLatestFrom, map, mergeMap, tap } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
 import { interactActions, outputLogActions, deployerActions, transactionsActions } from '../../actions';
 import { of, from, Observable, Observer, throwError, concat } from 'rxjs';
@@ -159,7 +159,6 @@ export const sendTransactionEpic: Epic = (action$, state$) => action$.pipe(
         const selectedEnv = projectSelectors.getSelectedEnvironment(state);
         const selectedAccount = projectSelectors.getSelectedAccount(state);
         const networkSettings = state.settings.preferences.network;
-
         return getContractInstance$(selectedEnv.endpoint, deployedContract)
             .pipe(
                 map(contractInstance => getData(contractInstance, action.data.rawAbiDefinitionName, action.data.abiIndex, action.data.args)),

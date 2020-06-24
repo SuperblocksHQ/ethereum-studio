@@ -1,4 +1,10 @@
 {
+    "project": {
+        "info": {
+            "name": "Crypto Pizzas",
+            "title": "Crypto Pizzas"
+        }
+    },
     "environments": [
         {
             "name": "browser"

@@ -1,4 +1,10 @@
 {
+    "project": {
+        "info": {
+            "name": "Hello World",
+            "title": "Hello World"
+        }
+    },
     "environments": [
         {
             "name": "browser"

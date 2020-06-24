@@ -26,14 +26,14 @@ import Networks from '../../networks';
 import { IAccount } from '../../models/state';
 import { TransactionType } from '../../models';
 
-function finalizeDeploy(state: any, deployRunner: DeployRunner, hash: string, outputPath: string[], isNewTransaction: boolean, tx?: any) {
+function finalizeDeploy(state: any, deployRunner: DeployRunner, hash: string, outputPath: string[], isNewTransaction: boolean, tx?: any, templateName?: string) {
     return deployRunner.waitForContract(hash).pipe(
         mergeMap((o: any) => {
             if (o.msg) {
                 return of(outputLogActions.addRows([o]));
             } else {
                 const res = <IDeployResult>o;
-                analytics.logEvent('CONTRACT_DEPLOYED', { environment: res.environment });
+                analytics.logEvent('CONTRACT_DEPLOYED', { environment: res.environment, template: templateName });
                 const files = res.files.map(f => createFile(f.name, f.code));
                 return of<any>(
                     explorerActions.createPathWithContent(outputPath, files),
@@ -101,7 +101,7 @@ export function tryExternalDeploy(state: any, deployRunner: DeployRunner) {
 export function browserDeploy(state: any, deployRunner: DeployRunner) {
     const account: IAccount = projectSelectors.getSelectedAccount(state);
     const networkSettings = state.settings.preferences.network;
-
+    const templateName = state.projects.dappFileData.project.info.name;
     if (state.projects.selectedAccount.isLocked) {
         return [outputLogActions.addRows([{ channel: 2, msg: 'The Custom wallet is currently locked. Please unlock it and try again!' }]), deployerActions.deployFail()];
     }
@@ -116,7 +116,7 @@ export function browserDeploy(state: any, deployRunner: DeployRunner) {
             if (output.msg) { // intermediate messages comming
                 return of(outputLogActions.addRows([ output ]));
             } else if (output.hash && output.tx) { // result
-                return finalizeDeploy(state, deployRunner, output.hash, state.deployer.outputPath, true, output.tx);
+                return finalizeDeploy(state, deployRunner, output.hash, state.deployer.outputPath, true, output.tx, templateName);
             } else { // unexpected error
                 return of(outputLogActions.addRows([{ msg: 'Unexpected error occurred. Please try again!', channel: 3 }]));
             }

@@ -31,6 +31,7 @@ interface IProps {
     hasUnsavedChanges: boolean;
     onSave: (fileId: string, code: string) => void;
     onUnsavedChange: (fileId: string, hasUnsavedChanges: boolean, code: any) => void;
+    onOutboundLinkClick: (url: string) => void;
 }
 
 interface IState {
@@ -116,7 +117,7 @@ export class FileEditor extends React.Component<IProps, IState> {
     }
 
     render() {
-        const { file, visible, hasUnsavedChanges } = this.props;
+        const { file, visible, hasUnsavedChanges, onOutboundLinkClick } = this.props;
         const { showMarkdownPreview } = this.state;
 
         return (
@@ -131,7 +132,7 @@ export class FileEditor extends React.Component<IProps, IState> {
 
                 { isMarkdown(file.name) && showMarkdownPreview
                     ?
-                        <MarkdownPreview markdown={file.code} />
+                        <MarkdownPreview markdown={file.code} onOutboundLinkClick={onOutboundLinkClick} />
                     :
                         <MonacoEditor
                             ref='monaco'
