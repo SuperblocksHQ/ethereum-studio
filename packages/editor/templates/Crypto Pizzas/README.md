@@ -82,9 +82,9 @@ Congratulations! You've made it through our final tutorial. You're well on your 
 
 **Want to learn more about ERC721 tokens?**
 
--   [Read the ERC20 Token Standard](https://eips.ethereum.org/EIPS/eip-721)
+-   [Read the ERC721 Token Standard](https://eips.ethereum.org/EIPS/eip-721)
 -   [Learn how standards are established on Ethereum](https://ethereum.org/developers/#standards)
--   [See popular implementations of ERC20 interfaces, contracts and utilities](https://docs.openzeppelin.com/contracts/2.x/api/token/erc721)
+-   [See popular implementations of ERC721 interfaces, contracts and utilities](https://docs.openzeppelin.com/contracts/2.x/api/token/erc721)
 
 **Ready to keep building?**
 Here's some other useful online resources to continue your dapp development journey:
